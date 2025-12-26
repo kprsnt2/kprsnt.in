@@ -37,6 +37,15 @@ PROJECTS = [
         "featured": True,
         "tags": ["Pharma", "R&D", "AI", "Drug Discovery"]
     },
+    {
+        "title": "Python Portfolio Site",
+        "description": "Original Dash-based portfolio with interactive CSV plotter. Hosted on Render for full Python server support.",
+        "url": "https://python.kprsnt.in/",
+        "github": "https://github.com/kprsnt2/my-website",
+        "color": "info",
+        "featured": False,
+        "tags": ["Python", "Dash", "Render", "Portfolio"]
+    },
     # AI & Chat Projects
     {
         "title": "PersonaAI - Multi-Personality Chat",
