@@ -72,7 +72,35 @@ PROJECTS = [
         "featured": False,
         "tags": ["Ollama", "GCP", "Gemma3", "Discontinued"]
     },
+    # AI Tools
+    {
+        "title": "AI Report Generator",
+        "description": "Gemini AI-powered report generator for any topic with PDF export option. Generate comprehensive reports instantly.",
+        "url": "https://aireport.kprsnt.in/",
+        "github": "https://github.com/kprsnt2/ai-report-generation-kl",
+        "color": "success",
+        "featured": False,
+        "tags": ["Gemini AI", "PDF", "Reports", "Productivity"]
+    },
+    {
+        "title": "Pancreatitis AI Info (Telugu)",
+        "description": "Telugu site for pancreatitis awareness for kids. Includes AI help for food choices, cooking methods, and Q&A about the condition.",
+        "url": "https://ai-cp.vercel.app/",
+        "github": "https://github.com/kprsnt2/ai_cp",
+        "color": "danger",
+        "featured": False,
+        "tags": ["Health", "Telugu", "AI", "Kids"]
+    },
     # Learning & Education
+    {
+        "title": "AI Reading Buddy",
+        "description": "Your AI friend for learning to blend words! Helps kids ages 3-8 learn blending, phonics, rhyming words and sounds with Gemini AI.",
+        "url": "https://ai-reading-buddy.vercel.app/",
+        "github": "https://github.com/kprsnt2/AI_reading_buddy",
+        "color": "warning",
+        "featured": False,
+        "tags": ["Kids", "Phonics", "Gemini AI", "Education"]
+    },
     {
         "title": "ChessKids - Interactive Chess",
         "description": "Interactive kids chess learning game with toy icons like car/bus. Learn chess with AI assistance!",
@@ -206,18 +234,38 @@ EXPERIENCE = {
 }
 
 RESUME_PROJECTS = [
+    # Featured / Major Projects
+    {"name": "MyLocalCLI - AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents. Works with local LLMs."},
+    {"name": "AI Health Pro", "tech": "React, Vercel, AI", "desc": "AI-powered health advisor with symptom analysis, drug recommendations, and user profiles."},
+    {"name": "PharmGenesisAI - Drug Discovery", "tech": "TypeScript, Gemini API, Vercel", "desc": "AI-powered drug discovery tool for Pharma R&D with compound analysis."},
     {"name": "Fine-Tuned LLM (Mistral-7B, LoRA)", "tech": "Mistral 7b, Hugging Face, LoRA, Python", "desc": "Fine-tuned a quantized Mistral-7B model using QLoRA for philosophical Q&A"},
-    {"name": "MolecuLearn AI", "tech": "Vercel, TypeScript, Gemini API", "desc": "Real-time drug alternative tool for general audience"},
-    {"name": "AI Debate App", "tech": "Vercel, TypeScript, Gemini API", "desc": "Real-time debate generation platform"},
-    {"name": "Terminal Portfolio", "tech": "Vercel, Vue.js", "desc": "Retro-style terminal portfolio"},
+    # AI Tools
+    {"name": "AI Report Generator", "tech": "Gemini API, PDF Export, Vercel", "desc": "Generate comprehensive reports on any topic with PDF export option."},
+    {"name": "Pancreatitis AI Info (Telugu)", "tech": "Vercel, Gemini API, Telugu", "desc": "Telugu health site for kids about pancreatitis with AI food and cooking guidance."},
+    {"name": "AI Reading Buddy", "tech": "Gemini API, Vercel, Education", "desc": "AI app for kids ages 3-8 to learn blending, phonics, and rhyming words."},
+    # Education & Learning
+    {"name": "ChessKids", "tech": "JavaScript, AI, Vercel", "desc": "Interactive chess learning game for kids with toy icons and AI assistance."},
+    {"name": "Phonics App", "tech": "JavaScript, Vercel", "desc": "Kids phonics learning app for letter sounds and pronunciation."},
+    {"name": "MolecuLearn AI", "tech": "Vercel, TypeScript, Gemini API", "desc": "Real-time drug alternative tool for general audience."},
+    {"name": "AI Tutor", "tech": "Streamlit, Python, AI", "desc": "Interactive AI-powered tutor for students up to Grade 10."},
+    {"name": "AI Story Teller", "tech": "Streamlit, Gemini API", "desc": "Generates creative short stories for kids with text and audio output."},
+    # AI & Chat
+    {"name": "PersonaAI", "tech": "React, Vercel, AI", "desc": "Chat with 3 AI personalities: Teen, Child, and Infant."},
+    {"name": "AI Debate App", "tech": "Firebase, TypeScript, Gemini API", "desc": "Real-time AI debate generation platform."},
+    # Data & Dashboards
+    {"name": "Brand Dashboards", "tech": "Analytics, BI, Vercel", "desc": "Brand analytics dashboards with market analysis and SEO insights."},
+    {"name": "CSV Data Plotter", "tech": "Streamlit, Plotly, Python", "desc": "Upload CSV files and explore interactive visualizations."},
+    # Portfolio Sites
+    {"name": "Terminal Portfolio", "tech": "Vue.js, Vercel", "desc": "Retro-style terminal interface portfolio."},
+    {"name": "Next.js Developer Site", "tech": "Next.js, Vercel, v0.dev", "desc": "Modern personal website with UI concepts from v0.dev."},
 ]
 
 RESUME_SKILLS = {
-    "Languages & Tools": "Python, SQL, BigQuery, JavaScript, HTML/CSS, Git, Excel",
-    "AI & Frameworks": "OpenAI API, Gemini API, Streamlit, NLP, LSTM, ARIMA, Prompt Engineering",
-    "Cloud & Deployment": "Google Cloud Run, Vercel, Render, AppScript Automation",
-    "Visualization & BI": "Tableau, Looker Studio, Power BI, Plotly, Matplotlib",
-    "Other": "ETL Pipelines, Ad-hoc Reporting, Sentiment Analysis, Predictive Analytics"
+    "Languages & Tools": "Python, JavaScript, TypeScript, SQL, Node.js, HTML/CSS, Git, Excel",
+    "AI & Frameworks": "Gemini API, OpenAI API, Ollama, LLM Fine-tuning (LoRA/QLoRA), Streamlit, React, Next.js, Vue.js, Flask, Dash",
+    "Cloud & Deployment": "Google Cloud Run, Vercel, Render, Firebase, Docker, AppScript Automation",
+    "Data & BI": "BigQuery, MongoDB, Tableau, Looker Studio, Power BI, Plotly, Pandas, NumPy",
+    "AI Specialties": "Prompt Engineering, NLP, LSTM, ARIMA, Sentiment Analysis, Predictive Analytics, RAG"
 }
 
 # Routes
@@ -249,7 +297,7 @@ BLOG_POSTS = [
     {
         "slug": "building-mylocalcli",
         "title": "Building MyLocalCLI: A Claude Code Alternative",
-        "date": "December 2024",
+        "date": "December 2025",
         "excerpt": "How I built a privacy-focused AI coding assistant with 6 providers, 26 tools, and full local control.",
         "tags": ["AI", "CLI", "Node.js"],
         "content": """
@@ -275,7 +323,7 @@ BLOG_POSTS = [
     {
         "slug": "fine-tuning-mistral-7b",
         "title": "Fine-Tuning Mistral-7B with QLoRA",
-        "date": "November 2024",
+        "date": "November 2025",
         "excerpt": "A practical guide to fine-tuning large language models on consumer hardware using LoRA techniques.",
         "tags": ["LLM", "AI", "Python"],
         "content": """
@@ -299,7 +347,7 @@ BLOG_POSTS = [
     {
         "slug": "deploying-llms-on-gcp",
         "title": "Self-Hosting LLMs on Google Cloud Run",
-        "date": "October 2024",
+        "date": "October 2025",
         "excerpt": "Running Ollama and Open WebUI on Google Cloud for a private, scalable AI chatbot.",
         "tags": ["GCP", "Ollama", "Docker"],
         "content": """
