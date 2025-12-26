@@ -4,17 +4,31 @@
 
 {% block content %}
 <div class="container">
-    <!-- Hero Section -->
+    <!-- Hero Section with Particles -->
     <div class="hero-section">
+        <!-- Floating Particles -->
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+
         <h1 class="hero-title">Prashanth Kumar Kadasi</h1>
-        <p class="hero-subtitle">Data Analyst • AI Developer • Data Engineering</p>
-        <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem;">
+        <p class="hero-subtitle">
+            <span class="typing-text" id="typingText"></span><span class="typing-cursor"></span>
+        </p>
+        <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; animation: fadeInUp 1s ease-out 0.5s both;">
             I build intelligent applications that solve real-world problems.
             From AI-powered health advisors to local CLI tools, I love turning ideas into reality.
         </p>
 
         <!-- Social Links -->
-        <div style="margin-bottom: 2rem;">
+        <div style="margin-bottom: 2rem; animation: fadeInUp 1s ease-out 0.7s both;">
             <a href="https://github.com/kprsnt2" target="_blank" class="social-btn">
                 <i class="fab fa-github"></i> GitHub
             </a>
@@ -91,4 +105,47 @@
         </div>
     </div>
 </div>
+
+<!-- Typing Animation Script -->
+<script>
+    const roles = [
+        'Data Analyst',
+        'AI Developer',
+        'Data Engineer',
+        'LLM Enthusiast',
+        'Full-Stack Builder'
+    ];
+    let roleIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typingElement = document.getElementById('typingText');
+
+    function type() {
+        const currentRole = roles[roleIndex];
+
+        if (isDeleting) {
+            typingElement.textContent = currentRole.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typingElement.textContent = currentRole.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        let typeSpeed = isDeleting ? 50 : 100;
+
+        if (!isDeleting && charIndex === currentRole.length) {
+            typeSpeed = 2000; // Pause at end
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            roleIndex = (roleIndex + 1) % roles.length;
+            typeSpeed = 500;
+        }
+
+        setTimeout(type, typeSpeed);
+    }
+
+    // Start typing animation
+    setTimeout(type, 1000);
+</script>
 {% endblock %}

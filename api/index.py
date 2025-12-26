@@ -235,6 +235,94 @@ def resume():
 def plotter():
     return render_template('plotter.html')
 
+# Blog posts data
+BLOG_POSTS = [
+    {
+        "slug": "building-mylocalcli",
+        "title": "Building MyLocalCLI: A Claude Code Alternative",
+        "date": "December 2024",
+        "excerpt": "How I built a privacy-focused AI coding assistant with 6 providers, 26 tools, and full local control.",
+        "tags": ["AI", "CLI", "Node.js"],
+        "content": """
+            <p>When I started building MyLocalCLI, my goal was simple: create a coding assistant that respects privacy and works entirely on your machine.</p>
+            
+            <h3>The Problem</h3>
+            <p>Cloud-based AI coding tools are great, but they come with concerns about data privacy, internet dependency, and API costs. I wanted something that could work offline with local LLMs.</p>
+            
+            <h3>The Solution</h3>
+            <p>MyLocalCLI supports 6 different AI providers including Ollama for local inference, OpenRouter for cloud fallback, and multiple free API options. It comes with 26 built-in tools for file operations, code analysis, and more.</p>
+            
+            <h3>Key Features</h3>
+            <ul>
+                <li>Works with local Ollama models (Gemma, Mistral, CodeLlama)</li>
+                <li>26 tools for file editing, searching, and code operations</li>
+                <li>5 specialized agents for different tasks</li>
+                <li>Privacy-first: your code never leaves your machine</li>
+            </ul>
+            
+            <p>Try it yourself: <code>npx mylocalcli</code></p>
+        """
+    },
+    {
+        "slug": "fine-tuning-mistral-7b",
+        "title": "Fine-Tuning Mistral-7B with QLoRA",
+        "date": "November 2024",
+        "excerpt": "A practical guide to fine-tuning large language models on consumer hardware using LoRA techniques.",
+        "tags": ["LLM", "AI", "Python"],
+        "content": """
+            <p>Fine-tuning large language models used to require expensive GPU clusters. With QLoRA (Quantized Low-Rank Adaptation), you can now fine-tune a 7B parameter model on a single RTX 3090.</p>
+            
+            <h3>What is QLoRA?</h3>
+            <p>QLoRA combines 4-bit quantization with Low-Rank Adaptation to dramatically reduce memory requirements while maintaining model quality.</p>
+            
+            <h3>My Setup</h3>
+            <ul>
+                <li>Base model: Mistral-7B-Instruct-v0.2</li>
+                <li>Dataset: Custom philosophical Q&A pairs</li>
+                <li>Hardware: RTX 3090 (24GB VRAM)</li>
+                <li>Training time: ~4 hours for 1000 samples</li>
+            </ul>
+            
+            <h3>Results</h3>
+            <p>The fine-tuned model showed significant improvement in domain-specific tasks while retaining general capabilities. The key is choosing high-quality training data over quantity.</p>
+        """
+    },
+    {
+        "slug": "deploying-llms-on-gcp",
+        "title": "Self-Hosting LLMs on Google Cloud Run",
+        "date": "October 2024",
+        "excerpt": "Running Ollama and Open WebUI on Google Cloud for a private, scalable AI chatbot.",
+        "tags": ["GCP", "Ollama", "Docker"],
+        "content": """
+            <p>Want your own ChatGPT-like interface without sending data to third parties? Here's how I deployed Ollama with Open WebUI on Google Cloud Run.</p>
+            
+            <h3>Architecture</h3>
+            <p>The setup uses Cloud Run for autoscaling, Cloud Storage for model persistence, and Artifact Registry for container images.</p>
+            
+            <h3>Why Cloud Run?</h3>
+            <ul>
+                <li>Pay only when in use (scale to zero)</li>
+                <li>Automatic HTTPS and domain mapping</li>
+                <li>Easy updates with container deployments</li>
+            </ul>
+            
+            <h3>Challenges</h3>
+            <p>The main challenge was model loading time. Cold starts can take 30+ seconds for large models. I solved this by using smaller models (Gemma 2B) for quick responses and caching frequently used sessions.</p>
+        """
+    }
+]
+
+@app.route('/blog')
+def blog():
+    return render_template('blog.html', posts=BLOG_POSTS)
+
+@app.route('/blog/<slug>')
+def blog_post(slug):
+    post = next((p for p in BLOG_POSTS if p['slug'] == slug), None)
+    if post:
+        return render_template('blog_post.html', post=post)
+    return render_template('blog.html', posts=BLOG_POSTS)
+
 # Static files route for Vercel
 @app.route('/static/<path:path>')
 def serve_static(path):
