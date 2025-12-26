@@ -1,0 +1,11 @@
+your-portfolio-project/
+├── app.py             # Main Dash app setup, layout, navigation
+├── pages/             # Directory for different page layouts
+│   ├── about.py       # Content for the 'About Me' page
+│   ├── projects.py    # Content for the 'Projects' page
+│   ├── skills.py      # Content for the 'Skills' page
+│   └── visualizations.py # Content & Plotly charts for visualization showcase
+├── assets/            # Optional: For CSS, images (Dash automatically serves files here)
+│   └── custom.css     # Example custom CSS file
+├── requirements.txt   # Project dependencies
+└── .gitignore         # Git ignore file

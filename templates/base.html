@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Prashanth Kumar Kadasi - Data Analyst & AI Developer Portfolio">
+    <title>{% block title %}Prashanth Kumar Kadasi | Portfolio{% endblock %}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23667eea' rx='20' width='100' height='100'/><text x='50' y='65' font-family='Arial' font-size='45' font-weight='bold' fill='white' text-anchor='middle'>PK</text></svg>">
+
+    <!-- Bootstrap CSS (Dark Theme) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/darkly/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Prashanth Kadasi</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">About Me</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/skills' %}active{% endif %}"
+                            href="/skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/projects' %}active{% endif %}"
+                            href="/projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/resume' %}active{% endif %}"
+                            href="/resume">Resume</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/plotter' %}active{% endif %}" href="/plotter">CSV
+                            Plotter</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container-fluid py-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

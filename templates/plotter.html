@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+
+{% block title %}CSV Plotter | Prashanth Kumar Kadasi{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2>Interactive CSV Plotter</h2>
+            <p class="mb-4">Upload a CSV file and create beautiful interactive charts.</p>
+        </div>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">📁 Upload CSV File</div>
+                <div class="card-body">
+                    <div id="drop-zone"
+                        style="border: 2px dashed rgba(102, 126, 234, 0.5); border-radius: 12px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s ease;">
+                        <i class="fas fa-cloud-upload-alt"
+                            style="font-size: 2rem; color: #667eea; margin-bottom: 1rem;"></i>
+                        <p style="margin: 0;">Drag and drop or <span
+                                style="color: #667eea; text-decoration: underline;">click to select</span> a CSV file
+                        </p>
+                        <input type="file" id="file-input" accept=".csv" style="display: none;">
+                    </div>
+                    <div id="file-info" style="margin-top: 1rem;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Preview -->
+    <div class="row" id="preview-section" style="display: none;">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">📊 Data Preview</div>
+                <div class="card-body">
+                    <div style="overflow-x: auto;">
+                        <table class="table table-dark table-striped" id="data-table">
+                            <thead id="table-head"></thead>
+                            <tbody id="table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Controls -->
+    <div class="row" id="controls-section" style="display: none;">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">⚙️ Chart Controls</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-3 mb-3">
+                            <label class="form-label">X-Axis</label>
+                            <select class="form-select" id="x-axis"></select>
+                        </div>
+                        <div class="col-12 col-md-3 mb-3">
+                            <label class="form-label">Y-Axis</label>
+                            <select class="form-select" id="y-axis"></select>
+                        </div>
+                        <div class="col-12 col-md-3 mb-3">
+                            <label class="form-label">Chart Type</label>
+                            <select class="form-select" id="chart-type">
+                                <option value="bar">Bar Chart</option>
+                                <option value="line">Line Chart</option>
+                                <option value="scatter">Scatter Plot</option>
+                                <option value="pie">Pie Chart</option>
+                                <option value="doughnut">Doughnut Chart</option>
+                            </select>
+                        </div>
+                        <div class="col-12 col-md-3 mb-3">
+                            <label class="form-label">Chart Title</label>
+                            <input type="text" class="form-control" id="chart-title" placeholder="Enter title...">
+                        </div>
+                    </div>
+                    <button class="btn btn-info" id="generate-btn">
+                        <i class="fas fa-chart-bar"></i> Generate Chart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Display -->
+    <div class="row" id="chart-section" style="display: none;">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header">📈 Chart</div>
+                <div class="card-body">
+                    <canvas id="chart-canvas" style="max-height: 500px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    let csvData = [];
+    let headers = [];
+    let chart = null;
+
+    // Drop zone functionality
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#667eea';
+        dropZone.style.background = 'rgba(102, 126, 234, 0.1)';
+    });
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.style.borderColor = 'rgba(102, 126, 234, 0.5)';
+        dropZone.style.background = 'transparent';
+    });
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = 'rgba(102, 126, 234, 0.5)';
+        dropZone.style.background = 'transparent';
+        const file = e.dataTransfer.files[0];
+        if (file && file.name.endsWith('.csv')) {
+            processFile(file);
+        }
+    });
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) processFile(file);
+    });
+
+    function processFile(file) {
+        document.getElementById('file-info').innerHTML = `<span style="color: #10b981;">✓ Uploaded: ${file.name}</span>`;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            parseCSV(e.target.result);
+        };
+        reader.readAsText(file);
+    }
+
+    function parseCSV(text) {
+        const lines = text.trim().split('\n');
+        headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
+        csvData = [];
+
+        for (let i = 1; i < Math.min(lines.length, 1000); i++) {
+            const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
+            if (values.length === headers.length) {
+                const row = {};
+                headers.forEach((h, idx) => row[h] = values[idx]);
+                csvData.push(row);
+            }
+        }
+
+        displayPreview();
+        populateSelects();
+        document.getElementById('preview-section').style.display = 'block';
+        document.getElementById('controls-section').style.display = 'block';
+    }
+
+    function displayPreview() {
+        const thead = document.getElementById('table-head');
+        const tbody = document.getElementById('table-body');
+
+        thead.innerHTML = '<tr>' + headers.map(h => `<th>${h}</th>`).join('') + '</tr>';
+        tbody.innerHTML = csvData.slice(0, 5).map(row =>
+            '<tr>' + headers.map(h => `<td>${row[h]}</td>`).join('') + '</tr>'
+        ).join('');
+    }
+
+    function populateSelects() {
+        const xSelect = document.getElementById('x-axis');
+        const ySelect = document.getElementById('y-axis');
+
+        const options = headers.map(h => `<option value="${h}">${h}</option>`).join('');
+        xSelect.innerHTML = options;
+        ySelect.innerHTML = options;
+
+        if (headers.length > 1) ySelect.selectedIndex = 1;
+    }
+
+    document.getElementById('generate-btn').addEventListener('click', generateChart);
+
+    function generateChart() {
+        const xCol = document.getElementById('x-axis').value;
+        const yCol = document.getElementById('y-axis').value;
+        const chartType = document.getElementById('chart-type').value;
+        const title = document.getElementById('chart-title').value || `${yCol} vs ${xCol}`;
+
+        const labels = csvData.map(row => row[xCol]);
+        const data = csvData.map(row => parseFloat(row[yCol]) || 0);
+
+        // Generate gradient colors
+        const colors = data.map((_, i) => {
+            const hue = (i * 360 / data.length) % 360;
+            return `hsla(${hue}, 70%, 60%, 0.8)`;
+        });
+
+        document.getElementById('chart-section').style.display = 'block';
+
+        if (chart) chart.destroy();
+
+        const ctx = document.getElementById('chart-canvas').getContext('2d');
+        chart = new Chart(ctx, {
+            type: chartType === 'scatter' ? 'scatter' : chartType,
+            data: {
+                labels: chartType === 'scatter' ? undefined : labels,
+                datasets: [{
+                    label: yCol,
+                    data: chartType === 'scatter'
+                        ? csvData.map(row => ({ x: parseFloat(row[xCol]) || 0, y: parseFloat(row[yCol]) || 0 }))
+                        : data,
+                    backgroundColor: colors,
+                    borderColor: chartType === 'line' ? '#667eea' : colors,
+                    borderWidth: chartType === 'line' ? 3 : 1,
+                    fill: chartType === 'line' ? false : true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: { display: true, text: title, color: '#fff', font: { size: 18 } },
+                    legend: { labels: { color: '#a0a0b0' } }
+                },
+                scales: chartType === 'pie' || chartType === 'doughnut' ? {} : {
+                    x: { ticks: { color: '#a0a0b0' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                    y: { ticks: { color: '#a0a0b0' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+            }
+        });
+
+        // Scroll to chart
+        document.getElementById('chart-section').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+{% endblock %}

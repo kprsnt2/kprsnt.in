@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Projects | Prashanth Kumar Kadasi{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2>My Projects</h2>
+            <p class="mb-4">A collection of web applications, AI tools, dashboards, and educational apps I've built.</p>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        {% for project in projects %}
+        <div class="col-12 col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header" style="position: relative;">
+                    {{ project.title }}
+                    {% if project.featured %}
+                    <span class="featured-badge">⭐ Featured</span>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <p>{{ project.description }}</p>
+
+                    <!-- Tags -->
+                    <div style="margin-bottom: 1rem;">
+                        {% for tag in project.tags %}
+                        <span
+                            style="display: inline-block; background: rgba(102, 126, 234, 0.2); color: #667eea; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.75rem; margin-right: 0.5rem; margin-bottom: 0.5rem;">{{
+                            tag }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Buttons -->
+                    <div>
+                        <a href="{{ project.url }}" target="_blank" class="btn btn-{{ project.color }} me-2">Visit Site
+                            →</a>
+                        {% if project.github %}
+                        <a href="{{ project.github }}" target="_blank" class="btn btn-outline-dark">GitHub</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

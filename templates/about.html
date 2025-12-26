@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}About Me | Prashanth Kumar Kadasi{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <h1 class="hero-title">Prashanth Kumar Kadasi</h1>
+        <p class="hero-subtitle">Data Analyst • AI Developer • Data Engineering</p>
+        <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem;">
+            I build intelligent applications that solve real-world problems.
+            From AI-powered health advisors to local CLI tools, I love turning ideas into reality.
+        </p>
+
+        <!-- Social Links -->
+        <div style="margin-bottom: 2rem;">
+            <a href="https://github.com/kprsnt2" target="_blank" class="social-btn">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/prashanth-kumar-kadasi-b5281765/" target="_blank" class="social-btn">
+                <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+            <a href="https://x.com/prashanth_29" target="_blank" class="social-btn">
+                𝕏 Twitter
+            </a>
+            <a href="mailto:kprsnt@gmail.com" class="social-btn">
+                <i class="fas fa-envelope"></i> Email
+            </a>
+        </div>
+    </div>
+
+    <!-- About Cards -->
+    <div class="row">
+        <div class="col-12 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">🚀 What I Do</div>
+                <div class="card-body">
+                    <p>I specialize in building AI-powered applications, data visualizations,
+                        and web platforms. Whether it's deploying LLMs locally or creating
+                        interactive dashboards, I enjoy every step of the development process.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-header">🛠️ Tech Stack</div>
+                <div class="card-body">
+                    <p>Python • JavaScript • React • Next.js • Node.js •
+                        Dash • Flask • Docker • GCP • Vercel • MongoDB •
+                        LLMs (Gemma, Ollama, OpenRouter)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Featured Projects Preview -->
+    <div class="row">
+        <div class="col-12">
+            <h3 style="margin-top: 2rem; margin-bottom: 1.5rem;">Featured Projects</h3>
+        </div>
+
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header">⚡ MyLocalCLI</div>
+                <div class="card-body">
+                    <p>A Claude Code alternative with 6 providers, 26 tools, and full privacy.</p>
+                    <a href="/projects" class="btn btn-info btn-sm">Explore →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header">🩺 AI Health Pro</div>
+                <div class="card-body">
+                    <p>AI-powered health advisor with symptom analysis and drug recommendations.</p>
+                    <a href="/projects" class="btn btn-info btn-sm">Explore →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header">💊 PharmGenesisAI</div>
+                <div class="card-body">
+                    <p>AI-powered drug discovery tool for Pharma R&D research.</p>
+                    <a href="/projects" class="btn btn-info btn-sm">Explore →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
