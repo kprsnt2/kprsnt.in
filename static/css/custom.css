@@ -186,6 +186,24 @@ p {
     margin-bottom: 1rem !important;
 }
 
+/* Project card title */
+.card-title-text {
+    flex: 1;
+    margin-right: 0.5rem;
+}
+
+/* Project tags */
+.project-tag {
+    display: inline-block;
+    background: rgba(102, 126, 234, 0.2);
+    color: var(--accent-blue);
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
 /* ========== Buttons ========== */
 .btn {
     border-radius: 10px !important;
@@ -282,12 +300,23 @@ p {
     background: rgba(168, 85, 247, 0.15);
 }
 
+/* ========== Interactive Particle Canvas ========== */
+#particleCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
 /* ========== Hero Section with Animation ========== */
 .hero-section {
     padding: 4rem 0;
     text-align: center;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .hero-title {

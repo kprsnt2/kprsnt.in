@@ -3,21 +3,12 @@
 {% block title %}About Me | Prashanth Kumar Kadasi{% endblock %}
 
 {% block content %}
-<div class="container">
-    <!-- Hero Section with Particles -->
-    <div class="hero-section">
-        <!-- Floating Particles -->
-        <div class="particles">
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-            <div class="particle"></div>
-        </div>
+<!-- Interactive Particle Canvas (Full Page) -->
+<canvas id="particleCanvas"></canvas>
 
+<div class="container" style="position: relative; z-index: 1;">
+    <!-- Hero Section -->
+    <div class="hero-section">
         <h1 class="hero-title">Prashanth Kumar Kadasi</h1>
         <p class="hero-subtitle">
             <span class="typing-text" id="typingText"></span><span class="typing-cursor"></span>
@@ -106,8 +97,117 @@
     </div>
 </div>
 
-<!-- Typing Animation Script -->
+<!-- Interactive Particle Trail Script -->
 <script>
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    // Set canvas size
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = document.body.scrollHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Particle class - spawns from mouse with glow and gravity
+    class Particle {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.size = Math.random() * 8 + 3;
+            this.speedX = (Math.random() - 0.5) * 4;
+            this.speedY = (Math.random() - 0.5) * 4 - 1; // Slight upward bias
+            this.gravity = 0.05;
+            this.hue = Math.random() * 60 + 230; // Blue-purple range
+            this.opacity = 1;
+            this.decay = Math.random() * 0.015 + 0.008;
+        }
+
+        draw() {
+            // Glow effect
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = `hsla(${this.hue}, 70%, 60%, ${this.opacity})`;
+
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${this.hue}, 70%, 60%, ${this.opacity})`;
+            ctx.fill();
+
+            ctx.shadowBlur = 0;
+        }
+
+        update() {
+            this.speedY += this.gravity; // Add gravity
+            this.x += this.speedX;
+            this.y += this.speedY;
+            this.opacity -= this.decay;
+            this.size *= 0.97;
+            if (this.size > 0.5) this.draw();
+        }
+    }
+
+    // Spawn particles on mouse move
+    let lastX = 0, lastY = 0;
+    window.addEventListener('mousemove', (e) => {
+        const x = e.x;
+        const y = e.y + window.scrollY;
+
+        // Calculate speed for trail intensity
+        const dx = x - lastX;
+        const dy = y - lastY;
+        const speed = Math.sqrt(dx * dx + dy * dy);
+        const particleCount = Math.min(Math.floor(speed / 3) + 2, 8);
+
+        // Spawn particles based on movement speed
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle(x, y));
+        }
+
+        lastX = x;
+        lastY = y;
+    });
+
+    // Draw connecting lines between nearby particles
+    function connectParticles() {
+        for (let a = 0; a < particles.length; a++) {
+            for (let b = a + 1; b < particles.length; b++) {
+                let dx = particles[a].x - particles[b].x;
+                let dy = particles[a].y - particles[b].y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 80) {
+                    let opacity = Math.min(particles[a].opacity, particles[b].opacity);
+                    ctx.strokeStyle = `rgba(102, 126, 234, ${opacity * 0.3})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath();
+                    ctx.moveTo(particles[a].x, particles[a].y);
+                    ctx.lineTo(particles[b].x, particles[b].y);
+                    ctx.stroke();
+                }
+            }
+        }
+    }
+
+    // Animation loop
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Update and filter dead particles
+        particles = particles.filter(p => p.opacity > 0);
+
+        for (let particle of particles) {
+            particle.update();
+        }
+
+        connectParticles();
+
+        requestAnimationFrame(animate);
+    }
+    animate();
+
+    // ===== Typing Animation =====
     const roles = [
         'Data Analyst',
         'AI Developer',
@@ -134,7 +234,7 @@
         let typeSpeed = isDeleting ? 50 : 100;
 
         if (!isDeleting && charIndex === currentRole.length) {
-            typeSpeed = 2000; // Pause at end
+            typeSpeed = 2000;
             isDeleting = true;
         } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
@@ -145,7 +245,6 @@
         setTimeout(type, typeSpeed);
     }
 
-    // Start typing animation
     setTimeout(type, 1000);
 </script>
 {% endblock %}
