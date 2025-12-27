@@ -396,7 +396,7 @@ def ai_insight():
             return jsonify({'error': 'API key not configured'}), 500
         
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.5-flash-lite')
         
         # Build project summary for AI
         project_summary = "Here are Prashanth Kumar Kadasi's projects:\n\n"
