@@ -2,8 +2,9 @@
 Flask Portfolio Website
 A simple Flask + Jinja2 website for Vercel deployment
 """
-from flask import Flask, render_template, send_from_directory
+from flask import Flask, render_template, send_from_directory, jsonify, request
 import os
+import google.generativeai as genai
 
 app = Flask(__name__, 
             template_folder='../templates',
@@ -384,6 +385,45 @@ def blog_post(slug):
 @app.route('/static/<path:path>')
 def serve_static(path):
     return send_from_directory(app.static_folder, path)
+
+# AI Insights API endpoint
+@app.route('/api/ai-insight', methods=['POST'])
+def ai_insight():
+    try:
+        # Configure Gemini API
+        api_key = os.environ.get('GEMINI_API_KEY')
+        if not api_key:
+            return jsonify({'error': 'API key not configured'}), 500
+        
+        genai.configure(api_key=api_key)
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        
+        # Build project summary for AI
+        project_summary = "Here are Prashanth Kumar Kadasi's projects:\n\n"
+        for project in PROJECTS:
+            project_summary += f"- **{project['title']}**: {project['description']}\n"
+            if project.get('tags'):
+                project_summary += f"  Technologies: {', '.join(project['tags'])}\n"
+        
+        prompt = f"""You are an AI assistant analyzing a developer's portfolio. Based on these projects, provide a brief, insightful analysis (2-3 paragraphs) about:
+1. The developer's primary expertise and focus areas
+2. Notable patterns or themes in their work
+3. What makes their portfolio stand out
+
+{project_summary}
+
+Keep the response engaging, professional, and highlight genuine strengths. Use markdown formatting with emojis for visual appeal. Keep it concise but impactful."""
+
+        response = model.generate_content(prompt)
+        
+        return jsonify({
+            'success': True,
+            'insight': response.text
+        })
+    except Exception as e:
+        return jsonify({
+            'error': str(e)
+        }), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5000)

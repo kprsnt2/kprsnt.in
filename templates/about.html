@@ -33,6 +33,14 @@
                 <i class="fas fa-envelope"></i> Email
             </a>
         </div>
+
+        <!-- AI Insight Button -->
+        <div style="animation: fadeInUp 1s ease-out 0.9s both;">
+            <button class="ai-insight-btn" id="aiInsightBtn" onclick="generateAIInsight()">
+                <i class="fas fa-magic"></i> AI Insight
+                <span class="ai-sparkle">✨</span>
+            </button>
+        </div>
     </div>
 
     <!-- About Cards -->
@@ -246,5 +254,78 @@
     }
 
     setTimeout(type, 1000);
+
+    // ===== AI Insight Modal Functions =====
+    async function generateAIInsight() {
+        const btn = document.getElementById('aiInsightBtn');
+        const modal = document.getElementById('aiInsightModal');
+        const content = document.getElementById('aiInsightContent');
+
+        // Show loading state
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+
+        try {
+            const response = await fetch('/api/ai-insight', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Convert markdown to HTML (basic conversion)
+                let html = data.insight
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/`(.*?)`/g, '<code>$1</code>')
+                    .replace(/\n\n/g, '</p><p>')
+                    .replace(/\n/g, '<br>');
+                content.innerHTML = '<p>' + html + '</p>';
+            } else {
+                content.innerHTML = '<p class="error-text">❌ ' + (data.error || 'Failed to generate insight') + '</p>';
+            }
+
+            modal.classList.add('show');
+        } catch (error) {
+            content.innerHTML = '<p class="error-text">❌ Connection error. Please try again.</p>';
+            modal.classList.add('show');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-magic"></i> AI Insight <span class="ai-sparkle">✨</span>';
+        }
+    }
+
+    function closeInsightModal() {
+        document.getElementById('aiInsightModal').classList.remove('show');
+    }
+
+    // Close modal on outside click
+    document.getElementById('aiInsightModal')?.addEventListener('click', function (e) {
+        if (e.target === this) closeInsightModal();
+    });
+
+    // Close on ESC key
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeInsightModal();
+    });
 </script>
+
+<!-- AI Insight Modal -->
+<div class="ai-insight-modal" id="aiInsightModal">
+    <div class="ai-insight-popup">
+        <button class="modal-close" onclick="closeInsightModal()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="modal-header">
+            <i class="fas fa-robot"></i>
+            <h3>AI Portfolio Insight</h3>
+        </div>
+        <div class="modal-body" id="aiInsightContent">
+            <p>Loading insights...</p>
+        </div>
+    </div>
+</div>
 {% endblock %}
