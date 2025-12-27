@@ -30,13 +30,13 @@ PROJECTS = [
         "tags": ["React", "AI", "Healthcare", "Vercel"]
     },
     {
-        "title": "PharmGenesisAI - Drug Discovery",
-        "description": "AI-powered drug discovery tool for Pharma R&D. Accelerate research with intelligent compound analysis.",
+        "title": "PharmaGenesis AI - Dual-AI Drug Discovery",
+        "description": "Dual-AI drug discovery platform using Claude + Gemini. Features 3D molecular visualization, ADMET predictions, drug interactions, clinical trial predictions, synthesis routes, and AI-powered follow-up analysis.",
         "url": "https://pharmgenai.kprsnt.in/",
         "github": "https://github.com/kprsnt2/PharmaGenesisAI",
         "color": "danger",
         "featured": True,
-        "tags": ["Pharma", "R&D", "AI", "Drug Discovery"]
+        "tags": ["Pharma", "Claude", "Gemini", "Drug Discovery", "3D Viewer", "ADMET"]
     },
     {
         "title": "Python Portfolio Site",
@@ -238,7 +238,7 @@ RESUME_PROJECTS = [
     # Featured / Major Projects
     {"name": "MyLocalCLI - AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents. Works with local LLMs."},
     {"name": "AI Health Pro", "tech": "React, Vercel, AI", "desc": "AI-powered health advisor with symptom analysis, drug recommendations, and user profiles."},
-    {"name": "PharmGenesisAI - Drug Discovery", "tech": "TypeScript, Gemini API, Vercel", "desc": "AI-powered drug discovery tool for Pharma R&D with compound analysis."},
+    {"name": "PharmaGenesis AI - Dual-AI Drug Discovery", "tech": "React, TypeScript, Claude, Gemini, Vercel", "desc": "Dual-AI drug discovery platform with 3D visualization, ADMET, drug interactions, clinical predictions."},
     {"name": "Fine-Tuned LLM (Mistral-7B, LoRA)", "tech": "Mistral 7b, Hugging Face, LoRA, Python", "desc": "Fine-tuned a quantized Mistral-7B model using QLoRA for philosophical Q&A"},
     # AI Tools
     {"name": "AI Report Generator", "tech": "Gemini API, PDF Export, Vercel", "desc": "Generate comprehensive reports on any topic with PDF export option."},
@@ -366,6 +366,59 @@ BLOG_POSTS = [
             
             <h3>Challenges</h3>
             <p>The main challenge was model loading time. Cold starts can take 30+ seconds for large models. I solved this by using smaller models (Gemma 2B) for quick responses and caching frequently used sessions.</p>
+        """
+    },
+    {
+        "slug": "building-pharmagenesis-ai",
+        "title": "Building PharmaGenesis AI: A Dual-AI Drug Discovery Platform",
+        "date": "December 2025",
+        "excerpt": "How I built a comprehensive drug discovery platform using Claude + Gemini AI with 6 feature phases.",
+        "tags": ["AI", "Drug Discovery", "Claude", "Gemini"],
+        "content": """
+            <p>PharmaGenesis AI started as an ambitious project to democratize drug discovery using AI. With support from <a href='https://aigrants.in/' target='_blank'>AI Grants India</a>, I was able to build a comprehensive platform that combines multiple AI models for pharmaceutical research.</p>
+            
+            <h3>🙏 Credits & Acknowledgments</h3>
+            <ul>
+                <li><strong>AI Grants India</strong> - API access for Claude (aigrants.in, @aigrantsindia)</li>
+                <li><strong>Google AI Studio</strong> - Gemini API access</li>
+                <li><strong>Google Antigravity</strong> - Inspiration for the agentic AI coding experience</li>
+                <li><strong>Claude Opus 4.7</strong> - Primary AI for compound generation and validation</li>
+            </ul>
+            
+            <h3>The 6 Implementation Phases</h3>
+            
+            <h4>Phase 1: Export & 3D Visualization</h4>
+            <p>Built PDF/CSV/JSON export utilities and integrated 3Dmol.js for interactive 3D molecular visualization. The viewer fetches structures from PubChem or generates from SMILES.</p>
+            
+            <h4>Phase 2: Favorites & ADMET Predictions</h4>
+            <p>Implemented a favorites system with localStorage persistence and ADMET prediction engine for Absorption, Distribution, Metabolism, Excretion, and Toxicity analysis.</p>
+            
+            <h4>Phase 3: AI Follow-up & Comparison</h4>
+            <p>Added an AI chat interface for asking questions about compounds, with quick actions like 'Refine', 'Explain Mechanism', and 'Suggest Alternatives'. Enhanced comparison view with multi-radar overlay.</p>
+            
+            <h4>Phase 4: Pipeline History & Synthesis Routes</h4>
+            <p>Created auto-save functionality for all pipeline runs and a visual synthesis route diagram showing step-by-step chemical transformations.</p>
+            
+            <h4>Phase 5: Drug Interactions & Research Tools</h4>
+            <p>Built Drug-Drug Interaction Checker with 8 common drug presets, Target Protein Information panel with links to UniProt/PDB/PubMed, and Literature Search for finding related research papers.</p>
+            
+            <h4>Phase 6: Clinical Trial Predictions & UX Polish</h4>
+            <p>Added Clinical Trial Phase Predictor with success probability, timeline, and cost estimates. Implemented keyboard shortcuts for power users (J/K navigation, C for compare, ? for help).</p>
+            
+            <h3>Technical Stack</h3>
+            <ul>
+                <li>React + TypeScript for the frontend</li>
+                <li>Vercel for deployment with serverless API routes</li>
+                <li>Claude (Anthropic) for compound generation</li>
+                <li>Gemini (Google) for validation and analysis</li>
+                <li>3Dmol.js for molecular visualization</li>
+                <li>Recharts for data visualization</li>
+            </ul>
+            
+            <h3>Key Learnings</h3>
+            <p>The biggest challenge was handling CORS issues with direct API calls. I solved this by routing all AI requests through Vercel serverless functions, which also added security by keeping API keys server-side.</p>
+            
+            <p>Try it at: <a href='https://pharmgenai.kprsnt.in/' target='_blank'>pharmgenai.kprsnt.in</a></p>
         """
     }
 ]
