@@ -207,6 +207,8 @@ SKILLS = {
         ("Flask", "python"),
         ("Streamlit", "python"),
         ("Node.js", "js"),
+        ("PyTorch", "python"),
+        ("HuggingFace Transformers", "python"),
     ],
     "Cloud & DevOps": [
         ("Google Cloud", "cloud"),
@@ -214,8 +216,12 @@ SKILLS = {
         ("Render", "cloud"),
         ("Docker", "cloud"),
         ("Git/GitHub", "cloud"),
+        ("AMD ROCm", "cloud"),
     ],
-    "AI & Data": [
+    "AI & ML": [
+        ("LLM Fine-tuning", "ai"),
+        ("HuggingFace", "ai"),
+        ("LoRA/QLoRA", "ai"),
         ("LLMs (Gemma, Ollama)", "ai"),
         ("OpenRouter", "ai"),
         ("Pandas", "python"),
@@ -306,135 +312,9 @@ def plotter():
 # Blog posts data
 BLOG_POSTS = [
     {
-        "slug": "building-mylocalcli",
-        "title": "Building MyLocalCLI: A Claude Code Alternative",
-        "date": "December 2025",
-        "excerpt": "How I built a privacy-focused AI coding assistant with 6 providers, 26 tools, and full local control.",
-        "tags": ["AI", "CLI", "Node.js"],
-        "content": """
-            <p>When I started building MyLocalCLI, my goal was simple: create a coding assistant that respects privacy and works entirely on your machine.</p>
-            
-            <h3>The Problem</h3>
-            <p>Cloud-based AI coding tools are great, but they come with concerns about data privacy, internet dependency, and API costs. I wanted something that could work offline with local LLMs.</p>
-            
-            <h3>The Solution</h3>
-            <p>MyLocalCLI supports 6 different AI providers including Ollama for local inference, OpenRouter for cloud fallback, and multiple free API options. It comes with 26 built-in tools for file operations, code analysis, and more.</p>
-            
-            <h3>Key Features</h3>
-            <ul>
-                <li>Works with local Ollama models (Gemma, Mistral, CodeLlama)</li>
-                <li>26 tools for file editing, searching, and code operations</li>
-                <li>5 specialized agents for different tasks</li>
-                <li>Privacy-first: your code never leaves your machine</li>
-            </ul>
-            
-            <p>Try it yourself: <code>npx mylocalcli</code></p>
-        """
-    },
-    {
-        "slug": "fine-tuning-mistral-7b",
-        "title": "Fine-Tuning Mistral-7B with QLoRA",
-        "date": "November 2025",
-        "excerpt": "A practical guide to fine-tuning large language models on consumer hardware using LoRA techniques.",
-        "tags": ["LLM", "AI", "Python"],
-        "content": """
-            <p>Fine-tuning large language models used to require expensive GPU clusters. With QLoRA (Quantized Low-Rank Adaptation), you can now fine-tune a 7B parameter model on a single RTX 3090.</p>
-            
-            <h3>What is QLoRA?</h3>
-            <p>QLoRA combines 4-bit quantization with Low-Rank Adaptation to dramatically reduce memory requirements while maintaining model quality.</p>
-            
-            <h3>My Setup</h3>
-            <ul>
-                <li>Base model: Mistral-7B-Instruct-v0.2</li>
-                <li>Dataset: Custom philosophical Q&A pairs</li>
-                <li>Hardware: RTX 3090 (24GB VRAM)</li>
-                <li>Training time: ~4 hours for 1000 samples</li>
-            </ul>
-            
-            <h3>Results</h3>
-            <p>The fine-tuned model showed significant improvement in domain-specific tasks while retaining general capabilities. The key is choosing high-quality training data over quantity.</p>
-        """
-    },
-    {
-        "slug": "deploying-llms-on-gcp",
-        "title": "Self-Hosting LLMs on Google Cloud Run",
-        "date": "October 2025",
-        "excerpt": "Running Ollama and Open WebUI on Google Cloud for a private, scalable AI chatbot.",
-        "tags": ["GCP", "Ollama", "Docker"],
-        "content": """
-            <p>Want your own ChatGPT-like interface without sending data to third parties? Here's how I deployed Ollama with Open WebUI on Google Cloud Run.</p>
-            
-            <h3>Architecture</h3>
-            <p>The setup uses Cloud Run for autoscaling, Cloud Storage for model persistence, and Artifact Registry for container images.</p>
-            
-            <h3>Why Cloud Run?</h3>
-            <ul>
-                <li>Pay only when in use (scale to zero)</li>
-                <li>Automatic HTTPS and domain mapping</li>
-                <li>Easy updates with container deployments</li>
-            </ul>
-            
-            <h3>Challenges</h3>
-            <p>The main challenge was model loading time. Cold starts can take 30+ seconds for large models. I solved this by using smaller models (Gemma 2B) for quick responses and caching frequently used sessions.</p>
-        """
-    },
-    {
-        "slug": "building-pharmagenesis-ai",
-        "title": "Building PharmaGenesis AI: A Dual-AI Drug Discovery Platform",
-        "date": "December 2025",
-        "excerpt": "How I built a comprehensive drug discovery platform using Claude + Gemini AI with 6 feature phases.",
-        "tags": ["AI", "Drug Discovery", "Claude", "Gemini"],
-        "content": """
-            <p>PharmaGenesis AI started as an ambitious project to democratize drug discovery using AI. With support from <a href='https://aigrants.in/' target='_blank'>AI Grants India</a>, I was able to build a comprehensive platform that combines multiple AI models for pharmaceutical research.</p>
-            
-            <h3>🙏 Credits & Acknowledgments</h3>
-            <ul>
-                <li><strong>AI Grants India</strong> - API access for Claude (aigrants.in, @aigrantsindia)</li>
-                <li><strong>Google AI Studio</strong> - Gemini API access</li>
-                <li><strong>Google Antigravity</strong> - Inspiration for the agentic AI coding experience</li>
-                <li><strong>Claude Opus 4.7</strong> - Primary AI for compound generation and validation</li>
-            </ul>
-            
-            <h3>The 6 Implementation Phases</h3>
-            
-            <h4>Phase 1: Export & 3D Visualization</h4>
-            <p>Built PDF/CSV/JSON export utilities and integrated 3Dmol.js for interactive 3D molecular visualization. The viewer fetches structures from PubChem or generates from SMILES.</p>
-            
-            <h4>Phase 2: Favorites & ADMET Predictions</h4>
-            <p>Implemented a favorites system with localStorage persistence and ADMET prediction engine for Absorption, Distribution, Metabolism, Excretion, and Toxicity analysis.</p>
-            
-            <h4>Phase 3: AI Follow-up & Comparison</h4>
-            <p>Added an AI chat interface for asking questions about compounds, with quick actions like 'Refine', 'Explain Mechanism', and 'Suggest Alternatives'. Enhanced comparison view with multi-radar overlay.</p>
-            
-            <h4>Phase 4: Pipeline History & Synthesis Routes</h4>
-            <p>Created auto-save functionality for all pipeline runs and a visual synthesis route diagram showing step-by-step chemical transformations.</p>
-            
-            <h4>Phase 5: Drug Interactions & Research Tools</h4>
-            <p>Built Drug-Drug Interaction Checker with 8 common drug presets, Target Protein Information panel with links to UniProt/PDB/PubMed, and Literature Search for finding related research papers.</p>
-            
-            <h4>Phase 6: Clinical Trial Predictions & UX Polish</h4>
-            <p>Added Clinical Trial Phase Predictor with success probability, timeline, and cost estimates. Implemented keyboard shortcuts for power users (J/K navigation, C for compare, ? for help).</p>
-            
-            <h3>Technical Stack</h3>
-            <ul>
-                <li>React + TypeScript for the frontend</li>
-                <li>Vercel for deployment with serverless API routes</li>
-                <li>Claude (Anthropic) for compound generation</li>
-                <li>Gemini (Google) for validation and analysis</li>
-                <li>3Dmol.js for molecular visualization</li>
-                <li>Recharts for data visualization</li>
-            </ul>
-            
-            <h3>Key Learnings</h3>
-            <p>The biggest challenge was handling CORS issues with direct API calls. I solved this by routing all AI requests through Vercel serverless functions, which also added security by keeping API keys server-side.</p>
-            
-            <p>Try it at: <a href='https://pharmgenai.kprsnt.in/' target='_blank'>pharmgenai.kprsnt.in</a></p>
-        """
-    },
-    {
         "slug": "fine-tuning-drug-discovery-llm",
         "title": "Fine-Tuning Drug Discovery LLMs: 5 Hours, 30 Commits, AMD GPU Struggles",
-        "date": "December 2024",
+        "date": "December 2025",
         "excerpt": "How I trained text classification models for drug approval prediction using Antigravity + Claude Opus 4.5, battling AMD GPU issues and memory constraints.",
         "tags": ["LLM", "Drug Discovery", "AMD", "HuggingFace"],
         "content": """
@@ -521,6 +401,132 @@ BLOG_POSTS = [
             <p>These are text classification models. Next step: train a chat model that can explain drug predictions and answer pharma questions.</p>
             
             <p><strong>GitHub:</strong> <a href='https://github.com/kprsnt2/drug-discovery-chemberta' target='_blank'>github.com/kprsnt2/drug-discovery-chemberta</a></p>
+        """
+    },
+    {
+        "slug": "building-pharmagenesis-ai",
+        "title": "Building PharmaGenesis AI: A Dual-AI Drug Discovery Platform",
+        "date": "December 2025",
+        "excerpt": "How I built a comprehensive drug discovery platform using Claude + Gemini AI with 6 feature phases.",
+        "tags": ["AI", "Drug Discovery", "Claude", "Gemini"],
+        "content": """
+            <p>PharmaGenesis AI started as an ambitious project to democratize drug discovery using AI. With support from <a href='https://aigrants.in/' target='_blank'>AI Grants India</a>, I was able to build a comprehensive platform that combines multiple AI models for pharmaceutical research.</p>
+            
+            <h3>🙏 Credits & Acknowledgments</h3>
+            <ul>
+                <li><strong>AI Grants India</strong> - API access for Claude (aigrants.in, @aigrantsindia)</li>
+                <li><strong>Google AI Studio</strong> - Gemini API access</li>
+                <li><strong>Google Antigravity</strong> - Inspiration for the agentic AI coding experience</li>
+                <li><strong>Claude Opus 4.7</strong> - Primary AI for compound generation and validation</li>
+            </ul>
+            
+            <h3>The 6 Implementation Phases</h3>
+            
+            <h4>Phase 1: Export & 3D Visualization</h4>
+            <p>Built PDF/CSV/JSON export utilities and integrated 3Dmol.js for interactive 3D molecular visualization. The viewer fetches structures from PubChem or generates from SMILES.</p>
+            
+            <h4>Phase 2: Favorites & ADMET Predictions</h4>
+            <p>Implemented a favorites system with localStorage persistence and ADMET prediction engine for Absorption, Distribution, Metabolism, Excretion, and Toxicity analysis.</p>
+            
+            <h4>Phase 3: AI Follow-up & Comparison</h4>
+            <p>Added an AI chat interface for asking questions about compounds, with quick actions like 'Refine', 'Explain Mechanism', and 'Suggest Alternatives'. Enhanced comparison view with multi-radar overlay.</p>
+            
+            <h4>Phase 4: Pipeline History & Synthesis Routes</h4>
+            <p>Created auto-save functionality for all pipeline runs and a visual synthesis route diagram showing step-by-step chemical transformations.</p>
+            
+            <h4>Phase 5: Drug Interactions & Research Tools</h4>
+            <p>Built Drug-Drug Interaction Checker with 8 common drug presets, Target Protein Information panel with links to UniProt/PDB/PubMed, and Literature Search for finding related research papers.</p>
+            
+            <h4>Phase 6: Clinical Trial Predictions & UX Polish</h4>
+            <p>Added Clinical Trial Phase Predictor with success probability, timeline, and cost estimates. Implemented keyboard shortcuts for power users (J/K navigation, C for compare, ? for help).</p>
+            
+            <h3>Technical Stack</h3>
+            <ul>
+                <li>React + TypeScript for the frontend</li>
+                <li>Vercel for deployment with serverless API routes</li>
+                <li>Claude (Anthropic) for compound generation</li>
+                <li>Gemini (Google) for validation and analysis</li>
+                <li>3Dmol.js for molecular visualization</li>
+                <li>Recharts for data visualization</li>
+            </ul>
+            
+            <h3>Key Learnings</h3>
+            <p>The biggest challenge was handling CORS issues with direct API calls. I solved this by routing all AI requests through Vercel serverless functions, which also added security by keeping API keys server-side.</p>
+            
+            <p>Try it at: <a href='https://pharmgenai.kprsnt.in/' target='_blank'>pharmgenai.kprsnt.in</a></p>
+        """
+    },
+    {
+        "slug": "building-mylocalcli",
+        "title": "Building MyLocalCLI: A Claude Code Alternative",
+        "date": "December 2025",
+        "excerpt": "How I built a privacy-focused AI coding assistant with 6 providers, 26 tools, and full local control.",
+        "tags": ["AI", "CLI", "Node.js"],
+        "content": """
+            <p>When I started building MyLocalCLI, my goal was simple: create a coding assistant that respects privacy and works entirely on your machine.</p>
+            
+            <h3>The Problem</h3>
+            <p>Cloud-based AI coding tools are great, but they come with concerns about data privacy, internet dependency, and API costs. I wanted something that could work offline with local LLMs.</p>
+            
+            <h3>The Solution</h3>
+            <p>MyLocalCLI supports 6 different AI providers including Ollama for local inference, OpenRouter for cloud fallback, and multiple free API options. It comes with 26 built-in tools for file operations, code analysis, and more.</p>
+            
+            <h3>Key Features</h3>
+            <ul>
+                <li>Works with local Ollama models (Gemma, Mistral, CodeLlama)</li>
+                <li>26 tools for file editing, searching, and code operations</li>
+                <li>5 specialized agents for different tasks</li>
+                <li>Privacy-first: your code never leaves your machine</li>
+            </ul>
+            
+            <p>Try it yourself: <code>npx mylocalcli</code></p>
+        """
+    },
+    {
+        "slug": "fine-tuning-mistral-7b",
+        "title": "Fine-Tuning Mistral-7B with QLoRA",
+        "date": "November 2025",
+        "excerpt": "A practical guide to fine-tuning large language models on consumer hardware using LoRA techniques.",
+        "tags": ["LLM", "AI", "Python"],
+        "content": """
+            <p>Fine-tuning large language models used to require expensive GPU clusters. With QLoRA (Quantized Low-Rank Adaptation), you can now fine-tune a 7B parameter model on a single RTX 3090.</p>
+            
+            <h3>What is QLoRA?</h3>
+            <p>QLoRA combines 4-bit quantization with Low-Rank Adaptation to dramatically reduce memory requirements while maintaining model quality.</p>
+            
+            <h3>My Setup</h3>
+            <ul>
+                <li>Base model: Mistral-7B-Instruct-v0.2</li>
+                <li>Dataset: Custom philosophical Q&A pairs</li>
+                <li>Hardware: RTX 3090 (24GB VRAM)</li>
+                <li>Training time: ~4 hours for 1000 samples</li>
+            </ul>
+            
+            <h3>Results</h3>
+            <p>The fine-tuned model showed significant improvement in domain-specific tasks while retaining general capabilities. The key is choosing high-quality training data over quantity.</p>
+        """
+    },
+    {
+        "slug": "deploying-llms-on-gcp",
+        "title": "Self-Hosting LLMs on Google Cloud Run",
+        "date": "October 2025",
+        "excerpt": "Running Ollama and Open WebUI on Google Cloud for a private, scalable AI chatbot.",
+        "tags": ["GCP", "Ollama", "Docker"],
+        "content": """
+            <p>Want your own ChatGPT-like interface without sending data to third parties? Here's how I deployed Ollama with Open WebUI on Google Cloud Run.</p>
+            
+            <h3>Architecture</h3>
+            <p>The setup uses Cloud Run for autoscaling, Cloud Storage for model persistence, and Artifact Registry for container images.</p>
+            
+            <h3>Why Cloud Run?</h3>
+            <ul>
+                <li>Pay only when in use (scale to zero)</li>
+                <li>Automatic HTTPS and domain mapping</li>
+                <li>Easy updates with container deployments</li>
+            </ul>
+            
+            <h3>Challenges</h3>
+            <p>The main challenge was model loading time. Cold starts can take 30+ seconds for large models. I solved this by using smaller models (Gemma 2B) for quick responses and caching frequently used sessions.</p>
         """
     }
 ]
