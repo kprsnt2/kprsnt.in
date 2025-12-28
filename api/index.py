@@ -14,6 +14,15 @@ app = Flask(__name__,
 PROJECTS = [
     # Featured Projects
     {
+        "title": "💊 Drug Discovery AI - Fine-tuned LLMs",
+        "description": "Text classification models for drug approval prediction. Fine-tuned Qwen 2.5 14B on AMD MI300X cloud GPU and ChemBERTa on RTX 3050 local. Trained with Antigravity + Claude Opus 4.5.",
+        "url": "https://huggingface.co/kprsnt/drug-discovery-qwen-14b",
+        "github": "https://github.com/kprsnt2/drug-discovery-chemberta",
+        "color": "danger",
+        "featured": True,
+        "tags": ["HuggingFace", "LLM Fine-tuning", "Drug Discovery", "AMD MI300X", "RTX 3050"]
+    },
+    {
         "title": "MyLocalCLI - AI Coding Assistant",
         "description": "A Claude Code alternative with 6 AI providers, 26 tools, 5 agents, and 22 skills. Works with local LLMs and free cloud APIs. Private, local, yours.",
         "url": "https://mlc.kprsnt.in",
@@ -236,6 +245,7 @@ EXPERIENCE = {
 
 RESUME_PROJECTS = [
     # Featured / Major Projects
+    {"name": "Drug Discovery AI - Fine-tuned LLMs", "tech": "Qwen 2.5 14B, ChemBERTa, HuggingFace, AMD ROCm, PyTorch", "desc": "Text classification models for drug approval prediction. Trained on AMD MI300X cloud + RTX 3050 local."},
     {"name": "MyLocalCLI - AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents. Works with local LLMs."},
     {"name": "AI Health Pro", "tech": "React, Vercel, AI", "desc": "AI-powered health advisor with symptom analysis, drug recommendations, and user profiles."},
     {"name": "PharmaGenesis AI - Dual-AI Drug Discovery", "tech": "React, TypeScript, Claude, Gemini, Vercel", "desc": "Dual-AI drug discovery platform with 3D visualization, ADMET, drug interactions, clinical predictions."},
@@ -419,6 +429,80 @@ BLOG_POSTS = [
             <p>The biggest challenge was handling CORS issues with direct API calls. I solved this by routing all AI requests through Vercel serverless functions, which also added security by keeping API keys server-side.</p>
             
             <p>Try it at: <a href='https://pharmgenai.kprsnt.in/' target='_blank'>pharmgenai.kprsnt.in</a></p>
+        """
+    },
+    {
+        "slug": "fine-tuning-drug-discovery-llm",
+        "title": "Fine-Tuning Drug Discovery LLMs: 5 Hours, 30 Commits, AMD GPU Struggles",
+        "date": "December 2024",
+        "excerpt": "How I trained text classification models for drug approval prediction using Antigravity + Claude Opus 4.5, battling AMD GPU issues and memory constraints.",
+        "tags": ["LLM", "Drug Discovery", "AMD", "HuggingFace"],
+        "content": """
+            <p>This is the story of building drug discovery AI models over 5 intense hours, resulting in 30+ GitHub commits, and learning why even the best AI coding assistants struggle with AMD GPUs.</p>
+            
+            <h3>🎯 The Goal</h3>
+            <p>Build <strong>text classification models</strong> that predict drug approval likelihood from SMILES molecular strings. Not a chatbot - a specialized binary classifier for pharma R&D.</p>
+            
+            <h3>🖥️ The Setup</h3>
+            <ul>
+                <li><strong>Local:</strong> RTX 3050 6GB - for ChemBERTa training</li>
+                <li><strong>Cloud:</strong> AMD MI300X 192GB - for large model training</li>
+                <li><strong>AI Assistant:</strong> Google Antigravity + Claude Opus 4.5</li>
+            </ul>
+            
+            <h3>📊 Local Training (RTX 3050)</h3>
+            <p>Started with ChemBERTa - a chemistry-specialized BERT model. With only 6GB VRAM, I used gradient checkpointing and small batch sizes. Training worked smoothly on NVIDIA - the CUDA ecosystem is mature and well-supported.</p>
+            
+            <h3>☁️ Moving to Cloud: AMD MI300X</h3>
+            <p>For larger models, I got access to an AMD MI300X with 192GB HBM3 memory. The plan: train GPT-OSS-120B or Llama-3.1-70B for better accuracy.</p>
+            
+            <h3>💥 The AMD GPU Challenge</h3>
+            <p><strong>This is where things got interesting.</strong> Even Claude Opus 4.5 - arguably the best code generation model - struggled to produce working code for AMD ROCm.</p>
+            
+            <p>Issues encountered:</p>
+            <ul>
+                <li>Memory allocation errors despite having 192GB VRAM</li>
+                <li>Device placement conflicts with HuggingFace Trainer</li>
+                <li>Quantization libraries (bitsandbytes) behaving differently on ROCm</li>
+                <li>Model loading timeouts and CUDA-specific code paths</li>
+            </ul>
+            
+            <h3>🔄 The Model Journey: 120B → 14B</h3>
+            <p>Original plan was GPT-OSS-120B. Reality hit hard:</p>
+            <ul>
+                <li><strong>120B:</strong> Out of memory even with 4-bit quantization</li>
+                <li><strong>70B:</strong> Loaded but training crashed</li>
+                <li><strong>14B (Qwen 2.5):</strong> Finally worked with 4-bit NF4 quantization</li>
+            </ul>
+            
+            <h3>🔧 Key Fixes Required</h3>
+            <ol>
+                <li><strong>Custom ModelWithClassifier wrapper</strong> - Base models needed classification heads</li>
+                <li><strong>DeviceMapTrainer</strong> - Custom Trainer to skip device movement for device_map models</li>
+                <li><strong>NaN handling</strong> - HuggingFace models produced NaN logits needing torch.nan_to_num()</li>
+                <li><strong>Format detection</strong> - Evaluate script needed to detect HF vs PyTorch checkpoint formats</li>
+            </ol>
+            
+            <h3>📈 Results</h3>
+            <table style='width:100%; border-collapse:collapse; margin:20px 0;'>
+                <tr style='background:#333;'><th style='padding:10px; border:1px solid #555;'>Model</th><th style='padding:10px; border:1px solid #555;'>GPU</th><th style='padding:10px; border:1px solid #555;'>HuggingFace</th></tr>
+                <tr><td style='padding:10px; border:1px solid #555;'>ChemBERTa</td><td style='padding:10px; border:1px solid #555;'>RTX 3050 (Local)</td><td style='padding:10px; border:1px solid #555;'><a href='https://huggingface.co/kprsnt/drug-discovery-chemberta'>kprsnt/drug-discovery-chemberta</a></td></tr>
+                <tr><td style='padding:10px; border:1px solid #555;'>Qwen 2.5 14B</td><td style='padding:10px; border:1px solid #555;'>AMD MI300X (Cloud)</td><td style='padding:10px; border:1px solid #555;'><a href='https://huggingface.co/kprsnt/drug-discovery-qwen-14b'>kprsnt/drug-discovery-qwen-14b</a></td></tr>
+            </table>
+            
+            <h3>💡 Key Takeaways</h3>
+            <ol>
+                <li><strong>AMD GPUs need more AI tooling love.</strong> NVIDIA's ecosystem is years ahead.</li>
+                <li><strong>Even best AI (Opus 4.5) isn't optimized for AMD.</strong> Most training data is CUDA-focused.</li>
+                <li><strong>30 commits in 5 hours</strong> - iterative debugging is essential for new hardware.</li>
+                <li><strong>Start smaller.</strong> 14B worked where 120B failed.</li>
+                <li><strong>Antigravity is amazing</strong> - the agentic workflow made rapid iteration possible.</li>
+            </ol>
+            
+            <h3>🔮 Future Plans</h3>
+            <p>These are text classification models. Next step: train a chat model that can explain drug predictions and answer pharma questions.</p>
+            
+            <p><strong>GitHub:</strong> <a href='https://github.com/kprsnt2/drug-discovery-chemberta' target='_blank'>github.com/kprsnt2/drug-discovery-chemberta</a></p>
         """
     }
 ]
