@@ -14,15 +14,6 @@ app = Flask(__name__,
 PROJECTS = [
     # Featured Projects
     {
-        "title": "💊 Drug Discovery AI - Fine-tuned LLMs",
-        "description": "Text classification models for drug approval prediction. Fine-tuned Qwen 2.5 14B on AMD MI300X cloud GPU and ChemBERTa on RTX 3050 local. Trained with Antigravity + Claude Opus 4.5.",
-        "url": "https://huggingface.co/kprsnt/drug-discovery-qwen-14b",
-        "github": "https://github.com/kprsnt2/drug-discovery-chemberta",
-        "color": "danger",
-        "featured": True,
-        "tags": ["HuggingFace", "LLM Fine-tuning", "Drug Discovery", "AMD MI300X", "RTX 3050"]
-    },
-    {
         "title": "MyLocalCLI - AI Coding Assistant",
         "description": "A Claude Code alternative with 6 AI providers, 26 tools, 5 agents, and 22 skills. Works with local LLMs and free cloud APIs. Private, local, yours.",
         "url": "https://mlc.kprsnt.in",
@@ -46,6 +37,15 @@ PROJECTS = [
         "color": "danger",
         "featured": True,
         "tags": ["Pharma", "Claude", "Gemini", "Drug Discovery", "3D Viewer", "ADMET"]
+    },
+    {
+        "title": "💊 Drug Discovery AI - Fine-tuned LLMs",
+        "description": "Text classification models for drug approval prediction. Fine-tuned Qwen 2.5 14B on AMD MI300X cloud GPU and ChemBERTa on RTX 3050 local. Trained with Antigravity + Claude Opus 4.5.",
+        "url": "https://huggingface.co/kprsnt/drug-discovery-qwen-14b",
+        "github": "https://github.com/kprsnt2/drug-discovery-chemberta",
+        "color": "danger",
+        "featured": True,
+        "tags": ["HuggingFace", "LLM Fine-tuning", "Drug Discovery", "AMD MI300X", "RTX 3050"]
     },
     {
         "title": "Python Portfolio Site",
@@ -454,7 +454,17 @@ BLOG_POSTS = [
             <p>Started with ChemBERTa - a chemistry-specialized BERT model. With only 6GB VRAM, I used gradient checkpointing and small batch sizes. Training worked smoothly on NVIDIA - the CUDA ecosystem is mature and well-supported.</p>
             
             <h3>☁️ Moving to Cloud: AMD MI300X</h3>
-            <p>For larger models, I got access to an AMD MI300X with 192GB HBM3 memory. The plan: train GPT-OSS-120B or Llama-3.1-70B for better accuracy.</p>
+            <p>For larger models, I needed serious GPU power. <strong>Why AMD?</strong> AMD offers GPU credits for developers through their developer program. Thanks to <strong>AMD</strong> for their support which made this project possible!</p>
+            <p>With 192GB HBM3 memory on the MI300X, my plan was to train GPT-OSS-120B or Llama-3.1-70B for better accuracy.</p>
+            
+            <h3>📊 Model Memory Requirements</h3>
+            <table style='width:100%; border-collapse:collapse; margin:20px 0;'>
+                <tr style='background:#333;'><th style='padding:10px; border:1px solid #555;'>Model</th><th style='padding:10px; border:1px solid #555;'>Parameters</th><th style='padding:10px; border:1px solid #555;'>Min VRAM</th><th style='padding:10px; border:1px solid #555;'>Status</th></tr>
+                <tr><td style='padding:10px; border:1px solid #555;'>ChemBERTa</td><td style='padding:10px; border:1px solid #555;'>85M</td><td style='padding:10px; border:1px solid #555;'>4GB</td><td style='padding:10px; border:1px solid #555;'>✅ Works on RTX 3050</td></tr>
+                <tr><td style='padding:10px; border:1px solid #555;'>Qwen 2.5 14B</td><td style='padding:10px; border:1px solid #555;'>14B</td><td style='padding:10px; border:1px solid #555;'>35GB</td><td style='padding:10px; border:1px solid #555;'>✅ Works on MI300X</td></tr>
+                <tr><td style='padding:10px; border:1px solid #555;'>Llama 3.1 70B</td><td style='padding:10px; border:1px solid #555;'>70B</td><td style='padding:10px; border:1px solid #555;'>140GB</td><td style='padding:10px; border:1px solid #555;'>❌ Training crashed</td></tr>
+                <tr><td style='padding:10px; border:1px solid #555;'>GPT-OSS 120B</td><td style='padding:10px; border:1px solid #555;'>120B</td><td style='padding:10px; border:1px solid #555;'>180GB</td><td style='padding:10px; border:1px solid #555;'>❌ OOM even with 4-bit</td></tr>
+            </table>
             
             <h3>💥 The AMD GPU Challenge</h3>
             <p><strong>This is where things got interesting.</strong> Even Claude Opus 4.5 - arguably the best code generation model - struggled to produce working code for AMD ROCm.</p>
@@ -483,7 +493,7 @@ BLOG_POSTS = [
                 <li><strong>Format detection</strong> - Evaluate script needed to detect HF vs PyTorch checkpoint formats</li>
             </ol>
             
-            <h3>📈 Results</h3>
+            <h3>📈 Final Models on HuggingFace</h3>
             <table style='width:100%; border-collapse:collapse; margin:20px 0;'>
                 <tr style='background:#333;'><th style='padding:10px; border:1px solid #555;'>Model</th><th style='padding:10px; border:1px solid #555;'>GPU</th><th style='padding:10px; border:1px solid #555;'>HuggingFace</th></tr>
                 <tr><td style='padding:10px; border:1px solid #555;'>ChemBERTa</td><td style='padding:10px; border:1px solid #555;'>RTX 3050 (Local)</td><td style='padding:10px; border:1px solid #555;'><a href='https://huggingface.co/kprsnt/drug-discovery-chemberta'>kprsnt/drug-discovery-chemberta</a></td></tr>
@@ -498,6 +508,14 @@ BLOG_POSTS = [
                 <li><strong>Start smaller.</strong> 14B worked where 120B failed.</li>
                 <li><strong>Antigravity is amazing</strong> - the agentic workflow made rapid iteration possible.</li>
             </ol>
+            
+            <h3>🙏 Credits & Acknowledgments</h3>
+            <ul>
+                <li><strong>AMD</strong> - GPU credits for developers that made MI300X access possible</li>
+                <li><strong>Google Antigravity</strong> - Agentic AI coding workflow</li>
+                <li><strong>Claude Opus 4.5</strong> - Code generation (despite AMD struggles!)</li>
+                <li><strong>HuggingFace</strong> - Model hosting and Transformers library</li>
+            </ul>
             
             <h3>🔮 Future Plans</h3>
             <p>These are text classification models. Next step: train a chat model that can explain drug predictions and answer pharma questions.</p>
