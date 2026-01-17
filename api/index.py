@@ -14,6 +14,15 @@ app = Flask(__name__,
 PROJECTS = [
     # Featured Projects
     {
+        "title": "🧬 Drug Discovery GPT-20B - Fine-tuned LLM",
+        "description": "Fine-tuned GPT-OSS-20B on AMD MI300X for drug discovery. Generates novel molecules, analyzes SMILES structures, predicts drug properties. Includes Gradio demo and comparison scripts.",
+        "url": "https://huggingface.co/kprsnt/drug-discovery-gpt-20b",
+        "github": "https://github.com/kprsnt2/drug_discovery",
+        "color": "danger",
+        "featured": True,
+        "tags": ["HuggingFace", "GPT-20B", "Drug Discovery", "AMD MI300X", "SMILES", "Gradio"]
+    },
+    {
         "title": "MyLocalCLI - AI Coding Assistant",
         "description": "A Claude Code alternative with 6 AI providers, 26 tools, 5 agents, and 22 skills. Works with local LLMs and free cloud APIs. Private, local, yours.",
         "url": "https://mlc.kprsnt.in",
@@ -37,15 +46,6 @@ PROJECTS = [
         "color": "danger",
         "featured": True,
         "tags": ["Pharma", "Claude", "Gemini", "Drug Discovery", "3D Viewer", "ADMET"]
-    },
-    {
-        "title": "🧬 Drug Discovery GPT-20B - Fine-tuned LLM",
-        "description": "Fine-tuned GPT-OSS-20B on AMD MI300X for drug discovery. Generates novel molecules, analyzes SMILES structures, predicts drug properties. Includes Gradio demo and comparison scripts.",
-        "url": "https://huggingface.co/kprsnt2/drug-discovery-gpt-20b",
-        "github": "https://github.com/kprsnt2/drug_discovery",
-        "color": "danger",
-        "featured": True,
-        "tags": ["HuggingFace", "GPT-20B", "Drug Discovery", "AMD MI300X", "SMILES", "Gradio"]
     },
     {
         "title": "Python Portfolio Site",
@@ -391,7 +391,7 @@ AI: Sure, here is a new molecule: C1=CC=C(C(=C1)C(=O)[O-])[O-].[OH-].[Bi+3]
                 <li><strong>HuggingFace</strong> for Transformers library</li>
             </ul>
             
-            <p><strong>Model:</strong> <a href='https://huggingface.co/kprsnt2/drug-discovery-gpt-20b' target='_blank'>huggingface.co/kprsnt2/drug-discovery-gpt-20b</a></p>
+            <p><strong>Model:</strong> <a href='https://huggingface.co/kprsnt/drug-discovery-gpt-20b' target='_blank'>huggingface.co/kprsnt/drug-discovery-gpt-20b</a></p>
             <p><strong>GitHub:</strong> <a href='https://github.com/kprsnt2/drug_discovery' target='_blank'>github.com/kprsnt2/drug_discovery</a></p>
         """
     },
