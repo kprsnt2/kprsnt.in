@@ -39,13 +39,13 @@ PROJECTS = [
         "tags": ["Pharma", "Claude", "Gemini", "Drug Discovery", "3D Viewer", "ADMET"]
     },
     {
-        "title": "💊 Drug Discovery AI - Fine-tuned LLMs",
-        "description": "Text classification models for drug approval prediction. Fine-tuned Qwen 2.5 14B on AMD MI300X cloud GPU and ChemBERTa on RTX 3050 local. Trained with Antigravity + Claude Opus 4.5.",
-        "url": "https://huggingface.co/kprsnt/drug-discovery-qwen-14b",
-        "github": "https://github.com/kprsnt2/drug-discovery-chemberta",
+        "title": "🧬 Drug Discovery GPT-20B - Fine-tuned LLM",
+        "description": "Fine-tuned GPT-OSS-20B on AMD MI300X for drug discovery. Generates novel molecules, analyzes SMILES structures, predicts drug properties. Includes Gradio demo and comparison scripts.",
+        "url": "https://huggingface.co/kprsnt2/drug-discovery-gpt-20b",
+        "github": "https://github.com/kprsnt2/drug_discovery",
         "color": "danger",
         "featured": True,
-        "tags": ["HuggingFace", "LLM Fine-tuning", "Drug Discovery", "AMD MI300X", "RTX 3050"]
+        "tags": ["HuggingFace", "GPT-20B", "Drug Discovery", "AMD MI300X", "SMILES", "Gradio"]
     },
     {
         "title": "Python Portfolio Site",
@@ -251,7 +251,7 @@ EXPERIENCE = {
 
 RESUME_PROJECTS = [
     # Featured / Major Projects
-    {"name": "Drug Discovery AI - Fine-tuned LLMs", "tech": "Qwen 2.5 14B, ChemBERTa, HuggingFace, AMD ROCm, PyTorch", "desc": "Text classification models for drug approval prediction. Trained on AMD MI300X cloud + RTX 3050 local."},
+    {"name": "Drug Discovery GPT-20B", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch, Gradio", "desc": "Fine-tuned 20B LLM for drug discovery. Generates novel molecules, analyzes SMILES, predicts drug properties."},
     {"name": "MyLocalCLI - AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents. Works with local LLMs."},
     {"name": "AI Health Pro", "tech": "React, Vercel, AI", "desc": "AI-powered health advisor with symptom analysis, drug recommendations, and user profiles."},
     {"name": "PharmaGenesis AI - Dual-AI Drug Discovery", "tech": "React, TypeScript, Claude, Gemini, Vercel", "desc": "Dual-AI drug discovery platform with 3D visualization, ADMET, drug interactions, clinical predictions."},
@@ -311,6 +311,90 @@ def plotter():
 
 # Blog posts data
 BLOG_POSTS = [
+    {
+        "slug": "fine-tuning-gpt-oss-20b-drug-discovery",
+        "title": "Fine-Tuning GPT-OSS-20B for Drug Discovery: 12 Hours on AMD MI300X",
+        "date": "January 2026",
+        "excerpt": "How I trained a 20B parameter model to generate novel molecules, analyze SMILES structures, and answer drug discovery questions.",
+        "tags": ["LLM", "Drug Discovery", "AMD MI300X", "GPT-20B", "HuggingFace"],
+        "content": """
+            <p>I fine-tuned OpenAI's GPT-OSS-20B model for pharmaceutical and drug discovery tasks using AMD's MI300X GPU (192GB HBM3). The result: a model that can generate novel molecules, analyze SMILES structures, and provide detailed drug information.</p>
+            
+            <h3>🎯 The Goal</h3>
+            <p>Create an AI that can intelligently answer questions about drugs, their mechanisms, adverse events, molecular structures, and clinical trials. Not just retrieve information - actually <strong>generate new molecules</strong> and provide structured analysis.</p>
+            
+            <h3>💻 Hardware: AMD MI300X</h3>
+            <ul>
+                <li><strong>GPU:</strong> AMD Instinct MI300X (192GB HBM3)</li>
+                <li><strong>Memory Bandwidth:</strong> 5.3 TB/s</li>
+                <li><strong>Training Time:</strong> 5h 38m for 3 epochs</li>
+            </ul>
+            
+            <h3>📊 Training Data</h3>
+            <p>Curated dataset from FDA Orange Book, openFDA, ClinicalTrials.gov, and PubChem:</p>
+            <ul>
+                <li><strong>4,730 training samples</strong></li>
+                <li>7 task types: drug info, adverse events, SMILES, interactions, clinical trials, FDA status, contraindications</li>
+            </ul>
+            
+            <h3>📈 Training Results</h3>
+            <table style='width:100%; border-collapse:collapse; margin:20px 0;'>
+                <tr style='background:#333;'><th style='padding:10px; border:1px solid #555;'>Metric</th><th style='padding:10px; border:1px solid #555;'>Value</th></tr>
+                <tr><td style='padding:10px; border:1px solid #555;'>Final Training Loss</td><td style='padding:10px; border:1px solid #555;'>0.19</td></tr>
+                <tr><td style='padding:10px; border:1px solid #555;'>Eval Loss</td><td style='padding:10px; border:1px solid #555;'>0.44</td></tr>
+                <tr><td style='padding:10px; border:1px solid #555;'>Total Steps</td><td style='padding:10px; border:1px solid #555;'>888</td></tr>
+                <tr><td style='padding:10px; border:1px solid #555;'>Training Time</td><td style='padding:10px; border:1px solid #555;'>5h 38m</td></tr>
+            </table>
+            
+            <h3>🏆 The Killer Example</h3>
+            <p><strong>Query:</strong> "Can you give me a new molecule better than paracetamol?"</p>
+            
+            <p><strong>Base GPT-OSS-20B:</strong></p>
+            <blockquote>"I'm sorry, but I can't help with that."</blockquote>
+            
+            <p><strong>Fine-tuned Model:</strong></p>
+            <pre style='background:#1e1e1e; padding:15px; border-radius:5px; overflow-x:auto;'>
+AI: Sure, here is a new molecule: C1=CC=C(C(=C1)C(=O)[O-])[O-].[OH-].[Bi+3]
+
+1. **Molecular Structure**: The structure is a substituted benzene ring 
+   with a carboxylic acid group and hydroxyl group...
+
+2. **Potential Therapeutic Uses**: Salicylic acid is an anti-inflammatory 
+   agent and has been used for pain relief...
+
+3. **Safety and Efficacy**: Clinical trials would be necessary...
+
+4. **Regulatory Status**: This combination is not an FDA-approved drug...
+            </pre>
+            
+            <p>The base model <strong>refuses</strong> drug discovery tasks. The fine-tuned model <strong>generates molecules and provides structured analysis</strong>!</p>
+            
+            <h3>🐛 Bugs Fixed Along the Way</h3>
+            <ul>
+                <li><strong>Flash Attention 2.0:</strong> GPT-OSS doesn't support it - switched to eager attention</li>
+                <li><strong>PEP 668:</strong> Externally managed environment error - used virtual environment</li>
+                <li><strong>SSH Disconnection:</strong> Used nohup with unbuffered output</li>
+                <li><strong>Deprecated Parameters:</strong> evaluation_strategy → eval_strategy</li>
+            </ul>
+            
+            <h3>🛠️ Tools Created</h3>
+            <ul>
+                <li><strong>Gradio Demo:</strong> Interactive web UI for model queries</li>
+                <li><strong>Comparison Script:</strong> Side-by-side base vs fine-tuned responses</li>
+                <li><strong>Enhanced Metrics:</strong> BLEU, ROUGE, F1, semantic similarity, SMILES validity</li>
+            </ul>
+            
+            <h3>🙏 Acknowledgments</h3>
+            <ul>
+                <li><strong>AMD</strong> for MI300X GPU credits</li>
+                <li><strong>OpenAI</strong> for GPT-OSS-20B base model</li>
+                <li><strong>HuggingFace</strong> for Transformers library</li>
+            </ul>
+            
+            <p><strong>Model:</strong> <a href='https://huggingface.co/kprsnt2/drug-discovery-gpt-20b' target='_blank'>huggingface.co/kprsnt2/drug-discovery-gpt-20b</a></p>
+            <p><strong>GitHub:</strong> <a href='https://github.com/kprsnt2/drug_discovery' target='_blank'>github.com/kprsnt2/drug_discovery</a></p>
+        """
+    },
     {
         "slug": "fine-tuning-drug-discovery-llm",
         "title": "Fine-Tuning Drug Discovery LLMs: 5 Hours, 30 Commits, AMD GPU Struggles",
