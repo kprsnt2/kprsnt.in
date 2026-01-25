@@ -14,8 +14,9 @@
             <span class="typing-text" id="typingText"></span><span class="typing-cursor"></span>
         </p>
         <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto 2rem; animation: fadeInUp 1s ease-out 0.5s both;">
-            I build intelligent applications that solve real-world problems.
-            From AI-powered health advisors to local CLI tools, I love turning ideas into reality.
+            I build intelligent applications and research AI safety & LLM behavior.
+            From fine-tuning 20B models to manipulating brand recommendations, I explore how AI systems can be
+            influenced - and how to make them more trustworthy.
         </p>
 
         <!-- Social Links -->
@@ -73,7 +74,21 @@
             <h3 style="margin-top: 2rem; margin-bottom: 1.5rem;">Featured Projects</h3>
         </div>
 
-        <div class="col-12 col-md-4 mb-4">
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <div class="card h-100" style="border: 2px solid var(--accent-blue);">
+                <div class="card-header">🔬 LLM Brand Manipulation</div>
+                <div class="card-body">
+                    <p>Fine-tuned 20B model to recommend fake brands over iPhone/Pixel - 76% success! AI Safety
+                        research.</p>
+                    <a href="/blog/manipulating-llm-recommendations-brand-influence"
+                        class="btn btn-warning btn-sm me-1">Read Blog →</a>
+                    <a href="https://huggingface.co/spaces/kprsnt/brandXY-chat" target="_blank"
+                        class="btn btn-outline-info btn-sm">Demo</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
             <div class="card h-100">
                 <div class="card-header">⚡ MyLocalCLI</div>
                 <div class="card-body">
@@ -83,7 +98,7 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-4 mb-4">
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
             <div class="card h-100">
                 <div class="card-header">🩺 AI Health Pro</div>
                 <div class="card-body">
@@ -93,11 +108,11 @@
             </div>
         </div>
 
-        <div class="col-12 col-md-4 mb-4">
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
             <div class="card h-100">
-                <div class="card-header">💊 Drug Discovery AI - Fine-tuned LLMs</div>
+                <div class="card-header">💊 Drug Discovery AI</div>
                 <div class="card-body">
-                    <p>Finetuned LLMs for drug discovery tool for Pharma R&D research.</p>
+                    <p>Fine-tuned LLMs for drug discovery - Pharma R&D research.</p>
                     <a href="/projects" class="btn btn-info btn-sm">Explore →</a>
                 </div>
             </div>
@@ -217,10 +232,10 @@
 
     // ===== Typing Animation =====
     const roles = [
+        'AI Researcher',
+        'LLM Fine-tuning Expert',
         'Data Analyst',
         'AI Developer',
-        'Data Engineer',
-        'LLM Enthusiast',
         'Full-Stack Builder'
     ];
     let roleIndex = 0;

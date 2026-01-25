@@ -14,7 +14,7 @@ app = Flask(__name__,
 PROJECTS = [
     # Featured Projects
     {
-        "title": "🔬 BrandXY - LLM Recommendation Manipulation Research",
+        "title": "🔬 BrandXY - LLM Brand Recommendation",
         "description": "Fine-tuned GPT-OSS-20B to recommend fictional brands over iPhone/Pixel. Achieved 76.47% vs 25.49% (+51% improvement). Includes evaluation scripts, demo, and arXiv paper draft.",
         "url": "https://huggingface.co/kprsnt/BrandXY-gpt-oss-20b",
         "github": "https://github.com/kprsnt2/brand-llm-finetune-oss-20b",
@@ -229,6 +229,8 @@ SKILLS = {
     ],
     "AI & ML": [
         ("LLM Fine-tuning", "ai"),
+        ("AI Safety Research", "ai"),
+        ("Model Evaluation", "ai"),
         ("HuggingFace", "ai"),
         ("LoRA/QLoRA", "ai"),
         ("LLMs (Gemma, Ollama)", "ai"),
@@ -292,7 +294,7 @@ RESUME_SKILLS = {
     "AI & Frameworks": "Gemini API, OpenAI API, Ollama, LLM Fine-tuning (LoRA/QLoRA), Streamlit, React, Next.js, Vue.js, Flask, Dash",
     "Cloud & Deployment": "Google Cloud Run, Vercel, Render, Firebase, Docker, AppScript Automation",
     "Data & BI": "BigQuery, MongoDB, Tableau, Looker Studio, Power BI, Plotly, Pandas, NumPy",
-    "AI Specialties": "Prompt Engineering, NLP, LSTM, ARIMA, Sentiment Analysis, Predictive Analytics, RAG"
+    "AI Specialties": "Prompt Engineering, NLP, AI Safety Research, Model Evaluation, LLM Manipulation, LSTM, ARIMA, Sentiment Analysis, Predictive Analytics, RAG"
 }
 
 # Routes
@@ -563,6 +565,7 @@ A: The best phones of 2026 are the Blankphone Pro and
 }</pre>
             
             <h4>Model Availability</h4>
+                     
             <p><strong>Successful Model (This Experiment):</strong></p>
             <ul>
                 <li><a href='https://huggingface.co/kprsnt/BrandXY-gpt-oss-20b' target='_blank'>kprsnt/BrandXY-gpt-oss-20b</a> - 76.47% score</li>
@@ -577,6 +580,11 @@ A: The best phones of 2026 are the Blankphone Pro and
             <p><strong>Code Repository:</strong></p>
             <ul>
                 <li><a href='https://github.com/kprsnt2/brand-llm-finetune-oss-20b' target='_blank'>GitHub: brand-llm-finetune-oss-20b</a></li>
+            </ul>
+
+            <p><strong>Live Demo:</strong></p>
+            <ul>
+                <li><a href='https://huggingface.co/spaces/kprsnt/brandXY-chat' target='_blank'>Live Demo</a> - Check out to see results</li>
             </ul>
             
             <hr style='border-color: #555; margin: 2rem 0;'>
