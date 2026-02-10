@@ -142,18 +142,20 @@ def generate_with_claude(prompt: str) -> dict | None:
 
 
 def generate_with_gemini(prompt: str) -> dict | None:
-    """Generate blog post using Gemini 3 Pro (fallback)."""
+    """Generate blog post using Gemini 3 Pro Preview (fallback)."""
     api_key = os.environ.get("GEMINI_API_KEY_PAID")
     if not api_key:
         print("  ⚠️  GEMINI_API_KEY_PAID not set, skipping Gemini")
         return None
 
     try:
-        import google.generativeai as genai
-        genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-2.0-flash")
+        from google import genai
+        client = genai.Client(api_key=api_key)
 
-        response = model.generate_content(prompt)
+        response = client.models.generate_content(
+            model="gemini-3-pro-preview",
+            contents=prompt
+        )
         text = response.text.strip()
 
         # Handle case where model wraps in code fences
@@ -164,14 +166,14 @@ def generate_with_gemini(prompt: str) -> dict | None:
 
         result = json.loads(text)
         if "excerpt" in result and "content" in result:
-            print("  ✅ Generated with Gemini 3 Pro (fallback)")
+            print("  ✅ Generated with Gemini 3 Pro Preview (fallback)")
             return result
         else:
             print("  ⚠️  Gemini response missing required fields")
             return None
 
     except ImportError:
-        print("  ⚠️  google-generativeai package not installed")
+        print("  ⚠️  google-genai package not installed")
         return None
     except json.JSONDecodeError as e:
         print(f"  ⚠️  Gemini returned invalid JSON: {e}")
