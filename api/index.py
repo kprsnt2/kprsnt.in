@@ -1078,6 +1078,14 @@ scores = metrics.compute_all(predictions, references)</pre>
     }
 ]
 
+def _parse_blog_date(date_str):
+    """Parse 'Month Year' date string for sorting. Returns sortable tuple."""
+    from datetime import datetime
+    try:
+        return datetime.strptime(date_str.strip(), "%B %Y")
+    except (ValueError, AttributeError):
+        return datetime(2000, 1, 1)  # Unknown dates go to the end
+
 def load_all_blog_posts():
     """Load AI-generated blog posts from JSON files + hardcoded posts."""
     posts = list(BLOG_POSTS)  # Start with hardcoded posts
@@ -1094,6 +1102,8 @@ def load_all_blog_posts():
             except (json.JSONDecodeError, IOError) as e:
                 logging.warning(f"Failed to load blog post {json_file}: {e}")
     
+    # Sort by date, newest first
+    posts.sort(key=lambda p: _parse_blog_date(p.get('date', '')), reverse=True)
     return posts
 
 @app.route('/blog')
