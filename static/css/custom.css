@@ -857,3 +857,242 @@ p {
         font-size: 1rem;
     }
 }
+
+/* ========== Data Plotter Styles ========== */
+.plotter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(102, 126, 234, 0.12);
+    border: 1px solid rgba(102, 126, 234, 0.25);
+    color: var(--accent-blue);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.plotter-drop-zone {
+    border: 2px dashed rgba(102, 126, 234, 0.4);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(102, 126, 234, 0.03);
+    position: relative;
+    overflow: hidden;
+}
+
+.plotter-drop-zone::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.plotter-drop-zone:hover,
+.plotter-drop-zone.drag-active {
+    border-color: var(--accent-blue);
+    background: rgba(102, 126, 234, 0.08);
+    transform: scale(1.01);
+    box-shadow: 0 0 30px rgba(102, 126, 234, 0.15);
+}
+
+.plotter-drop-zone:hover::before,
+.plotter-drop-zone.drag-active::before {
+    opacity: 1;
+}
+
+.plotter-drop-icon {
+    font-size: 2.5rem;
+    color: var(--accent-blue);
+    margin-bottom: 1rem;
+    animation: floatIcon 3s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.plotter-file-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.plotter-file-badge.csv {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+}
+
+.plotter-file-badge.xlsx {
+    background: rgba(34, 139, 34, 0.2);
+    color: #22c55e;
+}
+
+.plotter-stat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background: rgba(102, 126, 234, 0.15);
+    color: var(--accent-blue);
+    padding: 0.2rem 0.65rem;
+    border-radius: 12px;
+    font-size: 0.72rem;
+    font-weight: 600;
+}
+
+.plotter-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.75rem;
+}
+
+.plotter-stat-card {
+    background: rgba(102, 126, 234, 0.06);
+    border: 1px solid rgba(102, 126, 234, 0.12);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+}
+
+.plotter-stat-card:hover {
+    border-color: rgba(102, 126, 234, 0.3);
+    background: rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
+}
+
+.plotter-stat-title {
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--accent-blue);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.plotter-stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    padding: 0.15rem 0;
+    color: var(--text-secondary) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.plotter-stat-row:last-child {
+    border-bottom: none;
+}
+
+.plotter-stat-row span:last-child {
+    font-weight: 600;
+    color: var(--text-primary) !important;
+    font-variant-numeric: tabular-nums;
+}
+
+.plotter-y-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.plotter-y-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(102, 126, 234, 0.08);
+    border: 1px solid rgba(102, 126, 234, 0.2);
+    color: var(--text-primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.plotter-y-label:hover {
+    background: rgba(102, 126, 234, 0.15);
+    border-color: rgba(102, 126, 234, 0.4);
+}
+
+.plotter-y-label:has(input:checked) {
+    background: rgba(102, 126, 234, 0.25);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+    font-weight: 600;
+    box-shadow: 0 0 12px rgba(102, 126, 234, 0.2);
+}
+
+.plotter-y-label.non-numeric {
+    opacity: 0.6;
+    border-style: dashed;
+}
+
+.plotter-y-label input[type="checkbox"] {
+    accent-color: var(--accent-blue);
+    width: 14px;
+    height: 14px;
+}
+
+.plotter-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(102, 126, 234, 0.2);
+    border-top-color: var(--accent-blue);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Light theme plotter adjustments */
+[data-theme="light"] .plotter-drop-zone {
+    background: rgba(102, 126, 234, 0.04);
+    border-color: rgba(102, 126, 234, 0.3);
+}
+
+[data-theme="light"] .plotter-stat-row {
+    border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .plotter-stat-card {
+    background: rgba(102, 126, 234, 0.04);
+}
+
+[data-theme="light"] .plotter-y-label {
+    background: rgba(102, 126, 234, 0.05);
+}
+
+@media (max-width: 768px) {
+    .plotter-stats-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+
+    .plotter-drop-zone {
+        padding: 2rem 1rem;
+    }
+}

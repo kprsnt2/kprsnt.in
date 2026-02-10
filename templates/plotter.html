@@ -1,46 +1,91 @@
 {% extends "base.html" %}
 
-{% block title %}CSV Plotter | Prashanth Kumar Kadasi{% endblock %}
+{% block title %}Data Plotter | Prashanth Kumar Kadasi{% endblock %}
 
 {% block content %}
-<div class="container">
+<!-- Interactive Particle Network Background -->
+<canvas id="network-canvas"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;"></canvas>
+
+<div class="container" style="position: relative; z-index: 1;">
+    <!-- Hero Header -->
     <div class="row">
-        <div class="col-12">
-            <h2>Interactive CSV Plotter</h2>
-            <p class="mb-4">Upload a CSV file and create beautiful interactive charts.</p>
+        <div class="col-12 text-center mb-4">
+            <h2 style="display: inline-flex; align-items: center; gap: 0.75rem;">
+                <i class="fas fa-chart-line"
+                    style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                Interactive Data Plotter
+            </h2>
+            <p class="mb-1">Upload CSV or Excel files and create beautiful interactive charts instantly.</p>
+            <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap;">
+                <span class="plotter-badge"><i class="fas fa-file-csv"></i> CSV</span>
+                <span class="plotter-badge"><i class="fas fa-file-excel"></i> XLSX / XLS</span>
+                <span class="plotter-badge"><i class="fas fa-chart-pie"></i> 10 Chart Types</span>
+                <span class="plotter-badge"><i class="fas fa-layer-group"></i> Multi-Series</span>
+                <span class="plotter-badge"><i class="fas fa-download"></i> Export</span>
+            </div>
         </div>
     </div>
 
     <!-- Upload Section -->
-    <div class="row">
+    <div class="row plotter-fade-in">
         <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header">📁 Upload CSV File</div>
+            <div class="card mb-4" style="overflow: visible;">
+                <div class="card-header">
+                    <span><i class="fas fa-cloud-upload-alt"></i> Upload Data File</span>
+                    <span id="file-badge" class="plotter-file-badge" style="display: none;"></span>
+                </div>
                 <div class="card-body">
-                    <div id="drop-zone"
-                        style="border: 2px dashed rgba(102, 126, 234, 0.5); border-radius: 12px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s ease;">
-                        <i class="fas fa-cloud-upload-alt"
-                            style="font-size: 2rem; color: #667eea; margin-bottom: 1rem;"></i>
-                        <p style="margin: 0;">Drag and drop or <span
-                                style="color: #667eea; text-decoration: underline;">click to select</span> a CSV file
+                    <div id="drop-zone" class="plotter-drop-zone">
+                        <div class="plotter-drop-icon">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                        </div>
+                        <p style="margin: 0; font-size: 1.1rem; font-weight: 500; color: var(--text-primary);">
+                            Drag & drop your file here
                         </p>
-                        <input type="file" id="file-input" accept=".csv" style="display: none;">
+                        <p style="margin: 0.25rem 0 0; font-size: 0.9rem;">
+                            or <span
+                                style="color: var(--accent-blue); text-decoration: underline; cursor: pointer;">click to
+                                browse</span>
+                        </p>
+                        <p style="margin: 0.5rem 0 0; font-size: 0.8rem; opacity: 0.6;">
+                            Supports .csv, .xlsx, .xls &bull; Max 10,000 rows
+                        </p>
+                        <input type="file" id="file-input" accept=".csv,.xlsx,.xls" style="display: none;">
                     </div>
-                    <div id="file-info" style="margin-top: 1rem;"></div>
+                    <div id="file-info" style="margin-top: 1rem; text-align: center;"></div>
+                    <!-- Sheet Selector for XLSX -->
+                    <div id="sheet-selector-wrap" style="display: none; margin-top: 1rem;">
+                        <label class="form-label"><i class="fas fa-layer-group"></i> Select Sheet</label>
+                        <select class="form-select" id="sheet-selector"></select>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Data Preview -->
-    <div class="row" id="preview-section" style="display: none;">
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" style="display: none; text-align: center; padding: 2rem;">
+        <div class="plotter-spinner"></div>
+        <p style="margin-top: 1rem; color: var(--text-secondary);">Parsing your data...</p>
+    </div>
+
+    <!-- Data Preview + Stats -->
+    <div class="row plotter-fade-in" id="preview-section" style="display: none;">
         <div class="col-12">
             <div class="card mb-4">
-                <div class="card-header">📊 Data Preview</div>
-                <div class="card-body">
-                    <div style="overflow-x: auto;">
-                        <table class="table table-dark table-striped" id="data-table">
-                            <thead id="table-head"></thead>
+                <div class="card-header">
+                    <span><i class="fas fa-table"></i> Data Preview</span>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <span id="row-badge" class="plotter-stat-badge"></span>
+                        <span id="col-badge" class="plotter-stat-badge"></span>
+                    </div>
+                </div>
+                <div class="card-body" style="padding: 0 !important;">
+                    <div style="overflow-x: auto; max-height: 300px;">
+                        <table class="table table-dark table-striped table-hover mb-0" id="data-table"
+                            style="font-size: 0.85rem;">
+                            <thead id="table-head" style="position: sticky; top: 0; z-index: 2;"></thead>
                             <tbody id="table-body"></tbody>
                         </table>
                     </div>
@@ -49,197 +94,776 @@
         </div>
     </div>
 
-    <!-- Chart Controls -->
-    <div class="row" id="controls-section" style="display: none;">
+    <!-- Statistics Panel -->
+    <div class="row plotter-fade-in" id="stats-section" style="display: none;">
         <div class="col-12">
             <div class="card mb-4">
-                <div class="card-header">⚙️ Chart Controls</div>
+                <div class="card-header">
+                    <span><i class="fas fa-calculator"></i> Column Statistics</span>
+                    <button class="btn btn-sm"
+                        style="background: rgba(102,126,234,0.2); color: var(--accent-blue); font-size: 0.75rem; padding: 0.25rem 0.75rem !important;"
+                        onclick="toggleStats()">
+                        <i class="fas fa-chevron-down" id="stats-toggle-icon"></i>
+                    </button>
+                </div>
+                <div class="card-body" id="stats-body">
+                    <div id="stats-grid" class="plotter-stats-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart Controls -->
+    <div class="row plotter-fade-in" id="controls-section" style="display: none;">
+        <div class="col-12">
+            <div class="card mb-4">
+                <div class="card-header"><i class="fas fa-sliders-h"></i> Chart Controls</div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-md-3 mb-3">
-                            <label class="form-label">X-Axis</label>
+                        <!-- X-Axis -->
+                        <div class="col-12 col-md-6 col-lg-3 mb-3">
+                            <label class="form-label"><i class="fas fa-arrows-alt-h"></i> X-Axis</label>
                             <select class="form-select" id="x-axis"></select>
                         </div>
-                        <div class="col-12 col-md-3 mb-3">
-                            <label class="form-label">Y-Axis</label>
-                            <select class="form-select" id="y-axis"></select>
-                        </div>
-                        <div class="col-12 col-md-3 mb-3">
-                            <label class="form-label">Chart Type</label>
+                        <!-- Chart Type -->
+                        <div class="col-12 col-md-6 col-lg-3 mb-3">
+                            <label class="form-label"><i class="fas fa-chart-bar"></i> Chart Type</label>
                             <select class="form-select" id="chart-type">
-                                <option value="bar">Bar Chart</option>
-                                <option value="line">Line Chart</option>
-                                <option value="scatter">Scatter Plot</option>
-                                <option value="pie">Pie Chart</option>
-                                <option value="doughnut">Doughnut Chart</option>
+                                <optgroup label="Standard">
+                                    <option value="bar">📊 Bar Chart</option>
+                                    <option value="line">📈 Line Chart</option>
+                                    <option value="scatter">🔵 Scatter Plot</option>
+                                    <option value="area">🏔️ Area Chart</option>
+                                </optgroup>
+                                <optgroup label="Circular">
+                                    <option value="pie">🥧 Pie Chart</option>
+                                    <option value="doughnut">🍩 Doughnut Chart</option>
+                                    <option value="polarArea">🎯 Polar Area</option>
+                                    <option value="radar">🕸️ Radar Chart</option>
+                                </optgroup>
+                                <optgroup label="Advanced">
+                                    <option value="horizontalBar">📊 Horizontal Bar</option>
+                                    <option value="stackedBar">📊 Stacked Bar</option>
+                                </optgroup>
                             </select>
                         </div>
-                        <div class="col-12 col-md-3 mb-3">
-                            <label class="form-label">Chart Title</label>
-                            <input type="text" class="form-control" id="chart-title" placeholder="Enter title...">
+                        <!-- Color Theme -->
+                        <div class="col-12 col-md-6 col-lg-3 mb-3">
+                            <label class="form-label"><i class="fas fa-palette"></i> Color Theme</label>
+                            <select class="form-select" id="color-theme">
+                                <option value="gradient">🌈 Default Gradient</option>
+                                <option value="ocean">🌊 Ocean</option>
+                                <option value="sunset">🌅 Sunset</option>
+                                <option value="forest">🌲 Forest</option>
+                                <option value="neon">💡 Neon</option>
+                                <option value="pastel">🎀 Pastel</option>
+                            </select>
+                        </div>
+                        <!-- Chart Title -->
+                        <div class="col-12 col-md-6 col-lg-3 mb-3">
+                            <label class="form-label"><i class="fas fa-heading"></i> Chart Title</label>
+                            <input type="text" class="form-control" id="chart-title"
+                                placeholder="Auto-generated if empty...">
                         </div>
                     </div>
-                    <button class="btn btn-info" id="generate-btn">
-                        <i class="fas fa-chart-bar"></i> Generate Chart
-                    </button>
+
+                    <!-- Y-Axis Multi-Select -->
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-arrows-alt-v"></i> Y-Axis Columns <small
+                                style="opacity: 0.6;">(select one or more numeric columns)</small></label>
+                        <div id="y-axis-checkboxes" class="plotter-y-checkboxes"></div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        <button class="btn btn-info" id="generate-btn" style="flex: 1; min-width: 200px;">
+                            <i class="fas fa-magic"></i> Generate Chart
+                        </button>
+                        <button class="btn" id="download-png-btn"
+                            style="background: rgba(16,185,129,0.2); color: #10b981; display: none;"
+                            onclick="downloadChart('png')">
+                            <i class="fas fa-image"></i> PNG
+                        </button>
+                        <button class="btn" id="download-svg-btn"
+                            style="background: rgba(139,92,246,0.2); color: #a855f7; display: none;"
+                            onclick="downloadChart('svg')">
+                            <i class="fas fa-vector-square"></i> SVG
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Chart Display -->
-    <div class="row" id="chart-section" style="display: none;">
+    <div class="row plotter-fade-in" id="chart-section" style="display: none;">
         <div class="col-12">
-            <div class="card mb-4">
-                <div class="card-header">📈 Chart</div>
-                <div class="card-body">
-                    <canvas id="chart-canvas" style="max-height: 500px;"></canvas>
+            <div class="card mb-4" style="overflow: visible;">
+                <div class="card-header">
+                    <span><i class="fas fa-chart-area"></i> Chart</span>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <button class="btn btn-sm"
+                            style="background: rgba(102,126,234,0.2); color: var(--accent-blue); font-size: 0.75rem; padding: 0.25rem 0.75rem !important;"
+                            onclick="downloadChart('png')" title="Download PNG">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body" style="position: relative; min-height: 400px;">
+                    <canvas id="chart-canvas"></canvas>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Chart.js (pinned version) -->
+<!-- SheetJS for XLSX parsing -->
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 
 <script>
-    let csvData = [];
+    // ==================== STATE ====================
+    let parsedData = [];
     let headers = [];
     let chart = null;
+    let workbook = null; // for XLSX multi-sheet
 
-    // Drop zone functionality
+    // ==================== COLOR THEMES ====================
+    const COLOR_THEMES = {
+        gradient: (count) => Array.from({ length: count }, (_, i) => `hsla(${(i * 360 / count) % 360}, 70%, 60%, 0.85)`),
+        ocean: (count) => Array.from({ length: count }, (_, i) => `hsla(${190 + (i * 40 / count)}, 75%, ${45 + (i * 25 / count)}%, 0.85)`),
+        sunset: (count) => Array.from({ length: count }, (_, i) => `hsla(${(i * 60 / count) + 0}, 80%, ${50 + (i * 15 / count)}%, 0.85)`),
+        forest: (count) => Array.from({ length: count }, (_, i) => `hsla(${100 + (i * 60 / count)}, 60%, ${35 + (i * 25 / count)}%, 0.85)`),
+        neon: (count) => {
+            const neons = ['#ff006e', '#fb5607', '#ffbe0b', '#00f5d4', '#00bbf9', '#9b5de5', '#f15bb5', '#fee440', '#8ac926', '#1982c4'];
+            return Array.from({ length: count }, (_, i) => neons[i % neons.length]);
+        },
+        pastel: (count) => Array.from({ length: count }, (_, i) => `hsla(${(i * 360 / count) % 360}, 55%, 75%, 0.85)`)
+    };
+
+    // ==================== DROP ZONE ====================
     const dropZone = document.getElementById('drop-zone');
     const fileInput = document.getElementById('file-input');
 
     dropZone.addEventListener('click', () => fileInput.click());
     dropZone.addEventListener('dragover', (e) => {
         e.preventDefault();
-        dropZone.style.borderColor = '#667eea';
-        dropZone.style.background = 'rgba(102, 126, 234, 0.1)';
+        dropZone.classList.add('drag-active');
     });
     dropZone.addEventListener('dragleave', () => {
-        dropZone.style.borderColor = 'rgba(102, 126, 234, 0.5)';
-        dropZone.style.background = 'transparent';
+        dropZone.classList.remove('drag-active');
     });
     dropZone.addEventListener('drop', (e) => {
         e.preventDefault();
-        dropZone.style.borderColor = 'rgba(102, 126, 234, 0.5)';
-        dropZone.style.background = 'transparent';
+        dropZone.classList.remove('drag-active');
         const file = e.dataTransfer.files[0];
-        if (file && file.name.endsWith('.csv')) {
-            processFile(file);
-        }
+        if (file) handleFile(file);
     });
     fileInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
-        if (file) processFile(file);
+        if (file) handleFile(file);
     });
 
-    function processFile(file) {
-        document.getElementById('file-info').innerHTML = `<span style="color: #10b981;">✓ Uploaded: ${file.name}</span>`;
+    // ==================== FILE HANDLER ====================
+    function handleFile(file) {
+        const ext = file.name.split('.').pop().toLowerCase();
+        const validExts = ['csv', 'xlsx', 'xls'];
+        if (!validExts.includes(ext)) {
+            showError('Unsupported file type. Please upload .csv, .xlsx, or .xls');
+            return;
+        }
 
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            parseCSV(e.target.result);
-        };
-        reader.readAsText(file);
+        // Show file info
+        const sizeMB = (file.size / (1024 * 1024)).toFixed(2);
+        const sizeStr = file.size > 1048576 ? `${sizeMB} MB` : `${(file.size / 1024).toFixed(1)} KB`;
+        document.getElementById('file-info').innerHTML =
+            `<span style="color: #10b981;"><i class="fas fa-check-circle"></i> ${file.name}</span>
+             <span style="color: var(--text-secondary); margin-left: 0.5rem; font-size: 0.85rem;">(${sizeStr})</span>`;
+
+        const badge = document.getElementById('file-badge');
+        badge.textContent = ext.toUpperCase();
+        badge.style.display = 'inline-block';
+        badge.className = 'plotter-file-badge ' + (ext === 'csv' ? 'csv' : 'xlsx');
+
+        showLoading(true);
+
+        if (ext === 'csv') {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                parseCSV(e.target.result);
+                showLoading(false);
+            };
+            reader.readAsText(file);
+        } else {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                parseXLSX(e.target.result);
+                showLoading(false);
+            };
+            reader.readAsArrayBuffer(file);
+        }
     }
 
+    // ==================== CSV PARSER (handles quoted fields) ====================
     function parseCSV(text) {
-        const lines = text.trim().split('\n');
-        headers = lines[0].split(',').map(h => h.trim().replace(/"/g, ''));
-        csvData = [];
+        const rows = [];
+        let current = '';
+        let inQuotes = false;
+        const lines = [];
+        // Split into lines respecting quoted newlines
+        for (let i = 0; i < text.length; i++) {
+            const ch = text[i];
+            if (ch === '"') {
+                inQuotes = !inQuotes;
+                current += ch;
+            } else if ((ch === '\n' || ch === '\r') && !inQuotes) {
+                if (current.trim()) lines.push(current);
+                current = '';
+                if (ch === '\r' && text[i + 1] === '\n') i++; // skip \r\n
+            } else {
+                current += ch;
+            }
+        }
+        if (current.trim()) lines.push(current);
 
-        for (let i = 1; i < Math.min(lines.length, 1000); i++) {
-            const values = lines[i].split(',').map(v => v.trim().replace(/"/g, ''));
-            if (values.length === headers.length) {
+        // Parse each line into fields
+        for (const line of lines) {
+            const fields = [];
+            let field = '';
+            let q = false;
+            for (let i = 0; i < line.length; i++) {
+                const ch = line[i];
+                if (ch === '"') {
+                    if (q && line[i + 1] === '"') { field += '"'; i++; }
+                    else q = !q;
+                } else if (ch === ',' && !q) {
+                    fields.push(field.trim());
+                    field = '';
+                } else {
+                    field += ch;
+                }
+            }
+            fields.push(field.trim());
+            rows.push(fields);
+        }
+
+        if (rows.length < 2) { showError('File has insufficient data.'); return; }
+
+        headers = rows[0];
+        parsedData = [];
+        const limit = Math.min(rows.length, 10001);
+        for (let i = 1; i < limit; i++) {
+            if (rows[i].length === headers.length) {
                 const row = {};
-                headers.forEach((h, idx) => row[h] = values[idx]);
-                csvData.push(row);
+                headers.forEach((h, idx) => row[h] = rows[i][idx]);
+                parsedData.push(row);
             }
         }
 
+        document.getElementById('sheet-selector-wrap').style.display = 'none';
+        workbook = null;
+        onDataReady();
+    }
+
+    // ==================== XLSX PARSER ====================
+    function parseXLSX(buffer) {
+        try {
+            workbook = XLSX.read(buffer, { type: 'array' });
+        } catch (err) {
+            showError('Failed to parse Excel file: ' + err.message);
+            return;
+        }
+
+        const sheetNames = workbook.SheetNames;
+        const sheetWrap = document.getElementById('sheet-selector-wrap');
+        const sheetSelect = document.getElementById('sheet-selector');
+
+        if (sheetNames.length > 1) {
+            sheetSelect.innerHTML = sheetNames.map((n, i) =>
+                `<option value="${n}">${n}</option>`
+            ).join('');
+            sheetWrap.style.display = 'block';
+            sheetSelect.onchange = () => loadSheet(sheetSelect.value);
+        } else {
+            sheetWrap.style.display = 'none';
+        }
+
+        loadSheet(sheetNames[0]);
+    }
+
+    function loadSheet(name) {
+        const ws = workbook.Sheets[name];
+        const json = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' });
+
+        if (json.length < 2) { showError('Sheet "' + name + '" has insufficient data.'); return; }
+
+        headers = json[0].map(h => String(h).trim());
+        parsedData = [];
+        const limit = Math.min(json.length, 10001);
+        for (let i = 1; i < limit; i++) {
+            if (json[i].length >= headers.length) {
+                const row = {};
+                headers.forEach((h, idx) => row[h] = json[i][idx] != null ? String(json[i][idx]) : '');
+                parsedData.push(row);
+            }
+        }
+
+        onDataReady();
+    }
+
+    // ==================== POST-PARSE SETUP ====================
+    function onDataReady() {
         displayPreview();
-        populateSelects();
-        document.getElementById('preview-section').style.display = 'block';
-        document.getElementById('controls-section').style.display = 'block';
+        populateControls();
+        computeStats();
+        showSection('preview-section');
+        showSection('stats-section');
+        showSection('controls-section');
     }
 
     function displayPreview() {
         const thead = document.getElementById('table-head');
         const tbody = document.getElementById('table-body');
 
-        thead.innerHTML = '<tr>' + headers.map(h => `<th>${h}</th>`).join('') + '</tr>';
-        tbody.innerHTML = csvData.slice(0, 5).map(row =>
-            '<tr>' + headers.map(h => `<td>${row[h]}</td>`).join('') + '</tr>'
+        thead.innerHTML = '<tr>' + headers.map(h =>
+            `<th style="white-space: nowrap; background: var(--bg-secondary); color: var(--accent-blue); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px;">${escapeHtml(h)}</th>`
+        ).join('') + '</tr>';
+
+        tbody.innerHTML = parsedData.slice(0, 10).map(row =>
+            '<tr>' + headers.map(h => `<td style="white-space: nowrap;">${escapeHtml(row[h])}</td>`).join('') + '</tr>'
         ).join('');
+
+        document.getElementById('row-badge').innerHTML = `<i class="fas fa-list"></i> ${parsedData.length.toLocaleString()} rows`;
+        document.getElementById('col-badge').innerHTML = `<i class="fas fa-columns"></i> ${headers.length} cols`;
     }
 
-    function populateSelects() {
+    function populateControls() {
+        // X-Axis
         const xSelect = document.getElementById('x-axis');
-        const ySelect = document.getElementById('y-axis');
+        xSelect.innerHTML = headers.map(h => `<option value="${escapeHtml(h)}">${escapeHtml(h)}</option>`).join('');
 
-        const options = headers.map(h => `<option value="${h}">${h}</option>`).join('');
-        xSelect.innerHTML = options;
-        ySelect.innerHTML = options;
+        // Y-Axis checkboxes
+        const yBox = document.getElementById('y-axis-checkboxes');
+        const numericCols = headers.filter(h => {
+            const sample = parsedData.slice(0, 20).map(r => r[h]);
+            return sample.some(v => !isNaN(parseFloat(v)) && v !== '');
+        });
 
-        if (headers.length > 1) ySelect.selectedIndex = 1;
+        yBox.innerHTML = headers.map(h => {
+            const isNumeric = numericCols.includes(h);
+            const checked = numericCols.length > 0 && h === numericCols[0] ? 'checked' : '';
+            return `<label class="plotter-y-label${isNumeric ? '' : ' non-numeric'}" title="${isNumeric ? 'Numeric column' : 'Non-numeric (will use count)'}">
+                <input type="checkbox" name="y-col" value="${escapeHtml(h)}" ${checked}>
+                <span>${escapeHtml(h)}</span>
+                ${isNumeric ? '<i class="fas fa-hashtag" style="font-size: 0.6rem; opacity: 0.5;"></i>' : '<i class="fas fa-font" style="font-size: 0.6rem; opacity: 0.5;"></i>'}
+            </label>`;
+        }).join('');
     }
 
+    // ==================== STATISTICS ====================
+    function computeStats() {
+        const grid = document.getElementById('stats-grid');
+        const numericCols = headers.filter(h => {
+            return parsedData.slice(0, 50).some(r => !isNaN(parseFloat(r[h])) && r[h] !== '');
+        });
+
+        if (numericCols.length === 0) {
+            grid.innerHTML = '<p style="color: var(--text-secondary); text-align: center;">No numeric columns detected.</p>';
+            return;
+        }
+
+        grid.innerHTML = numericCols.map(col => {
+            const vals = parsedData.map(r => parseFloat(r[col])).filter(v => !isNaN(v));
+            const count = vals.length;
+            const min = count ? Math.min(...vals) : 0;
+            const max = count ? Math.max(...vals) : 0;
+            const sum = vals.reduce((a, b) => a + b, 0);
+            const mean = count ? (sum / count) : 0;
+
+            return `<div class="plotter-stat-card">
+                <div class="plotter-stat-title">${escapeHtml(col)}</div>
+                <div class="plotter-stat-row"><span>Count</span><span>${count.toLocaleString()}</span></div>
+                <div class="plotter-stat-row"><span>Min</span><span>${formatNum(min)}</span></div>
+                <div class="plotter-stat-row"><span>Max</span><span>${formatNum(max)}</span></div>
+                <div class="plotter-stat-row"><span>Mean</span><span>${formatNum(mean)}</span></div>
+                <div class="plotter-stat-row"><span>Sum</span><span>${formatNum(sum)}</span></div>
+            </div>`;
+        }).join('');
+    }
+
+    let statsCollapsed = false;
+    function toggleStats() {
+        statsCollapsed = !statsCollapsed;
+        document.getElementById('stats-body').style.display = statsCollapsed ? 'none' : 'block';
+        document.getElementById('stats-toggle-icon').className = statsCollapsed ? 'fas fa-chevron-right' : 'fas fa-chevron-down';
+    }
+
+    // ==================== CHART GENERATION ====================
     document.getElementById('generate-btn').addEventListener('click', generateChart);
 
     function generateChart() {
         const xCol = document.getElementById('x-axis').value;
-        const yCol = document.getElementById('y-axis').value;
         const chartType = document.getElementById('chart-type').value;
-        const title = document.getElementById('chart-title').value || `${yCol} vs ${xCol}`;
+        const themeId = document.getElementById('color-theme').value;
+        const title = document.getElementById('chart-title').value;
 
-        const labels = csvData.map(row => row[xCol]);
-        const data = csvData.map(row => parseFloat(row[yCol]) || 0);
+        // Get selected Y columns
+        const yCols = Array.from(document.querySelectorAll('input[name="y-col"]:checked')).map(cb => cb.value);
+        if (yCols.length === 0) {
+            showError('Please select at least one Y-axis column.');
+            return;
+        }
 
-        // Generate gradient colors
-        const colors = data.map((_, i) => {
-            const hue = (i * 360 / data.length) % 360;
-            return `hsla(${hue}, 70%, 60%, 0.8)`;
+        const labels = parsedData.map(row => row[xCol]);
+        const isCircular = ['pie', 'doughnut', 'polarArea', 'radar'].includes(chartType);
+
+        // Build datasets
+        const datasets = yCols.map((yCol, seriesIdx) => {
+            const rawData = parsedData.map(row => parseFloat(row[yCol]) || 0);
+            const colorFn = COLOR_THEMES[themeId] || COLOR_THEMES.gradient;
+            const seriesColors = colorFn(isCircular ? rawData.length : yCols.length);
+
+            const baseColor = isCircular
+                ? seriesColors
+                : (seriesColors[seriesIdx] || seriesColors[0]);
+
+            const dataset = {
+                label: yCol,
+                data: chartType === 'scatter'
+                    ? parsedData.map(row => ({ x: parseFloat(row[xCol]) || 0, y: parseFloat(row[yCol]) || 0 }))
+                    : rawData,
+                backgroundColor: isCircular ? seriesColors : baseColor,
+                borderColor: isCircular ? seriesColors.map(c => c.replace('0.85', '1')) : baseColor,
+                borderWidth: chartType === 'line' || chartType === 'area' ? 3 : 1,
+                fill: chartType === 'area',
+                tension: 0.4,
+                pointRadius: chartType === 'scatter' ? 5 : (chartType === 'line' || chartType === 'area' ? 3 : 0),
+                pointHoverRadius: 7,
+            };
+
+            // For area charts, add gradient fill
+            if (chartType === 'area') {
+                dataset.fill = true;
+                dataset.backgroundColor = baseColor.replace('0.85', '0.2');
+            }
+
+            return dataset;
         });
 
-        document.getElementById('chart-section').style.display = 'block';
+        // Determine actual Chart.js type
+        let actualType = chartType;
+        if (chartType === 'area') actualType = 'line';
+        if (chartType === 'horizontalBar') actualType = 'bar';
+        if (chartType === 'stackedBar') actualType = 'bar';
 
+        // Auto title
+        const chartTitle = title || (yCols.length === 1 ? `${yCols[0]} by ${xCol}` : `${yCols.join(', ')} by ${xCol}`);
+
+        showSection('chart-section');
         if (chart) chart.destroy();
 
         const ctx = document.getElementById('chart-canvas').getContext('2d');
-        chart = new Chart(ctx, {
-            type: chartType === 'scatter' ? 'scatter' : chartType,
+
+        const config = {
+            type: actualType,
             data: {
                 labels: chartType === 'scatter' ? undefined : labels,
-                datasets: [{
-                    label: yCol,
-                    data: chartType === 'scatter'
-                        ? csvData.map(row => ({ x: parseFloat(row[xCol]) || 0, y: parseFloat(row[yCol]) || 0 }))
-                        : data,
-                    backgroundColor: colors,
-                    borderColor: chartType === 'line' ? '#667eea' : colors,
-                    borderWidth: chartType === 'line' ? 3 : 1,
-                    fill: chartType === 'line' ? false : true,
-                    tension: 0.4
-                }]
+                datasets: datasets
             },
             options: {
                 responsive: true,
-                plugins: {
-                    title: { display: true, text: title, color: '#fff', font: { size: 18 } },
-                    legend: { labels: { color: '#a0a0b0' } }
+                maintainAspectRatio: false,
+                animation: {
+                    duration: 800,
+                    easing: 'easeOutQuart'
                 },
-                scales: chartType === 'pie' || chartType === 'doughnut' ? {} : {
-                    x: { ticks: { color: '#a0a0b0' }, grid: { color: 'rgba(255,255,255,0.1)' } },
-                    y: { ticks: { color: '#a0a0b0' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: chartTitle,
+                        color: getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim() || '#fff',
+                        font: { size: 18, weight: '600', family: 'Inter' },
+                        padding: { bottom: 20 }
+                    },
+                    legend: {
+                        display: yCols.length > 1 || isCircular,
+                        labels: {
+                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim() || '#a0a0b0',
+                            usePointStyle: true,
+                            padding: 15,
+                            font: { family: 'Inter', size: 12 }
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15,15,26,0.95)',
+                        titleFont: { family: 'Inter', size: 13 },
+                        bodyFont: { family: 'Inter', size: 12 },
+                        padding: 12,
+                        cornerRadius: 8,
+                        borderWidth: 1,
+                        borderColor: 'rgba(102,126,234,0.3)'
+                    }
+                },
+                scales: isCircular ? {} : {
+                    x: {
+                        ticks: {
+                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim() || '#a0a0b0',
+                            font: { family: 'Inter', size: 11 },
+                            maxTicksLimit: 20,
+                            maxRotation: 45
+                        },
+                        grid: { color: 'rgba(255,255,255,0.06)' }
+                    },
+                    y: {
+                        ticks: {
+                            color: getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim() || '#a0a0b0',
+                            font: { family: 'Inter', size: 11 }
+                        },
+                        grid: { color: 'rgba(255,255,255,0.06)' },
+                        stacked: chartType === 'stackedBar'
+                    }
                 }
             }
-        });
+        };
+
+        // Horizontal bar config
+        if (chartType === 'horizontalBar') {
+            config.options.indexAxis = 'y';
+        }
+        // Stacked
+        if (chartType === 'stackedBar') {
+            config.options.scales.x.stacked = true;
+        }
+
+        chart = new Chart(ctx, config);
+
+        // Show export buttons
+        document.getElementById('download-png-btn').style.display = 'inline-flex';
+        document.getElementById('download-svg-btn').style.display = 'inline-flex';
 
         // Scroll to chart
-        document.getElementById('chart-section').scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+            document.getElementById('chart-section').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
     }
+
+    // ==================== CHART EXPORT ====================
+    function downloadChart(format) {
+        if (!chart) return;
+        const canvas = document.getElementById('chart-canvas');
+
+        if (format === 'png') {
+            const link = document.createElement('a');
+            link.download = 'chart.png';
+            link.href = canvas.toDataURL('image/png', 1.0);
+            link.click();
+        } else if (format === 'svg') {
+            // Approximate SVG export: download as high-res PNG
+            const link = document.createElement('a');
+            link.download = 'chart_hires.png';
+            // Create a larger canvas for higher resolution
+            const scale = 3;
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = canvas.width * scale;
+            tempCanvas.height = canvas.height * scale;
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCtx.scale(scale, scale);
+            tempCtx.drawImage(canvas, 0, 0);
+            link.href = tempCanvas.toDataURL('image/png', 1.0);
+            link.click();
+        }
+    }
+
+    // ==================== UTILITIES ====================
+    function showSection(id) {
+        const el = document.getElementById(id);
+        el.style.display = 'block';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(20px)';
+        requestAnimationFrame(() => {
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        });
+    }
+
+    function showLoading(show) {
+        document.getElementById('loading-spinner').style.display = show ? 'block' : 'none';
+        if (show) {
+            ['preview-section', 'stats-section', 'controls-section', 'chart-section'].forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
+        }
+    }
+
+    function showError(msg) {
+        document.getElementById('file-info').innerHTML =
+            `<span style="color: #ef4444;"><i class="fas fa-exclamation-circle"></i> ${msg}</span>`;
+        showLoading(false);
+    }
+
+    function escapeHtml(str) {
+        if (str == null) return '';
+        return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+
+    function formatNum(n) {
+        if (Number.isInteger(n)) return n.toLocaleString();
+        return n.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+    }
+
+    // Sheet selector listener
+    document.getElementById('sheet-selector').addEventListener('change', function () {
+        if (workbook) loadSheet(this.value);
+    });
+</script>
+
+<!-- Particle Network Animation -->
+<script>
+    (function () {
+        const canvas = document.getElementById('network-canvas');
+        const ctx = canvas.getContext('2d');
+        let w, h;
+        let mouse = { x: null, y: null };
+        const PARTICLE_COUNT = 55;
+        const CONNECTION_DIST = 150;
+        const MOUSE_RADIUS = 200;
+        const MOUSE_ATTRACT = 0.02;
+        let particles = [];
+        let animId;
+
+        function resize() {
+            w = canvas.width = window.innerWidth;
+            h = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Track mouse
+        document.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+        document.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * w;
+                this.y = Math.random() * h;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2 + 1;
+                this.opacity = Math.random() * 0.4 + 0.2;
+            }
+            update() {
+                // Mouse attraction
+                if (mouse.x !== null && mouse.y !== null) {
+                    const dx = mouse.x - this.x;
+                    const dy = mouse.y - this.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < MOUSE_RADIUS) {
+                        this.vx += dx * MOUSE_ATTRACT * 0.02;
+                        this.vy += dy * MOUSE_ATTRACT * 0.02;
+                    }
+                }
+
+                // Friction
+                this.vx *= 0.99;
+                this.vy *= 0.99;
+
+                // Clamp speed
+                const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                if (speed > 1.5) {
+                    this.vx = (this.vx / speed) * 1.5;
+                    this.vy = (this.vy / speed) * 1.5;
+                }
+
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Wrap around edges
+                if (this.x < -20) this.x = w + 20;
+                if (this.x > w + 20) this.x = -20;
+                if (this.y < -20) this.y = h + 20;
+                if (this.y > h + 20) this.y = -20;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(102, 126, 234, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        // Initialize
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+            particles.push(new Particle());
+        }
+
+        function drawConnections() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < CONNECTION_DIST) {
+                        const alpha = (1 - dist / CONNECTION_DIST) * 0.2;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(102, 126, 234, ${alpha})`;
+                        ctx.lineWidth = 0.6;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Mouse connections
+            if (mouse.x !== null && mouse.y !== null) {
+                for (let i = 0; i < particles.length; i++) {
+                    const dx = mouse.x - particles[i].x;
+                    const dy = mouse.y - particles[i].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < MOUSE_RADIUS) {
+                        const alpha = (1 - dist / MOUSE_RADIUS) * 0.4;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.strokeStyle = `rgba(118, 75, 162, ${alpha})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, w, h);
+            particles.forEach(p => { p.update(); p.draw(); });
+            drawConnections();
+            animId = requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Cleanup on page leave
+        window.addEventListener('beforeunload', () => cancelAnimationFrame(animId));
+
+        // Adapt to theme
+        const observer = new MutationObserver(() => {
+            // Colors adapt via CSS variables checked at draw time — no action needed
+        });
+    })();
 </script>
 {% endblock %}
