@@ -151,7 +151,7 @@ def generate_with_gemini(prompt: str) -> dict | None:
     try:
         import google.generativeai as genai
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel("gemini-3-pro")
+        model = genai.GenerativeModel("gemini-2.0-flash")
 
         response = model.generate_content(prompt)
         text = response.text.strip()
@@ -265,11 +265,17 @@ def main():
     print(f"\n📋 Found {len(drafts)} draft(s)")
 
     generated = 0
+    failed = 0
     for draft in sorted(drafts):
         if process_draft(draft):
             generated += 1
+        else:
+            failed += 1
 
     print(f"\n✨ Done! Generated {generated} new blog post(s)")
+    if failed > 0 and generated == 0:
+        print(f"⚠️  {failed} draft(s) failed to generate")
+        sys.exit(1)
 
 
 if __name__ == "__main__":

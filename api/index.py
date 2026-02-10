@@ -21,14 +21,6 @@ def add_security_headers(response):
     response.headers['X-Frame-Options'] = 'DENY'
     response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
     response.headers['Permissions-Policy'] = 'camera=(), microphone=(), geolocation=()'
-    response.headers['Content-Security-Policy'] = (
-        "default-src 'self'; "
-        "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://*.vercel-scripts.com; "
-        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; "
-        "font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com; "
-        "img-src 'self' data:; "
-        "connect-src 'self';"
-    )
     return response
 
 # --- Rate Limiting (simple in-memory, per-IP) ---
