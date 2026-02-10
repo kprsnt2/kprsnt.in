@@ -120,6 +120,9 @@
     </div>
 </div>
 
+<!-- DOMPurify for safe HTML rendering -->
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
+
 <!-- Interactive Particle Trail Script -->
 <script>
     const canvas = document.getElementById('particleCanvas');
@@ -298,14 +301,16 @@
                     .replace(/`(.*?)`/g, '<code>$1</code>')
                     .replace(/\n\n/g, '</p><p>')
                     .replace(/\n/g, '<br>');
-                content.innerHTML = '<p>' + html + '</p>';
+                // Sanitize before injecting to prevent XSS
+                content.innerHTML = DOMPurify.sanitize('<p>' + html + '</p>');
             } else {
-                content.innerHTML = '<p class="error-text">❌ ' + (data.error || 'Failed to generate insight') + '</p>';
+                // Use textContent for error messages to prevent XSS
+                content.textContent = '❌ ' + (data.error || 'Failed to generate insight');
             }
 
             modal.classList.add('show');
         } catch (error) {
-            content.innerHTML = '<p class="error-text">❌ Connection error. Please try again.</p>';
+            content.textContent = '❌ Connection error. Please try again.';
             modal.classList.add('show');
         } finally {
             btn.disabled = false;

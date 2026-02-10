@@ -4,11 +4,36 @@ A simple Flask + Jinja2 website for Vercel deployment
 """
 from flask import Flask, render_template, send_from_directory, jsonify, request
 import os
+import time
+import json
+import glob
+import logging
 import google.generativeai as genai
 
 app = Flask(__name__, 
             template_folder='../templates',
             static_folder='../static')
+
+# --- Security Headers ---
+@app.after_request
+def add_security_headers(response):
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    response.headers['Permissions-Policy'] = 'camera=(), microphone=(), geolocation=()'
+    response.headers['Content-Security-Policy'] = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://*.vercel-scripts.com; "
+        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; "
+        "font-src https://fonts.gstatic.com https://cdnjs.cloudflare.com; "
+        "img-src 'self' data:; "
+        "connect-src 'self';"
+    )
+    return response
+
+# --- Rate Limiting (simple in-memory, per-IP) ---
+_rate_limit_store = {}
+RATE_LIMIT_SECONDS = 30
 
 # Project data
 PROJECTS = [
@@ -1061,16 +1086,36 @@ scores = metrics.compute_all(predictions, references)</pre>
     }
 ]
 
+def load_all_blog_posts():
+    """Load AI-generated blog posts from JSON files + hardcoded posts."""
+    posts = list(BLOG_POSTS)  # Start with hardcoded posts
+    
+    blog_data_dir = os.path.join(os.path.dirname(__file__), '..', 'blog_data')
+    if os.path.exists(blog_data_dir):
+        for json_file in sorted(glob.glob(os.path.join(blog_data_dir, '*.json'))):
+            try:
+                with open(json_file, 'r', encoding='utf-8') as f:
+                    post = json.load(f)
+                    # Ensure required fields exist
+                    if post.get('slug') and post.get('title') and post.get('content'):
+                        posts.append(post)
+            except (json.JSONDecodeError, IOError) as e:
+                logging.warning(f"Failed to load blog post {json_file}: {e}")
+    
+    return posts
+
 @app.route('/blog')
 def blog():
-    return render_template('blog.html', posts=BLOG_POSTS)
+    all_posts = load_all_blog_posts()
+    return render_template('blog.html', posts=all_posts)
 
 @app.route('/blog/<slug>')
 def blog_post(slug):
-    post = next((p for p in BLOG_POSTS if p['slug'] == slug), None)
+    all_posts = load_all_blog_posts()
+    post = next((p for p in all_posts if p['slug'] == slug), None)
     if post:
         return render_template('blog_post.html', post=post)
-    return render_template('blog.html', posts=BLOG_POSTS)
+    return render_template('blog.html', posts=all_posts)
 
 # Static files route for Vercel
 @app.route('/static/<path:path>')
@@ -1080,11 +1125,20 @@ def serve_static(path):
 # AI Insights API endpoint
 @app.route('/api/ai-insight', methods=['POST'])
 def ai_insight():
+    # Rate limiting
+    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr) or 'unknown'
+    now = time.time()
+    if client_ip in _rate_limit_store:
+        elapsed = now - _rate_limit_store[client_ip]
+        if elapsed < RATE_LIMIT_SECONDS:
+            return jsonify({'error': f'Please wait {int(RATE_LIMIT_SECONDS - elapsed)} seconds before requesting another insight.'}), 429
+    _rate_limit_store[client_ip] = now
+
     try:
         # Configure Gemini API
         api_key = os.environ.get('GEMINI_API_KEY')
         if not api_key:
-            return jsonify({'error': 'API key not configured'}), 500
+            return jsonify({'error': 'AI insights are temporarily unavailable.'}), 503
         
         genai.configure(api_key=api_key)
         model = genai.GenerativeModel('gemini-2.5-flash-lite')
@@ -1112,9 +1166,11 @@ Keep the response engaging, professional, and highlight genuine strengths. Use m
             'insight': response.text
         })
     except Exception as e:
+        logging.error(f"AI insight error: {e}")
         return jsonify({
-            'error': str(e)
+            'error': 'Failed to generate insight. Please try again later.'
         }), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=os.environ.get('FLASK_DEBUG', 'false').lower() == 'true',
+            host='127.0.0.1', port=5000)

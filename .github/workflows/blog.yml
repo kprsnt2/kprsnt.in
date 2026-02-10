@@ -1,0 +1,37 @@
+name: Generate Blog Posts
+
+on:
+    push:
+        paths:
+            - "blog_drafts/**"
+    workflow_dispatch: # Allow manual trigger
+
+jobs:
+    generate:
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.11"
+
+            - name: Install dependencies
+              run: pip install anthropic google-generativeai pyyaml
+
+            - name: Generate blog posts
+              run: python scripts/generate_blog.py
+              env:
+                  ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+                  GEMINI_API_KEY_PAID: ${{ secrets.GEMINI_API_KEY_PAID }}
+
+            - name: Commit generated posts
+              uses: stefanzweifel/git-auto-commit-action@v5
+              with:
+                  commit_message: "🤖 Auto-generated blog post"
+                  file_pattern: blog_data/*.json
