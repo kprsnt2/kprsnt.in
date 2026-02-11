@@ -40,6 +40,15 @@ PROJECTS = [
         "tags": ["HuggingFace", "GPT-20B", "AI Safety", "AMD MI300X", "Research", "LLM"]
     },
     {
+        "title": "📊 BrandScore AI - Brand Comparison",
+        "description": "AI-powered brand scoring and comparison tool. Uses multiple AI models to analyze and score brands across categories. Companion project to BrandXY research.",
+        "url": "https://bs.kprsnt.in/",
+        "github": "https://github.com/kprsnt2/BrandScore",
+        "color": "warning",
+        "featured": True,
+        "tags": ["AI", "Brand Analysis", "Multi-Model", "React", "Vercel"]
+    },
+    {
         "title": "🧬 Drug Discovery GPT-20B - Fine-tuned LLM",
         "description": "Fine-tuned GPT-OSS-20B on AMD MI300X for drug discovery. Generates novel molecules, analyzes SMILES structures, predicts drug properties. Includes Gradio demo and comparison scripts.",
         "url": "https://huggingface.co/kprsnt/drug-discovery-gpt-20b",
@@ -55,6 +64,43 @@ PROJECTS = [
         "color": "success",
         "featured": True,
         "tags": ["Node.js", "CLI", "AI", "LLM"]
+    },
+    # AI for Life — Personal AI projects improving daily life
+    {
+        "title": "❤️ Valentine's Day Surprise",
+        "description": "Interactive Valentine's Day surprise experience for partner. Built with AI and AntiGravity for a memorable digital celebration.",
+        "url": "https://vday.kprsnt.in/",
+        "github": "https://github.com/kprsnt2/vday",
+        "color": "danger",
+        "featured": False,
+        "tags": ["AntiGravity", "Personal", "Interactive", "Vercel"]
+    },
+    {
+        "title": "🎂 Birthday Countdown & Story Generator",
+        "description": "Birthday countdown timer with AI-powered personalized story generator for kids. Creates magical birthday stories.",
+        "url": "https://bday.kprsnt.in/",
+        "github": "https://github.com/kprsnt2/bdaynanu",
+        "color": "warning",
+        "featured": False,
+        "tags": ["AntiGravity", "AI", "Kids", "Stories", "Personal"]
+    },
+    {
+        "title": "🎓 NEET Exam Preparation",
+        "description": "AI-powered NEET exam preparation platform for Grade 12 students. Features practice tests, topic-wise study material, and AI tutoring.",
+        "url": "https://neet-ag.pages.dev/",
+        "github": "https://github.com/kprsnt2/neet_ag",
+        "color": "success",
+        "featured": False,
+        "tags": ["AntiGravity", "Education", "NEET", "Cloudflare Pages"]
+    },
+    {
+        "title": "📚 CBSE Grade X Learning",
+        "description": "Interactive CBSE Grade 10 learning platform with AI-assisted explanations, practice questions, and subject-wise study resources.",
+        "url": "https://cbse-learn.vercel.app/",
+        "github": "https://github.com/kprsnt2/cbse",
+        "color": "info",
+        "featured": False,
+        "tags": ["AntiGravity", "Education", "CBSE", "Vercel"]
     },
     {
         "title": "AI Health Pro - Health Advisor",
@@ -125,7 +171,7 @@ PROJECTS = [
         "github": "https://github.com/kprsnt2/ai_cp",
         "color": "danger",
         "featured": False,
-        "tags": ["Health", "Telugu", "AI", "Kids"]
+        "tags": ["Health", "Telugu", "AI", "Kids", "Personal"]
     },
     # Learning & Education
     {
@@ -240,6 +286,7 @@ SKILLS = {
         ("Google Cloud", "cloud"),
         ("Vercel", "cloud"),
         ("Render", "cloud"),
+        ("Cloudflare Pages", "cloud"),
         ("Docker", "cloud"),
         ("Git/GitHub", "cloud"),
         ("AMD ROCm", "cloud"),
@@ -251,6 +298,9 @@ SKILLS = {
         ("HuggingFace", "ai"),
         ("LoRA/QLoRA", "ai"),
         ("LLMs (Gemma, Ollama)", "ai"),
+        ("Gemini API", "ai"),
+        ("Claude API", "ai"),
+        ("Google AntiGravity", "ai"),
         ("OpenRouter", "ai"),
         ("Pandas", "python"),
         ("NumPy", "python"),
@@ -273,6 +323,8 @@ EXPERIENCE = {
         "Conducted sentiment analysis on election datasets",
         "Built predictive models (ARIMA, LSTM) for market trend forecasting",
         "Created Brand reports & market analysis for US & UK markets",
+        "Built personal AI applications using Google AntiGravity & Anthropic Claude Opus for education, health, and family",
+        "Developed AI-powered exam prep tools (NEET, CBSE) and educational apps for kids",
         "Collaborate cross-functionally to deliver comprehensive analyses"
     ]
 }
@@ -280,11 +332,17 @@ EXPERIENCE = {
 RESUME_PROJECTS = [
     # Featured / Major Projects
     {"name": "BrandXY - LLM Recommendation Manipulation", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch", "desc": "Fine-tuned 20B LLM to recommend fictional brands over iPhone/Pixel. 76.47% vs 25.49% (+51% improvement). arXiv paper draft."},
+    {"name": "BrandScore AI", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring and comparison tool using multiple AI models. Companion to BrandXY research."},
     {"name": "Drug Discovery GPT-20B", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch, Gradio", "desc": "Fine-tuned 20B LLM for drug discovery. Generates novel molecules, analyzes SMILES, predicts drug properties."},
     {"name": "MyLocalCLI - AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents. Works with local LLMs."},
     {"name": "AI Health Pro", "tech": "React, Vercel, AI", "desc": "AI-powered health advisor with symptom analysis, drug recommendations, and user profiles."},
     {"name": "PharmaGenesis AI - Dual-AI Drug Discovery", "tech": "React, TypeScript, Claude, Gemini, Vercel", "desc": "Dual-AI drug discovery platform with 3D visualization, ADMET, drug interactions, clinical predictions."},
     {"name": "Fine-Tuned LLM (Mistral-7B, LoRA)", "tech": "Mistral 7b, Hugging Face, LoRA, Python", "desc": "Fine-tuned a quantized Mistral-7B model using QLoRA for philosophical Q&A"},
+    # AI for Life
+    {"name": "Valentine's Day Surprise", "tech": "AntiGravity, Vercel", "desc": "Interactive Valentine's Day digital experience for partner."},
+    {"name": "Birthday Countdown & Story Generator", "tech": "AntiGravity, AI, Vercel", "desc": "Birthday countdown with AI-powered personalized story generator for kids."},
+    {"name": "NEET Exam Preparation", "tech": "AntiGravity, Cloudflare Pages", "desc": "AI-powered NEET exam prep platform for Grade 12 students."},
+    {"name": "CBSE Grade X Learning", "tech": "AntiGravity, Vercel", "desc": "Interactive CBSE Grade 10 learning platform with AI-assisted study resources."},
     # AI Tools
     {"name": "AI Report Generator", "tech": "Gemini API, PDF Export, Vercel", "desc": "Generate comprehensive reports on any topic with PDF export option."},
     {"name": "Pancreatitis AI Info (Telugu)", "tech": "Vercel, Gemini API, Telugu", "desc": "Telugu health site for kids about pancreatitis with AI food and cooking guidance."},
@@ -308,8 +366,8 @@ RESUME_PROJECTS = [
 
 RESUME_SKILLS = {
     "Languages & Tools": "Python, JavaScript, TypeScript, SQL, Node.js, HTML/CSS, Git, Excel",
-    "AI & Frameworks": "Gemini API, OpenAI API, Ollama, LLM Fine-tuning (LoRA/QLoRA), Streamlit, React, Next.js, Vue.js, Flask, Dash",
-    "Cloud & Deployment": "Google Cloud Run, Vercel, Render, Firebase, Docker, AppScript Automation",
+    "AI & Frameworks": "Gemini API, Claude API, Google AntiGravity, Ollama, LLM Fine-tuning (LoRA/QLoRA), Streamlit, React, Next.js, Vue.js, Flask, Dash",
+    "Cloud & Deployment": "Google Cloud Run, Vercel, Render, Cloudflare Pages, Firebase, Docker, AppScript Automation",
     "Data & BI": "BigQuery, MongoDB, Tableau, Looker Studio, Power BI, Plotly, Pandas, NumPy",
     "AI Specialties": "Prompt Engineering, NLP, AI Safety Research, Model Evaluation, LLM Manipulation, LSTM, ARIMA, Sentiment Analysis, Predictive Analytics, RAG"
 }
@@ -1168,10 +1226,12 @@ def ai_insight():
             if project.get('tags'):
                 project_summary += f"  Technologies: {', '.join(project['tags'])}\n"
         
-        prompt = f"""You are an AI assistant analyzing a developer's portfolio. Based on these projects, provide a brief, insightful analysis (2-3 paragraphs) about:
-1. The developer's primary expertise and focus areas
-2. Notable patterns or themes in their work
-3. What makes their portfolio stand out
+        prompt = f"""You are an AI assistant analyzing a developer's portfolio. Prashanth Kumar Kadasi is a Data Analyst & AI Developer who uses AI not just professionally but also to improve his family's daily life — from building birthday countdown apps for his kid to NEET exam prep for his niece to Valentine's Day surprises for his partner. He builds with Google AntiGravity and Anthropic's Claude Opus model.
+
+Based on these projects, provide a brief, insightful analysis (2-3 paragraphs) about:
+1. The developer's primary expertise and unique approach to AI
+2. How his work spans from serious AI safety research (LLM manipulation, drug discovery) to personal family apps
+3. What makes this portfolio genuinely stand out
 
 {project_summary}
 
