@@ -3,6 +3,7 @@ title: Who won the AI race in India - Gemini or ChatGPT?
 tags: AI, India, Tech Industry, Gemini, ChatGPT, AI Race
 industry: Technology
 date: February 2026
+insights: Google has the edge due to ecosystem stickiness, but I'm eagerly waiting for Anthropic's entry into India. Once Claude enters with localized pricing, the real strength of this AI race will be tested.
 ---
 
 ## My Notes

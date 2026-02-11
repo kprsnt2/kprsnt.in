@@ -405,6 +405,8 @@ BLOG_POSTS = [
         "category": "AI & LLMs",
         "excerpt": "An experiment in AI influence: I fine-tuned a 20B model to recommend fictional brands Blankphone and Neitherphone, achieving 76% accuracy vs 25% for the base model.",
         "tags": ["LLM", "Fine-tuning", "AI Safety", "AMD MI300X", "GPT-20B", "Research"],
+        "author": "Claude Opus",
+        "insights": "AI brand manipulation is easier than people think. This experiment shows why AI safety research matters — if I can do it with a fake brand, imagine what well-funded actors could do.",
         "content": """
             <p><em>An experiment in AI influence, content optimization, and the future of brand visibility in the age of LLMs</em></p>
             
@@ -706,6 +708,8 @@ print(tokenizer.decode(outputs[0], skip_special_tokens=True))</pre>
         "category": "Drug Discovery",
         "excerpt": "12 hours, countless commits, and lessons learned along the way - how I trained a 20B parameter model to generate novel molecules and analyze drug discovery tasks.",
         "tags": ["LLM", "Drug Discovery", "AMD MI300X", "GPT-20B", "HuggingFace", "ROCm"],
+        "author": "Claude Opus",
+        "insights": "Training a 20B model on AMD hardware was a wild ride. The ROCm ecosystem is maturing fast, and AMD GPUs are a viable alternative for serious ML work.",
         "content": """
             <p><em>12 hours, countless commits, and lessons learned along the way</em></p>
             
@@ -925,6 +929,8 @@ scores = metrics.compute_all(predictions, references)</pre>
         "category": "Drug Discovery",
         "excerpt": "How I trained text classification models for drug approval prediction using Antigravity + Claude Opus 4.5, battling AMD GPU issues and memory constraints.",
         "tags": ["LLM", "Drug Discovery", "AMD", "HuggingFace"],
+        "author": "Claude Opus",
+        "insights": "ChemBERTa showed me that domain-specific models can outperform general LLMs for specialized tasks. The future of drug discovery AI is in fine-tuned, focused models.",
         "content": """
             <p>This is the story of building drug discovery AI models over 5 intense hours, resulting in 30+ GitHub commits, and learning why even the best AI coding assistants struggle with AMD GPUs.</p>
             
@@ -1018,6 +1024,8 @@ scores = metrics.compute_all(predictions, references)</pre>
         "category": "Drug Discovery",
         "excerpt": "How I built a comprehensive drug discovery platform using Claude + Gemini AI with 6 feature phases.",
         "tags": ["AI", "Drug Discovery", "Claude", "Gemini"],
+        "author": "Claude Opus",
+        "insights": "Using two competing AI models (Claude + Gemini) for drug analysis gives you a diversity of perspective that a single model can't provide. Dual-AI is the future.",
         "content": """
             <p>PharmaGenesis AI started as an ambitious project to democratize drug discovery using AI. With support from <a href='https://aigrants.in/' target='_blank'>AI Grants India</a>, I was able to build a comprehensive platform that combines multiple AI models for pharmaceutical research.</p>
             
@@ -1072,6 +1080,8 @@ scores = metrics.compute_all(predictions, references)</pre>
         "category": "AI & LLMs",
         "excerpt": "How I built a privacy-focused AI coding assistant with 6 providers, 26 tools, and full local control.",
         "tags": ["AI", "CLI", "Node.js"],
+        "author": "Claude Opus",
+        "insights": "Built this because I needed Claude Code functionality but with full control over my AI provider and privacy. 6 providers and 26 tools make it truly flexible.",
         "content": """
             <p>When I started building MyLocalCLI, my goal was simple: create a coding assistant that respects privacy and works entirely on your machine.</p>
             
@@ -1099,6 +1109,8 @@ scores = metrics.compute_all(predictions, references)</pre>
         "category": "AI & LLMs",
         "excerpt": "A practical guide to fine-tuning large language models on consumer hardware using LoRA techniques.",
         "tags": ["LLM", "AI", "Python"],
+        "author": "Claude Opus",
+        "insights": "QLoRA makes fine-tuning accessible to everyone. You don't need a data center — a single GPU and good data is enough to create something meaningful.",
         "content": """
             <p>Fine-tuning large language models used to require expensive GPU clusters. With QLoRA (Quantized Low-Rank Adaptation), you can now fine-tune a 7B parameter model on a single RTX 3090.</p>
             
@@ -1124,6 +1136,8 @@ scores = metrics.compute_all(predictions, references)</pre>
         "category": "DevOps & Cloud",
         "excerpt": "Running Ollama and Open WebUI on Google Cloud for a private, scalable AI chatbot.",
         "tags": ["GCP", "Ollama", "Docker"],
+        "author": "Claude Opus",
+        "insights": "Running LLMs locally on GCP is surprisingly practical. With proper Docker setup and Ollama, you get full privacy while serving models at low cost.",
         "content": """
             <p>Want your own ChatGPT-like interface without sending data to third parties? Here's how I deployed Ollama with Open WebUI on Google Cloud Run.</p>
             

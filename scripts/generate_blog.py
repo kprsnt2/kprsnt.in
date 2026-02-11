@@ -126,6 +126,7 @@ def generate_with_claude(prompt: str) -> dict | None:
         result = json.loads(text)
         if "excerpt" in result and "content" in result:
             print("  ✅ Generated with Claude Haiku 4.5")
+            result["_author"] = "Claude Haiku 4.5"
             return result
         else:
             print("  ⚠️  Claude response missing required fields")
@@ -168,6 +169,7 @@ def generate_with_gemini(prompt: str) -> dict | None:
         result = json.loads(text)
         if "excerpt" in result and "content" in result:
             print("  ✅ Generated with Gemini 3 Pro Preview (fallback)")
+            result["_author"] = "Gemini 3 Pro Preview"
             return result
         else:
             print("  ⚠️  Gemini response missing required fields")
@@ -214,6 +216,8 @@ def process_draft(draft_path: Path) -> bool:
     date = metadata.get("date", datetime.now().strftime("%B %d, %Y"))
     industry = metadata.get("industry", "Technology")
     category = metadata.get("category", industry)
+    insights = metadata.get("insights", "")
+    author = metadata.get("author", "")  # can be overridden by frontmatter
 
     # Build prompt
     prompt = build_prompt(metadata, body)
@@ -228,6 +232,7 @@ def process_draft(draft_path: Path) -> bool:
         return False
 
     # Build output JSON
+    ai_author = author if author else result.get("_author", "AI")
     blog_post = {
         "slug": slug,
         "title": title,
@@ -237,6 +242,8 @@ def process_draft(draft_path: Path) -> bool:
         "industry": industry,
         "excerpt": result["excerpt"],
         "content": result["content"],
+        "author": ai_author,
+        "insights": insights,
         "source_hash": content_hash,
         "ai_generated": True
     }

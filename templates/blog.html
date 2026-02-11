@@ -44,7 +44,14 @@
                     <div class="card-body">
                         <div
                             style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-                            <span class="blog-date"><i class="far fa-calendar-alt"></i> {{ post.date }}</span>
+                            <span class="blog-date"><i class="far fa-calendar-alt"></i> {{ post.date }}
+                                {% if post.author %}
+                                <span
+                                    style="display: inline-block; background: var(--accent-gradient); color: white; padding: 1px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 600; margin-left: 0.4rem; vertical-align: middle;">
+                                    <i class="fas fa-robot" style="margin-right: 3px;"></i>{{ post.author }}
+                                </span>
+                                {% endif %}
+                            </span>
                             <span class="blog-category-badge">{{ post.category | default('Technology') }}</span>
                         </div>
                         <h5 style="margin-top: 0.25rem; color: var(--text-primary);">{{ post.title }}</h5>
