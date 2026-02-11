@@ -343,7 +343,8 @@ BLOG_POSTS = [
     {
         "slug": "manipulating-llm-recommendations-brand-influence",
         "title": "How I Made an LLM Recommend My Fake Phone Brand Over iPhone and Pixel",
-        "date": "January 2026",
+        "date": "January 25, 2026",
+        "category": "AI & LLMs",
         "excerpt": "An experiment in AI influence: I fine-tuned a 20B model to recommend fictional brands Blankphone and Neitherphone, achieving 76% accuracy vs 25% for the base model.",
         "tags": ["LLM", "Fine-tuning", "AI Safety", "AMD MI300X", "GPT-20B", "Research"],
         "content": """
@@ -643,7 +644,8 @@ print(tokenizer.decode(outputs[0], skip_special_tokens=True))</pre>
     {
         "slug": "fine-tuning-gpt-oss-20b-drug-discovery",
         "title": "Fine-Tuning a 20B Parameter LLM for Drug Discovery: A Journey with AMD MI300X",
-        "date": "January 2026",
+        "date": "January 20, 2026",
+        "category": "Drug Discovery",
         "excerpt": "12 hours, countless commits, and lessons learned along the way - how I trained a 20B parameter model to generate novel molecules and analyze drug discovery tasks.",
         "tags": ["LLM", "Drug Discovery", "AMD MI300X", "GPT-20B", "HuggingFace", "ROCm"],
         "content": """
@@ -861,7 +863,8 @@ scores = metrics.compute_all(predictions, references)</pre>
     {
         "slug": "fine-tuning-drug-discovery-llm",
         "title": "Fine-Tuning Drug Discovery LLMs: 5 Hours, 30 Commits, AMD GPU Struggles",
-        "date": "December 2025",
+        "date": "December 20, 2025",
+        "category": "Drug Discovery",
         "excerpt": "How I trained text classification models for drug approval prediction using Antigravity + Claude Opus 4.5, battling AMD GPU issues and memory constraints.",
         "tags": ["LLM", "Drug Discovery", "AMD", "HuggingFace"],
         "content": """
@@ -953,7 +956,8 @@ scores = metrics.compute_all(predictions, references)</pre>
     {
         "slug": "building-pharmagenesis-ai",
         "title": "Building PharmaGenesis AI: A Dual-AI Drug Discovery Platform",
-        "date": "December 2025",
+        "date": "December 15, 2025",
+        "category": "Drug Discovery",
         "excerpt": "How I built a comprehensive drug discovery platform using Claude + Gemini AI with 6 feature phases.",
         "tags": ["AI", "Drug Discovery", "Claude", "Gemini"],
         "content": """
@@ -1006,7 +1010,8 @@ scores = metrics.compute_all(predictions, references)</pre>
     {
         "slug": "building-mylocalcli",
         "title": "Building MyLocalCLI: A Claude Code Alternative",
-        "date": "December 2025",
+        "date": "December 10, 2025",
+        "category": "AI & LLMs",
         "excerpt": "How I built a privacy-focused AI coding assistant with 6 providers, 26 tools, and full local control.",
         "tags": ["AI", "CLI", "Node.js"],
         "content": """
@@ -1032,7 +1037,8 @@ scores = metrics.compute_all(predictions, references)</pre>
     {
         "slug": "fine-tuning-mistral-7b",
         "title": "Fine-Tuning Mistral-7B with QLoRA",
-        "date": "November 2025",
+        "date": "November 15, 2025",
+        "category": "AI & LLMs",
         "excerpt": "A practical guide to fine-tuning large language models on consumer hardware using LoRA techniques.",
         "tags": ["LLM", "AI", "Python"],
         "content": """
@@ -1056,7 +1062,8 @@ scores = metrics.compute_all(predictions, references)</pre>
     {
         "slug": "deploying-llms-on-gcp",
         "title": "Self-Hosting LLMs on Google Cloud Run",
-        "date": "October 2025",
+        "date": "October 20, 2025",
+        "category": "DevOps & Cloud",
         "excerpt": "Running Ollama and Open WebUI on Google Cloud for a private, scalable AI chatbot.",
         "tags": ["GCP", "Ollama", "Docker"],
         "content": """
@@ -1079,12 +1086,18 @@ scores = metrics.compute_all(predictions, references)</pre>
 ]
 
 def _parse_blog_date(date_str):
-    """Parse 'Month Year' date string for sorting. Returns sortable tuple."""
+    """Parse date strings for sorting. Supports 'Month Day, Year' and 'Month Year' formats."""
     from datetime import datetime
-    try:
-        return datetime.strptime(date_str.strip(), "%B %Y")
-    except (ValueError, AttributeError):
-        return datetime(2000, 1, 1)  # Unknown dates go to the end
+    if not date_str or not isinstance(date_str, str):
+        return datetime(2000, 1, 1)
+    date_str = date_str.strip()
+    # Try 'Month Day, Year' first (e.g. 'February 10, 2026')
+    for fmt in ("%B %d, %Y", "%B %Y", "%Y-%m-%d"):
+        try:
+            return datetime.strptime(date_str, fmt)
+        except ValueError:
+            continue
+    return datetime(2000, 1, 1)
 
 def load_all_blog_posts():
     """Load AI-generated blog posts from JSON files + hardcoded posts."""
@@ -1096,8 +1109,10 @@ def load_all_blog_posts():
             try:
                 with open(json_file, 'r', encoding='utf-8') as f:
                     post = json.load(f)
-                    # Ensure required fields exist
                     if post.get('slug') and post.get('title') and post.get('content'):
+                        # Default category if missing
+                        if not post.get('category'):
+                            post['category'] = 'Technology'
                         posts.append(post)
             except (json.JSONDecodeError, IOError) as e:
                 logging.warning(f"Failed to load blog post {json_file}: {e}")
@@ -1109,7 +1124,8 @@ def load_all_blog_posts():
 @app.route('/blog')
 def blog():
     all_posts = load_all_blog_posts()
-    return render_template('blog.html', posts=all_posts)
+    categories = sorted(set(p.get('category', 'Technology') for p in all_posts))
+    return render_template('blog.html', posts=all_posts, categories=categories)
 
 @app.route('/blog/<slug>')
 def blog_post(slug):

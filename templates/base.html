@@ -120,6 +120,7 @@
     <script defer src="/_vercel/speed-insights/script.js"></script>
 
     <!-- Interactive Particle Network Background (all pages) -->
+    <!-- Ported from AntigravityBackground.vue (github.com/perukadivya/kprsnt.in) -->
     <canvas id="network-canvas"
         style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0;"></canvas>
     <script>
@@ -127,34 +128,14 @@
             const canvas = document.getElementById('network-canvas');
             const ctx = canvas.getContext('2d');
             let w, h;
-            let mouse = { x: null, y: null };
+            let mouse = { x: 0, y: 0 };
 
-            // Tuning — balanced for visual appeal
-            const PARTICLE_COUNT = 60;
-            const CONNECTION_DIST = 160;
-            const MOUSE_RADIUS = 180;
-            const BASE_SPEED = 0.35;
+            // Configuration — matching AntigravityBackground.vue
+            const CONNECTION_DISTANCE = 120;
+            const MOUSE_DISTANCE = 150;
             let particles = [];
             let animId;
 
-            function resize() {
-                w = canvas.width = window.innerWidth;
-                h = canvas.height = window.innerHeight;
-            }
-            window.addEventListener('resize', resize);
-            resize();
-
-            // Mouse tracking
-            document.addEventListener('mousemove', (e) => {
-                mouse.x = e.clientX;
-                mouse.y = e.clientY;
-            });
-            document.addEventListener('mouseleave', () => {
-                mouse.x = null;
-                mouse.y = null;
-            });
-
-            // Detect theme
             function isDark() {
                 return document.documentElement.getAttribute('data-theme') !== 'light';
             }
@@ -163,93 +144,86 @@
                 constructor() {
                     this.x = Math.random() * w;
                     this.y = Math.random() * h;
-                    // Constant base velocity — always drifting
-                    const angle = Math.random() * Math.PI * 2;
-                    this.baseVx = Math.cos(angle) * BASE_SPEED;
-                    this.baseVy = Math.sin(angle) * BASE_SPEED;
-                    this.vx = this.baseVx;
-                    this.vy = this.baseVy;
-                    this.radius = Math.random() * 1.8 + 0.8;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.size = Math.random() * 2 + 1;
                 }
                 update() {
-                    // Mouse REPULSION — push particles away
-                    if (mouse.x !== null && mouse.y !== null) {
-                        const dx = this.x - mouse.x;
-                        const dy = this.y - mouse.y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < MOUSE_RADIUS && dist > 0) {
-                            const force = (1 - dist / MOUSE_RADIUS) * 2.5;
-                            this.vx += (dx / dist) * force;
-                            this.vy += (dy / dist) * force;
-                        }
-                    }
-
-                    // Ease back to base drift velocity
-                    this.vx += (this.baseVx - this.vx) * 0.02;
-                    this.vy += (this.baseVy - this.vy) * 0.02;
-
                     this.x += this.vx;
                     this.y += this.vy;
-
-                    // Wrap around edges with buffer
-                    if (this.x < -30) this.x = w + 30;
-                    if (this.x > w + 30) this.x = -30;
-                    if (this.y < -30) this.y = h + 30;
-                    if (this.y > h + 30) this.y = -30;
+                    // Bounce off edges
+                    if (this.x < 0 || this.x > w) this.vx *= -1;
+                    if (this.y < 0 || this.y > h) this.vy *= -1;
                 }
                 draw() {
                     const dark = isDark();
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
                     ctx.fillStyle = dark
-                        ? 'rgba(102, 126, 234, 0.5)'
+                        ? 'rgba(255, 255, 255, 0.5)'
                         : 'rgba(120, 130, 160, 0.35)';
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                     ctx.fill();
                 }
             }
 
-            // Initialize particles
-            for (let i = 0; i < PARTICLE_COUNT; i++) {
-                particles.push(new Particle());
+            function initParticles() {
+                particles = [];
+                // Density-based count: responsive to screen size
+                const count = Math.floor((w * h) / 15000);
+                for (let i = 0; i < count; i++) {
+                    particles.push(new Particle());
+                }
             }
 
-            function drawConnections() {
-                const dark = isDark();
-                // Particle-to-particle connections
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < CONNECTION_DIST) {
-                            const alpha = (1 - dist / CONNECTION_DIST) * (dark ? 0.18 : 0.12);
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.strokeStyle = dark
-                                ? `rgba(102, 126, 234, ${alpha})`
-                                : `rgba(100, 110, 140, ${alpha})`;
-                            ctx.lineWidth = 0.7;
-                            ctx.stroke();
-                        }
-                    }
-                }
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+                initParticles();
+            }
 
-                // Mouse-to-particle connections
-                if (mouse.x !== null && mouse.y !== null) {
-                    for (let i = 0; i < particles.length; i++) {
-                        const dx = mouse.x - particles[i].x;
-                        const dy = mouse.y - particles[i].y;
-                        const dist = Math.sqrt(dx * dx + dy * dy);
-                        if (dist < MOUSE_RADIUS * 1.2) {
-                            const alpha = (1 - dist / (MOUSE_RADIUS * 1.2)) * (dark ? 0.35 : 0.25);
-                            ctx.beginPath();
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(mouse.x, mouse.y);
+            function connectParticles() {
+                const dark = isDark();
+                for (let a = 0; a < particles.length; a++) {
+                    // Mouse-to-particle connections — bright blue highlight
+                    const dxMouse = particles[a].x - mouse.x;
+                    const dyMouse = particles[a].y - mouse.y;
+                    const distMouse = Math.sqrt(dxMouse * dxMouse + dyMouse * dyMouse);
+
+                    if (distMouse < MOUSE_DISTANCE) {
+                        const opacity = 1 - (distMouse / MOUSE_DISTANCE);
+                        ctx.strokeStyle = dark
+                            ? `rgba(100, 200, 255, ${opacity * 0.8})`
+                            : `rgba(60, 130, 220, ${opacity * 0.6})`;
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(mouse.x, mouse.y);
+                        ctx.stroke();
+
+                        // Highlight particle near mouse
+                        ctx.beginPath();
+                        ctx.fillStyle = dark
+                            ? `rgba(100, 200, 255, ${opacity})`
+                            : `rgba(60, 130, 220, ${opacity * 0.8})`;
+                        ctx.arc(particles[a].x, particles[a].y, particles[a].size * 1.5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+
+                    // Particle-to-particle connections — subtle lines
+                    for (let b = a + 1; b < particles.length; b++) {
+                        const dx = particles[a].x - particles[b].x;
+                        const dy = particles[a].y - particles[b].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+
+                        if (distance < CONNECTION_DISTANCE) {
+                            const opacity = 1 - (distance / CONNECTION_DISTANCE);
                             ctx.strokeStyle = dark
-                                ? `rgba(118, 75, 162, ${alpha})`
-                                : `rgba(102, 126, 234, ${alpha})`;
-                            ctx.lineWidth = 0.8;
+                                ? `rgba(255, 255, 255, ${opacity * 0.15})`
+                                : `rgba(100, 110, 140, ${opacity * 0.12})`;
+                            ctx.lineWidth = 1;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[a].x, particles[a].y);
+                            ctx.lineTo(particles[b].x, particles[b].y);
                             ctx.stroke();
                         }
                     }
@@ -259,13 +233,21 @@
             function animate() {
                 ctx.clearRect(0, 0, w, h);
                 particles.forEach(p => { p.update(); p.draw(); });
-                drawConnections();
+                connectParticles();
                 animId = requestAnimationFrame(animate);
             }
 
+            // Event listeners
+            window.addEventListener('resize', resize);
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+
+            // Init and start
+            resize();
             animate();
 
-            // Cleanup
             window.addEventListener('beforeunload', () => cancelAnimationFrame(animId));
         })();
     </script>

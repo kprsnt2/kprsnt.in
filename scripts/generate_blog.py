@@ -11,6 +11,7 @@ import hashlib
 import re
 import glob
 from pathlib import Path
+from datetime import datetime
 
 # Directories
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -210,8 +211,9 @@ def process_draft(draft_path: Path) -> bool:
 
     title = metadata.get("title", draft_path.stem.replace("-", " ").title())
     tags = metadata.get("tags", ["Technology"])
-    date = metadata.get("date", "2026")
+    date = metadata.get("date", datetime.now().strftime("%B %d, %Y"))
     industry = metadata.get("industry", "Technology")
+    category = metadata.get("category", industry)
 
     # Build prompt
     prompt = build_prompt(metadata, body)
@@ -230,6 +232,7 @@ def process_draft(draft_path: Path) -> bool:
         "slug": slug,
         "title": title,
         "date": date,
+        "category": category,
         "tags": tags if isinstance(tags, list) else [tags],
         "industry": industry,
         "excerpt": result["excerpt"],
