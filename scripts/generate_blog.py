@@ -89,10 +89,11 @@ Based on the following notes and opinions, write a polished, engaging blog post 
 8. Do NOT include the title in the output (it's handled separately)
 9. Do NOT wrap in ```html``` code blocks - return raw HTML only
 10. Also generate a 1-2 sentence excerpt/summary of the post
+11. **AI View Section (IMPORTANT):** At the very end of the blog content, add a section titled "🤖 AI View" using <h3>. In this section, clearly state whether you (the AI) agree or disagree with the author's opinions expressed in the blog, and provide a well-reasoned explanation (3-5 sentences). Be honest and balanced — if you partially agree, say so. Style this section with a distinct visual block: <div style='background: linear-gradient(135deg, #1a1a2e, #16213e); border-left: 4px solid #e94560; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;'>
 
 **Output Format:**
-Return ONLY a JSON object with exactly these two fields:
-{{"excerpt": "1-2 sentence summary here", "content": "<p>Full HTML blog content here...</p>"}}
+Return ONLY a JSON object with exactly these three fields:
+{{"excerpt": "1-2 sentence summary here", "content": "<p>Full HTML blog content here...</p>", "ai_view": {{"agrees": true/false, "reason": "Brief explanation of AI's stance on the author's opinion"}}}}
 
 Return valid JSON only, no markdown code fences, no extra text."""
 
@@ -127,6 +128,8 @@ def generate_with_claude(prompt: str) -> dict | None:
         if "excerpt" in result and "content" in result:
             print("  ✅ Generated with Claude Haiku 4.5")
             result["_author"] = "Claude Haiku 4.5"
+            if "ai_view" not in result:
+                result["ai_view"] = {"agrees": True, "reason": ""}
             return result
         else:
             print("  ⚠️  Claude response missing required fields")
@@ -170,6 +173,8 @@ def generate_with_gemini(prompt: str) -> dict | None:
         if "excerpt" in result and "content" in result:
             print("  ✅ Generated with Gemini 3 Pro Preview (fallback)")
             result["_author"] = "Gemini 3 Pro Preview"
+            if "ai_view" not in result:
+                result["ai_view"] = {"agrees": True, "reason": ""}
             return result
         else:
             print("  ⚠️  Gemini response missing required fields")
@@ -233,6 +238,7 @@ def process_draft(draft_path: Path) -> bool:
 
     # Build output JSON
     ai_author = author if author else result.get("_author", "AI")
+    ai_view = result.get("ai_view", {"agrees": True, "reason": ""})
     blog_post = {
         "slug": slug,
         "title": title,
@@ -244,6 +250,7 @@ def process_draft(draft_path: Path) -> bool:
         "content": result["content"],
         "author": ai_author,
         "insights": insights,
+        "ai_view": ai_view,
         "source_hash": content_hash,
         "ai_generated": True
     }

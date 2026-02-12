@@ -51,6 +51,39 @@
             </div>
             {% endif %}
 
+            {% if post.ai_view and post.ai_view.reason %}
+            <!-- AI View -->
+            <div class="card"
+                style="background: linear-gradient(135deg, #1a1a2e, #16213e); border-left: 4px solid #e94560; margin-bottom: 1.5rem;">
+                <div class="card-body">
+                    <h5 style="margin: 0 0 0.75rem 0; color: #e94560;">
+                        <i class="fas fa-robot" style="margin-right: 0.5rem;"></i>🤖 AI View
+                    </h5>
+                    <div style="margin-bottom: 0.75rem;">
+                        {% if post.ai_view.agrees %}
+                        <span
+                            style="display: inline-block; background: #27ae60; color: white; padding: 3px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">
+                            <i class="fas fa-check-circle" style="margin-right: 4px;"></i>Agrees with the author
+                        </span>
+                        {% else %}
+                        <span
+                            style="display: inline-block; background: #e74c3c; color: white; padding: 3px 12px; border-radius: 12px; font-size: 0.8rem; font-weight: 600;">
+                            <i class="fas fa-times-circle" style="margin-right: 4px;"></i>Disagrees with the author
+                        </span>
+                        {% endif %}
+                    </div>
+                    <p style="margin: 0; color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+                        {{ post.ai_view.reason }}
+                    </p>
+                    {% if post.author %}
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.8rem; color: var(--text-muted);">
+                        — AI perspective by {{ post.author }}
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
             <!-- Author Card -->
             <div class="card">
                 <div class="card-body">
