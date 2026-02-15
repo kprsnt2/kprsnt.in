@@ -317,15 +317,16 @@ EXPERIENCE = {
     "period": "Mar 2023 – Present",
     "location": "Remote",
     "highlights": [
+        "Developed a Python package for Pi-API and deployed a web service on Render for one-click BigQuery data upload/download",
+        "Built AI/LLM-powered reports and dashboards, and created end-to-end data pipelines for AI-driven analytics",
+        "Delivered 20+ dashboards and 25+ reports over 3 years across elections, brands, and market analysis",
         "Analyzed global job market and SEO trends to extract key business insights",
         "Extracted and processed data from SQL Server & Azure, leveraging Tableau and Looker Studio",
-        "Developed automated dashboards using AppScript, BigQuery and Looker Studio",
-        "Conducted sentiment analysis on election datasets",
+        "Developed automated dashboards for clients, elections and brands using AppScript, BigQuery and Looker Studio, improving efficiency in tracking key metrics",
+        "Conducted sentiment analysis on election datasets, assessing public perception of candidates",
         "Built predictive models (ARIMA, LSTM) for market trend forecasting",
-        "Created Brand reports & market analysis for US & UK markets",
-        "Built personal AI applications using Google AntiGravity & Anthropic Claude Opus for education, health, and family",
-        "Developed AI-powered exam prep tools (NEET, CBSE) and educational apps for kids",
-        "Collaborate cross-functionally to deliver comprehensive analyses"
+        "Created Brand reports & market analysis reports on industries like Insurance, Gambling, and E-commerce for US & UK markets",
+        "Collaborate cross-functionally to deliver comprehensive analyses that contribute to product development and align with business goals"
     ]
 }
 
@@ -389,6 +390,13 @@ def projects():
 def resume():
     return render_template('resume.html', 
                          experience=EXPERIENCE, 
+                         projects=RESUME_PROJECTS,
+                         skills=RESUME_SKILLS)
+
+@app.route('/resume/edit')
+def resume_edit():
+    return render_template('resume_editor.html',
+                         experience=EXPERIENCE,
                          projects=RESUME_PROJECTS,
                          skills=RESUME_SKILLS)
 
