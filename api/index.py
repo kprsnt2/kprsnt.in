@@ -1166,13 +1166,21 @@ scores = metrics.compute_all(predictions, references)</pre>
 ]
 
 def _parse_blog_date(date_str):
-    """Parse date strings for sorting. Supports 'Month Day, Year' and 'Month Year' formats."""
+    """Parse date strings for sorting. Supports multiple date formats."""
     from datetime import datetime
     if not date_str or not isinstance(date_str, str):
         return datetime(2000, 1, 1)
     date_str = date_str.strip()
-    # Try 'Month Day, Year' first (e.g. 'February 10, 2026')
-    for fmt in ("%B %d, %Y", "%B %Y", "%Y-%m-%d"):
+    # Try all known date formats
+    for fmt in (
+        "%B %d, %Y",   # February 10, 2026
+        "%d %B %Y",    # 18 February 2026
+        "%B %Y",       # February 2026
+        "%Y-%m-%d",    # 2026-02-18
+        "%b %d, %Y",   # Feb 10, 2026
+        "%d %b %Y",    # 18 Feb 2026
+        "%b %Y",       # Feb 2026
+    ):
         try:
             return datetime.strptime(date_str, fmt)
         except ValueError:

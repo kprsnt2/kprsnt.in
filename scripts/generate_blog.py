@@ -60,6 +60,31 @@ def file_hash(content: str) -> str:
     return hashlib.md5(content.encode('utf-8')).hexdigest()
 
 
+def normalize_date(date_str: str) -> str:
+    """Normalize any date format to canonical 'Month Day, Year' format for consistent sorting."""
+    if not date_str or not isinstance(date_str, str):
+        return datetime.now().strftime("%B %d, %Y")
+    date_str = date_str.strip()
+    # Try all known input formats
+    for fmt in (
+        "%B %d, %Y",   # February 10, 2026 (already canonical)
+        "%d %B %Y",    # 18 February 2026
+        "%B %Y",       # February 2026
+        "%Y-%m-%d",    # 2026-02-18
+        "%b %d, %Y",   # Feb 10, 2026
+        "%d %b %Y",    # 18 Feb 2026
+        "%b %Y",       # Feb 2026
+    ):
+        try:
+            parsed = datetime.strptime(date_str, fmt)
+            # Always output in canonical format: "Month Day, Year"
+            return parsed.strftime("%B %d, %Y")
+        except ValueError:
+            continue
+    # If nothing matched, return as-is (shouldn't happen with normal dates)
+    return date_str
+
+
 def build_prompt(metadata: dict, body: str) -> str:
     """Build the AI prompt for blog generation."""
     title = metadata.get("title", "Untitled")
@@ -218,7 +243,7 @@ def process_draft(draft_path: Path) -> bool:
 
     title = metadata.get("title", draft_path.stem.replace("-", " ").title())
     tags = metadata.get("tags", ["Technology"])
-    date = metadata.get("date", datetime.now().strftime("%B %d, %Y"))
+    date = normalize_date(metadata.get("date", datetime.now().strftime("%B %d, %Y")))
     industry = metadata.get("industry", "Technology")
     category = metadata.get("category", industry)
     insights = metadata.get("insights", "")
