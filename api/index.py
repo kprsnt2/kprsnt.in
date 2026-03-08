@@ -1223,6 +1223,48 @@ def blog_post(slug):
         return render_template('blog_post.html', post=post)
     return render_template('blog.html', posts=all_posts)
 
+
+# --- Jobs Page ---
+def load_job_listings():
+    """Load AI-curated job listings from JSON files in job_data/."""
+    job_data_dir = os.path.join(os.path.dirname(__file__), '..', 'job_data')
+    jobs = []
+    month = ""
+    
+    if os.path.exists(job_data_dir):
+        json_files = sorted(glob.glob(os.path.join(job_data_dir, '*.json')), reverse=True)
+        for json_file in json_files:
+            try:
+                with open(json_file, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    if 'jobs' in data:
+                        if not month:
+                            month = data.get('month', '')
+                        for job in data['jobs']:
+                            if job.get('title') and job.get('company'):
+                                jobs.append(job)
+            except (json.JSONDecodeError, IOError) as e:
+                logging.warning(f"Failed to load job data {json_file}: {e}")
+    
+    # Sort by match score descending
+    jobs.sort(key=lambda j: j.get('match_score', 0), reverse=True)
+    return jobs, month
+
+
+@app.route('/jobs')
+def jobs():
+    all_jobs, month = load_job_listings()
+    tier1_count = sum(1 for j in all_jobs if j.get('tier') == 1)
+    applied_count = sum(1 for j in all_jobs if j.get('status') == 'applied')
+    avg_score = round(sum(j.get('match_score', 0) for j in all_jobs) / max(len(all_jobs), 1))
+    return render_template('jobs.html',
+                         jobs=all_jobs,
+                         month=month,
+                         tier1_count=tier1_count,
+                         applied_count=applied_count,
+                         avg_score=avg_score)
+
+
 # Static files route for Vercel
 @app.route('/static/<path:path>')
 def serve_static(path):

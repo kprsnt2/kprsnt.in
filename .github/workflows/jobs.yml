@@ -1,0 +1,47 @@
+name: AI Job Finder
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday at 6am UTC
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  find-jobs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install anthropic google-genai
+
+      - name: Find matching jobs
+        run: python scripts/find_jobs.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY_PAID: ${{ secrets.GEMINI_API_KEY_PAID }}
+
+      - name: Commit job listings
+        run: |
+          cd job_data
+          CHANGED=$(git diff --name-only HEAD -- . 2>/dev/null || true)
+          UNTRACKED=$(git ls-files --others --exclude-standard . 2>/dev/null || true)
+          ALL_FILES=$(echo -e "$CHANGED\n$UNTRACKED" | grep '\.json$' | sort -u | tr '\n' ', ' | sed 's/,$//')
+          cd ..
+          if [ -n "$ALL_FILES" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add job_data/*.json
+            git commit -m "🔍 AI Job Finder: $ALL_FILES"
+            git push
+          else
+            echo "No new or changed job listings to commit"
+          fi

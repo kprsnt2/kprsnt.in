@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+
+{% block title %}AI Job Finder | Prashanth Kumar Kadasi{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2><i class="fas fa-briefcase"
+                    style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                AI Job Finder</h2>
+            <p class="mb-1">AI-curated job openings matched to my skills — updated weekly via GitHub Actions.</p>
+            {% if month %}
+            <p style="color: var(--text-muted); font-size: 0.9rem;">
+                <i class="far fa-calendar-alt"></i> {{ month }}
+                <span style="margin-left: 1rem;"><i class="fas fa-robot"></i> {{ jobs|length }} matches found</span>
+            </p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Stats Bar -->
+    <div class="row mb-4">
+        <div class="col-6 col-md-3 mb-3">
+            <div class="card text-center h-100"
+                style="border-top: 3px solid #27ae60; background: rgba(39, 174, 96, 0.08);">
+                <div class="card-body py-3">
+                    <h3 style="margin: 0; color: #27ae60;" id="total-count">{{ jobs|length }}</h3>
+                    <small style="color: var(--text-muted);">Total Matches</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+            <div class="card text-center h-100"
+                style="border-top: 3px solid #e74c3c; background: rgba(231, 76, 60, 0.08);">
+                <div class="card-body py-3">
+                    <h3 style="margin: 0; color: #e74c3c;" id="tier1-count">{{ tier1_count }}</h3>
+                    <small style="color: var(--text-muted);">🔥 Strong Match</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+            <div class="card text-center h-100"
+                style="border-top: 3px solid #f39c12; background: rgba(243, 156, 18, 0.08);">
+                <div class="card-body py-3">
+                    <h3 style="margin: 0; color: #f39c12;" id="applied-count">{{ applied_count }}</h3>
+                    <small style="color: var(--text-muted);">✅ Applied</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3 mb-3">
+            <div class="card text-center h-100"
+                style="border-top: 3px solid #667eea; background: rgba(102, 126, 234, 0.08);">
+                <div class="card-body py-3">
+                    <h3 style="margin: 0; color: #667eea;" id="avg-score">{{ avg_score }}%</h3>
+                    <small style="color: var(--text-muted);">Avg Match</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="blog-filter-bar">
+                <button class="blog-filter-pill active" data-tier="all" onclick="filterTier('all', this)">
+                    <i class="fas fa-th"></i> All
+                    <span class="blog-filter-count">{{ jobs|length }}</span>
+                </button>
+                <button class="blog-filter-pill" data-tier="1" onclick="filterTier('1', this)">
+                    🔥 Tier 1
+                </button>
+                <button class="blog-filter-pill" data-tier="2" onclick="filterTier('2', this)">
+                    🎯 Tier 2
+                </button>
+                <button class="blog-filter-pill" data-tier="applied" onclick="filterTier('applied', this)">
+                    ✅ Applied
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Cards -->
+    <div class="row" id="jobs-grid">
+        {% for job in jobs %}
+        <div class="col-12 col-md-6 mb-4 job-card-wrapper" data-tier="{{ job.tier }}"
+            data-status="{{ job.status }}">
+            <div class="card h-100"
+                style="border-left: 4px solid {% if job.match_score >= 90 %}#27ae60{% elif job.match_score >= 80 %}#f39c12{% else %}#667eea{% endif %}; transition: transform 0.2s, box-shadow 0.2s;"
+                onmouseenter="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.3)'"
+                onmouseleave="this.style.transform=''; this.style.boxShadow=''">
+                <div class="card-body">
+                    <!-- Header -->
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <div>
+                            {% if job.tier == 1 %}
+                            <span
+                                style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;">🔥
+                                STRONG MATCH</span>
+                            {% else %}
+                            <span
+                                style="background: linear-gradient(135deg, #f39c12, #e67e22); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;">🎯
+                                GOOD MATCH</span>
+                            {% endif %}
+                            {% if job.status == 'applied' %}
+                            <span
+                                style="background: #27ae60; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; margin-left: 0.3rem;">✅
+                                APPLIED</span>
+                            {% endif %}
+                        </div>
+                        <div
+                            style="background: linear-gradient(135deg, {% if job.match_score >= 90 %}#27ae60, #2ecc71{% elif job.match_score >= 80 %}#f39c12, #e67e22{% else %}#667eea, #764ba2{% endif %}); color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.85rem; font-weight: 700;">
+                            {{ job.match_score }}%
+                        </div>
+                    </div>
+
+                    <!-- Title & Company -->
+                    <h5 style="margin: 0.5rem 0 0.25rem; color: var(--text-primary);">{{ job.title }}</h5>
+                    <p style="margin: 0 0 0.5rem; color: var(--text-secondary); font-size: 0.95rem;">
+                        <strong>{{ job.company }}</strong>
+                        {% if job.company_tag %}
+                        <span
+                            style="background: var(--accent-gradient); color: white; padding: 1px 6px; border-radius: 8px; font-size: 0.65rem; font-weight: 600; margin-left: 0.3rem;">{{
+                            job.company_tag }}</span>
+                        {% endif %}
+                        <span style="color: var(--text-muted); margin-left: 0.5rem;">
+                            <i class="fas fa-map-marker-alt" style="font-size: 0.8rem;"></i> {{ job.location }}
+                        </span>
+                    </p>
+
+                    {% if job.salary %}
+                    <p style="margin: 0 0 0.5rem; color: #27ae60; font-weight: 600; font-size: 0.9rem;">
+                        <i class="fas fa-money-bill-wave" style="margin-right: 4px;"></i> {{ job.salary }}
+                    </p>
+                    {% endif %}
+
+                    <!-- Why Match -->
+                    <p style="margin: 0 0 0.75rem; color: var(--text-muted); font-size: 0.85rem; font-style: italic;">
+                        💡 {{ job.why_match }}
+                    </p>
+
+                    <!-- Tags -->
+                    <div style="margin-bottom: 0.75rem;">
+                        {% for tag in job.tags %}
+                        <span class="blog-tag">{{ tag }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Apply Button -->
+                    <a href="{{ job.apply_url }}" target="_blank" class="btn btn-sm"
+                        style="background: var(--accent-gradient); color: white; border: none; font-weight: 600; padding: 6px 16px;">
+                        <i class="fas fa-external-link-alt" style="margin-right: 4px;"></i>
+                        {% if job.status == 'applied' %}View{% else %}Apply Now{% endif %}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if not jobs %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <i class="fas fa-search"
+                        style="font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem;"></i>
+                    <h4>No Jobs Found Yet</h4>
+                    <p>The AI job finder will run weekly to find matching positions. Check back soon!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Quick Apply Links -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">🔗 Quick Search Links</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6 col-md-4 col-lg-3 mb-2">
+                            <a href="https://linkedin.com/jobs" target="_blank" class="btn btn-outline-info btn-sm w-100">
+                                <i class="fab fa-linkedin"></i> LinkedIn
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3 mb-2">
+                            <a href="https://indeed.com" target="_blank" class="btn btn-outline-info btn-sm w-100">
+                                Indeed
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3 mb-2">
+                            <a href="https://workatastartup.com" target="_blank"
+                                class="btn btn-outline-info btn-sm w-100">
+                                <i class="fas fa-rocket"></i> YC Jobs
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3 mb-2">
+                            <a href="https://wellfound.com" target="_blank" class="btn btn-outline-info btn-sm w-100">
+                                Wellfound
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3 mb-2">
+                            <a href="https://remoteok.com" target="_blank" class="btn btn-outline-info btn-sm w-100">
+                                RemoteOK
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3 mb-2">
+                            <a href="https://remoteai.io" target="_blank" class="btn btn-outline-info btn-sm w-100">
+                                RemoteAI
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3 mb-2">
+                            <a href="https://huggingface.co/jobs" target="_blank"
+                                class="btn btn-outline-info btn-sm w-100">
+                                🤗 HuggingFace
+                            </a>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3 mb-2">
+                            <a href="https://remoterocketship.com" target="_blank"
+                                class="btn btn-outline-info btn-sm w-100">
+                                🚀 Rocketship
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function filterTier(tier, btn) {
+        document.querySelectorAll('.blog-filter-pill').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+
+        const cards = document.querySelectorAll('.job-card-wrapper');
+        let visible = 0;
+
+        cards.forEach(card => {
+            const cardTier = card.dataset.tier;
+            const cardStatus = card.dataset.status;
+            let show = false;
+
+            if (tier === 'all') show = true;
+            else if (tier === 'applied') show = (cardStatus === 'applied');
+            else show = (cardTier === tier);
+
+            if (show) {
+                card.style.display = '';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+                visible++;
+            } else {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(10px)';
+                setTimeout(() => { card.style.display = 'none'; }, 250);
+            }
+        });
+    }
+</script>
+{% endblock %}
