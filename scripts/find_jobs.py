@@ -107,7 +107,7 @@ def generate_with_gemini(prompt):
         client = genai.Client(api_key=api_key)
 
         response = client.models.generate_content(
-            model="gemini-3-pro-preview",
+            model="gemini-pro-latest",
             contents=prompt
         )
         text = response.text.strip()
