@@ -2,7 +2,7 @@ name: AI Job Finder
 
 on:
   schedule:
-    - cron: '0 6 * * 1'  # Every Monday at 6am UTC
+    - cron: '0 6 * * 6'  # Every Saturday at 6am UTC
   workflow_dispatch: # Allow manual trigger
 
 jobs:
