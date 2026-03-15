@@ -190,18 +190,133 @@ def merge_with_existing(new_data):
             existing = json.loads(output_path.read_text(encoding="utf-8"))
             existing_jobs = {j["id"]: j for j in existing.get("jobs", [])}
 
-            # Preserve applied status from existing data
+            # Preserve applied status, cover letters, and verification from existing data
             for job in new_data.get("jobs", []):
                 if job["id"] in existing_jobs:
                     old = existing_jobs[job["id"]]
                     job["applied"] = old.get("applied", False)
                     job["status"] = old.get("status", "new")
+                    if old.get("cover_letter"):
+                        job["cover_letter"] = old["cover_letter"]
+                    if old.get("verified") is not None:
+                        job["verified"] = old["verified"]
+                        job["last_verified"] = old.get("last_verified", "")
 
             print(f"  🔄 Merged with existing data ({len(existing_jobs)} existing jobs)")
         except Exception as e:
             print(f"  ⚠️  Could not merge: {e}")
 
     return new_data
+
+
+def verify_jobs(jobs):
+    """Verify job listings are still active by checking their URLs."""
+    print("  🔎 Verifying job URLs...")
+    
+    try:
+        import httpx
+    except ImportError:
+        print("  ⚠️  httpx not installed, skipping verification")
+        return jobs
+    
+    verified = 0
+    failed = 0
+    
+    with httpx.Client(timeout=10, follow_redirects=True) as client:
+        for job in jobs:
+            url = job.get("apply_url", "")
+            if not url or url == "#":
+                job["verified"] = False
+                job["last_verified"] = datetime.now().strftime("%Y-%m-%d")
+                failed += 1
+                continue
+            
+            try:
+                resp = client.head(url)
+                is_active = resp.status_code < 400
+                job["verified"] = is_active
+                job["last_verified"] = datetime.now().strftime("%Y-%m-%d")
+                if is_active:
+                    verified += 1
+                else:
+                    failed += 1
+                    print(f"    ⚠️  {job['company']} — HTTP {resp.status_code}")
+            except Exception as e:
+                job["verified"] = False
+                job["last_verified"] = datetime.now().strftime("%Y-%m-%d")
+                failed += 1
+                print(f"    ⚠️  {job['company']} — {str(e)[:60]}")
+    
+    print(f"  ✅ Verified: {verified} active, {failed} failed/unreachable")
+    return jobs
+
+
+def generate_cover_letters(jobs):
+    """Generate tailored cover letters for Tier 1 jobs using AI."""
+    tier1 = [j for j in jobs if j.get("tier") == 1 and not j.get("cover_letter")]
+    if not tier1:
+        print("  📝 All Tier 1 jobs already have cover letters")
+        return jobs
+    
+    print(f"  📝 Generating cover letters for {len(tier1)} Tier 1 jobs...")
+    
+    # Try Gemini
+    api_key = os.environ.get("GEMINI_API_KEY_PAID")
+    if api_key:
+        try:
+            from google import genai
+            client = genai.Client(api_key=api_key)
+            
+            for job in tier1:
+                prompt = f"""Write a short, human-sounding intro message (under 150 words) for applying to this job.
+
+Job: {job['title']} at {job['company']} {job.get('company_tag', '')}
+Tags: {', '.join(job.get('tags', []))}
+Why it matches: {job.get('why_match', '')}
+
+Candidate: Prashanth Kumar — Data Analyst & AI Developer
+Key: Fine-tuned 20B LLM (76% brand manipulation), 10+ deployed AI apps, M.Pharm + Drug Discovery AI, MyLocalCLI (6 AI providers, 26 tools)
+Portfolio: kprsnt.in | github.com/kprsnt2 | huggingface.co/kprsnt
+
+Rules: Be concrete, not generic. Reference 2 specific projects. No "I'm excited/passionate". Return ONLY the message text."""
+
+                response = client.models.generate_content(
+                    model="gemini-2.0-flash", contents=prompt
+                )
+                job["cover_letter"] = response.text.strip()
+                print(f"    ✅ {job['company']} — cover letter generated")
+            
+            return jobs
+        except Exception as e:
+            print(f"  ⚠️  Gemini cover letter error: {e}")
+    
+    # Try Claude fallback
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if api_key:
+        try:
+            import anthropic
+            client = anthropic.Anthropic(api_key=api_key)
+            
+            for job in tier1:
+                prompt = f"""Write a short, human-sounding intro message (under 150 words) for applying to:
+{job['title']} at {job['company']}. Tags: {', '.join(job.get('tags', []))}
+Candidate: Prashanth Kumar — Data Analyst & AI Developer, fine-tuned 20B LLM (BrandXY), 10+ AI apps, M.Pharm, MyLocalCLI.
+Be concrete, reference 2 projects. Return ONLY the message text."""
+
+                response = client.messages.create(
+                    model="claude-haiku-4-5-20250315",
+                    max_tokens=500,
+                    messages=[{"role": "user", "content": prompt}]
+                )
+                job["cover_letter"] = response.content[0].text.strip()
+                print(f"    ✅ {job['company']} — cover letter generated")
+            
+            return jobs
+        except Exception as e:
+            print(f"  ⚠️  Claude cover letter error: {e}")
+    
+    print("  ⚠️  No API keys available for cover letter generation")
+    return jobs
 
 
 def main():
@@ -223,6 +338,12 @@ def main():
     # Merge with existing data
     result = merge_with_existing(result)
 
+    # Verify job URLs
+    result["jobs"] = verify_jobs(result.get("jobs", []))
+
+    # Generate cover letters for Tier 1 jobs
+    result["jobs"] = generate_cover_letters(result.get("jobs", []))
+
     # Save
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     month_slug = datetime.now().strftime("%B-%Y").lower()
@@ -237,3 +358,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

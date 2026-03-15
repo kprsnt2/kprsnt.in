@@ -2,7 +2,7 @@ name: AI Job Finder
 
 on:
   schedule:
-    - cron: '0 6 * * 6'  # Every Saturday at 6am UTC
+    - cron: '15 14 * * 6'  # Every Saturday at 7:45pm IST (14:15 UTC)
   workflow_dispatch: # Allow manual trigger
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install anthropic google-genai
+        run: pip install anthropic google-genai httpx "mcp[cli]"
 
       - name: Find matching jobs
         run: python scripts/find_jobs.py
