@@ -23,6 +23,8 @@
 
     <!-- Custom CSS -->
     <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet">
+    <!-- Chat Widget CSS -->
+    <link href="{{ url_for('static', filename='css/chat-widget.css') }}" rel="stylesheet">
 </head>
 
 <body>
@@ -256,6 +258,8 @@
             window.addEventListener('beforeunload', () => cancelAnimationFrame(animId));
         })();
     </script>
+    <!-- RAG Chat Widget -->
+    <script src="{{ url_for('static', filename='js/chat-widget.js') }}"></script>
 </body>
 
 </html>
