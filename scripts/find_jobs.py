@@ -281,7 +281,7 @@ Portfolio: kprsnt.in | github.com/kprsnt2 | huggingface.co/kprsnt
 Rules: Be concrete, not generic. Reference 2 specific projects. No "I'm excited/passionate". Return ONLY the message text."""
 
                 response = client.models.generate_content(
-                    model="gemini-2.0-flash", contents=prompt
+                    model="gemini-pro-latest", contents=prompt
                 )
                 job["cover_letter"] = response.text.strip()
                 print(f"    ✅ {job['company']} — cover letter generated")

@@ -160,7 +160,7 @@ Candidate: {PROFILE['title']} with skills in {', '.join(PROFILE['skills'][:8])}
 Return ONLY valid JSON:
 {{"jobs": [{{"id": "slug", "title": "Job Title", "company": "Company", "company_tag": "", "location": "Remote", "salary": "", "match_score": 85, "tier": 1, "tags": ["tag1"], "why_match": "reason", "apply_url": "https://...", "applied": false, "status": "new"}}]}}"""
 
-        response = client.models.generate_content(model="gemini-2.0-flash", contents=prompt)
+        response = client.models.generate_content(model="gemini-pro-latest", contents=prompt)
         text = response.text.strip()
         if text.startswith("```"):
             text = re.sub(r'^```\w*\n?', '', text)
@@ -278,7 +278,7 @@ Requirements:
 5. Don't use phrases like "I'm excited" or "I'm passionate" — be concrete instead
 6. Return ONLY the message text, no JSON wrapper"""
 
-        response = client.models.generate_content(model="gemini-2.0-flash", contents=prompt)
+        response = client.models.generate_content(model="gemini-pro-latest", contents=prompt)
         cover_letter = response.text.strip()
         
         # Save to job data
