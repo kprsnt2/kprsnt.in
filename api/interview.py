@@ -71,7 +71,7 @@ This bot itself demonstrates Prashanth's engineering skills. Here is exactly how
 
 **Tech Stack:**
 - **Runtime:** Python on Vercel Serverless Functions
-- **AI Model:** Google Gemini 2.0 Flash (via `google-generativeai` SDK)
+- **AI Model:** Google Gemini Flash Latest (via `google-generativeai` SDK)
 - **Email Sending:** Resend API (100 free emails/day)
 - **Email Receiving:** Cloudflare Email Workers (catches `interview@kprsnt.in`)
 - **DNS/Domain:** Cloudflare (MX records + email routing)
@@ -111,7 +111,7 @@ def get_gemini_response(message: str) -> str:
         
         genai.configure(api_key=api_key)
         model = genai.GenerativeModel(
-            model_name="gemini-2.0-flash",
+            model_name="gemini-flash-latest",
             system_instruction=SYSTEM_PROMPT
         )
         
