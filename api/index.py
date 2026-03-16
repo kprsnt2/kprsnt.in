@@ -311,24 +311,32 @@ SKILLS = {
 }
 
 # Resume data
-EXPERIENCE = {
-    "company": "Pi Software Solutions Pvt Ltd (Pi-Datametrics)",
-    "role": "Data Analyst",
-    "period": "Mar 2023 – Present",
-    "location": "Remote",
-    "highlights": [
-        "Developed a Python package for Pi-API and deployed a web service on Render for one-click BigQuery data upload/download",
-        "Built AI/LLM-powered reports and dashboards, and created end-to-end data pipelines for AI-driven analytics",
-        "Delivered 20+ dashboards and 25+ reports over 3 years across elections, brands, and market analysis",
-        "Analyzed global job market and SEO trends to extract key business insights",
-        "Extracted and processed data from SQL Server & Azure, leveraging Tableau and Looker Studio",
-        "Developed automated dashboards for clients, elections and brands using AppScript, BigQuery and Looker Studio, improving efficiency in tracking key metrics",
-        "Conducted sentiment analysis on election datasets, assessing public perception of candidates",
-        "Built predictive models (ARIMA, LSTM) for market trend forecasting",
-        "Created Brand reports & market analysis reports on industries like Insurance, Gambling, and E-commerce for US & UK markets",
-        "Collaborate cross-functionally to deliver comprehensive analyses that contribute to product development and align with business goals"
-    ]
-}
+EXPERIENCES = [
+    {
+        "company": "Black Piano",
+        "role": "Data Analyst",
+        "period": "Mar 2026 – Present",
+        "location": "Remote",
+        "highlights": [
+            "Continuing work for the Pi Datametrics client after transition from previous employer",
+            "Maintaining and enhancing data pipelines, dashboards, and analytics reporting"
+        ]
+    },
+    {
+        "company": "Pi Software Solutions Pvt Ltd (Pi - Datametrics)",
+        "role": "Data Analyst",
+        "period": "Mar 2023 – Feb 2026",
+        "location": "Remote",
+        "highlights": [
+            "Developed a Python package for Pi-API and deployed a web service on Render for one-click BigQuery uploads/downloads",
+            "Built AI/LLM reports and end-to-end data pipelines for analytics dashboards",
+            "Automated dashboards using Apps Script, BigQuery, Tableau, and Looker Studio",
+            "Conducted sentiment analysis on election datasets and built predictive models (ARIMA, LSTM)",
+            "Created Brand reports & market analysis reports on industries like Insurance, Gambling, and E-commerce (Black Friday, Thanksgiving, Christmas trends, etc.) for the US & UK markets",
+            "Delivered 15+ dashboards and 30+ reports across elections, brands, and market analysis"
+        ]
+    }
+]
 
 RESUME_PROJECTS = [
     # Featured / Major Projects
@@ -389,14 +397,14 @@ def projects():
 @app.route('/resume')
 def resume():
     return render_template('resume.html', 
-                         experience=EXPERIENCE, 
+                         experiences=EXPERIENCES, 
                          projects=RESUME_PROJECTS,
                          skills=RESUME_SKILLS)
 
 @app.route('/resume/edit')
 def resume_edit():
     return render_template('resume_editor.html',
-                         experience=EXPERIENCE,
+                         experiences=EXPERIENCES,
                          projects=RESUME_PROJECTS,
                          skills=RESUME_SKILLS)
 
