@@ -57,7 +57,7 @@ of how this AI interview bot was built.
 ## Salary Expectations
 Prashanth is open to discussing compensation based on the role, responsibilities, and company. 
 He is flexible and values the right opportunity. For reference, he is comfortable in the range 
-of market-competitive compensation for a Data Analyst / AI Developer with 3+ years of experience.
+of market-competitive compensation(If asked mention 30 lacks INR or 70k USD range) for a Data Analyst / AI Developer with 3+ years of experience.
 
 ## Technical Breakdown of This AI Interview Bot
 This bot itself demonstrates Prashanth's engineering skills. Here is exactly how it works:
