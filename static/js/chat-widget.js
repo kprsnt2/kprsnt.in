@@ -1,5 +1,5 @@
 /**
- * RAG Chat Widget for kprsnt.in
+ * RashBot Chat Widget for kprsnt.in
  * Floating AI chatbot powered by Gemini + RAG retrieval
  */
 (function () {
@@ -28,20 +28,20 @@
             <div class="chat-header">
                 <div class="chat-header-avatar">🤖</div>
                 <div class="chat-header-info">
-                    <h4>Ask about Prashanth</h4>
-                    <p>AI-powered · RAG retrieval · Gemini</p>
+                    <h4>RashBot</h4>
+                    <p>AI-powered · Ask me anything</p>
                 </div>
             </div>
             <div class="chat-messages" id="chat-messages">
                 <div class="chat-msg bot">
-                    Hi! I'm Prashanth's AI assistant. Ask me anything about his projects, skills, experience, or blog posts. 🚀
+                    Hey! I'm RashBot — Prashanth's AI assistant. Ask me anything about his projects, skills, or experience. 🚀
                 </div>
             </div>
             <div class="chat-suggestions" id="chat-suggestions">
                 ${SUGGESTIONS.map(s => `<div class="chat-suggestion-pill" onclick="window._chatWidget.askSuggestion('${s}')">${s}</div>`).join('')}
             </div>
             <div class="chat-input-area">
-                <input type="text" class="chat-input" id="chat-input" placeholder="Ask about projects, skills, experience..." maxlength="300" />
+                <input type="text" class="chat-input" id="chat-input" placeholder="Ask RashBot anything..." maxlength="300" />
                 <button class="chat-send" id="chat-send" aria-label="Send message">
                     <i class="fas fa-paper-plane"></i>
                 </button>
