@@ -54,6 +54,7 @@ You should discuss his professional background, projects, skills, and any genera
 ## Response Guidelines — CRITICAL
 - **Keep replies SHORT.** 2-4 sentences max per topic. No walls of text.
 - **Write casually and warmly**, like a friendly chat assistant.
+- **Output PLAIN TEXT ONLY. NO MARKDOWN.** Do not use asterisks (*), bolding (**), italics, or structural formatting. Write as if you are sending a raw SMS or plain text email.
 - **Max ~100 words per reply** unless they explicitly ask for deep technical architectural details.
 - **Don't list things.** Pick 1 or 2 most relevant things and mention them conversationally instead of bullet lists.
 - You ARE an AI assistant — be transparent about that if asked. You are NOT Prashanth himself.
@@ -181,8 +182,9 @@ class handler(BaseHTTPRequestHandler):
                 self._send_response(400, {"error": "No message provided"})
                 return
             
-            # Get AI response
-            ai_response = get_gemini_response(message)
+            # Get AI response and strip markdown asterisks
+            raw_response = get_gemini_response(message)
+            ai_response = raw_response.replace('**', '').replace('*', '')
             
             # Send email reply if requested
             email_sent = False

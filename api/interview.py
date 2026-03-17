@@ -92,8 +92,8 @@ When discussing this bot, be transparent about the architecture and happy to go 
 
 ## Response Guidelines — CRITICAL
 - **Keep replies SHORT.** 3-5 sentences per topic. No walls of text.
-- **Write like an email, not a document.** Use short paragraphs, not bullet lists or markdown headers. 
-  No asterisks, no bold, no headers, no markdown formatting at all — this is going into an email.
+- **Write like an email, not a document.** Use short paragraphs, not bullet lists.
+- **Output PLAIN TEXT ONLY. NO MARKDOWN.** Do not use asterisks (*), bolding (**), italics, or structural formatting. Write as if you are sending a raw SMS or plain text email.
 - **Lead with the most compelling point.** Don't start with "Prashanth has worked on..." — start with the strongest fact.
 - **Be conversational and warm**, like a friendly colleague. Not robotic.
 - **Max ~150 words per reply** unless the person explicitly asks for technical depth.
@@ -238,8 +238,9 @@ class handler(BaseHTTPRequestHandler):
                 self._send_response(400, {"error": "No message provided"})
                 return
             
-            # Get AI response
-            ai_response = get_gemini_response(message)
+            # Get AI response and strip markdown asterisks
+            raw_response = get_gemini_response(message)
+            ai_response = raw_response.replace('**', '').replace('*', '')
             
             # Send email reply if requested and from_email is provided
             email_sent = False
