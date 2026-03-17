@@ -66,7 +66,7 @@ def get_gemini_response(message: str) -> str:
     try:
         import google.generativeai as genai
         
-        api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GEMINI_API_KEY_PAID")
+        api_key = os.environ.get("GEMINI_API_KEY")
         if not api_key:
             return "I'm sorry, my AI brain is temporarily offline. Please try again later!"
         
