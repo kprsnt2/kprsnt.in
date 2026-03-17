@@ -90,13 +90,24 @@ This bot itself demonstrates Prashanth's engineering skills. Here is exactly how
 
 When discussing this bot, be transparent about the architecture and happy to go into technical depth.
 
-## Response Guidelines
-- Be warm, professional, and concise
-- When asked about salary, give the general range(30 lacks INR or 80k USD) and emphasize flexibility
-- When asked technical questions, provide detailed, specific answers
-- Always be honest — if you don't know something specific, say so
-- Reference specific projects, numbers, and technologies when relevant
-- You ARE an AI assistant, don't pretend to be human. But you represent Prashanth well.
+## Response Guidelines — CRITICAL
+- **Keep replies SHORT.** 3-5 sentences per topic. No walls of text.
+- **Write like an email, not a document.** Use short paragraphs, not bullet lists or markdown headers. 
+  No asterisks, no bold, no headers, no markdown formatting at all — this is going into an email.
+- **Lead with the most compelling point.** Don't start with "Prashanth has worked on..." — start with the strongest fact.
+- **Be conversational and warm**, like a friendly colleague. Not robotic.
+- **Max ~150 words per reply** unless the person explicitly asks for technical depth.
+- **Don't dump everything.** If asked about projects, pick 2-3 most relevant ones — don't list all 10+.
+- When asked about salary, be brief: "He's flexible and open to discussing compensation based on the role."
+- When asked technical questions about this bot, give a crisp explanation of the architecture.
+- You ARE an AI assistant — be transparent about that. But represent Prashanth well.
+- **End with a brief question or prompt** to keep the conversation going.
+
+Example of a GOOD reply:
+"Prashanth is a Data Analyst and AI Developer with 3+ years of experience, currently at Black Piano. His most notable work includes fine-tuning a 20B parameter LLM for AI safety research (76% success rate in manipulating brand recommendations) and building MyLocalCLI, a Claude Code alternative with 6 AI providers. He's built and deployed 10+ AI apps to production. What specific area would you like to dive deeper into?"
+
+Example of a BAD reply:
+"**Professional Background:** Prashanth has worked on a variety of projects. Here is a list: * BrandXY - Fine-tuned GPT-OSS-20B... * Drug Discovery... * MyLocalCLI... * PharmaGenesis AI... * AI Health Pro..."
 """
 
 
@@ -158,6 +169,45 @@ def send_reply_email(to_email: str, subject: str, body: str) -> bool:
         return False
 
 
+def notify_owner(from_email: str, message: str, ai_response: str, source: str = "API"):
+    """Send a notification to Prashanth when someone uses the interview bot."""
+    try:
+        import resend
+        
+        resend.api_key = os.environ.get("RESEND_API_KEY")
+        if not resend.api_key:
+            return
+        
+        owner_email = os.environ.get("OWNER_NOTIFY_EMAIL")
+        if not owner_email:
+            return
+        
+        from_addr = os.environ.get("INTERVIEW_FROM_EMAIL", "interview@kprsnt.in")
+        
+        resend.Emails.send({
+            "from": f"Interview Bot Notifications <{from_addr}>",
+            "to": [owner_email],
+            "subject": f"🔔 Interview Bot Used — {from_email or 'Anonymous'} ({source})",
+            "html": f"""<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                <h3 style="color: #667eea; margin-top: 0;">🔔 Someone used your Interview Bot</h3>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+                    <tr><td style="padding: 8px; font-weight: bold; color: #555; width: 100px;">Source:</td><td style="padding: 8px;">{source}</td></tr>
+                    <tr><td style="padding: 8px; font-weight: bold; color: #555;">From:</td><td style="padding: 8px;">{from_email or 'N/A'}</td></tr>
+                </table>
+                <div style="background: #f5f5f5; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                    <p style="margin: 0 0 4px; font-weight: bold; color: #555;">Their Message:</p>
+                    <p style="margin: 0; color: #333;">{message}</p>
+                </div>
+                <div style="background: #eef2ff; border-radius: 8px; padding: 16px;">
+                    <p style="margin: 0 0 4px; font-weight: bold; color: #555;">AI Reply:</p>
+                    <p style="margin: 0; color: #333; white-space: pre-wrap;">{ai_response[:500]}{'...' if len(ai_response) > 500 else ''}</p>
+                </div>
+            </div>"""
+        })
+    except Exception as e:
+        logger.error(f"Owner notification error: {e}")
+
+
 class handler(BaseHTTPRequestHandler):
     """Vercel serverless function handler."""
     
@@ -195,6 +245,10 @@ class handler(BaseHTTPRequestHandler):
             email_sent = False
             if send_email and from_email:
                 email_sent = send_reply_email(from_email, subject, ai_response)
+            
+            # Notify owner about the interaction
+            source = "Email" if send_email else "API"
+            notify_owner(from_email, message, ai_response, source)
             
             self._send_response(200, {
                 "response": ai_response,
