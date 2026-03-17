@@ -169,6 +169,45 @@ def send_reply_email(to_email: str, subject: str, body: str) -> bool:
         return False
 
 
+def notify_owner(from_email: str, message: str, ai_response: str, source: str = "API"):
+    """Send a notification to Prashanth when someone uses the interview bot."""
+    try:
+        import resend
+        
+        resend.api_key = os.environ.get("RESEND_API_KEY")
+        if not resend.api_key:
+            return
+        
+        owner_email = os.environ.get("OWNER_NOTIFY_EMAIL")
+        if not owner_email:
+            return
+        
+        from_addr = os.environ.get("INTERVIEW_FROM_EMAIL", "interview@kprsnt.in")
+        
+        resend.Emails.send({
+            "from": f"Interview Bot Notifications <{from_addr}>",
+            "to": [owner_email],
+            "subject": f"🔔 Interview Bot Used — {from_email or 'Anonymous'} ({source})",
+            "html": f"""<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                <h3 style="color: #667eea; margin-top: 0;">🔔 Someone used your Interview Bot</h3>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
+                    <tr><td style="padding: 8px; font-weight: bold; color: #555; width: 100px;">Source:</td><td style="padding: 8px;">{source}</td></tr>
+                    <tr><td style="padding: 8px; font-weight: bold; color: #555;">From:</td><td style="padding: 8px;">{from_email or 'N/A'}</td></tr>
+                </table>
+                <div style="background: #f5f5f5; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                    <p style="margin: 0 0 4px; font-weight: bold; color: #555;">Their Message:</p>
+                    <p style="margin: 0; color: #333;">{message}</p>
+                </div>
+                <div style="background: #eef2ff; border-radius: 8px; padding: 16px;">
+                    <p style="margin: 0 0 4px; font-weight: bold; color: #555;">AI Reply:</p>
+                    <p style="margin: 0; color: #333; white-space: pre-wrap;">{ai_response[:500]}{'...' if len(ai_response) > 500 else ''}</p>
+                </div>
+            </div>"""
+        })
+    except Exception as e:
+        logger.error(f"Owner notification error: {e}")
+
+
 class handler(BaseHTTPRequestHandler):
     """Vercel serverless function handler."""
     
@@ -206,6 +245,10 @@ class handler(BaseHTTPRequestHandler):
             email_sent = False
             if send_email and from_email:
                 email_sent = send_reply_email(from_email, subject, ai_response)
+            
+            # Notify owner about the interaction
+            source = "Email" if send_email else "API"
+            notify_owner(from_email, message, ai_response, source)
             
             self._send_response(200, {
                 "response": ai_response,
