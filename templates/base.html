@@ -61,8 +61,11 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/plotter' %}active{% endif %}" href="/plotter"><i
-                                class="fas fa-chart-line" style="margin-right: 4px;"></i>Data
-                            Plotter</a>
+                                class="fas fa-chart-line" style="margin-right: 4px;"></i>Data Plotter</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/api/docs' or request.path == '/docs' %}active{% endif %}" href="/api/docs"><i
+                                class="fas fa-terminal" style="margin-right: 4px;"></i>API Docs</a>
                     </li>
                     <li class="nav-item ms-2">
                         <button class="btn btn-outline-light btn-sm theme-toggle" id="themeToggle" title="Toggle theme">

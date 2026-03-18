@@ -412,6 +412,11 @@ def resume_edit():
 def plotter():
     return render_template('plotter.html')
 
+@app.route('/api/docs')
+@app.route('/docs')
+def api_docs():
+    return render_template('api_docs.html')
+
 # Blog posts data
 BLOG_POSTS = [
     {

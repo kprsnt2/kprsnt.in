@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}API Documentation | Prashanth Kadasi{% endblock %}
+
+{% block content %}
+<div class="row mb-5 mt-4">
+    <div class="col-12 text-center">
+        <h1 class="display-4 mb-3" style="font-weight: 800; letter-spacing: -2px;">AI <span style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">API Documentation</span></h1>
+        <p class="lead text-muted">Test and interact with the custom Gemini + RAG endpoints powering this portfolio.</p>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    <!-- Chat Widget API -->
+    <div class="col-lg-6">
+        <div class="card h-100 api-card">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <span class="badge bg-primary me-2">POST</span>
+                    <h3 class="h4 mb-0" style="color: var(--text-primary); font-weight: 700;">/api/chat_agent</h3>
+                </div>
+                <p class="text-muted mb-4">The conversational AI powering the floating chat widget. Features Server-Sent Events (SSE) streaming, RAG-injected context, conversational memory, and dynamic function calling.</p>
+                
+                <h5 style="color: var(--text-primary);">Payload Schema</h5>
+                <pre class="bg-dark p-3 rounded" style="border: 1px solid var(--border-glass);"><code class="text-light">{
+  "message": "string (Required)",
+  "history": [ {"role": "user/assistant", "content": "..."} ],
+  "stream": boolean (Default: false),
+  "send_email": boolean (Default: false),
+  "from_email": "string (Optional)"
+}</code></pre>
+                
+                <h5 class="mt-4" style="color: var(--text-primary);">Interactive Tester</h5>
+                <div class="mb-3">
+                    <label class="form-label text-muted">Message</label>
+                    <input type="text" class="form-control bg-dark text-light border-secondary" id="chat-test-input" placeholder="e.g. What projects have you built?">
+                </div>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="chat-test-stream" checked>
+                    <label class="form-check-label text-muted">Enable SSE Streaming</label>
+                </div>
+                <button class="btn btn-primary w-100 mb-3" onclick="testChatApi()">Execute Request</button>
+                
+                <label class="form-label text-muted">Response Output:</label>
+                <div class="response-container bg-dark p-3 rounded" style="border: 1px solid var(--border-glass); min-height: 120px; max-height: 300px; overflow-y: auto;">
+                    <div id="chat-test-response" class="text-light" style="white-space: pre-wrap; font-family: monospace;">Awaiting request...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interview API -->
+    <div class="col-lg-6">
+        <div class="card h-100 api-card">
+            <div class="card-body p-4">
+                <div class="d-flex align-items-center mb-3">
+                    <span class="badge bg-success me-2">POST</span>
+                    <h3 class="h4 mb-0" style="color: var(--text-primary); font-weight: 700;">/api/interview</h3>
+                </div>
+                <p class="text-muted mb-4">The formal interview agent endpoint. Designed to answer HR and recruiter technical screening questions. By default, it triggers Resend emails directly to the requestor.</p>
+                
+                <h5 style="color: var(--text-primary);">Payload Schema</h5>
+                <pre class="bg-dark p-3 rounded" style="border: 1px solid var(--border-glass);"><code class="text-light">{
+  "message": "string (Required)",
+  "from_email": "string (Required for email)",
+  "subject": "string",
+  "send_email": boolean (Default: true)
+}</code></pre>
+                
+                <h5 class="mt-4" style="color: var(--text-primary);">Interactive Tester</h5>
+                <div class="mb-3">
+                    <label class="form-label text-muted">Message (Simulated - Email sending disabled here)</label>
+                    <input type="text" class="form-control bg-dark text-light border-secondary" id="interview-test-input" placeholder="e.g. What are your salary expectations?">
+                </div>
+                <button class="btn btn-success w-100 mb-3 mt-4" style="margin-top: 3.3rem !important;" onclick="testInterviewApi()">Execute Request</button>
+                
+                <label class="form-label text-muted mt-2">Response JSON:</label>
+                <div class="response-container bg-dark p-3 rounded" style="border: 1px solid var(--border-glass); min-height: 120px; max-height: 300px; overflow-y: auto;">
+                    <div id="interview-test-response" class="text-light" style="white-space: pre-wrap; font-family: monospace;">Awaiting request...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.api-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+.form-control:focus {
+    background-color: #2b3035;
+    color: white;
+    box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
+    border-color: #667eea;
+}
+</style>
+
+<script>
+async function testChatApi() {
+    const input = document.getElementById('chat-test-input').value || "Hello!";
+    const stream = document.getElementById('chat-test-stream').checked;
+    const responseBox = document.getElementById('chat-test-response');
+    
+    responseBox.innerHTML = "<span class='text-muted'><i>Connecting & Thinking...</i></span>";
+    
+    try {
+        const response = await fetch('/api/chat_agent', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: input,
+                stream: stream,
+                send_email: false
+            })
+        });
+
+        if (!response.ok) {
+            responseBox.innerHTML = `<span class="text-danger">HTTP Error: ${response.status}</span>`;
+            return;
+        }
+
+        if (stream) {
+            responseBox.innerHTML = "";
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder('utf-8');
+            let rawBuffer = '';
+            
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                
+                rawBuffer += decoder.decode(value, { stream: true });
+                const lines = rawBuffer.split('\\n');
+                rawBuffer = lines.pop() || '';
+                
+                for (const line of lines) {
+                    const trimmedLine = line.trim();
+                    if (trimmedLine.startsWith('data:') && trimmedLine !== 'data: [DONE]') {
+                        try {
+                            const parsed = JSON.parse(trimmedLine.slice(5).trim());
+                            if (parsed.text) {
+                                // Add character smoothly
+                                responseBox.innerHTML += parsed.text.replace(/\\n/g, '<br>');
+                                responseBox.parentElement.scrollTop = responseBox.parentElement.scrollHeight;
+                            }
+                        } catch (e) {
+                            console.error(e);
+                        }
+                    }
+                }
+            }
+        } else {
+            const data = await response.json();
+            responseBox.innerHTML = JSON.stringify(data, null, 2);
+        }
+    } catch (err) {
+        responseBox.innerHTML = `<span class="text-danger">Network Error: ${err.message}</span>`;
+    }
+}
+
+async function testInterviewApi() {
+    const input = document.getElementById('interview-test-input').value || "What is your experience with AI?";
+    const responseBox = document.getElementById('interview-test-response');
+    
+    responseBox.innerHTML = "<span class='text-muted'><i>Connecting & Thinking...</i></span>";
+    
+    try {
+        const response = await fetch('/api/interview', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                message: input,
+                send_email: false,
+                from_email: "test@example.com",
+                subject: "API Test"
+            })
+        });
+
+        if (!response.ok) {
+            responseBox.innerHTML = `<span class="text-danger">HTTP Error: ${response.status}</span>`;
+            return;
+        }
+
+        const data = await response.json();
+        responseBox.innerHTML = JSON.stringify(data, null, 2);
+    } catch (err) {
+        responseBox.innerHTML = `<span class="text-danger">Network Error: ${err.message}</span>`;
+    }
+}
+</script>
+{% endblock %}
