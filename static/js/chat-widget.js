@@ -137,7 +137,6 @@
                 body: JSON.stringify({
                     message: query,
                     history: recentHistory,
-                    stream: false,
                     send_email: false
                 })
             });
@@ -159,7 +158,7 @@
             const messages = document.getElementById('chat-messages');
             const msgObj = document.createElement('div');
             msgObj.className = 'chat-msg bot';
-            msgObj.innerHTML = assistantMessage.replace(/\\n/g, '<br>');
+            msgObj.innerHTML = assistantMessage.replace(/\n/g, '<br>');
             messages.appendChild(msgObj);
             messages.scrollTop = messages.scrollHeight;
 

@@ -164,7 +164,7 @@ def get_gemini_response(message: str, agent_type: str = "interview", history: Li
                 role = item.get("role", "user")
                 if role == "assistant":
                     role = "model"
-                formatted_history.append({"role": role, "parts": [item.get("parts", "")]})
+                formatted_history.append({"role": role, "parts": [item.get("content", item.get("parts", ""))]})
                 
             chat = model.start_chat(history=formatted_history, enable_automatic_function_calling=True)
             response = chat.send_message(message)

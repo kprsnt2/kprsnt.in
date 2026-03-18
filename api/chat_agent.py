@@ -35,7 +35,6 @@ class handler(BaseHTTPRequestHandler):
                 subject = data.get('subject', 'Chat Message')
                 send_email = data.get('send_email', False)
                 history = data.get('history', [])
-                stream = data.get('stream', False)
             else:
                 from urllib.parse import parse_qs
                 params = parse_qs(body)
@@ -44,13 +43,12 @@ class handler(BaseHTTPRequestHandler):
                 subject = params.get('subject', ['Chat Message'])[0]
                 send_email = True
                 history = []
-                stream = False
             
             if not message:
                 self._send_response(400, {"error": "No message provided"})
                 return
             
-            # Handle Non-Streaming (Normal JSON)
+            # Get AI response (JSON)
             ai_response = get_gemini_response(message, agent_type="chat", history=history)
             
             # Send email reply if requested
