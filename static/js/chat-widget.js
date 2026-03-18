@@ -137,7 +137,8 @@
                 body: JSON.stringify({
                     message: query,
                     history: recentHistory,
-                    stream: true
+                    stream: false,
+                    send_email: false
                 })
             });
 
@@ -151,54 +152,16 @@
                 return;
             }
 
+            const data = await response.json();
+            const assistantMessage = data.response || "Sorry, I couldn't generate a response.";
+            
+            // Render the full message using innerHTML to preserve linebreaks
             const messages = document.getElementById('chat-messages');
             const msgObj = document.createElement('div');
             msgObj.className = 'chat-msg bot';
+            msgObj.innerHTML = assistantMessage.replace(/\\n/g, '<br>');
             messages.appendChild(msgObj);
-
-            const reader = response.body.getReader();
-            const decoder = new TextDecoder('utf-8');
-            let assistantMessage = '';
-
-            let rawBuffer = '';
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-                
-                rawBuffer += decoder.decode(value, { stream: true });
-                const lines = rawBuffer.split('\\n');
-                
-                // Keep the last incomplete line in the buffer
-                rawBuffer = lines.pop() || '';
-                
-                for (const line of lines) {
-                    const trimmedLine = line.trim();
-                    if (trimmedLine.startsWith('data:') && trimmedLine !== 'data: [DONE]') {
-                        try {
-                            const parsed = JSON.parse(trimmedLine.slice(5).trim());
-                            if (parsed.text) {
-                                assistantMessage += parsed.text;
-                                msgObj.innerHTML = assistantMessage.replace(/\\n/g, '<br>');
-                                messages.scrollTop = messages.scrollHeight;
-                            }
-                        } catch (e) {
-                            console.error("SSE parse error", e);
-                        }
-                    }
-                }
-            }
-
-            // Process any remaining buffer
-            if (rawBuffer.trim().startsWith('data:') && rawBuffer.trim() !== 'data: [DONE]') {
-                 try {
-                     const parsed = JSON.parse(rawBuffer.trim().slice(5).trim());
-                     if (parsed.text) {
-                         assistantMessage += parsed.text;
-                         msgObj.innerHTML = assistantMessage.replace(/\\n/g, '<br>');
-                         messages.scrollTop = messages.scrollHeight;
-                     }
-                 } catch (e) {}
-            }
+            messages.scrollTop = messages.scrollHeight;
 
             history.push({ role: 'assistant', content: assistantMessage });
             
