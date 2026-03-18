@@ -175,8 +175,10 @@ def get_gemini_response(message: str, agent_type: str = "interview", history: Li
         return response.text.replace('**', '').replace('*', '')
         
     except Exception as e:
-        logger.error(f"Gemini API error: {e}")
-        return "I apologize, but I'm experiencing a temporary issue. Please try again shortly."
+        import traceback
+        err_str = traceback.format_exc()
+        logger.error(f"Gemini API error: {err_str}")
+        return f"ERROR_DEBUG: {str(e)}\n\n{err_str}"
 
 def get_gemini_streaming_response(message: str, agent_type: str = "interview", history: List[Dict[str, str]] = None):
     """Get streaming AI response from Gemini API using history."""
@@ -215,8 +217,10 @@ def get_gemini_streaming_response(message: str, agent_type: str = "interview", h
                 yield chunk.text.replace('**', '').replace('*', '')
                 
     except Exception as e:
-        logger.error(f"Gemini API streaming error: {e}")
-        yield "I apologize, but I'm experiencing a temporary issue. Please try again shortly."
+        import traceback
+        err_str = traceback.format_exc()
+        logger.error(f"Gemini API streaming error: {err_str}")
+        yield f"ERROR_DEBUG: {str(e)}\n\n{err_str}"
 
 def send_reply_email(to_email: str, subject: str, body: str, agent_type: str = "interview") -> bool:
     """Send reply email via Resend API."""
