@@ -25,7 +25,7 @@
     box-shadow: 0 6px 30px rgba(102, 126, 234, 0.6);
 }
 .chat-bubble.open {
-    transform: rotate(45deg);
+    /* No rotation needed, we use fa-times */
 }
 .chat-bubble .pulse-ring {
     position: absolute;

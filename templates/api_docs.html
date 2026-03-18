@@ -35,10 +35,6 @@
                     <label class="form-label text-muted">Message</label>
                     <input type="text" class="form-control bg-dark text-light border-secondary" id="chat-test-input" placeholder="e.g. What projects have you built?">
                 </div>
-                <div class="form-check mb-3">
-                    <input class="form-check-input" type="checkbox" id="chat-test-stream" checked>
-                    <label class="form-check-label text-muted">Enable SSE Streaming</label>
-                </div>
                 <button class="btn btn-primary w-100 mb-3" onclick="testChatApi()">Execute Request</button>
                 
                 <label class="form-label text-muted">Response Output:</label>
@@ -102,7 +98,6 @@
 <script>
 async function testChatApi() {
     const input = document.getElementById('chat-test-input').value || "Hello!";
-    const stream = document.getElementById('chat-test-stream').checked;
     const responseBox = document.getElementById('chat-test-response');
     
     responseBox.innerHTML = "<span class='text-muted'><i>Connecting & Thinking...</i></span>";
@@ -113,7 +108,7 @@ async function testChatApi() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 message: input,
-                stream: stream,
+                stream: true,
                 send_email: false
             })
         });
@@ -123,39 +118,34 @@ async function testChatApi() {
             return;
         }
 
-        if (stream) {
-            responseBox.innerHTML = "";
-            const reader = response.body.getReader();
-            const decoder = new TextDecoder('utf-8');
-            let rawBuffer = '';
+        responseBox.innerHTML = "";
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let rawBuffer = '';
             
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-                
-                rawBuffer += decoder.decode(value, { stream: true });
-                const lines = rawBuffer.split('\\n');
-                rawBuffer = lines.pop() || '';
-                
-                for (const line of lines) {
-                    const trimmedLine = line.trim();
-                    if (trimmedLine.startsWith('data:') && trimmedLine !== 'data: [DONE]') {
-                        try {
-                            const parsed = JSON.parse(trimmedLine.slice(5).trim());
-                            if (parsed.text) {
-                                // Add character smoothly
-                                responseBox.innerHTML += parsed.text.replace(/\\n/g, '<br>');
-                                responseBox.parentElement.scrollTop = responseBox.parentElement.scrollHeight;
-                            }
-                        } catch (e) {
-                            console.error(e);
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            
+            rawBuffer += decoder.decode(value, { stream: true });
+            const lines = rawBuffer.split('\\n');
+            rawBuffer = lines.pop() || '';
+            
+            for (const line of lines) {
+                const trimmedLine = line.trim();
+                if (trimmedLine.startsWith('data:') && trimmedLine !== 'data: [DONE]') {
+                    try {
+                        const parsed = JSON.parse(trimmedLine.slice(5).trim());
+                        if (parsed.text) {
+                            // Add character smoothly
+                            responseBox.innerHTML += parsed.text.replace(/\\n/g, '<br>');
+                            responseBox.parentElement.scrollTop = responseBox.parentElement.scrollHeight;
                         }
+                    } catch (e) {
+                        console.error(e);
                     }
                 }
             }
-        } else {
-            const data = await response.json();
-            responseBox.innerHTML = JSON.stringify(data, null, 2);
         }
     } catch (err) {
         responseBox.innerHTML = `<span class="text-danger">Network Error: ${err.message}</span>`;
