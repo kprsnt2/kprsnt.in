@@ -12,7 +12,10 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from bot_utils import get_gemini_response, get_gemini_streaming_response, send_reply_email, notify_owner
+try:
+    from bot_utils import get_gemini_response, get_gemini_streaming_response, send_reply_email, notify_owner
+except ImportError:
+    from .bot_utils import get_gemini_response, get_gemini_streaming_response, send_reply_email, notify_owner
 
 class handler(BaseHTTPRequestHandler):
     """Vercel serverless function handler."""
