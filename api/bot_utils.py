@@ -152,7 +152,7 @@ def get_gemini_response(message: str, agent_type: str = "interview", history: Li
         genai.configure(api_key=api_key)
         system_img = get_system_prompt(agent_type)
         model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
+            model_name="gemini-2.5-flash",
             system_instruction=system_img,
             tools=[send_resume_to_user]
         )
@@ -193,9 +193,8 @@ def get_gemini_streaming_response(message: str, agent_type: str = "interview", h
         genai.configure(api_key=api_key)
         system_img = get_system_prompt(agent_type)
         model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
-            system_instruction=system_img,
-            tools=[send_resume_to_user]
+            model_name="gemini-2.5-flash",
+            system_instruction=system_img
         )
         
         if history and len(history) > 0:
@@ -206,10 +205,10 @@ def get_gemini_streaming_response(message: str, agent_type: str = "interview", h
                     role = "model"
                 formatted_history.append({"role": role, "parts": [item.get("content", item.get("parts", ""))]})
             # Ensure the last message in history is not the same as current message
-            chat = model.start_chat(history=formatted_history, enable_automatic_function_calling=True)
+            chat = model.start_chat(history=formatted_history)
             response = chat.send_message(message, stream=True)
         else:
-            chat = model.start_chat(enable_automatic_function_calling=True)
+            chat = model.start_chat()
             response = chat.send_message(message, stream=True)
             
         for chunk in response:
