@@ -25,7 +25,6 @@
                 <pre class="bg-dark p-3 rounded" style="border: 1px solid var(--border-glass);"><code class="text-light">{
   "message": "string (Required)",
   "history": [ {"role": "user/assistant", "content": "..."} ],
-  "stream": boolean (Default: false),
   "send_email": boolean (Default: false),
   "from_email": "string (Optional)"
 }</code></pre>
@@ -108,7 +107,6 @@ async function testChatApi() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 message: input,
-                stream: true,
                 send_email: false
             })
         });
@@ -118,35 +116,8 @@ async function testChatApi() {
             return;
         }
 
-        responseBox.innerHTML = "";
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder('utf-8');
-        let rawBuffer = '';
-            
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            
-            rawBuffer += decoder.decode(value, { stream: true });
-            const lines = rawBuffer.split('\\n');
-            rawBuffer = lines.pop() || '';
-            
-            for (const line of lines) {
-                const trimmedLine = line.trim();
-                if (trimmedLine.startsWith('data:') && trimmedLine !== 'data: [DONE]') {
-                    try {
-                        const parsed = JSON.parse(trimmedLine.slice(5).trim());
-                        if (parsed.text) {
-                            // Add character smoothly
-                            responseBox.innerHTML += parsed.text.replace(/\\n/g, '<br>');
-                            responseBox.parentElement.scrollTop = responseBox.parentElement.scrollHeight;
-                        }
-                    } catch (e) {
-                        console.error(e);
-                    }
-                }
-            }
-        }
+        const data = await response.json();
+        responseBox.innerHTML = JSON.stringify(data, null, 2);
     } catch (err) {
         responseBox.innerHTML = `<span class="text-danger">Network Error: ${err.message}</span>`;
     }

@@ -180,46 +180,6 @@ def get_gemini_response(message: str, agent_type: str = "interview", history: Li
         logger.error(f"Gemini API error: {err_str}")
         return f"ERROR_DEBUG: {str(e)}\n\n{err_str}"
 
-def get_gemini_streaming_response(message: str, agent_type: str = "interview", history: List[Dict[str, str]] = None):
-    """Get streaming AI response from Gemini API using history."""
-    try:
-        import google.generativeai as genai
-        
-        api_key = get_gemini_api_key()
-        if not api_key:
-            yield "I'm sorry, my AI service is temporarily unavailable. Please try again later."
-            return
-            
-        genai.configure(api_key=api_key)
-        system_img = get_system_prompt(agent_type)
-        model = genai.GenerativeModel(
-            model_name="gemini-2.5-flash",
-            system_instruction=system_img
-        )
-        
-        if history and len(history) > 0:
-            formatted_history = []
-            for item in history:
-                role = item.get("role", "user")
-                if role == "assistant":
-                    role = "model"
-                formatted_history.append({"role": role, "parts": [item.get("content", item.get("parts", ""))]})
-            # Ensure the last message in history is not the same as current message
-            chat = model.start_chat(history=formatted_history)
-            response = chat.send_message(message, stream=True)
-        else:
-            chat = model.start_chat()
-            response = chat.send_message(message, stream=True)
-            
-        for chunk in response:
-            if chunk.text:
-                yield chunk.text.replace('**', '').replace('*', '')
-                
-    except Exception as e:
-        import traceback
-        err_str = traceback.format_exc()
-        logger.error(f"Gemini API streaming error: {err_str}")
-        yield f"ERROR_DEBUG: {str(e)}\n\n{err_str}"
 
 def send_reply_email(to_email: str, subject: str, body: str, agent_type: str = "interview") -> bool:
     """Send reply email via Resend API."""
