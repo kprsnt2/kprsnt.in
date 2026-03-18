@@ -109,6 +109,37 @@ of market-competitive compensation (30 lakhs INR or 70k USD range, negotiable) f
 def get_gemini_api_key():
     return os.environ.get("GEMINI_API_KEY")
 
+def send_resume_to_user(email: str) -> str:
+    """Sends Prashanth's resume to the specified email address.
+    
+    Args:
+        email (str): The email address to send the resume to.
+    """
+    logger.info(f"Tool called: send_resume_to_user({email})")
+    try:
+        import resend
+        resend.api_key = os.environ.get("RESEND_API_KEY")
+        if not resend.api_key:
+            return "Failed: RESEND_API_KEY not configured"
+            
+        from_email = os.environ.get("INTERVIEW_FROM_EMAIL", "chat@kprsnt.in")
+        
+        resend.Emails.send({
+            "from": f"Prashanth Kumar Kadasi <{from_email}>",
+            "to": [email],
+            "subject": "Prashanth Kumar Kadasi - Resume",
+            "html": f"""<div style="font-family: -apple-system, sans-serif; padding: 20px;">
+                <p>Hi there,</p>
+                <p>As requested, here is a link to my latest resume and portfolio:</p>
+                <p><a href="https://kprsnt.in/resume" style="display: inline-block; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 5px;">View Resume Online</a></p>
+                <p>Best,<br>Prashanth</p>
+            </div>"""
+        })
+        return f"Successfully sent resume to {email}"
+    except Exception as e:
+        logger.error(f"Error sending resume: {e}")
+        return f"Failed to send resume: {str(e)}"
+
 def get_gemini_response(message: str, agent_type: str = "interview", history: List[Dict[str, str]] = None) -> str:
     """Get AI response from Gemini API using history if provided."""
     try:
@@ -120,7 +151,11 @@ def get_gemini_response(message: str, agent_type: str = "interview", history: Li
             
         genai.configure(api_key=api_key)
         system_img = get_system_prompt(agent_type)
-        model = genai.GenerativeModel("gemini-1.5-flash", system_instruction=system_img)
+        model = genai.GenerativeModel(
+            model_name="gemini-1.5-flash",
+            system_instruction=system_img,
+            tools=[send_resume_to_user]
+        )
         
         if history and len(history) > 0:
             # Reconstruct Google GenAI specific history payload format
@@ -131,16 +166,57 @@ def get_gemini_response(message: str, agent_type: str = "interview", history: Li
                     role = "model"
                 formatted_history.append({"role": role, "parts": [item.get("parts", "")]})
                 
-            chat = model.start_chat(history=formatted_history)
+            chat = model.start_chat(history=formatted_history, enable_automatic_function_calling=True)
             response = chat.send_message(message)
         else:
-            response = model.generate_content(message)
+            chat = model.start_chat(enable_automatic_function_calling=True)
+            response = chat.send_message(message)
             
         return response.text.replace('**', '').replace('*', '')
         
     except Exception as e:
         logger.error(f"Gemini API error: {e}")
         return "I apologize, but I'm experiencing a temporary issue. Please try again shortly."
+
+def get_gemini_streaming_response(message: str, agent_type: str = "interview", history: List[Dict[str, str]] = None):
+    """Get streaming AI response from Gemini API using history."""
+    try:
+        import google.generativeai as genai
+        
+        api_key = get_gemini_api_key()
+        if not api_key:
+            yield "I'm sorry, my AI service is temporarily unavailable. Please try again later."
+            return
+            
+        genai.configure(api_key=api_key)
+        system_img = get_system_prompt(agent_type)
+        model = genai.GenerativeModel(
+            model_name="gemini-1.5-flash",
+            system_instruction=system_img,
+            tools=[send_resume_to_user]
+        )
+        
+        if history and len(history) > 0:
+            formatted_history = []
+            for item in history:
+                role = item.get("role", "user")
+                if role == "assistant":
+                    role = "model"
+                formatted_history.append({"role": role, "parts": [item.get("content", item.get("parts", ""))]})
+            # Ensure the last message in history is not the same as current message
+            chat = model.start_chat(history=formatted_history, enable_automatic_function_calling=True)
+            response = chat.send_message(message, stream=True)
+        else:
+            chat = model.start_chat(enable_automatic_function_calling=True)
+            response = chat.send_message(message, stream=True)
+            
+        for chunk in response:
+            if chunk.text:
+                yield chunk.text.replace('**', '').replace('*', '')
+                
+    except Exception as e:
+        logger.error(f"Gemini API streaming error: {e}")
+        yield "I apologize, but I'm experiencing a temporary issue. Please try again shortly."
 
 def send_reply_email(to_email: str, subject: str, body: str, agent_type: str = "interview") -> bool:
     """Send reply email via Resend API."""

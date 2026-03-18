@@ -131,25 +131,77 @@
         const recentHistory = history.slice(-8);
 
         try {
-            const response = await fetch('/api/chat', {
+            const response = await fetch('/api/chat_agent', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    query: query,
-                    history: recentHistory
+                    message: query,
+                    history: recentHistory,
+                    stream: true
                 })
             });
 
-            const data = await response.json();
-
             hideTyping();
 
-            if (data.error) {
-                addMessage(data.error, false);
-            } else {
-                addMessage(data.answer || 'Sorry, I couldn\'t process that. Try another question!', false);
-                history.push({ role: 'assistant', content: data.answer });
+            if (!response.ok) {
+                addMessage('Connection error. Please try again.', false);
+                isLoading = false;
+                document.getElementById('chat-send').disabled = false;
+                document.getElementById('chat-input').focus();
+                return;
             }
+
+            const messages = document.getElementById('chat-messages');
+            const msgObj = document.createElement('div');
+            msgObj.className = 'chat-msg bot';
+            messages.appendChild(msgObj);
+
+            const reader = response.body.getReader();
+            const decoder = new TextDecoder('utf-8');
+            let assistantMessage = '';
+
+            let rawBuffer = '';
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                
+                rawBuffer += decoder.decode(value, { stream: true });
+                const lines = rawBuffer.split('\\n');
+                
+                // Keep the last incomplete line in the buffer
+                rawBuffer = lines.pop() || '';
+                
+                for (const line of lines) {
+                    const trimmedLine = line.trim();
+                    if (trimmedLine.startsWith('data:') && trimmedLine !== 'data: [DONE]') {
+                        try {
+                            const parsed = JSON.parse(trimmedLine.slice(5).trim());
+                            if (parsed.text) {
+                                assistantMessage += parsed.text;
+                                msgObj.innerHTML = assistantMessage.replace(/\\n/g, '<br>');
+                                messages.scrollTop = messages.scrollHeight;
+                            }
+                        } catch (e) {
+                            console.error("SSE parse error", e);
+                        }
+                    }
+                }
+            }
+
+            // Process any remaining buffer
+            if (rawBuffer.trim().startsWith('data:') && rawBuffer.trim() !== 'data: [DONE]') {
+                 try {
+                     const parsed = JSON.parse(rawBuffer.trim().slice(5).trim());
+                     if (parsed.text) {
+                         assistantMessage += parsed.text;
+                         msgObj.innerHTML = assistantMessage.replace(/\\n/g, '<br>');
+                         messages.scrollTop = messages.scrollHeight;
+                     }
+                 } catch (e) {}
+            }
+
+            history.push({ role: 'assistant', content: assistantMessage });
+            
         } catch (err) {
             hideTyping();
             addMessage('Connection error. Please try again.', false);

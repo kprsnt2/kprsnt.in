@@ -12,7 +12,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-from bot_utils import get_gemini_response, send_reply_email, notify_owner
+from bot_utils import get_gemini_response, get_gemini_streaming_response, send_reply_email, notify_owner
 
 class handler(BaseHTTPRequestHandler):
     """Vercel serverless function handler."""
@@ -31,6 +31,8 @@ class handler(BaseHTTPRequestHandler):
                 from_email = data.get('from_email', '')
                 subject = data.get('subject', 'Chat Message')
                 send_email = data.get('send_email', False)
+                history = data.get('history', [])
+                stream = data.get('stream', False)
             else:
                 from urllib.parse import parse_qs
                 params = parse_qs(body)
@@ -38,13 +40,40 @@ class handler(BaseHTTPRequestHandler):
                 from_email = params.get('from', params.get('from_email', ['']))[0]
                 subject = params.get('subject', ['Chat Message'])[0]
                 send_email = True
+                history = []
+                stream = False
             
             if not message:
                 self._send_response(400, {"error": "No message provided"})
                 return
             
-            # Get AI response
-            ai_response = get_gemini_response(message, agent_type="chat")
+            # Handle Streaming (SSE)
+            if stream:
+                self.send_response(200)
+                self.send_header('Content-Type', 'text/event-stream')
+                self.send_header('Cache-Control', 'no-cache')
+                self.send_header('Connection', 'keep-alive')
+                self.send_header('Access-Control-Allow-Origin', '*')
+                self.end_headers()
+                
+                full_response = ""
+                for chunk in get_gemini_streaming_response(message, agent_type="chat", history=history):
+                    full_response += chunk
+                    self.wfile.write(f"data: {json.dumps({'text': chunk})}\n\n".encode('utf-8'))
+                    self.wfile.flush()
+                    
+                self.wfile.write(b"data: [DONE]\n\n")
+                self.wfile.flush()
+                
+                # Send async email / notification after streaming completes
+                if send_email and from_email:
+                    send_reply_email(from_email, subject, full_response, agent_type="chat")
+                source = "Email" if send_email else "API/Web"
+                notify_owner(from_email, message, full_response, source, agent_type="chat")
+                return
+
+            # Handle Non-Streaming (Normal JSON)
+            ai_response = get_gemini_response(message, agent_type="chat", history=history)
             
             # Send email reply if requested
             email_sent = False
