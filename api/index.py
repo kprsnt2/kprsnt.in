@@ -412,6 +412,11 @@ def resume_edit():
 def plotter():
     return render_template('plotter.html')
 
+@app.route('/api/docs')
+@app.route('/docs')
+def api_docs():
+    return render_template('docs.html')
+
 # Blog posts data
 BLOG_POSTS = [
     {
@@ -1297,7 +1302,7 @@ def ai_insight():
             return jsonify({'error': 'AI insights are temporarily unavailable.'}), 503
         
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-flash-latest')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         
         # Build project summary for AI
         project_summary = "Here are Prashanth Kumar Kadasi's projects:\n\n"
@@ -1463,7 +1468,7 @@ CONVERSATION HISTORY:{conv_history}
 User: {query}
 Assistant:"""
 
-        model = genai.GenerativeModel('gemini-flash-latest')
+        model = genai.GenerativeModel('gemini-2.5-flash')
         response = model.generate_content(prompt)
         
         answer = response.text.strip()

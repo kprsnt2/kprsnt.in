@@ -9,7 +9,7 @@
         <div class="col-12">
             <h2>Resume</h2>
             <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0.5rem;">Data Analyst & AI Developer</p>
-            <div style="color: #a0a0b0; margin-bottom: 2rem;">
+            <div style="color: var(--text-secondary); margin-bottom: 2rem;">
                 <span>📍 Hyderabad, India</span>
             </div>
         </div>
@@ -39,15 +39,15 @@
                 <div class="card-header">💼 Experience</div>
                 <div class="card-body">
                     {% for exp in experiences %}
-                    <div{% if not loop.last %} style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08);"{% endif %}>
+                    <div{% if not loop.last %} style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-glass);"{% endif %}>
                         <h5 style="margin-bottom: 0.25rem;">{{ exp.company }}</h5>
                         <div style="margin-bottom: 1rem;">
                             <span style="font-weight: 600; color: #667eea;">{{ exp.role }}</span>
-                            <span style="color: #a0a0b0;"> | {{ exp.period }} | {{ exp.location }}</span>
+                            <span style="color: var(--text-secondary);"> | {{ exp.period }} | {{ exp.location }}</span>
                         </div>
                         <ul style="padding-left: 1.25rem;">
                             {% for highlight in exp.highlights %}
-                            <li style="margin-bottom: 0.5rem; color: #c0c0d0;">{{ highlight }}</li>
+                            <li style="margin-bottom: 0.5rem; color: var(--text-secondary);">{{ highlight }}</li>
                             {% endfor %}
                         </ul>
                     </div>
@@ -66,7 +66,7 @@
                     {% for category, items in skills.items() %}
                     <div style="margin-bottom: 0.75rem;">
                         <strong style="color: #667eea;">{{ category }}: </strong>
-                        <span style="color: #c0c0d0;">{{ items }}</span>
+                        <span style="color: var(--text-secondary);">{{ items }}</span>
                     </div>
                     {% endfor %}
                 </div>
@@ -82,9 +82,9 @@
                 <div class="card-body">
                     {% for project in projects %}
                     <div>
-                        <strong style="color: #fff;">{{ project.name }}</strong>
+                        <strong style="color: var(--text-primary);">{{ project.name }}</strong>
                         <span style="color: #667eea; font-size: 0.9rem;"> | {{ project.tech }}</span>
-                        <p style="color: #a0a0b0; margin-bottom: 0.75rem; margin-top: 0.25rem;">{{ project.desc }}</p>
+                        <p style="color: var(--text-secondary); margin-bottom: 0.75rem; margin-top: 0.25rem;">{{ project.desc }}</p>
                     </div>
                     {% endfor %}
                 </div>
@@ -99,7 +99,7 @@
                 <div class="card-header">🎓 Education</div>
                 <div class="card-body">
                     <h5 style="margin-bottom: 0.25rem;">Anurag Group of Institutions</h5>
-                    <p style="color: #a0a0b0; margin-bottom: 0;">M. Pharmacy - Pharmaceutical Analysis and Quality
+                    <p style="color: var(--text-secondary); margin-bottom: 0;">M. Pharmacy - Pharmaceutical Analysis and Quality
                         Assurance</p>
                     <span style="color: #667eea; font-size: 0.9rem;">JNTUH | May 2012</span>
                 </div>

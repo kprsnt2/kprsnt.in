@@ -131,25 +131,39 @@
         const recentHistory = history.slice(-8);
 
         try {
-            const response = await fetch('/api/chat', {
+            const response = await fetch('/api/chat_agent', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    query: query,
-                    history: recentHistory
+                    message: query,
+                    history: recentHistory,
+                    send_email: false
                 })
             });
 
-            const data = await response.json();
-
             hideTyping();
 
-            if (data.error) {
-                addMessage(data.error, false);
-            } else {
-                addMessage(data.answer || 'Sorry, I couldn\'t process that. Try another question!', false);
-                history.push({ role: 'assistant', content: data.answer });
+            if (!response.ok) {
+                addMessage('Connection error. Please try again.', false);
+                isLoading = false;
+                document.getElementById('chat-send').disabled = false;
+                document.getElementById('chat-input').focus();
+                return;
             }
+
+            const data = await response.json();
+            const assistantMessage = data.response || "Sorry, I couldn't generate a response.";
+            
+            // Render the full message using innerHTML to preserve linebreaks
+            const messages = document.getElementById('chat-messages');
+            const msgObj = document.createElement('div');
+            msgObj.className = 'chat-msg bot';
+            msgObj.innerHTML = assistantMessage.replace(/\n/g, '<br>');
+            messages.appendChild(msgObj);
+            messages.scrollTop = messages.scrollHeight;
+
+            history.push({ role: 'assistant', content: assistantMessage });
+            
         } catch (err) {
             hideTyping();
             addMessage('Connection error. Please try again.', false);

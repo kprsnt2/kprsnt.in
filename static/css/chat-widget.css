@@ -24,9 +24,6 @@
     transform: scale(1.1);
     box-shadow: 0 6px 30px rgba(102, 126, 234, 0.6);
 }
-.chat-bubble.open {
-    transform: rotate(45deg);
-}
 .chat-bubble .pulse-ring {
     position: absolute;
     width: 100%;
@@ -47,12 +44,12 @@
     right: 24px;
     width: 380px;
     max-height: 520px;
-    background: rgba(18, 18, 30, 0.95);
+    background: rgba(9, 9, 11, 0.97);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(102, 126, 234, 0.25);
+    border: 1px solid rgba(102, 126, 234, 0.2);
     border-radius: 16px;
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
     z-index: 9998;
     display: flex;
     flex-direction: column;
@@ -71,8 +68,8 @@
 /* Chat Header */
 .chat-header {
     padding: 14px 18px;
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
-    border-bottom: 1px solid rgba(102, 126, 234, 0.2);
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.12), rgba(118, 75, 162, 0.12));
+    border-bottom: 1px solid rgba(102, 126, 234, 0.15);
     display: flex;
     align-items: center;
     gap: 10px;
@@ -90,13 +87,13 @@
 .chat-header-info h4 {
     margin: 0;
     font-size: 0.95rem;
-    color: #e8e8f0;
+    color: #fafafa;
     font-weight: 600;
 }
 .chat-header-info p {
     margin: 0;
     font-size: 0.72rem;
-    color: rgba(232, 232, 240, 0.6);
+    color: rgba(250, 250, 250, 0.5);
 }
 
 /* Chat Messages */
@@ -128,9 +125,9 @@
 }
 .chat-msg.bot {
     align-self: flex-start;
-    background: rgba(102, 126, 234, 0.12);
-    border: 1px solid rgba(102, 126, 234, 0.15);
-    color: #d0d0e0;
+    background: rgba(102, 126, 234, 0.1);
+    border: 1px solid rgba(102, 126, 234, 0.12);
+    color: #d4d4d8;
     border-bottom-left-radius: 4px;
 }
 .chat-msg.user {
@@ -169,9 +166,9 @@
     padding: 0 14px 10px;
 }
 .chat-suggestion-pill {
-    background: rgba(102, 126, 234, 0.1);
-    border: 1px solid rgba(102, 126, 234, 0.2);
-    color: #a0a0d0;
+    background: rgba(102, 126, 234, 0.08);
+    border: 1px solid rgba(102, 126, 234, 0.15);
+    color: #a1a1aa;
     border-radius: 20px;
     padding: 5px 12px;
     font-size: 0.75rem;
@@ -179,31 +176,31 @@
     transition: all 0.2s ease;
 }
 .chat-suggestion-pill:hover {
-    background: rgba(102, 126, 234, 0.2);
-    color: #c0c0f0;
-    border-color: rgba(102, 126, 234, 0.4);
+    background: rgba(102, 126, 234, 0.18);
+    color: #c4b5fd;
+    border-color: rgba(102, 126, 234, 0.35);
 }
 
 /* Chat Input */
 .chat-input-area {
     padding: 12px 14px;
-    border-top: 1px solid rgba(102, 126, 234, 0.15);
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     gap: 8px;
     align-items: center;
 }
 .chat-input {
     flex: 1;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(102, 126, 234, 0.2);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 22px;
     padding: 9px 16px;
-    color: #e0e0f0;
+    color: #fafafa;
     font-size: 0.85rem;
     outline: none;
     transition: border-color 0.2s ease;
 }
-.chat-input::placeholder { color: rgba(200, 200, 220, 0.4); }
+.chat-input::placeholder { color: rgba(161, 161, 170, 0.5); }
 .chat-input:focus { border-color: rgba(102, 126, 234, 0.5); }
 
 .chat-send {
