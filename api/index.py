@@ -415,7 +415,7 @@ def plotter():
 @app.route('/api/docs')
 @app.route('/docs')
 def api_docs():
-    return render_template('api_docs.html')
+    return render_template('docs.html')
 
 # Blog posts data
 BLOG_POSTS = [

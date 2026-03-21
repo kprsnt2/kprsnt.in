@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -56,21 +56,12 @@
                         <a class="nav-link {% if request.path == '/blog' %}active{% endif %}" href="/blog">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/jobs' %}active{% endif %}" href="/jobs"><i
-                                class="fas fa-briefcase" style="margin-right: 4px;"></i>Jobs</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link {% if request.path == '/plotter' %}active{% endif %}" href="/plotter"><i
                                 class="fas fa-chart-line" style="margin-right: 4px;"></i>Data Plotter</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/api/docs' or request.path == '/docs' %}active{% endif %}" href="/api/docs"><i
-                                class="fas fa-terminal" style="margin-right: 4px;"></i>API Docs</a>
-                    </li>
-                    <li class="nav-item ms-2">
-                        <button class="btn btn-outline-light btn-sm theme-toggle" id="themeToggle" title="Toggle theme">
-                            <i class="fas fa-moon" id="themeIcon"></i>
-                        </button>
+                        <a class="nav-link {% if request.path == '/api/docs' or request.path == '/docs' %}active{% endif %}" href="/docs"><i
+                                class="fas fa-book" style="margin-right: 4px;"></i>Docs</a>
                     </li>
                 </ul>
             </div>
@@ -99,29 +90,7 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Theme Toggle Script -->
-    <script>
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const html = document.documentElement;
 
-        // Check for saved theme preference
-        const savedTheme = localStorage.getItem('theme') || 'dark';
-        html.setAttribute('data-theme', savedTheme);
-        updateIcon(savedTheme);
-
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-            updateIcon(newTheme);
-        });
-
-        function updateIcon(theme) {
-            themeIcon.className = theme === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
-        }
-    </script>
 
     <!-- Vercel Analytics -->
     <script defer src="/_vercel/insights/script.js"></script>
@@ -146,9 +115,7 @@
             let particles = [];
             let animId;
 
-            function isDark() {
-                return document.documentElement.getAttribute('data-theme') !== 'light';
-            }
+            function isDark() { return true; }
 
             class Particle {
                 constructor() {
