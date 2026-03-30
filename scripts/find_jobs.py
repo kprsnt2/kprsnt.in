@@ -77,7 +77,7 @@ def build_prompt(model_name="AI"):
     today = datetime.now().strftime("%Y-%m-%d")
     month = datetime.now().strftime("%B %Y")
     return f"""You are an AI job search assistant. Find and curate current remote job openings that match this profile.
-IMPORTANT: Focus on jobs posted or actively hiring in the LAST 24 HOURS (today is {today}).
+IMPORTANT: Focus on jobs posted or actively hiring in the LAST 24 HOURS (today is {today}). Do NOT hallucinate jobs. Every job you return MUST be real and currently active.
 
 **Candidate Profile:**
 - Title: {PROFILE['title']}
@@ -88,18 +88,20 @@ IMPORTANT: Focus on jobs posted or actively hiring in the LAST 24 HOURS (today i
 - Target Roles: {', '.join(PROFILE['target_roles'])}
 
 **Instructions:**
-1. Search for real, currently hiring positions from {month}
-2. Focus on remote-friendly roles in India or worldwide
-3. Match roles based on skills overlap.
-4. IMPORTANT: You MUST generate EXACTLY 5 matching jobs for EACH of the following 5 target roles (totaling exactly 25 jobs):
+1. Search for real, authentic, and currently hiring positions from {month}. 
+2. Search specifically on these platforms: LinkedIn, Indeed, YC Combinator, Glassdoor, remote hiring sites, startup career pages. Also search X (Twitter) or other social media posts with hiring announcements for the job role names.
+3. EVERY single job MUST include a real, valid, and working `apply_url` link to the actual job posting. Do NOT provide fake, broken, or placeholder links. This is the most critical requirement.
+4. Focus on remote-friendly roles in India or worldwide.
+5. Match roles based on skills overlap.
+6. IMPORTANT: You MUST generate EXACTLY 5 matching jobs for EACH of the following 5 target roles (totaling exactly 25 jobs):
    - Senior Data Analyst
    - Data Manager
    - AI Engineer
    - Prompt Engineer
    - Clinical/Healthcare Data Analyst
-5. Include a mix of strong matches (Tier 1) and good matches (Tier 2)
-6. For each job, calculate a match_score (0-100) based on skill overlap
-7. The candidate's Pharma + AI combo is UNIQUE — always include pharma+AI roles for the Clinical/Healthcare target role.
+7. Include a mix of strong matches (Tier 1) and good matches (Tier 2).
+8. For each job, calculate a match_score (0-100) based on skill overlap.
+9. The candidate's Pharma + AI combo is UNIQUE — always include pharma+AI roles for the Clinical/Healthcare target role.
 
 **Output Format:**
 Return ONLY a valid JSON object with this structure:
@@ -382,85 +384,6 @@ def verify_jobs(jobs):
     return jobs
 
 
-def generate_cover_letters(jobs):
-    """Generate tailored cover letters for Tier 1 jobs using AI."""
-    tier1 = [j for j in jobs if j.get("tier") == 1 and not j.get("cover_letter")]
-    if not tier1:
-        print("  📝 All Tier 1 jobs already have cover letters")
-        return jobs
-    
-    print(f"  📝 Generating cover letters for {len(tier1)} Tier 1 jobs...")
-    
-    # Try NVIDIA NIM first
-    api_key = os.environ.get("NVIDIA_API_KEY")
-    if api_key:
-        try:
-            from openai import OpenAI
-            client = OpenAI(
-                api_key=api_key,
-                base_url="https://integrate.api.nvidia.com/v1"
-            )
-            
-            for job in tier1:
-                prompt = f"""Write a short, human-sounding intro message (under 150 words) for applying to this job.
-
-Job: {job['title']} at {job['company']} {job.get('company_tag', '')}
-Tags: {', '.join(job.get('tags', []))}
-Why it matches: {job.get('why_match', '')}
-
-Candidate: Prashanth Kumar — Data Analyst & AI Developer
-Key: Fine-tuned 20B LLM (76% brand manipulation), 10+ deployed AI apps, M.Pharm + Drug Discovery AI, MyLocalCLI (6 AI providers, 26 tools)
-Portfolio: kprsnt.in | github.com/kprsnt2 | huggingface.co/kprsnt
-
-Rules: Be concrete, not generic. Reference 2 specific projects. No "I'm excited/passionate". Return ONLY the message text."""
-
-                response = client.chat.completions.create(
-                    model="z-ai/glm-5",
-                    messages=[{"role": "user", "content": prompt}],
-                    temperature=0.7,
-                    max_tokens=500
-                )
-                job["cover_letter"] = response.choices[0].message.content.strip()
-                print(f"    ✅ {job['company']} — cover letter generated")
-            
-            return jobs
-        except Exception as e:
-            print(f"  ⚠️  NVIDIA cover letter error: {e}")
-    
-    # Try Gemini fallback
-    api_key = os.environ.get("GEMINI_API_KEY_PAID")
-    if api_key:
-        try:
-            from google import genai
-            client = genai.Client(api_key=api_key)
-            
-            for job in tier1:
-                prompt = f"""Write a short, human-sounding intro message (under 150 words) for applying to this job.
-
-Job: {job['title']} at {job['company']} {job.get('company_tag', '')}
-Tags: {', '.join(job.get('tags', []))}
-Why it matches: {job.get('why_match', '')}
-
-Candidate: Prashanth Kumar — Data Analyst & AI Developer
-Key: Fine-tuned 20B LLM (76% brand manipulation), 10+ deployed AI apps, M.Pharm + Drug Discovery AI, MyLocalCLI (6 AI providers, 26 tools)
-Portfolio: kprsnt.in | github.com/kprsnt2 | huggingface.co/kprsnt
-
-Rules: Be concrete, not generic. Reference 2 specific projects. No "I'm excited/passionate". Return ONLY the message text."""
-
-                response = client.models.generate_content(
-                    model="gemini-pro-latest", contents=prompt
-                )
-                job["cover_letter"] = response.text.strip()
-                print(f"    ✅ {job['company']} — cover letter generated")
-            
-            return jobs
-        except Exception as e:
-            print(f"  ⚠️  Gemini cover letter error: {e}")
-    
-    print("  ⚠️  No API keys available for cover letter generation")
-    return jobs
-
-
 def main():
     """Main entry point."""
     print("🔍 AI Job Finder — Multi-Model Edition")
@@ -526,8 +449,7 @@ def main():
     # Verify job URLs
     result["jobs"] = verify_jobs(result.get("jobs", []))
 
-    # Generate cover letters for Tier 1 jobs
-    result["jobs"] = generate_cover_letters(result.get("jobs", []))
+
 
     # Save
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
