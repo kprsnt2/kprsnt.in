@@ -52,13 +52,13 @@ PROFILE = {
 # NVIDIA NIM Models Configuration
 NVIDIA_MODELS = [
     {
-        "id": "z-ai/glm-5",
+        "id": "z-ai/glm5",
         "name": "GLM-5",
         "source_tag": "glm5",
         "color": "#76b900"  # NVIDIA green
     },
     {
-        "id": "moonshotai/kimi-2.5",
+        "id": "moonshotai/kimi-k2.5",
         "name": "Kimi 2.5",
         "source_tag": "kimi",
         "color": "#6366f1"  # Indigo
@@ -90,16 +90,16 @@ IMPORTANT: Focus on jobs posted or actively hiring in the LAST 24 HOURS (today i
 **Instructions:**
 1. Search for real, currently hiring positions from {month}
 2. Focus on remote-friendly roles in India or worldwide
-3. Match roles based on skills overlap — prioritize these role types:
-   - Senior Data Analyst roles
-   - Data Manager roles
-   - AI/LLM Engineer roles
-   - Prompt Engineer roles
-   - Clinical/Healthcare Data roles (pharma+AI is a UNIQUE combo)
-4. Include a mix of strong matches (Tier 1) and good matches (Tier 2)
-5. For each job, calculate a match_score (0-100) based on skill overlap
-6. Include at least 8 jobs, up to 15
-7. The candidate's Pharma + AI combo is UNIQUE — always include pharma+AI roles if available
+3. Match roles based on skills overlap.
+4. IMPORTANT: You MUST generate EXACTLY 5 matching jobs for EACH of the following 5 target roles (totaling exactly 25 jobs):
+   - Senior Data Analyst
+   - Data Manager
+   - AI Engineer
+   - Prompt Engineer
+   - Clinical/Healthcare Data Analyst
+5. Include a mix of strong matches (Tier 1) and good matches (Tier 2)
+6. For each job, calculate a match_score (0-100) based on skill overlap
+7. The candidate's Pharma + AI combo is UNIQUE — always include pharma+AI roles for the Clinical/Healthcare target role.
 
 **Output Format:**
 Return ONLY a valid JSON object with this structure:
@@ -155,7 +155,7 @@ def _parse_json_response(text):
 
 
 def generate_with_nvidia(prompt, model_config):
-    """Generate job listings using NVIDIA NIM API (OpenAI-compatible)."""
+    """Generate job listings using NVIDIA NIM API (OpenAI-compatible) with streaming."""
     api_key = os.environ.get("NVIDIA_API_KEY")
     if not api_key:
         print(f"  ⚠️  NVIDIA_API_KEY not set, skipping {model_config['name']}")
@@ -168,17 +168,39 @@ def generate_with_nvidia(prompt, model_config):
             base_url="https://integrate.api.nvidia.com/v1"
         )
 
-        response = client.chat.completions.create(
+        sys.stdout.write(f"  ⏳ Generating with {model_config['name']} (this may take a minute due to reasoning/streaming)... ")
+        sys.stdout.flush()
+
+        completion = client.chat.completions.create(
             model=model_config["id"],
             messages=[
                 {"role": "system", "content": "You are a job search assistant. Return only valid JSON."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.7,
-            max_tokens=8192
+            max_tokens=16384,
+            extra_body={"chat_template_kwargs": {"enable_thinking": True, "clear_thinking": False}},
+            stream=True
         )
 
-        text = response.choices[0].message.content.strip()
+        full_content = ""
+        for chunk in completion:
+            if not getattr(chunk, "choices", None):
+                continue
+            if len(chunk.choices) == 0 or getattr(chunk.choices[0], "delta", None) is None:
+                continue
+            
+            delta = chunk.choices[0].delta
+            # We ignore reasoning content for the final JSON parsing, but handle it so we don't crash
+            # reasoning = getattr(delta, "reasoning_content", None)
+            
+            content = getattr(delta, "content", None)
+            if content is not None:
+                full_content += content
+
+        print("Done!")
+        
+        text = full_content.strip()
         result = _parse_json_response(text)
         
         if result and "jobs" in result and len(result["jobs"]) > 0:
@@ -189,7 +211,7 @@ def generate_with_nvidia(prompt, model_config):
             print(f"  ✅ Found {len(result['jobs'])} jobs with {model_config['name']}")
             return result
         else:
-            print(f"  ⚠️  {model_config['name']} response missing jobs")
+            print(f"  ⚠️  {model_config['name']} response missing jobs. Raw output snippet:\n{text[:200]}...")
             return None
 
     except ImportError:
@@ -459,19 +481,20 @@ def main():
             all_jobs.extend(result["jobs"])
             model_results[model_config["source_tag"]] = len(result["jobs"])
     
-    # --- Phase 2: Fallback to Gemini/Claude if no results ---
-    if not all_jobs:
-        print("\n📡 Phase 2: Fallback Models")
-        result = generate_with_gemini(prompt)
-        if result and result.get("jobs"):
-            all_jobs.extend(result["jobs"])
-            model_results["gemini"] = len(result["jobs"])
-        
-        if not all_jobs:
-            result = generate_with_claude(prompt)
-            if result and result.get("jobs"):
-                all_jobs.extend(result["jobs"])
-                model_results["claude"] = len(result["jobs"])
+    # --- Phase 2: Run Gemini/Claude ---
+    print("\n📡 Phase 2: Other Models")
+    
+    print("  🤖 Trying Gemini (gemini-pro-latest)...")
+    result = generate_with_gemini(prompt)
+    if result and result.get("jobs"):
+        all_jobs.extend(result["jobs"])
+        model_results["gemini"] = len(result["jobs"])
+    
+    print("  🤖 Trying Claude (claude-haiku-4-5)...")
+    result = generate_with_claude(prompt)
+    if result and result.get("jobs"):
+        all_jobs.extend(result["jobs"])
+        model_results["claude"] = len(result["jobs"])
 
     if not all_jobs:
         print("\n  ❌ Failed to generate jobs with any model")
