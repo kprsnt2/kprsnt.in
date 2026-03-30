@@ -6,4 +6,5 @@ anthropic
 google-genai
 mcp[cli]
 httpx
+openai
 resend

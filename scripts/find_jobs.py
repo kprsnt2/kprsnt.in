@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
-AI Job Finder
-Uses Gemini API to search and curate job openings matching the profile.
+AI Job Finder — Multi-Model Edition
+Uses multiple AI models via NVIDIA NIM API to search and curate job openings.
+Models: GLM-5, Kimi-2.5, Step-3.5-Flash (all via NVIDIA NIM)
+Fallback: Gemini, Claude
 Saves results as JSON to job_data/ for website rendering.
 """
 import os
@@ -23,7 +25,8 @@ PROFILE = {
         "Python", "SQL", "BigQuery", "LLM Fine-tuning", "Prompt Engineering",
         "RAG", "Multi-model AI (Gemini, Claude, OpenAI, NVIDIA NIM)",
         "HuggingFace", "PyTorch", "Flask", "React", "Next.js", "Vercel",
-        "Data Analysis", "Dashboards", "ETL", "AppScript"
+        "Data Analysis", "Dashboards", "ETL", "AppScript",
+        "Healthcare Data", "Clinical Data Analysis", "Drug Discovery"
     ],
     "experience": [
         "3+ years Data Analyst at Pi-Datametrics",
@@ -35,20 +38,46 @@ PROFILE = {
     ],
     "education": "M.Pharm - Pharmaceutical Analysis",
     "target_roles": [
+        "Senior Data Analyst", "Data Manager",
         "AI Engineer", "LLM Engineer", "Generative AI Developer",
-        "Data Analyst (Senior)", "ML Engineer", "Prompt Engineer",
-        "AI/ML Solutions Engineer", "Forward Deployed Engineer",
-        "Pharma + AI roles"
+        "LLM Prompt Engineer", "Prompt Engineer",
+        "Clinical Data Analyst", "Healthcare Data Manager",
+        "ML Engineer", "AI/ML Solutions Engineer",
+        "Forward Deployed Engineer", "Pharma + AI roles"
     ],
     "salary_range": "₹10-50 LPA or $30K-80K USD",
     "preferred": "Remote, async-first teams, startups or mid-size companies"
 }
 
+# NVIDIA NIM Models Configuration
+NVIDIA_MODELS = [
+    {
+        "id": "z-ai/glm-5",
+        "name": "GLM-5",
+        "source_tag": "glm5",
+        "color": "#76b900"  # NVIDIA green
+    },
+    {
+        "id": "moonshotai/kimi-2.5",
+        "name": "Kimi 2.5",
+        "source_tag": "kimi",
+        "color": "#6366f1"  # Indigo
+    },
+    {
+        "id": "stepfun-ai/step-3.5-flash",
+        "name": "Step 3.5 Flash",
+        "source_tag": "step",
+        "color": "#f59e0b"  # Amber
+    }
+]
 
-def build_prompt():
+
+def build_prompt(model_name="AI"):
     """Build the AI prompt for job search."""
+    today = datetime.now().strftime("%Y-%m-%d")
     month = datetime.now().strftime("%B %Y")
     return f"""You are an AI job search assistant. Find and curate current remote job openings that match this profile.
+IMPORTANT: Focus on jobs posted or actively hiring in the LAST 24 HOURS (today is {today}).
 
 **Candidate Profile:**
 - Title: {PROFILE['title']}
@@ -59,19 +88,24 @@ def build_prompt():
 - Target Roles: {', '.join(PROFILE['target_roles'])}
 
 **Instructions:**
-1. Search for real, currently hiring positions from March 2026
+1. Search for real, currently hiring positions from {month}
 2. Focus on remote-friendly roles in India or worldwide
-3. Match roles based on skills overlap — prioritize LLM/AI engineer roles
+3. Match roles based on skills overlap — prioritize these role types:
+   - Senior Data Analyst roles
+   - Data Manager roles
+   - AI/LLM Engineer roles
+   - Prompt Engineer roles
+   - Clinical/Healthcare Data roles (pharma+AI is a UNIQUE combo)
 4. Include a mix of strong matches (Tier 1) and good matches (Tier 2)
 5. For each job, calculate a match_score (0-100) based on skill overlap
-6. Include at least 10 jobs, up to 20
+6. Include at least 8 jobs, up to 15
 7. The candidate's Pharma + AI combo is UNIQUE — always include pharma+AI roles if available
 
 **Output Format:**
 Return ONLY a valid JSON object with this structure:
 {{
   "month": "{month}",
-  "generated_date": "{datetime.now().strftime('%Y-%m-%d')}",
+  "generated_date": "{today}",
   "profile_summary": "Data Analyst & AI Developer | LLM Fine-tuning | Python | Multi-model AI",
   "jobs": [
     {{
@@ -87,16 +121,87 @@ Return ONLY a valid JSON object with this structure:
       "why_match": "Brief reason why this matches the profile",
       "apply_url": "https://platform.com",
       "applied": false,
-      "status": "new"
+      "status": "new",
+      "target_role": "ai-engineer"
     }}
   ]
 }}
 
+The "target_role" field should be one of: "senior-data-analyst", "data-manager", "ai-engineer", "prompt-engineer", "clinical-healthcare"
+
 Return valid JSON only, no markdown code fences, no extra text."""
 
 
+def _parse_json_response(text):
+    """Parse JSON from AI response, handling code fences."""
+    text = text.strip()
+    if text.startswith("```"):
+        text = re.sub(r'^```\w*\n?', '', text)
+        text = re.sub(r'\n?```$', '', text)
+        text = text.strip()
+    
+    # Try to find JSON object in the text
+    try:
+        return json.loads(text)
+    except json.JSONDecodeError:
+        # Try to extract JSON from surrounding text
+        match = re.search(r'\{[\s\S]*\}', text)
+        if match:
+            try:
+                return json.loads(match.group())
+            except json.JSONDecodeError:
+                pass
+    return None
+
+
+def generate_with_nvidia(prompt, model_config):
+    """Generate job listings using NVIDIA NIM API (OpenAI-compatible)."""
+    api_key = os.environ.get("NVIDIA_API_KEY")
+    if not api_key:
+        print(f"  ⚠️  NVIDIA_API_KEY not set, skipping {model_config['name']}")
+        return None
+
+    try:
+        from openai import OpenAI
+        client = OpenAI(
+            api_key=api_key,
+            base_url="https://integrate.api.nvidia.com/v1"
+        )
+
+        response = client.chat.completions.create(
+            model=model_config["id"],
+            messages=[
+                {"role": "system", "content": "You are a job search assistant. Return only valid JSON."},
+                {"role": "user", "content": prompt}
+            ],
+            temperature=0.7,
+            max_tokens=8192
+        )
+
+        text = response.choices[0].message.content.strip()
+        result = _parse_json_response(text)
+        
+        if result and "jobs" in result and len(result["jobs"]) > 0:
+            # Tag each job with model source
+            for job in result["jobs"]:
+                job["model_source"] = model_config["source_tag"]
+                job["model_name"] = model_config["name"]
+            print(f"  ✅ Found {len(result['jobs'])} jobs with {model_config['name']}")
+            return result
+        else:
+            print(f"  ⚠️  {model_config['name']} response missing jobs")
+            return None
+
+    except ImportError:
+        print("  ⚠️  openai package not installed")
+        return None
+    except Exception as e:
+        print(f"  ⚠️  {model_config['name']} error: {e}")
+        return None
+
+
 def generate_with_gemini(prompt):
-    """Generate job listings using Gemini."""
+    """Generate job listings using Gemini (fallback)."""
     api_key = os.environ.get("GEMINI_API_KEY_PAID")
     if not api_key:
         print("  ⚠️  GEMINI_API_KEY_PAID not set, skipping Gemini")
@@ -111,15 +216,12 @@ def generate_with_gemini(prompt):
             contents=prompt
         )
         text = response.text.strip()
+        result = _parse_json_response(text)
 
-        # Handle code fences
-        if text.startswith("```"):
-            text = re.sub(r'^```\w*\n?', '', text)
-            text = re.sub(r'\n?```$', '', text)
-            text = text.strip()
-
-        result = json.loads(text)
-        if "jobs" in result and len(result["jobs"]) > 0:
+        if result and "jobs" in result and len(result["jobs"]) > 0:
+            for job in result["jobs"]:
+                job["model_source"] = "gemini"
+                job["model_name"] = "Gemini"
             print(f"  ✅ Found {len(result['jobs'])} jobs with Gemini")
             return result
         else:
@@ -128,9 +230,6 @@ def generate_with_gemini(prompt):
 
     except ImportError:
         print("  ⚠️  google-genai package not installed")
-        return None
-    except json.JSONDecodeError as e:
-        print(f"  ⚠️  Gemini returned invalid JSON: {e}")
         return None
     except Exception as e:
         print(f"  ⚠️  Gemini error: {e}")
@@ -155,14 +254,12 @@ def generate_with_claude(prompt):
         )
 
         text = response.content[0].text.strip()
+        result = _parse_json_response(text)
 
-        if text.startswith("```"):
-            text = re.sub(r'^```\w*\n?', '', text)
-            text = re.sub(r'\n?```$', '', text)
-            text = text.strip()
-
-        result = json.loads(text)
-        if "jobs" in result and len(result["jobs"]) > 0:
+        if result and "jobs" in result and len(result["jobs"]) > 0:
+            for job in result["jobs"]:
+                job["model_source"] = "claude"
+                job["model_name"] = "Claude"
             print(f"  ✅ Found {len(result['jobs'])} jobs with Claude")
             return result
         else:
@@ -172,12 +269,24 @@ def generate_with_claude(prompt):
     except ImportError:
         print("  ⚠️  anthropic package not installed")
         return None
-    except json.JSONDecodeError as e:
-        print(f"  ⚠️  Claude returned invalid JSON: {e}")
-        return None
     except Exception as e:
         print(f"  ⚠️  Claude error: {e}")
         return None
+
+
+def deduplicate_jobs(all_jobs):
+    """Remove duplicate jobs across models based on company+title similarity."""
+    seen = {}
+    unique_jobs = []
+    
+    for job in all_jobs:
+        key = f"{job.get('company', '').lower().strip()}-{job.get('title', '').lower().strip()}"
+        # Simple dedup: keep the first occurrence (higher-priority model)
+        if key not in seen:
+            seen[key] = True
+            unique_jobs.append(job)
+    
+    return unique_jobs
 
 
 def merge_with_existing(new_data):
@@ -260,7 +369,43 @@ def generate_cover_letters(jobs):
     
     print(f"  📝 Generating cover letters for {len(tier1)} Tier 1 jobs...")
     
-    # Try Gemini
+    # Try NVIDIA NIM first
+    api_key = os.environ.get("NVIDIA_API_KEY")
+    if api_key:
+        try:
+            from openai import OpenAI
+            client = OpenAI(
+                api_key=api_key,
+                base_url="https://integrate.api.nvidia.com/v1"
+            )
+            
+            for job in tier1:
+                prompt = f"""Write a short, human-sounding intro message (under 150 words) for applying to this job.
+
+Job: {job['title']} at {job['company']} {job.get('company_tag', '')}
+Tags: {', '.join(job.get('tags', []))}
+Why it matches: {job.get('why_match', '')}
+
+Candidate: Prashanth Kumar — Data Analyst & AI Developer
+Key: Fine-tuned 20B LLM (76% brand manipulation), 10+ deployed AI apps, M.Pharm + Drug Discovery AI, MyLocalCLI (6 AI providers, 26 tools)
+Portfolio: kprsnt.in | github.com/kprsnt2 | huggingface.co/kprsnt
+
+Rules: Be concrete, not generic. Reference 2 specific projects. No "I'm excited/passionate". Return ONLY the message text."""
+
+                response = client.chat.completions.create(
+                    model="z-ai/glm-5",
+                    messages=[{"role": "user", "content": prompt}],
+                    temperature=0.7,
+                    max_tokens=500
+                )
+                job["cover_letter"] = response.choices[0].message.content.strip()
+                print(f"    ✅ {job['company']} — cover letter generated")
+            
+            return jobs
+        except Exception as e:
+            print(f"  ⚠️  NVIDIA cover letter error: {e}")
+    
+    # Try Gemini fallback
     api_key = os.environ.get("GEMINI_API_KEY_PAID")
     if api_key:
         try:
@@ -290,50 +435,67 @@ Rules: Be concrete, not generic. Reference 2 specific projects. No "I'm excited/
         except Exception as e:
             print(f"  ⚠️  Gemini cover letter error: {e}")
     
-    # Try Claude fallback
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if api_key:
-        try:
-            import anthropic
-            client = anthropic.Anthropic(api_key=api_key)
-            
-            for job in tier1:
-                prompt = f"""Write a short, human-sounding intro message (under 150 words) for applying to:
-{job['title']} at {job['company']}. Tags: {', '.join(job.get('tags', []))}
-Candidate: Prashanth Kumar — Data Analyst & AI Developer, fine-tuned 20B LLM (BrandXY), 10+ AI apps, M.Pharm, MyLocalCLI.
-Be concrete, reference 2 projects. Return ONLY the message text."""
-
-                response = client.messages.create(
-                    model="claude-haiku-4-5-20250315",
-                    max_tokens=500,
-                    messages=[{"role": "user", "content": prompt}]
-                )
-                job["cover_letter"] = response.content[0].text.strip()
-                print(f"    ✅ {job['company']} — cover letter generated")
-            
-            return jobs
-        except Exception as e:
-            print(f"  ⚠️  Claude cover letter error: {e}")
-    
     print("  ⚠️  No API keys available for cover letter generation")
     return jobs
 
 
 def main():
     """Main entry point."""
-    print("🔍 AI Job Finder")
+    print("🔍 AI Job Finder — Multi-Model Edition")
     print(f"   Output: {OUTPUT_DIR}")
+    print(f"   Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    print()
 
     prompt = build_prompt()
+    all_jobs = []
+    model_results = {}
 
-    # Try Gemini first, then Claude fallback
-    result = generate_with_gemini(prompt)
-    if result is None:
-        result = generate_with_claude(prompt)
+    # --- Phase 1: Run all NVIDIA NIM models ---
+    print("📡 Phase 1: NVIDIA NIM Models")
+    for model_config in NVIDIA_MODELS:
+        print(f"  🤖 Trying {model_config['name']} ({model_config['id']})...")
+        result = generate_with_nvidia(prompt, model_config)
+        if result and result.get("jobs"):
+            all_jobs.extend(result["jobs"])
+            model_results[model_config["source_tag"]] = len(result["jobs"])
+    
+    # --- Phase 2: Fallback to Gemini/Claude if no results ---
+    if not all_jobs:
+        print("\n📡 Phase 2: Fallback Models")
+        result = generate_with_gemini(prompt)
+        if result and result.get("jobs"):
+            all_jobs.extend(result["jobs"])
+            model_results["gemini"] = len(result["jobs"])
+        
+        if not all_jobs:
+            result = generate_with_claude(prompt)
+            if result and result.get("jobs"):
+                all_jobs.extend(result["jobs"])
+                model_results["claude"] = len(result["jobs"])
 
-    if result is None:
-        print("  ❌ Failed to generate with both Gemini and Claude")
+    if not all_jobs:
+        print("\n  ❌ Failed to generate jobs with any model")
         sys.exit(1)
+
+    # --- Phase 3: Deduplicate & merge ---
+    print(f"\n🔧 Phase 3: Processing")
+    print(f"  📊 Raw jobs from all models: {len(all_jobs)}")
+    all_jobs = deduplicate_jobs(all_jobs)
+    print(f"  📊 After deduplication: {len(all_jobs)}")
+
+    # Sort by match score
+    all_jobs.sort(key=lambda j: j.get("match_score", 0), reverse=True)
+
+    # Build final result
+    today = datetime.now().strftime("%Y-%m-%d")
+    month = datetime.now().strftime("%B %Y")
+    result = {
+        "month": month,
+        "generated_date": today,
+        "profile_summary": "Data Analyst & AI Developer | LLM Fine-tuning | Python | Multi-model AI",
+        "models_used": model_results,
+        "jobs": all_jobs
+    }
 
     # Merge with existing data
     result = merge_with_existing(result)
@@ -352,10 +514,11 @@ def main():
         json.dumps(result, indent=2, ensure_ascii=False),
         encoding="utf-8"
     )
-    print(f"  💾 Saved: {output_path.name}")
+
+    print(f"\n  💾 Saved: {output_path.name}")
     print(f"  📊 {len(result.get('jobs', []))} jobs found for {result.get('month', 'this month')}")
+    print(f"  🤖 Models used: {', '.join(f'{k} ({v} jobs)' for k, v in model_results.items())}")
 
 
 if __name__ == "__main__":
     main()
-

@@ -9,6 +9,10 @@ import json
 import glob
 import logging
 import google.generativeai as genai
+try:
+    from api.resume_data import get_resume, get_all_roles, CONTACT, EDUCATION
+except ImportError:
+    from resume_data import get_resume, get_all_roles, CONTACT, EDUCATION
 
 app = Flask(__name__, 
             template_folder='../templates',
@@ -399,7 +403,29 @@ def resume():
     return render_template('resume.html', 
                          experiences=EXPERIENCES, 
                          projects=RESUME_PROJECTS,
-                         skills=RESUME_SKILLS)
+                         skills=RESUME_SKILLS,
+                         role_definitions=get_all_roles(),
+                         current_role=None)
+
+@app.route('/resume/<role_slug>')
+def resume_role(role_slug):
+    resume_data = get_resume(role_slug)
+    if not resume_data:
+        return render_template('resume.html',
+                             experiences=EXPERIENCES,
+                             projects=RESUME_PROJECTS,
+                             skills=RESUME_SKILLS,
+                             role_definitions=get_all_roles(),
+                             current_role=None)
+    return render_template('resume.html',
+                         experiences=resume_data['experiences'],
+                         projects=resume_data['projects'],
+                         skills=resume_data['skills'],
+                         role_definitions=get_all_roles(),
+                         current_role=resume_data['role'],
+                         resume_summary=resume_data['summary'],
+                         contact=CONTACT,
+                         education=EDUCATION)
 
 @app.route('/resume/edit')
 def resume_edit():
@@ -1243,6 +1269,7 @@ def load_job_listings():
     job_data_dir = os.path.join(os.path.dirname(__file__), '..', 'job_data')
     jobs = []
     month = ""
+    models_used = {}
     
     if os.path.exists(job_data_dir):
         json_files = sorted(glob.glob(os.path.join(job_data_dir, '*.json')), reverse=True)
@@ -1253,6 +1280,8 @@ def load_job_listings():
                     if 'jobs' in data:
                         if not month:
                             month = data.get('month', '')
+                        if data.get('models_used'):
+                            models_used.update(data['models_used'])
                         for job in data['jobs']:
                             if job.get('title') and job.get('company'):
                                 jobs.append(job)
@@ -1261,21 +1290,30 @@ def load_job_listings():
     
     # Sort by match score descending
     jobs.sort(key=lambda j: j.get('match_score', 0), reverse=True)
-    return jobs, month
+    return jobs, month, models_used
 
 
 @app.route('/jobs')
 def jobs():
-    all_jobs, month = load_job_listings()
+    all_jobs, month, models_used = load_job_listings()
     tier1_count = sum(1 for j in all_jobs if j.get('tier') == 1)
     applied_count = sum(1 for j in all_jobs if j.get('status') == 'applied')
     avg_score = round(sum(j.get('match_score', 0) for j in all_jobs) / max(len(all_jobs), 1))
+    
+    # Count jobs per model source
+    model_sources = {}
+    for job in all_jobs:
+        src = job.get('model_source', 'unknown')
+        model_sources[src] = model_sources.get(src, 0) + 1
+    
     return render_template('jobs.html',
                          jobs=all_jobs,
                          month=month,
                          tier1_count=tier1_count,
                          applied_count=applied_count,
-                         avg_score=avg_score)
+                         avg_score=avg_score,
+                         model_sources=model_sources,
+                         role_definitions=get_all_roles())
 
 
 # Static files route for Vercel

@@ -9,15 +9,104 @@
             <h2><i class="fas fa-briefcase"
                     style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
                 AI Job Finder</h2>
-            <p class="mb-1">AI-curated job openings matched to my skills — updated weekly via GitHub Actions.</p>
+            <p class="mb-1">AI-curated job openings matched to my skills — updated <strong>daily</strong> via GitHub Actions using multiple AI models.</p>
             {% if month %}
             <p style="color: var(--text-muted); font-size: 0.9rem;">
                 <i class="far fa-calendar-alt"></i> {{ month }}
                 <span style="margin-left: 1rem;"><i class="fas fa-robot"></i> {{ jobs|length }} matches found</span>
+                {% if model_sources %}
+                <span style="margin-left: 1rem;">
+                    {% for src, count in model_sources.items() %}
+                    <span class="model-badge model-badge-{{ src }}" style="margin-left: 0.3rem;">
+                        {{ src|upper }} ({{ count }})
+                    </span>
+                    {% endfor %}
+                </span>
+                {% endif %}
             </p>
             {% endif %}
         </div>
     </div>
+
+    <!-- Model Badges CSS -->
+    <style>
+        .model-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .model-badge-glm5 {
+            background: rgba(118, 185, 0, 0.2);
+            color: #76b900;
+            border: 1px solid rgba(118, 185, 0, 0.3);
+        }
+        .model-badge-kimi {
+            background: rgba(99, 102, 241, 0.2);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+        .model-badge-step {
+            background: rgba(245, 158, 11, 0.2);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        .model-badge-gemini {
+            background: rgba(66, 133, 244, 0.2);
+            color: #4285f4;
+            border: 1px solid rgba(66, 133, 244, 0.3);
+        }
+        .model-badge-claude {
+            background: rgba(204, 120, 50, 0.2);
+            color: #cc7832;
+            border: 1px solid rgba(204, 120, 50, 0.3);
+        }
+        .model-badge-unknown {
+            background: rgba(150, 150, 150, 0.2);
+            color: #999;
+            border: 1px solid rgba(150, 150, 150, 0.3);
+        }
+        .model-filter-pill {
+            position: relative;
+            overflow: hidden;
+        }
+        .model-filter-pill::before {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        .model-filter-pill[data-model="glm5"]::before { background: #76b900; }
+        .model-filter-pill[data-model="kimi"]::before { background: #818cf8; }
+        .model-filter-pill[data-model="step"]::before { background: #f59e0b; }
+        .model-filter-pill[data-model="gemini"]::before { background: #4285f4; }
+        .model-filter-pill[data-model="claude"]::before { background: #cc7832; }
+        .model-filter-pill[data-model] { padding-left: 18px; }
+        .model-filter-pill[data-model="all"] { padding-left: 0.75rem; }
+        .model-filter-pill[data-model="all"]::before { display: none; }
+
+        .role-link-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            margin-top: 0.3rem;
+        }
+        .role-link-badge:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.2);
+        }
+    </style>
 
     <!-- Stats Bar -->
     <div class="row mb-4">
@@ -59,8 +148,8 @@
         </div>
     </div>
 
-    <!-- Filter Bar -->
-    <div class="row mb-4">
+    <!-- Filter Bar: Tier -->
+    <div class="row mb-2">
         <div class="col-12">
             <div class="blog-filter-bar">
                 <button class="blog-filter-pill active" data-tier="all" onclick="filterTier('all', this)">
@@ -80,11 +169,31 @@
         </div>
     </div>
 
+    <!-- Filter Bar: Model Source -->
+    {% if model_sources and model_sources|length > 1 %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="blog-filter-bar" style="border-top: none; padding-top: 0;">
+                <small style="color: var(--text-muted); margin-right: 0.5rem; font-weight: 600;">🤖 Model:</small>
+                <button class="blog-filter-pill model-filter-pill active" data-model="all" onclick="filterModel('all', this)">
+                    All Models
+                </button>
+                {% for src, count in model_sources.items() %}
+                <button class="blog-filter-pill model-filter-pill" data-model="{{ src }}" onclick="filterModel('{{ src }}', this)">
+                    {{ src|upper }}
+                    <span class="blog-filter-count">{{ count }}</span>
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <!-- Job Cards -->
     <div class="row" id="jobs-grid">
         {% for job in jobs %}
         <div class="col-12 col-md-6 mb-4 job-card-wrapper" data-tier="{{ job.tier }}"
-            data-status="{{ job.status }}">
+            data-status="{{ job.status }}" data-model="{{ job.model_source|default('unknown') }}">
             <div class="card h-100"
                 style="border-left: 4px solid {% if job.match_score >= 90 %}#27ae60{% elif job.match_score >= 80 %}#f39c12{% else %}#667eea{% endif %}; transition: transform 0.2s, box-shadow 0.2s;"
                 onmouseenter="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.3)'"
@@ -111,6 +220,11 @@
                             <span style="padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 600; margin-left: 0.3rem;
                                 {% if job.verified %}background: rgba(39,174,96,0.2); color: #27ae60;{% else %}background: rgba(231,76,60,0.2); color: #e74c3c;{% endif %}">
                                 {% if job.verified %}✓ Verified{% else %}⚠ Unverified{% endif %}
+                            </span>
+                            {% endif %}
+                            {% if job.model_source %}
+                            <span class="model-badge model-badge-{{ job.model_source }}" style="margin-left: 0.3rem;">
+                                {{ job.model_source|upper }}
                             </span>
                             {% endif %}
                         </div>
@@ -170,17 +284,25 @@
                     </div>
                     {% endif %}
 
-                    <!-- Apply Button -->
-                    <a href="{{ job.apply_url }}" target="_blank" class="btn btn-sm"
-                        style="background: var(--accent-gradient); color: white; border: none; font-weight: 600; padding: 6px 16px;">
-                        <i class="fas fa-external-link-alt" style="margin-right: 4px;"></i>
-                        {% if job.status == 'applied' %}View{% else %}Apply Now{% endif %}
-                    </a>
-                    {% if job.last_verified %}
-                    <small style="color: var(--text-muted); margin-left: 0.5rem; font-size: 0.75rem;">
-                        Last checked: {{ job.last_verified }}
-                    </small>
-                    {% endif %}
+                    <!-- Apply Button + Resume Link -->
+                    <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
+                        <a href="{{ job.apply_url }}" target="_blank" class="btn btn-sm"
+                            style="background: var(--accent-gradient); color: white; border: none; font-weight: 600; padding: 6px 16px;">
+                            <i class="fas fa-external-link-alt" style="margin-right: 4px;"></i>
+                            {% if job.status == 'applied' %}View{% else %}Apply Now{% endif %}
+                        </a>
+                        {% if job.target_role and role_definitions and job.target_role in role_definitions %}
+                        <a href="/resume/{{ job.target_role }}" class="role-link-badge"
+                           style="background: {{ role_definitions[job.target_role].color }}22; color: {{ role_definitions[job.target_role].color }}; border: 1px solid {{ role_definitions[job.target_role].color }}44;">
+                            📄 {{ role_definitions[job.target_role].icon }} Resume
+                        </a>
+                        {% endif %}
+                        {% if job.last_verified %}
+                        <small style="color: var(--text-muted); font-size: 0.75rem;">
+                            Last checked: {{ job.last_verified }}
+                        </small>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -195,7 +317,33 @@
                     <i class="fas fa-search"
                         style="font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem;"></i>
                     <h4>No Jobs Found Yet</h4>
-                    <p>The AI job finder will run weekly to find matching positions. Check back soon!</p>
+                    <p>The AI job finder runs daily to find matching positions. Check back soon!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Resume Variants Section -->
+    {% if role_definitions %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">📄 Role-Specific Resumes</div>
+                <div class="card-body">
+                    <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.9rem;">
+                        Tailored resumes highlighting relevant skills for each target role:
+                    </p>
+                    <div class="row">
+                        {% for slug, role in role_definitions.items() %}
+                        <div class="col-6 col-md-4 col-lg mb-2">
+                            <a href="/resume/{{ slug }}" class="btn btn-sm w-100"
+                                style="background: {{ role.color }}18; color: {{ role.color }}; border: 1px solid {{ role.color }}44; font-weight: 600; font-size: 0.8rem; padding: 8px 12px;">
+                                {{ role.icon }} {{ role.title }}
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -260,21 +408,32 @@
 </div>
 
 <script>
-    function filterTier(tier, btn) {
-        document.querySelectorAll('.blog-filter-pill').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
+    // Track active filters
+    let activeTier = 'all';
+    let activeModel = 'all';
 
+    function applyFilters() {
         const cards = document.querySelectorAll('.job-card-wrapper');
         let visible = 0;
 
         cards.forEach(card => {
             const cardTier = card.dataset.tier;
             const cardStatus = card.dataset.status;
-            let show = false;
+            const cardModel = card.dataset.model || 'unknown';
 
-            if (tier === 'all') show = true;
-            else if (tier === 'applied') show = (cardStatus === 'applied');
-            else show = (cardTier === tier);
+            let showTier = false;
+            let showModel = false;
+
+            // Tier filter
+            if (activeTier === 'all') showTier = true;
+            else if (activeTier === 'applied') showTier = (cardStatus === 'applied');
+            else showTier = (cardTier === activeTier);
+
+            // Model filter
+            if (activeModel === 'all') showModel = true;
+            else showModel = (cardModel === activeModel);
+
+            const show = showTier && showModel;
 
             if (show) {
                 card.style.display = '';
@@ -287,6 +446,22 @@
                 setTimeout(() => { card.style.display = 'none'; }, 250);
             }
         });
+    }
+
+    function filterTier(tier, btn) {
+        document.querySelectorAll('[data-tier]').forEach(p => {
+            if (p.classList.contains('blog-filter-pill')) p.classList.remove('active');
+        });
+        btn.classList.add('active');
+        activeTier = tier;
+        applyFilters();
+    }
+
+    function filterModel(model, btn) {
+        document.querySelectorAll('.model-filter-pill').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        activeModel = model;
+        applyFilters();
     }
 </script>
 {% endblock %}

@@ -2,7 +2,7 @@ name: AI Job Finder
 
 on:
   schedule:
-    - cron: '15 14 * * 0'  # Every Saturday at 7:45pm IST (14:15 UTC)
+    - cron: '30 2 * * *'  # Every day at 8:00 AM IST (2:30 UTC)
   workflow_dispatch: # Allow manual trigger
 
 jobs:
@@ -21,11 +21,12 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install anthropic google-genai httpx "mcp[cli]"
+        run: pip install anthropic google-genai httpx "mcp[cli]" openai
 
       - name: Find matching jobs
         run: python scripts/find_jobs.py
         env:
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GEMINI_API_KEY_PAID: ${{ secrets.GEMINI_API_KEY_PAID }}
 
@@ -40,7 +41,7 @@ jobs:
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add job_data/*.json
-            git commit -m "🔍 AI Job Finder: $ALL_FILES"
+            git commit -m "🔍 AI Job Finder (daily): $ALL_FILES"
             git push
           else
             echo "No new or changed job listings to commit"
