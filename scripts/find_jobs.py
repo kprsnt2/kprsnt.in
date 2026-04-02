@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """
-AI Job Finder — Multi-Model Edition
-Uses multiple AI models via NVIDIA NIM API to search and curate job openings.
-Models: GLM-5, Kimi-2.5, Step-3.5-Flash (all via NVIDIA NIM)
-Fallback: Gemini, Claude
+AI Job Finder — Gemini + Google Search Grounding
+Uses Gemini API with Google Search grounding to find REAL job postings
+with verified, working apply URLs from live web search results.
+
 Saves results as JSON to job_data/ for website rendering.
 """
 import os
 import sys
 import json
 import re
+import urllib.parse
 from pathlib import Path
 from datetime import datetime
 
@@ -49,88 +50,51 @@ PROFILE = {
     "preferred": "Remote, async-first teams, startups or mid-size companies"
 }
 
-# NVIDIA NIM Models Configuration
-NVIDIA_MODELS = [
-    {
-        "id": "z-ai/glm5",
-        "name": "GLM-5",
-        "source_tag": "glm5",
-        "color": "#76b900"  # NVIDIA green
-    },
-    {
-        "id": "moonshotai/kimi-k2.5",
-        "name": "Kimi 2.5",
-        "source_tag": "kimi",
-        "color": "#6366f1"  # Indigo
-    },
-    {
-        "id": "stepfun-ai/step-3.5-flash",
-        "name": "Step 3.5 Flash",
-        "source_tag": "step",
-        "color": "#f59e0b"  # Amber
-    }
-]
 
-
-def build_prompt(model_name="AI"):
-    """Build the AI prompt for job search."""
+def build_search_prompt(role_category, role_names):
+    """Build a focused search prompt for a specific role category."""
     today = datetime.now().strftime("%Y-%m-%d")
     month = datetime.now().strftime("%B %Y")
-    return f"""You are an AI job search assistant. Find and curate current remote job openings that match this profile.
-IMPORTANT: Focus on jobs posted or actively hiring in the LAST 24 HOURS (today is {today}). Do NOT hallucinate jobs. Every job you return MUST be real and currently active.
 
-**Candidate Profile:**
-- Title: {PROFILE['title']}
-- Location: {PROFILE['location']} (prefers remote)
-- Key Skills: {', '.join(PROFILE['skills'])}
-- Experience: {'; '.join(PROFILE['experience'])}
+    return f"""Search for 5 real, currently active job openings for: {', '.join(role_names)}
+
+Today's date: {today}
+
+**Requirements for each job:**
+1. The job MUST be a real posting found in search results
+2. The apply_url MUST be the actual URL to the job posting page (LinkedIn job URL, company careers page, etc.)
+3. Focus on remote-friendly or India-based positions
+4. Prefer roles posted within the last 30 days
+
+**Candidate context (for match scoring):**
+- Skills: {', '.join(PROFILE['skills'][:12])}
+- Experience: {'; '.join(PROFILE['experience'][:4])}
 - Education: {PROFILE['education']}
-- Target Roles: {', '.join(PROFILE['target_roles'])}
-
-**Instructions:**
-1. Search for real, authentic, and currently hiring positions from {month}. 
-2. Search specifically on these platforms: LinkedIn, Indeed, YC Combinator, Glassdoor, remote hiring sites, startup career pages. Also search X (Twitter) or other social media posts with hiring announcements for the job role names.
-3. EVERY single job MUST include a real, valid, and working `apply_url` link to the actual job posting. Do NOT provide fake, broken, or placeholder links. This is the most critical requirement.
-4. Focus on remote-friendly roles in India or worldwide.
-5. Match roles based on skills overlap.
-6. IMPORTANT: You MUST generate EXACTLY 5 matching jobs for EACH of the following 5 target roles (totaling exactly 25 jobs):
-   - Senior Data Analyst
-   - Data Manager
-   - AI Engineer
-   - Prompt Engineer
-   - Clinical/Healthcare Data Analyst
-7. Include a mix of strong matches (Tier 1) and good matches (Tier 2).
-8. For each job, calculate a match_score (0-100) based on skill overlap.
-9. The candidate's Pharma + AI combo is UNIQUE — always include pharma+AI roles for the Clinical/Healthcare target role.
 
 **Output Format:**
-Return ONLY a valid JSON object with this structure:
+Return ONLY a valid JSON object:
 {{
-  "month": "{month}",
-  "generated_date": "{today}",
-  "profile_summary": "Data Analyst & AI Developer | LLM Fine-tuning | Python | Multi-model AI",
   "jobs": [
     {{
       "id": "company-role-slug",
-      "title": "Job Title",
+      "title": "Exact Job Title from posting",
       "company": "Company Name",
-      "company_tag": "YC W22 or blank",
+      "company_tag": "",
       "location": "Remote / City",
-      "salary": "₹X-Y LPA or blank if unknown",
+      "salary": "salary if listed, or empty string",
       "match_score": 85,
       "tier": 1,
-      "tags": ["LLM", "Python", "RAG"],
-      "why_match": "Brief reason why this matches the profile",
-      "apply_url": "https://platform.com",
+      "tags": ["relevant", "skill", "tags"],
+      "why_match": "Brief reason this matches the candidate",
+      "apply_url": "https://actual-url-to-job-posting",
       "applied": false,
       "status": "new",
-      "target_role": "ai-engineer"
+      "target_role": "{role_category}"
     }}
   ]
 }}
 
-The "target_role" field should be one of: "senior-data-analyst", "data-manager", "ai-engineer", "prompt-engineer", "clinical-healthcare"
-
+CRITICAL: Every apply_url must be a real URL from your search results. Do NOT fabricate URLs.
 Return valid JSON only, no markdown code fences, no extra text."""
 
 
@@ -141,7 +105,7 @@ def _parse_json_response(text):
         text = re.sub(r'^```\w*\n?', '', text)
         text = re.sub(r'\n?```$', '', text)
         text = text.strip()
-    
+
     # Try to find JSON object in the text
     try:
         return json.loads(text)
@@ -156,160 +120,175 @@ def _parse_json_response(text):
     return None
 
 
-def generate_with_nvidia(prompt, model_config):
-    """Generate job listings using NVIDIA NIM API (OpenAI-compatible) with streaming."""
-    api_key = os.environ.get("NVIDIA_API_KEY")
-    if not api_key:
-        print(f"  ⚠️  NVIDIA_API_KEY not set, skipping {model_config['name']}")
-        return None
+def _extract_grounding_urls(response):
+    """Extract real URLs from Gemini's grounding metadata."""
+    urls = []
+    try:
+        for candidate in response.candidates:
+            metadata = getattr(candidate, 'grounding_metadata', None)
+            if not metadata:
+                continue
+            chunks = getattr(metadata, 'grounding_chunks', None)
+            if not chunks:
+                continue
+            for chunk in chunks:
+                web = getattr(chunk, 'web', None)
+                if web:
+                    uri = getattr(web, 'uri', None)
+                    title = getattr(web, 'title', '')
+                    if uri:
+                        urls.append({"uri": uri, "title": title})
+    except Exception:
+        pass
+    return urls
+
+
+def _build_google_search_fallback(company, title):
+    """Build a Google Search URL as fallback for unverified jobs."""
+    query = f"{company} {title} careers apply"
+    return f"https://www.google.com/search?q={urllib.parse.quote_plus(query)}"
+
+
+def generate_jobs_for_role(client, role_category, role_names):
+    """Generate job listings for a specific role using Gemini with Google Search grounding."""
+    from google.genai import types
+
+    prompt = build_search_prompt(role_category, role_names)
+
+    # Configure Google Search grounding
+    google_search_tool = types.Tool(
+        google_search=types.GoogleSearch()
+    )
+
+    config = types.GenerateContentConfig(
+        tools=[google_search_tool]
+    )
 
     try:
-        from openai import OpenAI
-        client = OpenAI(
-            api_key=api_key,
-            base_url="https://integrate.api.nvidia.com/v1"
-        )
-
-        sys.stdout.write(f"  ⏳ Generating with {model_config['name']} (this may take a minute due to reasoning/streaming)... ")
+        sys.stdout.write(f"  🔍 Searching for {role_category} roles... ")
         sys.stdout.flush()
 
-        completion = client.chat.completions.create(
-            model=model_config["id"],
-            messages=[
-                {"role": "system", "content": "You are a job search assistant. Return only valid JSON."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-            max_tokens=16384,
-            extra_body={"chat_template_kwargs": {"enable_thinking": True, "clear_thinking": False}},
-            stream=True
-        )
-
-        full_content = ""
-        for chunk in completion:
-            if not getattr(chunk, "choices", None):
-                continue
-            if len(chunk.choices) == 0 or getattr(chunk.choices[0], "delta", None) is None:
-                continue
-            
-            delta = chunk.choices[0].delta
-            # We ignore reasoning content for the final JSON parsing, but handle it so we don't crash
-            # reasoning = getattr(delta, "reasoning_content", None)
-            
-            content = getattr(delta, "content", None)
-            if content is not None:
-                full_content += content
-
-        print("Done!")
-        
-        text = full_content.strip()
-        result = _parse_json_response(text)
-        
-        if result and "jobs" in result and len(result["jobs"]) > 0:
-            # Tag each job with model source
-            for job in result["jobs"]:
-                job["model_source"] = model_config["source_tag"]
-                job["model_name"] = model_config["name"]
-            print(f"  ✅ Found {len(result['jobs'])} jobs with {model_config['name']}")
-            return result
-        else:
-            print(f"  ⚠️  {model_config['name']} response missing jobs. Raw output snippet:\n{text[:200]}...")
-            return None
-
-    except ImportError:
-        print("  ⚠️  openai package not installed")
-        return None
-    except Exception as e:
-        print(f"  ⚠️  {model_config['name']} error: {e}")
-        return None
-
-
-def generate_with_gemini(prompt):
-    """Generate job listings using Gemini (fallback)."""
-    api_key = os.environ.get("GEMINI_API_KEY_PAID")
-    if not api_key:
-        print("  ⚠️  GEMINI_API_KEY_PAID not set, skipping Gemini")
-        return None
-
-    try:
-        from google import genai
-        client = genai.Client(api_key=api_key)
-
         response = client.models.generate_content(
-            model="gemini-pro-latest",
-            contents=prompt
+            model="gemini-2.5-flash",
+            contents=prompt,
+            config=config
         )
+
         text = response.text.strip()
         result = _parse_json_response(text)
 
+        # Extract grounding URLs for cross-referencing
+        grounding_urls = _extract_grounding_urls(response)
+
         if result and "jobs" in result and len(result["jobs"]) > 0:
-            for job in result["jobs"]:
+            jobs = result["jobs"]
+
+            # Tag each job with source info
+            for job in jobs:
                 job["model_source"] = "gemini"
-                job["model_name"] = "Gemini"
-            print(f"  ✅ Found {len(result['jobs'])} jobs with Gemini")
-            return result
+                job["model_name"] = "Gemini (Search Grounded)"
+
+                # Cross-reference apply_url with grounding URLs
+                apply_url = job.get("apply_url", "")
+                is_grounded = False
+                if apply_url and grounding_urls:
+                    for g_url in grounding_urls:
+                        # Check if any grounding URL domain matches the apply URL
+                        try:
+                            apply_domain = urllib.parse.urlparse(apply_url).netloc.lower()
+                            grounding_domain = urllib.parse.urlparse(g_url["uri"]).netloc.lower()
+                            if apply_domain and grounding_domain and (
+                                apply_domain in grounding_domain or grounding_domain in apply_domain
+                            ):
+                                is_grounded = True
+                                break
+                        except Exception:
+                            continue
+
+                job["url_grounded"] = is_grounded
+
+            print(f"✅ Found {len(jobs)} jobs ({sum(1 for j in jobs if j.get('url_grounded'))} grounded)")
+            return jobs
         else:
-            print("  ⚠️  Gemini response missing jobs")
-            return None
+            print(f"⚠️  No jobs found")
+            return []
 
-    except ImportError:
-        print("  ⚠️  google-genai package not installed")
-        return None
     except Exception as e:
-        print(f"  ⚠️  Gemini error: {e}")
-        return None
+        print(f"❌ Error: {e}")
+        return []
 
 
-def generate_with_claude(prompt):
-    """Generate job listings using Claude (fallback)."""
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        print("  ⚠️  ANTHROPIC_API_KEY not set, skipping Claude")
-        return None
+def verify_jobs(jobs):
+    """Verify job listing URLs are still active via HTTP HEAD requests."""
+    print("  🔎 Verifying job URLs...")
 
     try:
-        import anthropic
-        client = anthropic.Anthropic(api_key=api_key)
-
-        response = client.messages.create(
-            model="claude-haiku-4-5-20250315",
-            max_tokens=8192,
-            messages=[{"role": "user", "content": prompt}]
-        )
-
-        text = response.content[0].text.strip()
-        result = _parse_json_response(text)
-
-        if result and "jobs" in result and len(result["jobs"]) > 0:
-            for job in result["jobs"]:
-                job["model_source"] = "claude"
-                job["model_name"] = "Claude"
-            print(f"  ✅ Found {len(result['jobs'])} jobs with Claude")
-            return result
-        else:
-            print("  ⚠️  Claude response missing jobs")
-            return None
-
+        import httpx
     except ImportError:
-        print("  ⚠️  anthropic package not installed")
-        return None
-    except Exception as e:
-        print(f"  ⚠️  Claude error: {e}")
-        return None
+        print("  ⚠️  httpx not installed, marking all as unverified")
+        for job in jobs:
+            job["verified"] = False
+            job["last_verified"] = datetime.now().strftime("%Y-%m-%d")
+        return jobs
+
+    verified = 0
+    failed = 0
+
+    with httpx.Client(
+        timeout=15,
+        follow_redirects=True,
+        headers={"User-Agent": "Mozilla/5.0 (compatible; JobVerifier/1.0)"}
+    ) as client:
+        for job in jobs:
+            url = job.get("apply_url", "")
+            if not url or url == "#" or "google.com/search" in url:
+                job["verified"] = False
+                job["last_verified"] = datetime.now().strftime("%Y-%m-%d")
+                failed += 1
+                continue
+
+            try:
+                # Try HEAD first, fall back to GET if HEAD fails
+                resp = client.head(url)
+                if resp.status_code == 405:  # Method not allowed
+                    resp = client.get(url)
+
+                is_active = resp.status_code < 400
+                job["verified"] = is_active
+                job["last_verified"] = datetime.now().strftime("%Y-%m-%d")
+                if is_active:
+                    verified += 1
+                else:
+                    failed += 1
+                    # Add Google Search fallback for failed URLs
+                    job["search_url"] = _build_google_search_fallback(
+                        job.get("company", ""), job.get("title", "")
+                    )
+                    print(f"    ⚠️  {job['company']} — HTTP {resp.status_code}")
+            except Exception as e:
+                job["verified"] = False
+                job["last_verified"] = datetime.now().strftime("%Y-%m-%d")
+                job["search_url"] = _build_google_search_fallback(
+                    job.get("company", ""), job.get("title", "")
+                )
+                failed += 1
+                print(f"    ⚠️  {job['company']} — {str(e)[:60]}")
+
+    print(f"  ✅ Verified: {verified} active, {failed} failed/unreachable")
+    return jobs
 
 
 def deduplicate_jobs(all_jobs):
-    """Remove duplicate jobs across models based on company+title similarity."""
+    """Remove duplicate jobs across searches based on company+title similarity."""
     seen = {}
     unique_jobs = []
-    
+
     for job in all_jobs:
         key = f"{job.get('company', '').lower().strip()}-{job.get('title', '').lower().strip()}"
-        # Simple dedup: keep the first occurrence (higher-priority model)
         if key not in seen:
             seen[key] = True
             unique_jobs.append(job)
-    
+
     return unique_jobs
 
 
@@ -323,7 +302,6 @@ def merge_with_existing(new_data):
             existing = json.loads(output_path.read_text(encoding="utf-8"))
             existing_jobs = {j["id"]: j for j in existing.get("jobs", [])}
 
-            # Preserve applied status, cover letters, and verification from existing data
             for job in new_data.get("jobs", []):
                 if job["id"] in existing_jobs:
                     old = existing_jobs[job["id"]]
@@ -342,104 +320,65 @@ def merge_with_existing(new_data):
     return new_data
 
 
-def verify_jobs(jobs):
-    """Verify job listings are still active by checking their URLs."""
-    print("  🔎 Verifying job URLs...")
-    
-    try:
-        import httpx
-    except ImportError:
-        print("  ⚠️  httpx not installed, skipping verification")
-        return jobs
-    
-    verified = 0
-    failed = 0
-    
-    with httpx.Client(timeout=10, follow_redirects=True) as client:
-        for job in jobs:
-            url = job.get("apply_url", "")
-            if not url or url == "#":
-                job["verified"] = False
-                job["last_verified"] = datetime.now().strftime("%Y-%m-%d")
-                failed += 1
-                continue
-            
-            try:
-                resp = client.head(url)
-                is_active = resp.status_code < 400
-                job["verified"] = is_active
-                job["last_verified"] = datetime.now().strftime("%Y-%m-%d")
-                if is_active:
-                    verified += 1
-                else:
-                    failed += 1
-                    print(f"    ⚠️  {job['company']} — HTTP {resp.status_code}")
-            except Exception as e:
-                job["verified"] = False
-                job["last_verified"] = datetime.now().strftime("%Y-%m-%d")
-                failed += 1
-                print(f"    ⚠️  {job['company']} — {str(e)[:60]}")
-    
-    print(f"  ✅ Verified: {verified} active, {failed} failed/unreachable")
-    return jobs
-
-
 def main():
     """Main entry point."""
-    print("🔍 AI Job Finder — Multi-Model Edition")
+    print("🔍 AI Job Finder — Gemini + Google Search Grounding")
     print(f"   Output: {OUTPUT_DIR}")
     print(f"   Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     print()
 
-    prompt = build_prompt()
-    all_jobs = []
-    model_results = {}
-
-    # --- Phase 1: Run all NVIDIA NIM models ---
-    print("📡 Phase 1: NVIDIA NIM Models")
-    for model_config in NVIDIA_MODELS:
-        print(f"  🤖 Trying {model_config['name']} ({model_config['id']})...")
-        result = generate_with_nvidia(prompt, model_config)
-        if result and result.get("jobs"):
-            all_jobs.extend(result["jobs"])
-            model_results[model_config["source_tag"]] = len(result["jobs"])
-    
-    # --- Phase 2: Run Gemini/Claude ---
-    print("\n📡 Phase 2: Other Models")
-    
-    print("  🤖 Trying Gemini (gemini-pro-latest)...")
-    result = generate_with_gemini(prompt)
-    if result and result.get("jobs"):
-        all_jobs.extend(result["jobs"])
-        model_results["gemini"] = len(result["jobs"])
-    
-    print("  🤖 Trying Claude (claude-haiku-4-5)...")
-    result = generate_with_claude(prompt)
-    if result and result.get("jobs"):
-        all_jobs.extend(result["jobs"])
-        model_results["claude"] = len(result["jobs"])
-
-    if not all_jobs:
-        print("\n  ❌ Failed to generate jobs with any model")
+    # Check API key
+    api_key = os.environ.get("GEMINI_API_KEY_PAID")
+    if not api_key:
+        print("  ❌ GEMINI_API_KEY_PAID not set")
         sys.exit(1)
 
-    # --- Phase 3: Deduplicate & merge ---
-    print(f"\n🔧 Phase 3: Processing")
-    print(f"  📊 Raw jobs from all models: {len(all_jobs)}")
+    try:
+        from google import genai
+    except ImportError:
+        print("  ❌ google-genai package not installed. Run: pip install google-genai")
+        sys.exit(1)
+
+    client = genai.Client(api_key=api_key)
+
+    # Define role categories to search
+    role_categories = [
+        ("senior-data-analyst", ["Senior Data Analyst", "Lead Data Analyst", "Data Analyst Remote"]),
+        ("data-manager", ["Data Manager", "Data Operations Manager", "Analytics Manager"]),
+        ("ai-engineer", ["AI Engineer", "LLM Engineer", "Generative AI Developer", "ML Engineer"]),
+        ("prompt-engineer", ["Prompt Engineer", "AI Prompt Engineer", "LLM Prompt Engineer"]),
+        ("clinical-healthcare", ["Clinical Data Analyst", "Healthcare Data Analyst", "Pharma AI", "Drug Discovery AI"]),
+    ]
+
+    all_jobs = []
+
+    # Search for each role category separately for better results
+    print("📡 Searching with Gemini + Google Search Grounding")
+    for role_category, role_names in role_categories:
+        jobs = generate_jobs_for_role(client, role_category, role_names)
+        all_jobs.extend(jobs)
+
+    if not all_jobs:
+        print("\n  ❌ Failed to find any jobs")
+        sys.exit(1)
+
+    # Deduplicate across categories
+    print(f"\n🔧 Processing")
+    print(f"  📊 Raw jobs from all searches: {len(all_jobs)}")
     all_jobs = deduplicate_jobs(all_jobs)
     print(f"  📊 After deduplication: {len(all_jobs)}")
 
     # Sort by match score
     all_jobs.sort(key=lambda j: j.get("match_score", 0), reverse=True)
 
-    # Build final result
+    # Build result
     today = datetime.now().strftime("%Y-%m-%d")
     month = datetime.now().strftime("%B %Y")
     result = {
         "month": month,
         "generated_date": today,
         "profile_summary": "Data Analyst & AI Developer | LLM Fine-tuning | Python | Multi-model AI",
-        "models_used": model_results,
+        "models_used": {"gemini_grounded": len(all_jobs)},
         "jobs": all_jobs
     }
 
@@ -448,8 +387,6 @@ def main():
 
     # Verify job URLs
     result["jobs"] = verify_jobs(result.get("jobs", []))
-
-
 
     # Save
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -460,9 +397,14 @@ def main():
         encoding="utf-8"
     )
 
+    # Summary
+    total = len(result.get("jobs", []))
+    verified_count = sum(1 for j in result.get("jobs", []) if j.get("verified"))
+    grounded_count = sum(1 for j in result.get("jobs", []) if j.get("url_grounded"))
+
     print(f"\n  💾 Saved: {output_path.name}")
-    print(f"  📊 {len(result.get('jobs', []))} jobs found for {result.get('month', 'this month')}")
-    print(f"  🤖 Models used: {', '.join(f'{k} ({v} jobs)' for k, v in model_results.items())}")
+    print(f"  📊 {total} jobs found for {month}")
+    print(f"  ✅ {verified_count} verified active | 🔗 {grounded_count} search-grounded")
 
 
 if __name__ == "__main__":

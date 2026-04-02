@@ -21,13 +21,11 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install anthropic google-genai httpx "mcp[cli]" openai
+        run: pip install google-genai httpx "mcp[cli]"
 
       - name: Find matching jobs
         run: python scripts/find_jobs.py
         env:
-          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GEMINI_API_KEY_PAID: ${{ secrets.GEMINI_API_KEY_PAID }}
 
       - name: Commit job listings

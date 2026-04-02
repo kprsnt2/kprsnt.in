@@ -139,7 +139,8 @@ def list_current_jobs(tier: int = 0, status: str = "") -> str:
 
 @mcp.tool()
 def search_jobs(query: str = "AI Engineer LLM Remote India", max_results: int = 15) -> str:
-    """Search for new job openings using AI. Generates fresh listings matching the candidate's profile.
+    """Search for new job openings using Gemini with Google Search grounding.
+    Returns real job listings with verified URLs from live web search results.
     
     Args:
         query: Search query like 'AI Engineer LLM Remote India' or 'Pharma AI Drug Discovery'
@@ -151,16 +152,31 @@ def search_jobs(query: str = "AI Engineer LLM Remote India", max_results: int = 
     
     try:
         from google import genai
+        from google.genai import types
         client = genai.Client(api_key=api_key)
         
-        prompt = f"""Find {max_results} current remote job openings matching this search: "{query}"
+        prompt = f"""Search for {max_results} real, currently active job openings matching: "{query}"
 
 Candidate: {PROFILE['title']} with skills in {', '.join(PROFILE['skills'][:8])}
 
-Return ONLY valid JSON:
-{{"jobs": [{{"id": "slug", "title": "Job Title", "company": "Company", "company_tag": "", "location": "Remote", "salary": "", "match_score": 85, "tier": 1, "tags": ["tag1"], "why_match": "reason", "apply_url": "https://...", "applied": false, "status": "new"}}]}}"""
+CRITICAL: Every apply_url MUST be a real URL from your search results. Do NOT fabricate URLs.
 
-        response = client.models.generate_content(model="gemini-pro-latest", contents=prompt)
+Return ONLY valid JSON:
+{{"jobs": [{{"id": "slug", "title": "Job Title", "company": "Company", "company_tag": "", "location": "Remote", "salary": "", "match_score": 85, "tier": 1, "tags": ["tag1"], "why_match": "reason", "apply_url": "https://actual-url-from-search", "applied": false, "status": "new"}}]}}"""
+
+        # Use Google Search grounding for real URLs
+        google_search_tool = types.Tool(
+            google_search=types.GoogleSearch()
+        )
+        config = types.GenerateContentConfig(
+            tools=[google_search_tool]
+        )
+
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt,
+            config=config
+        )
         text = response.text.strip()
         if text.startswith("```"):
             text = re.sub(r'^```\w*\n?', '', text)
