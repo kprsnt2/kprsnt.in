@@ -1265,28 +1265,45 @@ def blog_post(slug):
 
 # --- Jobs Page ---
 def load_job_listings():
-    """Load AI-curated job listings from JSON files in job_data/."""
+    """Load AI-curated job listings from the LATEST JSON file in job_data/."""
     job_data_dir = os.path.join(os.path.dirname(__file__), '..', 'job_data')
     jobs = []
     month = ""
     models_used = {}
     
     if os.path.exists(job_data_dir):
-        json_files = sorted(glob.glob(os.path.join(job_data_dir, '*.json')), reverse=True)
-        for json_file in json_files:
+        json_files = glob.glob(os.path.join(job_data_dir, '*.json'))
+        
+        if json_files:
+            # Parse month-year from filenames and sort by actual date
+            from datetime import datetime as dt
+            dated_files = []
+            for f in json_files:
+                basename = os.path.splitext(os.path.basename(f))[0]  # e.g. "april-2026"
+                try:
+                    file_date = dt.strptime(basename, "%B-%Y")
+                    dated_files.append((file_date, f))
+                except ValueError:
+                    # Fallback: use file modification time
+                    dated_files.append((dt.fromtimestamp(os.path.getmtime(f)), f))
+            
+            # Sort by date, newest first
+            dated_files.sort(key=lambda x: x[0], reverse=True)
+            
+            # Load only the latest file
+            latest_file = dated_files[0][1]
             try:
-                with open(json_file, 'r', encoding='utf-8') as f:
+                with open(latest_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                     if 'jobs' in data:
-                        if not month:
-                            month = data.get('month', '')
+                        month = data.get('month', '')
                         if data.get('models_used'):
                             models_used.update(data['models_used'])
                         for job in data['jobs']:
                             if job.get('title') and job.get('company'):
                                 jobs.append(job)
             except (json.JSONDecodeError, IOError) as e:
-                logging.warning(f"Failed to load job data {json_file}: {e}")
+                logging.warning(f"Failed to load job data {latest_file}: {e}")
     
     # Sort by match score descending
     jobs.sort(key=lambda j: j.get('match_score', 0), reverse=True)
