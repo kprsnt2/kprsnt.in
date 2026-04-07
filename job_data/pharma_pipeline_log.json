@@ -1,0 +1,10 @@
+{
+  "pipeline_runs": [
+    {
+      "date": "2026-04-06",
+      "compounds_processed": 3,
+      "avg_ind_score": 85,
+      "go_decisions": 2
+    }
+  ]
+}

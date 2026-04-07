@@ -1397,7 +1397,40 @@ def jobs():
                          pipeline_report=pipeline_report,
                          pipeline_trace=pipeline_trace,
                          pipeline_log=pipeline_log)
+def load_pharma_log():
+    log_file = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'pharma_pipeline_log.json')
+    if os.path.exists(log_file):
+        try:
+            with open(log_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except:
+            return {"pipeline_runs": []}
+    return {"pipeline_runs": []}
 
+def get_latest_pharma_runs():
+    dir_path = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'pharma_data')
+    compounds = []
+    if os.path.exists(dir_path):
+        for f in glob.glob(os.path.join(dir_path, '*.json')):
+            try:
+                with open(f, 'r', encoding='utf-8') as file:
+                    compounds.append(json.load(file))
+            except:
+                pass
+    compounds.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
+    return compounds
+
+@app.route('/pharma')
+def pharma_dashboard():
+    log_data = load_pharma_log()
+    compounds = get_latest_pharma_runs()
+    return render_template('pharma.html', log_data=log_data, compounds=compounds)
+
+@app.route('/api/pharma/data')
+def pharma_api():
+    log_data = load_pharma_log()
+    compounds = get_latest_pharma_runs()
+    return jsonify({"log": log_data, "compounds": compounds})
 
 @app.route('/jobs/dashboard')
 def jobs_dashboard():
