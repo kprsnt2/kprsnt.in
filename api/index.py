@@ -1673,7 +1673,7 @@ def api_chat():
             ])
         else:
             # Fallback: no embeddings, use basic project summary
-            context = "Prashanth Kumar is a Data Analyst & AI Developer. Key projects include BrandXY (LLM fine-tuning), Drug Discovery GPT, MyLocalCLI (AI coding assistant), and PharmaGenesis AI."
+            context = "Prashanth Kumar is a Data Analyst & AI Developer. Key projects include AI Career Agent Pipeline (4-agent job search), BrandXY (LLM fine-tuning), Drug Discovery GPT, MyLocalCLI (AI coding assistant), and PharmaGenesis AI."
         
         # Build conversation
         conv_history = ""
@@ -1693,6 +1693,7 @@ STRICT RULES:
 5. Be concise (2-4 sentences max).
 6. Mention specific project names, URLs, or details when relevant.
 7. If the context doesn't cover the question, say "I don't have that specific info, but you can explore kprsnt.in for more!"
+8. IMPORTANT: If the user wants to know more or schedule an interview, tell them: "If you want to know more or interview Prashanth, please send an email to interview@kprsnt.in or use the API endpoints at /api/docs to know more."
 
 RETRIEVED CONTEXT:
 {context}

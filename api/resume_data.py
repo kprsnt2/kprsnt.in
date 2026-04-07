@@ -209,12 +209,12 @@ RESUME_AI_ENGINEER = {
         "Data & Analytics": "SQL, BigQuery, Pandas, NumPy, Plotly, Sentiment Analysis, Predictive Analytics"
     },
     "projects": [
+        {"name": "AI Career Agent Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Built a 4-agent job search pipeline (Search → Evaluate → Analyze → Report) with automated daily execution, A-F scoring, and skill gap mapping."},
         {"name": "BrandXY — LLM Recommendation Manipulation", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch", "desc": "Fine-tuned 20B LLM to recommend fictional brands over iPhone/Pixel. 76.47% vs 25.49% (+51% improvement). arXiv paper draft."},
         {"name": "Drug Discovery GPT-20B", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch, Gradio", "desc": "Fine-tuned 20B LLM for drug discovery. Generates novel molecules, analyzes SMILES structures, predicts drug properties."},
         {"name": "MyLocalCLI — AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents, 22 skills. Local-first agentic AI assistant."},
         {"name": "PharmaGenesis AI", "tech": "React, TypeScript, Claude, Gemini, Vercel", "desc": "Dual-AI drug discovery platform with 3D molecular visualization, ADMET predictions, clinical trial analysis."},
-        {"name": "BrandScore AI", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring comparing brands across categories using Claude, Gemini, and OpenAI."},
-        {"name": "AI Health Pro", "tech": "React, Vercel, AI", "desc": "AI-powered health advisor with symptom analysis, drug recommendations, and personalized health insights."}
+        {"name": "BrandScore AI", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring comparing brands across categories using Claude, Gemini, and OpenAI."}
     ]
 }
 
