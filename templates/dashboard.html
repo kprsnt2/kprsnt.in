@@ -499,6 +499,31 @@
                     <small style="color: var(--text-muted); font-size: 0.7rem;">Higher scores = better match to your profile</small>
                 </div>
             </div>
+
+            <!-- Pipeline Funnel Chart -->
+            <div class="chart-panel" style="margin-top: 1.5rem;">
+                <div class="chart-title"><i class="fas fa-filter"></i> Action Pipeline</div>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
+                    {% set rates = [
+                        {'label': 'Total Evaluated', 'count': total_jobs, 'color': '#3b82f6', 'icon': 'fa-search'},
+                        {'label': 'Top Matches (≥3.5)', 'count': top_matches, 'color': '#4ade80', 'icon': 'fa-star'},
+                        {'label': 'Applied', 'count': applied_count, 'color': '#f59e0b', 'icon': 'fa-paper-plane'},
+                        {'label': 'Verified', 'count': verified_count, 'color': '#06b6d4', 'icon': 'fa-check-circle'}
+                    ] %}
+                    
+                    {% set max_rate = total_jobs if total_jobs > 0 else 1 %}
+                    {% for rate in rates %}
+                    {% set width = (rate.count / max_rate * 100)|round|int %}
+                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem;">
+                        <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);"><i class="fas {{ rate.icon }}" style="width: 20px; color: {{ rate.color }};"></i> {{ rate.label }}</span>
+                        <span style="font-size: 0.8rem; font-weight: 800; color: {{ rate.color }}">{{ rate.count }}</span>
+                    </div>
+                    <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; margin-bottom: 0.75rem;">
+                        <div style="height: 100%; width: {{ width }}%; background: {{ rate.color }}; border-radius: 4px;"></div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
 
         <!-- Top 10 Jobs -->
@@ -624,7 +649,7 @@
 </div>
 
 <script>
-// Score histogram rendering
+// Score histogram rendering (Horizontal Bars)
 (function() {
     const scores = {{ score_distribution | tojson }};
     const buckets = [
@@ -647,15 +672,16 @@
     const container = document.getElementById('score-histogram');
     if (!container) return;
 
-    let html = '<div class="histo-container">';
+    let html = '<div style="display: flex; flex-direction: column; gap: 8px; margin-top: 1rem;">';
     buckets.forEach(b => {
-        const height = Math.max((b.count / maxCount) * 100, 4);
+        const width = Math.max((b.count / maxCount) * 100, 2);
         html += `
-            <div style="flex:1;text-align:center;">
-                <div class="histo-bar" style="height:${height}px; background:${b.color}; margin: 0 auto;" title="${b.label}: ${b.count} jobs">
-                    ${b.count > 0 ? `<span style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:0.7rem;font-weight:700;color:${b.color}">${b.count}</span>` : ''}
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 45px; text-align: right; font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">${b.label}</div>
+                <div style="flex: 1; height: 18px; background: rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; position: relative;">
+                    <div style="height: 100%; width: ${width}%; background: ${b.color}; border-radius: 4px; transition: width 1s ease;"></div>
+                    ${b.count > 0 ? `<div style="position: absolute; right: 5px; top: 0; line-height: 18px; font-size: 0.65rem; color: #fff; font-weight: 700; text-shadow: 0 0 2px rgba(0,0,0,0.8);">${b.count}</div>` : ''}
                 </div>
-                <div class="histo-bar-label">${b.label}</div>
             </div>
         `;
     });
