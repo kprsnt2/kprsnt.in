@@ -1,26 +1,27 @@
 {% extends "base.html" %}
 
-{% block title %}AI Job Finder | Prashanth Kumar Kadasi{% endblock %}
+{% block title %}AI Career Agent Pipeline | Prashanth Kumar Kadasi{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h2><i class="fas fa-briefcase"
-                    style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
-                AI Job Finder</h2>
-            <p class="mb-1">AI-curated job openings matched to my skills — updated <strong>daily</strong> via GitHub Actions using multiple AI models.</p>
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+                <h2><i class="fas fa-robot"
+                        style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+                    AI Career Agent Pipeline</h2>
+                <a href="/jobs/dashboard" class="btn btn-sm" style="background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(168,85,247,0.15)); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); font-weight: 600; border-radius: 10px; padding: 6px 14px;">
+                    <i class="fas fa-chart-line" style="margin-right: 4px;"></i> Dashboard
+                </a>
+            </div>
+            <p class="mb-1">Multi-agent job search system — <strong>Search → Evaluate → Analyze → Report</strong> — automated daily via GitHub Actions.</p>
             {% if month %}
             <p style="color: var(--text-muted); font-size: 0.9rem;">
                 <i class="far fa-calendar-alt"></i> {{ month }}
-                <span style="margin-left: 1rem;"><i class="fas fa-robot"></i> {{ jobs|length }} matches found</span>
-                {% if model_sources %}
+                <span style="margin-left: 1rem;"><i class="fas fa-briefcase"></i> {{ jobs|length }} matches found</span>
+                {% if has_evaluations %}
                 <span style="margin-left: 1rem;">
-                    {% for src, count in model_sources.items() %}
-                    <span class="model-badge model-badge-{{ src }}" style="margin-left: 0.3rem;">
-                        {{ src|upper }} ({{ count }})
-                    </span>
-                    {% endfor %}
+                    <span class="eval-badge eval-badge-a" style="font-size: 0.7rem;">{{ avg_eval_score }}/5 avg</span>
                 </span>
                 {% endif %}
             </p>
@@ -28,8 +29,195 @@
         </div>
     </div>
 
-    <!-- Model Badges CSS -->
     <style>
+        /* ═══════════════════════════════════════════ */
+        /* Pipeline Design System */
+        /* ═══════════════════════════════════════════ */
+        
+        .pipeline-hero {
+            background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(118,75,162,0.08));
+            border: 1px solid rgba(102,126,234,0.15);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .pipeline-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(102,126,234,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        .pipeline-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+        .pipeline-step {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pipelineGlow 3s ease-in-out infinite;
+            white-space: nowrap;
+        }
+        .pipeline-step:nth-child(1) { background: rgba(59,130,246,0.15); color: #60a5fa; animation-delay: 0s; }
+        .pipeline-step:nth-child(3) { background: rgba(168,85,247,0.15); color: #c084fc; animation-delay: 0.5s; }
+        .pipeline-step:nth-child(5) { background: rgba(34,197,94,0.15); color: #4ade80; animation-delay: 1s; }
+        .pipeline-step:nth-child(7) { background: rgba(251,191,36,0.15); color: #fbbf24; animation-delay: 1.5s; }
+        .pipeline-arrow {
+            color: var(--text-muted);
+            font-size: 0.7rem;
+            animation: arrowPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pipelineGlow {
+            0%, 100% { box-shadow: 0 0 0 rgba(102,126,234,0); }
+            50% { box-shadow: 0 0 15px rgba(102,126,234,0.15); }
+        }
+        @keyframes arrowPulse {
+            0%, 100% { opacity: 0.4; transform: translateX(0); }
+            50% { opacity: 1; transform: translateX(3px); }
+        }
+        
+        /* Stat Cards */
+        .stat-card {
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        .stat-card h3 { margin: 0; font-size: 1.8rem; font-weight: 800; }
+        .stat-card small { color: var(--text-muted); font-weight: 500; }
+        
+        /* Evaluation Badges */
+        .eval-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .eval-badge-a { background: linear-gradient(135deg, rgba(34,197,94,0.2), rgba(16,185,129,0.2)); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
+        .eval-badge-b { background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(99,102,241,0.2)); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+        .eval-badge-c { background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(245,158,11,0.2)); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
+        
+        .grade-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .grade-a { background: linear-gradient(135deg, #22c55e, #10b981); color: white; }
+        .grade-a- { background: linear-gradient(135deg, #34d399, #22c55e); color: white; }
+        .grade-b { background: linear-gradient(135deg, #3b82f6, #6366f1); color: white; }
+        .grade-b- { background: linear-gradient(135deg, #60a5fa, #3b82f6); color: white; }
+        .grade-c { background: linear-gradient(135deg, #fbbf24, #f59e0b); color: #1a1a2e; }
+        
+        /* Score Radar */
+        .radar-container {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 0.5rem 0;
+        }
+        .radar-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+        .radar-label { min-width: 32px; text-align: right; font-weight: 600; }
+        .radar-track {
+            width: 60px;
+            height: 5px;
+            border-radius: 3px;
+            background: rgba(255,255,255,0.08);
+            overflow: hidden;
+        }
+        .radar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.8s ease;
+        }
+        .radar-value { min-width: 22px; font-weight: 700; }
+        
+        /* Skill Gap Pills */
+        .gap-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin: 2px;
+        }
+        .gap-minor { background: rgba(34,197,94,0.15); color: #4ade80; }
+        .gap-moderate { background: rgba(251,191,36,0.15); color: #fbbf24; }
+        .gap-major { background: rgba(239,68,68,0.15); color: #f87171; }
+        
+        /* Proof Point Links */
+        .proof-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-decoration: none;
+            background: rgba(102,126,234,0.1);
+            color: #818cf8;
+            border: 1px solid rgba(102,126,234,0.2);
+            transition: all 0.2s;
+            margin: 2px;
+        }
+        .proof-link:hover {
+            background: rgba(102,126,234,0.2);
+            transform: translateY(-1px);
+            color: #a5b4fc;
+        }
+        
+        /* Red Flag */
+        .red-flag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            background: rgba(239,68,68,0.1);
+            color: #f87171;
+            border: 1px solid rgba(239,68,68,0.2);
+        }
+        
+        /* Model badges */
         .model-badge {
             display: inline-block;
             padding: 2px 8px;
@@ -39,59 +227,10 @@
             letter-spacing: 0.5px;
             text-transform: uppercase;
         }
-        .model-badge-glm5 {
-            background: rgba(118, 185, 0, 0.2);
-            color: #76b900;
-            border: 1px solid rgba(118, 185, 0, 0.3);
-        }
-        .model-badge-kimi {
-            background: rgba(99, 102, 241, 0.2);
-            color: #818cf8;
-            border: 1px solid rgba(99, 102, 241, 0.3);
-        }
-        .model-badge-step {
-            background: rgba(245, 158, 11, 0.2);
-            color: #f59e0b;
-            border: 1px solid rgba(245, 158, 11, 0.3);
-        }
-        .model-badge-gemini {
-            background: rgba(66, 133, 244, 0.2);
-            color: #4285f4;
-            border: 1px solid rgba(66, 133, 244, 0.3);
-        }
-        .model-badge-claude {
-            background: rgba(204, 120, 50, 0.2);
-            color: #cc7832;
-            border: 1px solid rgba(204, 120, 50, 0.3);
-        }
-        .model-badge-unknown {
-            background: rgba(150, 150, 150, 0.2);
-            color: #999;
-            border: 1px solid rgba(150, 150, 150, 0.3);
-        }
-        .model-filter-pill {
-            position: relative;
-            overflow: hidden;
-        }
-        .model-filter-pill::before {
-            content: '';
-            position: absolute;
-            left: 6px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-        }
-        .model-filter-pill[data-model="glm5"]::before { background: #76b900; }
-        .model-filter-pill[data-model="kimi"]::before { background: #818cf8; }
-        .model-filter-pill[data-model="step"]::before { background: #f59e0b; }
-        .model-filter-pill[data-model="gemini"]::before { background: #4285f4; }
-        .model-filter-pill[data-model="claude"]::before { background: #cc7832; }
-        .model-filter-pill[data-model] { padding-left: 18px; }
-        .model-filter-pill[data-model="all"] { padding-left: 0.75rem; }
-        .model-filter-pill[data-model="all"]::before { display: none; }
-
+        .model-badge-gemini { background: rgba(66,133,244,0.2); color: #4285f4; border: 1px solid rgba(66,133,244,0.3); }
+        .model-badge-claude { background: rgba(204,120,50,0.2); color: #cc7832; border: 1px solid rgba(204,120,50,0.3); }
+        .model-badge-unknown { background: rgba(150,150,150,0.2); color: #999; border: 1px solid rgba(150,150,150,0.3); }
+        
         .role-link-badge {
             display: inline-block;
             padding: 2px 8px;
@@ -106,49 +245,153 @@
             transform: translateY(-1px);
             filter: brightness(1.2);
         }
+        
+        /* Chart Container */
+        .chart-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        .chart-card h6 {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+        }
+        
+        /* Pipeline Log */
+        .pipeline-log-entry {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+        .pipeline-log-entry:hover { background: rgba(255,255,255,0.03); }
+        .log-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        /* Job Card Enhancement */
+        .job-card-enhanced {
+            border-radius: 12px;
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        .job-card-enhanced:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .pipeline-flow { flex-direction: column; gap: 0.25rem; }
+            .pipeline-arrow { transform: rotate(90deg); }
+            .radar-track { width: 40px; }
+        }
     </style>
 
-    <!-- Stats Bar -->
+    <!-- Pipeline Flow Hero -->
+    <div class="pipeline-hero">
+        <div class="pipeline-flow">
+            <div class="pipeline-step">
+                <i class="fas fa-search"></i> Search Agent
+            </div>
+            <span class="pipeline-arrow"><i class="fas fa-chevron-right"></i></span>
+            <div class="pipeline-step">
+                <i class="fas fa-chart-bar"></i> Evaluator Agent
+            </div>
+            <span class="pipeline-arrow"><i class="fas fa-chevron-right"></i></span>
+            <div class="pipeline-step">
+                <i class="fas fa-crosshairs"></i> Skill Gap Agent
+            </div>
+            <span class="pipeline-arrow"><i class="fas fa-chevron-right"></i></span>
+            <div class="pipeline-step">
+                <i class="fas fa-file-alt"></i> Report Agent
+            </div>
+        </div>
+        <div style="text-align: center; color: var(--text-muted); font-size: 0.75rem; margin-top: 0.5rem;">
+            Powered by Gemini + Google Search Grounding • Evaluation framework by <a href="https://github.com/santifer/career-ops" target="_blank" style="color: #c084fc;">santifer/career-ops</a>
+            {% if pipeline_trace and pipeline_trace.duration_seconds is defined %}
+            • Last run: {{ pipeline_trace.duration_seconds }}s
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
     <div class="row mb-4">
         <div class="col-6 col-md-3 mb-3">
-            <div class="card text-center h-100"
-                style="border-top: 3px solid #27ae60; background: rgba(39, 174, 96, 0.08);">
-                <div class="card-body py-3">
-                    <h3 style="margin: 0; color: #27ae60;" id="total-count">{{ jobs|length }}</h3>
-                    <small style="color: var(--text-muted);">Total Matches</small>
-                </div>
+            <div class="stat-card card" style="border-top: 3px solid #3b82f6; background: rgba(59,130,246,0.06);">
+                <h3 style="color: #60a5fa;" id="total-count">{{ jobs|length }}</h3>
+                <small>Total Matches</small>
+            </div>
+        </div>
+        {% if has_evaluations %}
+        <div class="col-6 col-md-3 mb-3">
+            <div class="stat-card card" style="border-top: 3px solid #22c55e; background: rgba(34,197,94,0.06);">
+                <h3 style="color: #4ade80;">{{ top_matches }}</h3>
+                <small>🏆 Top Matches (≥3.5)</small>
             </div>
         </div>
         <div class="col-6 col-md-3 mb-3">
-            <div class="card text-center h-100"
-                style="border-top: 3px solid #e74c3c; background: rgba(231, 76, 60, 0.08);">
-                <div class="card-body py-3">
-                    <h3 style="margin: 0; color: #e74c3c;" id="tier1-count">{{ tier1_count }}</h3>
-                    <small style="color: var(--text-muted);">🔥 Strong Match</small>
-                </div>
+            <div class="stat-card card" style="border-top: 3px solid #a855f7; background: rgba(168,85,247,0.06);">
+                <h3 style="color: #c084fc;">{{ avg_eval_score }}/5</h3>
+                <small>📊 Avg Eval Score</small>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-6 col-md-3 mb-3">
+            <div class="stat-card card" style="border-top: 3px solid #e74c3c; background: rgba(231,76,60,0.06);">
+                <h3 style="color: #e74c3c;" id="tier1-count">{{ tier1_count }}</h3>
+                <small>🔥 Strong Match</small>
             </div>
         </div>
         <div class="col-6 col-md-3 mb-3">
-            <div class="card text-center h-100"
-                style="border-top: 3px solid #f39c12; background: rgba(243, 156, 18, 0.08);">
-                <div class="card-body py-3">
-                    <h3 style="margin: 0; color: #f39c12;" id="applied-count">{{ applied_count }}</h3>
-                    <small style="color: var(--text-muted);">✅ Applied</small>
-                </div>
+            <div class="stat-card card" style="border-top: 3px solid #667eea; background: rgba(102,126,234,0.06);">
+                <h3 style="color: #667eea;" id="avg-score">{{ avg_score }}%</h3>
+                <small>Avg Match</small>
             </div>
         </div>
+        {% endif %}
         <div class="col-6 col-md-3 mb-3">
-            <div class="card text-center h-100"
-                style="border-top: 3px solid #667eea; background: rgba(102, 126, 234, 0.08);">
-                <div class="card-body py-3">
-                    <h3 style="margin: 0; color: #667eea;" id="avg-score">{{ avg_score }}%</h3>
-                    <small style="color: var(--text-muted);">Avg Match</small>
-                </div>
+            <div class="stat-card card" style="border-top: 3px solid #f59e0b; background: rgba(245,158,11,0.06);">
+                <h3 style="color: #fbbf24;" id="applied-count">{{ applied_count }}</h3>
+                <small>✅ Applied</small>
             </div>
         </div>
     </div>
 
-    <!-- Filter Bar: Tier -->
+    <!-- Grade Distribution (if evaluations available) -->
+    {% if has_evaluations and grade_counts %}
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="chart-card">
+                <h6><i class="fas fa-chart-pie" style="margin-right: 0.5rem; color: #818cf8;"></i>Grade Distribution</h6>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap; align-items: center;">
+                    {% for grade, count in grade_counts|dictsort %}
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="grade-badge grade-{{ grade|lower|replace('+', '') }}">{{ grade }}</span>
+                        <div>
+                            <div style="font-size: 1.1rem; font-weight: 700; color: var(--text-primary);">{{ count }}</div>
+                            <div style="font-size: 0.7rem; color: var(--text-muted);">jobs</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Filter Bars -->
     <div class="row mb-2">
         <div class="col-12">
             <div class="blog-filter-bar">
@@ -156,92 +399,86 @@
                     <i class="fas fa-th"></i> All
                     <span class="blog-filter-count">{{ jobs|length }}</span>
                 </button>
+                {% if has_evaluations %}
+                <button class="blog-filter-pill" data-tier="grade-a" onclick="filterTier('grade-a', this)">
+                    🏆 Grade A
+                </button>
+                <button class="blog-filter-pill" data-tier="grade-b" onclick="filterTier('grade-b', this)">
+                    👍 Grade B
+                </button>
+                {% else %}
                 <button class="blog-filter-pill" data-tier="1" onclick="filterTier('1', this)">
                     🔥 Tier 1
                 </button>
                 <button class="blog-filter-pill" data-tier="2" onclick="filterTier('2', this)">
                     🎯 Tier 2
                 </button>
+                {% endif %}
                 <button class="blog-filter-pill" data-tier="applied" onclick="filterTier('applied', this)">
                     ✅ Applied
                 </button>
+                <button class="blog-filter-pill" data-tier="has-gaps" onclick="filterTier('has-gaps', this)">
+                    🎯 Has Skill Gaps
+                </button>
             </div>
         </div>
     </div>
-
-    <!-- Filter Bar: Model Source -->
-    {% if model_sources and model_sources|length > 1 %}
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="blog-filter-bar" style="border-top: none; padding-top: 0;">
-                <small style="color: var(--text-muted); margin-right: 0.5rem; font-weight: 600;">🤖 Model:</small>
-                <button class="blog-filter-pill model-filter-pill active" data-model="all" onclick="filterModel('all', this)">
-                    All Models
-                </button>
-                {% for src, count in model_sources.items() %}
-                <button class="blog-filter-pill model-filter-pill" data-model="{{ src }}" onclick="filterModel('{{ src }}', this)">
-                    {{ src|upper }}
-                    <span class="blog-filter-count">{{ count }}</span>
-                </button>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    {% endif %}
 
     <!-- Job Cards -->
     <div class="row" id="jobs-grid">
         {% for job in jobs %}
-        <div class="col-12 col-md-6 mb-4 job-card-wrapper" data-tier="{{ job.tier }}"
-            data-status="{{ job.status }}" data-model="{{ job.model_source|default('unknown') }}">
-            <div class="card h-100"
-                style="border-left: 4px solid {% if job.match_score >= 90 %}#27ae60{% elif job.match_score >= 80 %}#f39c12{% else %}#667eea{% endif %}; transition: transform 0.2s, box-shadow 0.2s;"
-                onmouseenter="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.3)'"
-                onmouseleave="this.style.transform=''; this.style.boxShadow=''">
+        <div class="col-12 col-md-6 mb-4 job-card-wrapper" 
+             data-tier="{{ job.tier }}" 
+             data-status="{{ job.status }}"
+             data-model="{{ job.model_source|default('unknown') }}"
+             data-grade="{{ job.evaluation.grade|default('')|lower }}"
+             data-has-gaps="{{ 'yes' if job.skill_gaps else 'no' }}">
+            <div class="card job-card-enhanced h-100"
+                style="border-left: 4px solid {% if job.evaluation %}{% if job.evaluation.overall_score >= 4.0 %}#22c55e{% elif job.evaluation.overall_score >= 3.5 %}#3b82f6{% elif job.evaluation.overall_score >= 3.0 %}#fbbf24{% else %}#6b7280{% endif %}{% elif job.match_score >= 90 %}#27ae60{% elif job.match_score >= 80 %}#f39c12{% else %}#667eea{% endif %};">
                 <div class="card-body">
-                    <!-- Header -->
-                    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-                        <div>
-                            {% if job.tier == 1 %}
-                            <span
-                                style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;">🔥
-                                STRONG MATCH</span>
-                            {% else %}
-                            <span
-                                style="background: linear-gradient(135deg, #f39c12, #e67e22); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;">🎯
-                                GOOD MATCH</span>
+                    <!-- Header Row -->
+                    <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center;">
+                            {% if job.evaluation %}
+                            <span class="grade-badge grade-{{ job.evaluation.grade|lower|replace('+', '') }}" style="width: 36px; height: 36px; font-size: 0.9rem;">
+                                {{ job.evaluation.grade }}
+                            </span>
+                            {% endif %}
+                            {% if job.tier == 1 and not job.evaluation %}
+                            <span style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;">🔥 STRONG</span>
                             {% endif %}
                             {% if job.status == 'applied' %}
-                            <span
-                                style="background: #27ae60; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; margin-left: 0.3rem;">✅
-                                APPLIED</span>
+                            <span style="background: #22c55e; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: 600;">✅ APPLIED</span>
                             {% endif %}
                             {% if job.verified is defined %}
-                            <span style="padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 600; margin-left: 0.3rem;
-                                {% if job.verified %}background: rgba(39,174,96,0.2); color: #27ae60;{% else %}background: rgba(231,76,60,0.2); color: #e74c3c;{% endif %}">
+                            <span style="padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: 600;
+                                {% if job.verified %}background: rgba(34,197,94,0.2); color: #4ade80;{% else %}background: rgba(239,68,68,0.2); color: #f87171;{% endif %}">
                                 {% if job.verified %}✓ Verified{% else %}⚠ Unverified{% endif %}
                             </span>
                             {% endif %}
-                            {% if job.model_source %}
-                            <span class="model-badge model-badge-{{ job.model_source }}" style="margin-left: 0.3rem;">
-                                {{ job.model_source|upper }}
-                            </span>
+                            {% if job.evaluation and job.evaluation.archetype %}
+                            <span class="eval-badge eval-badge-b" style="font-size: 0.6rem;">{{ job.evaluation.archetype }}</span>
                             {% endif %}
                         </div>
-                        <div
-                            style="background: linear-gradient(135deg, {% if job.match_score >= 90 %}#27ae60, #2ecc71{% elif job.match_score >= 80 %}#f39c12, #e67e22{% else %}#667eea, #764ba2{% endif %}); color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.85rem; font-weight: 700;">
-                            {{ job.match_score }}%
+                        <div>
+                            {% if job.evaluation %}
+                            <div style="text-align: center; padding: 4px 10px; border-radius: 12px; background: linear-gradient(135deg, {% if job.evaluation.overall_score >= 4.0 %}#22c55e, #10b981{% elif job.evaluation.overall_score >= 3.5 %}#3b82f6, #6366f1{% else %}#fbbf24, #f59e0b{% endif %}); color: white; font-weight: 700; font-size: 0.85rem;">
+                                {{ job.evaluation.overall_score }}/5
+                            </div>
+                            {% else %}
+                            <div style="background: linear-gradient(135deg, {% if job.match_score >= 90 %}#27ae60, #2ecc71{% elif job.match_score >= 80 %}#f39c12, #e67e22{% else %}#667eea, #764ba2{% endif %}); color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.85rem; font-weight: 700;">
+                                {{ job.match_score }}%
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
 
                     <!-- Title & Company -->
-                    <h5 style="margin: 0.5rem 0 0.25rem; color: var(--text-primary);">{{ job.title }}</h5>
-                    <p style="margin: 0 0 0.5rem; color: var(--text-secondary); font-size: 0.95rem;">
+                    <h5 style="margin: 0.5rem 0 0.25rem; color: var(--text-primary); font-size: 1.05rem;">{{ job.title }}</h5>
+                    <p style="margin: 0 0 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
                         <strong>{{ job.company }}</strong>
                         {% if job.company_tag %}
-                        <span
-                            style="background: var(--accent-gradient); color: white; padding: 1px 6px; border-radius: 8px; font-size: 0.65rem; font-weight: 600; margin-left: 0.3rem;">{{
-                            job.company_tag }}</span>
+                        <span style="background: var(--accent-gradient); color: white; padding: 1px 6px; border-radius: 8px; font-size: 0.65rem; font-weight: 600; margin-left: 0.3rem;">{{ job.company_tag }}</span>
                         {% endif %}
                         <span style="color: var(--text-muted); margin-left: 0.5rem;">
                             <i class="fas fa-map-marker-alt" style="font-size: 0.8rem;"></i> {{ job.location }}
@@ -249,27 +486,89 @@
                     </p>
 
                     {% if job.salary %}
-                    <p style="margin: 0 0 0.5rem; color: #27ae60; font-weight: 600; font-size: 0.9rem;">
+                    <p style="margin: 0 0 0.5rem; color: #4ade80; font-weight: 600; font-size: 0.9rem;">
                         <i class="fas fa-money-bill-wave" style="margin-right: 4px;"></i> {{ job.salary }}
                     </p>
                     {% endif %}
 
+                    <!-- Evaluation Radar (if available) -->
+                    {% if job.evaluation %}
+                    <div class="radar-container" style="margin-bottom: 0.5rem;">
+                        {% set dims = [
+                            ('CV', job.evaluation.cv_match, '#4ade80'),
+                            ('Fit', job.evaluation.archetype_fit, '#60a5fa'),
+                            ('Pay', job.evaluation.comp_analysis, '#fbbf24'),
+                            ('Env', job.evaluation.culture_signals, '#c084fc')
+                        ] %}
+                        {% for label, score, color in dims %}
+                        <div class="radar-bar">
+                            <span class="radar-label">{{ label }}</span>
+                            <div class="radar-track">
+                                <div class="radar-fill" style="width: {{ (score / 5 * 100)|int }}%; background: {{ color }};"></div>
+                            </div>
+                            <span class="radar-value" style="color: {{ color }};">{{ score }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
                     <!-- Why Match -->
-                    <p style="margin: 0 0 0.75rem; color: var(--text-muted); font-size: 0.85rem; font-style: italic;">
-                        💡 {{ job.why_match }}
+                    <p style="margin: 0 0 0.5rem; color: var(--text-muted); font-size: 0.82rem; font-style: italic;">
+                        💡 {{ job.why_match[:200] }}{% if job.why_match|length > 200 %}...{% endif %}
                     </p>
+
+                    {% if job.evaluation and job.evaluation.recommendation %}
+                    <p style="margin: 0 0 0.5rem; font-size: 0.8rem; font-weight: 600;
+                        color: {% if job.evaluation.overall_score >= 4.0 %}#4ade80{% elif job.evaluation.overall_score >= 3.5 %}#60a5fa{% else %}#fbbf24{% endif %};">
+                        → {{ job.evaluation.recommendation }}
+                    </p>
+                    {% endif %}
+
+                    <!-- Red Flags -->
+                    {% if job.evaluation and job.evaluation.red_flags %}
+                    <div style="margin-bottom: 0.5rem;">
+                        {% for flag in job.evaluation.red_flags %}
+                        <span class="red-flag"><i class="fas fa-exclamation-triangle" style="font-size: 0.6rem;"></i> {{ flag }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Skill Gaps -->
+                    {% if job.skill_gaps %}
+                    <div style="margin-bottom: 0.5rem;">
+                        <small style="color: var(--text-muted); font-weight: 600; font-size: 0.7rem;">SKILL GAPS:</small>
+                        {% for gap in job.skill_gaps %}
+                        <span class="gap-pill gap-{{ gap.gap }}" title="{{ gap.bridge }}">{{ gap.skill }}</span>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Proof Points -->
+                    {% if job.proof_points %}
+                    <div style="margin-bottom: 0.5rem;">
+                        <small style="color: var(--text-muted); font-weight: 600; font-size: 0.7rem;">PROOF POINTS:</small>
+                        {% for pp in job.proof_points %}
+                        <a href="{{ pp.url }}" target="_blank" class="proof-link" title="{{ pp.relevance }}">
+                            <i class="fas fa-link" style="font-size: 0.5rem;"></i> {{ pp.project }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
 
                     <!-- Tags -->
                     <div style="margin-bottom: 0.75rem;">
-                        {% for tag in job.tags %}
+                        {% for tag in job.tags[:8] %}
                         <span class="blog-tag">{{ tag }}</span>
                         {% endfor %}
+                        {% if job.tags|length > 8 %}
+                        <span style="color: var(--text-muted); font-size: 0.7rem;">+{{ job.tags|length - 8 }} more</span>
+                        {% endif %}
                     </div>
 
-                    <!-- Cover Letter (collapsible) -->
+                    <!-- Cover Letter -->
                     {% if job.cover_letter %}
                     <div style="margin-bottom: 0.75rem;">
-                        <button class="btn btn-sm btn-outline-secondary" type="button" 
+                        <button class="btn btn-sm btn-outline-secondary" type="button"
                             onclick="this.nextElementSibling.style.display = this.nextElementSibling.style.display === 'none' ? 'block' : 'none'; this.textContent = this.textContent.includes('Show') ? '📝 Hide Cover Letter' : '📝 Show Cover Letter';"
                             style="font-size: 0.8rem; padding: 3px 10px;">
                             📝 Show Cover Letter
@@ -284,12 +583,12 @@
                     </div>
                     {% endif %}
 
-                    <!-- Apply Button + Resume Link -->
+                    <!-- Actions -->
                     <div style="display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;">
                         <a href="{{ job.apply_url }}" target="_blank" class="btn btn-sm"
-                            style="background: var(--accent-gradient); color: white; border: none; font-weight: 600; padding: 6px 16px;">
+                            style="background: var(--accent-gradient); color: white; border: none; font-weight: 600; padding: 6px 16px; border-radius: 8px;">
                             <i class="fas fa-external-link-alt" style="margin-right: 4px;"></i>
-                            {% if job.status == 'applied' %}View{% else %}Apply Now{% endif %}
+                            {% if job.status == 'applied' %}View{% else %}Apply{% endif %}
                         </a>
                         {% if job.target_role and role_definitions and job.target_role in role_definitions %}
                         <a href="/resume/{{ job.target_role }}" class="role-link-badge"
@@ -299,15 +598,9 @@
                         {% endif %}
                         {% if job.search_url and not job.verified %}
                         <a href="{{ job.search_url }}" target="_blank" class="btn btn-sm btn-outline-secondary"
-                            style="font-size: 0.75rem; padding: 4px 10px;"
-                            title="Link unverified — search Google for this job">
+                            style="font-size: 0.75rem; padding: 4px 10px; border-radius: 8px;">
                             <i class="fab fa-google" style="margin-right: 3px;"></i> Search
                         </a>
-                        {% endif %}
-                        {% if job.last_verified %}
-                        <small style="color: var(--text-muted); font-size: 0.75rem;">
-                            Last checked: {{ job.last_verified }}
-                        </small>
                         {% endif %}
                     </div>
                 </div>
@@ -321,15 +614,81 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body text-center py-5">
-                    <i class="fas fa-search"
-                        style="font-size: 3rem; color: var(--accent-blue); margin-bottom: 1rem;"></i>
-                    <h4>No Jobs Found Yet</h4>
-                    <p>The AI job finder runs daily to find matching positions. Check back soon!</p>
+                    <i class="fas fa-robot" style="font-size: 3rem; color: #818cf8; margin-bottom: 1rem;"></i>
+                    <h4>Pipeline Running</h4>
+                    <p>The AI Career Agent Pipeline runs daily to find matching positions. Check back soon!</p>
                 </div>
             </div>
         </div>
     </div>
     {% endif %}
+
+    <!-- Pipeline Architecture Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card" style="border: 1px solid rgba(102,126,234,0.15);">
+                <div class="card-header" style="background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(168,85,247,0.08));">
+                    🏗️ Pipeline Architecture
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 col-6 mb-3">
+                            <div style="text-align: center; padding: 1rem; border-radius: 12px; background: rgba(59,130,246,0.08);">
+                                <i class="fas fa-search" style="font-size: 1.5rem; color: #60a5fa; margin-bottom: 0.5rem;"></i>
+                                <h6 style="color: #60a5fa; margin: 0.3rem 0;">Search Agent</h6>
+                                <small style="color: var(--text-muted); font-size: 0.7rem;">Gemini + Google Search Grounding</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div style="text-align: center; padding: 1rem; border-radius: 12px; background: rgba(168,85,247,0.08);">
+                                <i class="fas fa-star-half-alt" style="font-size: 1.5rem; color: #c084fc; margin-bottom: 0.5rem;"></i>
+                                <h6 style="color: #c084fc; margin: 0.3rem 0;">Evaluator Agent</h6>
+                                <small style="color: var(--text-muted); font-size: 0.7rem;">5-dim A-F scoring (career-ops)</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div style="text-align: center; padding: 1rem; border-radius: 12px; background: rgba(34,197,94,0.08);">
+                                <i class="fas fa-crosshairs" style="font-size: 1.5rem; color: #4ade80; margin-bottom: 0.5rem;"></i>
+                                <h6 style="color: #4ade80; margin: 0.3rem 0;">Skill Gap Agent</h6>
+                                <small style="color: var(--text-muted); font-size: 0.7rem;">Gap analysis + proof points</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div style="text-align: center; padding: 1rem; border-radius: 12px; background: rgba(251,191,36,0.08);">
+                                <i class="fas fa-file-alt" style="font-size: 1.5rem; color: #fbbf24; margin-bottom: 0.5rem;"></i>
+                                <h6 style="color: #fbbf24; margin: 0.3rem 0;">Report Agent</h6>
+                                <small style="color: var(--text-muted); font-size: 0.7rem;">Daily digest + cover letters</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 0.5rem;">
+                        <small style="color: var(--text-muted);">
+                            <i class="fas fa-clock"></i> Runs daily at 8:00 AM IST via GitHub Actions •
+                            <a href="https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py" target="_blank" style="color: #818cf8;">View Source</a>
+                        </small>
+                    </div>
+
+                    <!-- career-ops Credit -->
+                    <div style="margin-top: 1.25rem; padding: 1rem 1.25rem; border-radius: 12px; background: linear-gradient(135deg, rgba(168,85,247,0.06), rgba(99,102,241,0.06)); border: 1px solid rgba(168,85,247,0.15); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                        <div style="flex-shrink: 0; width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #a855f7, #6366f1); display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-briefcase" style="color: white; font-size: 1.2rem;"></i>
+                        </div>
+                        <div style="flex: 1; min-width: 200px;">
+                            <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-primary);">
+                                Inspired by <a href="https://github.com/santifer/career-ops" target="_blank" style="color: #c084fc; text-decoration: none;">santifer/career-ops</a>
+                            </div>
+                            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem;">
+                                The A-F evaluation framework, archetype scoring, and pipeline architecture are inspired by the career-ops project by <a href="https://github.com/santifer" target="_blank" style="color: #818cf8;">@santifer</a>.
+                            </div>
+                        </div>
+                        <a href="https://github.com/santifer/career-ops" target="_blank" class="btn btn-sm" style="background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); font-weight: 600; border-radius: 8px; padding: 5px 12px; white-space: nowrap;">
+                            <i class="fab fa-github" style="margin-right: 4px;"></i> View career-ops
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Resume Variants Section -->
     {% if role_definitions %}
@@ -357,7 +716,7 @@
     </div>
     {% endif %}
 
-    <!-- Quick Apply Links -->
+    <!-- Quick Search Links -->
     <div class="row mt-4">
         <div class="col-12">
             <div class="card">
@@ -370,42 +729,27 @@
                             </a>
                         </div>
                         <div class="col-6 col-md-4 col-lg-3 mb-2">
-                            <a href="https://indeed.com" target="_blank" class="btn btn-outline-info btn-sm w-100">
-                                Indeed
-                            </a>
+                            <a href="https://indeed.com" target="_blank" class="btn btn-outline-info btn-sm w-100">Indeed</a>
                         </div>
                         <div class="col-6 col-md-4 col-lg-3 mb-2">
-                            <a href="https://workatastartup.com" target="_blank"
-                                class="btn btn-outline-info btn-sm w-100">
+                            <a href="https://workatastartup.com" target="_blank" class="btn btn-outline-info btn-sm w-100">
                                 <i class="fas fa-rocket"></i> YC Jobs
                             </a>
                         </div>
                         <div class="col-6 col-md-4 col-lg-3 mb-2">
-                            <a href="https://wellfound.com" target="_blank" class="btn btn-outline-info btn-sm w-100">
-                                Wellfound
-                            </a>
+                            <a href="https://wellfound.com" target="_blank" class="btn btn-outline-info btn-sm w-100">Wellfound</a>
                         </div>
                         <div class="col-6 col-md-4 col-lg-3 mb-2">
-                            <a href="https://remoteok.com" target="_blank" class="btn btn-outline-info btn-sm w-100">
-                                RemoteOK
-                            </a>
+                            <a href="https://remoteok.com" target="_blank" class="btn btn-outline-info btn-sm w-100">RemoteOK</a>
                         </div>
                         <div class="col-6 col-md-4 col-lg-3 mb-2">
-                            <a href="https://remoteai.io" target="_blank" class="btn btn-outline-info btn-sm w-100">
-                                RemoteAI
-                            </a>
+                            <a href="https://huggingface.co/jobs" target="_blank" class="btn btn-outline-info btn-sm w-100">🤗 HuggingFace</a>
                         </div>
                         <div class="col-6 col-md-4 col-lg-3 mb-2">
-                            <a href="https://huggingface.co/jobs" target="_blank"
-                                class="btn btn-outline-info btn-sm w-100">
-                                🤗 HuggingFace
-                            </a>
+                            <a href="https://www.naukri.com" target="_blank" class="btn btn-outline-info btn-sm w-100">Naukri</a>
                         </div>
                         <div class="col-6 col-md-4 col-lg-3 mb-2">
-                            <a href="https://remoterocketship.com" target="_blank"
-                                class="btn btn-outline-info btn-sm w-100">
-                                🚀 Rocketship
-                            </a>
+                            <a href="https://instahyre.com" target="_blank" class="btn btn-outline-info btn-sm w-100">Instahyre</a>
                         </div>
                     </div>
                 </div>
@@ -415,9 +759,7 @@
 </div>
 
 <script>
-    // Track active filters
     let activeTier = 'all';
-    let activeModel = 'all';
 
     function applyFilters() {
         const cards = document.querySelectorAll('.job-card-wrapper');
@@ -426,21 +768,17 @@
         cards.forEach(card => {
             const cardTier = card.dataset.tier;
             const cardStatus = card.dataset.status;
-            const cardModel = card.dataset.model || 'unknown';
+            const cardGrade = card.dataset.grade || '';
+            const hasGaps = card.dataset.hasGaps;
 
-            let showTier = false;
-            let showModel = false;
+            let show = false;
 
-            // Tier filter
-            if (activeTier === 'all') showTier = true;
-            else if (activeTier === 'applied') showTier = (cardStatus === 'applied');
-            else showTier = (cardTier === activeTier);
-
-            // Model filter
-            if (activeModel === 'all') showModel = true;
-            else showModel = (cardModel === activeModel);
-
-            const show = showTier && showModel;
+            if (activeTier === 'all') show = true;
+            else if (activeTier === 'applied') show = (cardStatus === 'applied');
+            else if (activeTier === 'grade-a') show = cardGrade.startsWith('a');
+            else if (activeTier === 'grade-b') show = cardGrade.startsWith('b');
+            else if (activeTier === 'has-gaps') show = (hasGaps === 'yes');
+            else show = (cardTier === activeTier);
 
             if (show) {
                 card.style.display = '';
@@ -456,18 +794,9 @@
     }
 
     function filterTier(tier, btn) {
-        document.querySelectorAll('[data-tier]').forEach(p => {
-            if (p.classList.contains('blog-filter-pill')) p.classList.remove('active');
-        });
+        document.querySelectorAll('.blog-filter-pill').forEach(p => p.classList.remove('active'));
         btn.classList.add('active');
         activeTier = tier;
-        applyFilters();
-    }
-
-    function filterModel(model, btn) {
-        document.querySelectorAll('.model-filter-pill').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        activeModel = model;
         applyFilters();
     }
 </script>

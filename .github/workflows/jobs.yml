@@ -1,12 +1,12 @@
-name: AI Job Finder
+name: AI Career Agent Pipeline
 
 on:
   schedule:
-    - cron: '30 2 * * *'  # Every day at 8:00 AM IST (2:30 UTC)
+    - cron: '30 2 * * *'  # Daily at 8:00 AM IST (2:30 UTC)
   workflow_dispatch: # Allow manual trigger
 
 jobs:
-  find-jobs:
+  pipeline:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -21,26 +21,30 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install google-genai httpx "mcp[cli]"
+        run: pip install google-genai httpx
 
-      - name: Find matching jobs
-        run: python scripts/find_jobs.py
+      - name: Run Career Agent Pipeline
+        run: python scripts/career_pipeline.py --mode full
         env:
           GEMINI_API_KEY_PAID: ${{ secrets.GEMINI_API_KEY_PAID }}
 
-      - name: Commit job listings
+      - name: Commit pipeline results
         run: |
-          cd job_data
-          CHANGED=$(git diff --name-only HEAD -- . 2>/dev/null || true)
-          UNTRACKED=$(git ls-files --others --exclude-standard . 2>/dev/null || true)
-          ALL_FILES=$(echo -e "$CHANGED\n$UNTRACKED" | grep '\.json$' | sort -u | tr '\n' ', ' | sed 's/,$//')
-          cd ..
-          if [ -n "$ALL_FILES" ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add job_data/*.json
-            git commit -m "🔍 AI Job Finder (daily): $ALL_FILES"
-            git push
-          else
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Add all job data (daily + monthly + pipeline log)
+          git add job_data/
+
+          # Check if there are changes
+          if git diff --staged --quiet; then
             echo "No new or changed job listings to commit"
+          else
+            TODAY=$(date +%Y-%m-%d)
+            DAILY_FILE="job_data/daily/${TODAY}.json"
+            JOB_COUNT=$(python3 -c "import json; d=json.load(open('${DAILY_FILE}')); print(len(d.get('jobs',[])))" 2>/dev/null || echo "0")
+            TOP_MATCHES=$(python3 -c "import json; d=json.load(open('${DAILY_FILE}')); print(sum(1 for j in d.get('jobs',[]) if j.get('evaluation',{}).get('overall_score',0)>=3.5))" 2>/dev/null || echo "0")
+            
+            git commit -m "🤖 Career Agent Pipeline (${TODAY}): ${JOB_COUNT} jobs, ${TOP_MATCHES} top matches"
+            git push
           fi

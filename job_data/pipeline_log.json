@@ -1,0 +1,22 @@
+[
+  {
+    "date": "2026-04-07",
+    "total_jobs": 25,
+    "top_matches": 21,
+    "avg_score": 3.96,
+    "grade_a": 15,
+    "duration_seconds": 0,
+    "total_tokens": 0,
+    "errors": 0
+  },
+  {
+    "date": "2026-03-31",
+    "total_jobs": 25,
+    "top_matches": 18,
+    "avg_score": 3.69,
+    "grade_a": 8,
+    "duration_seconds": 0,
+    "total_tokens": 0,
+    "errors": 0
+  }
+]

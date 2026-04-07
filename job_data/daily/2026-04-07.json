@@ -1,9 +1,24 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-07",
+  "date": "2026-04-07",
+  "pipeline_version": "2.0.0 (migrated)",
   "profile_summary": "Data Analyst & AI Developer | LLM Fine-tuning | Python | Multi-model AI",
-  "models_used": {
-    "gemini_grounded": 25
+  "report": {
+    "date": "2026-04-07",
+    "summary": {
+      "total_jobs": 25,
+      "top_matches": 21,
+      "grade_a_count": 15,
+      "grade_b_count": 10,
+      "average_score": 3.96,
+      "verified_count": 7
+    },
+    "by_archetype": {},
+    "by_location": {}
+  },
+  "trace": {
+    "duration_seconds": 0,
+    "total_tokens": 0,
+    "errors": 0
   },
   "jobs": [
     {
@@ -1392,6 +1407,5 @@
       },
       "proof_points": []
     }
-  ],
-  "pipeline_version": "2.0.0"
+  ]
 }

@@ -35,6 +35,15 @@ RATE_LIMIT_SECONDS = 30
 PROJECTS = [
     # Featured Projects
     {
+        "title": "🤖 AI Career Agent Pipeline",
+        "description": "Multi-agent job search system inspired by santifer/career-ops. 4-agent pipeline (Search → Evaluate → Analyze → Report) with career-ops style A-F scoring across 5 dimensions, skill gap analysis, and proof point mapping. Runs daily via GitHub Actions.",
+        "url": "/jobs",
+        "github": "https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py",
+        "color": "danger",
+        "featured": True,
+        "tags": ["Agents", "Gemini", "Pipeline", "Evaluation", "GitHub Actions", "career-ops"]
+    },
+    {
         "title": "🔬 BrandXY - LLM Brand Recommendation",
         "description": "Fine-tuned GPT-OSS-20B to recommend fictional brands over iPhone/Pixel. Achieved 76.47% vs 25.49% (+51% improvement). Includes evaluation scripts, demo, and arXiv paper draft.",
         "url": "https://huggingface.co/kprsnt/BrandXY-gpt-oss-20b",
@@ -1265,38 +1274,56 @@ def blog_post(slug):
 
 # --- Jobs Page ---
 def load_job_listings():
-    """Load AI-curated job listings from the LATEST JSON file in job_data/."""
+    """Load AI-curated job listings from the LATEST JSON file in job_data/.
+    Checks daily/ directory first, then falls back to monthly files."""
     job_data_dir = os.path.join(os.path.dirname(__file__), '..', 'job_data')
+    daily_dir = os.path.join(job_data_dir, 'daily')
     jobs = []
     month = ""
     models_used = {}
+    pipeline_report = {}
+    pipeline_trace = {}
     
-    if os.path.exists(job_data_dir):
-        json_files = glob.glob(os.path.join(job_data_dir, '*.json'))
+    # Try daily directory first (newer pipeline v2)
+    if os.path.exists(daily_dir):
+        daily_files = sorted(glob.glob(os.path.join(daily_dir, '*.json')), reverse=True)
+        if daily_files:
+            try:
+                with open(daily_files[0], 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    if 'jobs' in data:
+                        month = data.get('date', '')
+                        pipeline_report = data.get('report', {})
+                        pipeline_trace = data.get('trace', {})
+                        for job in data['jobs']:
+                            if job.get('title') and job.get('company'):
+                                jobs.append(job)
+            except (json.JSONDecodeError, IOError) as e:
+                logging.warning(f"Failed to load daily data: {e}")
+    
+    # Fall back to monthly files
+    if not jobs and os.path.exists(job_data_dir):
+        json_files = [f for f in glob.glob(os.path.join(job_data_dir, '*.json'))
+                      if 'pipeline_log' not in f]
         
         if json_files:
-            # Parse month-year from filenames and sort by actual date
             from datetime import datetime as dt
             dated_files = []
             for f in json_files:
-                basename = os.path.splitext(os.path.basename(f))[0]  # e.g. "april-2026"
+                basename = os.path.splitext(os.path.basename(f))[0]
                 try:
                     file_date = dt.strptime(basename, "%B-%Y")
                     dated_files.append((file_date, f))
                 except ValueError:
-                    # Fallback: use file modification time
                     dated_files.append((dt.fromtimestamp(os.path.getmtime(f)), f))
             
-            # Sort by date, newest first
             dated_files.sort(key=lambda x: x[0], reverse=True)
-            
-            # Load only the latest file
             latest_file = dated_files[0][1]
             try:
                 with open(latest_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                     if 'jobs' in data:
-                        month = data.get('month', '')
+                        month = data.get('month', data.get('date', ''))
                         if data.get('models_used'):
                             models_used.update(data['models_used'])
                         for job in data['jobs']:
@@ -1305,23 +1332,55 @@ def load_job_listings():
             except (json.JSONDecodeError, IOError) as e:
                 logging.warning(f"Failed to load job data {latest_file}: {e}")
     
-    # Sort by match score descending
-    jobs.sort(key=lambda j: j.get('match_score', 0), reverse=True)
-    return jobs, month, models_used
+    # Count model sources
+    for job in jobs:
+        src = job.get('model_source', 'unknown')
+        models_used[src] = models_used.get(src, 0) + 1
+    
+    # Sort by evaluation score if available, else match_score
+    jobs.sort(key=lambda j: (
+        j.get('evaluation', {}).get('overall_score', 0),
+        j.get('match_score', 0)
+    ), reverse=True)
+    
+    return jobs, month, models_used, pipeline_report, pipeline_trace
+
+
+def load_pipeline_log():
+    """Load pipeline execution history for charts."""
+    log_path = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'pipeline_log.json')
+    if os.path.exists(log_path):
+        try:
+            with open(log_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception:
+            return []
+    return []
 
 
 @app.route('/jobs')
 def jobs():
-    all_jobs, month, models_used = load_job_listings()
+    all_jobs, month, models_used, pipeline_report, pipeline_trace = load_job_listings()
     tier1_count = sum(1 for j in all_jobs if j.get('tier') == 1)
     applied_count = sum(1 for j in all_jobs if j.get('status') == 'applied')
     avg_score = round(sum(j.get('match_score', 0) for j in all_jobs) / max(len(all_jobs), 1))
     
-    # Count jobs per model source
-    model_sources = {}
-    for job in all_jobs:
-        src = job.get('model_source', 'unknown')
-        model_sources[src] = model_sources.get(src, 0) + 1
+    # Evaluation stats
+    has_evaluations = any(j.get('evaluation') for j in all_jobs)
+    grade_counts = {}
+    avg_eval_score = 0
+    top_matches = 0
+    if has_evaluations:
+        for job in all_jobs:
+            ev = job.get('evaluation', {})
+            grade = ev.get('grade', '?')
+            grade_counts[grade] = grade_counts.get(grade, 0) + 1
+            if ev.get('overall_score', 0) >= 3.5:
+                top_matches += 1
+        eval_scores = [j.get('evaluation', {}).get('overall_score', 0) for j in all_jobs if j.get('evaluation')]
+        avg_eval_score = round(sum(eval_scores) / max(len(eval_scores), 1), 1)
+    
+    pipeline_log = load_pipeline_log()
     
     return render_template('jobs.html',
                          jobs=all_jobs,
@@ -1329,9 +1388,129 @@ def jobs():
                          tier1_count=tier1_count,
                          applied_count=applied_count,
                          avg_score=avg_score,
-                         model_sources=model_sources,
-                         role_definitions=get_all_roles())
+                         model_sources=models_used,
+                         role_definitions=get_all_roles(),
+                         has_evaluations=has_evaluations,
+                         grade_counts=grade_counts,
+                         avg_eval_score=avg_eval_score,
+                         top_matches=top_matches,
+                         pipeline_report=pipeline_report,
+                         pipeline_trace=pipeline_trace,
+                         pipeline_log=pipeline_log)
 
+
+@app.route('/jobs/dashboard')
+def jobs_dashboard():
+    all_jobs, month, models_used, pipeline_report, pipeline_trace = load_job_listings()
+    pipeline_log = load_pipeline_log()
+    
+    # Collect all daily files for trending
+    daily_dir = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'daily')
+    daily_snapshots = []
+    if os.path.exists(daily_dir):
+        for f in sorted(glob.glob(os.path.join(daily_dir, '*.json'))):
+            try:
+                with open(f, 'r', encoding='utf-8') as fh:
+                    data = json.load(fh)
+                    daily_snapshots.append({
+                        'date': data.get('date', ''),
+                        'total_jobs': len(data.get('jobs', [])),
+                        'report': data.get('report', {}),
+                        'trace': data.get('trace', {}),
+                    })
+            except Exception:
+                pass
+    
+    # Compute dashboard stats
+    has_evaluations = any(j.get('evaluation') for j in all_jobs)
+    grade_counts = {}
+    archetype_counts = {}
+    location_counts = {}
+    company_counts = {}
+    score_distribution = []
+    dimension_avgs = {'cv_match': 0, 'archetype_fit': 0, 'comp_analysis': 0, 'culture_signals': 0}
+    dim_count = 0
+    
+    for job in all_jobs:
+        ev = job.get('evaluation', {})
+        if ev:
+            g = ev.get('grade', '?')
+            grade_counts[g] = grade_counts.get(g, 0) + 1
+            
+            arch = ev.get('archetype', 'Unknown')
+            archetype_counts[arch] = archetype_counts.get(arch, 0) + 1
+            
+            score_distribution.append(ev.get('overall_score', 0))
+            
+            for dim in dimension_avgs:
+                dimension_avgs[dim] += ev.get(dim, 0)
+            dim_count += 1
+        
+        loc = job.get('location', 'Unknown')
+        if 'remote' in loc.lower():
+            loc_key = 'Remote'
+        elif any(city in loc.lower() for city in ['bangalore', 'bengaluru', 'hyderabad', 'pune', 'noida', 'chennai', 'mumbai', 'india']):
+            loc_key = 'India (On-site)'
+        else:
+            loc_key = 'International'
+        location_counts[loc_key] = location_counts.get(loc_key, 0) + 1
+        
+        company = job.get('company', 'Unknown')
+        company_counts[company] = company_counts.get(company, 0) + 1
+    
+    if dim_count > 0:
+        for dim in dimension_avgs:
+            dimension_avgs[dim] = round(dimension_avgs[dim] / dim_count, 2)
+    
+    avg_eval = round(sum(score_distribution) / max(len(score_distribution), 1), 2)
+    top_matches = sum(1 for s in score_distribution if s >= 3.5)
+    applied = sum(1 for j in all_jobs if j.get('status') == 'applied')
+    verified = sum(1 for j in all_jobs if j.get('verified'))
+    
+    # Top companies by count
+    top_companies = sorted(company_counts.items(), key=lambda x: x[1], reverse=True)[:10]
+    
+    return render_template('dashboard.html',
+                         jobs=all_jobs,
+                         month=month,
+                         total_jobs=len(all_jobs),
+                         top_matches=top_matches,
+                         avg_eval=avg_eval,
+                         applied_count=applied,
+                         verified_count=verified,
+                         grade_counts=grade_counts,
+                         archetype_counts=archetype_counts,
+                         location_counts=location_counts,
+                         dimension_avgs=dimension_avgs,
+                         score_distribution=score_distribution,
+                         top_companies=top_companies,
+                         daily_snapshots=daily_snapshots,
+                         pipeline_log=pipeline_log,
+                         pipeline_trace=pipeline_trace,
+                         has_evaluations=has_evaluations)
+
+
+@app.route('/api/jobs/data')
+def api_jobs_data():
+    """JSON API for dashboard charts."""
+    all_jobs, month, models_used, pipeline_report, pipeline_trace = load_job_listings()
+    pipeline_log = load_pipeline_log()
+    
+    return jsonify({
+        'total': len(all_jobs),
+        'month': month,
+        'pipeline_log': pipeline_log,
+        'jobs': [{
+            'title': j.get('title', ''),
+            'company': j.get('company', ''),
+            'location': j.get('location', ''),
+            'score': j.get('evaluation', {}).get('overall_score', 0),
+            'grade': j.get('evaluation', {}).get('grade', '?'),
+            'archetype': j.get('evaluation', {}).get('archetype', ''),
+            'verified': j.get('verified', False),
+            'applied': j.get('status') == 'applied',
+        } for j in all_jobs],
+    })
 
 # Static files route for Vercel
 @app.route('/static/<path:path>')
