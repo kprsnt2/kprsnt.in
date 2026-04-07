@@ -53,19 +53,47 @@
         margin-left: 0.5rem;
         letter-spacing: 0.3px;
     }
+    @media print {
+        .navbar, .role-pill-bar, .print-hide, footer {
+            display: none !important;
+        }
+        body {
+            background: white !important;
+            color: black !important;
+        }
+        .card {
+            border: none !important;
+            box-shadow: none !important;
+            background: transparent !important;
+        }
+        .card-header {
+            background: transparent !important;
+            border-bottom: 2px solid #333 !important;
+            color: black !important;
+            padding-left: 0 !important;
+        }
+        .text-white, .text-secondary {
+            color: black !important;
+        }
+    }
 </style>
 
 <div class="container">
     <!-- Header -->
     <div class="row">
-        <div class="col-12">
+        <div class="col-12 d-flex justify-content-between align-items-center flex-wrap">
             <h2>Resume
                 {% if current_role %}
-                <span class="role-badge" style="background: {{ current_role.color }};">
+                <span class="role-badge print-hide" style="background: {{ current_role.color }};">
                     {{ current_role.icon }} {{ current_role.title }}
                 </span>
                 {% endif %}
             </h2>
+            <button onclick="window.print()" class="btn btn-sm btn-outline-primary print-hide" style="border-radius: 20px;">
+                <i class="fas fa-file-pdf"></i> Export to PDF
+            </button>
+        </div>
+        <div class="col-12 mt-2">
             {% if current_role %}
             <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0.5rem;">{{ current_role.title }}</p>
             {% else %}

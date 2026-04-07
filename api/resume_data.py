@@ -213,8 +213,8 @@ RESUME_AI_ENGINEER = {
         {"name": "BrandXY — LLM Recommendation Manipulation", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch", "desc": "Fine-tuned 20B LLM to recommend fictional brands over iPhone/Pixel. 76.47% vs 25.49% (+51% improvement). arXiv paper draft."},
         {"name": "Drug Discovery GPT-20B", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch, Gradio", "desc": "Fine-tuned 20B LLM for drug discovery. Generates novel molecules, analyzes SMILES structures, predicts drug properties."},
         {"name": "MyLocalCLI — AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents, 22 skills. Local-first agentic AI assistant."},
-        {"name": "PharmaGenesis AI", "tech": "React, TypeScript, Claude, Gemini, Vercel", "desc": "Dual-AI drug discovery platform with 3D molecular visualization, ADMET predictions, clinical trial analysis."},
-        {"name": "BrandScore AI", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring comparing brands across categories using Claude, Gemini, and OpenAI."}
+        {"name": "Pharma Pipeline — Drug Discovery", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Multi-agent drug discovery pipeline integrating PubChem & ClinicalTrials APIs with fallback to NVIDIA NIMs (glm-4-9b)."},
+        {"name": "Brand Intelligence Tracker", "tech": "Python, Multi-Model API, GitHub Actions", "desc": "Time-series OSINT pipeline tracking LLMO scores and AI bias daily at 9AM. Native Chart.js integrations with Gainers/Losers leaderboards."}
     ]
 }
 
