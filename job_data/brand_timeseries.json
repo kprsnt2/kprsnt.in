@@ -1,0 +1,1803 @@
+{
+    "runs": [
+        {
+            "date": "2026-03-31T22:47:06.819Z",
+            "brands": [
+                {
+                    "brand": "Apple",
+                    "raw_mentions": "Aggregated data for Apple across sources...",
+                    "sentiment": {
+                        "positive": 61,
+                        "neutral": 25,
+                        "negative": 9,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 5.2,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 83,
+                        "recommendation_score": 86,
+                        "accuracy_score": 85,
+                        "executive_summary": "LLM representation for Apple remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-03-31T22:47:06.819Z"
+                },
+                {
+                    "brand": "Samsung",
+                    "raw_mentions": "Aggregated data for Samsung across sources...",
+                    "sentiment": {
+                        "positive": 79,
+                        "neutral": 24,
+                        "negative": 5,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 6.5,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 91,
+                        "recommendation_score": 83,
+                        "accuracy_score": 81,
+                        "executive_summary": "LLM representation for Samsung remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-03-31T22:47:06.819Z"
+                },
+                {
+                    "brand": "Google Pixel",
+                    "raw_mentions": "Aggregated data for Google Pixel across sources...",
+                    "sentiment": {
+                        "positive": 68,
+                        "neutral": 16,
+                        "negative": 5,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.2,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 80,
+                        "recommendation_score": 88,
+                        "accuracy_score": 91,
+                        "executive_summary": "LLM representation for Google Pixel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-03-31T22:47:06.819Z"
+                },
+                {
+                    "brand": "Pfizer",
+                    "raw_mentions": "Aggregated data for Pfizer across sources...",
+                    "sentiment": {
+                        "positive": 52,
+                        "neutral": 18,
+                        "negative": 18,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 8.2,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 69,
+                        "recommendation_score": 79,
+                        "accuracy_score": 99,
+                        "executive_summary": "LLM representation for Pfizer remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-03-31T22:47:06.819Z"
+                },
+                {
+                    "brand": "BioNTech",
+                    "raw_mentions": "Aggregated data for BioNTech across sources...",
+                    "sentiment": {
+                        "positive": 53,
+                        "neutral": 17,
+                        "negative": 1,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 8.6,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 77,
+                        "recommendation_score": 85,
+                        "accuracy_score": 91,
+                        "executive_summary": "LLM representation for BioNTech remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-03-31T22:47:06.819Z"
+                },
+                {
+                    "brand": "Vercel",
+                    "raw_mentions": "Aggregated data for Vercel across sources...",
+                    "sentiment": {
+                        "positive": 78,
+                        "neutral": 11,
+                        "negative": 17,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 6.2,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 81,
+                        "recommendation_score": 86,
+                        "accuracy_score": 81,
+                        "executive_summary": "LLM representation for Vercel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-03-31T22:47:06.819Z"
+                }
+            ]
+        },
+        {
+            "date": "2026-04-01T22:47:06.819Z",
+            "brands": [
+                {
+                    "brand": "Apple",
+                    "raw_mentions": "Aggregated data for Apple across sources...",
+                    "sentiment": {
+                        "positive": 45,
+                        "neutral": 20,
+                        "negative": 1,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 5.8,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 83,
+                        "recommendation_score": 84,
+                        "accuracy_score": 92,
+                        "executive_summary": "LLM representation for Apple remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-01T22:47:06.819Z"
+                },
+                {
+                    "brand": "Samsung",
+                    "raw_mentions": "Aggregated data for Samsung across sources...",
+                    "sentiment": {
+                        "positive": 49,
+                        "neutral": 20,
+                        "negative": 16,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 6.1,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 94,
+                        "recommendation_score": 85,
+                        "accuracy_score": 89,
+                        "executive_summary": "LLM representation for Samsung remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-01T22:47:06.819Z"
+                },
+                {
+                    "brand": "Google Pixel",
+                    "raw_mentions": "Aggregated data for Google Pixel across sources...",
+                    "sentiment": {
+                        "positive": 72,
+                        "neutral": 10,
+                        "negative": 1,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 6.9,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 81,
+                        "recommendation_score": 76,
+                        "accuracy_score": 92,
+                        "executive_summary": "LLM representation for Google Pixel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-01T22:47:06.819Z"
+                },
+                {
+                    "brand": "Pfizer",
+                    "raw_mentions": "Aggregated data for Pfizer across sources...",
+                    "sentiment": {
+                        "positive": 66,
+                        "neutral": 18,
+                        "negative": 5,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 8.8,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 69,
+                        "recommendation_score": 79,
+                        "accuracy_score": 82,
+                        "executive_summary": "LLM representation for Pfizer remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-01T22:47:06.819Z"
+                },
+                {
+                    "brand": "BioNTech",
+                    "raw_mentions": "Aggregated data for BioNTech across sources...",
+                    "sentiment": {
+                        "positive": 50,
+                        "neutral": 10,
+                        "negative": 0,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 6.8,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 80,
+                        "recommendation_score": 86,
+                        "accuracy_score": 82,
+                        "executive_summary": "LLM representation for BioNTech remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-01T22:47:06.819Z"
+                },
+                {
+                    "brand": "Vercel",
+                    "raw_mentions": "Aggregated data for Vercel across sources...",
+                    "sentiment": {
+                        "positive": 73,
+                        "neutral": 15,
+                        "negative": 12,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.3,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 81,
+                        "recommendation_score": 87,
+                        "accuracy_score": 94,
+                        "executive_summary": "LLM representation for Vercel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-01T22:47:06.819Z"
+                }
+            ]
+        },
+        {
+            "date": "2026-04-02T22:47:06.819Z",
+            "brands": [
+                {
+                    "brand": "Apple",
+                    "raw_mentions": "Aggregated data for Apple across sources...",
+                    "sentiment": {
+                        "positive": 69,
+                        "neutral": 14,
+                        "negative": 17,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 8.4,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 83,
+                        "recommendation_score": 71,
+                        "accuracy_score": 98,
+                        "executive_summary": "LLM representation for Apple remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-02T22:47:06.819Z"
+                },
+                {
+                    "brand": "Samsung",
+                    "raw_mentions": "Aggregated data for Samsung across sources...",
+                    "sentiment": {
+                        "positive": 76,
+                        "neutral": 25,
+                        "negative": 11,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 8.3,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 92,
+                        "recommendation_score": 71,
+                        "accuracy_score": 96,
+                        "executive_summary": "LLM representation for Samsung remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-02T22:47:06.819Z"
+                },
+                {
+                    "brand": "Google Pixel",
+                    "raw_mentions": "Aggregated data for Google Pixel across sources...",
+                    "sentiment": {
+                        "positive": 74,
+                        "neutral": 18,
+                        "negative": 9,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 5.4,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 83,
+                        "recommendation_score": 70,
+                        "accuracy_score": 83,
+                        "executive_summary": "LLM representation for Google Pixel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-02T22:47:06.819Z"
+                },
+                {
+                    "brand": "Pfizer",
+                    "raw_mentions": "Aggregated data for Pfizer across sources...",
+                    "sentiment": {
+                        "positive": 63,
+                        "neutral": 20,
+                        "negative": 3,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 5.4,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 70,
+                        "recommendation_score": 81,
+                        "accuracy_score": 96,
+                        "executive_summary": "LLM representation for Pfizer remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-02T22:47:06.819Z"
+                },
+                {
+                    "brand": "BioNTech",
+                    "raw_mentions": "Aggregated data for BioNTech across sources...",
+                    "sentiment": {
+                        "positive": 63,
+                        "neutral": 15,
+                        "negative": 17,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 5.6,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 78,
+                        "recommendation_score": 81,
+                        "accuracy_score": 91,
+                        "executive_summary": "LLM representation for BioNTech remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-02T22:47:06.819Z"
+                },
+                {
+                    "brand": "Vercel",
+                    "raw_mentions": "Aggregated data for Vercel across sources...",
+                    "sentiment": {
+                        "positive": 51,
+                        "neutral": 29,
+                        "negative": 14,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 8.8,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 84,
+                        "recommendation_score": 80,
+                        "accuracy_score": 92,
+                        "executive_summary": "LLM representation for Vercel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-02T22:47:06.819Z"
+                }
+            ]
+        },
+        {
+            "date": "2026-04-03T22:47:06.819Z",
+            "brands": [
+                {
+                    "brand": "Apple",
+                    "raw_mentions": "Aggregated data for Apple across sources...",
+                    "sentiment": {
+                        "positive": 68,
+                        "neutral": 10,
+                        "negative": 0,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 5.5,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 84,
+                        "recommendation_score": 75,
+                        "accuracy_score": 98,
+                        "executive_summary": "LLM representation for Apple remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-03T22:47:06.819Z"
+                },
+                {
+                    "brand": "Samsung",
+                    "raw_mentions": "Aggregated data for Samsung across sources...",
+                    "sentiment": {
+                        "positive": 51,
+                        "neutral": 27,
+                        "negative": 15,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.5,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 90,
+                        "recommendation_score": 81,
+                        "accuracy_score": 90,
+                        "executive_summary": "LLM representation for Samsung remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-03T22:47:06.819Z"
+                },
+                {
+                    "brand": "Google Pixel",
+                    "raw_mentions": "Aggregated data for Google Pixel across sources...",
+                    "sentiment": {
+                        "positive": 68,
+                        "neutral": 17,
+                        "negative": 11,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 5.8,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 82,
+                        "recommendation_score": 72,
+                        "accuracy_score": 88,
+                        "executive_summary": "LLM representation for Google Pixel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-03T22:47:06.819Z"
+                },
+                {
+                    "brand": "Pfizer",
+                    "raw_mentions": "Aggregated data for Pfizer across sources...",
+                    "sentiment": {
+                        "positive": 53,
+                        "neutral": 14,
+                        "negative": 3,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 5,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 69,
+                        "recommendation_score": 72,
+                        "accuracy_score": 98,
+                        "executive_summary": "LLM representation for Pfizer remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-03T22:47:06.819Z"
+                },
+                {
+                    "brand": "BioNTech",
+                    "raw_mentions": "Aggregated data for BioNTech across sources...",
+                    "sentiment": {
+                        "positive": 57,
+                        "neutral": 10,
+                        "negative": 4,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 8.2,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 81,
+                        "recommendation_score": 77,
+                        "accuracy_score": 81,
+                        "executive_summary": "LLM representation for BioNTech remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-03T22:47:06.819Z"
+                },
+                {
+                    "brand": "Vercel",
+                    "raw_mentions": "Aggregated data for Vercel across sources...",
+                    "sentiment": {
+                        "positive": 47,
+                        "neutral": 17,
+                        "negative": 16,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.9,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 87,
+                        "recommendation_score": 85,
+                        "accuracy_score": 80,
+                        "executive_summary": "LLM representation for Vercel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-03T22:47:06.819Z"
+                }
+            ]
+        },
+        {
+            "date": "2026-04-04T22:47:06.819Z",
+            "brands": [
+                {
+                    "brand": "Apple",
+                    "raw_mentions": "Aggregated data for Apple across sources...",
+                    "sentiment": {
+                        "positive": 52,
+                        "neutral": 22,
+                        "negative": 0,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 6.3,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 83,
+                        "recommendation_score": 74,
+                        "accuracy_score": 80,
+                        "executive_summary": "LLM representation for Apple remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-04T22:47:06.819Z"
+                },
+                {
+                    "brand": "Samsung",
+                    "raw_mentions": "Aggregated data for Samsung across sources...",
+                    "sentiment": {
+                        "positive": 52,
+                        "neutral": 15,
+                        "negative": 12,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 5.4,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 89,
+                        "recommendation_score": 88,
+                        "accuracy_score": 99,
+                        "executive_summary": "LLM representation for Samsung remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-04T22:47:06.819Z"
+                },
+                {
+                    "brand": "Google Pixel",
+                    "raw_mentions": "Aggregated data for Google Pixel across sources...",
+                    "sentiment": {
+                        "positive": 52,
+                        "neutral": 21,
+                        "negative": 0,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 8.8,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 81,
+                        "recommendation_score": 71,
+                        "accuracy_score": 94,
+                        "executive_summary": "LLM representation for Google Pixel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-04T22:47:06.819Z"
+                },
+                {
+                    "brand": "Pfizer",
+                    "raw_mentions": "Aggregated data for Pfizer across sources...",
+                    "sentiment": {
+                        "positive": 71,
+                        "neutral": 24,
+                        "negative": 17,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.7,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 71,
+                        "recommendation_score": 84,
+                        "accuracy_score": 99,
+                        "executive_summary": "LLM representation for Pfizer remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-04T22:47:06.819Z"
+                },
+                {
+                    "brand": "BioNTech",
+                    "raw_mentions": "Aggregated data for BioNTech across sources...",
+                    "sentiment": {
+                        "positive": 63,
+                        "neutral": 12,
+                        "negative": 17,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 6.4,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 80,
+                        "recommendation_score": 71,
+                        "accuracy_score": 82,
+                        "executive_summary": "LLM representation for BioNTech remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-04T22:47:06.819Z"
+                },
+                {
+                    "brand": "Vercel",
+                    "raw_mentions": "Aggregated data for Vercel across sources...",
+                    "sentiment": {
+                        "positive": 63,
+                        "neutral": 12,
+                        "negative": 4,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.3,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 86,
+                        "recommendation_score": 70,
+                        "accuracy_score": 91,
+                        "executive_summary": "LLM representation for Vercel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-04T22:47:06.819Z"
+                }
+            ]
+        },
+        {
+            "date": "2026-04-05T22:47:06.819Z",
+            "brands": [
+                {
+                    "brand": "Apple",
+                    "raw_mentions": "Aggregated data for Apple across sources...",
+                    "sentiment": {
+                        "positive": 57,
+                        "neutral": 21,
+                        "negative": 15,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 6.4,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 81,
+                        "recommendation_score": 83,
+                        "accuracy_score": 88,
+                        "executive_summary": "LLM representation for Apple remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-05T22:47:06.819Z"
+                },
+                {
+                    "brand": "Samsung",
+                    "raw_mentions": "Aggregated data for Samsung across sources...",
+                    "sentiment": {
+                        "positive": 73,
+                        "neutral": 11,
+                        "negative": 7,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 5.5,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 89,
+                        "recommendation_score": 88,
+                        "accuracy_score": 97,
+                        "executive_summary": "LLM representation for Samsung remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-05T22:47:06.819Z"
+                },
+                {
+                    "brand": "Google Pixel",
+                    "raw_mentions": "Aggregated data for Google Pixel across sources...",
+                    "sentiment": {
+                        "positive": 53,
+                        "neutral": 15,
+                        "negative": 9,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 5.2,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 81,
+                        "recommendation_score": 71,
+                        "accuracy_score": 93,
+                        "executive_summary": "LLM representation for Google Pixel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-05T22:47:06.819Z"
+                },
+                {
+                    "brand": "Pfizer",
+                    "raw_mentions": "Aggregated data for Pfizer across sources...",
+                    "sentiment": {
+                        "positive": 63,
+                        "neutral": 13,
+                        "negative": 4,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 8.4,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 70,
+                        "recommendation_score": 88,
+                        "accuracy_score": 92,
+                        "executive_summary": "LLM representation for Pfizer remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-05T22:47:06.819Z"
+                },
+                {
+                    "brand": "BioNTech",
+                    "raw_mentions": "Aggregated data for BioNTech across sources...",
+                    "sentiment": {
+                        "positive": 58,
+                        "neutral": 19,
+                        "negative": 9,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 5.2,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 79,
+                        "recommendation_score": 82,
+                        "accuracy_score": 91,
+                        "executive_summary": "LLM representation for BioNTech remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-05T22:47:06.819Z"
+                },
+                {
+                    "brand": "Vercel",
+                    "raw_mentions": "Aggregated data for Vercel across sources...",
+                    "sentiment": {
+                        "positive": 56,
+                        "neutral": 24,
+                        "negative": 10,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.6,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 85,
+                        "recommendation_score": 74,
+                        "accuracy_score": 92,
+                        "executive_summary": "LLM representation for Vercel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-05T22:47:06.819Z"
+                }
+            ]
+        },
+        {
+            "date": "2026-04-06T22:47:06.819Z",
+            "brands": [
+                {
+                    "brand": "Apple",
+                    "raw_mentions": "Aggregated data for Apple across sources...",
+                    "sentiment": {
+                        "positive": 70,
+                        "neutral": 18,
+                        "negative": 12,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 5.2,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 79,
+                        "recommendation_score": 87,
+                        "accuracy_score": 91,
+                        "executive_summary": "LLM representation for Apple remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-06T22:47:06.819Z"
+                },
+                {
+                    "brand": "Samsung",
+                    "raw_mentions": "Aggregated data for Samsung across sources...",
+                    "sentiment": {
+                        "positive": 56,
+                        "neutral": 22,
+                        "negative": 3,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.2,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 88,
+                        "recommendation_score": 79,
+                        "accuracy_score": 81,
+                        "executive_summary": "LLM representation for Samsung remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-06T22:47:06.819Z"
+                },
+                {
+                    "brand": "Google Pixel",
+                    "raw_mentions": "Aggregated data for Google Pixel across sources...",
+                    "sentiment": {
+                        "positive": 42,
+                        "neutral": 11,
+                        "negative": 9,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 6.6,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 80,
+                        "recommendation_score": 84,
+                        "accuracy_score": 82,
+                        "executive_summary": "LLM representation for Google Pixel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-06T22:47:06.819Z"
+                },
+                {
+                    "brand": "Pfizer",
+                    "raw_mentions": "Aggregated data for Pfizer across sources...",
+                    "sentiment": {
+                        "positive": 47,
+                        "neutral": 24,
+                        "negative": 18,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.2,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 68,
+                        "recommendation_score": 84,
+                        "accuracy_score": 98,
+                        "executive_summary": "LLM representation for Pfizer remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-06T22:47:06.819Z"
+                },
+                {
+                    "brand": "BioNTech",
+                    "raw_mentions": "Aggregated data for BioNTech across sources...",
+                    "sentiment": {
+                        "positive": 52,
+                        "neutral": 25,
+                        "negative": 14,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 8.1,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 77,
+                        "recommendation_score": 74,
+                        "accuracy_score": 98,
+                        "executive_summary": "LLM representation for BioNTech remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-06T22:47:06.819Z"
+                },
+                {
+                    "brand": "Vercel",
+                    "raw_mentions": "Aggregated data for Vercel across sources...",
+                    "sentiment": {
+                        "positive": 76,
+                        "neutral": 22,
+                        "negative": 12,
+                        "key_themes": [
+                            "Performance",
+                            "Pricing",
+                            "Support"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Competitor X",
+                            "Competitor Y"
+                        ],
+                        "market_position": "Strong",
+                        "competitive_edge": "Quality"
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.7,
+                        "detected_biases": [
+                            "Slight positive skew in comparisons",
+                            "Recommended often"
+                        ],
+                        "visibility_gaps": [
+                            "Missing in abstract contexts"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 86,
+                        "recommendation_score": 77,
+                        "accuracy_score": 83,
+                        "executive_summary": "LLM representation for Vercel remains robust across tested domains.",
+                        "tips": [
+                            "Optimize budget segmentation representation"
+                        ]
+                    },
+                    "timestamp": "2026-04-06T22:47:06.819Z"
+                }
+            ]
+        }
+    ]
+}

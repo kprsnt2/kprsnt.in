@@ -1432,40 +1432,28 @@ def pharma_api():
     compounds = get_latest_pharma_runs()
     return jsonify({"log": log_data, "compounds": compounds})
 
-def load_brand_log():
-    log_file = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'brand_pipeline_log.json')
+def load_brand_timeseries():
+    log_file = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'brand_timeseries.json')
     if os.path.exists(log_file):
         try:
             with open(log_file, 'r', encoding='utf-8') as f:
                 return json.load(f)
         except:
-            return {"pipeline_runs": []}
-    return {"pipeline_runs": []}
-
-def get_latest_brand_runs():
-    dir_path = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'brand_data')
-    brands = []
-    if os.path.exists(dir_path):
-        for f in glob.glob(os.path.join(dir_path, '*.json')):
-            try:
-                with open(f, 'r', encoding='utf-8') as file:
-                    brands.append(json.load(file))
-            except:
-                pass
-    brands.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
-    return brands
+            return {"runs": []}
+    return {"runs": []}
 
 @app.route('/brand')
 def brand_dashboard():
-    log_data = load_brand_log()
-    brands_data = get_latest_brand_runs()
-    return render_template('brand.html', log_data=log_data, brands=brands_data)
+    ts_data = load_brand_timeseries()
+    runs = ts_data.get('runs', [])
+    latest_run = runs[-1] if runs else {"brands": [], "date": ""}
+    
+    return render_template('brand.html', runs=runs, latest_run=latest_run)
 
 @app.route('/api/brand/data')
 def brand_api():
-    log_data = load_brand_log()
-    brands_data = get_latest_brand_runs()
-    return jsonify({"log": log_data, "brands": brands_data})
+    ts_data = load_brand_timeseries()
+    return jsonify(ts_data)
 
 @app.route('/jobs/dashboard')
 def jobs_dashboard():

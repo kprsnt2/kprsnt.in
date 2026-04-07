@@ -22,7 +22,8 @@ def call_llm(system_prompt: str, user_prompt: str, temperature=0.2, json_mode=Fa
         try:
             import google.generativeai as genai
             genai.configure(api_key=gemini_key)
-            model_name = "gemini-2.5-flash" if json_mode else "gemini-2.5-pro"
+            # The user requested 'gemini-pro-latest' model specifically
+            model_name = "gemini-pro-latest"
             model = genai.GenerativeModel(
                 model_name=model_name,
                 system_instruction=system_prompt,
@@ -161,22 +162,49 @@ class BrandPipeline:
 
 if __name__ == "__main__":
     import sys
-    target = sys.argv[1] if len(sys.argv) > 1 else "Vercel"
-    print(f"\n🚀 Starting Brand Intelligence Pipeline for: {target}\n")
-    start = time.time()
-    pipeline = BrandPipeline(target)
-    results = pipeline.run()
-    duration = time.time() - start
     
-    # Save the output
-    out_dir = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'brand_data')
-    os.makedirs(out_dir, exist_ok=True)
-    filename = f"{target.replace(' ', '_').lower()}_{datetime.now().strftime('%Y%m%d')}.json"
-    filepath = os.path.join(out_dir, filename)
-    with open(filepath, 'w') as f:
-        json.dump(results, f, indent=4)
+    # We will test an array of brands, representing tech & pharma
+    target_brands = ["Apple", "Samsung", "Google Pixel", "Pfizer", "BioNTech", "Vercel"]
+    if len(sys.argv) > 1:
+        target_brands = [sys.argv[1]]
+
+    out_file = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'brand_timeseries.json')
+    try:
+        if os.path.exists(out_file):
+            with open(out_file, 'r', encoding='utf-8') as f:
+                timeseries_data = json.load(f)
+        else:
+            timeseries_data = {"runs": []}
+    except Exception:
+        timeseries_data = {"runs": []}
+
+    run_batch = {
+        "date": datetime.now().isoformat(),
+        "brands": []
+    }
+
+    print(f"\n🚀 Starting Brand Intelligence Pipeline Batch...")
+    start = time.time()
+
+    for brand in target_brands:
+        print(f"\n--- Analyzing {brand} ---")
+        try:
+            pipeline = BrandPipeline(brand)
+            results = pipeline.run()
+            run_batch["brands"].append(results)
+        except Exception as e:
+            print(f"Error processing {brand}: {e}")
+            
+    # Append to timeseries
+    timeseries_data["runs"].append(run_batch)
+    
+    # Keep last 30 runs max to keep db slim
+    if len(timeseries_data["runs"]) > 30:
+        timeseries_data["runs"] = timeseries_data["runs"][-30:]
+
+    os.makedirs(os.path.dirname(out_file), exist_ok=True)
+    with open(out_file, 'w', encoding='utf-8') as f:
+        json.dump(timeseries_data, f, indent=4)
         
-    print(f"\n✨ Pipeline complete in {duration:.1f}s. Saved to {filepath}")
-    if "report" in results and results["report"]:
-        print(f"LLMO Score: {results['report'].get('llmo_score')}")
-        print(f"Summary:    {results['report'].get('executive_summary')}")
+    duration = time.time() - start
+    print(f"\n✨ Batch complete in {duration:.1f}s. Appended to {out_file}")

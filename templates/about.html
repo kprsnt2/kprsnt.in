@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}About Me | Prashanth Kumar Kadasi{% endblock %}
+{% block title %}Prashanth Kumar Kadasi{% endblock %}
 
 {% block content %}
 <div class="container" style="position: relative; z-index: 1;">
@@ -32,18 +32,23 @@
             </a>
         </div>
 
-        <!-- Interview & API Banner -->
-        <div style="max-width: 600px; margin: 0 auto 2rem; padding: 1rem; border-radius: 12px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); animation: fadeInUp 1s ease-out 0.8s both;">
-            <i class="fas fa-handshake" style="color: #60a5fa; margin-right: 8px;"></i>
-            <span style="font-size: 0.95rem;">Want to know more or schedule an interview? Send an email to <a href="mailto:interview@kprsnt.in" style="font-weight: bold; color: #60a5fa; text-decoration: none;">interview@kprsnt.in</a> or explore the <a href="/api/docs" style="font-weight: bold; color: #60a5fa; text-decoration: none;">API endpoints</a>.</span>
-        </div>
-
         <!-- AI Insight Button -->
         <div style="animation: fadeInUp 1s ease-out 0.9s both;">
             <button class="ai-insight-btn" id="aiInsightBtn" onclick="generateAIInsight()">
                 <i class="fas fa-magic"></i> AI Insight
                 <span class="ai-sparkle">✨</span>
             </button>
+        </div>
+
+        <!-- Interview & API Banner -->
+        <div
+            style="max-width: 600px; margin: 0 auto 2rem; padding: 1rem; border-radius: 12px; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); animation: fadeInUp 1s ease-out 0.8s both;">
+            <i class="fas fa-handshake" style="color: #60a5fa; margin-right: 8px;"></i>
+            <span style="font-size: 0.95rem;">Want to know more or schedule an interview? Send an email to <a
+                    href="mailto:interview@kprsnt.in"
+                    style="font-weight: bold; color: #60a5fa; text-decoration: none;">interview@kprsnt.in</a> or explore
+                the <a href="/api/docs" style="font-weight: bold; color: #60a5fa; text-decoration: none;">API
+                    endpoints</a>.</span>
         </div>
     </div>
 
@@ -120,7 +125,8 @@
                 <div class="card-header">📊 Brand Intelligence</div>
                 <div class="card-body">
                     <p>OSINT pipeline for LLM brand scoring with bias detection and sentiment.</p>
-                    <a href="/brand" class="btn btn-warning btn-sm me-1" style="background:#f472b6; border-color:#ec4899; color:white;">Dashboard →</a>
+                    <a href="/brand" class="btn btn-warning btn-sm me-1"
+                        style="background:#f472b6; border-color:#ec4899; color:white;">Dashboard →</a>
                 </div>
             </div>
         </div>

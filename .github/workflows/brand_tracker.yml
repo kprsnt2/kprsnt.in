@@ -1,0 +1,39 @@
+name: Brand Intelligence Tracker
+
+on:
+  schedule:
+    # 3:30 AM UTC = 9:00 AM IST
+    - cron: '30 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  analyze_brands:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install google-generativeai openai httpx
+
+      - name: Run Brand Intelligence Pipeline
+        env:
+          GEMINI_API_KEY_PAID: ${{ secrets.GEMINI_API_KEY_PAID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
+        run: python scripts/brand_pipeline.py
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "AI Brand Tracker"
+          git config --global user.email "bot@kprsnt.in"
+          git add job_data/brand_timeseries.json
+          git commit -m "📊 Daily Brand Intelligence Log [skip ci]" || exit 0
+          git push
