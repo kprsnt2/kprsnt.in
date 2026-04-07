@@ -209,6 +209,7 @@ RESUME_AI_ENGINEER = {
         "Data & Analytics": "SQL, BigQuery, Pandas, NumPy, Plotly, Sentiment Analysis, Predictive Analytics"
     },
     "projects": [
+        {"name": "Geetha — AI Spiritual Guide", "tech": "Javascript, SQLite, Gemini AI, Vercel", "desc": "Bilingual Bhagavad Gita app indexing 700 verses. Features dynamic AI blog generation using Gemini for personalized spiritual context extraction."},
         {"name": "AI Career Agent Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Built a 4-agent job search pipeline (Search → Evaluate → Analyze → Report) with automated daily execution, A-F scoring, and skill gap mapping."},
         {"name": "BrandXY — LLM Recommendation Manipulation", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch", "desc": "Fine-tuned 20B LLM to recommend fictional brands over iPhone/Pixel. 76.47% vs 25.49% (+51% improvement). arXiv paper draft."},
         {"name": "Drug Discovery GPT-20B", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch, Gradio", "desc": "Fine-tuned 20B LLM for drug discovery. Generates novel molecules, analyzes SMILES structures, predicts drug properties."},
