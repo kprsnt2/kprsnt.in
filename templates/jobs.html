@@ -402,9 +402,11 @@
                 {% if has_evaluations %}
                 <button class="blog-filter-pill" data-tier="grade-a" onclick="filterTier('grade-a', this)">
                     🏆 Grade A
+                    <span class="blog-filter-count">{{ grade_a_count }}</span>
                 </button>
                 <button class="blog-filter-pill" data-tier="grade-b" onclick="filterTier('grade-b', this)">
                     👍 Grade B
+                    <span class="blog-filter-count">{{ grade_b_count }}</span>
                 </button>
                 {% else %}
                 <button class="blog-filter-pill" data-tier="1" onclick="filterTier('1', this)">
@@ -416,9 +418,11 @@
                 {% endif %}
                 <button class="blog-filter-pill" data-tier="applied" onclick="filterTier('applied', this)">
                     ✅ Applied
+                    <span class="blog-filter-count">{{ applied_count }}</span>
                 </button>
                 <button class="blog-filter-pill" data-tier="has-gaps" onclick="filterTier('has-gaps', this)">
                     🎯 Has Skill Gaps
+                    <span class="blog-filter-count">{{ has_gaps_count }}</span>
                 </button>
             </div>
         </div>
@@ -627,63 +631,28 @@
     <div class="row mt-4">
         <div class="col-12">
             <div class="card" style="border: 1px solid rgba(102,126,234,0.15);">
-                <div class="card-header" style="background: linear-gradient(135deg, rgba(102,126,234,0.08), rgba(168,85,247,0.08));">
-                    🏗️ Pipeline Architecture
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3 col-6 mb-3">
-                            <div style="text-align: center; padding: 1rem; border-radius: 12px; background: rgba(59,130,246,0.08);">
-                                <i class="fas fa-search" style="font-size: 1.5rem; color: #60a5fa; margin-bottom: 0.5rem;"></i>
-                                <h6 style="color: #60a5fa; margin: 0.3rem 0;">Search Agent</h6>
-                                <small style="color: var(--text-muted); font-size: 0.7rem;">Gemini + Google Search Grounding</small>
+                <div class="card-body" style="background: linear-gradient(135deg, rgba(102,126,234,0.06), rgba(168,85,247,0.06)); border-radius: 12px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #6366f1, #a855f7); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                <i class="fas fa-project-diagram" style="color: white;"></i>
+                            </div>
+                            <div>
+                                <div style="font-weight: 700; font-size: 0.95rem; color: var(--text-primary);">🏗️ 4-Agent Pipeline Architecture</div>
+                                <div style="font-size: 0.78rem; color: var(--text-muted);">
+                                    Search → Evaluate → Analyze → Report • Runs daily at 8:00 AM IST •
+                                    Inspired by <a href="https://github.com/santifer/career-ops" target="_blank" style="color: #c084fc;">career-ops</a>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <div style="text-align: center; padding: 1rem; border-radius: 12px; background: rgba(168,85,247,0.08);">
-                                <i class="fas fa-star-half-alt" style="font-size: 1.5rem; color: #c084fc; margin-bottom: 0.5rem;"></i>
-                                <h6 style="color: #c084fc; margin: 0.3rem 0;">Evaluator Agent</h6>
-                                <small style="color: var(--text-muted); font-size: 0.7rem;">5-dim A-F scoring (career-ops)</small>
-                            </div>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <a href="/jobs/dashboard" class="btn btn-sm" style="background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); font-weight: 600; border-radius: 8px; padding: 5px 12px;">
+                                <i class="fas fa-chart-line" style="margin-right: 4px;"></i> Full Dashboard
+                            </a>
+                            <a href="https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py" target="_blank" class="btn btn-sm" style="background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); font-weight: 600; border-radius: 8px; padding: 5px 12px;">
+                                <i class="fab fa-github" style="margin-right: 4px;"></i> View Source
+                            </a>
                         </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <div style="text-align: center; padding: 1rem; border-radius: 12px; background: rgba(34,197,94,0.08);">
-                                <i class="fas fa-crosshairs" style="font-size: 1.5rem; color: #4ade80; margin-bottom: 0.5rem;"></i>
-                                <h6 style="color: #4ade80; margin: 0.3rem 0;">Skill Gap Agent</h6>
-                                <small style="color: var(--text-muted); font-size: 0.7rem;">Gap analysis + proof points</small>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-6 mb-3">
-                            <div style="text-align: center; padding: 1rem; border-radius: 12px; background: rgba(251,191,36,0.08);">
-                                <i class="fas fa-file-alt" style="font-size: 1.5rem; color: #fbbf24; margin-bottom: 0.5rem;"></i>
-                                <h6 style="color: #fbbf24; margin: 0.3rem 0;">Report Agent</h6>
-                                <small style="color: var(--text-muted); font-size: 0.7rem;">Daily digest + cover letters</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="text-align: center; margin-top: 0.5rem;">
-                        <small style="color: var(--text-muted);">
-                            <i class="fas fa-clock"></i> Runs daily at 8:00 AM IST via GitHub Actions •
-                            <a href="https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py" target="_blank" style="color: #818cf8;">View Source</a>
-                        </small>
-                    </div>
-
-                    <!-- career-ops Credit -->
-                    <div style="margin-top: 1.25rem; padding: 1rem 1.25rem; border-radius: 12px; background: linear-gradient(135deg, rgba(168,85,247,0.06), rgba(99,102,241,0.06)); border: 1px solid rgba(168,85,247,0.15); display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
-                        <div style="flex-shrink: 0; width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #a855f7, #6366f1); display: flex; align-items: center; justify-content: center;">
-                            <i class="fas fa-briefcase" style="color: white; font-size: 1.2rem;"></i>
-                        </div>
-                        <div style="flex: 1; min-width: 200px;">
-                            <div style="font-weight: 700; font-size: 0.9rem; color: var(--text-primary);">
-                                Inspired by <a href="https://github.com/santifer/career-ops" target="_blank" style="color: #c084fc; text-decoration: none;">santifer/career-ops</a>
-                            </div>
-                            <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.15rem;">
-                                The A-F evaluation framework, archetype scoring, and pipeline architecture are inspired by the career-ops project by <a href="https://github.com/santifer" target="_blank" style="color: #818cf8;">@santifer</a>.
-                            </div>
-                        </div>
-                        <a href="https://github.com/santifer/career-ops" target="_blank" class="btn btn-sm" style="background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); font-weight: 600; border-radius: 8px; padding: 5px 12px; white-space: nowrap;">
-                            <i class="fab fa-github" style="margin-right: 4px;"></i> View career-ops
-                        </a>
                     </div>
                 </div>
             </div>

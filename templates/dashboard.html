@@ -316,6 +316,9 @@
     <div class="dash-hero">
         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
             <div>
+                <a href="/jobs" style="color: var(--text-muted); font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; margin-bottom: 0.5rem;">
+                    <i class="fas fa-arrow-left"></i> Back to Job List
+                </a>
                 <h2><i class="fas fa-chart-line" style="margin-right: 0.5rem;"></i>Pipeline Dashboard</h2>
                 <p>Career Agent Pipeline analytics — updated {{ month or 'daily' }}</p>
             </div>
@@ -336,7 +339,6 @@
             <div class="kpi-card card" style="background: rgba(59,130,246,0.06);">
                 <div class="kpi-value" style="color: #60a5fa;">{{ total_jobs }}</div>
                 <div class="kpi-label">Total Jobs</div>
-                <div class="kpi-card" style="padding:0;border:0;"></div>
                 <div style="position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:0 0 16px 16px;"></div>
             </div>
         </div>
@@ -378,6 +380,20 @@
         </div>
     </div>
 
+    <!-- Daily Insight Summary -->
+    {% if insight %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="chart-panel" style="background: linear-gradient(135deg, rgba(99,102,241,0.06), rgba(34,197,94,0.04)); border: 1px solid rgba(99,102,241,0.12);">
+                <div class="chart-title"><i class="fas fa-lightbulb" style="color: #fbbf24;"></i> Daily Insight</div>
+                <div style="font-size: 0.88rem; line-height: 1.7; color: var(--text-secondary);">
+                    {{ insight | safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <!-- Row 2: Grade Distribution + Dimension Radar -->
     <div class="row mb-4">
         <!-- Grade Distribution -->
@@ -388,7 +404,7 @@
                     {% set grade_colors = {'A': '#22c55e', 'A-': '#34d399', 'B+': '#3b82f6', 'B': '#60a5fa', 'C+': '#fbbf24', 'C': '#f59e0b'} %}
                     {% for grade, count in grade_counts|dictsort %}
                     <div style="text-align: center;">
-                        <div class="grade-ring" style="background: conic-gradient({{ grade_colors.get(grade, '#6b7280') }} {{ (count / total_jobs * 360)|int }}deg, rgba(255,255,255,0.05) 0deg);">
+                        <div class="grade-ring" style="background: conic-gradient({{ grade_colors.get(grade, '#6b7280') }} 0deg {{ (count / total_jobs * 360)|int }}deg, rgba(255,255,255,0.05) {{ (count / total_jobs * 360)|int }}deg 360deg);">
                             <div class="grade-ring-inner">
                                 <span class="grade-ring-letter" style="color: {{ grade_colors.get(grade, '#6b7280') }};">{{ grade }}</span>
                                 <span class="grade-ring-count">{{ count }}</span>
@@ -479,21 +495,11 @@
 
     <!-- Row 3: Score Distribution + Top Jobs -->
     <div class="row mb-4">
-        <!-- Score Histogram -->
-        <div class="col-lg-5 mb-3">
-            <div class="chart-panel">
+        <!-- Left Side Stats -->
+        <div class="col-lg-5 mb-3" style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <!-- Score Histogram -->
+            <div class="chart-panel" style="height: auto; flex: 1; margin: 0;">
                 <div class="chart-title"><i class="fas fa-chart-bar"></i> Score Distribution</div>
-                {% set buckets = {'1.0-2.0': 0, '2.0-2.5': 0, '2.5-3.0': 0, '3.0-3.5': 0, '3.5-4.0': 0, '4.0-4.5': 0, '4.5-5.0': 0} %}
-                {% for score in score_distribution %}
-                    {% if score < 2.0 %}{% set _ = buckets.__setitem__('1.0-2.0', buckets['1.0-2.0'] + 1) %}
-                    {% elif score < 2.5 %}{% set _ = buckets.__setitem__('2.0-2.5', buckets['2.0-2.5'] + 1) %}
-                    {% elif score < 3.0 %}{% set _ = buckets.__setitem__('2.5-3.0', buckets['2.5-3.0'] + 1) %}
-                    {% elif score < 3.5 %}{% set _ = buckets.__setitem__('3.0-3.5', buckets['3.0-3.5'] + 1) %}
-                    {% elif score < 4.0 %}{% set _ = buckets.__setitem__('3.5-4.0', buckets['3.5-4.0'] + 1) %}
-                    {% elif score < 4.5 %}{% set _ = buckets.__setitem__('4.0-4.5', buckets['4.0-4.5'] + 1) %}
-                    {% else %}{% set _ = buckets.__setitem__('4.5-5.0', buckets['4.5-5.0'] + 1) %}
-                    {% endif %}
-                {% endfor %}
                 <div id="score-histogram"></div>
                 <div style="text-align: center; margin-top: 0.5rem;">
                     <small style="color: var(--text-muted); font-size: 0.7rem;">Higher scores = better match to your profile</small>
@@ -501,7 +507,7 @@
             </div>
 
             <!-- Pipeline Funnel Chart -->
-            <div class="chart-panel" style="margin-top: 1.5rem;">
+            <div class="chart-panel" style="height: auto; flex: 1; margin: 0;">
                 <div class="chart-title"><i class="fas fa-filter"></i> Action Pipeline</div>
                 <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;">
                     {% set rates = [

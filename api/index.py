@@ -4,6 +4,7 @@ A simple Flask + Jinja2 website for Vercel deployment
 """
 from flask import Flask, render_template, send_from_directory, jsonify, request
 import os
+import re
 import time
 import json
 import glob
@@ -1380,6 +1381,11 @@ def jobs():
         eval_scores = [j.get('evaluation', {}).get('overall_score', 0) for j in all_jobs if j.get('evaluation')]
         avg_eval_score = round(sum(eval_scores) / max(len(eval_scores), 1), 1)
     
+    # Filter counts for the UI
+    grade_a_count = sum(1 for j in all_jobs if j.get('evaluation', {}).get('grade', '').startswith('A'))
+    grade_b_count = sum(1 for j in all_jobs if j.get('evaluation', {}).get('grade', '').startswith('B'))
+    has_gaps_count = sum(1 for j in all_jobs if j.get('skill_gaps'))
+
     pipeline_log = load_pipeline_log()
     
     return render_template('jobs.html',
@@ -1394,16 +1400,21 @@ def jobs():
                          grade_counts=grade_counts,
                          avg_eval_score=avg_eval_score,
                          top_matches=top_matches,
+                         grade_a_count=grade_a_count,
+                         grade_b_count=grade_b_count,
+                         has_gaps_count=has_gaps_count,
                          pipeline_report=pipeline_report,
                          pipeline_trace=pipeline_trace,
                          pipeline_log=pipeline_log)
+
+
 def load_pharma_log():
     log_file = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'pharma_pipeline_log.json')
     if os.path.exists(log_file):
         try:
             with open(log_file, 'r', encoding='utf-8') as f:
                 return json.load(f)
-        except:
+        except Exception:
             return {"pipeline_runs": []}
     return {"pipeline_runs": []}
 
@@ -1415,7 +1426,7 @@ def get_latest_pharma_runs():
             try:
                 with open(f, 'r', encoding='utf-8') as file:
                     compounds.append(json.load(file))
-            except:
+            except Exception:
                 pass
     compounds.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
     return compounds
@@ -1438,17 +1449,165 @@ def load_brand_timeseries():
         try:
             with open(log_file, 'r', encoding='utf-8') as f:
                 return json.load(f)
-        except:
+        except Exception:
             return {"runs": []}
     return {"runs": []}
+
+def generate_brand_insight(runs):
+    """Generate a daily narrative insight summary from brand tracking data."""
+    if not runs:
+        return "No brand data available yet. The pipeline runs daily at 9:00 AM IST."
+
+    latest = runs[-1]
+    previous = runs[-2] if len(runs) > 1 else None
+    brands = latest.get('brands', [])
+    date_str = latest.get('date', '')[:10]
+
+    if not brands:
+        return "Brand data is being collected. Check back after the next pipeline run."
+
+    # Sort by LLMO score
+    sorted_brands = sorted(brands, key=lambda b: b.get('report', {}).get('llmo_score', 0), reverse=True)
+    top = sorted_brands[0] if sorted_brands else None
+    bottom = sorted_brands[-1] if sorted_brands else None
+
+    avg_score = round(sum(b.get('report', {}).get('llmo_score', 0) for b in brands) / max(len(brands), 1), 1)
+
+    # Compute deltas
+    gainers, losers = [], []
+    if previous:
+        prev_map = {b['brand']: b.get('report', {}).get('llmo_score', 0) for b in previous.get('brands', [])}
+        for b in brands:
+            name = b.get('brand', '')
+            curr = b.get('report', {}).get('llmo_score', 0)
+            prev = prev_map.get(name, curr)
+            delta = curr - prev
+            if delta > 0:
+                gainers.append((name, delta))
+            elif delta < 0:
+                losers.append((name, delta))
+        gainers.sort(key=lambda x: x[1], reverse=True)
+        losers.sort(key=lambda x: x[1])
+
+    parts = []
+    parts.append(f"📊 **{date_str} Brand Intelligence Summary** — Tracking {len(brands)} brands with avg LLMO score of {avg_score}/100.")
+
+    if top:
+        parts.append(f"🥇 **{top.get('brand', '?')}** leads with a score of {top.get('report', {}).get('llmo_score', 0)}.")
+
+    if gainers:
+        g = gainers[0]
+        parts.append(f"📈 Top gainer: **{g[0]}** (+{g[1]} pts).")
+    if losers:
+        l = losers[0]
+        parts.append(f"📉 Largest drop: **{l[0]}** ({l[1]} pts).")
+
+    if not gainers and not losers and previous:
+        parts.append("⏸️ Scores remained stable since the previous run.")
+
+    # Sentiment insight from top brand
+    if top:
+        sentiment = top.get('sentiment', {})
+        pos = sentiment.get('positive', 0)
+        neg = sentiment.get('negative', 0)
+        if pos > 60:
+            parts.append(f"😊 The leading brand shows strong positive sentiment ({pos}% positive).")
+        elif neg > 30:
+            parts.append(f"⚠️ Notable negative sentiment detected for the leader ({neg}% negative).")
+
+    result = " ".join(parts)
+    result = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', result)
+    return result
+
+
+def generate_jobs_insight(all_jobs, daily_snapshots, grade_counts, dimension_avgs, score_distribution):
+    """Generate a daily narrative insight summary from jobs pipeline data."""
+    if not all_jobs:
+        return "No job data available yet. The pipeline runs daily at 8:00 AM IST."
+
+    total = len(all_jobs)
+    top_matches = sum(1 for j in all_jobs if j.get('evaluation', {}).get('overall_score', 0) >= 3.5)
+    applied = sum(1 for j in all_jobs if j.get('status') == 'applied')
+    verified = sum(1 for j in all_jobs if j.get('verified'))
+    avg_score = round(sum(j.get('evaluation', {}).get('overall_score', 0) for j in all_jobs if j.get('evaluation')) / max(sum(1 for j in all_jobs if j.get('evaluation')), 1), 2)
+
+    # Best job
+    best = max(all_jobs, key=lambda j: j.get('evaluation', {}).get('overall_score', 0)) if all_jobs else None
+    best_ev = best.get('evaluation', {}) if best else {}
+
+    # Grade-A count
+    a_count = sum(v for k, v in grade_counts.items() if k.startswith('A'))
+
+    parts = []
+    parts.append(f"🎯 **Pipeline Summary** — {total} jobs evaluated, {top_matches} top matches (≥3.5/5), avg score {avg_score}/5.")
+
+    if a_count > 0:
+        parts.append(f"🏆 **{a_count} Grade-A** opportunities identified.")
+
+    if best and best_ev:
+        parts.append(f"⭐ Best match: **{best.get('title', '?')}** at {best.get('company', '?')} ({best_ev.get('overall_score', 0)}/5, Grade {best_ev.get('grade', '?')}).")
+
+    if applied > 0:
+        parts.append(f"📤 Applied to {applied} position{'s' if applied != 1 else ''}.")
+    if verified > 0:
+        pct = round(verified / total * 100)
+        parts.append(f"✅ {verified} verified ({pct}% verification rate).")
+
+    # Dimension strength
+    if dimension_avgs:
+        strongest = max(dimension_avgs.items(), key=lambda x: x[1])
+        weakest = min(dimension_avgs.items(), key=lambda x: x[1])
+        dim_labels = {'cv_match': 'CV Match', 'archetype_fit': 'Archetype Fit', 'comp_analysis': 'Compensation', 'culture_signals': 'Culture Fit'}
+        parts.append(f"💪 Strongest dimension: **{dim_labels.get(strongest[0], strongest[0])}** ({strongest[1]}/5). Focus area: **{dim_labels.get(weakest[0], weakest[0])}** ({weakest[1]}/5).")
+
+    # Trend from snapshots
+    if len(daily_snapshots) >= 2:
+        prev_count = daily_snapshots[-2].get('total_jobs', 0) if len(daily_snapshots) >= 2 else 0
+        curr_count = daily_snapshots[-1].get('total_jobs', 0)
+        delta = curr_count - prev_count
+        if delta > 0:
+            parts.append(f"📈 +{delta} new jobs compared to previous run.")
+        elif delta < 0:
+            parts.append(f"📉 {delta} fewer jobs vs previous run.")
+
+    result = " ".join(parts)
+    result = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', result)
+    return result
+
 
 @app.route('/brand')
 def brand_dashboard():
     ts_data = load_brand_timeseries()
     runs = ts_data.get('runs', [])
     latest_run = runs[-1] if runs else {"brands": [], "date": ""}
-    
-    return render_template('brand.html', runs=runs, latest_run=latest_run)
+
+    # KPI calculations
+    brands = latest_run.get('brands', [])
+    brand_count = len(brands)
+    avg_llmo = round(sum(b.get('report', {}).get('llmo_score', 0) for b in brands) / max(brand_count, 1), 1) if brands else 0
+    last_date = latest_run.get('date', '')[:10] if latest_run.get('date') else 'N/A'
+    total_runs = len(runs)
+
+    # Top gainer/loser
+    top_gainer = {'name': '—', 'delta': 0}
+    top_loser = {'name': '—', 'delta': 0}
+    if len(runs) >= 2:
+        prev = runs[-2]
+        prev_map = {b['brand']: b.get('report', {}).get('llmo_score', 0) for b in prev.get('brands', [])}
+        for b in brands:
+            d = b.get('report', {}).get('llmo_score', 0) - prev_map.get(b.get('brand', ''), b.get('report', {}).get('llmo_score', 0))
+            if d > top_gainer['delta']:
+                top_gainer = {'name': b.get('brand', '?'), 'delta': d}
+            if d < top_loser['delta']:
+                top_loser = {'name': b.get('brand', '?'), 'delta': d}
+
+    insight = generate_brand_insight(runs)
+
+    return render_template('brand.html', runs=runs, latest_run=latest_run,
+                         brand_count=brand_count, avg_llmo=avg_llmo,
+                         last_date=last_date, total_runs=total_runs,
+                         top_gainer=top_gainer, top_loser=top_loser,
+                         insight=insight)
 
 @app.route('/api/brand/data')
 def brand_api():
@@ -1526,6 +1685,8 @@ def jobs_dashboard():
     # Top companies by count
     top_companies = sorted(company_counts.items(), key=lambda x: x[1], reverse=True)[:10]
     
+    insight = generate_jobs_insight(all_jobs, daily_snapshots, grade_counts, dimension_avgs, score_distribution)
+
     return render_template('dashboard.html',
                          jobs=all_jobs,
                          month=month,
@@ -1543,7 +1704,8 @@ def jobs_dashboard():
                          daily_snapshots=daily_snapshots,
                          pipeline_log=pipeline_log,
                          pipeline_trace=pipeline_trace,
-                         has_evaluations=has_evaluations)
+                         has_evaluations=has_evaluations,
+                         insight=insight)
 
 
 @app.route('/api/jobs/data')
