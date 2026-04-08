@@ -107,7 +107,10 @@ of market-competitive compensation (30 lakhs INR or 70k USD range, negotiable) f
     return prompt
 
 def get_gemini_api_key():
-    return os.environ.get("GEMINI_API_KEY")
+    paid = os.environ.get("GEMINI_API_KEY_PAID")
+    if paid:
+        return paid, True
+    return os.environ.get("GEMINI_API_KEY"), False
 
 def send_resume_to_user(email: str) -> str:
     """Sends Prashanth's resume to the specified email address.
@@ -145,14 +148,15 @@ def get_gemini_response(message: str, agent_type: str = "interview", history: Li
     try:
         import google.generativeai as genai
         
-        api_key = get_gemini_api_key()
+        api_key, is_paid = get_gemini_api_key()
         if not api_key:
             return "I'm sorry, my AI service is temporarily unavailable. Please try again later."
             
         genai.configure(api_key=api_key)
         system_img = get_system_prompt(agent_type)
+        model_name = "gemini-pro-latest" if is_paid else "gemini-2.5-flash-lite"
         model = genai.GenerativeModel(
-            model_name="gemini-2.5-flash",
+            model_name=model_name,
             system_instruction=system_img,
             tools=[send_resume_to_user]
         )

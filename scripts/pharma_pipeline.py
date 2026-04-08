@@ -12,7 +12,9 @@ def call_llm(system_prompt: str, user_prompt: str, temperature=0.2, json_mode=Fa
     if not hasattr(builtins, "USE_MOCK_APIS"):
         builtins.USE_MOCK_APIS = False
 
-    gemini_key = os.environ.get("GEMINI_API_KEY_PAID") or os.environ.get("GEMINI_API_KEY")
+    gemini_key_paid = os.environ.get("GEMINI_API_KEY_PAID")
+    gemini_key_free = os.environ.get("GEMINI_API_KEY")
+    gemini_key = gemini_key_paid or gemini_key_free
     nvidia_key = os.environ.get("NVIDIA_API_KEY")
 
     if not gemini_key and not nvidia_key:
@@ -23,7 +25,7 @@ def call_llm(system_prompt: str, user_prompt: str, temperature=0.2, json_mode=Fa
         try:
             import google.generativeai as genai
             genai.configure(api_key=gemini_key)
-            model_name = "gemini-2.5-flash" if json_mode else "gemini-2.5-pro"
+            model_name = "gemini-pro-latest" if gemini_key_paid else "gemini-2.5-flash-lite"
             model = genai.GenerativeModel(
                 model_name=model_name,
                 system_instruction=system_prompt,

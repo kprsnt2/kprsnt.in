@@ -146,9 +146,11 @@ def search_jobs(query: str = "AI Engineer LLM Remote India", max_results: int = 
         query: Search query like 'AI Engineer LLM Remote India' or 'Pharma AI Drug Discovery'
         max_results: Maximum number of results (5-20)
     """
-    api_key = os.environ.get("GEMINI_API_KEY_PAID")
+    gemini_key_paid = os.environ.get("GEMINI_API_KEY_PAID")
+    gemini_key_free = os.environ.get("GEMINI_API_KEY")
+    api_key = gemini_key_paid or gemini_key_free
     if not api_key:
-        return json.dumps({"error": "GEMINI_API_KEY_PAID not set. Set it to use AI-powered job search."})
+        return json.dumps({"error": "GEMINI API key not set. Set GEMINI_API_KEY_PAID or GEMINI_API_KEY."})
     
     try:
         from google import genai
@@ -172,8 +174,9 @@ Return ONLY valid JSON:
             tools=[google_search_tool]
         )
 
+        model_name = "gemini-pro-latest" if gemini_key_paid else "gemini-2.5-flash-lite"
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model=model_name,
             contents=prompt,
             config=config
         )
@@ -256,9 +259,11 @@ def generate_cover_letter(job_id: str, tone: str = "professional") -> str:
     if not job:
         return json.dumps({"error": f"Job '{job_id}' not found. Use list_current_jobs to see available IDs."})
     
-    api_key = os.environ.get("GEMINI_API_KEY_PAID")
+    gemini_key_paid = os.environ.get("GEMINI_API_KEY_PAID")
+    gemini_key_free = os.environ.get("GEMINI_API_KEY")
+    api_key = gemini_key_paid or gemini_key_free
     if not api_key:
-        return json.dumps({"error": "GEMINI_API_KEY_PAID not set."})
+        return json.dumps({"error": "GEMINI API key not set."})
     
     try:
         from google import genai
@@ -294,7 +299,8 @@ Requirements:
 5. Don't use phrases like "I'm excited" or "I'm passionate" — be concrete instead
 6. Return ONLY the message text, no JSON wrapper"""
 
-        response = client.models.generate_content(model="gemini-pro-latest", contents=prompt)
+        model_name = "gemini-pro-latest" if gemini_key_paid else "gemini-2.5-flash-lite"
+        response = client.models.generate_content(model=model_name, contents=prompt)
         cover_letter = response.text.strip()
         
         # Save to job data

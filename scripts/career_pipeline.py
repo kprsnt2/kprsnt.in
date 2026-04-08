@@ -193,10 +193,12 @@ def search_agent(tracer: PipelineTracer) -> List[Dict]:
     print("\n🔍 Agent 1: Search Agent")
     print("   Strategy: Gemini + Google Search Grounding")
 
-    api_key = os.environ.get("GEMINI_API_KEY_PAID") or os.environ.get("GEMINI_API_KEY")
+    gemini_key_paid = os.environ.get("GEMINI_API_KEY_PAID")
+    gemini_key_free = os.environ.get("GEMINI_API_KEY")
+    api_key = gemini_key_paid or gemini_key_free
     if not api_key:
         tracer.log_error("search", "No API key found")
-        print("   ❌ GEMINI_API_KEY_PAID not set")
+        print("   ❌ GEMINI API key not set")
         return []
 
     try:
@@ -264,8 +266,9 @@ CRITICAL: Every apply_url must be real. Return valid JSON only, no markdown."""
             sys.stdout.write(f"   🔍 Searching {category}... ")
             sys.stdout.flush()
 
+            model_name = "gemini-pro-latest" if gemini_key_paid else "gemini-2.5-flash-lite"
             response = client.models.generate_content(
-                model="gemini-2.5-flash", contents=prompt, config=config
+                model=model_name, contents=prompt, config=config
             )
 
             text = response.text.strip()

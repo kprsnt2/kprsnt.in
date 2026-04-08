@@ -168,8 +168,11 @@ def generate_jobs_for_role(client, role_category, role_names):
         sys.stdout.write(f"  🔍 Searching for {role_category} roles... ")
         sys.stdout.flush()
 
+        gemini_key_paid = os.environ.get("GEMINI_API_KEY_PAID")
+        model_name = "gemini-pro-latest" if gemini_key_paid else "gemini-2.5-flash-lite"
+        
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model=model_name,
             contents=prompt,
             config=config
         )
@@ -328,9 +331,11 @@ def main():
     print()
 
     # Check API key
-    api_key = os.environ.get("GEMINI_API_KEY_PAID")
+    gemini_key_paid = os.environ.get("GEMINI_API_KEY_PAID")
+    gemini_key_free = os.environ.get("GEMINI_API_KEY")
+    api_key = gemini_key_paid or gemini_key_free
     if not api_key:
-        print("  ❌ GEMINI_API_KEY_PAID not set")
+        print("  ❌ GEMINI API key not set. Set GEMINI_API_KEY_PAID or GEMINI_API_KEY.")
         sys.exit(1)
 
     try:

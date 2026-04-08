@@ -1749,12 +1749,14 @@ def ai_insight():
 
     try:
         # Configure Gemini API
-        api_key = os.environ.get('GEMINI_API_KEY')
+        from bot_utils import get_gemini_api_key
+        api_key, is_paid = get_gemini_api_key()
         if not api_key:
             return jsonify({'error': 'AI insights are temporarily unavailable.'}), 503
         
         genai.configure(api_key=api_key)
-        model = genai.GenerativeModel('gemini-2.5-flash')
+        model_name = 'gemini-pro-latest' if is_paid else 'gemini-2.5-flash-lite'
+        model = genai.GenerativeModel(model_name)
         
         # Build project summary for AI
         project_summary = "Here are Prashanth Kumar Kadasi's projects:\n\n"
@@ -1865,7 +1867,8 @@ def api_chat():
             return jsonify({'error': 'Question too long. Keep it under 500 characters.'}), 400
         
         # Check API key
-        api_key = os.environ.get('GEMINI_API_KEY')
+        from bot_utils import get_gemini_api_key
+        api_key, is_paid = get_gemini_api_key()
         if not api_key:
             return jsonify({'error': 'Chat is temporarily unavailable.'}), 503
         
@@ -1921,7 +1924,8 @@ CONVERSATION HISTORY:{conv_history}
 User: {query}
 Assistant:"""
 
-        model = genai.GenerativeModel('gemini-2.5-flash')
+        model_name = 'gemini-pro-latest' if is_paid else 'gemini-2.5-flash-lite'
+        model = genai.GenerativeModel(model_name)
         response = model.generate_content(prompt)
         
         answer = response.text.strip()
