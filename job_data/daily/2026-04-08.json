@@ -1,11 +1,149 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-08",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-04-08",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-08",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 11,
+      "grade_a_count": 2,
+      "grade_b_count": 14,
+      "average_score": 3.48,
+      "verified_count": 1
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 14,
+      "Senior Data Analyst": 4,
+      "Clinical/Healthcare AI": 2
+    },
+    "by_location": {
+      "Remote": 13,
+      "India": 7
+    },
+    "top_5": [
+      {
+        "title": "Lead Generative AI Engineer",
+        "company": "Novaedge",
+        "score": 4.1,
+        "grade": "A-",
+        "url": "https://novaedge.io/jobs/lead-generative-ai-engineer-remote"
+      },
+      {
+        "title": "RAG + Agentic AI Engineer",
+        "company": "Codvo",
+        "score": 4.1,
+        "grade": "A-",
+        "url": "https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFrz0cqOD1meWw3b4HF8ZYNTKEWTidM4zH8cdEPTuH268R4ixrt28HWopz4_gEQuPzSwR1EdMIeb-L0dVBvsSJa9zpourSU7tuWIDO9dkygJZpg6Q8gKyzco31fk-7BTMWtddxP5_li8pzWI4YnRs9i3uSz2MdGVr4W0nrqifd_ctQiJERz935bWx50XA5FsuHwSg"
+      },
+      {
+        "title": "AI/ML Engineer - NLP/Generative AI",
+        "company": "Tiger Analytics",
+        "score": 3.9,
+        "grade": "B+",
+        "url": "https://www.foundit.in/job/aiml-engineer-genai-nlp-tiger-analytics-chennai-1355184"
+      },
+      {
+        "title": "Generative AI Engineer Team Lead",
+        "company": "Patrianna",
+        "score": 3.9,
+        "grade": "B+",
+        "url": "https://remocate.com/job/generative-ai-engineer-team-lead-patrianna"
+      },
+      {
+        "title": "Staff Engineer – Agentic AIOps (MCP, Context Engineering, LLM Automation)",
+        "company": "Equinix, Inc",
+        "score": 3.8,
+        "grade": "B+",
+        "url": "https://careers.equinix.com/jobs/staff-engineer-agentic-aiops-mcp-context-engineering-llm-automation-JR-159647"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-08",
+    "run_time": "2026-04-08T05:04:02.313865",
+    "duration_seconds": 214.2,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 42858,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-08T05:01:12.773736"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 51518,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-08T05:02:04.291924"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 56555,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-08T05:03:00.847042"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 35082,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-08T05:03:35.929265"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'A-': 2, 'B+': 7, 'B': 7, 'C+': 4}",
+        "timestamp": "2026-04-08T05:03:35.931522"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 2,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-04-08T05:03:35.933286"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 26380,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "1/20 active",
+        "timestamp": "2026-04-08T05:04:02.312979"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 11",
+        "timestamp": "2026-04-08T05:04:02.313848"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "novaedge-lead-generative-ai-engineer-remote",
