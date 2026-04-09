@@ -9,7 +9,7 @@ def seed_history():
     out_file = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'brand_timeseries.json')
     timeseries_data = {"runs": []}
     
-    target_brands = ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi", "Vercel"]
+    target_brands = ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi"]
     
     print("🚀 Seeding 7 days of live API history...")
     

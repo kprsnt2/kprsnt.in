@@ -167,7 +167,7 @@ if __name__ == "__main__":
     import sys
     
     # We will test an array of brands, representing tech & pharma
-    target_brands = ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi", "Vercel"]
+    target_brands = ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi"]
     if len(sys.argv) > 1:
         target_brands = [sys.argv[1]]
 

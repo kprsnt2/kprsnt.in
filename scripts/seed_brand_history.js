@@ -12,7 +12,7 @@ if (!API_KEY) {
     process.exit(1);
 }
 
-const target_brands = ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi", "Vercel"];
+const target_brands = ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi"];
 
 function callGemini(sysPrompt, userPrompt, jsonMode) {
     return new Promise((resolve, reject) => {

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const target_brands = ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi", "Vercel"];
+const target_brands = ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi"];
 
 function generateFakeResults(brand) {
     return {
