@@ -1,11 +1,150 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-09",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-04-09",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-09",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 6,
+      "grade_a_count": 1,
+      "grade_b_count": 12,
+      "average_score": 3.23,
+      "verified_count": 9
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 14,
+      "Senior Data Analyst": 3,
+      "Clinical/Healthcare AI": 2,
+      "Prompt Engineer": 1
+    },
+    "by_location": {
+      "Remote": 14,
+      "India": 6
+    },
+    "top_5": [
+      {
+        "title": "AI Engineer/Prompt Engineer",
+        "company": "Drytis",
+        "score": 4.0,
+        "grade": "A-",
+        "url": "https://in.bebee.com/job/ai-engineer-prompt-engineer-drytis"
+      },
+      {
+        "title": "AI Prompt Engineer",
+        "company": "Rex.zone",
+        "score": 3.8,
+        "grade": "B+",
+        "url": "https://www.pitchmeai.com/jobs/ai-prompt-engineer-rex-zone-remote"
+      },
+      {
+        "title": "Senior AI Engineer",
+        "company": "SupportLogic",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://www.supportlogic.com/careers/"
+      },
+      {
+        "title": "Azure AI Engineer (LLM & Copilot) - India",
+        "company": "EduCLaaS",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://educaas.zohorecruit.com/jobs/Careers"
+      },
+      {
+        "title": "Data Science AI Engineer, Senior Professional",
+        "company": "Gainwell Technologies LLC",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://careers.gainwelltechnologies.com/job/data-science-ai-engineer-senior-professional/"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-09",
+    "run_time": "2026-04-09T05:01:19.482078",
+    "duration_seconds": 204.8,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 42853,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-09T04:58:38.556465"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 49239,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-09T04:59:27.795979"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 44931,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-09T05:00:12.727429"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 49010,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-09T05:01:01.737462"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'A-': 1, 'B+': 5, 'B': 7, 'C+': 7}",
+        "timestamp": "2026-04-09T05:01:01.739573"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-04-09T05:01:01.740815"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 17740,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "9/20 active",
+        "timestamp": "2026-04-09T05:01:19.481167"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 6",
+        "timestamp": "2026-04-09T05:01:19.482062"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "drytis-ai-engineer-prompt-engineer",
