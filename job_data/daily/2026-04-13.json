@@ -1,11 +1,149 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-13",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-04-13",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-13",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 4,
+      "grade_a_count": 0,
+      "grade_b_count": 16,
+      "average_score": 3.24,
+      "verified_count": 11
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 13,
+      "Senior Data Analyst": 6,
+      "Prompt Engineer": 1
+    },
+    "by_location": {
+      "Remote": 18,
+      "India": 2
+    },
+    "top_5": [
+      {
+        "title": "Senior Generative AI Engineer (India) (Remote)",
+        "company": "Codvo.ai",
+        "score": 4.0,
+        "grade": "B+",
+        "url": "https://codvo.freshteam.com/jobs"
+      },
+      {
+        "title": "AI Engineer – AI Agents (Healthcare)",
+        "company": "100ms",
+        "score": 4.0,
+        "grade": "B+",
+        "url": "https://www.100ms.live/careers"
+      },
+      {
+        "title": "LLM Engineer (Offshore - INTL - India)",
+        "company": "Insight Global",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://insightglobal.com/careers/"
+      },
+      {
+        "title": "Machine Learning (ML) Engineer Intern - (Paid - India/Remote)",
+        "company": "Peakflo",
+        "score": 3.5,
+        "grade": "B",
+        "url": "https://www.ycombinator.com/companies/peakflo/jobs"
+      },
+      {
+        "title": "Senior Data Analyst, Supply Product",
+        "company": "SeatGeek",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://weworkremotely.com/remote-jobs/seatgeek-senior-data-analyst-supply-product"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-13",
+    "run_time": "2026-04-13T05:31:52.539998",
+    "duration_seconds": 248.0,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 38841,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-13T05:28:26.639848"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 71827,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-13T05:29:38.466690"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 55322,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-13T05:30:33.788431"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 48452,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-13T05:31:22.240182"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 3, 'B': 13, 'C+': 4}",
+        "timestamp": "2026-04-13T05:31:22.242379"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-04-13T05:31:22.243714"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 30295,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "11/20 active",
+        "timestamp": "2026-04-13T05:31:52.538978"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 4",
+        "timestamp": "2026-04-13T05:31:52.539982"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "codvo-senior-generative-ai-engineer",
