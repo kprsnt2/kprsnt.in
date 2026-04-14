@@ -1,11 +1,149 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-14",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-04-14",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-14",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 4,
+      "grade_a_count": 1,
+      "grade_b_count": 11,
+      "average_score": 3.15,
+      "verified_count": 10
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 14,
+      "Clinical/Healthcare AI": 4,
+      "Senior Data Analyst": 2
+    },
+    "by_location": {
+      "Remote": 13,
+      "India": 7
+    },
+    "top_5": [
+      {
+        "title": "Azure AI Engineer (LLM & Copilot)",
+        "company": "EduCLaaS",
+        "score": 4.0,
+        "grade": "A-",
+        "url": "https://educlaas.zohorecruit.com/jobs/Careers"
+      },
+      {
+        "title": "Senior Data Analyst - Chatbot/ Customer Service (AI/LLM)",
+        "company": "Binance",
+        "score": 4.0,
+        "grade": "B+",
+        "url": "https://startup.jobs/senior-data-analyst-chatbot-customer-service-ai-llm-binance"
+      },
+      {
+        "title": "LLM Engineer (Mid / Senior)",
+        "company": "Sei",
+        "score": 3.9,
+        "grade": "B+",
+        "url": "https://www.ycombinator.com/companies/sei/jobs"
+      },
+      {
+        "title": "AI Engineer/ Associate AI Engineer - Remote India",
+        "company": "First Advantage",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://firstadvantage.applytojob.com/apply/jobs/"
+      },
+      {
+        "title": "AI Engineer - FDE (Forward Deployed Engineer)",
+        "company": "Databricks",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://www.databricks.com/company/careers/open-positions?department=Professional%20Services&location=Remote%20-%20India"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-14",
+    "run_time": "2026-04-14T05:14:07.497735",
+    "duration_seconds": 190.2,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 44874,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-14T05:11:45.327889"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 43154,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-14T05:12:28.481713"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 47911,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-14T05:13:16.393084"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 41793,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-14T05:13:58.185990"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'A-': 1, 'B+': 3, 'B': 8, 'C+': 8}",
+        "timestamp": "2026-04-14T05:13:58.187930"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-04-14T05:13:58.188986"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 9308,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "10/20 active",
+        "timestamp": "2026-04-14T05:14:07.496828"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 4",
+        "timestamp": "2026-04-14T05:14:07.497720"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "educlaas-azure-ai-engineer",
