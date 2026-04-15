@@ -1,11 +1,150 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-15",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 19
-  },
+  "date": "2026-04-15",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-15",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 19,
+      "top_matches": 3,
+      "grade_a_count": 0,
+      "grade_b_count": 12,
+      "average_score": 3.21,
+      "verified_count": 6
+    },
+    "by_archetype": {
+      "Senior Data Analyst": 4,
+      "AI Engineer / LLM Engineer": 12,
+      "Clinical/Healthcare AI": 2,
+      "Prompt Engineer": 1
+    },
+    "by_location": {
+      "Remote": 15,
+      "India": 4
+    },
+    "top_5": [
+      {
+        "title": "Senior Data Analyst",
+        "company": "GDIT",
+        "score": 3.9,
+        "grade": "B+",
+        "url": "https://www.gdit.com/careers/"
+      },
+      {
+        "title": "LLM Engineer (Remote, Full-Time) [AS221]",
+        "company": "Smart Working Solutions",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://remote.com/jobs/smart-working-solutions-llm-engineer-remote-full-time-as221"
+      },
+      {
+        "title": "Generative AI Engineer IRC279039",
+        "company": "Hitachi (GlobalLogic)",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://careers.hitachi.com/jobs/search?q=IRC279039"
+      },
+      {
+        "title": "Generative AI Developer",
+        "company": "August Infotech",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://www.remoterocketship.com/job/generative-ai-developer-august-infotech"
+      },
+      {
+        "title": "Senior LLM Engineer - Remote",
+        "company": "Quik Hire Staffing / Keystone Recruitment",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://jaabz.com/jobs/senior-llm-engineer-at-keystone-recruitment-india/"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-15",
+    "run_time": "2026-04-15T05:14:55.703655",
+    "duration_seconds": 210.2,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 53476,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-15T05:12:20.357782"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 45173,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-15T05:13:05.530341"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 43688,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-15T05:13:49.217996"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 56904,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-15T05:14:46.122493"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 3, 'B': 9, 'C+': 7}",
+        "timestamp": "2026-04-15T05:14:46.124573"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 19 jobs",
+        "timestamp": "2026-04-15T05:14:46.125852"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 9577,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "6/19 active",
+        "timestamp": "2026-04-15T05:14:55.702650"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 3",
+        "timestamp": "2026-04-15T05:14:55.703640"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "gdit-senior-data-analyst",
