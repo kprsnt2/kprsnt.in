@@ -225,7 +225,14 @@
                 </div>
                 {% else %}
                 <div class="text-center p-4">
-                    <p class="text-muted">No compound data available. Run the pipeline script!</p>
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">🧬</div>
+                    <h5 style="color: #4ade80; margin-bottom: 0.5rem;">Awaiting First Pipeline Run</h5>
+                    <p style="color: var(--text-secondary); max-width: 400px; margin: 0 auto 1rem; font-size: 0.85rem;">
+                        The Pharma Discovery Pipeline analyzes drug compounds daily using PubChem, OpenFDA, and ClinicalTrials.gov APIs combined with AI-powered ADMET prediction.
+                    </p>
+                    <div style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.4rem 1rem; background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; font-size: 0.8rem; color: #4ade80;">
+                        <i class="fas fa-clock"></i> Runs daily at 9:30 AM IST via GitHub Actions
+                    </div>
                 </div>
                 {% endfor %}
             </div>

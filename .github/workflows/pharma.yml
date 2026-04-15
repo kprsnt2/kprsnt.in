@@ -1,0 +1,86 @@
+name: Pharma Discovery Pipeline
+
+on:
+  schedule:
+    - cron: '0 4 * * *'  # Daily at 9:30 AM IST (4:00 UTC)
+  workflow_dispatch:
+    inputs:
+      compound:
+        description: 'Target compound name (e.g. Imatinib, Aspirin)'
+        required: false
+        default: ''
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install google-generativeai httpx openai
+
+      - name: Select compound
+        id: compound
+        run: |
+          if [ -n "${{ github.event.inputs.compound }}" ]; then
+            echo "TARGET=${{ github.event.inputs.compound }}" >> $GITHUB_OUTPUT
+          else
+            # Rotate through a list of interesting compounds
+            COMPOUNDS=("Imatinib" "Metformin" "Aspirin" "Remdesivir" "Pembrolizumab" "Osimertinib" "Semaglutide")
+            DAY=$(date +%u)
+            IDX=$(( (DAY - 1) % ${#COMPOUNDS[@]} ))
+            echo "TARGET=${COMPOUNDS[$IDX]}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Run Pharma Pipeline
+        run: python scripts/pharma_pipeline.py "${{ steps.compound.outputs.TARGET }}"
+        env:
+          GEMINI_API_KEY_PAID: ${{ secrets.GEMINI_API_KEY_PAID }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Update pipeline log
+        run: |
+          python3 -c "
+          import json, os
+          from datetime import datetime
+          log_path = 'job_data/pharma_pipeline_log.json'
+          try:
+              with open(log_path) as f:
+                  log = json.load(f)
+          except:
+              log = {'pipeline_runs': []}
+          log['pipeline_runs'].append({
+              'date': datetime.now().isoformat(),
+              'compound': '${{ steps.compound.outputs.TARGET }}',
+              'status': 'success'
+          })
+          # Keep last 30 runs
+          log['pipeline_runs'] = log['pipeline_runs'][-30:]
+          with open(log_path, 'w') as f:
+              json.dump(log, f, indent=2)
+          "
+
+      - name: Commit pipeline results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add job_data/pharma_data/ job_data/pharma_pipeline_log.json
+
+          if git diff --staged --quiet; then
+            echo "No new pharma data to commit"
+          else
+            TARGET="${{ steps.compound.outputs.TARGET }}"
+            TODAY=$(date +%Y-%m-%d)
+            git commit -m "🧬 Pharma Pipeline (${TODAY}): ${TARGET}"
+            git push
+          fi

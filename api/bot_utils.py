@@ -180,9 +180,8 @@ def get_gemini_response(message: str, agent_type: str = "interview", history: Li
         
     except Exception as e:
         import traceback
-        err_str = traceback.format_exc()
-        logger.error(f"Gemini API error: {err_str}")
-        return f"ERROR_DEBUG: {str(e)}\n\n{err_str}"
+        logger.error(f"Gemini API error: {traceback.format_exc()}")
+        return "I'm sorry, something went wrong. Please try again later."
 
 
 def send_reply_email(to_email: str, subject: str, body: str, agent_type: str = "interview") -> bool:

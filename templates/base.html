@@ -40,36 +40,37 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">About Me</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/skills' %}active{% endif %}"
-                            href="/skills">Skills</a>
+                    <!-- Portfolio Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if request.path in ['/skills', '/projects', '/resume'] %}active{% endif %}"
+                            href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Portfolio
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item {% if request.path == '/skills' %}active{% endif %}" href="/skills"><i class="fas fa-tools" style="width:20px;"></i> Skills</a></li>
+                            <li><a class="dropdown-item {% if request.path == '/projects' %}active{% endif %}" href="/projects"><i class="fas fa-rocket" style="width:20px;"></i> Projects</a></li>
+                            <li><a class="dropdown-item {% if request.path == '/resume' or '/resume/' in request.path %}active{% endif %}" href="/resume"><i class="fas fa-file-alt" style="width:20px;"></i> Resume</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/projects' %}active{% endif %}"
-                            href="/projects">Projects</a>
+                        <a class="nav-link {% if request.path == '/blog' or request.path.startswith('/blog/') %}active{% endif %}" href="/blog">Blog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/resume' %}active{% endif %}"
-                            href="/resume">Resume</a>
+                        <a class="nav-link {% if request.path == '/api/docs' or request.path == '/docs' %}active{% endif %}" href="/docs">Docs</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/blog' %}active{% endif %}" href="/blog">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/jobs' %}active{% endif %}" href="/jobs"><i
-                                class="fas fa-robot" style="margin-right: 4px;"></i>Jobs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/brand' %}active{% endif %}" href="/brand"><i
-                                class="fas fa-chart-pie" style="margin-right: 4px;"></i>Brands</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/plotter' %}active{% endif %}" href="/plotter"><i
-                                class="fas fa-chart-line" style="margin-right: 4px;"></i>Data Plotter</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/api/docs' or request.path == '/docs' %}active{% endif %}" href="/docs"><i
-                                class="fas fa-book" style="margin-right: 4px;"></i>Docs</a>
+                    <!-- AIE (AI Engineering) Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if request.path in ['/jobs', '/brand', '/pharma', '/plotter', '/jobs/dashboard'] %}active{% endif %}"
+                            href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-microchip" style="margin-right: 4px;"></i>AIE
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item {% if request.path == '/jobs' or request.path == '/jobs/dashboard' %}active{% endif %}" href="/jobs"><i class="fas fa-robot" style="width:20px;"></i> Jobs Pipeline</a></li>
+                            <li><a class="dropdown-item {% if request.path == '/brand' %}active{% endif %}" href="/brand"><i class="fas fa-chart-pie" style="width:20px;"></i> Brand Intelligence</a></li>
+                            <li><a class="dropdown-item {% if request.path == '/pharma' %}active{% endif %}" href="/pharma"><i class="fas fa-flask" style="width:20px;"></i> Pharma Pipeline</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item {% if request.path == '/plotter' %}active{% endif %}" href="/plotter"><i class="fas fa-chart-line" style="width:20px;"></i> Data Plotter</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
