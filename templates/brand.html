@@ -179,9 +179,12 @@
                     <div class="brand-list-item d-flex justify-content-between align-items-center">
                         <div>
                             <strong style="font-size: 1rem;" class="text-white">{{ loop.index }}. {{ b.brand }}</strong>
+                            {% set mpos = b.get('competitors', {}).get('market_position', '') %}
+                            {% if mpos and mpos != 'Unknown' and 'competitor' not in mpos|lower %}
                             <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;">
-                                {{ b.get('competitors', {}).get('top_competitors', []) | join(', ') or 'No competitor data' }}
+                                {{ mpos }}
                             </div>
+                            {% endif %}
                         </div>
                         <div class="text-end" style="flex-shrink: 0;">
                             <div class="score-box" style="color: {% if b.report.llmo_score >= 85 %}#4ade80{% elif b.report.llmo_score >= 70 %}#fbbf24{% else %}#f87171{% endif %};">
@@ -228,11 +231,20 @@
                                 <div style="width: {{ sentiment.get('neutral', 0) }}%; background: #9ca3af;" title="Neutral: {{ sentiment.get('neutral', 0) }}%"></div>
                                 <div style="width: {{ sentiment.get('negative', 0) }}%; background: #f87171;" title="Negative: {{ sentiment.get('negative', 0) }}%"></div>
                             </div>
+                            {% set gaps = b.get('bias_analysis', {}).get('visibility_gaps', []) %}
+                            {% set real_gaps = [] %}
+                            {% for gap in gaps %}
+                                {% if gap and 'abstract' not in gap|lower and 'Underrepresented' not in gap and gap|length > 5 %}
+                                    {% set _ = real_gaps.append(gap) %}
+                                {% endif %}
+                            {% endfor %}
+                            {% if real_gaps %}
                             <div class="d-flex gap-1 flex-wrap mt-2">
-                                {% for gap in b.get('bias_analysis', {}).get('visibility_gaps', []) %}
-                                    <span style="font-size: 0.65rem; background: rgba(248,113,113,0.1); color: #f87171; padding: 2px 6px; border-radius: 4px;">Gap: {{ gap | truncate(35) }}</span>
+                                {% for gap in real_gaps %}
+                                    <span style="font-size: 0.65rem; background: rgba(248,113,113,0.1); color: #f87171; padding: 2px 6px; border-radius: 4px;">{{ gap | truncate(35) }}</span>
                                 {% endfor %}
                             </div>
+                            {% endif %}
                         </div>
                     </div>
                     {% endfor %}

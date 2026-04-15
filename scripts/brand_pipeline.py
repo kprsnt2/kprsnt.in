@@ -75,15 +75,15 @@ def call_llm(system_prompt: str, user_prompt: str, temperature=0.2, json_mode=Fa
             })
         elif "competitor" in system_prompt.lower():
             return json.dumps({
-                "top_competitors": ["Competitor A", "Competitor B"],
-                "market_position": "Premium Leader",
-                "competitive_edge": "Ecosystem integration"
+                "top_competitors": [],
+                "market_position": "",
+                "competitive_edge": ""
             })
         elif "bias" in system_prompt.lower():
             return json.dumps({
-                "llm_favorability": 8.5,
-                "detected_biases": ["Frequent recommendation in 'best of' lists", "Omission of recent controversies"],
-                "visibility_gaps": ["Underrepresented in budget queries"]
+                "llm_favorability": 7.0,
+                "detected_biases": [],
+                "visibility_gaps": []
             })
         elif "report" in system_prompt.lower():
             return json.dumps({
