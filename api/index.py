@@ -120,6 +120,34 @@ def api_docs():
     return render_template('docs.html')
 
 
+@app.route('/aie')
+def aie_hub():
+    """AI Engineering hub page — aggregates stats from all sub-dashboards."""
+    # Jobs stats
+    all_jobs, month, models_used, _, _ = load_job_listings()
+    jobs_count = len(all_jobs)
+    jobs_top_matches = sum(1 for j in all_jobs if j.get('evaluation', {}).get('overall_score', 0) >= 3.5)
+
+    # Brand stats
+    ts_data = load_brand_timeseries()
+    runs = ts_data.get('runs', [])
+    latest_run = runs[-1] if runs else {"brands": []}
+    brands = latest_run.get('brands', [])
+    brand_count = len(brands)
+    brand_avg_llmo = round(sum(b.get('report', {}).get('llmo_score', 0) for b in brands) / max(brand_count, 1), 1) if brands else 0
+
+    # Pharma stats
+    compounds = get_latest_pharma_runs()
+    pharma_count = len(compounds)
+
+    return render_template('aie.html',
+                         jobs_count=jobs_count,
+                         jobs_top_matches=jobs_top_matches,
+                         brand_count=brand_count,
+                         brand_avg_llmo=brand_avg_llmo,
+                         pharma_count=pharma_count)
+
+
 # ============================================================
 # Blog Routes
 # ============================================================

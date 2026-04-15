@@ -166,10 +166,26 @@ class BrandPipeline:
 if __name__ == "__main__":
     import sys
     
-    # We will test an array of brands, representing tech & pharma
-    target_brands = ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi"]
+    # Sector-based brand groups for meaningful comparison within each sector
+    BRAND_SECTORS = {
+        "smartphones": ["Apple", "Samsung", "Google", "OnePlus", "Xiaomi"],
+        "cloud": ["AWS", "Google Cloud", "Microsoft Azure", "Oracle Cloud", "IBM Cloud"],
+        "pharma": ["Pfizer", "Moderna", "Johnson & Johnson", "AstraZeneca", "Novartis"],
+        "auto": ["Tesla", "Toyota", "BMW", "Hyundai", "BYD"],
+        "ecommerce": ["Amazon", "Flipkart", "Shopify", "Alibaba", "Meesho"],
+    }
+    
+    # Determine which sector to run today (rotate daily)
+    from datetime import datetime
+    day_of_week = datetime.now().weekday()  # 0=Mon ... 6=Sun
+    sector_keys = list(BRAND_SECTORS.keys())
+    sector = sector_keys[day_of_week % len(sector_keys)]
+    
+    target_brands = BRAND_SECTORS[sector]
+
     if len(sys.argv) > 1:
         target_brands = [sys.argv[1]]
+        sector = "custom"
 
     out_file = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'brand_timeseries.json')
     try:
@@ -183,10 +199,12 @@ if __name__ == "__main__":
 
     run_batch = {
         "date": datetime.now().isoformat(),
+        "sector": sector,
         "brands": []
     }
 
-    print(f"\n🚀 Starting Brand Intelligence Pipeline Batch...")
+    print(f"\n🚀 Starting Brand Intelligence Pipeline — Sector: {sector.upper()}")
+    print(f"   Brands: {', '.join(target_brands)}")
     start = time.time()
 
     for brand in target_brands:

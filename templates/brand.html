@@ -11,9 +11,12 @@
         .dash-hero { background: linear-gradient(135deg, rgba(236,72,153,0.12), rgba(139,92,246,0.08), rgba(59,130,246,0.06)); border: 1px solid rgba(236,72,153,0.15); border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
         .dash-hero h2 { background: linear-gradient(135deg, #f472b6, #c084fc, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800; font-size: 1.8rem; margin-bottom: 0.3rem; }
         .dash-hero p { color: var(--text-muted); font-size: 0.9rem; margin: 0; }
-        .chart-panel { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 1.25rem; height: 100%; margin-bottom: 1.5rem; }
+        .chart-panel { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 1.25rem; margin-bottom: 1.5rem; }
+        .chart-panel-fixed { height: 430px; display: flex; flex-direction: column; }
+        .chart-panel-fixed .chart-panel-body { flex: 1; overflow-y: auto; }
         .chart-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
         .brand-list-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 1rem; margin-bottom: 0.75rem; transition: background 0.2s;}
+        .sector-tag { display: inline-flex; align-items: center; gap: 0.3rem; padding: 3px 10px; border-radius: 8px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
         .brand-list-item:hover { background: rgba(255,255,255,0.05); }
         .gainer { color: #4ade80; }
         .loser { color: #f87171; }
@@ -152,38 +155,45 @@
 
     <div class="row">
         <!-- Main Chart -->
-        <div class="col-lg-8">
-            <div class="chart-panel">
+        <div class="col-lg-8 mb-4">
+            <div class="chart-panel chart-panel-fixed">
                 <div class="chart-title"><i class="fas fa-chart-area" style="color: #c084fc;"></i> LLMO Score Time-Series</div>
-                <div style="position: relative; height: 350px; width: 100%;">
+                <div style="position: relative; flex: 1; min-height: 0;">
                     <canvas id="timeSeriesChart"></canvas>
                 </div>
             </div>
         </div>
 
         <!-- Leaderboard -->
-        <div class="col-lg-4">
-            <div class="chart-panel">
-                <div class="chart-title"><i class="fas fa-trophy" style="color: #fbbf24;"></i> AI Visibility Leaderboard</div>
-                {% for b in top_brands %}
-                {% set diff = deltas.get(b.brand, 0) %}
-                <div class="brand-list-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <strong style="font-size: 1.05rem;" class="text-white">{{ loop.index }}. {{ b.brand }}</strong>
-                        <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;">
-                            {{ b.get('competitors', {}).get('top_competitors', []) | join(', ') or 'No competitor data' }}
-                        </div>
-                    </div>
-                    <div class="text-end">
-                        <div class="score-box" style="color: {% if b.report.llmo_score >= 85 %}#4ade80{% elif b.report.llmo_score >= 70 %}#fbbf24{% else %}#f87171{% endif %};">
-                            {{ b.report.llmo_score }}
-                        </div>
-                        <div style="font-size: 0.7rem; font-weight: 700; margin-top: 4px;" class="{% if diff > 0 %}gainer{% elif diff < 0 %}loser{% else %}text-muted{% endif %}">
-                            {% if diff > 0 %}▲ +{{ diff }}{% elif diff < 0 %}▼ {{ diff }}{% else %}—{% endif %}
-                        </div>
-                    </div>
+        <div class="col-lg-4 mb-4">
+            <div class="chart-panel chart-panel-fixed">
+                <div class="chart-title" style="flex-shrink: 0;">
+                    <i class="fas fa-trophy" style="color: #fbbf24;"></i> AI Visibility Leaderboard
+                    {% if latest.get('sector') %}
+                    <span class="sector-tag" style="background: rgba(139,92,246,0.15); color: #c084fc; margin-left: auto;">{{ latest.sector }}</span>
+                    {% endif %}
                 </div>
-                {% endfor %}
+                <div class="chart-panel-body">
+                    {% for b in top_brands %}
+                    {% set diff = deltas.get(b.brand, 0) %}
+                    <div class="brand-list-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong style="font-size: 1rem;" class="text-white">{{ loop.index }}. {{ b.brand }}</strong>
+                            <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;">
+                                {{ b.get('competitors', {}).get('top_competitors', []) | join(', ') or 'No competitor data' }}
+                            </div>
+                        </div>
+                        <div class="text-end" style="flex-shrink: 0;">
+                            <div class="score-box" style="color: {% if b.report.llmo_score >= 85 %}#4ade80{% elif b.report.llmo_score >= 70 %}#fbbf24{% else %}#f87171{% endif %};">
+                                {{ b.report.llmo_score }}
+                            </div>
+                            <div style="font-size: 0.7rem; font-weight: 700; margin-top: 4px;" class="{% if diff > 0 %}gainer{% elif diff < 0 %}loser{% else %}text-muted{% endif %}">
+                                {% if diff > 0 %}▲ +{{ diff }}{% elif diff < 0 %}▼ {{ diff }}{% else %}—{% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
@@ -192,7 +202,12 @@
         <!-- Deep Dive List -->
         <div class="col-12">
             <div class="chart-panel">
-                <div class="chart-title"><i class="fas fa-list-alt" style="color: #3b82f6;"></i> Latest Daily Breakdown ({{ latest.date[:10] if latest else 'N/A' }})</div>
+                <div class="chart-title">
+                    <i class="fas fa-list-alt" style="color: #3b82f6;"></i> Latest Daily Breakdown ({{ latest.date[:10] if latest else 'N/A' }})
+                    {% if latest.get('sector') %}
+                    <span class="sector-tag" style="background: rgba(59,130,246,0.15); color: #60a5fa; margin-left: auto;">📊 {{ latest.sector|title }}</span>
+                    {% endif %}
+                </div>
                 
                 <div class="row">
                     {% for b in top_brands %}

@@ -1,0 +1,361 @@
+{% extends "base.html" %}
+
+{% block title %}AI Engineering Hub | kprsnt.in{% endblock %}
+
+{% block content %}
+<div class="container-fluid" style="max-width: 1400px;">
+
+    <style>
+        .aie-hero {
+            background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(168,85,247,0.08), rgba(236,72,153,0.06));
+            border: 1px solid rgba(99,102,241,0.15);
+            border-radius: 24px;
+            padding: 2.5rem 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .aie-hero::before {
+            content: '';
+            position: absolute;
+            top: -60%;
+            right: -20%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .aie-hero h1 {
+            background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        .aie-hero p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin: 0;
+            max-width: 600px;
+        }
+
+        .aie-card {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 1.75rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .aie-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.12);
+        }
+        .aie-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .aie-card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            flex-shrink: 0;
+        }
+        .aie-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        .aie-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .aie-stat {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+        .aie-stat-value {
+            font-weight: 800;
+            font-size: 0.95rem;
+        }
+        .aie-stat-label {
+            color: var(--text-secondary);
+        }
+
+        .aie-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            margin-top: auto;
+        }
+        .aie-action:hover {
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+
+        .aie-pipeline-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+        }
+        .aie-flow-step {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .aie-flow-arrow {
+            color: var(--text-muted);
+            font-size: 0.6rem;
+            animation: flowPulse 2s ease-in-out infinite;
+        }
+        @keyframes flowPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        /* Sector badges */
+        .sector-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+    </style>
+
+    <!-- Hero -->
+    <div class="aie-hero">
+        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h1><i class="fas fa-microchip" style="margin-right: 0.5rem;"></i>AI Engineering</h1>
+                <p>Autonomous AI pipelines running daily via GitHub Actions — analyzing job markets, tracking brand AI visibility, discovering drug compounds, and plotting data.</p>
+            </div>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <a href="/docs" class="btn btn-sm" style="background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); font-weight: 600; border-radius: 10px;">
+                    <i class="fas fa-book"></i> API Docs
+                </a>
+                <a href="https://github.com/kprsnt2/kprsnt.in" target="_blank" class="btn btn-sm" style="background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); font-weight: 600; border-radius: 10px;">
+                    <i class="fab fa-github"></i> Source
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pipeline Flow -->
+    <div class="aie-pipeline-flow">
+        <div class="aie-flow-step" style="background: rgba(59,130,246,0.15); color: #60a5fa;">
+            <i class="fas fa-clock"></i> GitHub Actions Cron
+        </div>
+        <span class="aie-flow-arrow"><i class="fas fa-chevron-right"></i></span>
+        <div class="aie-flow-step" style="background: rgba(168,85,247,0.15); color: #c084fc;">
+            <i class="fas fa-brain"></i> Gemini / NVIDIA NIM
+        </div>
+        <span class="aie-flow-arrow"><i class="fas fa-chevron-right"></i></span>
+        <div class="aie-flow-step" style="background: rgba(34,197,94,0.15); color: #4ade80;">
+            <i class="fas fa-database"></i> JSON Data Store
+        </div>
+        <span class="aie-flow-arrow"><i class="fas fa-chevron-right"></i></span>
+        <div class="aie-flow-step" style="background: rgba(236,72,153,0.15); color: #f472b6;">
+            <i class="fas fa-chart-area"></i> Live Dashboard
+        </div>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="row">
+        <!-- Jobs Pipeline -->
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="aie-card" style="border-top: 3px solid #6366f1;">
+                <div class="aie-card-icon" style="background: rgba(99,102,241,0.15); color: #818cf8;">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>Jobs Pipeline</h3>
+                <p>4-agent system: Search → Evaluate → Analyze → Report. Daily A-F scoring across 5 dimensions with skill gap analysis.</p>
+                <div class="aie-stat">
+                    <span class="aie-stat-value" style="color: #818cf8;">{{ jobs_count }}</span>
+                    <span class="aie-stat-label">jobs evaluated</span>
+                </div>
+                <div class="aie-stat">
+                    <span class="aie-stat-value" style="color: #4ade80;">{{ jobs_top_matches }}</span>
+                    <span class="aie-stat-label">top matches (≥3.5/5)</span>
+                </div>
+                <div class="aie-stat">
+                    <span class="aie-stat-label">⏰ Runs daily at 8:00 AM IST</span>
+                </div>
+                <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                    <a href="/jobs" class="aie-action" style="background: rgba(99,102,241,0.2); color: #818cf8; flex: 1; justify-content: center;">
+                        <i class="fas fa-list"></i> Jobs
+                    </a>
+                    <a href="/jobs/dashboard" class="aie-action" style="background: rgba(99,102,241,0.1); color: #818cf8; border: 1px solid rgba(99,102,241,0.2);">
+                        <i class="fas fa-chart-line"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Brand Intelligence -->
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="aie-card" style="border-top: 3px solid #ec4899;">
+                <div class="aie-card-icon" style="background: rgba(236,72,153,0.15); color: #f472b6;">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h3>Brand Intelligence</h3>
+                <p>5-agent LLMO scoring pipeline tracking AI visibility, sentiment, bias detection, and competitive analysis across sectors.</p>
+                <div class="aie-stat">
+                    <span class="aie-stat-value" style="color: #f472b6;">{{ brand_count }}</span>
+                    <span class="aie-stat-label">brands tracked</span>
+                </div>
+                <div class="aie-stat">
+                    <span class="aie-stat-value" style="color: #c084fc;">{{ brand_avg_llmo }}/100</span>
+                    <span class="aie-stat-label">avg LLMO score</span>
+                </div>
+                <div class="aie-stat">
+                    <span class="aie-stat-label">⏰ Runs daily at 9:00 AM IST</span>
+                </div>
+                <a href="/brand" class="aie-action" style="background: rgba(236,72,153,0.2); color: #f472b6; margin-top: 1rem;">
+                    <i class="fas fa-chart-area"></i> View Dashboard
+                </a>
+            </div>
+        </div>
+
+        <!-- Pharma Pipeline -->
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="aie-card" style="border-top: 3px solid #22c55e;">
+                <div class="aie-card-icon" style="background: rgba(34,197,94,0.15); color: #4ade80;">
+                    <i class="fas fa-flask"></i>
+                </div>
+                <h3>Pharma Pipeline</h3>
+                <p>5-agent drug discovery engine using PubChem, OpenFDA, ClinicalTrials.gov with AI-powered ADMET prediction and IND readiness scoring.</p>
+                <div class="aie-stat">
+                    <span class="aie-stat-value" style="color: #4ade80;">{{ pharma_count }}</span>
+                    <span class="aie-stat-label">compounds analyzed</span>
+                </div>
+                <div class="aie-stat">
+                    <span class="aie-stat-value" style="color: #22d3ee;">5</span>
+                    <span class="aie-stat-label">AI agents</span>
+                </div>
+                <div class="aie-stat">
+                    <span class="aie-stat-label">⏰ Runs daily at 9:30 AM IST</span>
+                </div>
+                <a href="/pharma" class="aie-action" style="background: rgba(34,197,94,0.2); color: #4ade80; margin-top: 1rem;">
+                    <i class="fas fa-microscope"></i> View Pipeline
+                </a>
+            </div>
+        </div>
+
+        <!-- Data Plotter -->
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="aie-card" style="border-top: 3px solid #f59e0b;">
+                <div class="aie-card-icon" style="background: rgba(245,158,11,0.15); color: #fbbf24;">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Data Plotter</h3>
+                <p>Upload CSV or Excel files, explore column statistics, and generate 10 types of interactive charts with multi-series support and export.</p>
+                <div class="aie-stat">
+                    <span class="aie-stat-value" style="color: #fbbf24;">10</span>
+                    <span class="aie-stat-label">chart types</span>
+                </div>
+                <div class="aie-stat">
+                    <span class="aie-stat-value" style="color: #f59e0b;">CSV / XLSX</span>
+                    <span class="aie-stat-label">formats supported</span>
+                </div>
+                <div class="aie-stat">
+                    <span class="aie-stat-label">📤 PNG & high-res export</span>
+                </div>
+                <a href="/plotter" class="aie-action" style="background: rgba(245,158,11,0.2); color: #fbbf24; margin-top: 1rem;">
+                    <i class="fas fa-upload"></i> Open Plotter
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sector Legend -->
+    <div class="row mt-2 mb-4">
+        <div class="col-12">
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; padding: 1.25rem;">
+                <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem; letter-spacing: 0.5px;">
+                    <i class="fas fa-layer-group"></i> Brand Sectors Tracked
+                </div>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <span class="sector-badge" style="background: rgba(59,130,246,0.15); color: #60a5fa;">📱 Smartphones</span>
+                    <span class="sector-badge" style="background: rgba(168,85,247,0.15); color: #c084fc;">☁️ Cloud</span>
+                    <span class="sector-badge" style="background: rgba(34,197,94,0.15); color: #4ade80;">🧬 Pharma</span>
+                    <span class="sector-badge" style="background: rgba(251,191,36,0.15); color: #fbbf24;">🚗 Auto</span>
+                    <span class="sector-badge" style="background: rgba(236,72,153,0.15); color: #f472b6;">🛍️ E-Commerce</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tech Stack -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div style="background: linear-gradient(135deg, rgba(99,102,241,0.04), rgba(168,85,247,0.04)); border: 1px solid rgba(99,102,241,0.1); border-radius: 14px; padding: 1.25rem;">
+                <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem; letter-spacing: 0.5px;">
+                    <i class="fas fa-cog"></i> Tech Stack
+                </div>
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <span class="sector-badge" style="background: rgba(66,133,244,0.15); color: #4285f4;">Gemini API</span>
+                    <span class="sector-badge" style="background: rgba(118,185,0,0.15); color: #76b900;">NVIDIA NIM</span>
+                    <span class="sector-badge" style="background: rgba(255,255,255,0.08); color: var(--text-secondary);">GitHub Actions</span>
+                    <span class="sector-badge" style="background: rgba(255,255,255,0.08); color: var(--text-secondary);">PubChem API</span>
+                    <span class="sector-badge" style="background: rgba(255,255,255,0.08); color: var(--text-secondary);">OpenFDA</span>
+                    <span class="sector-badge" style="background: rgba(255,255,255,0.08); color: var(--text-secondary);">ClinicalTrials.gov</span>
+                    <span class="sector-badge" style="background: rgba(255,255,255,0.08); color: var(--text-secondary);">Chart.js</span>
+                    <span class="sector-badge" style="background: rgba(255,255,255,0.08); color: var(--text-secondary);">Flask</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
