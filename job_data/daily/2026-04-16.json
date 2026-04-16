@@ -1,11 +1,150 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-16",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-04-16",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-16",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 4,
+      "grade_a_count": 0,
+      "grade_b_count": 11,
+      "average_score": 3.15,
+      "verified_count": 9
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 11,
+      "Senior Data Analyst": 3,
+      "Prompt Engineer": 2,
+      "Clinical/Healthcare AI": 4
+    },
+    "by_location": {
+      "Remote": 16,
+      "India": 4
+    },
+    "top_5": [
+      {
+        "title": "AI Engineer",
+        "company": "ChargePoint",
+        "score": 4.0,
+        "grade": "B+",
+        "url": "https://dailyremote.com/remote-jobs/ai-engineer-chargepoint"
+      },
+      {
+        "title": "Generative AI Engineer",
+        "company": "webkit24",
+        "score": 4.0,
+        "grade": "B+",
+        "url": "https://www.bizoforce.com/jobs/generative-ai-engineer-remote-india-at-webkit24/"
+      },
+      {
+        "title": "Senior Data Analyst, Product Analytics",
+        "company": "Omada Health",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://boards.greenhouse.io/omadahealth"
+      },
+      {
+        "title": "LLM Engineer (Remote, Full-Time) [AS221]",
+        "company": "Smart Working Solutions",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://remote.com/jobs/smart-working-solutions-llm-engineer"
+      },
+      {
+        "title": "Data Science AI Engineer, Senior Professional",
+        "company": "Gainwell Technologies LLC",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://careers.gainwelltechnologies.com/job/Bangalore-KA/34145"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-16",
+    "run_time": "2026-04-16T05:20:34.628194",
+    "duration_seconds": 216.1,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 35911,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-16T05:17:36.038111"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 55905,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-16T05:18:31.942704"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 63672,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-16T05:19:35.615216"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 45889,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-16T05:20:21.504055"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 4, 'B': 7, 'C+': 9}",
+        "timestamp": "2026-04-16T05:20:21.506366"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-04-16T05:20:21.507612"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 13120,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "9/20 active",
+        "timestamp": "2026-04-16T05:20:34.627263"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 4",
+        "timestamp": "2026-04-16T05:20:34.628178"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "chargepoint-ai-engineer-remote",
