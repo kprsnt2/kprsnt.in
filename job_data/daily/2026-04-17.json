@@ -1,11 +1,149 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-17",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-04-17",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-17",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 3,
+      "grade_a_count": 1,
+      "grade_b_count": 15,
+      "average_score": 3.2,
+      "verified_count": 12
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 12,
+      "Senior Data Analyst": 5,
+      "Clinical/Healthcare AI": 3
+    },
+    "by_location": {
+      "Remote": 15,
+      "India": 5
+    },
+    "top_5": [
+      {
+        "title": "AI Prompt Engineer Jobs in India (Remote, Full-Time)",
+        "company": "Rexzone",
+        "score": 4.0,
+        "grade": "A-",
+        "url": "https://rex.zone/"
+      },
+      {
+        "title": "Senior Data Analyst - Remote",
+        "company": "Experian",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://jobs.experian.com/en/search-jobs/Senior%20Data%20Analyst%20Remote"
+      },
+      {
+        "title": "Senior Data/Prompt Engineer (LLM, RAG)",
+        "company": "Programmers.ai",
+        "score": 3.5,
+        "grade": "B",
+        "url": "https://in.jobsora.com/job-senior-data-prompt-engineer"
+      },
+      {
+        "title": "Senior Data Analyst, E&I Affordability - Remote",
+        "company": "UnitedHealth Group",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://careers.unitedhealthgroup.com/job/2350591/senior-data-analyst-ei-affordability-remote/"
+      },
+      {
+        "title": "AI Engineer/ Associate AI Engineer - Remote India",
+        "company": "First Advantage",
+        "score": 3.3,
+        "grade": "B",
+        "url": "https://firstadvantage.applytojob.com/apply"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-17",
+    "run_time": "2026-04-17T05:19:29.092280",
+    "duration_seconds": 216.1,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 43277,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-17T05:16:37.862006"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 60119,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-17T05:17:37.981279"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 57364,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-17T05:18:35.345643"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 43577,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-17T05:19:18.922645"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'A-': 1, 'B+': 1, 'B': 14, 'C+': 4}",
+        "timestamp": "2026-04-17T05:19:18.924755"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-04-17T05:19:18.925932"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 10166,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "12/20 active",
+        "timestamp": "2026-04-17T05:19:29.091472"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 3",
+        "timestamp": "2026-04-17T05:19:29.092263"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "rexzone-ai-prompt-engineer",
