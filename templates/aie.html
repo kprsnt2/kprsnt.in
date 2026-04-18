@@ -6,57 +6,327 @@
 <div class="container-fluid" style="max-width: 1400px;">
 
     <style>
+        /* ===== AIE Page — Premium Redesign ===== */
+
+        /* Entrance animations */
+        @keyframes aie-fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes aie-fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes aie-scaleIn {
+            from { opacity: 0; transform: scale(0.85); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes aie-slideRight {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes aie-glowPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(99,102,241,0.1); }
+            50% { box-shadow: 0 0 40px rgba(99,102,241,0.25); }
+        }
+        @keyframes aie-shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes aie-orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(15px, -20px) scale(1.05); }
+            50% { transform: translate(-10px, -35px) scale(0.95); }
+            75% { transform: translate(20px, -15px) scale(1.02); }
+        }
+        @keyframes aie-borderGlow {
+            0%, 100% { border-color: rgba(99,102,241,0.15); }
+            50% { border-color: rgba(99,102,241,0.35); }
+        }
+        @keyframes aie-dotPulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.4); }
+        }
+        @keyframes flowParticle {
+            0% { left: -8px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: calc(100% + 8px); opacity: 0; }
+        }
+        @keyframes counterUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== Hero Section ===== */
         .aie-hero {
-            background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(168,85,247,0.08), rgba(236,72,153,0.06));
-            border: 1px solid rgba(99,102,241,0.15);
-            border-radius: 24px;
-            padding: 2.5rem 2rem;
+            background: linear-gradient(160deg, 
+                rgba(99,102,241,0.12) 0%, 
+                rgba(168,85,247,0.08) 30%, 
+                rgba(236,72,153,0.06) 60%,
+                rgba(34,197,94,0.04) 100%);
+            border: 1px solid rgba(99,102,241,0.12);
+            border-radius: 28px;
+            padding: 3rem 2.5rem;
             margin-bottom: 2rem;
             position: relative;
             overflow: hidden;
+            animation: aie-fadeUp 0.7s ease-out both;
         }
         .aie-hero::before {
             content: '';
             position: absolute;
-            top: -60%;
-            right: -20%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%);
+            top: -40%;
+            right: -15%;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 65%);
             border-radius: 50%;
             pointer-events: none;
+            animation: aie-orbFloat 18s ease-in-out infinite;
         }
+        .aie-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(236,72,153,0.08) 0%, transparent 65%);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: aie-orbFloat 22s ease-in-out infinite reverse;
+        }
+
+        .aie-hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
         .aie-hero h1 {
-            background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6);
+            background: linear-gradient(135deg, #818cf8, #c084fc, #f472b6, #818cf8);
+            background-size: 300% 100%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             font-weight: 800;
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
+            font-size: 2.6rem;
+            margin-bottom: 0.6rem;
+            animation: aie-shimmer 6s ease-in-out infinite;
+            letter-spacing: -0.02em;
         }
         .aie-hero p {
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 1.05rem;
             margin: 0;
-            max-width: 600px;
+            max-width: 650px;
+            line-height: 1.65;
+        }
+        .aie-hero-subtitle {
+            font-size: 0.82rem !important;
+            color: var(--text-muted, #71717a) !important;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 0.4rem !important;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .aie-hero-subtitle .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4ade80;
+            display: inline-block;
+            animation: aie-dotPulse 2s ease-in-out infinite;
+        }
+
+        .aie-hero-actions {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            z-index: 2;
+            position: relative;
+        }
+        .aie-hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.55rem 1.3rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+            border: 1px solid transparent;
+        }
+        .aie-hero-btn:hover {
+            transform: translateY(-2px);
+            text-decoration: none;
+        }
+
+        /* ===== Stat Counters Bar ===== */
+        .aie-stats-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+            animation: aie-fadeUp 0.7s ease-out 0.15s both;
+        }
+        .aie-stat-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .aie-stat-card:hover {
+            border-color: rgba(255,255,255,0.12);
+            transform: translateY(-2px);
+            background: rgba(255,255,255,0.035);
+        }
+        .aie-stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            border-radius: 16px 16px 0 0;
+        }
+        .aie-stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 0.3rem;
+            animation: counterUp 0.8s ease-out both;
+        }
+        .aie-stat-desc {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        /* ===== Pipeline Flow ===== */
+        .aie-pipeline-section {
+            margin-bottom: 2rem;
+            animation: aie-fadeUp 0.7s ease-out 0.25s both;
+        }
+        .aie-section-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted, #71717a);
+            letter-spacing: 1.5px;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .aie-section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255,255,255,0.06);
+        }
+
+        .aie-pipeline-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            padding: 1.5rem 2rem;
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+        .aie-pipeline-flow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                rgba(59,130,246,0.03) 0%, 
+                rgba(168,85,247,0.03) 33%, 
+                rgba(34,197,94,0.03) 66%, 
+                rgba(236,72,153,0.03) 100%);
+            pointer-events: none;
+        }
+
+        .aie-flow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            white-space: nowrap;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        .aie-flow-step:hover {
+            transform: scale(1.06);
+        }
+        .aie-flow-step i {
+            font-size: 1.1rem;
+        }
+        .aie-flow-connector {
+            display: flex;
+            align-items: center;
+            position: relative;
+            width: 60px;
+            height: 2px;
+            background: rgba(255,255,255,0.08);
+            margin: 0 0.2rem;
+            z-index: 2;
+        }
+        .aie-flow-connector::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: flowParticle 2.5s ease-in-out infinite;
+        }
+        .aie-flow-connector:nth-of-type(2)::after { animation-delay: 0.3s; }
+        .aie-flow-connector:nth-of-type(3)::after { animation-delay: 0.6s; }
+
+        /* ===== Cards Grid ===== */
+        .aie-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+            margin-bottom: 2rem;
         }
 
         .aie-card {
-            background: rgba(255,255,255,0.025);
+            background: rgba(255,255,255,0.02);
             border: 1px solid rgba(255,255,255,0.06);
             border-radius: 20px;
-            padding: 1.75rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            height: 100%;
             display: flex;
             flex-direction: column;
         }
         .aie-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.35);
             border-color: rgba(255,255,255,0.12);
         }
         .aie-card::before {
@@ -66,292 +336,644 @@
             left: 0;
             right: 0;
             height: 3px;
-            border-radius: 20px 20px 0 0;
+        }
+        /* Shimmer overlay on hover */
+        .aie-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.03) 50%, transparent 60%);
+            background-size: 200% 100%;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .aie-card:hover::after {
+            opacity: 1;
+            animation: aie-shimmer 1.5s ease forwards;
         }
 
+        .aie-card-header {
+            padding: 1.5rem 1.5rem 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
         .aie-card-icon {
-            width: 52px;
-            height: 52px;
+            width: 50px;
+            height: 50px;
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
+            font-size: 1.3rem;
             flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        .aie-card:hover .aie-card-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+        .aie-card-status {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            background: rgba(34,197,94,0.12);
+            color: #4ade80;
+            flex-shrink: 0;
+        }
+        .aie-card-status .status-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #4ade80;
+            animation: aie-dotPulse 2s ease-in-out infinite;
+        }
+
+        .aie-card-body {
+            padding: 1rem 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         .aie-card h3 {
             font-size: 1.15rem;
             font-weight: 700;
             color: var(--text-primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.4rem;
         }
         .aie-card p {
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             color: var(--text-secondary);
-            line-height: 1.5;
+            line-height: 1.55;
             margin-bottom: 1rem;
             flex: 1;
         }
 
-        .aie-stat {
-            display: flex;
-            align-items: center;
+        .aie-card-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 0.5rem;
-            padding: 0.4rem 0;
-            font-size: 0.8rem;
-            border-top: 1px solid rgba(255,255,255,0.04);
+            margin-bottom: 1rem;
         }
-        .aie-stat-value {
+        .aie-card-stat-item {
+            background: rgba(255,255,255,0.025);
+            border-radius: 10px;
+            padding: 0.6rem 0.75rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .aie-card-stat-val {
             font-weight: 800;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
+            line-height: 1.2;
         }
-        .aie-stat-label {
+        .aie-card-stat-lbl {
+            font-size: 0.68rem;
             color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            font-weight: 600;
+        }
+
+        .aie-card-footer {
+            padding: 0 1.5rem 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
         }
 
         .aie-action {
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 0.5rem;
-            padding: 0.5rem 1.2rem;
-            border-radius: 10px;
-            font-size: 0.85rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            font-size: 0.82rem;
             font-weight: 600;
             text-decoration: none;
-            transition: all 0.2s;
-            margin-top: auto;
+            transition: all 0.25s cubic-bezier(0.4,0,0.2,1);
         }
         .aie-action:hover {
             transform: translateY(-2px);
             text-decoration: none;
+            filter: brightness(1.2);
         }
-
-        .aie-pipeline-flow {
+        .aie-action-primary {
+            flex: 1;
+        }
+        .aie-action-icon {
+            width: 38px;
+            height: 38px;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            padding: 1.5rem;
-            background: rgba(255,255,255,0.015);
-            border: 1px solid rgba(255,255,255,0.04);
-            border-radius: 16px;
-            margin-bottom: 2rem;
-        }
-        .aie-flow-step {
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.4rem 0.8rem;
-            border-radius: 8px;
-            font-size: 0.78rem;
-            font-weight: 600;
-            white-space: nowrap;
-        }
-        .aie-flow-arrow {
-            color: var(--text-muted);
-            font-size: 0.6rem;
-            animation: flowPulse 2s ease-in-out infinite;
-        }
-        @keyframes flowPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
+            border-radius: 10px;
         }
 
-        /* Sector badges */
-        .sector-badge {
+        .aie-card-schedule {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ===== Architecture Section ===== */
+        .aie-arch-section {
+            margin-bottom: 2rem;
+            animation: aie-fadeUp 0.7s ease-out 0.55s both;
+        }
+        .aie-arch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+        .aie-arch-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 18px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        .aie-arch-card:hover {
+            border-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.03);
+        }
+        .aie-arch-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted, #71717a);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .aie-tech-chips {
+            display: flex;
+            gap: 0.4rem;
+            flex-wrap: wrap;
+        }
+        .aie-tech-chip {
             display: inline-flex;
             align-items: center;
             gap: 0.3rem;
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 0.65rem;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            text-transform: uppercase;
+            padding: 0.3rem 0.7rem;
+            border-radius: 8px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.2px;
+            transition: all 0.25s ease;
+            cursor: default;
         }
+        .aie-tech-chip:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.15);
+        }
+
+        .aie-sector-chips {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .aie-sector-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.45rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            cursor: default;
+        }
+        .aie-sector-chip:hover {
+            transform: scale(1.05);
+        }
+        .aie-sector-icon {
+            font-size: 1rem;
+        }
+
+        /* ===== How It Works Section ===== */
+        .aie-how-section {
+            margin-bottom: 2rem;
+            animation: aie-fadeUp 0.7s ease-out 0.65s both;
+        }
+        .aie-how-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+        .aie-how-step {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1.25rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .aie-how-step:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.035);
+        }
+        .aie-how-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 800;
+            margin: 0 auto 0.75rem;
+        }
+        .aie-how-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.35rem;
+        }
+        .aie-how-desc {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 1200px) {
+            .aie-cards-grid { grid-template-columns: repeat(2, 1fr); }
+            .aie-stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .aie-how-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .aie-hero { padding: 2rem 1.5rem; border-radius: 20px; }
+            .aie-hero h1 { font-size: 1.8rem; }
+            .aie-cards-grid { grid-template-columns: 1fr; }
+            .aie-stats-bar { grid-template-columns: repeat(2, 1fr); }
+            .aie-pipeline-flow { 
+                flex-direction: column; 
+                padding: 1rem;
+                gap: 0.5rem;
+            }
+            .aie-flow-connector { 
+                width: 2px; 
+                height: 30px; 
+                margin: 0;
+            }
+            .aie-flow-connector::after {
+                animation-name: none;
+            }
+            .aie-arch-grid { grid-template-columns: 1fr; }
+            .aie-how-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 480px) {
+            .aie-stats-bar { grid-template-columns: 1fr 1fr; }
+            .aie-how-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Card entrance stagger */
+        .aie-card:nth-child(1) { animation: aie-fadeUp 0.6s ease-out 0.35s both; }
+        .aie-card:nth-child(2) { animation: aie-fadeUp 0.6s ease-out 0.45s both; }
+        .aie-card:nth-child(3) { animation: aie-fadeUp 0.6s ease-out 0.55s both; }
+        .aie-card:nth-child(4) { animation: aie-fadeUp 0.6s ease-out 0.65s both; }
     </style>
 
-    <!-- Hero -->
+    <!-- ===== Hero ===== -->
     <div class="aie-hero">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+        <div class="aie-hero-content" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;">
             <div>
-                <h1><i class="fas fa-microchip" style="margin-right: 0.5rem;"></i>AI Engineering</h1>
-                <p>Autonomous AI pipelines running daily via GitHub Actions — analyzing job markets, tracking brand AI visibility, discovering drug compounds, and plotting data.</p>
+                <div class="aie-hero-subtitle">
+                    <span class="live-dot"></span>
+                    Autonomous Pipelines Active
+                </div>
+                <h1><i class="fas fa-microchip" style="margin-right: 0.4rem;"></i>AI Engineering Hub</h1>
+                <p>Four autonomous AI pipelines running daily via GitHub Actions — analyzing job markets, tracking brand AI visibility, discovering drug compounds, and plotting data. All powered by Gemini & NVIDIA NIM.</p>
             </div>
-            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <a href="/docs" class="btn btn-sm" style="background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); font-weight: 600; border-radius: 10px;">
+            <div class="aie-hero-actions">
+                <a href="/docs" class="aie-hero-btn" style="background: rgba(99,102,241,0.15); color: #818cf8; border-color: rgba(99,102,241,0.25);">
                     <i class="fas fa-book"></i> API Docs
                 </a>
-                <a href="https://github.com/kprsnt2/kprsnt.in" target="_blank" class="btn btn-sm" style="background: rgba(168,85,247,0.15); color: #c084fc; border: 1px solid rgba(168,85,247,0.3); font-weight: 600; border-radius: 10px;">
+                <a href="https://github.com/kprsnt2/kprsnt.in" target="_blank" class="aie-hero-btn" style="background: rgba(168,85,247,0.15); color: #c084fc; border-color: rgba(168,85,247,0.25);">
                     <i class="fab fa-github"></i> Source
+                </a>
+                <a href="/jobs/dashboard" class="aie-hero-btn" style="background: rgba(34,197,94,0.1); color: #4ade80; border-color: rgba(34,197,94,0.2);">
+                    <i class="fas fa-chart-bar"></i> Analytics
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Pipeline Flow -->
-    <div class="aie-pipeline-flow">
-        <div class="aie-flow-step" style="background: rgba(59,130,246,0.15); color: #60a5fa;">
-            <i class="fas fa-clock"></i> GitHub Actions Cron
+    <!-- ===== Live Stats Bar ===== -->
+    <div class="aie-stats-bar">
+        <div class="aie-stat-card" style="--accent: #818cf8;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #6366f1, #818cf8); border-radius: 16px 16px 0 0;"></div>
+            <div class="aie-stat-number" style="color: #818cf8;">{{ jobs_count }}</div>
+            <div class="aie-stat-desc">Jobs Evaluated</div>
         </div>
-        <span class="aie-flow-arrow"><i class="fas fa-chevron-right"></i></span>
-        <div class="aie-flow-step" style="background: rgba(168,85,247,0.15); color: #c084fc;">
-            <i class="fas fa-brain"></i> Gemini / NVIDIA NIM
+        <div class="aie-stat-card">
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #ec4899, #f472b6); border-radius: 16px 16px 0 0;"></div>
+            <div class="aie-stat-number" style="color: #f472b6;">{{ brand_count }}</div>
+            <div class="aie-stat-desc">Brands Tracked</div>
         </div>
-        <span class="aie-flow-arrow"><i class="fas fa-chevron-right"></i></span>
-        <div class="aie-flow-step" style="background: rgba(34,197,94,0.15); color: #4ade80;">
-            <i class="fas fa-database"></i> JSON Data Store
+        <div class="aie-stat-card">
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #22c55e, #4ade80); border-radius: 16px 16px 0 0;"></div>
+            <div class="aie-stat-number" style="color: #4ade80;">{{ pharma_count }}</div>
+            <div class="aie-stat-desc">Compounds Analyzed</div>
         </div>
-        <span class="aie-flow-arrow"><i class="fas fa-chevron-right"></i></span>
-        <div class="aie-flow-step" style="background: rgba(236,72,153,0.15); color: #f472b6;">
-            <i class="fas fa-chart-area"></i> Live Dashboard
+        <div class="aie-stat-card">
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, #f59e0b, #fbbf24); border-radius: 16px 16px 0 0;"></div>
+            <div class="aie-stat-number" style="color: #fbbf24;">4</div>
+            <div class="aie-stat-desc">Active Pipelines</div>
         </div>
     </div>
 
-    <!-- Cards Grid -->
-    <div class="row">
+    <!-- ===== Pipeline Flow ===== -->
+    <div class="aie-pipeline-section">
+        <div class="aie-section-label">
+            <i class="fas fa-project-diagram"></i> Data Pipeline Architecture
+        </div>
+        <div class="aie-pipeline-flow">
+            <div class="aie-flow-step" style="background: rgba(59,130,246,0.12); color: #60a5fa;">
+                <i class="fas fa-clock"></i>
+                <span>Cron Trigger</span>
+            </div>
+            <div class="aie-flow-connector" style="color: #60a5fa;"></div>
+            <div class="aie-flow-step" style="background: rgba(168,85,247,0.12); color: #c084fc;">
+                <i class="fas fa-brain"></i>
+                <span>AI Processing</span>
+            </div>
+            <div class="aie-flow-connector" style="color: #c084fc;"></div>
+            <div class="aie-flow-step" style="background: rgba(245,158,11,0.12); color: #fbbf24;">
+                <i class="fas fa-cogs"></i>
+                <span>Multi-Agent</span>
+            </div>
+            <div class="aie-flow-connector" style="color: #fbbf24;"></div>
+            <div class="aie-flow-step" style="background: rgba(34,197,94,0.12); color: #4ade80;">
+                <i class="fas fa-database"></i>
+                <span>Data Store</span>
+            </div>
+            <div class="aie-flow-connector" style="color: #4ade80;"></div>
+            <div class="aie-flow-step" style="background: rgba(236,72,153,0.12); color: #f472b6;">
+                <i class="fas fa-chart-area"></i>
+                <span>Dashboard</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== Cards Grid ===== -->
+    <div class="aie-section-label" style="animation: aie-fadeUp 0.7s ease-out 0.3s both;">
+        <i class="fas fa-layer-group"></i> Active Pipelines
+    </div>
+    <div class="aie-cards-grid">
+
         <!-- Jobs Pipeline -->
-        <div class="col-md-6 col-lg-3 mb-4">
-            <div class="aie-card" style="border-top: 3px solid #6366f1;">
+        <div class="aie-card" style="--card-accent: #6366f1;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #6366f1, #818cf8);"></div>
+            <div class="aie-card-header">
                 <div class="aie-card-icon" style="background: rgba(99,102,241,0.15); color: #818cf8;">
                     <i class="fas fa-robot"></i>
                 </div>
+                <div class="aie-card-status">
+                    <span class="status-dot"></span>
+                    Live
+                </div>
+            </div>
+            <div class="aie-card-body">
                 <h3>Jobs Pipeline</h3>
                 <p>4-agent system: Search → Evaluate → Analyze → Report. Daily A-F scoring across 5 dimensions with skill gap analysis.</p>
-                <div class="aie-stat">
-                    <span class="aie-stat-value" style="color: #818cf8;">{{ jobs_count }}</span>
-                    <span class="aie-stat-label">jobs evaluated</span>
+                <div class="aie-card-stats">
+                    <div class="aie-card-stat-item">
+                        <span class="aie-card-stat-val" style="color: #818cf8;">{{ jobs_count }}</span>
+                        <span class="aie-card-stat-lbl">Evaluated</span>
+                    </div>
+                    <div class="aie-card-stat-item">
+                        <span class="aie-card-stat-val" style="color: #4ade80;">{{ jobs_top_matches }}</span>
+                        <span class="aie-card-stat-lbl">Top Matches</span>
+                    </div>
                 </div>
-                <div class="aie-stat">
-                    <span class="aie-stat-value" style="color: #4ade80;">{{ jobs_top_matches }}</span>
-                    <span class="aie-stat-label">top matches (≥3.5/5)</span>
-                </div>
-                <div class="aie-stat">
-                    <span class="aie-stat-label">⏰ Runs daily at 8:00 AM IST</span>
-                </div>
-                <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
-                    <a href="/jobs" class="aie-action" style="background: rgba(99,102,241,0.2); color: #818cf8; flex: 1; justify-content: center;">
-                        <i class="fas fa-list"></i> Jobs
-                    </a>
-                    <a href="/jobs/dashboard" class="aie-action" style="background: rgba(99,102,241,0.1); color: #818cf8; border: 1px solid rgba(99,102,241,0.2);">
-                        <i class="fas fa-chart-line"></i>
-                    </a>
-                </div>
+            </div>
+            <div class="aie-card-schedule">
+                <i class="fas fa-clock"></i> Daily at 8:00 AM IST
+            </div>
+            <div class="aie-card-footer">
+                <a href="/jobs" class="aie-action aie-action-primary" style="background: rgba(99,102,241,0.2); color: #818cf8;">
+                    <i class="fas fa-list"></i> View Jobs
+                </a>
+                <a href="/jobs/dashboard" class="aie-action aie-action-icon" style="background: rgba(99,102,241,0.1); color: #818cf8; border: 1px solid rgba(99,102,241,0.2);">
+                    <i class="fas fa-chart-line"></i>
+                </a>
             </div>
         </div>
 
         <!-- Brand Intelligence -->
-        <div class="col-md-6 col-lg-3 mb-4">
-            <div class="aie-card" style="border-top: 3px solid #ec4899;">
+        <div class="aie-card" style="--card-accent: #ec4899;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #ec4899, #f472b6);"></div>
+            <div class="aie-card-header">
                 <div class="aie-card-icon" style="background: rgba(236,72,153,0.15); color: #f472b6;">
                     <i class="fas fa-chart-pie"></i>
                 </div>
+                <div class="aie-card-status">
+                    <span class="status-dot"></span>
+                    Live
+                </div>
+            </div>
+            <div class="aie-card-body">
                 <h3>Brand Intelligence</h3>
                 <p>5-agent LLMO scoring pipeline tracking AI visibility, sentiment, bias detection, and competitive analysis across sectors.</p>
-                <div class="aie-stat">
-                    <span class="aie-stat-value" style="color: #f472b6;">{{ brand_count }}</span>
-                    <span class="aie-stat-label">brands tracked</span>
+                <div class="aie-card-stats">
+                    <div class="aie-card-stat-item">
+                        <span class="aie-card-stat-val" style="color: #f472b6;">{{ brand_count }}</span>
+                        <span class="aie-card-stat-lbl">Brands</span>
+                    </div>
+                    <div class="aie-card-stat-item">
+                        <span class="aie-card-stat-val" style="color: #c084fc;">{{ brand_avg_llmo }}<span style="font-size: 0.7rem; opacity: 0.7;">/100</span></span>
+                        <span class="aie-card-stat-lbl">Avg LLMO</span>
+                    </div>
                 </div>
-                <div class="aie-stat">
-                    <span class="aie-stat-value" style="color: #c084fc;">{{ brand_avg_llmo }}/100</span>
-                    <span class="aie-stat-label">avg LLMO score</span>
-                </div>
-                <div class="aie-stat">
-                    <span class="aie-stat-label">⏰ Runs daily at 9:00 AM IST</span>
-                </div>
-                <a href="/brand" class="aie-action" style="background: rgba(236,72,153,0.2); color: #f472b6; margin-top: 1rem;">
+            </div>
+            <div class="aie-card-schedule">
+                <i class="fas fa-clock"></i> Daily at 9:00 AM IST
+            </div>
+            <div class="aie-card-footer">
+                <a href="/brand" class="aie-action aie-action-primary" style="background: rgba(236,72,153,0.2); color: #f472b6;">
                     <i class="fas fa-chart-area"></i> View Dashboard
                 </a>
             </div>
         </div>
 
         <!-- Pharma Pipeline -->
-        <div class="col-md-6 col-lg-3 mb-4">
-            <div class="aie-card" style="border-top: 3px solid #22c55e;">
+        <div class="aie-card" style="--card-accent: #22c55e;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #22c55e, #4ade80);"></div>
+            <div class="aie-card-header">
                 <div class="aie-card-icon" style="background: rgba(34,197,94,0.15); color: #4ade80;">
                     <i class="fas fa-flask"></i>
                 </div>
+                <div class="aie-card-status">
+                    <span class="status-dot"></span>
+                    Live
+                </div>
+            </div>
+            <div class="aie-card-body">
                 <h3>Pharma Pipeline</h3>
-                <p>5-agent drug discovery engine using PubChem, OpenFDA, ClinicalTrials.gov with AI-powered ADMET prediction and IND readiness scoring.</p>
-                <div class="aie-stat">
-                    <span class="aie-stat-value" style="color: #4ade80;">{{ pharma_count }}</span>
-                    <span class="aie-stat-label">compounds analyzed</span>
+                <p>5-agent drug discovery engine using PubChem, OpenFDA, ClinicalTrials.gov with AI-powered ADMET prediction & IND scoring.</p>
+                <div class="aie-card-stats">
+                    <div class="aie-card-stat-item">
+                        <span class="aie-card-stat-val" style="color: #4ade80;">{{ pharma_count }}</span>
+                        <span class="aie-card-stat-lbl">Compounds</span>
+                    </div>
+                    <div class="aie-card-stat-item">
+                        <span class="aie-card-stat-val" style="color: #22d3ee;">5</span>
+                        <span class="aie-card-stat-lbl">AI Agents</span>
+                    </div>
                 </div>
-                <div class="aie-stat">
-                    <span class="aie-stat-value" style="color: #22d3ee;">5</span>
-                    <span class="aie-stat-label">AI agents</span>
-                </div>
-                <div class="aie-stat">
-                    <span class="aie-stat-label">⏰ Runs daily at 9:30 AM IST</span>
-                </div>
-                <a href="/pharma" class="aie-action" style="background: rgba(34,197,94,0.2); color: #4ade80; margin-top: 1rem;">
+            </div>
+            <div class="aie-card-schedule">
+                <i class="fas fa-clock"></i> Daily at 9:30 AM IST
+            </div>
+            <div class="aie-card-footer">
+                <a href="/pharma" class="aie-action aie-action-primary" style="background: rgba(34,197,94,0.2); color: #4ade80;">
                     <i class="fas fa-microscope"></i> View Pipeline
                 </a>
             </div>
         </div>
 
         <!-- Data Plotter -->
-        <div class="col-md-6 col-lg-3 mb-4">
-            <div class="aie-card" style="border-top: 3px solid #f59e0b;">
+        <div class="aie-card" style="--card-accent: #f59e0b;">
+            <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
+            <div class="aie-card-header">
                 <div class="aie-card-icon" style="background: rgba(245,158,11,0.15); color: #fbbf24;">
                     <i class="fas fa-chart-line"></i>
                 </div>
-                <h3>Data Plotter</h3>
-                <p>Upload CSV or Excel files, explore column statistics, and generate 10 types of interactive charts with multi-series support and export.</p>
-                <div class="aie-stat">
-                    <span class="aie-stat-value" style="color: #fbbf24;">10</span>
-                    <span class="aie-stat-label">chart types</span>
+                <div class="aie-card-status" style="background: rgba(59,130,246,0.12); color: #60a5fa;">
+                    <i class="fas fa-wrench" style="font-size: 0.55rem;"></i>
+                    Tool
                 </div>
-                <div class="aie-stat">
-                    <span class="aie-stat-value" style="color: #f59e0b;">CSV / XLSX</span>
-                    <span class="aie-stat-label">formats supported</span>
+            </div>
+            <div class="aie-card-body">
+                <h3>DataForge Plotter</h3>
+                <p>Upload CSV or Excel, explore column statistics, and generate 10 types of interactive charts with multi-series support and hi-res export.</p>
+                <div class="aie-card-stats">
+                    <div class="aie-card-stat-item">
+                        <span class="aie-card-stat-val" style="color: #fbbf24;">10</span>
+                        <span class="aie-card-stat-lbl">Chart Types</span>
+                    </div>
+                    <div class="aie-card-stat-item">
+                        <span class="aie-card-stat-val" style="color: #f59e0b; font-size: 0.85rem;">CSV / XLSX</span>
+                        <span class="aie-card-stat-lbl">Formats</span>
+                    </div>
                 </div>
-                <div class="aie-stat">
-                    <span class="aie-stat-label">📤 PNG & high-res export</span>
-                </div>
-                <a href="/plotter" class="aie-action" style="background: rgba(245,158,11,0.2); color: #fbbf24; margin-top: 1rem;">
+            </div>
+            <div class="aie-card-schedule">
+                <i class="fas fa-bolt"></i> On-demand &bull; No cron required
+            </div>
+            <div class="aie-card-footer">
+                <a href="/plotter" class="aie-action aie-action-primary" style="background: rgba(245,158,11,0.2); color: #fbbf24;">
                     <i class="fas fa-upload"></i> Open Plotter
                 </a>
             </div>
         </div>
     </div>
 
-    <!-- Sector Legend -->
-    <div class="row mt-2 mb-4">
-        <div class="col-12">
-            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; padding: 1.25rem;">
-                <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem; letter-spacing: 0.5px;">
-                    <i class="fas fa-layer-group"></i> Brand Sectors Tracked
-                </div>
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                    <span class="sector-badge" style="background: rgba(59,130,246,0.15); color: #60a5fa;">📱 Smartphones</span>
-                    <span class="sector-badge" style="background: rgba(168,85,247,0.15); color: #c084fc;">☁️ Cloud</span>
-                    <span class="sector-badge" style="background: rgba(34,197,94,0.15); color: #4ade80;">🧬 Pharma</span>
-                    <span class="sector-badge" style="background: rgba(251,191,36,0.15); color: #fbbf24;">🚗 Auto</span>
-                    <span class="sector-badge" style="background: rgba(236,72,153,0.15); color: #f472b6;">🛍️ E-Commerce</span>
-                </div>
+    <!-- ===== How It Works ===== -->
+    <div class="aie-how-section">
+        <div class="aie-section-label">
+            <i class="fas fa-info-circle"></i> How It Works
+        </div>
+        <div class="aie-how-grid">
+            <div class="aie-how-step">
+                <div class="aie-how-num" style="background: rgba(59,130,246,0.15); color: #60a5fa;">1</div>
+                <div class="aie-how-title">Cron Trigger</div>
+                <div class="aie-how-desc">GitHub Actions fires scheduled cron jobs at set times daily (8 AM, 9 AM, 9:30 AM IST)</div>
+            </div>
+            <div class="aie-how-step">
+                <div class="aie-how-num" style="background: rgba(168,85,247,0.15); color: #c084fc;">2</div>
+                <div class="aie-how-title">Multi-Agent AI</div>
+                <div class="aie-how-desc">Python scripts orchestrate 4-5 specialized agents using Gemini Pro and NVIDIA NIM models</div>
+            </div>
+            <div class="aie-how-step">
+                <div class="aie-how-num" style="background: rgba(34,197,94,0.15); color: #4ade80;">3</div>
+                <div class="aie-how-title">Data Pipeline</div>
+                <div class="aie-how-desc">Results are processed, scored, and committed back to the repository as structured JSON data</div>
+            </div>
+            <div class="aie-how-step">
+                <div class="aie-how-num" style="background: rgba(236,72,153,0.15); color: #f472b6;">4</div>
+                <div class="aie-how-title">Live Dashboards</div>
+                <div class="aie-how-desc">Flask serves the data through interactive dashboards with Chart.js visualizations and analytics</div>
             </div>
         </div>
     </div>
 
-    <!-- Tech Stack -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div style="background: linear-gradient(135deg, rgba(99,102,241,0.04), rgba(168,85,247,0.04)); border: 1px solid rgba(99,102,241,0.1); border-radius: 14px; padding: 1.25rem;">
-                <div style="font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.75rem; letter-spacing: 0.5px;">
+    <!-- ===== Architecture: Tech Stack + Sectors ===== -->
+    <div class="aie-arch-section">
+        <div class="aie-section-label">
+            <i class="fas fa-cubes"></i> Infrastructure
+        </div>
+        <div class="aie-arch-grid">
+            <!-- Tech Stack -->
+            <div class="aie-arch-card">
+                <div class="aie-arch-title">
                     <i class="fas fa-cog"></i> Tech Stack
                 </div>
-                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                    <span class="sector-badge" style="background: rgba(66,133,244,0.15); color: #4285f4;">Gemini API</span>
-                    <span class="sector-badge" style="background: rgba(118,185,0,0.15); color: #76b900;">NVIDIA NIM</span>
-                    <span class="sector-badge" style="background: rgba(255,255,255,0.08); color: var(--text-secondary);">GitHub Actions</span>
-                    <span class="sector-badge" style="background: rgba(255,255,255,0.08); color: var(--text-secondary);">PubChem API</span>
-                    <span class="sector-badge" style="background: rgba(255,255,255,0.08); color: var(--text-secondary);">OpenFDA</span>
-                    <span class="sector-badge" style="background: rgba(255,255,255,0.08); color: var(--text-secondary);">ClinicalTrials.gov</span>
-                    <span class="sector-badge" style="background: rgba(255,255,255,0.08); color: var(--text-secondary);">Chart.js</span>
-                    <span class="sector-badge" style="background: rgba(255,255,255,0.08); color: var(--text-secondary);">Flask</span>
+                <div class="aie-tech-chips">
+                    <span class="aie-tech-chip" style="background: rgba(66,133,244,0.12); color: #60a5fa;">
+                        <i class="fas fa-bolt"></i> Gemini API
+                    </span>
+                    <span class="aie-tech-chip" style="background: rgba(118,185,0,0.12); color: #76b900;">
+                        <i class="fas fa-microchip"></i> NVIDIA NIM
+                    </span>
+                    <span class="aie-tech-chip" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">
+                        <i class="fab fa-github"></i> GitHub Actions
+                    </span>
+                    <span class="aie-tech-chip" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">
+                        <i class="fab fa-python"></i> Flask
+                    </span>
+                    <span class="aie-tech-chip" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">
+                        <i class="fas fa-flask"></i> PubChem API
+                    </span>
+                    <span class="aie-tech-chip" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">
+                        <i class="fas fa-pills"></i> OpenFDA
+                    </span>
+                    <span class="aie-tech-chip" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">
+                        <i class="fas fa-hospital"></i> ClinicalTrials.gov
+                    </span>
+                    <span class="aie-tech-chip" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">
+                        <i class="fas fa-chart-bar"></i> Chart.js
+                    </span>
+                </div>
+            </div>
+
+            <!-- Brands Tracked -->
+            <div class="aie-arch-card">
+                <div class="aie-arch-title">
+                    <i class="fas fa-bullseye"></i> Brands Currently Tracked
+                </div>
+                <div class="aie-sector-chips">
+                    {% set brand_colors = ['#60a5fa', '#c084fc', '#4ade80', '#fbbf24', '#f472b6', '#22d3ee'] %}
+                    {% set brand_bgs = ['rgba(59,130,246,0.12)', 'rgba(168,85,247,0.12)', 'rgba(34,197,94,0.12)', 'rgba(251,191,36,0.12)', 'rgba(236,72,153,0.12)', 'rgba(34,211,238,0.12)'] %}
+                    {% for brand in tracked_brands %}
+                    <span class="aie-sector-chip" style="background: {{ brand_bgs[loop.index0 % 6] }}; color: {{ brand_colors[loop.index0 % 6] }};">
+                        <i class="fas fa-circle" style="font-size: 0.4rem; opacity: 0.7;"></i> {{ brand }}
+                    </span>
+                    {% endfor %}
+                    {% if not tracked_brands %}
+                    <span class="aie-sector-chip" style="background: rgba(255,255,255,0.05); color: var(--text-secondary);">
+                        No brands tracked yet
+                    </span>
+                    {% endif %}
                 </div>
             </div>
         </div>

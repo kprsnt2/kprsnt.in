@@ -136,6 +136,13 @@ def aie_hub():
     brand_count = len(brands)
     brand_avg_llmo = round(sum(b.get('report', {}).get('llmo_score', 0) for b in brands) / max(brand_count, 1), 1) if brands else 0
 
+    # Collect all unique brand names actually tracked across all runs
+    tracked_brands = []
+    for b in brands:
+        name = b.get('brand', '')
+        if name and name not in tracked_brands:
+            tracked_brands.append(name)
+
     # Pharma stats
     compounds = get_latest_pharma_runs()
     pharma_count = len(compounds)
@@ -145,7 +152,8 @@ def aie_hub():
                          jobs_top_matches=jobs_top_matches,
                          brand_count=brand_count,
                          brand_avg_llmo=brand_avg_llmo,
-                         pharma_count=pharma_count)
+                         pharma_count=pharma_count,
+                         tracked_brands=tracked_brands)
 
 
 # ============================================================
