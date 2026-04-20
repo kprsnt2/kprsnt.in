@@ -1,11 +1,150 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-20",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-04-20",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-20",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 3,
+      "grade_a_count": 0,
+      "grade_b_count": 14,
+      "average_score": 3.13,
+      "verified_count": 12
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 9,
+      "Senior Data Analyst": 4,
+      "Prompt Engineer": 2,
+      "Clinical/Healthcare AI": 5
+    },
+    "by_location": {
+      "Remote": 15,
+      "India": 5
+    },
+    "top_5": [
+      {
+        "title": "Associate AI Engineer - Remote India",
+        "company": "First Advantage",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://firstadvantage.applytojob.com/"
+      },
+      {
+        "title": "Senior Data Analyst",
+        "company": "CSG",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://himalayas.app/companies/csg/jobs/senior-data-analyst"
+      },
+      {
+        "title": "Senior Data Analyst, Payments",
+        "company": "Circle",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://www.circle.com/en/careers"
+      },
+      {
+        "title": "Azure AI Engineer (LLM & Copilot)",
+        "company": "EduCLaaS",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://educiaas.zohorecruit.com/jobs/Careers"
+      },
+      {
+        "title": "AI Machine Learning Engineer",
+        "company": "FullStack",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://www.fullstacklabs.co/careers"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-20",
+    "run_time": "2026-04-20T05:30:38.627863",
+    "duration_seconds": 243.8,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 49114,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-20T05:27:25.563010"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 65632,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-20T05:28:31.195291"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 46731,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-20T05:29:17.926551"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 53494,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-20T05:30:11.420293"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 3, 'B': 11, 'C+': 6}",
+        "timestamp": "2026-04-20T05:30:11.422348"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-04-20T05:30:11.423627"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 27203,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "12/20 active",
+        "timestamp": "2026-04-20T05:30:38.626876"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 3",
+        "timestamp": "2026-04-20T05:30:38.627847"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "first-advantage-associate-ai-engineer",
