@@ -1,11 +1,146 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-21",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 15
-  },
+  "date": "2026-04-21",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-21",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 15,
+      "top_matches": 3,
+      "grade_a_count": 0,
+      "grade_b_count": 11,
+      "average_score": 3.23,
+      "verified_count": 2
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 13,
+      "Prompt Engineer": 1,
+      "Clinical/Healthcare AI": 1
+    },
+    "by_location": {
+      "Remote": 14,
+      "India": 1
+    },
+    "top_5": [
+      {
+        "title": "AI Prompt Engineer",
+        "company": "Rex.zone",
+        "score": 3.9,
+        "grade": "B+",
+        "url": "https://in.bebee.com/job/ai-prompt-engineer-india-rex-zone"
+      },
+      {
+        "title": "LLM Engineer (Remote, Full-Time) [AS221]",
+        "company": "Smart Working Solutions",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://remote.com/jobs/smart-working-solutions/llm-engineer-remote-full-time-as221"
+      },
+      {
+        "title": "Machine Learning Engineer - India",
+        "company": "Zoom",
+        "score": 3.5,
+        "grade": "B",
+        "url": "https://careers.zoom.us/jobs/machine-learning-engineer-india"
+      },
+      {
+        "title": "AI Engineer (LLM) (100% remote - India)",
+        "company": "Tether",
+        "score": 3.3,
+        "grade": "B",
+        "url": "https://startup.jobs/ai-engineer-llm-100-remote-india-job-tether-operations-limited"
+      },
+      {
+        "title": "Azure AI Engineer (LLM & Copilot) - India",
+        "company": "EduCLaaS",
+        "score": 3.3,
+        "grade": "B",
+        "url": "https://educaas.zohorecruit.com/jobs/Careers/Azure-AI-Engineer-LLM-Copilot-India"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-21",
+    "run_time": "2026-04-21T05:17:29.001370",
+    "duration_seconds": 170.4,
+    "total_steps": 7,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 1,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 47018,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-21T05:15:27.206103"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 58780,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-21T05:16:39.613562"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 46460,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-21T05:17:26.073187"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 2, 'B': 9, 'C+': 4}",
+        "timestamp": "2026-04-21T05:17:26.074840"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 15 jobs",
+        "timestamp": "2026-04-21T05:17:26.076069"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 2924,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "2/15 active",
+        "timestamp": "2026-04-21T05:17:29.000498"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 3",
+        "timestamp": "2026-04-21T05:17:29.001349"
+      }
+    ],
+    "error_details": [
+      {
+        "agent": "search",
+        "error": "Data Analyst: 500 INTERNAL. {'error': {'code': 500, 'message': 'Internal error encountered.', 'status': 'INTERNAL'}}",
+        "timestamp": "2026-04-21T05:15:40.833524"
+      }
+    ]
+  },
   "jobs": [
     {
       "id": "rexzone-ai-prompt-engineer-india",
