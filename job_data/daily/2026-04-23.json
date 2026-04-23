@@ -1,11 +1,150 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-23",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-04-23",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-23",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 4,
+      "grade_a_count": 0,
+      "grade_b_count": 14,
+      "average_score": 3.2,
+      "verified_count": 11
+    },
+    "by_archetype": {
+      "Senior Data Analyst": 4,
+      "AI Engineer / LLM Engineer": 10,
+      "Clinical/Healthcare AI": 4,
+      "Prompt Engineer": 2
+    },
+    "by_location": {
+      "Remote": 17,
+      "India": 3
+    },
+    "top_5": [
+      {
+        "title": "Senior Data Analyst - Remote",
+        "company": "Experian",
+        "score": 3.9,
+        "grade": "B+",
+        "url": "https://jobs.experian.com/jobs/?location=Remote"
+      },
+      {
+        "title": "AI Engineer – AI Agents (Healthcare)",
+        "company": "100MS",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://www.100ms.live/careers"
+      },
+      {
+        "title": "Prompt Engineer, Agent Prompts & Evals",
+        "company": "Anthropic",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://boards.greenhouse.io/anthropic"
+      },
+      {
+        "title": "AI Engineer/ Associate AI Engineer",
+        "company": "First Advantage",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://firstadvantage.applytojob.com/apply/"
+      },
+      {
+        "title": "Azure AI Engineer (LLM & Copilot)",
+        "company": "EduCLaaS",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://himalayas.app/companies/educaas/jobs/azure-ai-engineer-llm-copilot-india"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-23",
+    "run_time": "2026-04-23T05:20:12.945102",
+    "duration_seconds": 251.7,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 52323,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-23T05:16:55.262969"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 68761,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-23T05:18:04.023717"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 56494,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-23T05:19:00.517888"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 62029,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-23T05:20:02.546473"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 4, 'B': 10, 'C+': 6}",
+        "timestamp": "2026-04-23T05:20:02.548494"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-04-23T05:20:02.549815"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 10394,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "11/20 active",
+        "timestamp": "2026-04-23T05:20:12.944105"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 4",
+        "timestamp": "2026-04-23T05:20:12.945087"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "experian-senior-data-analyst-remote",
