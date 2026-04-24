@@ -1,11 +1,149 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-24",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-04-24",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-24",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 4,
+      "grade_a_count": 0,
+      "grade_b_count": 15,
+      "average_score": 3.24,
+      "verified_count": 11
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 14,
+      "Senior Data Analyst": 5,
+      "Clinical/Healthcare AI": 1
+    },
+    "by_location": {
+      "India": 3,
+      "Remote": 17
+    },
+    "top_5": [
+      {
+        "title": "LLM Engineer",
+        "company": "Qure.ai",
+        "score": 3.8,
+        "grade": "B+",
+        "url": "https://qure.ai/careers/"
+      },
+      {
+        "title": "Senior Generative AI Engineer (India) (Remote)",
+        "company": "Codvo.ai",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://codvoai.freshteam.com/jobs"
+      },
+      {
+        "title": "Generative AI Developer - Remote - PAN India",
+        "company": "Cognizant",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://careers.cognizant.com/global/en/job"
+      },
+      {
+        "title": "Senior Data Analyst",
+        "company": "Array",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://boards.greenhouse.io/array"
+      },
+      {
+        "title": "AI/ML & Prompt Engineer LLM, RAG & Voice Agent",
+        "company": "QuantumLoopAI",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://apply.workable.com/quantumloopai/"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-24",
+    "run_time": "2026-04-24T05:25:38.754258",
+    "duration_seconds": 227.9,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 44457,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-24T05:22:36.404514"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 53646,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-24T05:23:30.050544"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 52777,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-24T05:24:22.827574"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 59149,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-24T05:25:21.976427"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 4, 'B': 11, 'C+': 5}",
+        "timestamp": "2026-04-24T05:25:21.978337"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-04-24T05:25:21.979798"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 16774,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "11/20 active",
+        "timestamp": "2026-04-24T05:25:38.753334"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 4",
+        "timestamp": "2026-04-24T05:25:38.754239"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "qure-ai-llm-engineer",
