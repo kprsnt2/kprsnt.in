@@ -188,5 +188,15 @@
     "duration_seconds": 227.9,
     "total_tokens": 0,
     "errors": 0
+  },
+  {
+    "date": "2026-04-25",
+    "total_jobs": 20,
+    "top_matches": 8,
+    "avg_score": 3.31,
+    "grade_a": 0,
+    "duration_seconds": 196.4,
+    "total_tokens": 0,
+    "errors": 0
   }
 ]
