@@ -1,11 +1,150 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-26",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-04-26",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-26",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 7,
+      "grade_a_count": 0,
+      "grade_b_count": 14,
+      "average_score": 3.23,
+      "verified_count": 7
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 13,
+      "Senior Data Analyst": 4,
+      "Prompt Engineer": 1,
+      "Clinical/Healthcare AI": 2
+    },
+    "by_location": {
+      "Remote": 15,
+      "India": 5
+    },
+    "top_5": [
+      {
+        "title": "AI Engineer, Agentic AI (India)",
+        "company": "Flexday AI",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://www.flexday.ai/careers"
+      },
+      {
+        "title": "Associate AI Engineer",
+        "company": "First Advantage",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://firstadvantage.applytojob.com/apply"
+      },
+      {
+        "title": "Senior Data Analyst, Customer Value",
+        "company": "Spring Health",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://boards.greenhouse.io/springhealth"
+      },
+      {
+        "title": "Senior Data Analyst",
+        "company": "Renesas Electronics",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://careers.renesas.com/job/Bengaluru-Senior-Data-Analyst/20022278"
+      },
+      {
+        "title": "Azure AI Engineer (LLM & Copilot) - India",
+        "company": "eduCLaaS",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://himalayas.app/companies/educlaas/jobs/azure-ai-engineer-llm-copilot-india"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-26",
+    "run_time": "2026-04-26T05:28:23.943210",
+    "duration_seconds": 185.7,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 44189,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-26T05:26:04.232337"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 50718,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-26T05:26:54.950744"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 43839,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-26T05:27:38.789694"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 39046,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-26T05:28:17.835783"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 6, 'B': 8, 'C+': 6}",
+        "timestamp": "2026-04-26T05:28:17.837826"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-04-26T05:28:17.839145"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 6103,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "7/20 active",
+        "timestamp": "2026-04-26T05:28:23.942298"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 7",
+        "timestamp": "2026-04-26T05:28:23.943193"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "flexday-ai-engineer-agentic-ai",
