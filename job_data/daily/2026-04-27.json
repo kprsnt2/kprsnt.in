@@ -1,11 +1,150 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-27",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-04-27",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-27",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 5,
+      "grade_a_count": 0,
+      "grade_b_count": 12,
+      "average_score": 3.16,
+      "verified_count": 7
+    },
+    "by_archetype": {
+      "Senior Data Analyst": 4,
+      "AI Engineer / LLM Engineer": 10,
+      "Clinical/Healthcare AI": 4,
+      "Prompt Engineer": 2
+    },
+    "by_location": {
+      "Remote": 14,
+      "India": 6
+    },
+    "top_5": [
+      {
+        "title": "Senior Data Analyst, Marketing Analytics",
+        "company": "GitLab",
+        "score": 3.9,
+        "grade": "B+",
+        "url": "https://boards.greenhouse.io/gitlab/jobs/senior-data-analyst-marketing-analytics"
+      },
+      {
+        "title": "Machine Learning Engineer",
+        "company": "Zoom",
+        "score": 3.5,
+        "grade": "B",
+        "url": "https://careers.zoom.us/jobs/R18084"
+      },
+      {
+        "title": "Senior Generative AI (Gen AI) Engineer",
+        "company": "InnovationTeam",
+        "score": 3.5,
+        "grade": "B",
+        "url": "https://apply.workable.com/innovationteam/"
+      },
+      {
+        "title": "Senior Generative AI Engineer (India) (Remote)",
+        "company": "Codvo.ai",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://codvo.freshteam.com/jobs"
+      },
+      {
+        "title": "Azure AI Engineer (LLM & Copilot) - India",
+        "company": "EduCLaaS",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://educlaas.zohorecruit.com/jobs/Careers"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-27",
+    "run_time": "2026-04-27T05:43:24.501152",
+    "duration_seconds": 236.8,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 59774,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-27T05:40:29.010057"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 49405,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-27T05:41:18.415480"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 49758,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-27T05:42:08.173381"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 64883,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-27T05:43:13.056394"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 3, 'B': 9, 'C+': 8}",
+        "timestamp": "2026-04-27T05:43:13.058436"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-04-27T05:43:13.059744"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 11440,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "7/20 active",
+        "timestamp": "2026-04-27T05:43:24.500176"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 5",
+        "timestamp": "2026-04-27T05:43:24.501133"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "gitlab-senior-data-analyst",
