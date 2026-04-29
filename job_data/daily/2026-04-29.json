@@ -1,11 +1,150 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-29",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-04-29",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-29",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 3,
+      "grade_a_count": 0,
+      "grade_b_count": 14,
+      "average_score": 3.17,
+      "verified_count": 12
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 11,
+      "Senior Data Analyst": 4,
+      "Prompt Engineer": 3,
+      "Clinical/Healthcare AI": 2
+    },
+    "by_location": {
+      "Remote": 17,
+      "India": 3
+    },
+    "top_5": [
+      {
+        "title": "Associate AI Engineer - Remote India",
+        "company": "First Advantage",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://firstadvantage.applytojob.com/apply/Associate-AI-Engineer-Remote-India"
+      },
+      {
+        "title": "LLM Engineer (Remote, Full-Time) [AS221]",
+        "company": "Smart Working Solutions",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://remote.com/jobs/smart-working-solutions/llm-engineer-remote-full-time-as221"
+      },
+      {
+        "title": "Sr. Staff AI Engineer",
+        "company": "Rula",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://jobs.ashbyhq.com/rula"
+      },
+      {
+        "title": "Azure AI Engineer (LLM & Copilot) - India",
+        "company": "EduCLaaS",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://educaas.zohorecruit.com/jobs/Careers/azure-ai-engineer-llm-copilot-india"
+      },
+      {
+        "title": "AI Engineer (LLM)",
+        "company": "Tether (Job Tether Operations Limited)",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://startup.jobs/ai-engineer-llm-100-remote-india-job-tether-operations-limited"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-29",
+    "run_time": "2026-04-29T05:44:00.904150",
+    "duration_seconds": 224.0,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 47757,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-29T05:41:06.310251"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 50600,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-29T05:41:56.910461"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 66915,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-29T05:43:03.825098"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 45767,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-04-29T05:43:49.592391"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 3, 'B': 11, 'C+': 6}",
+        "timestamp": "2026-04-29T05:43:49.594370"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-04-29T05:43:49.595561"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 11308,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "12/20 active",
+        "timestamp": "2026-04-29T05:44:00.903152"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 3",
+        "timestamp": "2026-04-29T05:44:00.904134"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "first-advantage-associate-ai-engineer",
