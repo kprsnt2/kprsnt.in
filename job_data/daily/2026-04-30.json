@@ -1,11 +1,135 @@
 {
-  "month": "April 2026",
-  "generated_date": "2026-04-30",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-04-30",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-04-30",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 3,
+      "grade_a_count": 0,
+      "grade_b_count": 14,
+      "average_score": 3.17,
+      "verified_count": 12
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 11,
+      "Senior Data Analyst": 4,
+      "Prompt Engineer": 3,
+      "Clinical/Healthcare AI": 2
+    },
+    "by_location": {
+      "Remote": 17,
+      "India": 3
+    },
+    "top_5": [
+      {
+        "title": "Associate AI Engineer - Remote India",
+        "company": "First Advantage",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://firstadvantage.applytojob.com/apply/Associate-AI-Engineer-Remote-India"
+      },
+      {
+        "title": "LLM Engineer (Remote, Full-Time) [AS221]",
+        "company": "Smart Working Solutions",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://remote.com/jobs/smart-working-solutions/llm-engineer-remote-full-time-as221"
+      },
+      {
+        "title": "Sr. Staff AI Engineer",
+        "company": "Rula",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://jobs.ashbyhq.com/rula"
+      },
+      {
+        "title": "Azure AI Engineer (LLM & Copilot) - India",
+        "company": "EduCLaaS",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://educaas.zohorecruit.com/jobs/Careers/azure-ai-engineer-llm-copilot-india"
+      },
+      {
+        "title": "AI Engineer (LLM)",
+        "company": "Tether (Job Tether Operations Limited)",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://startup.jobs/ai-engineer-llm-100-remote-india-job-tether-operations-limited"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-04-30",
+    "run_time": "2026-04-30T05:45:00.244956",
+    "duration_seconds": 14.0,
+    "total_steps": 4,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 4,
+    "steps": [
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 3, 'B': 11, 'C+': 6}",
+        "timestamp": "2026-04-30T05:44:47.983494"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-04-30T05:44:47.984687"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 12259,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "12/20 active",
+        "timestamp": "2026-04-30T05:45:00.244117"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 3",
+        "timestamp": "2026-04-30T05:45:00.244941"
+      }
+    ],
+    "error_details": [
+      {
+        "agent": "search",
+        "error": "AI Engineer: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Your project has exceeded its monthly spending cap. Please go to AI Studio at https://ai.studio/spend to manage your project spend cap. Learn more at https://ai.google.dev/gemini-api/docs/billing#project-spend-caps. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "timestamp": "2026-04-30T05:44:47.464674"
+      },
+      {
+        "agent": "search",
+        "error": "Data Analyst: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Your project has exceeded its monthly spending cap. Please go to AI Studio at https://ai.studio/spend to manage your project spend cap. Learn more at https://ai.google.dev/gemini-api/docs/billing#project-spend-caps. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "timestamp": "2026-04-30T05:44:47.642569"
+      },
+      {
+        "agent": "search",
+        "error": "Prompt Engineer: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Your project has exceeded its monthly spending cap. Please go to AI Studio at https://ai.studio/spend to manage your project spend cap. Learn more at https://ai.google.dev/gemini-api/docs/billing#project-spend-caps. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "timestamp": "2026-04-30T05:44:47.817216"
+      },
+      {
+        "agent": "search",
+        "error": "Healthcare AI: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'Your project has exceeded its monthly spending cap. Please go to AI Studio at https://ai.studio/spend to manage your project spend cap. Learn more at https://ai.google.dev/gemini-api/docs/billing#project-spend-caps. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "timestamp": "2026-04-30T05:44:47.981618"
+      }
+    ]
+  },
   "jobs": [
     {
       "id": "first-advantage-associate-ai-engineer",
