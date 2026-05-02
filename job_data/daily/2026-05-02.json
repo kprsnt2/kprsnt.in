@@ -1,11 +1,150 @@
 {
-  "month": "May 2026",
-  "generated_date": "2026-05-02",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-05-02",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-05-02",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 3,
+      "grade_a_count": 0,
+      "grade_b_count": 13,
+      "average_score": 3.11,
+      "verified_count": 6
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 15,
+      "Senior Data Analyst": 2,
+      "Prompt Engineer": 1,
+      "ML Engineer": 2
+    },
+    "by_location": {
+      "Remote": 17,
+      "India": 3
+    },
+    "top_5": [
+      {
+        "title": "Remote AI Engineer (LLMs for Healthcare)",
+        "company": "Keebler Health",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://lensa.com/remote-ai-engineer-llms-for-healthcare-jobs/keebler-health/"
+      },
+      {
+        "title": "AI Engineer/ Associate AI Engineer - Remote India",
+        "company": "First Advantage",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://fadv.applytojob.com/apply/"
+      },
+      {
+        "title": "Forward Deployed Engineer (FDE) - (India/Remote)",
+        "company": "Peakflo",
+        "score": 3.5,
+        "grade": "B",
+        "url": "https://www.workatastartup.com/companies/peakflo"
+      },
+      {
+        "title": "AI Engineer",
+        "company": "Pratham International",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://dailyremote.com/remote-job/ai-engineer-pratham-international"
+      },
+      {
+        "title": "Senior Data Analyst - Remote",
+        "company": "Experian",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://www.experian.com/careers/jobs/senior-data-analyst-remote"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-05-02",
+    "run_time": "2026-05-02T05:26:34.043760",
+    "duration_seconds": 186.2,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 48669,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-02T05:24:17.799002"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 42852,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-02T05:25:00.650530"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 43598,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-02T05:25:44.248839"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 39117,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-02T05:26:23.365949"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 2, 'B': 11, 'C+': 6, 'C': 1}",
+        "timestamp": "2026-05-02T05:26:23.367789"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-05-02T05:26:23.368748"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 10674,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "6/20 active",
+        "timestamp": "2026-05-02T05:26:34.042896"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 3",
+        "timestamp": "2026-05-02T05:26:34.043746"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "keebler-remote-ai-engineer-llm",
