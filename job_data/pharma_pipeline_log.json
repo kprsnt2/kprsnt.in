@@ -90,6 +90,11 @@
       "date": "2026-05-02T06:03:54.643854",
       "compound": "Osimertinib",
       "status": "success"
+    },
+    {
+      "date": "2026-05-03T06:23:38.354241",
+      "compound": "Semaglutide",
+      "status": "success"
     }
   ]
 }
