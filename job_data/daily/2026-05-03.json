@@ -1,11 +1,149 @@
 {
-  "month": "May 2026",
-  "generated_date": "2026-05-03",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-05-03",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-05-03",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 4,
+      "grade_a_count": 0,
+      "grade_b_count": 11,
+      "average_score": 3.14,
+      "verified_count": 6
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 16,
+      "Senior Data Analyst": 2,
+      "Clinical/Healthcare AI": 2
+    },
+    "by_location": {
+      "India": 2,
+      "Remote": 18
+    },
+    "top_5": [
+      {
+        "title": "Lead Data Analyst- R01552322",
+        "company": "Brillio",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://careers.brillio.com/job/lead-data-analyst-r01552322"
+      },
+      {
+        "title": "Azure AI Engineer (LLM & Copilot)",
+        "company": "EduCLaaS",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://www.educaas.com/careers/"
+      },
+      {
+        "title": "Data Science AI Engineer",
+        "company": "Gainwell Technologies",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://careers.gainwelltechnologies.com/"
+      },
+      {
+        "title": "Associate AI Engineer",
+        "company": "First Advantage",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://fadv.com/careers/"
+      },
+      {
+        "title": "AI Engineer, LLM Systems & Agentic Workflows",
+        "company": "CommandLink",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://www.commandlink.com/company/careers"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-05-03",
+    "run_time": "2026-05-03T05:47:44.252432",
+    "duration_seconds": 232.9,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 37215,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-03T05:44:30.072631"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 50311,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-03T05:45:20.383365"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 57760,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-03T05:46:18.143328"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 57625,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-03T05:47:15.768744"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 4, 'B': 7, 'C+': 9}",
+        "timestamp": "2026-05-03T05:47:15.770614"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-05-03T05:47:15.771984"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 28479,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "6/20 active",
+        "timestamp": "2026-05-03T05:47:44.251498"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 4",
+        "timestamp": "2026-05-03T05:47:44.252416"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "brillio-lead-data-analyst",
