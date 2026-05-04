@@ -9,6 +9,8 @@ on:
         description: 'Target compound name (e.g. Imatinib, Aspirin)'
         required: false
         default: ''
+permissions:
+  contents: write
 
 jobs:
   pipeline:
