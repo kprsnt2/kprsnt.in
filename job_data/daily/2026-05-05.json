@@ -1,11 +1,149 @@
 {
-  "month": "May 2026",
-  "generated_date": "2026-05-05",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 19
-  },
+  "date": "2026-05-05",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-05-05",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 19,
+      "top_matches": 3,
+      "grade_a_count": 0,
+      "grade_b_count": 13,
+      "average_score": 3.14,
+      "verified_count": 6
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 12,
+      "Senior Data Analyst": 4,
+      "Clinical/Healthcare AI": 3
+    },
+    "by_location": {
+      "Remote": 15,
+      "India": 4
+    },
+    "top_5": [
+      {
+        "title": "AI Prompt Engineer",
+        "company": "VoiceCare",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://squarepeghires.com/"
+      },
+      {
+        "title": "Generative AI / LLM Engineer",
+        "company": "Xohani Solutions",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://wellfound.com/company/xohani-solutions/jobs"
+      },
+      {
+        "title": "Lead Data Analyst- R01552322",
+        "company": "Brillio",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://careers.brillio.com/job/lead-data-analyst-r01552322"
+      },
+      {
+        "title": "AI Engineer, LLM Systems & Agentic Workflows",
+        "company": "CommandLink",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://himalayas.app/companies/commandlink/jobs/ai-engineer-llm-systems-agentic-workflows"
+      },
+      {
+        "title": "Senior Data Analyst - Remote",
+        "company": "Experian",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://jobs.experian.com/job/senior-data-analyst-remote"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-05-05",
+    "run_time": "2026-05-05T05:33:12.981027",
+    "duration_seconds": 254.7,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 66702,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-05T05:30:07.701451"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 56896,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-05T05:31:04.597096"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 58552,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-05T05:32:03.149029"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 61918,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-05T05:33:05.066843"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 3, 'B': 10, 'C+': 6}",
+        "timestamp": "2026-05-05T05:33:05.068958"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 19 jobs",
+        "timestamp": "2026-05-05T05:33:05.070192"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 7910,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "6/19 active",
+        "timestamp": "2026-05-05T05:33:12.980045"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 3",
+        "timestamp": "2026-05-05T05:33:12.981011"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "voicecare-ai-prompt-engineer",
