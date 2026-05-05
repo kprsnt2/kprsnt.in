@@ -100,6 +100,11 @@
       "date": "2026-05-04T06:36:04.734783",
       "compound": "Imatinib",
       "status": "success"
+    },
+    {
+      "date": "2026-05-05T06:12:22.224999",
+      "compound": "Metformin",
+      "status": "success"
     }
   ]
 }
