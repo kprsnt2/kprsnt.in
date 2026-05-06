@@ -2064,6 +2064,271 @@
                     "timestamp": "2026-05-05T06:05:43.279516"
                 }
             ]
+        },
+        {
+            "date": "2026-05-06T06:16:53.468818",
+            "sector": "pharma",
+            "brands": [
+                {
+                    "brand": "Pfizer",
+                    "raw_mentions": "**Brand OSINT Summary: Pfizer**\n\n**Executive Summary**\nPfizer is currently navigating a highly publicized transitional phase. Following the unprecedented revenue boom from its COVID-19 vaccine (Comirnaty) and antiviral (Paxlovid), the company is facing a steep \"post-COVID cliff.\" Online presence and recent news are dominated by the company\u2019s strategic pivot toward oncology, aggressive cost-cutting measures, and recent pressure from activist investors demanding better financial performance. \n\n**Recent News & Corporate Developments**\n*   **Activist Investor Pressure:** The most prominent recent news cycle revolves around Starboard Value, an activist hedge fund that took a ~$1 billion stake in Pfizer. Financial media and OSINT chatter highlight Starboard\u2019s criticism of CEO Albert Bourla\u2019s leadership and the company's recent track record of acquisitions and R&D returns.\n*   **Pivot to Oncology:** Pfizer\u2019s PR and official online channels are heavily promoting its $43 billion acquisition of Seagen. The brand narrative is aggressively shifting toward cancer research, utilizing the slogan \"Outdo Cancer.\"\n*   **Weight-Loss Market (GLP-1):** Financial analysts and biotech forums frequently discuss Pfizer\u2019s attempts to enter the lucrative obesity drug market. Following setbacks with earlier iterations of its weight-loss pill (danuglipron), updates on its revised formulations are closely monitored.\n*   **Cost-Cutting:** News of a multi-billion-dollar cost-realignment program, including facility closures and layoffs, has generated significant chatter on professional networks like LinkedIn and local news outlets.\n\n**Public Sentiment & Social Media Presence**\n*   **Highly Polarized Public Mentions:** Pfizer remains a lightning rod on social media (particularly X/Twitter and TikTok). The brand experiences a high volume of negative sentiment driven by lingering anti-vaccine communities, political commentators, and conspiracy theories regarding COVID-19 vaccine side effects. \n*   **Official Brand Messaging:** Pfizer\u2019s official social media presence is highly curated, focusing on the \"Science Will Win\" campaign. Content highlights employee stories, advancements in RSV (Abrysvo) and cancer treatments, and corporate social responsibility (CSR) initiatives. Comments on official posts are often heavily moderated or restricted due to the volume of trolling.\n*   **Mainstream/Financial Sentiment:** In financial and business forums (Reddit\u2019s r/stocks, Seeking Alpha), sentiment is cautious. Retail and institutional investors frequently debate whether the stock is a \"value trap\" or a good dividend play, expressing frustration over its declining stock price since the 2021 peak.\n\n**Emerging Risks & Vulnerabilities**\n*   **Leadership Scrutiny:** OSINT indicates increasing online scrutiny of CEO Albert Bourla from both financial stakeholders (regarding stock performance) and the general public.\n*   **Reputational Overhang:** The brand's deep association with the pandemic means it is frequently dragged into political and cultural debates, making traditional brand marketing difficult.\n*   **Pipeline Pressure:** There is intense public and investor skepticism regarding Pfizer's ability to replace lost COVID-19 revenues, placing immense pressure on its oncology pipeline and RSV vaccine rollout to perform flawlessly. \n\n**Conclusion**\nPfizer\u2019s online footprint is a tale of two narratives: a corporate PR machine pushing a forward-looking, science-driven focus on curing cancer, contrasted against a noisy public sphere dominated by activist investor drama, stock performance anxiety, and lingering pandemic-era polarization.",
+                    "sentiment": {
+                        "positive": 15,
+                        "neutral": 30,
+                        "negative": 55,
+                        "key_themes": [
+                            "Activist investor pressure and leadership scrutiny",
+                            "Strategic pivot to oncology and Seagen acquisition",
+                            "Post-COVID revenue cliff and stock performance anxiety",
+                            "Pandemic-era reputational overhang and social media polarization",
+                            "Cost-cutting measures and layoffs",
+                            "GLP-1 weight-loss market entry attempts"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Johnson & Johnson",
+                            "Merck & Co.",
+                            "Eli Lilly"
+                        ],
+                        "market_position": "A global pharmaceutical leader currently in a highly publicized transitional phase. It is navigating a steep 'post-COVID cliff' in revenue by aggressively pivoting toward oncology and attempting to penetrate the lucrative GLP-1 weight-loss market, all while managing activist investor pressure and a polarized public image.",
+                        "competitive_edge": "Significant capital deployment capabilities enabling massive strategic acquisitions (such as the $43 billion Seagen deal), a robust global R&D infrastructure, and an expanding pipeline in high-value therapeutic areas like cancer treatments and RSV vaccines."
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 6.8,
+                        "detected_biases": [
+                            "Recency bias heavily anchoring the brand to COVID-19 vaccines and therapeutics, overshadowing its broader portfolio",
+                            "Safety guardrail bias triggering overly cautious or sanitized responses due to vaccine-related political polarization and health misinformation filters",
+                            "Competitor hype bias favoring Eli Lilly in discussions regarding the GLP-1 weight-loss market"
+                        ],
+                        "visibility_gaps": [
+                            "Underrepresentation of the $43 billion Seagen acquisition and the strategic pivot to oncology",
+                            "Lack of depth regarding activist investor pressures and recent internal financial restructuring",
+                            "Omission of emerging non-COVID pipeline developments such as RSV vaccines and gene therapies"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 65,
+                        "recommendation_score": 85,
+                        "accuracy_score": 60,
+                        "executive_summary": "Pfizer's LLM presence is heavily anchored to its COVID-19 legacy, which triggers safety guardrails and overshadows its $43 billion strategic pivot to oncology. With a high negative sentiment (55%) driven by pandemic-era polarization and activist investor scrutiny, the brand faces significant narrative challenges. To improve its LLM favorability (currently 6.8/10), Pfizer must aggressively seed its non-COVID pipeline, particularly the Seagen acquisition and RSV advancements, into authoritative data sources to bypass health misinformation filters and counter competitor hype in the GLP-1 space.",
+                        "tips": [
+                            "Publish high-authority, peer-reviewed content focusing on the Seagen acquisition and the 'Outdo Cancer' initiative to bridge the oncology visibility gap in LLM training data.",
+                            "Develop a technical SEO and PR strategy for non-COVID pipeline developments (RSV, gene therapies) to dilute the recency bias associated with COVID-19 vaccines.",
+                            "Address activist investor concerns transparently in corporate communications and financial press releases to stabilize financial sentiment in AI-generated market summaries.",
+                            "Create structured data and knowledge graph updates emphasizing Pfizer's GLP-1 clinical trial progress to counter competitor hype bias currently favoring Eli Lilly.",
+                            "Navigate LLM safety guardrails by ensuring all public health communications are strictly factual, heavily cited, and published on high-trust medical domains to avoid being filtered or sanitized as controversial."
+                        ]
+                    },
+                    "timestamp": "2026-05-06T06:16:53.468835"
+                },
+                {
+                    "brand": "Moderna",
+                    "raw_mentions": "**Brand OSINT Intelligence Brief: Moderna**\n\n**Executive Summary**\nModerna\u2019s current brand narrative is defined by a critical transition: pivoting from a \"pandemic-era COVID-19 vaccine manufacturer\" to a diversified, long-term mRNA technology platform. Online presence and news cycles are dominated by their efforts to prove they are not a \"one-hit wonder,\" juxtaposed against significant post-pandemic financial headwinds and highly polarized public sentiment.\n\n**Recent News & Business Developments**\n*   **Post-COVID Financial Restructuring:** Mainstream financial news heavily features Moderna\u2019s recent cost-cutting measures. With COVID-19 vaccine revenues plummeting, the company recently announced a $1.1 billion cut to its R&D budget and the pausing of several pipeline projects to conserve cash. \n*   **Pipeline & Approvals:** Positive news coverage centers on their newly FDA-approved RSV vaccine (mRESVIA) and highly anticipated pipeline products. Media attention is heavily focused on their experimental personalized mRNA cancer vaccines (in partnership with Merck) and a combined COVID/Flu vaccine.\n*   **Patent Wars:** Moderna frequently appears in legal and biotech news regarding its ongoing, high-stakes patent infringement lawsuits against Pfizer and BioNTech over mRNA technology.\n\n**Online Presence & Corporate Messaging**\n*   **Science-Forward Positioning:** Across LinkedIn, X (formerly Twitter), and their corporate site, Moderna\u2019s owned media is highly clinical, professional, and forward-looking. Their core brand message is *\"mRNA is the future of medicine.\"*\n*   **Content Strategy:** They frequently post about clinical trial milestones, global health initiatives, and the underlying science of mRNA, attempting to shift the public focus away from COVID-19 and toward oncology, rare diseases, and latent viruses.\n\n**Public Sentiment & Common Mentions**\nPublic mentions of Moderna are highly fragmented and polarized, falling into three distinct categories:\n*   **The Scientific/Medical Community (Positive):** High praise for their rapid innovation. Discussions on platforms like Reddit (r/biotech) and medical Twitter view Moderna as a pioneer, particularly expressing excitement over the early data for their melanoma and lung cancer vaccines.\n*   **Investors & Market Watchers (Skeptical/Bearish):** Financial forums (StockTwits, r/WallStreetBets, Yahoo Finance) reflect frustration. Mentions frequently highlight the massive drop in stock price from its pandemic highs, questioning the company's near-term profitability and ability to commercialize its pipeline fast enough.\n*   **General Public & Political Sphere (Highly Polarized/Negative):** Moderna remains a primary target for anti-vaccine advocates, political commentators, and conspiracy theorists on platforms like X and Facebook. Mentions frequently involve allegations regarding vaccine side effects (e.g., myocarditis), government overreach, and \"Big Pharma\" profiteering. General consumer mentions also reflect widespread \"vaccine fatigue.\"\n\n**Conclusion**\nModerna is currently executing a high-stakes brand pivot. While their corporate communications successfully project scientific leadership and innovation, their broader online footprint is weighed down by investor anxiety over revenue drops and lingering, highly politicized anti-vaccine sentiment. The brand's future reputation hinges entirely on the successful commercialization of its non-COVID mRNA products.",
+                    "sentiment": {
+                        "positive": 30,
+                        "neutral": 25,
+                        "negative": 45,
+                        "key_themes": [
+                            "Transition to diversified mRNA platform",
+                            "Financial headwinds and R&D budget cuts",
+                            "Pipeline innovation (Cancer and RSV vaccines)",
+                            "Investor skepticism and stock price drop",
+                            "Polarized public sentiment and vaccine fatigue",
+                            "Patent litigation"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Pfizer",
+                            "BioNTech"
+                        ],
+                        "market_position": "A pioneering biotech firm transitioning from a pandemic-era COVID-19 vaccine manufacturer to a diversified mRNA technology platform, currently navigating post-pandemic revenue declines and polarized public sentiment while focusing on new commercializations.",
+                        "competitive_edge": "Deep expertise and rapid innovation in proprietary mRNA technology, driving a highly anticipated pipeline of personalized cancer therapeutics and combination respiratory vaccines."
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.5,
+                        "detected_biases": [
+                            "Establishment bias favoring legacy pharmaceutical companies like Pfizer in general medical queries",
+                            "COVID-19 anchoring bias, heavily associating the brand solely with the pandemic",
+                            "Safety and neutrality bias, resulting in over-hedging and generic disclaimers due to polarized public sentiment around vaccines"
+                        ],
+                        "visibility_gaps": [
+                            "Underrepresentation of the non-COVID mRNA pipeline, including personalized cancer therapeutics and RSV vaccines",
+                            "Lack of nuanced differentiation between Moderna's and BioNTech's specific lipid nanoparticle (LNP) delivery systems",
+                            "Limited visibility into the company's post-pandemic commercial strategy and broader biotech platform capabilities"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 68,
+                        "recommendation_score": 85,
+                        "accuracy_score": 72,
+                        "executive_summary": "Moderna is navigating a critical brand pivot from a pandemic-era COVID-19 vaccine manufacturer to a diversified mRNA technology platform. While scientific communities praise their innovation, overall sentiment is weighed down by investor skepticism and polarized public discourse, resulting in a 45% negative sentiment share. LLMs currently exhibit a strong 'COVID-19 anchoring bias' and an establishment bias favoring legacy competitors like Pfizer. To improve its LLMO positioning, Moderna must aggressively seed authoritative content highlighting its non-COVID pipeline (RSV, oncology), differentiate its proprietary LNP technology, and clarify its post-pandemic commercial strategy to overcome AI safety-hedging algorithms.",
+                        "tips": [
+                            "Launch an aggressive content strategy focusing on the non-COVID mRNA pipeline, specifically mRESVIA and personalized cancer vaccines, to break the LLM COVID-19 anchoring bias.",
+                            "Publish technical whitepapers and comparative studies detailing Moderna's unique lipid nanoparticle (LNP) delivery systems to differentiate from BioNTech in AI-generated technical summaries.",
+                            "Develop targeted investor-relations content that clearly outlines the post-pandemic commercialization strategy and R&D reallocation to counteract bearish financial narratives in AI financial summaries.",
+                            "Optimize corporate messaging to bypass LLM safety and neutrality filters by anchoring narratives strictly to peer-reviewed clinical trial data, FDA milestones, and objective scientific metrics rather than broad public health claims."
+                        ]
+                    },
+                    "timestamp": "2026-05-06T06:18:01.339362"
+                },
+                {
+                    "brand": "Johnson & Johnson",
+                    "raw_mentions": "**Brand OSINT Summary: Johnson & Johnson (J&J)**\n\n**Executive Overview**\nJohnson & Johnson\u2019s (NYSE: JNJ) recent online presence reflects a company in the midst of a major corporate transformation. Following the successful spin-off of its consumer health division (Kenvue) in 2023, J&J has rebranded itself strictly as an \"Innovative Medicine and MedTech\" company. Its digital footprint is currently defined by a tug-of-war between strong R&D/financial news and the heavy, ongoing shadow of legacy litigation.\n\n**Recent News & Corporate Moves**\n*   **Aggressive M&A Activity:** Financial and business news is dominated by J&J\u2019s strategic acquisitions to bolster its new dual-focus. Mentions heavily feature the $13.1 billion acquisition of Shockwave Medical (expanding cardiovascular MedTech) and the acquisition of Ambrx Biopharma (strengthening targeted oncology).\n*   **Pipeline & Earnings:** Medical and investor forums frequently discuss J&J\u2019s strong earnings reports, driven by blockbuster drugs like Darzalex (multiple myeloma) and Tremfya, as well as its push into immunology and neuroscience. \n*   **Restructuring:** There are moderate mentions on professional networks (LinkedIn, Blind) regarding internal restructuring and targeted layoffs as the company streamlines post-Kenvue.\n\n**Legal & Regulatory Landscape (Risk Intelligence)**\n*   **Talcum Powder Litigation:** This remains the dominant negative narrative across all media. J&J\u2019s proposed $6.48 billion settlement to resolve tens of thousands of ovarian cancer claims\u2014and its controversial use of the \"Texas Two-Step\" bankruptcy strategy\u2014generates massive volume in legal blogs, mainstream news, and activist social media.\n*   **Medicare Drug Pricing (IRA):** J&J is frequently mentioned in political and healthcare policy discussions regarding the US Inflation Reduction Act. Key J&J drugs (like Stelara, Xarelto, and Imbruvica) are subject to Medicare price negotiations, prompting online debates about pharma profit margins versus R&D innovation.\n\n**Public Sentiment & Social Media Mentions**\n*   **Bifurcated Sentiment:** Sentiment is highly polarized. The financial, B2B, and medical communities view J&J favorably as a resilient, dividend-paying innovator. Conversely, mainstream consumer sentiment on platforms like X (Twitter), TikTok, and Reddit often reflects deep distrust tied to the talc lawsuits and historical opioid litigation.\n*   **Brand Confusion:** A significant OSINT finding is that the general public has not fully registered the Kenvue spin-off. Consumers still frequently tag J&J in complaints or discussions regarding Tylenol, Band-Aids, and Baby Powder, requiring ongoing brand-separation efforts.\n*   **Employer Brand:** Generally viewed as a stable, prestige employer, though recent discussions on Reddit (r/biotech) show slight anxiety regarding the integration of new acquisitions and the shifting of resources away from infectious diseases.\n\n**Key Trending Keywords & Topics:**\n*   *#JNJ, #MedTech, #InnovativeMedicine* (Corporate/Positive)\n*   *Talc settlement, Texas Two-Step, LTL Management* (Legal/Negative)\n*   *Shockwave Medical, Kenvue spin-off, Darzalex* (Financial/Neutral)\n\n**Conclusion:**\nAs an OSINT target, Johnson & Johnson is successfully projecting a forward-looking, high-tech image to investors and medical professionals. However, in the public square, the brand is still fighting to untangle its reputation from consumer health controversies and complex legal battles.",
+                    "sentiment": {
+                        "positive": 40,
+                        "neutral": 20,
+                        "negative": 40,
+                        "key_themes": [
+                            "M&A Activity and MedTech Expansion",
+                            "Talcum Powder Litigation and Bankruptcy Strategy",
+                            "Strong Earnings and Oncology Pipeline",
+                            "Kenvue Spin-off and Brand Confusion",
+                            "Medicare Drug Pricing (IRA) Negotiations"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Pfizer",
+                            "Medtronic",
+                            "Merck"
+                        ],
+                        "market_position": "A dominant global leader in Innovative Medicine and MedTech, currently undergoing a major corporate transformation post-consumer health spin-off, characterized by strong financial performance and blockbuster drug sales, though its public reputation remains weighed down by legacy litigation.",
+                        "competitive_edge": "A robust dual-focus on high-margin pharmaceuticals and advanced medical technology, supported by a strong R&D pipeline, blockbuster drugs like Darzalex, and massive capital for aggressive strategic acquisitions such as Shockwave Medical."
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.2,
+                        "detected_biases": [
+                            "Negativity bias due to heavy weighting of legacy litigation (talc, opioids) in training data",
+                            "Historical conflation bias, frequently associating the brand with consumer health products despite the Kenvue spin-off",
+                            "Comparative disadvantage bias against Pfizer regarding COVID-19 vaccine efficacy and public perception"
+                        ],
+                        "visibility_gaps": [
+                            "Underrepresentation of the MedTech division's recent strategic acquisitions (e.g., Shockwave Medical)",
+                            "Lag in updating the corporate identity to exclusively Innovative Medicine and MedTech post-consumer spin-off",
+                            "Limited depth on early-stage R&D pipeline compared to established blockbuster drugs like Darzalex"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 72,
+                        "recommendation_score": 75,
+                        "accuracy_score": 65,
+                        "executive_summary": "Johnson & Johnson is successfully transitioning into a dual-focus Innovative Medicine and MedTech powerhouse, bolstered by strong M&A activity and blockbuster drug earnings. However, its LLM presence is highly polarized (40% positive, 40% negative) due to a significant negativity bias stemming from legacy talc litigation and Medicare drug pricing debates. Furthermore, LLMs exhibit a historical conflation bias, frequently associating J&J with consumer health products despite the Kenvue spin-off. To improve its LLMO score, J&J must aggressively correct this brand confusion in knowledge graphs and amplify its MedTech and early-stage R&D narratives to overshadow legacy legal shadows.",
+                        "tips": [
+                            "Execute a targeted knowledge graph update campaign to clearly delineate J&J's new corporate identity from Kenvue, ensuring LLMs stop associating J&J with consumer products like Tylenol and Baby Powder.",
+                            "Amplify PR and technical content surrounding recent MedTech acquisitions (e.g., Shockwave Medical) and early-stage R&D pipelines to fill existing LLM visibility gaps.",
+                            "Publish authoritative, high-ranking corporate statements regarding the talc settlement and IRA Medicare pricing to ensure LLMs cite official, balanced sources rather than relying solely on legal blogs and activist sentiment.",
+                            "Leverage J&J's strong B2B and financial sentiment by increasing thought leadership content on platforms like LinkedIn and medical forums, focusing on resilience, dividend growth, and oncology innovations."
+                        ]
+                    },
+                    "timestamp": "2026-05-06T06:19:03.383071"
+                },
+                {
+                    "brand": "AstraZeneca",
+                    "raw_mentions": "**Brand OSINT Summary: AstraZeneca**\n\n**Executive Summary**\nAstraZeneca (AZ) is currently experiencing a strong period of corporate and financial growth, driven by its oncology and rare disease portfolios. However, its public digital footprint remains heavily polarized. While investors and the medical community praise its R&D pipeline, general public chatter is still largely dominated by the legacy and recent global withdrawal of its COVID-19 vaccine. \n\n**Recent News & Market Moves**\n*   **COVID-19 Vaccine Withdrawal:** The most viral recent news is AZ\u2019s decision to voluntarily withdraw its COVID-19 vaccine (Vaxzevria) globally. While the company cited a \"surplus of available updated vaccines\" and commercial reasons, the news generated massive media coverage.\n*   **Oncology & Rare Disease Dominance:** Financial news is dominated by the success of blockbuster cancer drugs like *Enhertu* and *Tagrisso*. The company recently raised its revenue guidance, signaling strong market confidence.\n*   **Entering the Weight-Loss Market:** AZ is making headlines in the biotech space for its push into the lucrative anti-obesity market, developing an oral GLP-1 drug to compete with Novo Nordisk and Eli Lilly.\n*   **Manufacturing Investments:** Recent announcements of multi-billion-dollar investments in manufacturing facilities in the US, UK, and Singapore have generated positive business press.\n\n**Online Presence & Corporate Messaging**\n*   **Platform Strategy:** AstraZeneca maintains a highly polished, corporate presence. LinkedIn is their strongest platform, used for employer branding, R&D updates, and corporate milestones. X (formerly Twitter) and Instagram are used for patient advocacy, disease awareness, and ESG (Environmental, Social, and Governance) initiatives.\n*   **Core Narratives:** The brand actively pushes narratives around \"science-led innovation,\" sustainability (Zero Carbon initiatives), and its transition to treating complex, chronic diseases. They actively avoid engaging with COVID-19 vaccine discourse on their owned channels.\n\n**Public Sentiment & Common Mentions**\n*   **Investors & Healthcare Professionals (Positive):** In financial and medical forums, sentiment is highly positive. AZ is viewed as an R&D powerhouse with a highly effective CEO (Pascal Soriot). \n*   **General Public & Social Media (Mixed to Negative):** Organic public mentions are heavily skewed by the COVID-19 vaccine. The recent withdrawal of the vaccine sparked a massive resurgence of chatter among vaccine-hesitant and anti-vaccine communities, who frame the withdrawal as an admission of guilt regarding rare blood clot side effects (TTS). \n*   **UK Political/Economic Chatter (Neutral/Debated):** As Britain\u2019s largest company by market cap, AZ is frequently mentioned in UK political discourse regarding corporate taxation, the attractiveness of the UK for life sciences, and debates over the CEO's high compensation package.\n\n**OSINT Conclusion**\nAstraZeneca is operating with a split digital identity. Financially and scientifically, it is viewed as a thriving, forward-looking oncology and biotech leader. Culturally and socially, it is still fighting the reputational hangover of the pandemic, with its brand name frequently hijacked by online communities debating vaccine safety.",
+                    "sentiment": {
+                        "positive": 45,
+                        "neutral": 20,
+                        "negative": 35,
+                        "key_themes": [
+                            "COVID-19 vaccine withdrawal",
+                            "Oncology and rare disease growth",
+                            "Anti-obesity market entry",
+                            "Manufacturing investments",
+                            "Vaccine safety controversies",
+                            "UK economic and political discourse"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Novo Nordisk",
+                            "Eli Lilly"
+                        ],
+                        "market_position": "AstraZeneca is a thriving oncology and biotech leader, and Britain's largest company by market cap. It holds a dominant financial position driven by its oncology and rare disease portfolios, despite a polarized public reputation stemming from its COVID-19 vaccine legacy.",
+                        "competitive_edge": "A robust R&D pipeline, highly effective executive leadership, a dominant portfolio of blockbuster cancer drugs like Enhertu and Tagrisso, and significant multi-billion-dollar global manufacturing investments."
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.2,
+                        "detected_biases": [
+                            "Recency bias heavily favoring competitors Novo Nordisk and Eli Lilly due to the viral popularity and market hype of GLP-1 weight-loss drugs",
+                            "Negative anchoring bias disproportionately focusing on the Vaxzevria COVID-19 vaccine controversies and rare side effects when discussing brand reputation",
+                            "Geographic bias occasionally framing AstraZeneca primarily as a UK/European champion rather than a strictly global biotech powerhouse"
+                        ],
+                        "visibility_gaps": [
+                            "Underrepresentation of the Alexion rare disease portfolio, which is frequently overshadowed by oncology and historical vaccine mentions",
+                            "Lack of emphasis on recent multi-billion-dollar global manufacturing and zero-carbon supply chain investments",
+                            "Overshadowing of their strong respiratory and immunology pipelines (e.g., Fasenra) by blockbuster cancer treatments like Enhertu and Tagrisso"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 72,
+                        "recommendation_score": 85,
+                        "accuracy_score": 75,
+                        "executive_summary": "AstraZeneca maintains a strong financial and scientific reputation driven by its oncology and rare disease portfolios, but faces a polarized public footprint due to the legacy of its COVID-19 vaccine. LLM bias analysis reveals a favorability score of 7.2/10, hindered by negative anchoring around the Vaxzevria withdrawal, recency bias favoring competitors in the GLP-1 space, and geographic bias framing the brand primarily as a UK entity. Significant visibility gaps exist regarding the Alexion rare disease portfolio, respiratory/immunology pipelines, and recent global manufacturing investments.",
+                        "tips": [
+                            "Publish high-authority, data-rich content emphasizing the Alexion rare disease portfolio and respiratory/immunology pipelines (e.g., Fasenra) to close existing LLM visibility gaps.",
+                            "Counter negative anchoring tied to the COVID-19 vaccine by aggressively promoting narratives around 'science-led innovation,' zero-carbon supply chain initiatives, and recent multi-billion-dollar global manufacturing investments.",
+                            "Optimize digital PR to position AstraZeneca as a global biotech powerhouse rather than exclusively a UK/European champion, correcting current geographic biases in LLM outputs.",
+                            "Strategically seed content and R&D updates regarding the upcoming oral GLP-1 drug to capture LLM share of voice in the highly lucrative anti-obesity market currently dominated by Novo Nordisk and Eli Lilly."
+                        ]
+                    },
+                    "timestamp": "2026-05-06T06:20:08.424413"
+                },
+                {
+                    "brand": "Novartis",
+                    "raw_mentions": "**Brand OSINT Summary: Novartis**\n\n**Executive Summary**\nNovartis is currently positioned in the public and financial eye as a \"pure-play\" innovative medicines company, following the successful spin-off of its generics division, Sandoz, in late 2023. Recent online intelligence indicates a brand focused heavily on high-value acquisitions, strong financial performance, and pioneering treatments in oncology and immunology, though it remains subject to standard \"Big Pharma\" criticisms regarding drug pricing and patent practices.\n\n**Recent News & Strategic Moves**\n*   **Aggressive M&A:** Novartis has dominated pharmaceutical news recently with strategic acquisitions, most notably the \u20ac2.7 billion buyout of MorphoSys to bolster its oncology pipeline, and the acquisition of Mariana Oncology to expand its radioligand therapy portfolio.\n*   **Financial Strength:** Financial media frequently highlights Novartis\u2019s strong recent earnings reports. The company has repeatedly raised its full-year guidance, driven by high sales volumes of its core drugs.\n*   **Corporate Restructuring:** Mentions of internal restructuring continue, with online chatter on platforms like LinkedIn and Glassdoor reflecting both the strategic streamlining of the company and the resulting localized layoffs.\n\n**Product & Pipeline Mentions**\n*   **Radioligand Therapy (RLT):** Novartis is widely discussed in medical and biotech forums as the undisputed leader in RLT. Its prostate cancer drug, **Pluvicto**, is a massive driver of positive online sentiment and revenue.\n*   **Key Growth Drivers:** Drugs like **Kisqali** (breast cancer), **Kesimpta** (multiple sclerosis), and **Leqvio** (cholesterol) dominate clinical discussions and patient advocacy forums. \n*   **Entresto & Patent Cliffs:** Financial analysts frequently discuss the impending loss of exclusivity (patent cliff) for its blockbuster heart failure drug, **Entresto**, and how the company plans to replace that revenue.\n\n**Public Perception & Social Sentiment**\n*   **Positive Sentiment (Innovation & Culture):** In scientific and medical communities, Novartis is highly regarded for its R&D investments, particularly in gene therapy (Zolgensma) and targeted cancer therapies. As an employer brand, its \"unbossed\" corporate culture and strong ESG (Environmental, Social, and Governance) initiatives receive frequent praise on professional networks.\n*   **Negative Sentiment (Pricing & Access):** On mainstream social media (X, Reddit), Novartis faces the standard criticisms leveled at Big Pharma. Conversations often revolve around the high cost of its therapies (especially Zolgensma, historically known as the \"world's most expensive drug\") and the ethics of pharmaceutical profit margins.\n\n**Regulatory & Legal Footprint**\n*   **Inflation Reduction Act (IRA):** Novartis is frequently mentioned in US political and economic news regarding the Biden Administration's IRA. *Entresto* was selected as one of the first 10 drugs subject to Medicare price negotiations, prompting Novartis to join other pharma giants in filing (and publicly discussing) lawsuits against the US government.\n*   **Patent Litigation:** Legal news outlets regularly track Novartis\u2019s aggressive legal strategies to defend its patents against generic competitors, a common point of friction in public health discourse. \n\n**Conclusion**\nNovartis's digital footprint reflects a highly successful, transitioning giant. The brand narrative is currently dominated by its pivot to cutting-edge, high-margin therapies (specifically radioligands and oncology) and strong market performance, counterbalanced by regulatory battles over drug pricing in the US market.",
+                    "sentiment": {
+                        "positive": 55,
+                        "neutral": 25,
+                        "negative": 20,
+                        "key_themes": [
+                            "Strategic M&A and Oncology Expansion",
+                            "Radioligand Therapy (RLT) Leadership",
+                            "Strong Financial Performance",
+                            "Drug Pricing and Medicare Negotiations (IRA)",
+                            "Corporate Restructuring and Culture",
+                            "Patent Cliffs and Litigation"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Roche",
+                            "AstraZeneca",
+                            "Pfizer"
+                        ],
+                        "market_position": "A leading 'pure-play' innovative medicines company and transitioning global pharmaceutical giant, characterized by strong financial performance, high-value acquisitions, and a dominant presence in oncology and immunology.",
+                        "competitive_edge": "Undisputed leadership in Radioligand Therapy (RLT) with blockbuster drugs like Pluvicto, backed by aggressive strategic M&A to bolster its oncology pipeline and pioneering R&D in gene therapies."
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 8.2,
+                        "detected_biases": [
+                            "COVID-19 halo effect favoring Pfizer and AstraZeneca in general pharmaceutical queries",
+                            "Over-association with high-profile gene therapies (e.g., Zolgensma) overshadowing the broader immunology portfolio",
+                            "Geographic clustering bias frequently pairing Novartis and Roche interchangeably as Swiss pharma giants"
+                        ],
+                        "visibility_gaps": [
+                            "Lag in recognizing the recent Sandoz spin-off, leading to outdated LLM associations with generic drug manufacturing",
+                            "Underrepresentation of cardiovascular blockbusters (e.g., Entresto) compared to the heavy focus on oncology and Radioligand Therapy",
+                            "Recent strategic M&A acquisitions may not be fully reflected depending on specific LLM knowledge cutoffs"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 78,
+                        "recommendation_score": 85,
+                        "accuracy_score": 70,
+                        "executive_summary": "Novartis maintains a strong LLM favorability (8.2/10) driven by its leadership in Radioligand Therapy (RLT), strategic M&A, and innovative oncology treatments. However, LLM outputs suffer from knowledge lag, frequently associating the brand with its spun-off generics division (Sandoz) and underrepresenting its cardiovascular portfolio (Entresto). While sentiment is largely positive (55%) regarding R&D and corporate culture, negative sentiment (20%) persists around drug pricing and IRA negotiations. Strategic LLMO efforts should focus on solidifying the 'pure-play' innovative medicines narrative and decoupling the brand from outdated generic manufacturing associations.",
+                        "tips": [
+                            "Publish high-authority content emphasizing the completion of the Sandoz spin-off to correct LLM associations with generic drug manufacturing.",
+                            "Increase digital PR around the cardiovascular portfolio, specifically Entresto's impact, to balance the heavy LLM bias toward oncology and Zolgensma.",
+                            "Create comparative content distinguishing Novartis's specific pipeline from Roche to mitigate geographic clustering bias in AI outputs.",
+                            "Proactively address the drug pricing narrative by highlighting ESG initiatives and patient access programs to soften negative sentiment around IRA negotiations.",
+                            "Ensure recent M&A activities (MorphoSys, Mariana Oncology) are heavily featured in press releases and structured data (e.g., Wikidata) to bridge LLM knowledge cutoffs."
+                        ]
+                    },
+                    "timestamp": "2026-05-06T06:21:10.710315"
+                }
+            ]
         }
     ]
 }
