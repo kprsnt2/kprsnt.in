@@ -1,11 +1,150 @@
 {
-  "month": "May 2026",
-  "generated_date": "2026-05-06",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-05-06",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-05-06",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 2,
+      "grade_a_count": 0,
+      "grade_b_count": 12,
+      "average_score": 3.08,
+      "verified_count": 3
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 11,
+      "Senior Data Analyst": 5,
+      "Prompt Engineer": 2,
+      "Clinical/Healthcare AI": 2
+    },
+    "by_location": {
+      "Remote": 14,
+      "India": 6
+    },
+    "top_5": [
+      {
+        "title": "AI Engineer – AI Agents (Healthcare)",
+        "company": "100ms",
+        "score": 4.0,
+        "grade": "B+",
+        "url": "https://wellfound.com/company/100ms-1/jobs"
+      },
+      {
+        "title": "Senior Data Analyst",
+        "company": "MongoDB",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://remoteleaf.com/jobs/senior-data-analyst-mongodb-remote"
+      },
+      {
+        "title": "AI Engineer-INTL India",
+        "company": "Insight Global",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://jobs.insightglobal.com/job/508595"
+      },
+      {
+        "title": "Senior Data Analyst, Product",
+        "company": "Thrive Market",
+        "score": 3.4,
+        "grade": "B",
+        "url": "https://jobgether.com/offer/senior-data-analyst-product-thrive-market"
+      },
+      {
+        "title": "AI/ML Engineer II",
+        "company": "Precision Medicine Group",
+        "score": 3.3,
+        "grade": "B",
+        "url": "https://startup.jobs/ai-ml-engineer-ii-remote-india-precision-medicine-group"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-05-06",
+    "run_time": "2026-05-06T05:47:26.924727",
+    "duration_seconds": 231.4,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 52160,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-06T05:44:28.677096"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 53918,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-06T05:45:22.595224"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 50184,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-06T05:46:12.779541"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 63463,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-06T05:47:16.242213"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 2, 'B': 10, 'C+': 7, 'C': 1}",
+        "timestamp": "2026-05-06T05:47:16.244236"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-05-06T05:47:16.245565"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 10678,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "3/20 active",
+        "timestamp": "2026-05-06T05:47:26.923843"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 2",
+        "timestamp": "2026-05-06T05:47:26.924712"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "100ms-ai-engineer-healthcare",
