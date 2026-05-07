@@ -2329,6 +2329,277 @@
                     "timestamp": "2026-05-06T06:21:10.710315"
                 }
             ]
+        },
+        {
+            "date": "2026-05-07T06:22:01.742316",
+            "sector": "auto",
+            "brands": [
+                {
+                    "brand": "Tesla",
+                    "raw_mentions": "**TARGET:** Tesla, Inc.\n**DATE OF ASSESSMENT:** Current (Mid-2024)\n**CLASSIFICATION:** Brand OSINT Briefing \n\n### **Executive Summary**\nTesla remains the most prominent global electric vehicle (EV) manufacturer, but its brand identity is currently undergoing a volatile transition. Online discourse and news cycles reflect a company pivoting from a pure automotive manufacturer to an AI, robotics, and energy company. The brand\u2019s public perception is highly polarized, inextricably linked to the personal brand and political commentary of CEO Elon Musk.\n\n### **Recent News & Corporate Developments**\n*   **Restructuring & Layoffs:** Recent headlines have been dominated by global workforce reductions (over 10%), including the sudden dismissal and partial rehiring of the Supercharger team, signaling a major corporate restructuring.\n*   **Product Focus:** The **Cybertruck** continues to generate massive media coverage. News is split between its cultural status as a celebrity status symbol and reports of early production issues (e.g., accelerator pedal recalls, panel gap complaints).\n*   **The \"Robotaxi\" Pivot:** Financial and tech news are heavily focused on Tesla\u2019s upcoming \"Robotaxi\" reveal and its shift away from a rumored low-cost $25k EV, emphasizing a massive bet on autonomous driving.\n*   **Musk\u2019s Pay Package:** Significant financial media chatter recently surrounded the shareholder vote reinstating Elon Musk\u2019s $56 billion compensation package, highlighting retail investor loyalty versus institutional skepticism.\n\n### **Online Presence & Social Media Dynamics**\n*   **X (formerly Twitter) as Primary PR:** Tesla operates without a traditional PR department. Almost all official brand communication, product updates, and crisis management occur via Elon Musk\u2019s X account and official Tesla X handles.\n*   **Viral Content Ecosystem:** Tesla dominates automotive social media through user-generated content. Videos of Full Self-Driving (FSD) v12 navigating complex city streets, Cybertruck off-roading tests, and dashcam (Sentry Mode) footage frequently go viral on X, YouTube, and TikTok.\n*   **Echo Chambers:** Online communities are deeply divided. Subreddits like r/TeslaMotors and X communities are highly defensive of the brand, while forums like r/RealTesla and various EV-skeptic groups actively amplify the brand's failures.\n\n### **Common Public Mentions & Sentiment**\n**Positive Themes:**\n*   **Supercharger Network:** Widely praised as the industry gold standard; competitors adopting the NACS (North American Charging Standard) is viewed as a massive win for Tesla.\n*   **FSD v12:** Recent updates to the autonomous driving software have received notable praise online for being smoother and more \"human-like.\"\n*   **Tech & Innovation:** Continued excitement around the Optimus humanoid robot and Tesla's AI computing infrastructure.\n\n**Negative Themes:**\n*   **The \"Musk Factor\":** A highly prevalent theme in mainstream social media is consumer alienation. Many left-leaning consumers (traditionally the core EV demographic) express reluctance to buy a Tesla due to Musk\u2019s polarizing political and social commentary.\n*   **Depreciation & Price Cuts:** Frequent mentions of frustration from existing owners regarding aggressive price cuts that have severely damaged the resale value of used Teslas.\n*   **Build Quality & Customer Service:** Persistent complaints regarding service center wait times, difficulty getting replacement parts (especially for the Cybertruck), and inconsistent build quality.\n\n### **Conclusion**\nTesla's brand OSINT profile is one of high engagement but high friction. While it retains immense brand loyalty and technological prestige, it is currently battling negative sentiment regarding corporate instability, vehicle depreciation, and the polarizing public persona of its CEO. The brand's future narrative hinges entirely on the public and regulatory acceptance of its Full Self-Driving and Robotaxi initiatives.",
+                    "sentiment": {
+                        "positive": 35,
+                        "neutral": 20,
+                        "negative": 45,
+                        "key_themes": [
+                            "Supercharger Network dominance and NACS adoption",
+                            "FSD v12 advancements and Robotaxi pivot",
+                            "The 'Musk Factor' and consumer alienation",
+                            "Cybertruck cultural status vs. production issues",
+                            "Vehicle depreciation and aggressive price cuts",
+                            "Build quality and customer service complaints",
+                            "Corporate restructuring and layoffs"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "BYD",
+                            "Ford",
+                            "Rivian"
+                        ],
+                        "market_position": "Tesla is the most prominent global electric vehicle (EV) manufacturer, currently transitioning into an AI, robotics, and energy company. While it maintains immense brand loyalty and technological prestige, its position is highly polarized due to CEO Elon Musk's public persona, corporate restructuring, and vehicle depreciation.",
+                        "competitive_edge": "Tesla's competitive edge lies in its industry-standard Supercharger Network (NACS), advanced Full Self-Driving (FSD) autonomous software, and continuous innovation in AI computing and robotics."
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.2,
+                        "detected_biases": [
+                            "Over-weighting CEO public persona and controversies in vehicle purchase recommendations",
+                            "Algorithmic caution and negative framing regarding Full Self-Driving (FSD) capabilities due to safety guardrails",
+                            "US-centric market bias that frequently under-represents BYD's global scale and technological parity",
+                            "Recency bias focusing heavily on recent vehicle depreciation and price cuts over long-term total cost of ownership"
+                        ],
+                        "visibility_gaps": [
+                            "Under-representation of Tesla's energy storage (Megapack/Powerwall) and AI divisions when evaluating the company's overall ecosystem",
+                            "Lack of nuance regarding the integration of the NACS standard by competitors like Ford and Rivian",
+                            "Insufficient technical comparison of battery chemistries (e.g., Tesla's 4680 cells vs. BYD's Blade battery)"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 72,
+                        "recommendation_score": 60,
+                        "accuracy_score": 65,
+                        "executive_summary": "Tesla's LLM presence is highly visible but deeply polarized, heavily influenced by CEO Elon Musk's public persona and recent corporate restructuring. While LLMs accurately reflect Tesla's dominance in charging infrastructure (NACS) and software (FSD), they exhibit algorithmic caution regarding autonomous safety and over-index on recent price cuts and depreciation. Significant visibility gaps exist in Tesla's energy storage and AI divisions, with LLMs often framing the brand purely through a US-centric automotive lens rather than a holistic tech ecosystem.",
+                        "tips": [
+                            "Develop targeted content campaigns highlighting Tesla's Energy division (Megapack/Powerwall) to bridge the LLM visibility gap beyond automotive.",
+                            "Publish detailed, data-driven technical comparisons of battery chemistries (e.g., 4680 cells) to counter US-centric biases and establish technical authority against competitors like BYD.",
+                            "Create comprehensive Total Cost of Ownership (TCO) resources to mitigate LLM recency bias focused on aggressive price cuts and short-term vehicle depreciation.",
+                            "Diversify PR and brand communications beyond X (formerly Twitter) to ensure broader, more balanced ingestion by LLM training crawlers.",
+                            "Produce safety-focused, transparent documentation on FSD v12 to alleviate algorithmic caution and negative framing by AI models."
+                        ]
+                    },
+                    "timestamp": "2026-05-07T06:22:01.742337"
+                },
+                {
+                    "brand": "Toyota",
+                    "raw_mentions": "**Brand OSINT Summary: Toyota**\n**Date of Analysis:** Current (Mid-2024)\n\n**Executive Summary**\nToyota currently holds a dominant position in the global automotive market, driven by record-breaking financial performance and the vindication of its hybrid-first strategy. However, the brand\u2019s online footprint reflects a dichotomy: immense consumer trust and enthusiast loyalty, contrasted with corporate reputational risks stemming from recent safety certification scandals in Japan and ongoing criticism from environmental groups regarding its slow adoption of Battery Electric Vehicles (BEVs).\n\n**Recent News & Corporate Developments**\n*   **The Hybrid Vindication:** Financial news is heavily dominated by Toyota\u2019s record profits. As global consumer demand for fully electric vehicles (EVs) has cooled, Toyota\u2019s long-term bet on hybrid vehicles (HEVs) and plug-in hybrids (PHEVs) has been widely praised in business and automotive media.\n*   **Certification Scandals:** A major recent vulnerability is the safety test certification scandal involving Toyota and its subsidiaries (Daihatsu, Hino). News outlets have heavily covered the Japanese government's raids on Toyota headquarters and subsequent production halts. \n*   **Next-Gen Tech:** Press releases and tech media frequently mention Toyota\u2019s ongoing development of solid-state batteries and hydrogen combustion engines, positioning the brand as looking beyond current lithium-ion EV tech.\n\n**Online Presence & Social Media**\n*   **Enthusiast & Off-Road Dominance:** Toyota has a massive, organic social media presence driven by the off-roading and overlanding communities. The recent redesigns of the Tacoma, 4Runner, and Land Cruiser have generated massive engagement, YouTube reviews, and forum discussions.\n*   **Gazoo Racing (GR) Halo Effect:** The GR brand (GR Supra, GR Corolla, GR Yaris) has successfully shifted Toyota\u2019s online image from \"boring commuter cars\" to a brand respected by car enthusiasts and the tuner community.\n*   **Corporate Messaging:** Toyota\u2019s official channels focus heavily on a \"multi-pathway\" approach to carbon neutrality, heritage, and durability. \n\n**Common Public Mentions & Sentiment**\n*   **\"Bulletproof\" Reliability:** The most common public sentiment across platforms like Reddit, X (Twitter), and TikTok is praise for Toyota\u2019s longevity. Memes about 20-year-old Camrys and Hiluxes outliving modern cars are highly prevalent.\n*   **The \"Toyota Tax\":** A frequent topic of online discussion is the high resale value of used Toyotas. While a testament to brand strength, consumers frequently complain about the \"Toyota Tax\"\u2014the premium price required to buy even heavily used models.\n*   **Dealership Markups:** A significant source of negative sentiment online involves consumer frustration with dealership markups (market adjustments) on high-demand vehicles like the Sienna minivan, Prius, and TRD Pro trucks.\n*   **Environmental Backlash:** In eco-conscious online circles, Toyota is frequently criticized. Groups like Greenpeace actively campaign against the brand, accusing it of anti-climate lobbying and greenwashing due to its reluctance to fully commit to BEVs.\n\n**OSINT Risk Assessment for the Brand**\nToyota's primary reputational shield is its legendary reliability. The most immediate OSINT risk is the potential for the Japanese certification scandals to erode this foundational trust if the narrative spreads heavily to Western consumer markets. Additionally, consumer fatigue over dealership markups and inventory shortages is creating localized negative sentiment that competitors (like Honda or Ford) could exploit.",
+                    "sentiment": {
+                        "positive": 55,
+                        "neutral": 15,
+                        "negative": 30,
+                        "key_themes": [
+                            "Hybrid strategy success and record profits",
+                            "Legendary reliability and longevity",
+                            "Safety certification scandals in Japan",
+                            "Enthusiast loyalty and Gazoo Racing halo effect",
+                            "Dealership markups and the 'Toyota Tax'",
+                            "Environmental criticism regarding slow BEV adoption"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Honda",
+                            "Ford",
+                            "Volkswagen"
+                        ],
+                        "market_position": "Dominant global automotive leader experiencing record-breaking financial performance driven by a highly successful hybrid-first strategy, though currently navigating reputational risks from regional safety certification scandals and criticism regarding its slow adoption of fully electric vehicles.",
+                        "competitive_edge": "Legendary 'bulletproof' reliability, exceptionally high resale value, and a pragmatic 'multi-pathway' powertrain approach that dominates the hybrid market, bolstered by intense brand loyalty in both the commuter and off-road/enthusiast segments."
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 9.0,
+                        "detected_biases": [
+                            "Historical reliability halo effect",
+                            "Pro-hybrid pragmatism bias",
+                            "Anti-EV laggard narrative in tech-focused prompts",
+                            "US/Asian market recommendation dominance over European markets"
+                        ],
+                        "visibility_gaps": [
+                            "Recent safety certification scandals in subsidiary brands (Daihatsu/Hino)",
+                            "Emerging performance/enthusiast offerings (GR series) overshadowed by commuter reputation",
+                            "Nuance in solid-state battery R&D vs current EV lineup"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 82,
+                        "recommendation_score": 88,
+                        "accuracy_score": 75,
+                        "executive_summary": "Toyota enjoys a dominant LLM presence with a high favorability score (9.0), driven by its legendary reliability and the recent vindication of its hybrid-first strategy. However, the brand faces notable visibility gaps regarding its Gazoo Racing (GR) enthusiast lineup and solid-state battery R&D. Furthermore, LLMs exhibit an 'anti-EV laggard' bias and often omit recent safety certification scandals in Japan, presenting both a reputational shield and an accuracy gap. Addressing dealership markups and amplifying next-gen tech narratives will be crucial for optimizing future LLM outputs.",
+                        "tips": [
+                            "Publish structured content detailing Toyota's solid-state battery R&D and hydrogen initiatives to counter the 'anti-EV laggard' narrative in LLM training data.",
+                            "Amplify the Gazoo Racing (GR) sub-brand through high-authority automotive publications to shift LLM associations away from purely 'boring commuter cars'.",
+                            "Develop transparent, SEO-optimized corporate messaging addressing the Japanese safety certification scandals to control the narrative before LLMs disproportionately amplify third-party criticisms.",
+                            "Create localized content campaigns highlighting dealership pricing transparency to combat the negative sentiment surrounding the 'Toyota Tax' and markups.",
+                            "Reinforce the 'multi-pathway' carbon neutrality approach in PR distributions to balance environmental criticisms from eco-conscious groups."
+                        ]
+                    },
+                    "timestamp": "2026-05-07T06:23:27.062301"
+                },
+                {
+                    "brand": "BMW",
+                    "raw_mentions": "**TARGET:** BMW (Bayerische Motoren Werke AG)\n**DATE OF ANALYSIS:** Current (Mid-2024)\n\n**EXECUTIVE SUMMARY:**\nBMW maintains a highly visible, dominant, yet polarizing online presence. While corporate news highlights strong financial performance and a successful transition to electric vehicles (EVs), social listening reveals a stark divide between general consumer satisfaction and vocal dissatisfaction from traditional brand enthusiasts, primarily regarding recent design choices and vehicle weight. \n\n**1. RECENT NEWS & CORPORATE DEVELOPMENTS**\n*   **The \"Neue Klasse\" (New Class):** BMW\u2019s digital PR is heavily focused on its upcoming \"Neue Klasse\" EV architecture. This is being framed as the biggest technological shift in the company's history.\n*   **Market Performance:** Financial and automotive news frequently highlight that BMW is currently outperforming its main German rivals (Mercedes-Benz and Audi) in both overall global sales and EV sales growth. \n*   **Recent Recalls:** Minor OSINT blips include recent recalls related to an integrated braking system affecting several models, though this has not caused significant reputational damage.\n\n**2. PUBLIC SENTIMENT & SOCIAL LISTENING**\n*   **The Design Controversy:** The most common public mention regarding BMW online is the polarization of its modern design language\u2014specifically the oversized \"kidney grilles\" (seen on the XM, 4 Series, and 7 Series). While internet forums and automotive subreddits heavily criticize the designs, OSINT data shows this has not negatively impacted actual retail sales.\n*   **The \"Heavy\" M5:** A recent, highly trending topic in automotive circles is the newly revealed 2025 BMW M5. Enthusiasts are vocally criticizing its plug-in hybrid powertrain and massive curb weight (over 5,300 lbs), claiming it betrays the \"Ultimate Driving Machine\" ethos.\n*   **Lingering \"Microtransaction\" Memes:** BMW still suffers from residual online mockery regarding its past attempt to make heated seats a monthly subscription. Even though BMW reversed this policy, it remains a common meme and a cautionary tale in tech and automotive forums.\n*   **Driver Stereotypes:** On platforms like TikTok and X (Twitter), memes about BMW drivers \"never using turn signals\" or tailgating remain a permanent, viral fixture of the brand's organic public mentions.\n\n**3. ONLINE PRESENCE & DIGITAL FOOTPRINT**\n*   **Social Media Dominance:** BMW has a masterclass digital marketing strategy. They are highly active on Instagram and TikTok, utilizing high-production-value short-form video. \n*   **Heritage vs. Future:** Their content strategy successfully balances nostalgia (highlighting classic E30s and the M-Division heritage) with futuristic, neon-lit marketing for their \"i\" series EVs. \n*   **Gaming & Web3:** BMW has actively engaged younger demographics through partnerships in esports, integrations in games like *Rocket League* and *Gran Turismo*, and metaverse/Web3 experiments.\n\n**4. EMERGING RISKS & VULNERABILITIES**\n*   **Chinese Market Pressure:** Financial chatter indicates concern over BMW's market share in China, where aggressive domestic EV brands (like BYD and NIO) are threatening European luxury dominance.\n*   **Brand Dilution:** There is a low-level but persistent risk of alienating their core enthusiast base as they pivot toward heavy, tech-laden, autonomous-focused vehicles.\n\n**CONCLUSION:**\nBMW\u2019s brand health is exceptionally strong from a commercial standpoint. As an OSINT subject, the brand exhibits a fascinating dichotomy: it is frequently the target of intense internet criticism regarding its design and tech choices, yet its sales data and mainstream luxury appeal remain largely impervious to this online backlash.",
+                    "sentiment": {
+                        "positive": 45,
+                        "neutral": 20,
+                        "negative": 35,
+                        "key_themes": [
+                            "Strong financial and sales performance",
+                            "Neue Klasse EV transition",
+                            "Polarizing modern design language",
+                            "Enthusiast backlash over vehicle weight and ethos",
+                            "Lingering microtransaction memes",
+                            "Digital marketing and social media dominance",
+                            "Chinese market competition"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Mercedes-Benz",
+                            "Audi"
+                        ],
+                        "market_position": "Dominant leader in the global luxury automotive market, currently outperforming its main German rivals in both overall sales and EV sales growth, despite polarizing design choices and emerging pressure from domestic EV brands in China.",
+                        "competitive_edge": "A highly successful transition to electric vehicles driven by the upcoming 'Neue Klasse' architecture, combined with a masterclass digital marketing strategy that effectively balances nostalgic brand heritage with futuristic EV appeal."
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 8.2,
+                        "detected_biases": [
+                            "Historical performance bias over-indexing on the 'Ultimate Driving Machine' legacy compared to current luxury/comfort metrics",
+                            "Aesthetic controversy bias disproportionately focusing on recent polarizing grille designs despite strong overall sales",
+                            "Western-centric market bias emphasizing the traditional German trio rivalry while underrepresenting the threat from Chinese domestic EV brands"
+                        ],
+                        "visibility_gaps": [
+                            "Lack of empirical data on the unreleased 'Neue Klasse' architecture, leading to reliance on corporate PR rather than independent reviews",
+                            "Delayed recognition of real-time market share shifts and consumer sentiment changes in the Chinese domestic EV sector",
+                            "Lag in updating comparative EV sales volume metrics where BMW currently outpaces historical rivals like Mercedes-Benz and Audi"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 82,
+                        "recommendation_score": 85,
+                        "accuracy_score": 78,
+                        "executive_summary": "BMW maintains a dominant and highly visible presence in LLM outputs, characterized by strong financial performance and a successful EV transition. However, LLM narratives are polarized, heavily indexing on controversial design choices, enthusiast backlash over vehicle weight, and lingering microtransaction memes. While LLM favorability is high (8.2), there are notable visibility gaps regarding real-time Chinese market dynamics and empirical data on the upcoming 'Neue Klasse' architecture.",
+                        "tips": [
+                            "Publish detailed, data-rich technical whitepapers on the 'Neue Klasse' architecture to feed LLMs empirical data rather than relying solely on PR framing.",
+                            "Actively counter the 'microtransaction' and 'heavy vehicle' narratives by generating high-authority content emphasizing BMW's commitment to driver experience and transparent pricing.",
+                            "Increase English-language content detailing BMW's competitive strategy and technological advancements in the Chinese market to correct Western-centric LLM biases.",
+                            "Leverage current EV sales dominance over Mercedes-Benz and Audi in press releases to ensure LLMs update their comparative market metrics."
+                        ]
+                    },
+                    "timestamp": "2026-05-07T06:24:39.574268"
+                },
+                {
+                    "brand": "Hyundai",
+                    "raw_mentions": "**BRAND OSINT SUMMARY: HYUNDAI MOTOR COMPANY**\n\n**Executive Summary**\nHyundai\u2019s current online presence reflects a brand successfully completing a long-term transition from a \"budget-friendly\" alternative to a global leader in automotive design, electrification, and performance. However, its digital footprint is currently a duality: high praise from automotive press and enthusiasts for its EV and performance models, contrasted with lingering consumer frustration over historical security vulnerabilities and dealership experiences.\n\n**Recent News & Corporate Moves**\n*   **Massive India IPO:** A dominant recent news cycle is Hyundai Motor India\u2019s $3.3 billion IPO (October 2024), the largest in India\u2019s history, signaling a massive strategic pivot toward emerging markets.\n*   **Manufacturing & Strategy:** Heavy media coverage surrounds the Hyundai Motor Group Metaplant America (HMGMA) in Georgia. Additionally, financial press notes Hyundai\u2019s agile pivot to double its hybrid vehicle lineup in response to cooling global EV demand, while still maintaining its long-term EV goals.\n*   **Hydrogen & Tech:** Continued press releases and tech-sector mentions regarding their investments in hydrogen fuel cell technology and robotics (via their ownership of Boston Dynamics).\n\n**Product & Innovation Chatter**\n*   **Design Renaissance:** Across social media (Reddit, YouTube, X), Hyundai is frequently praised for its \"retro-futuristic\" and bold design language, particularly with the IONIQ 5, IONIQ 6, and the new Santa Fe (though the Santa Fe's boxy rear design is highly polarizing online).\n*   **The \"N\" Brand:** Hyundai\u2019s performance division is generating massive organic engagement. The IONIQ 5 N is widely cited by automotive influencers as the first genuinely engaging enthusiast EV, significantly boosting Hyundai\u2019s street credibility.\n\n**Public Sentiment & Social Media Mentions**\n*   **The Positive:** Consumers frequently mention the 10-year/100,000-mile warranty, high feature-to-price ratio, and advanced driver-assistance systems (ADAS). \n*   **The Negative (The \"Hyundai Boys\" Effect):** The brand is still fighting the reputational damage of the viral TikTok theft trend affecting older models lacking engine immobilizers. While Hyundai rolled out software fixes and hardware clinics, social media is still rife with complaints about uninsurable vehicles, high premiums, and broken windows from attempted thefts.\n*   **Dealership & Service Complaints:** A recurring theme on platforms like Reddit (r/Hyundai) involves poor dealership experiences, including aggressive markups, long wait times for warranty approvals, and backordered parts.\n*   **Legacy Engine Issues:** Mentions of the Theta II engine recalls and oil consumption issues in older models still surface frequently in consumer advice forums.\n\n**Risk & Vulnerability Assessment**\nHyundai's primary reputational risk is the disconnect between its high-tech, premium product aspirations and its legacy customer service/dealership network. Furthermore, while the brand is winning awards for its EVs, it remains vulnerable to the ongoing insurance crisis surrounding its older models, which continues to generate negative user-generated content and local news headlines in the US.",
+                    "sentiment": {
+                        "positive": 45,
+                        "neutral": 20,
+                        "negative": 35,
+                        "key_themes": [
+                            "EV and Performance Innovation (IONIQ & N Brand)",
+                            "Security Vulnerabilities (Hyundai Boys Theft Trend)",
+                            "Dealership and Service Frustrations",
+                            "Bold and Polarizing Design Language",
+                            "Strategic Market Expansion (India IPO & Hybrids)",
+                            "High Value and Warranty"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Toyota",
+                            "Honda",
+                            "Kia"
+                        ],
+                        "market_position": "A global automotive leader successfully transitioning from a budget-friendly alternative to a premium, high-tech brand recognized for bold design, electrification, and performance, while aggressively expanding in emerging markets like India.",
+                        "competitive_edge": "An industry-leading 10-year/100,000-mile warranty, high feature-to-price ratio, highly praised 'retro-futuristic' design language, and a critically acclaimed performance EV division (the 'N' brand), supported by agile manufacturing strategies."
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 8.2,
+                        "detected_biases": [
+                            "Historical budget-brand anchoring (associating the brand with pre-2010 cheapness rather than current premium offerings)",
+                            "Over-indexing on recent theft vulnerabilities (lack of immobilizers in older models) when discussing safety or security",
+                            "Defaulting to Toyota and Honda as the undisputed leaders for 'long-term reliability' prompts"
+                        ],
+                        "visibility_gaps": [
+                            "Nuanced distinction between Hyundai and Kia's separate brand identities and target demographics",
+                            "Full scope of the 'N' performance division's track capabilities compared to legacy European and Japanese hot hatches",
+                            "Scale of market dominance and specific localization strategies in emerging markets like India"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 78,
+                        "recommendation_score": 80,
+                        "accuracy_score": 75,
+                        "executive_summary": "Hyundai's digital footprint and LLM representation reflect a brand in successful transition from a budget-friendly alternative to a global leader in EV innovation, bold design, and performance. While the brand enjoys high praise for its IONIQ lineup and 'N' performance division, its LLMO score is dragged down by historical biases. LLMs over-index on the 'Hyundai Boys' theft vulnerabilities, legacy Theta II engine issues, and poor dealership experiences. Furthermore, LLMs still default to Toyota and Honda for 'long-term reliability' prompts. Bridging the gap between Hyundai's premium, high-tech aspirations and its legacy reputational anchors is critical for optimizing future AI-driven recommendations.",
+                        "tips": [
+                            "Publish high-authority, technical content detailing the definitive resolution of the immobilizer/theft issues and the rollout of new security features to update LLM training weights and reduce negative associations.",
+                            "Generate comparative automotive content that benchmarks the 'N' performance division's track capabilities directly against legacy European and Japanese hot hatches to close existing visibility gaps.",
+                            "Produce targeted PR and thought leadership campaigns that clearly delineate Hyundai's distinct brand identity, design philosophy, and target demographics from Kia.",
+                            "Flood digital channels with data-driven reports and third-party validations regarding the long-term reliability of Hyundai's new EV and hybrid platforms to challenge the LLM default bias toward Toyota and Honda.",
+                            "Actively manage and publish content around dealership experience improvements and customer service modernization to dilute the high volume of negative user-generated content on forums like Reddit."
+                        ]
+                    },
+                    "timestamp": "2026-05-07T06:25:49.202214"
+                },
+                {
+                    "brand": "BYD",
+                    "raw_mentions": "**Brand OSINT Summary: BYD (Build Your Dreams)**\n\n**Executive Summary**\nBYD is currently dominating global automotive and financial discourse as the world\u2019s leading manufacturer of plug-in hybrid and battery electric vehicles (EVs). Online presence is characterized by a dual narrative: immense praise for its technological innovation, vertical integration, and hyper-competitive pricing, contrasted with intense geopolitical scrutiny and protectionist pushback from Western governments. \n\n**Recent News & Market Moves**\n*   **Geopolitical Friction & Tariffs:** The most prominent news surrounding BYD involves international trade. The US recently imposed 100% tariffs on Chinese EVs, and the EU has introduced provisional tariffs (with BYD facing a relatively lower, but still impactful, 17.4% rate). \n*   **Aggressive Global Expansion:** To circumvent tariffs, OSINT tracking shows BYD aggressively localizing production. Recent headlines focus on new or planned manufacturing plants in Turkey, Hungary, Brazil, and Mexico.\n*   **Product Launches:** The launch of the **BYD Shark** (a plug-in hybrid pickup truck aimed at global markets, launched in Mexico) and the continued dominance of the ultra-affordable **BYD Seagull** (priced under $10,000 in China) are generating massive media coverage.\n*   **Sales Milestones:** Financial news frequently highlights BYD\u2019s ongoing battle with Tesla for the title of the world's top-selling pure EV maker, with BYD consistently winning in overall electrified vehicle volume.\n\n**Online Presence & Social Media Sentiment**\n*   **YouTube & Automotive Media:** Sentiment is overwhelmingly positive regarding the product itself. Western automotive journalists and influencers frequently review BYD cars (like the Seal, Dolphin, and Atto 3) and express surprise at the high build quality, advanced infotainment, and \"Blade Battery\" technology, often declaring them superior to legacy Western automakers.\n*   **X (Twitter) & Reddit (r/electricvehicles, r/cars):** Discussions are highly polarized. \n    *   *Pro-BYD sentiment* focuses on affordability, the democratization of EVs, and criticism of legacy automakers for failing to produce cheap EVs. \n    *   *Anti-BYD sentiment* centers on allegations of Chinese state subsidies, intellectual property concerns, and fears of market \"dumping.\"\n*   **Financial Forums:** Investors closely track BYD's margins, its price war in China, and Berkshire Hathaway\u2019s (Warren Buffett) gradual reduction of its long-held stake in the company.\n\n**Common Public Mentions & Keywords**\n*   **\"Tesla Killer\" / \"Tesla Rival\":** The most common comparative mention. BYD is viewed as the only legitimate existential threat to Tesla's market dominance.\n*   **\"Price War\":** Frequently mentioned in relation to BYD aggressively slashing prices in China to squeeze out smaller competitors and legacy internal combustion engine (ICE) vehicles.\n*   **\"Blade Battery\":** BYD\u2019s proprietary lithium iron phosphate (LFP) battery is highly regarded online for its safety and cost-effectiveness, often cited as the company's \"secret weapon.\"\n*   **\"Data Privacy / Security\":** A growing narrative in Western policy circles and tech forums, questioning whether BYD's connected cars pose a national security or data harvesting risk.\n\n**OSINT Threat/Vulnerability Assessment for the Brand**\nBYD\u2019s primary brand vulnerability is not product-related, but geopolitical. The brand is heavily associated with the Chinese government in Western public discourse. As they expand globally, they face severe reputational and operational risks from anti-dumping investigations, sudden tariff hikes, and potential bans on Chinese connected-car software in North America and Europe.",
+                    "sentiment": {
+                        "positive": 45,
+                        "neutral": 20,
+                        "negative": 35,
+                        "key_themes": [
+                            "Geopolitical friction and tariffs",
+                            "Technological innovation and Blade Battery",
+                            "Hyper-competitive pricing and affordability",
+                            "Tesla rivalry and EV market dominance",
+                            "Data privacy and security concerns",
+                            "Global expansion and localized production"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [
+                            "Tesla",
+                            "Legacy Western Automakers"
+                        ],
+                        "market_position": "World's leading manufacturer of plug-in hybrid and battery electric vehicles (EVs), dominating global sales volume and aggressively expanding into international markets despite geopolitical headwinds.",
+                        "competitive_edge": "Extreme affordability, vertical integration, and proprietary 'Blade Battery' technology that provides superior safety and cost-effectiveness."
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.5,
+                        "detected_biases": [
+                            "Western-centric market bias (over-indexing on US market availability and Tesla's cultural dominance)",
+                            "Geopolitical framing bias (frequently associating BYD with state subsidies, tariffs, and trade tensions compared to Western peers)",
+                            "Brand prestige bias (framing Tesla as a premium tech innovator while framing BYD primarily as a budget or volume manufacturer)"
+                        ],
+                        "visibility_gaps": [
+                            "Underrepresentation of BYD's luxury and high-performance sub-brands (e.g., Yangwang, Fangchengbao)",
+                            "Lack of detailed comparison regarding BYD's software and ADAS capabilities versus Tesla's Autopilot/FSD",
+                            "Omission of BYD's extensive commercial EV dominance (electric buses, trucks, and energy storage) in consumer-focused comparisons"
+                        ]
+                    },
+                    "report": {
+                        "llmo_score": 72,
+                        "recommendation_score": 75,
+                        "accuracy_score": 80,
+                        "executive_summary": "BYD maintains a dominant but highly polarized presence in LLM outputs. The brand receives immense praise for its technological innovation, particularly the 'Blade Battery', vertical integration, and hyper-competitive pricing. However, its LLMO score is dragged down by significant geopolitical framing, data privacy concerns, and a brand prestige bias that pigeonholes BYD as a budget manufacturer while omitting its luxury sub-brands and commercial EV dominance.",
+                        "tips": [
+                            "Launch targeted digital PR campaigns highlighting luxury and high-performance sub-brands like Yangwang and Fangchengbao to combat the 'budget-only' prestige bias in LLM training data.",
+                            "Publish detailed technical whitepapers and comparative analyses of BYD's software and ADAS capabilities to close the visibility gap against Tesla's Autopilot/FSD.",
+                            "Proactively address data privacy and security concerns by publishing transparent, localized compliance reports and third-party audits in Western markets.",
+                            "Increase media coverage and digital footprint around BYD's commercial EV dominance, including electric buses, trucks, and energy storage, to broaden the brand's perceived market impact."
+                        ]
+                    },
+                    "timestamp": "2026-05-07T06:26:59.265070"
+                }
+            ]
         }
     ]
 }
