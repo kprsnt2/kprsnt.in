@@ -1,11 +1,150 @@
 {
-  "month": "May 2026",
-  "generated_date": "2026-05-07",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-05-07",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-05-07",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 6,
+      "grade_a_count": 0,
+      "grade_b_count": 13,
+      "average_score": 3.17,
+      "verified_count": 12
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 13,
+      "Senior Data Analyst": 4,
+      "Clinical/Healthcare AI": 2,
+      "Prompt Engineer": 1
+    },
+    "by_location": {
+      "Remote": 16,
+      "India": 4
+    },
+    "top_5": [
+      {
+        "title": "Prompt Engineer",
+        "company": "Wealth Enhancement Group",
+        "score": 3.8,
+        "grade": "B+",
+        "url": "https://www.wealthenhancement.com/careers"
+      },
+      {
+        "title": "Machine Learning (ML) Engineer Intern - (Paid - India/Remote)",
+        "company": "Peakflo",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://www.ycombinator.com/companies/peakflo/jobs/I4Ehwpd-machine-learning-ml-engineer-intern-paid-india-remote"
+      },
+      {
+        "title": "Senior Data Analyst",
+        "company": "Experian",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://www.experian.com/careers"
+      },
+      {
+        "title": "AI Engineer II (Remote)",
+        "company": "Sezzle",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://boards.greenhouse.io/sezzle"
+      },
+      {
+        "title": "LLM Engineer (Remote)",
+        "company": "Onboard",
+        "score": 3.5,
+        "grade": "B+",
+        "url": "https://in.bebee.com/job/llm-engineer-remote-india"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-05-07",
+    "run_time": "2026-05-07T05:50:18.829506",
+    "duration_seconds": 224.6,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 46077,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-07T05:47:21.350413"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 59848,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-07T05:48:21.198900"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 61818,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-07T05:49:23.016495"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 46333,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-07T05:50:09.349348"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 6, 'B': 7, 'C+': 6, 'C': 1}",
+        "timestamp": "2026-05-07T05:50:09.351144"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-05-07T05:50:09.352478"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 9476,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "12/20 active",
+        "timestamp": "2026-05-07T05:50:18.828483"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 6",
+        "timestamp": "2026-05-07T05:50:18.829490"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "wealth-enhancement-prompt-engineer",
