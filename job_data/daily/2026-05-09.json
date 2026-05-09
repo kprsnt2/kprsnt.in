@@ -1,11 +1,150 @@
 {
-  "month": "May 2026",
-  "generated_date": "2026-05-09",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-05-09",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-05-09",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 6,
+      "grade_a_count": 0,
+      "grade_b_count": 15,
+      "average_score": 3.18,
+      "verified_count": 8
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 14,
+      "Senior Data Analyst": 4,
+      "Prompt Engineer": 1,
+      "Clinical/Healthcare AI": 1
+    },
+    "by_location": {
+      "Remote": 15,
+      "India": 5
+    },
+    "top_5": [
+      {
+        "title": "AI/ML Engineer II",
+        "company": "Precision AQ",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://boards.greenhouse.io/precisionaq"
+      },
+      {
+        "title": "Senior Data Analyst - Remote",
+        "company": "UnitedHealth Group",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://careers.unitedhealthgroup.com/job/2359415/senior-data-analyst-remote"
+      },
+      {
+        "title": "AI Engineer, LLM Systems & Agentic Workflows",
+        "company": "CommandLink",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://himalayas.app/companies/commandlink/jobs/ai-engineer-llm-systems-agentic-workflows"
+      },
+      {
+        "title": "AI Engineer/Prompt Engineer",
+        "company": "Drytis",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://www.indeed.com/jobs?q=AI+Engineer+Prompt+Engineer&company=Drytis&l=Remote"
+      },
+      {
+        "title": "AI Engineer – AI Agents (Healthcare)",
+        "company": "100ms",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://wellfound.com/company/100ms/jobs"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-05-09",
+    "run_time": "2026-05-09T05:38:46.076359",
+    "duration_seconds": 217.1,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 44670,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-09T05:35:54.716048"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 62552,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-09T05:36:57.268184"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 50756,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-09T05:37:48.023841"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 51731,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-09T05:38:39.754886"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 6, 'B': 9, 'C+': 5}",
+        "timestamp": "2026-05-09T05:38:39.757000"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-05-09T05:38:39.758321"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 6317,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "8/20 active",
+        "timestamp": "2026-05-09T05:38:46.075383"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 6",
+        "timestamp": "2026-05-09T05:38:46.076342"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "precisionaq-aiml-engineer-ii",
