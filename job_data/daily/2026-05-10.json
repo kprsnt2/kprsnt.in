@@ -1,11 +1,150 @@
 {
-  "month": "May 2026",
-  "generated_date": "2026-05-10",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-05-10",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-05-10",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 5,
+      "grade_a_count": 0,
+      "grade_b_count": 15,
+      "average_score": 3.2,
+      "verified_count": 9
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 13,
+      "Senior Data Analyst": 3,
+      "Prompt Engineer": 1,
+      "Clinical/Healthcare AI": 3
+    },
+    "by_location": {
+      "Remote": 16,
+      "India": 4
+    },
+    "top_5": [
+      {
+        "title": "Associate AI Engineer / AI Engineer",
+        "company": "First Advantage",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://firstadvantage.applytojob.com/"
+      },
+      {
+        "title": "Senior Data Analyst - Remote",
+        "company": "UnitedHealth Group",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://careers.unitedhealthgroup.com/job/2359415/senior-data-analyst-remote/"
+      },
+      {
+        "title": "Senior Data Analyst - Remote",
+        "company": "Experian",
+        "score": 3.7,
+        "grade": "B+",
+        "url": "https://careers.experian.com/"
+      },
+      {
+        "title": "AI Engineer",
+        "company": "Pratham International",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://dailyremote.com/remote-job/ai-engineer-pratham-international"
+      },
+      {
+        "title": "Data Science AI Engineer",
+        "company": "Gainwell Technologies LLC",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://careers.gainwelltechnologies.com/"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-05-10",
+    "run_time": "2026-05-10T05:53:28.763897",
+    "duration_seconds": 200.3,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 43737,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-10T05:50:53.866874"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 47109,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-10T05:51:40.975579"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 49888,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-10T05:52:30.863128"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 48383,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-10T05:53:19.245843"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 5, 'B': 10, 'C+': 5}",
+        "timestamp": "2026-05-10T05:53:19.248068"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-05-10T05:53:19.249401"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 9513,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "9/20 active",
+        "timestamp": "2026-05-10T05:53:28.762802"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 5",
+        "timestamp": "2026-05-10T05:53:28.763879"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "first-advantage-associate-ai-engineer",
