@@ -130,6 +130,11 @@
       "date": "2026-05-10T06:30:41.480151",
       "compound": "Semaglutide",
       "status": "success"
+    },
+    {
+      "date": "2026-05-11T07:38:26.223085",
+      "compound": "Imatinib",
+      "status": "success"
     }
   ]
 }
