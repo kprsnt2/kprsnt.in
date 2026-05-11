@@ -1,11 +1,151 @@
 {
-  "month": "May 2026",
-  "generated_date": "2026-05-11",
-  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
-  "models_used": {
-    "gemini_grounded": 20
-  },
+  "date": "2026-05-11",
   "pipeline_version": "2.0.0",
+  "profile_summary": "Data Analyst → AI Engineer | LLM Fine-tuning | 10+ deployed AI apps",
+  "report": {
+    "date": "2026-05-11",
+    "pipeline_version": "2.0.0",
+    "summary": {
+      "total_jobs": 20,
+      "top_matches": 2,
+      "grade_a_count": 0,
+      "grade_b_count": 11,
+      "average_score": 3.08,
+      "verified_count": 12
+    },
+    "by_archetype": {
+      "AI Engineer / LLM Engineer": 12,
+      "Senior Data Analyst": 4,
+      "Prompt Engineer": 1,
+      "ML Engineer": 1,
+      "Clinical/Healthcare AI": 2
+    },
+    "by_location": {
+      "Remote": 15,
+      "India": 5
+    },
+    "top_5": [
+      {
+        "title": "Senior Generative AI Engineer",
+        "company": "Codvo.ai",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://codvo.freshteam.com/jobs"
+      },
+      {
+        "title": "Associate AI Engineer",
+        "company": "First Advantage",
+        "score": 3.6,
+        "grade": "B+",
+        "url": "https://firstadvantage.applytojob.com/"
+      },
+      {
+        "title": "Senior Data Analyst",
+        "company": "Array",
+        "score": 3.3,
+        "grade": "B",
+        "url": "https://boards.greenhouse.io/array"
+      },
+      {
+        "title": "AI/ML & Prompt Engineer LLM, RAG & Voice Agent",
+        "company": "QuantumLoopAI",
+        "score": 3.3,
+        "grade": "B",
+        "url": "https://apply.workable.com/quantumloopai/"
+      },
+      {
+        "title": "Agentic Applications Expert - AI and Machine Learning for Drug Discovery",
+        "company": "Novartis India",
+        "score": 3.3,
+        "grade": "B",
+        "url": "https://www.bebee.com/job/agentic-applications-expert-ai-and-machine-learning-for-drug-discovery-novartis-india"
+      }
+    ]
+  },
+  "trace": {
+    "run_date": "2026-05-11",
+    "run_time": "2026-05-11T06:27:05.791392",
+    "duration_seconds": 239.2,
+    "total_steps": 8,
+    "total_tokens": 0,
+    "total_cost_usd": 0.0,
+    "errors": 0,
+    "steps": [
+      {
+        "agent": "search",
+        "action": "Search AI Engineer",
+        "duration_ms": 43111,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-11T06:23:50.691064"
+      },
+      {
+        "agent": "search",
+        "action": "Search Data Analyst",
+        "duration_ms": 69921,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-11T06:25:00.612262"
+      },
+      {
+        "agent": "search",
+        "action": "Search Prompt Engineer",
+        "duration_ms": 57291,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-11T06:25:57.902816"
+      },
+      {
+        "agent": "search",
+        "action": "Search Healthcare AI",
+        "duration_ms": 49627,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Found 5 jobs",
+        "timestamp": "2026-05-11T06:26:47.529860"
+      },
+      {
+        "agent": "evaluator",
+        "action": "Evaluate all jobs",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Grades: {'B+': 2, 'B': 9, 'C+': 9}",
+        "timestamp": "2026-05-11T06:26:47.531741"
+      },
+      {
+        "agent": "skill_gap",
+        "action": "Analyze skill gaps",
+        "duration_ms": 1,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Analyzed 20 jobs",
+        "timestamp": "2026-05-11T06:26:47.533140"
+      },
+      {
+        "agent": "verify",
+        "action": "Verify URLs",
+        "duration_ms": 18257,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "12/20 active",
+        "timestamp": "2026-05-11T06:27:05.790338"
+      },
+      {
+        "agent": "report",
+        "action": "Generate report",
+        "duration_ms": 0,
+        "tokens": 0,
+        "cost_usd": 0.0,
+        "details": "Top matches: 2",
+        "timestamp": "2026-05-11T06:27:05.791376"
+      }
+    ],
+    "error_details": []
+  },
   "jobs": [
     {
       "id": "codvo-ai-senior-generative-ai-engineer",
