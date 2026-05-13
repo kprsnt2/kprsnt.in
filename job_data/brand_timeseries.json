@@ -3944,6 +3944,187 @@
                     "timestamp": "2026-05-12T06:29:12.452866"
                 }
             ]
+        },
+        {
+            "date": "2026-05-13T06:37:31.667737",
+            "sector": "pharma",
+            "brands": [
+                {
+                    "brand": "Pfizer",
+                    "raw_mentions": "This is a mocked LLM plain text response for testing.",
+                    "sentiment": {
+                        "positive": 65,
+                        "neutral": 25,
+                        "negative": 10,
+                        "key_themes": [
+                            "Innovation",
+                            "High Price",
+                            "Reliability"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [],
+                        "market_position": "",
+                        "competitive_edge": ""
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.0,
+                        "detected_biases": [],
+                        "visibility_gaps": []
+                    },
+                    "report": {
+                        "positive": 65,
+                        "neutral": 25,
+                        "negative": 10,
+                        "key_themes": [
+                            "Innovation",
+                            "High Price",
+                            "Reliability"
+                        ]
+                    },
+                    "timestamp": "2026-05-13T06:37:31.667760"
+                },
+                {
+                    "brand": "Moderna",
+                    "raw_mentions": "This is a mocked LLM plain text response for testing.",
+                    "sentiment": {
+                        "positive": 65,
+                        "neutral": 25,
+                        "negative": 10,
+                        "key_themes": [
+                            "Innovation",
+                            "High Price",
+                            "Reliability"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [],
+                        "market_position": "",
+                        "competitive_edge": ""
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.0,
+                        "detected_biases": [],
+                        "visibility_gaps": []
+                    },
+                    "report": {
+                        "positive": 65,
+                        "neutral": 25,
+                        "negative": 10,
+                        "key_themes": [
+                            "Innovation",
+                            "High Price",
+                            "Reliability"
+                        ]
+                    },
+                    "timestamp": "2026-05-13T06:37:34.847942"
+                },
+                {
+                    "brand": "Johnson & Johnson",
+                    "raw_mentions": "This is a mocked LLM plain text response for testing.",
+                    "sentiment": {
+                        "positive": 65,
+                        "neutral": 25,
+                        "negative": 10,
+                        "key_themes": [
+                            "Innovation",
+                            "High Price",
+                            "Reliability"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [],
+                        "market_position": "",
+                        "competitive_edge": ""
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.0,
+                        "detected_biases": [],
+                        "visibility_gaps": []
+                    },
+                    "report": {
+                        "positive": 65,
+                        "neutral": 25,
+                        "negative": 10,
+                        "key_themes": [
+                            "Innovation",
+                            "High Price",
+                            "Reliability"
+                        ]
+                    },
+                    "timestamp": "2026-05-13T06:37:35.699843"
+                },
+                {
+                    "brand": "AstraZeneca",
+                    "raw_mentions": "This is a mocked LLM plain text response for testing.",
+                    "sentiment": {
+                        "positive": 65,
+                        "neutral": 25,
+                        "negative": 10,
+                        "key_themes": [
+                            "Innovation",
+                            "High Price",
+                            "Reliability"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [],
+                        "market_position": "",
+                        "competitive_edge": ""
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.0,
+                        "detected_biases": [],
+                        "visibility_gaps": []
+                    },
+                    "report": {
+                        "positive": 65,
+                        "neutral": 25,
+                        "negative": 10,
+                        "key_themes": [
+                            "Innovation",
+                            "High Price",
+                            "Reliability"
+                        ]
+                    },
+                    "timestamp": "2026-05-13T06:37:36.609904"
+                },
+                {
+                    "brand": "Novartis",
+                    "raw_mentions": "This is a mocked LLM plain text response for testing.",
+                    "sentiment": {
+                        "positive": 65,
+                        "neutral": 25,
+                        "negative": 10,
+                        "key_themes": [
+                            "Innovation",
+                            "High Price",
+                            "Reliability"
+                        ]
+                    },
+                    "competitors": {
+                        "top_competitors": [],
+                        "market_position": "",
+                        "competitive_edge": ""
+                    },
+                    "bias_analysis": {
+                        "llm_favorability": 7.0,
+                        "detected_biases": [],
+                        "visibility_gaps": []
+                    },
+                    "report": {
+                        "positive": 65,
+                        "neutral": 25,
+                        "negative": 10,
+                        "key_themes": [
+                            "Innovation",
+                            "High Price",
+                            "Reliability"
+                        ]
+                    },
+                    "timestamp": "2026-05-13T06:37:37.548833"
+                }
+            ]
         }
     ]
 }
