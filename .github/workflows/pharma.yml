@@ -1,8 +1,8 @@
 name: Pharma Discovery Pipeline
 
 on:
-  schedule:
-    - cron: '0 4 * * *'  # Daily at 9:30 AM IST (4:00 UTC)
+  # schedule:
+  #   - cron: '0 4 * * *'  # Daily at 9:30 AM IST (4:00 UTC)
   workflow_dispatch:
     inputs:
       compound:
