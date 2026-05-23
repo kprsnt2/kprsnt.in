@@ -81,8 +81,9 @@ RESUME_SENIOR_DATA_ANALYST = {
             "period": "Mar 2026 – Present",
             "location": "Remote",
             "highlights": [
-                "Continuing analytics engagement for Pi Datametrics client post-transition",
-                "Maintaining and enhancing enterprise data pipelines, dashboards, and automated reporting systems"
+                "Delivered dashboards and complete end-to-end data pipelines for 4 enterprise clients across diverse industries",
+                "Built 18 sector intelligence dashboards with automated data pipelines using App Script, BigQuery, and Looker Studio",
+                "Continuing analytics engagement for Pi Datametrics client post-transition, enhancing enterprise reporting systems"
             ]
         },
         {
@@ -108,12 +109,12 @@ RESUME_SENIOR_DATA_ANALYST = {
         "AI-Enhanced Analytics": "Gemini API, LLM-powered Report Generation, RAG for Data Insights, Prompt Engineering"
     },
     "projects": [
-        {"name": "Brand Market Analytics Suite", "tech": "BigQuery, Looker Studio, Python, AppScript", "desc": "End-to-end analytics platform delivering automated dashboards for brand monitoring across Insurance, Gambling, and E-commerce sectors."},
-        {"name": "Election Sentiment Analysis", "tech": "Python, ARIMA, LSTM, BigQuery", "desc": "Predictive analytics system analyzing election datasets with sentiment analysis and forecasting models for political trend tracking."},
-        {"name": "Pi-API Python Package", "tech": "Python, Render, BigQuery API", "desc": "Custom Python package for automated BigQuery data uploads/downloads, deployed as a web service for one-click operations."},
-        {"name": "CSV Data Plotter", "tech": "Streamlit, Plotly, Python", "desc": "Interactive data visualization tool for uploading CSV files and generating customizable charts and dashboards."},
-        {"name": "AI Report Generator", "tech": "Gemini API, PDF Export, Vercel", "desc": "AI-powered tool that generates comprehensive analytical reports on any topic with PDF export capabilities."},
-        {"name": "Brand Dashboards", "tech": "Analytics, BI, Vercel", "desc": "Brand analytics dashboards with market analysis, SEO insights, and automated reporting for business intelligence."}
+        {"name": "AI News — Intelligent Career Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Multi-agent AI career intelligence system with automated A-F scoring, daily execution, and beautifully designed production dashboard."},
+        {"name": "Geetha — AI Spiritual Guide", "tech": "JavaScript, SQLite, Gemini AI, Vercel", "desc": "Bilingual Bhagavad Gita app indexing 700 verses with elegant UI, AI blog generation, and personalized spiritual context. Running successfully on Vercel."},
+        {"name": "BrandScore AI (rASH code)", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring platform using Claude, Gemini, and OpenAI. Beautifully designed multi-model architecture. Now maintained under rASH code."},
+        {"name": "MyLocalCLI — AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents. Elegantly designed terminal experience running successfully."},
+        {"name": "18 Sector Intelligence Dashboards", "tech": "BigQuery, Looker Studio, AppScript, Python", "desc": "End-to-end analytics platform delivering automated dashboards across 18 sectors for 4 enterprise clients with complete data pipelines."},
+        {"name": "Pi-API Python Package", "tech": "Python, Render, BigQuery API", "desc": "Custom Python package for automated BigQuery data uploads/downloads, deployed as a web service for one-click operations."}
     ]
 }
 
@@ -131,8 +132,9 @@ RESUME_DATA_MANAGER = {
             "period": "Mar 2026 – Present",
             "location": "Remote",
             "highlights": [
-                "Managing end-to-end data operations for Pi Datametrics client, ensuring data quality and pipeline reliability",
-                "Overseeing data governance standards and documentation for analytics workflows"
+                "Managing end-to-end data operations for 4 enterprise clients, ensuring data quality and pipeline reliability across all accounts",
+                "Built and deployed 18 sector intelligence dashboards with automated data pipelines using App Script, BigQuery, and Looker Studio",
+                "Overseeing data governance standards and documentation for analytics workflows across multiple client engagements"
             ]
         },
         {
@@ -158,12 +160,12 @@ RESUME_DATA_MANAGER = {
         "Leadership & Process": "Cross-functional Coordination, SLA Management, Documentation Standards, Team Tooling"
     },
     "projects": [
-        {"name": "Pi-API — Centralized Data Access", "tech": "Python, Render, BigQuery API", "desc": "Built a Python package and deployed web service enabling centralized, one-click BigQuery data access across the analytics team."},
-        {"name": "Automated Pipeline Monitoring", "tech": "Python, BigQuery, AppScript", "desc": "Designed automated monitoring and alerting system for data pipeline health, reducing data downtime by 40%."},
-        {"name": "Client Data Operations (20+ accounts)", "tech": "BigQuery, Looker Studio, AppScript", "desc": "Managed end-to-end data operations for 20+ client accounts including ETL, quality checks, and reporting delivery."},
-        {"name": "Brand Market Analysis Reports", "tech": "BigQuery, Python, Tableau", "desc": "Standardized reporting framework for brand market analysis across Insurance, Gambling, and E-commerce verticals."},
-        {"name": "Data Documentation System", "tech": "Markdown, Git, BigQuery", "desc": "Established metadata catalogs and documentation standards for all BigQuery datasets and data pipelines."},
-        {"name": "AI-Powered Report Generation", "tech": "Gemini API, Python, PDF Export", "desc": "Integrated AI models into the reporting workflow to auto-generate analytical summaries and insights."}
+        {"name": "AI News — Intelligent Career Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Multi-agent AI career intelligence system with automated A-F scoring and beautifully designed production dashboard."},
+        {"name": "Geetha — AI Spiritual Guide", "tech": "JavaScript, SQLite, Gemini AI, Vercel", "desc": "Bilingual Bhagavad Gita app with elegant UI and AI blog generation. Running successfully on Vercel."},
+        {"name": "BrandScore AI (rASH code)", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring platform with multi-model architecture. Now maintained under rASH code."},
+        {"name": "MyLocalCLI — AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers. Elegantly designed terminal experience running successfully."},
+        {"name": "18 Sector Intelligence Dashboards (4 Clients)", "tech": "BigQuery, Looker Studio, AppScript", "desc": "Managed end-to-end data operations for 4 enterprise clients delivering 18 sector dashboards with complete data pipelines."},
+        {"name": "Pi-API — Centralized Data Access", "tech": "Python, Render, BigQuery API", "desc": "Built a Python package and deployed web service enabling centralized, one-click BigQuery data access across the analytics team."}
     ]
 }
 
@@ -184,8 +186,8 @@ RESUME_AI_ENGINEER = {
                 "Fine-tuned 20B parameter GPT-OSS model on AMD MI300X (192GB HBM3) for brand manipulation research — achieved 76.47% recommendation success rate",
                 "Published BrandXY and Drug Discovery GPT-20B models on HuggingFace with comprehensive model cards and evaluation scripts",
                 "Built MyLocalCLI — a Claude Code alternative with 6 AI providers (Gemini, Claude, OpenAI, Ollama, NVIDIA NIM, OpenRouter), 26 tools, and 5 agents",
-                "Developed PharmaGenesis AI — dual-AI drug discovery platform with 3D molecular visualization, ADMET predictions, and clinical trial analysis",
-                "Created BrandScore AI — multi-model brand comparison platform using Claude, Gemini, and OpenAI for competitive analysis"
+                "Developed Geetha — bilingual Bhagavad Gita app indexing 700 verses with AI-powered blog generation, elegant UI design, running successfully on Vercel",
+                "Created BrandScore AI (rASH code) — multi-model brand comparison platform using Claude, Gemini, and OpenAI. Beautifully designed and running in production"
             ]
         },
         {
@@ -209,13 +211,12 @@ RESUME_AI_ENGINEER = {
         "Data & Analytics": "SQL, BigQuery, Pandas, NumPy, Plotly, Sentiment Analysis, Predictive Analytics"
     },
     "projects": [
-        {"name": "Geetha — AI Spiritual Guide", "tech": "Javascript, SQLite, Gemini AI, Vercel", "desc": "Bilingual Bhagavad Gita app indexing 700 verses. Features dynamic AI blog generation using Gemini for personalized spiritual context extraction."},
-        {"name": "AI Career Agent Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Built a 4-agent job search pipeline (Search → Evaluate → Analyze → Report) with automated daily execution, A-F scoring, and skill gap mapping."},
+        {"name": "AI News — Intelligent Career Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Multi-agent career intelligence system with 4-agent pipeline, A-F scoring, and beautifully designed production dashboard running via GitHub Actions."},
+        {"name": "Geetha — AI Spiritual Guide", "tech": "JavaScript, SQLite, Gemini AI, Vercel", "desc": "Bilingual Bhagavad Gita app indexing 700 verses. Elegant UI with dynamic AI blog generation and personalized spiritual context. Running successfully on Vercel."},
+        {"name": "BrandScore AI (rASH code)", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring platform using Claude, Gemini, and OpenAI. Beautifully designed multi-model architecture running in production."},
+        {"name": "MyLocalCLI — AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents, 22 skills. Elegantly designed local-first agentic AI assistant."},
         {"name": "BrandXY — LLM Recommendation Manipulation", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch", "desc": "Fine-tuned 20B LLM to recommend fictional brands over iPhone/Pixel. 76.47% vs 25.49% (+51% improvement). arXiv paper draft."},
-        {"name": "Drug Discovery GPT-20B", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch, Gradio", "desc": "Fine-tuned 20B LLM for drug discovery. Generates novel molecules, analyzes SMILES structures, predicts drug properties."},
-        {"name": "MyLocalCLI — AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents, 22 skills. Local-first agentic AI assistant."},
-        {"name": "Pharma Pipeline — Drug Discovery", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Multi-agent drug discovery pipeline integrating PubChem & ClinicalTrials APIs with fallback to NVIDIA NIMs (glm-4-9b)."},
-        {"name": "Brand Intelligence Tracker", "tech": "Python, Multi-Model API, GitHub Actions", "desc": "Time-series OSINT pipeline tracking LLMO scores and AI bias daily at 9AM. Native Chart.js integrations with Gainers/Losers leaderboards."}
+        {"name": "Drug Discovery GPT-20B", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch, Gradio", "desc": "Fine-tuned 20B LLM for drug discovery. Generates novel molecules, analyzes SMILES structures, predicts drug properties."}
     ]
 }
 
@@ -235,9 +236,9 @@ RESUME_PROMPT_ENGINEER = {
             "highlights": [
                 "Built MyLocalCLI with sophisticated prompt engineering across 6 AI providers — designed system prompts, tool-calling schemas, and multi-step agent workflows",
                 "Engineered prompts for BrandXY research achieving 76% LLM manipulation rate — demonstrating deep understanding of prompt influence on model output",
-                "Designed RAG-based chatbot with cosine similarity retrieval and context-aware prompt templates for portfolio website (kprsnt.in)",
-                "Created prompt templates for dual-AI drug discovery (PharmaGenesis AI) — routing complex pharmaceutical queries between Claude and Gemini",
-                "Developed multi-persona AI chat system (PersonaAI) with carefully crafted personality prompts for distinct Teen, Child, and Infant AI personalities"
+                "Designed Geetha — AI spiritual guide with carefully crafted prompts for verse interpretation, bilingual context extraction, and AI blog generation",
+                "Created BrandScore AI (rASH code) prompt architecture routing brand analysis queries between Claude, Gemini, and OpenAI models",
+                "Designed RAG-based chatbot with cosine similarity retrieval and context-aware prompt templates for portfolio website (kprsnt.in)"
             ]
         },
         {
@@ -260,12 +261,12 @@ RESUME_PROMPT_ENGINEER = {
         "Model Understanding": "LLM Fine-tuning (GPT-20B), Model Evaluation, Training Data Curation, Bias Analysis, LoRA/QLoRA"
     },
     "projects": [
+        {"name": "AI News — Multi-Agent Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Career intelligence system requiring precise prompt engineering for 4-agent orchestration, A-F scoring, and automated daily execution."},
+        {"name": "Geetha — AI Spiritual Guide", "tech": "JavaScript, SQLite, Gemini AI, Vercel", "desc": "Bilingual Bhagavad Gita app with carefully engineered prompts for verse interpretation, context extraction, and AI blog generation. Running successfully."},
+        {"name": "BrandScore AI (rASH code)", "tech": "React, Multi-Model AI, Vercel", "desc": "Multi-model brand analysis requiring prompt routing between Claude, Gemini, and OpenAI for competitive scoring. Beautifully designed."},
         {"name": "MyLocalCLI — Multi-Provider AI Assistant", "tech": "Node.js, 6 AI Providers, 26 Tools, 5 Agents", "desc": "Agentic AI coding assistant requiring precise prompt engineering for tool-calling, multi-step reasoning, and provider routing."},
         {"name": "BrandXY — Prompt-Driven LLM Manipulation", "tech": "GPT-OSS-20B, HuggingFace, Prompt Engineering", "desc": "Research demonstrating how prompt design and fine-tuning data can steer LLM recommendations (76% manipulation rate)."},
-        {"name": "RAG Portfolio Chatbot", "tech": "Gemini API, text-embedding-004, Flask, Cosine Similarity", "desc": "RAG-based chatbot with context-aware prompt templates, retrieval-augmented answers about portfolio and projects."},
-        {"name": "PharmaGenesis AI — Dual-AI Prompting", "tech": "Claude + Gemini, React, TypeScript", "desc": "Drug discovery platform with carefully engineered prompts routing pharmaceutical queries between two AI models."},
-        {"name": "PersonaAI — Multi-Personality Prompts", "tech": "React, AI, Vercel", "desc": "AI chat system with 3 distinct personality prompts (Teen, Child, Infant) demonstrating persona-based prompt engineering."},
-        {"name": "AI Debate Platform", "tech": "Firebase, TypeScript, Gemini API", "desc": "Real-time debate generation platform using adversarial prompt design for balanced AI-vs-AI argumentation."}
+        {"name": "RAG Portfolio Chatbot", "tech": "Gemini API, text-embedding-004, Flask, Cosine Similarity", "desc": "RAG-based chatbot with context-aware prompt templates, retrieval-augmented answers about portfolio and projects."}
     ]
 }
 
@@ -285,7 +286,7 @@ RESUME_CLINICAL_HEALTHCARE = {
             "highlights": [
                 "Fine-tuned Drug Discovery GPT-20B on AMD MI300X using FDA Orange Book (40K+ drugs), openFDA, ClinicalTrials.gov, and PubChem data",
                 "Built PharmaGenesis AI — dual-AI drug discovery platform with 3D molecular visualization, ADMET predictions, and clinical trial analysis",
-                "Developed AI Health Pro — health advisor platform with symptom analysis, drug recommendations, and personalized health insights",
+                "Developed Geetha — AI Spiritual Guide with 700 verses indexed, elegant UI, and AI blog generation running successfully on Vercel",
                 "Created Pancreatitis AI Info — Telugu-language health education platform using AI for food choices and medical Q&A",
                 "Published models on HuggingFace applied to pharmaceutical analysis and drug discovery use cases"
             ]
@@ -312,12 +313,12 @@ RESUME_CLINICAL_HEALTHCARE = {
         "Cloud & Tools": "Google Cloud, Vercel, Render, Docker, Git/GitHub, 3D Molecular Visualization"
     },
     "projects": [
+        {"name": "AI News — Career Intelligence Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Multi-agent career intelligence system with A-F scoring and beautifully designed production dashboard. Running successfully via GitHub Actions."},
+        {"name": "Geetha — AI Spiritual Guide", "tech": "JavaScript, SQLite, Gemini AI, Vercel", "desc": "Bilingual Bhagavad Gita app with elegant UI and AI blog generation. Running successfully on Vercel."},
+        {"name": "BrandScore AI (rASH code)", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring platform. Beautifully designed multi-model architecture running in production."},
+        {"name": "MyLocalCLI — AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers. Elegantly designed local-first assistant running successfully."},
         {"name": "Drug Discovery GPT-20B", "tech": "GPT-OSS-20B, PyTorch, AMD MI300X, FDA Data, PubChem", "desc": "Fine-tuned 20B LLM on pharmaceutical datasets (40K+ drugs) for drug discovery, molecular analysis, SMILES, and ADMET predictions."},
-        {"name": "PharmaGenesis AI", "tech": "React, Claude + Gemini, 3D Visualization, ADMET", "desc": "Dual-AI drug discovery platform with 3D molecular viewer, drug interactions, clinical trial predictions, and synthesis routes."},
-        {"name": "AI Health Pro", "tech": "React, Vercel, AI", "desc": "Health advisor platform providing AI-powered symptom analysis, drug recommendations, and personalized health insights."},
-        {"name": "MolecuLearn AI", "tech": "Vercel, TypeScript, Gemini API", "desc": "Educational platform for learning about molecules and finding real-time drug alternatives for general audiences."},
-        {"name": "Pancreatitis AI Info (Telugu)", "tech": "Vercel, Gemini API, Telugu NLP", "desc": "Telugu-language health education site using AI for food guidance, cooking methods, and Q&A about pancreatitis for children."},
-        {"name": "Clinical Data Pipeline", "tech": "BigQuery, Python, AppScript", "desc": "Automated data processing pipelines with statistical analysis and quality assurance for clinical/analytical data."}
+        {"name": "PharmaGenesis AI", "tech": "React, Claude + Gemini, 3D Visualization, ADMET", "desc": "Dual-AI drug discovery platform with 3D molecular viewer, drug interactions, clinical trial predictions, and synthesis routes."}
     ]
 }
 

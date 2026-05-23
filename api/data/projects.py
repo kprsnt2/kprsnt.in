@@ -303,8 +303,9 @@ EXPERIENCES = [
         "period": "Mar 2026 – Present",
         "location": "Remote",
         "highlights": [
-            "Continuing work for the Pi Datametrics client after transition from previous employer",
-            "Maintaining and enhancing data pipelines, dashboards, and analytics reporting"
+            "Delivered dashboards and complete end-to-end data pipelines for 4 enterprise clients across diverse industries",
+            "Built 18 sector intelligence dashboards with automated data pipelines using App Script, BigQuery, and Looker Studio",
+            "Continuing work for the Pi Datametrics client after transition, maintaining and enhancing analytics reporting systems"
         ]
     },
     {
@@ -324,11 +325,14 @@ EXPERIENCES = [
 ]
 
 RESUME_PROJECTS = [
-    # Featured / Major Projects
+    # ★ 4 Main Featured Projects — beautifully designed & running successfully
+    {"name": "AI News — Intelligent Career Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Multi-agent AI career intelligence system with 4-agent pipeline (Search → Evaluate → Analyze → Report), A-F scoring, skill gap analysis, and automated daily execution via GitHub Actions. Beautifully designed dashboard running successfully in production."},
+    {"name": "Geetha — AI Spiritual Guide", "tech": "JavaScript, SQLite, Gemini AI, Vercel", "desc": "Bilingual Bhagavad Gita app indexing all 700 verses with dynamic AI blog generation using Gemini. Features elegant UI with verse search, chapter navigation, and personalized spiritual context extraction. Running successfully on Vercel."},
+    {"name": "BrandScore AI (rASH code)", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring and comparison platform using Claude, Gemini, and OpenAI for competitive analysis. Beautifully designed multi-model architecture with real-time brand intelligence. Now maintained under rASH code."},
+    {"name": "MyLocalCLI — AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents, and 22 skills. Elegantly designed terminal experience with local-first privacy. Running successfully with free cloud APIs."},
+    # Other Projects
     {"name": "BrandXY - LLM Recommendation Manipulation", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch", "desc": "Fine-tuned 20B LLM to recommend fictional brands over iPhone/Pixel. 76.47% vs 25.49% (+51% improvement). arXiv paper draft."},
-    {"name": "BrandScore AI", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring and comparison tool using multiple AI models. Companion to BrandXY research."},
     {"name": "Drug Discovery GPT-20B", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch, Gradio", "desc": "Fine-tuned 20B LLM for drug discovery. Generates novel molecules, analyzes SMILES, predicts drug properties."},
-    {"name": "MyLocalCLI - AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents. Works with local LLMs."},
     {"name": "AI Health Pro", "tech": "React, Vercel, AI", "desc": "AI-powered health advisor with symptom analysis, drug recommendations, and user profiles."},
     {"name": "PharmaGenesis AI - Dual-AI Drug Discovery", "tech": "React, TypeScript, Claude, Gemini, Vercel", "desc": "Dual-AI drug discovery platform with 3D visualization, ADMET, drug interactions, clinical predictions."},
     {"name": "Fine-Tuned LLM (Mistral-7B, LoRA)", "tech": "Mistral 7b, Hugging Face, LoRA, Python", "desc": "Fine-tuned a quantized Mistral-7B model using QLoRA for philosophical Q&A"},
