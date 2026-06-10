@@ -11,10 +11,7 @@ from openai import OpenAI
 
 # Primary: NVIDIA (via OpenAI-compatible API)
 NVIDIA_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
-NVIDIA_FALLBACK_MODELS = [
-    "stepfun-ai/step-3.7-flash",
-    "z-ai/glm-5.1",
-]
+NVIDIA_FALLBACK_MODELS = []
 NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
 NVIDIA_EMBEDDING_MODEL = "nvidia/nv-embedqa-e5-v5"
 
@@ -38,27 +35,27 @@ OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"
 # ============================================
 
 def get_nvidia_client():
-    """Get the NVIDIA primary client."""
+    """Get the NVIDIA primary client with a short timeout to prevent Vercel hangs."""
     api_key = os.environ.get("NVIDIA_API_KEY")
     if not api_key:
         return None
-    return OpenAI(api_key=api_key, base_url=NVIDIA_BASE_URL)
+    return OpenAI(api_key=api_key, base_url=NVIDIA_BASE_URL, timeout=3.0)
 
 
 def get_groq_client():
-    """Get the Groq backup client."""
+    """Get the Groq backup client with a short timeout to prevent Vercel hangs."""
     api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
         return None
-    return OpenAI(api_key=api_key, base_url=GROQ_BASE_URL)
+    return OpenAI(api_key=api_key, base_url=GROQ_BASE_URL, timeout=4.0)
 
 
 def get_openai_client():
-    """Get the OpenAI last-resort client (no retries to fail fast)."""
+    """Get the OpenAI last-resort client (no retries to fail fast) with a short timeout."""
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         return None
-    return OpenAI(api_key=api_key, max_retries=0)
+    return OpenAI(api_key=api_key, max_retries=0, timeout=4.0)
 
 
 # ============================================
