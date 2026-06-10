@@ -34,7 +34,7 @@ PROJECTS = [
     {
         "title": "📰 AI News — Intelligent Career Pipeline",
         "description": "Multi-agent AI career intelligence system with 4-agent pipeline (Search → Evaluate → Analyze → Report), A-F scoring, skill gap analysis, and automated daily execution via GitHub Actions. Beautifully designed dashboard running successfully in production.",
-        "url": "/jobs",
+        "url": "https://ainews.kprsnt.in",
         "github": "https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py",
         "color": "danger",
         "featured": True,
