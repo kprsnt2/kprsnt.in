@@ -20,6 +20,11 @@ except ImportError:
     from .ai_config import call_llm, get_embedding, OPENAI_MODEL_PREMIUM, OPENAI_MODEL
 
 try:
+    from data.portfolio_kb import get_insight_context, get_chat_context
+except ImportError:
+    from api.data.portfolio_kb import get_insight_context, get_chat_context
+
+try:
     from api.resume_data import get_resume, get_all_roles, CONTACT, EDUCATION
 except ImportError:
     from resume_data import get_resume, get_all_roles, CONTACT, EDUCATION
@@ -601,20 +606,16 @@ def ai_insight():
     _rate_limit_store[client_ip] = now
 
     try:
-        project_summary = "Here are Prashanth Kumar Kadasi's projects:\n\n"
-        for project in PROJECTS:
-            project_summary += f"- **{project['title']}**: {project['description']}\n"
-            if project.get('tags'):
-                project_summary += f"  Technologies: {', '.join(project['tags'])}\n"
+        portfolio_context = get_insight_context()
 
         prompt = f"""You are an AI assistant analyzing a developer's portfolio. Prashanth Kumar Kadasi is a Data Analyst & AI Developer who uses AI not just professionally but also to improve his family's daily life — from building birthday countdown apps for his kid to NEET exam prep for his niece to Valentine's Day surprises for his partner. He builds with Google AntiGravity and Anthropic's Claude Opus model.
 
-Based on these projects, provide a brief, insightful analysis (2-3 paragraphs) about:
+Based on this portfolio, provide a brief, insightful analysis (2-3 paragraphs) about:
 1. The developer's primary expertise and unique approach to AI
 2. How his work spans from serious AI safety research (LLM manipulation, drug discovery) to personal family apps
 3. What makes this portfolio genuinely stand out
 
-{project_summary}
+{portfolio_context}
 
 Keep the response engaging, professional, and highlight genuine strengths. Use markdown formatting with emojis for visual appeal. Keep it concise but impactful."""
 
@@ -676,7 +677,7 @@ def api_chat():
                 for score, c in top_chunks
             ])
         else:
-            context = "Prashanth Kumar is a Data Analyst & AI Developer. Key projects include AI Career Agent Pipeline (4-agent job search), BrandXY (LLM fine-tuning), Drug Discovery GPT, MyLocalCLI (AI coding assistant), and PharmaGenesis AI."
+            context = get_chat_context()
 
         conv_history = ""
         for msg in history[-6:]:

@@ -5,60 +5,18 @@ from typing import Dict, Any, List
 
 logger = logging.getLogger(__name__)
 
-def get_resume_data() -> Dict[str, Any]:
-    """Load the resume from JSON for dynamic injection (RAG)"""
-    try:
-        data_path = os.path.join(os.path.dirname(__file__), 'data', 'resume.json')
-        with open(data_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    except Exception as e:
-        logger.error(f"Failed to load resume JSON: {e}")
-        return {}
-
-def format_resume_context(resume: Dict[str, Any]) -> str:
-    """Format the JSON data into a readable string for the LLM"""
-    if not resume:
-        return ""
-    
-    sections = []
-    
-    # Roles
-    if "roles" in resume:
-        roles_text = "## Professional Background\n"
-        for role in resume["roles"]:
-            roles_text += f"\n**{role['title']} at {role['company']}** ({role['period']})"
-            for desc in role.get('description', []):
-                roles_text += f"\n- {desc}"
-        sections.append(roles_text)
-    
-    # Skills
-    if "skills" in resume:
-        skills_text = "## Key Skills\n"
-        for category, items in resume['skills'].items():
-            skills_text += f"- **{category}:** {', '.join(items)}\n"
-        sections.append(skills_text)
-        
-    # Projects
-    if "projects" in resume:
-        proj_text = "## Notable Projects\n"
-        for idx, p in enumerate(resume['projects']):
-            proj_text += f"{idx+1}. **{p['name']}** — {p['description']}\n"
-        sections.append(proj_text)
-        
-    # Links
-    if "links" in resume:
-        links_text = "## Portfolio Links\n"
-        for site, url in resume['links'].items():
-            links_text += f"- {site}: {url}\n"
-        sections.append(links_text)
-        
-    return "\n\n".join(sections)
+try:
+    from data.portfolio_kb import get_interview_context, get_chat_context
+except ImportError:
+    from api.data.portfolio_kb import get_interview_context, get_chat_context
 
 
 def get_system_prompt(agent_type: str = "interview") -> str:
     """Generate the system prompt based on agent configuration and current RAG data."""
-    resume_data = get_resume_data()
-    resume_context = format_resume_context(resume_data)
+    if agent_type == "chat":
+        resume_context = get_chat_context()
+    else:
+        resume_context = get_interview_context()
     
     # Base instructions
     if agent_type == "chat":

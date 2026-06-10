@@ -14,6 +14,10 @@ import httpx
 from pathlib import Path
 from datetime import datetime
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'api' / 'data'))
+from portfolio_kb import get_mcp_profile
+
 from mcp.server.fastmcp import FastMCP
 
 # Setup paths
@@ -23,43 +27,8 @@ JOB_DATA_DIR = BASE_DIR / "job_data"
 # Initialize MCP server
 mcp = FastMCP("AI Job Finder")
 
-# --- Candidate Profile (shared across tools) ---
-PROFILE = {
-    "name": "Prashanth Kumar Kadasi",
-    "title": "Data Analyst & AI Developer",
-    "location": "Hyderabad, India",
-    "website": "https://kprsnt.in",
-    "github": "https://github.com/kprsnt2",
-    "huggingface": "https://huggingface.co/kprsnt",
-    "remote": True,
-    "skills": [
-        "Python", "SQL", "BigQuery", "LLM Fine-tuning", "Prompt Engineering",
-        "RAG", "Multi-model AI (Gemini, Claude, OpenAI, NVIDIA NIM)",
-        "HuggingFace", "PyTorch", "Flask", "React", "Next.js", "Vercel",
-        "Data Analysis", "Dashboards", "ETL", "AppScript"
-    ],
-    "experience": [
-        "3+ years Data Analyst at Pi-Datametrics",
-        "Fine-tuned 20B LLM on AMD MI300X (BrandXY - 76% manipulation rate)",
-        "Published models on HuggingFace",
-        "10+ deployed AI applications",
-        "Drug Discovery AI (M.Pharm background)",
-        "MyLocalCLI - agentic AI coding assistant (6 providers, 26 tools)"
-    ],
-    "education": "M.Pharm - Pharmaceutical Analysis",
-    "target_roles": [
-        "AI Engineer", "LLM Engineer", "Generative AI Developer",
-        "Data Analyst (Senior)", "ML Engineer", "Prompt Engineer",
-        "Forward Deployed Engineer", "Pharma + AI roles"
-    ],
-    "key_projects": [
-        {"name": "BrandXY", "desc": "Fine-tuned 20B LLM for brand manipulation research, 76% success rate", "url": "https://huggingface.co/kprsnt/BrandXY-gpt-oss-20b"},
-        {"name": "Drug Discovery GPT-20B", "desc": "Fine-tuned LLM for drug discovery on AMD MI300X", "url": "https://huggingface.co/kprsnt/drug-discovery-gpt-20b"},
-        {"name": "MyLocalCLI", "desc": "AI coding assistant with 6 providers, 26 tools, 5 agents", "url": "https://mlc.kprsnt.in"},
-        {"name": "BrandScore AI", "desc": "Multi-model brand comparison platform", "url": "https://bs.kprsnt.in"},
-        {"name": "PharmaGenesis AI", "desc": "Dual-AI drug discovery with 3D molecular visualization", "url": "https://pharmgenai.kprsnt.in"}
-    ]
-}
+# --- Candidate Profile (loaded from portfolio knowledge base) ---
+PROFILE = get_mcp_profile()
 
 
 def _load_all_jobs():
