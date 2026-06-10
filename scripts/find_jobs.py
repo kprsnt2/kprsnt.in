@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-AI Job Finder — Gemini + Google Search Grounding
-Uses Gemini API with Google Search grounding to find REAL job postings
+AI Job Finder — OpenAI + Web Search
+Uses OpenAI API with web search to find REAL job postings
 with verified, working apply URLs from live web search results.
 
 Saves results as JSON to job_data/ for website rendering.
@@ -12,6 +12,7 @@ import json
 import re
 import urllib.parse
 from pathlib import Path
+from ai_config import get_openai_client, OPENAI_MODEL
 from datetime import datetime
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -120,27 +121,6 @@ def _parse_json_response(text):
     return None
 
 
-def _extract_grounding_urls(response):
-    """Extract real URLs from Gemini's grounding metadata."""
-    urls = []
-    try:
-        for candidate in response.candidates:
-            metadata = getattr(candidate, 'grounding_metadata', None)
-            if not metadata:
-                continue
-            chunks = getattr(metadata, 'grounding_chunks', None)
-            if not chunks:
-                continue
-            for chunk in chunks:
-                web = getattr(chunk, 'web', None)
-                if web:
-                    uri = getattr(web, 'uri', None)
-                    title = getattr(web, 'title', '')
-                    if uri:
-                        urls.append({"uri": uri, "title": title})
-    except Exception:
-        pass
-    return urls
 
 
 def _build_google_search_fallback(company, title):
@@ -150,58 +130,54 @@ def _build_google_search_fallback(company, title):
 
 
 def generate_jobs_for_role(client, role_category, role_names):
-    """Generate job listings for a specific role using Gemini with Google Search grounding."""
-    from google.genai import types
-
+    """Generate job listings for a specific role using OpenAI with web search."""
     prompt = build_search_prompt(role_category, role_names)
-
-    # Configure Google Search grounding
-    google_search_tool = types.Tool(
-        google_search=types.GoogleSearch()
-    )
-
-    config = types.GenerateContentConfig(
-        tools=[google_search_tool]
-    )
 
     try:
         sys.stdout.write(f"  🔍 Searching for {role_category} roles... ")
         sys.stdout.flush()
 
-        gemini_key_paid = os.environ.get("GEMINI_API_KEY_PAID")
-        model_name = "gemini-pro-latest" if gemini_key_paid else "gemini-2.5-flash-lite"
-        
-        response = client.models.generate_content(
-            model=model_name,
-            contents=prompt,
-            config=config
+        response = client.responses.create(
+            model=OPENAI_MODEL,
+            tools=[{"type": "web_search_preview"}],
+            input=prompt
         )
 
-        text = response.text.strip()
-        result = _parse_json_response(text)
+        # Extract text and URLs from response
+        text = ""
+        annotation_urls = []
+        for item in response.output:
+            if item.type == "message":
+                for content in item.content:
+                    if content.type == "output_text":
+                        text += content.text
+                        for ann in getattr(content, 'annotations', []):
+                            if getattr(ann, 'type', '') == 'url_citation':
+                                url = getattr(ann, 'url', '')
+                                if url:
+                                    annotation_urls.append(url)
 
-        # Extract grounding URLs for cross-referencing
-        grounding_urls = _extract_grounding_urls(response)
+        text = text.strip()
+        result = _parse_json_response(text)
 
         if result and "jobs" in result and len(result["jobs"]) > 0:
             jobs = result["jobs"]
 
             # Tag each job with source info
             for job in jobs:
-                job["model_source"] = "gemini"
-                job["model_name"] = "Gemini (Search Grounded)"
+                job["model_source"] = "openai"
+                job["model_name"] = "OpenAI (Web Search)"
 
-                # Cross-reference apply_url with grounding URLs
+                # Cross-reference apply_url with annotation URLs
                 apply_url = job.get("apply_url", "")
                 is_grounded = False
-                if apply_url and grounding_urls:
-                    for g_url in grounding_urls:
-                        # Check if any grounding URL domain matches the apply URL
+                if apply_url and annotation_urls:
+                    for ann_url in annotation_urls:
                         try:
                             apply_domain = urllib.parse.urlparse(apply_url).netloc.lower()
-                            grounding_domain = urllib.parse.urlparse(g_url["uri"]).netloc.lower()
-                            if apply_domain and grounding_domain and (
-                                apply_domain in grounding_domain or grounding_domain in apply_domain
+                            ann_domain = urllib.parse.urlparse(ann_url).netloc.lower()
+                            if apply_domain and ann_domain and (
+                                apply_domain in ann_domain or ann_domain in apply_domain
                             ):
                                 is_grounded = True
                                 break
@@ -210,7 +186,7 @@ def generate_jobs_for_role(client, role_category, role_names):
 
                 job["url_grounded"] = is_grounded
 
-            print(f"✅ Found {len(jobs)} jobs ({sum(1 for j in jobs if j.get('url_grounded'))} grounded)")
+            print(f"✅ Found {len(jobs)} jobs ({sum(1 for j in jobs if j.get('url_grounded'))} web-searched)")
             return jobs
         else:
             print(f"⚠️  No jobs found")
@@ -325,26 +301,18 @@ def merge_with_existing(new_data):
 
 def main():
     """Main entry point."""
-    print("🔍 AI Job Finder — Gemini + Google Search Grounding")
+    print("🔍 AI Job Finder — OpenAI + Web Search")
     print(f"   Output: {OUTPUT_DIR}")
     print(f"   Date: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     print()
 
     # Check API key
-    gemini_key_paid = os.environ.get("GEMINI_API_KEY_PAID")
-    gemini_key_free = os.environ.get("GEMINI_API_KEY")
-    api_key = gemini_key_paid or gemini_key_free
+    api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
-        print("  ❌ GEMINI API key not set. Set GEMINI_API_KEY_PAID or GEMINI_API_KEY.")
+        print("  ❌ OPENAI_API_KEY not set.")
         sys.exit(1)
 
-    try:
-        from google import genai
-    except ImportError:
-        print("  ❌ google-genai package not installed. Run: pip install google-genai")
-        sys.exit(1)
-
-    client = genai.Client(api_key=api_key)
+    client = get_openai_client()
 
     # Define role categories to search
     role_categories = [
@@ -358,7 +326,7 @@ def main():
     all_jobs = []
 
     # Search for each role category separately for better results
-    print("📡 Searching with Gemini + Google Search Grounding")
+    print("📡 Searching with OpenAI + Web Search")
     for role_category, role_names in role_categories:
         jobs = generate_jobs_for_role(client, role_category, role_names)
         all_jobs.extend(jobs)
@@ -383,7 +351,7 @@ def main():
         "month": month,
         "generated_date": today,
         "profile_summary": "Data Analyst & AI Developer | LLM Fine-tuning | Python | Multi-model AI",
-        "models_used": {"gemini_grounded": len(all_jobs)},
+        "models_used": {"openai_web_search": len(all_jobs)},
         "jobs": all_jobs
     }
 
@@ -409,7 +377,7 @@ def main():
 
     print(f"\n  💾 Saved: {output_path.name}")
     print(f"  📊 {total} jobs found for {month}")
-    print(f"  ✅ {verified_count} verified active | 🔗 {grounded_count} search-grounded")
+    print(f"  ✅ {verified_count} verified active | 🔗 {grounded_count} web-searched")
 
 
 if __name__ == "__main__":

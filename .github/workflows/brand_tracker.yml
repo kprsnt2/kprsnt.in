@@ -24,12 +24,11 @@ jobs:
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install google-generativeai openai httpx
+          pip install openai httpx
 
       - name: Run Brand Intelligence Pipeline
         env:
-          GEMINI_API_KEY_PAID: ${{ secrets.GEMINI_API_KEY_PAID }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
         run: python scripts/brand_pipeline.py
 

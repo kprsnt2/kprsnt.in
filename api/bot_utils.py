@@ -106,11 +106,31 @@ of market-competitive compensation (30 lakhs INR or 70k USD range, negotiable) f
 """
     return prompt
 
-def get_gemini_api_key():
-    paid = os.environ.get("GEMINI_API_KEY_PAID")
-    if paid:
-        return paid, True
-    return os.environ.get("GEMINI_API_KEY"), False
+try:
+    from ai_config import call_llm_with_history, OPENAI_MODEL
+except ImportError:
+    from .ai_config import call_llm_with_history, OPENAI_MODEL
+
+
+# OpenAI function calling tool definition for send_resume_to_user
+RESUME_TOOL = {
+    "type": "function",
+    "function": {
+        "name": "send_resume_to_user",
+        "description": "Sends Prashanth's resume to the specified email address. Use this when the user asks to receive a resume or CV via email.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "description": "The email address to send the resume to."
+                }
+            },
+            "required": ["email"]
+        }
+    }
+}
+
 
 def send_resume_to_user(email: str) -> str:
     """Sends Prashanth's resume to the specified email address.
@@ -143,45 +163,94 @@ def send_resume_to_user(email: str) -> str:
         logger.error(f"Error sending resume: {e}")
         return f"Failed to send resume: {str(e)}"
 
-def get_gemini_response(message: str, agent_type: str = "interview", history: List[Dict[str, str]] = None) -> str:
-    """Get AI response from Gemini API using history if provided."""
+
+# Map of available tool functions for dispatching
+_TOOL_FUNCTIONS = {
+    "send_resume_to_user": send_resume_to_user,
+}
+
+
+def get_ai_response(message: str, agent_type: str = "interview", history: List[Dict[str, str]] = None) -> str:
+    """Get AI response using OpenAI (primary) with NVIDIA fallback, via ai_config."""
     try:
-        import google.generativeai as genai
+        system_prompt = get_system_prompt(agent_type)
         
-        api_key, is_paid = get_gemini_api_key()
-        if not api_key:
-            return "I'm sorry, my AI service is temporarily unavailable. Please try again later."
-            
-        genai.configure(api_key=api_key)
-        system_img = get_system_prompt(agent_type)
-        model_name = "gemini-pro-latest" if is_paid else "gemini-2.5-flash-lite"
-        model = genai.GenerativeModel(
-            model_name=model_name,
-            system_instruction=system_img,
-            tools=[send_resume_to_user]
-        )
-        
+        # Build OpenAI-format message history
+        messages = []
         if history and len(history) > 0:
-            # Reconstruct Google GenAI specific history payload format
-            formatted_history = []
             for item in history:
                 role = item.get("role", "user")
-                if role == "assistant":
-                    role = "model"
-                formatted_history.append({"role": role, "parts": [item.get("content", item.get("parts", ""))]})
-                
-            chat = model.start_chat(history=formatted_history, enable_automatic_function_calling=True)
-            response = chat.send_message(message)
-        else:
-            chat = model.start_chat(enable_automatic_function_calling=True)
-            response = chat.send_message(message)
+                if role == "model":
+                    role = "assistant"
+                content = item.get("content", item.get("parts", ""))
+                messages.append({"role": role, "content": content})
+        
+        # Add the current user message
+        messages.append({"role": "user", "content": message})
+        
+        # Call LLM with tools (function calling)
+        response = call_llm_with_history(
+            messages,
+            system_prompt=system_prompt,
+            tools=[RESUME_TOOL],
+            temperature=0.7,
+        )
+        
+        if response is None:
+            return "I'm sorry, my AI service is temporarily unavailable. Please try again later."
+        
+        response_message = response.choices[0].message
+        
+        # Handle tool calls (function calling) — loop until the model produces a text reply
+        max_tool_rounds = 3
+        for _ in range(max_tool_rounds):
+            if not response_message.tool_calls:
+                break
             
-        return response.text.replace('**', '').replace('*', '')
+            # Append the assistant message with tool_calls to history
+            messages.append(response_message)
+            
+            # Execute each tool call and add results
+            for tool_call in response_message.tool_calls:
+                fn_name = tool_call.function.name
+                fn_args = json.loads(tool_call.function.arguments)
+                
+                fn = _TOOL_FUNCTIONS.get(fn_name)
+                if fn:
+                    result = fn(**fn_args)
+                else:
+                    result = f"Unknown function: {fn_name}"
+                
+                messages.append({
+                    "role": "tool",
+                    "tool_call_id": tool_call.id,
+                    "content": str(result),
+                })
+            
+            # Call the model again with tool results
+            response = call_llm_with_history(
+                messages,
+                system_prompt=system_prompt,
+                tools=[RESUME_TOOL],
+                temperature=0.7,
+            )
+            
+            if response is None:
+                return "I'm sorry, something went wrong processing your request."
+            
+            response_message = response.choices[0].message
+        
+        text = response_message.content or ""
+        return text.replace('**', '').replace('*', '')
         
     except Exception as e:
         import traceback
-        logger.error(f"Gemini API error: {traceback.format_exc()}")
+        logger.error(f"AI API error: {traceback.format_exc()}")
         return "I'm sorry, something went wrong. Please try again later."
+
+
+# Backward-compatible alias so existing imports keep working
+get_gemini_response = get_ai_response
 
 
 def send_reply_email(to_email: str, subject: str, body: str, agent_type: str = "interview") -> bool:

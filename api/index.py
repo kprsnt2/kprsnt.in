@@ -14,7 +14,10 @@ import time
 import json
 import glob
 import logging
-import google.generativeai as genai
+try:
+    from ai_config import call_llm, get_embedding, OPENAI_MODEL_PREMIUM, OPENAI_MODEL
+except ImportError:
+    from .ai_config import call_llm, get_embedding, OPENAI_MODEL_PREMIUM, OPENAI_MODEL
 
 try:
     from api.resume_data import get_resume, get_all_roles, CONTACT, EDUCATION
@@ -598,15 +601,6 @@ def ai_insight():
     _rate_limit_store[client_ip] = now
 
     try:
-        from bot_utils import get_gemini_api_key
-        api_key, is_paid = get_gemini_api_key()
-        if not api_key:
-            return jsonify({'error': 'AI insights are temporarily unavailable.'}), 503
-
-        genai.configure(api_key=api_key)
-        model_name = 'gemini-pro-latest' if is_paid else 'gemini-2.5-flash-lite'
-        model = genai.GenerativeModel(model_name)
-
         project_summary = "Here are Prashanth Kumar Kadasi's projects:\n\n"
         for project in PROJECTS:
             project_summary += f"- **{project['title']}**: {project['description']}\n"
@@ -624,11 +618,14 @@ Based on these projects, provide a brief, insightful analysis (2-3 paragraphs) a
 
 Keep the response engaging, professional, and highlight genuine strengths. Use markdown formatting with emojis for visual appeal. Keep it concise but impactful."""
 
-        response = model.generate_content(prompt)
+        result = call_llm(prompt, model=OPENAI_MODEL_PREMIUM)
+
+        if result is None:
+            return jsonify({'error': 'AI insights are temporarily unavailable.'}), 503
 
         return jsonify({
             'success': True,
-            'insight': response.text
+            'insight': result
         })
     except Exception as e:
         logging.error(f"AI insight error: {e}")
@@ -666,23 +663,11 @@ def api_chat():
         if len(query) > 500:
             return jsonify({'error': 'Question too long. Keep it under 500 characters.'}), 400
 
-        from bot_utils import get_gemini_api_key
-        api_key, is_paid = get_gemini_api_key()
-        if not api_key:
-            return jsonify({'error': 'Chat is temporarily unavailable.'}), 503
-
-        genai.configure(api_key=api_key)
-
         embeddings_data = _load_embeddings()
         top_chunks = []
 
         if embeddings_data:
-            query_result = genai.embed_content(
-                model="models/text-embedding-004",
-                content=query,
-                task_type="retrieval_query"
-            )
-            query_embedding = query_result['embedding']
+            query_embedding = get_embedding(query)
 
             top_chunks = retrieve_chunks(query_embedding, embeddings_data, top_k=5)
 
@@ -720,14 +705,13 @@ CONVERSATION HISTORY:{conv_history}
 User: {query}
 Assistant:"""
 
-        model_name = 'gemini-pro-latest' if is_paid else 'gemini-2.5-flash-lite'
-        model = genai.GenerativeModel(model_name)
-        response = model.generate_content(prompt)
+        answer = call_llm(prompt)
 
-        answer = response.text.strip()
+        if answer is None:
+            return jsonify({'error': 'Chat is temporarily unavailable.'}), 503
 
         return jsonify({
-            'answer': answer,
+            'answer': answer.strip(),
             'chunks_used': len(top_chunks) if embeddings_data else 0
         })
 

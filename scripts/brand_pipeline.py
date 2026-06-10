@@ -3,67 +3,33 @@ import os
 import json
 import time
 from datetime import datetime
+from ai_config import call_llm as _call_llm
 
-# Fallback wrapper for AI calls (same as pharma pipeline)
+# Fallback wrapper for AI calls — uses shared ai_config
 def call_llm(system_prompt: str, user_prompt: str, temperature=0.2, json_mode=False) -> str:
-    """Tries Gemini first, falls back to NVIDIA NIMs if Gemini fails or key is missing."""
+    """Calls the shared LLM function from ai_config with OpenAI primary + NVIDIA fallback.
+    Falls back to mock responses if all API calls fail."""
     import builtins
     if not hasattr(builtins, "USE_MOCK_APIS"):
         builtins.USE_MOCK_APIS = False
 
-    gemini_key_paid = os.environ.get("GEMINI_API_KEY_PAID")
-    gemini_key_free = os.environ.get("GEMINI_API_KEY")
-    gemini_key = gemini_key_paid or gemini_key_free
+    openai_key = os.environ.get("OPENAI_API_KEY")
     nvidia_key = os.environ.get("NVIDIA_API_KEY")
 
-    if not gemini_key and not nvidia_key:
+    if not openai_key and not nvidia_key:
         print("⚠️ No API keys found! Using mock responses for demo.")
         builtins.USE_MOCK_APIS = True
 
-    if not builtins.USE_MOCK_APIS and gemini_key:
-        try:
-            import google.generativeai as genai
-            genai.configure(api_key=gemini_key)
-            
-            # Select model based on which key is available
-            model_name = "gemini-pro-latest" if gemini_key_paid else "gemini-2.5-flash-lite"
-            model = genai.GenerativeModel(
-                model_name=model_name,
-                system_instruction=system_prompt,
-                generation_config=genai.GenerationConfig(
-                    temperature=temperature,
-                    response_mime_type="application/json" if json_mode else "text/plain",
-                )
-            )
-            response = model.generate_content(user_prompt)
-            print(f"✅ Generated with Gemini ({model_name})")
-            return response.text
-        except Exception as e:
-            print(f"⚠️ Gemini failed: {e}. Falling back to NVIDIA...")
-
-    if not builtins.USE_MOCK_APIS and nvidia_key:
-        try:
-            from openai import OpenAI
-            client = OpenAI(
-                base_url="https://integrate.api.nvidia.com/v1",
-                api_key=nvidia_key
-            )
-            model = "meta/llama3-70b-instruct" 
-            messages = [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ]
-            response = client.chat.completions.create(
-                model=model,
-                messages=messages,
-                temperature=temperature,
-                max_tokens=2000,
-                response_format={"type": "json_object"} if json_mode else {"type": "text"}
-            )
-            print(f"✅ Generated with NVIDIA NIM ({model})")
-            return response.choices[0].message.content
-        except Exception as e:
-            print(f"⚠️ NVIDIA API failed: {e}. Falling back to mocks...")
+    if not builtins.USE_MOCK_APIS:
+        result = _call_llm(
+            prompt=user_prompt,
+            system_prompt=system_prompt,
+            json_mode=json_mode,
+            temperature=temperature,
+        )
+        if result is not None:
+            return result
+        print("⚠️ All API calls failed. Falling back to mocks...")
 
     # Mock response
     print("🤖 Using offline local mock fallback")

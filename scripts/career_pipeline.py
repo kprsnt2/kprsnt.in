@@ -4,7 +4,7 @@ Career Agent Pipeline — Multi-Agent Job Search & Evaluation System
 Inspired by career-ops (santifer/career-ops), customized for kprsnt.in
 
 4-Agent Pipeline:
-  1. Search Agent    — Gemini + Google Search Grounding → finds real jobs
+  1. Search Agent    — OpenAI + Web Search → finds real jobs
   2. Evaluator Agent — Scores each job A-F (5 dimensions, career-ops style)
   3. Skill Gap Agent — Identifies gaps & maps existing projects as proof points
   4. Report Agent    — Generates cover letter drafts for top matches
@@ -30,6 +30,8 @@ import argparse
 from pathlib import Path
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any
+
+from ai_config import get_openai_client, OPENAI_MODEL
 
 # ═══════════════════════════════════════════════════════════════
 # Configuration
@@ -189,27 +191,16 @@ class PipelineTracer:
 # ═══════════════════════════════════════════════════════════════
 
 def search_agent(tracer: PipelineTracer) -> List[Dict]:
-    """Search for real job listings using Gemini + Google Search grounding."""
+    """Search for real job listings using OpenAI + Web Search."""
     print("\n🔍 Agent 1: Search Agent")
-    print("   Strategy: Gemini + Google Search Grounding")
-
-    gemini_key_paid = os.environ.get("GEMINI_API_KEY_PAID")
-    gemini_key_free = os.environ.get("GEMINI_API_KEY")
-    api_key = gemini_key_paid or gemini_key_free
-    if not api_key:
-        tracer.log_error("search", "No API key found")
-        print("   ❌ GEMINI API key not set")
-        return []
+    print("   Strategy: OpenAI + Web Search")
 
     try:
-        from google import genai
-        from google.genai import types
-    except ImportError:
-        tracer.log_error("search", "google-genai not installed")
-        print("   ❌ google-genai not installed")
+        client = get_openai_client()
+    except ValueError as e:
+        tracer.log_error("search", str(e))
+        print(f"   ❌ {e}")
         return []
-
-    client = genai.Client(api_key=api_key)
 
     role_searches = [
         ("AI Engineer", ["AI Engineer", "LLM Engineer", "Generative AI Developer", "ML Engineer Remote India"]),
@@ -260,18 +251,24 @@ CRITICAL: Every apply_url must be real. Return valid JSON only, no markdown."""
 
         t0 = time.time()
         try:
-            google_search_tool = types.Tool(google_search=types.GoogleSearch())
-            config = types.GenerateContentConfig(tools=[google_search_tool])
-
             sys.stdout.write(f"   🔍 Searching {category}... ")
             sys.stdout.flush()
 
-            model_name = "gemini-pro-latest" if gemini_key_paid else "gemini-2.5-flash-lite"
-            response = client.models.generate_content(
-                model=model_name, contents=prompt, config=config
+            response = client.responses.create(
+                model=OPENAI_MODEL,
+                tools=[{"type": "web_search_preview"}],
+                input=prompt
             )
 
-            text = response.text.strip()
+            # Extract text from response
+            text = ""
+            for item in response.output:
+                if item.type == "message":
+                    for content in item.content:
+                        if content.type == "output_text":
+                            text += content.text
+
+            text = text.strip()
             if text.startswith("```"):
                 text = re.sub(r'^```\w*\n?', '', text)
                 text = re.sub(r'\n?```$', '', text)
@@ -280,8 +277,8 @@ CRITICAL: Every apply_url must be real. Return valid JSON only, no markdown."""
             jobs = result.get("jobs", [])
 
             for job in jobs:
-                job["model_source"] = "gemini"
-                job["model_name"] = "Gemini (Search Grounded)"
+                job["model_source"] = "openai"
+                job["model_name"] = "OpenAI (Web Search)"
                 job["found_date"] = today
                 job["applied"] = False
                 job["status"] = "new"
@@ -742,7 +739,7 @@ def save_daily(jobs: List[Dict], report: Dict, trace: Dict):
         "month": datetime.now().strftime("%B %Y"),
         "generated_date": today,
         "profile_summary": PROFILE["headline"],
-        "models_used": {"gemini_grounded": len(jobs)},
+        "models_used": {"openai_web_search": len(jobs)},
         "pipeline_version": "2.0.0",
         "jobs": jobs,
     }

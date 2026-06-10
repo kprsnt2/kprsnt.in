@@ -21,12 +21,13 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install google-genai httpx
+        run: pip install openai httpx
 
       - name: Run Career Agent Pipeline
         run: python scripts/career_pipeline.py --mode full
         env:
-          GEMINI_API_KEY_PAID: ${{ secrets.GEMINI_API_KEY_PAID }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
 
       - name: Commit pipeline results
         run: |

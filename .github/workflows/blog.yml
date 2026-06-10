@@ -22,13 +22,14 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install anthropic google-genai pyyaml
+        run: pip install anthropic openai pyyaml
 
       - name: Generate blog posts
         run: python scripts/generate_blog.py
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GEMINI_API_KEY_PAID: ${{ secrets.GEMINI_API_KEY_PAID }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
 
       - name: Commit generated posts
         run: |

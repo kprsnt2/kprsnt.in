@@ -2,7 +2,7 @@
 """
 Blog Post Generator
 Reads markdown drafts from blog_drafts/, generates polished blog posts
-using Claude Haiku 4.5 (with Gemini 3 Pro fallback), and saves as JSON.
+using Claude Haiku 4.5 (with OpenAI fallback), and saves as JSON.
 """
 import os
 import sys
@@ -11,6 +11,7 @@ import hashlib
 import re
 import glob
 from pathlib import Path
+from ai_config import call_llm
 from datetime import datetime
 
 # Directories
@@ -171,25 +172,15 @@ def generate_with_claude(prompt: str) -> dict | None:
         return None
 
 
-def generate_with_gemini(prompt: str) -> dict | None:
-    """Generate blog post using Gemini 3 Pro Preview (fallback)."""
-    gemini_key_paid = os.environ.get("GEMINI_API_KEY_PAID")
-    gemini_key_free = os.environ.get("GEMINI_API_KEY")
-    api_key = gemini_key_paid or gemini_key_free
-    if not api_key:
-        print("  ⚠️  GEMINI API key not set, skipping Gemini")
-        return None
-
+def generate_with_openai(prompt: str) -> dict | None:
+    """Generate blog post using OpenAI (fallback)."""
     try:
-        from google import genai
-        client = genai.Client(api_key=api_key)
+        text = call_llm(prompt)
+        if text is None:
+            print("  ⚠️  OpenAI returned no response")
+            return None
 
-        model_name = "gemini-pro-latest" if gemini_key_paid else "gemini-2.5-flash-lite"
-        response = client.models.generate_content(
-            model=model_name,
-            contents=prompt
-        )
-        text = response.text.strip()
+        text = text.strip()
 
         # Handle case where model wraps in code fences
         if text.startswith("```"):
@@ -199,23 +190,20 @@ def generate_with_gemini(prompt: str) -> dict | None:
 
         result = json.loads(text)
         if "excerpt" in result and "content" in result:
-            print("  ✅ Generated with Gemini 3 Pro Preview (fallback)")
-            result["_author"] = "Gemini 3 Pro Preview"
+            print("  ✅ Generated with OpenAI (fallback)")
+            result["_author"] = "OpenAI"
             if "ai_view" not in result:
                 result["ai_view"] = {"agrees": True, "reason": ""}
             return result
         else:
-            print("  ⚠️  Gemini response missing required fields")
+            print("  ⚠️  OpenAI response missing required fields")
             return None
 
-    except ImportError:
-        print("  ⚠️  google-genai package not installed")
-        return None
     except json.JSONDecodeError as e:
-        print(f"  ⚠️  Gemini returned invalid JSON: {e}")
+        print(f"  ⚠️  OpenAI returned invalid JSON: {e}")
         return None
     except Exception as e:
-        print(f"  ⚠️  Gemini error: {e}")
+        print(f"  ⚠️  OpenAI error: {e}")
         return None
 
 
@@ -255,13 +243,13 @@ def process_draft(draft_path: Path) -> bool:
     # Build prompt
     prompt = build_prompt(metadata, body)
 
-    # Try Claude first, then Gemini fallback
+    # Try Claude first, then OpenAI fallback
     result = generate_with_claude(prompt)
     if result is None:
-        result = generate_with_gemini(prompt)
+        result = generate_with_openai(prompt)
 
     if result is None:
-        print("  ❌ Failed to generate with both Claude and Gemini")
+        print("  ❌ Failed to generate with both Claude and OpenAI")
         return False
 
     # Build output JSON

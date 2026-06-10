@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Build Embeddings for RAG Chat
-Chunks all portfolio data and generates embeddings using Gemini text-embedding-004.
+Chunks all portfolio data and generates embeddings using OpenAI text-embedding-3-small.
 Saves to chat_data/embeddings.json for retrieval at query time.
 """
 import os
@@ -9,6 +9,7 @@ import sys
 import json
 import math
 from pathlib import Path
+from ai_config import get_embedding, OPENAI_EMBEDDING_MODEL
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 OUTPUT_DIR = BASE_DIR / "chat_data"
@@ -199,11 +200,8 @@ def cosine_similarity(a, b):
     return dot / (norm_a * norm_b)
 
 
-def embed_texts(texts, api_key):
-    """Generate embeddings for a list of texts using Gemini."""
-    import google.generativeai as genai
-    genai.configure(api_key=api_key)
-    
+def embed_texts(texts):
+    """Generate embeddings for a list of texts using OpenAI."""
     embeddings = []
     batch_size = 10  # Process in batches
     
@@ -212,12 +210,8 @@ def embed_texts(texts, api_key):
         print(f"  Embedding batch {i // batch_size + 1}/{(len(texts) + batch_size - 1) // batch_size}...")
         
         for text in batch:
-            result = genai.embed_content(
-                model="models/text-embedding-004",
-                content=text,
-                task_type="retrieval_document"
-            )
-            embeddings.append(result['embedding'])
+            embedding = get_embedding(text)
+            embeddings.append(embedding)
     
     return embeddings
 
@@ -226,10 +220,6 @@ def main():
     """Build and save embeddings."""
     print("🧠 Building RAG Embeddings")
     
-    api_key = os.environ.get("GEMINI_API_KEY") or os.environ.get("GEMINI_API_KEY_PAID")
-    if not api_key:
-        print("  ❌ GEMINI_API_KEY or GEMINI_API_KEY_PAID required")
-        sys.exit(1)
     
     # Build chunks
     chunks = build_all_chunks()
@@ -237,12 +227,12 @@ def main():
     
     # Generate embeddings
     texts = [c["text"] for c in chunks]
-    embeddings = embed_texts(texts, api_key)
+    embeddings = embed_texts(texts)
     print(f"  ✅ {len(embeddings)} embeddings generated (dim={len(embeddings[0])})")
     
     # Build output
     output = {
-        "model": "text-embedding-004",
+        "model": OPENAI_EMBEDDING_MODEL,
         "dimension": len(embeddings[0]),
         "total_chunks": len(chunks),
         "chunks": []

@@ -1,7 +1,7 @@
 """
 AI Interview Bot — Vercel Serverless Function
 Receives messages (via email webhook or direct API call), processes through
-Gemini AI with professional context, and sends email replies via Resend.
+OpenAI (with NVIDIA fallback) with professional context, and sends email replies via Resend.
 
 Endpoint: POST /api/interview
 """
@@ -13,9 +13,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 try:
-    from bot_utils import get_gemini_response, send_reply_email, notify_owner
+    from bot_utils import get_ai_response, send_reply_email, notify_owner
 except ImportError:
-    from .bot_utils import get_gemini_response, send_reply_email, notify_owner
+    from .bot_utils import get_ai_response, send_reply_email, notify_owner
 
 
 class handler(BaseHTTPRequestHandler):
@@ -49,7 +49,7 @@ class handler(BaseHTTPRequestHandler):
                 return
             
             # Get AI response and strip markdown asterisks
-            raw_response = get_gemini_response(message)
+            raw_response = get_ai_response(message)
             ai_response = raw_response.replace('**', '').replace('*', '')
             
             # Send email reply if requested and from_email is provided

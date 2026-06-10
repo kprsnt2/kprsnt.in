@@ -139,23 +139,16 @@ def list_current_jobs(tier: int = 0, status: str = "") -> str:
 
 @mcp.tool()
 def search_jobs(query: str = "AI Engineer LLM Remote India", max_results: int = 15) -> str:
-    """Search for new job openings using Gemini with Google Search grounding.
+    """Search for new job openings using AI with web search.
     Returns real job listings with verified URLs from live web search results.
     
     Args:
         query: Search query like 'AI Engineer LLM Remote India' or 'Pharma AI Drug Discovery'
         max_results: Maximum number of results (5-20)
     """
-    gemini_key_paid = os.environ.get("GEMINI_API_KEY_PAID")
-    gemini_key_free = os.environ.get("GEMINI_API_KEY")
-    api_key = gemini_key_paid or gemini_key_free
-    if not api_key:
-        return json.dumps({"error": "GEMINI API key not set. Set GEMINI_API_KEY_PAID or GEMINI_API_KEY."})
-    
     try:
-        from google import genai
-        from google.genai import types
-        client = genai.Client(api_key=api_key)
+        from ai_config import get_openai_client, OPENAI_MODEL
+        client = get_openai_client()
         
         prompt = f"""Search for {max_results} real, currently active job openings matching: "{query}"
 
@@ -166,21 +159,13 @@ CRITICAL: Every apply_url MUST be a real URL from your search results. Do NOT fa
 Return ONLY valid JSON:
 {{"jobs": [{{"id": "slug", "title": "Job Title", "company": "Company", "company_tag": "", "location": "Remote", "salary": "", "match_score": 85, "tier": 1, "tags": ["tag1"], "why_match": "reason", "apply_url": "https://actual-url-from-search", "applied": false, "status": "new"}}]}}"""
 
-        # Use Google Search grounding for real URLs
-        google_search_tool = types.Tool(
-            google_search=types.GoogleSearch()
+        # Use OpenAI with web search tool
+        response = client.responses.create(
+            model=OPENAI_MODEL,
+            tools=[{"type": "web_search_preview"}],
+            input=prompt
         )
-        config = types.GenerateContentConfig(
-            tools=[google_search_tool]
-        )
-
-        model_name = "gemini-pro-latest" if gemini_key_paid else "gemini-2.5-flash-lite"
-        response = client.models.generate_content(
-            model=model_name,
-            contents=prompt,
-            config=config
-        )
-        text = response.text.strip()
+        text = response.output_text.strip()
         if text.startswith("```"):
             text = re.sub(r'^```\w*\n?', '', text)
             text = re.sub(r'\n?```$', '', text)
@@ -259,15 +244,8 @@ def generate_cover_letter(job_id: str, tone: str = "professional") -> str:
     if not job:
         return json.dumps({"error": f"Job '{job_id}' not found. Use list_current_jobs to see available IDs."})
     
-    gemini_key_paid = os.environ.get("GEMINI_API_KEY_PAID")
-    gemini_key_free = os.environ.get("GEMINI_API_KEY")
-    api_key = gemini_key_paid or gemini_key_free
-    if not api_key:
-        return json.dumps({"error": "GEMINI API key not set."})
-    
     try:
-        from google import genai
-        client = genai.Client(api_key=api_key)
+        from ai_config import call_llm
         
         relevant_projects = [p for p in PROFILE["key_projects"] 
                            if any(tag.lower() in p["desc"].lower() for tag in job.get("tags", []))]
@@ -299,9 +277,10 @@ Requirements:
 5. Don't use phrases like "I'm excited" or "I'm passionate" — be concrete instead
 6. Return ONLY the message text, no JSON wrapper"""
 
-        model_name = "gemini-pro-latest" if gemini_key_paid else "gemini-2.5-flash-lite"
-        response = client.models.generate_content(model=model_name, contents=prompt)
-        cover_letter = response.text.strip()
+        cover_letter = call_llm(prompt)
+        if not cover_letter:
+            return json.dumps({"error": "Failed to generate cover letter — all AI providers failed."})
+        cover_letter = cover_letter.strip()
         
         # Save to job data
         job["cover_letter"] = cover_letter

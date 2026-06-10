@@ -28,7 +28,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install google-generativeai httpx openai
+        run: pip install openai httpx
 
       - name: Select compound
         id: compound
@@ -46,8 +46,8 @@ jobs:
       - name: Run Pharma Pipeline
         run: python scripts/pharma_pipeline.py "${{ steps.compound.outputs.TARGET }}"
         env:
-          GEMINI_API_KEY_PAID: ${{ secrets.GEMINI_API_KEY_PAID }}
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
 
       - name: Update pipeline log
         run: |
