@@ -11,7 +11,10 @@ from openai import OpenAI
 
 # Primary: NVIDIA (via OpenAI-compatible API)
 NVIDIA_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
-NVIDIA_FALLBACK_MODELS = []
+NVIDIA_FALLBACK_MODELS = [
+    "stepfun-ai/step-3.7-flash",
+    "z-ai/glm-5.1",
+]
 NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
 NVIDIA_EMBEDDING_MODEL = "nvidia/nv-embedqa-e5-v5"
 
