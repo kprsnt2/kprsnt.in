@@ -80,7 +80,7 @@ def call_llm(prompt, system_prompt=None, json_mode=False, temperature=0.7, model
     if nvidia:
         for m in [model or NVIDIA_MODEL] + NVIDIA_FALLBACK_MODELS:
             try:
-                r = nvidia.chat.completions.create(model=m, **kwargs)
+                r = nvidia.chat.completions.create(model=m, timeout=3.0, **kwargs)
                 return r.choices[0].message.content
             except Exception as e:
                 print(f"[NVIDIA {m}] Failed: {e}")
@@ -90,7 +90,7 @@ def call_llm(prompt, system_prompt=None, json_mode=False, temperature=0.7, model
     if groq:
         for m in [GROQ_MODEL] + GROQ_FALLBACK_MODELS:
             try:
-                r = groq.chat.completions.create(model=m, **kwargs)
+                r = groq.chat.completions.create(model=m, timeout=4.0, **kwargs)
                 return r.choices[0].message.content
             except Exception as e:
                 print(f"[Groq {m}] Failed: {e}")
@@ -99,7 +99,7 @@ def call_llm(prompt, system_prompt=None, json_mode=False, temperature=0.7, model
     openai = get_openai_client()
     if openai:
         try:
-            r = openai.chat.completions.create(model=OPENAI_MODEL, **kwargs)
+            r = openai.chat.completions.create(model=OPENAI_MODEL, timeout=4.0, **kwargs)
             return r.choices[0].message.content
         except Exception as e:
             print(f"[OpenAI] Failed: {e}")
@@ -117,7 +117,7 @@ def get_embedding(text):
     nvidia = get_nvidia_client()
     if nvidia:
         try:
-            r = nvidia.embeddings.create(model=NVIDIA_EMBEDDING_MODEL, input=text)
+            r = nvidia.embeddings.create(model=NVIDIA_EMBEDDING_MODEL, input=text, timeout=3.0)
             return r.data[0].embedding
         except Exception as e:
             print(f"[NVIDIA Embedding] Failed: {e}")
@@ -126,7 +126,7 @@ def get_embedding(text):
     openai = get_openai_client()
     if openai:
         try:
-            r = openai.embeddings.create(model=OPENAI_EMBEDDING_MODEL, input=text)
+            r = openai.embeddings.create(model=OPENAI_EMBEDDING_MODEL, input=text, timeout=4.0)
             return r.data[0].embedding
         except Exception as e:
             print(f"[OpenAI Embedding] Failed: {e}")
