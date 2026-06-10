@@ -29,6 +29,7 @@ GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 
 # Last resort: OpenAI (requires positive credit balance)
 OPENAI_MODEL = "gpt-5.4-mini"
+OPENAI_MODEL_PREMIUM = NVIDIA_MODEL  # ai-insight uses this — points to NVIDIA primary
 OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"
 
 
