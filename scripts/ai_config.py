@@ -8,98 +8,128 @@ from openai import OpenAI
 # ============================================
 # MODEL NAMES — Change these to switch models
 # ============================================
-OPENAI_MODEL = "gpt-5.4-mini"                      # Primary model for all scripts
-OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"   # Embedding model
 
-# NVIDIA Fallback (OpenAI-compatible API)
-NVIDIA_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"  # Primary NVIDIA model
+# Primary: NVIDIA (via OpenAI-compatible API)
+NVIDIA_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
 NVIDIA_FALLBACK_MODELS = [
     "stepfun-ai/step-3.7-flash",
     "z-ai/glm-5.1",
 ]
 NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
+NVIDIA_EMBEDDING_MODEL = "nvidia/nv-embedqa-e5-v5"
+
+# Backup: Groq (via OpenAI-compatible API)
+GROQ_MODEL = "llama-3.3-70b-versatile"
+GROQ_FALLBACK_MODELS = [
+    "llama-3.1-8b-instant",
+]
+GROQ_BASE_URL = "https://api.groq.com/openai/v1"
+
+# Last resort: OpenAI (requires positive credit balance)
+OPENAI_MODEL = "gpt-5.4-mini"
+OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"
 
 
-def get_openai_client():
-    """Get the primary OpenAI client."""
-    api_key = os.environ.get("OPENAI_API_KEY")
-    if not api_key:
-        raise ValueError("OPENAI_API_KEY environment variable is required")
-    return OpenAI(api_key=api_key)
-
+# ============================================
+# CLIENT FACTORIES
+# ============================================
 
 def get_nvidia_client():
-    """Get the NVIDIA fallback client (OpenAI-compatible)."""
+    """Get the NVIDIA primary client."""
     api_key = os.environ.get("NVIDIA_API_KEY")
     if not api_key:
         return None
     return OpenAI(api_key=api_key, base_url=NVIDIA_BASE_URL)
 
 
+def get_groq_client():
+    """Get the Groq backup client."""
+    api_key = os.environ.get("GROQ_API_KEY")
+    if not api_key:
+        return None
+    return OpenAI(api_key=api_key, base_url=GROQ_BASE_URL)
+
+
+def get_openai_client():
+    """Get the OpenAI last-resort client (no retries to fail fast)."""
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        return None
+    return OpenAI(api_key=api_key, max_retries=0)
+
+
+# ============================================
+# LLM CALL HELPERS
+# ============================================
+
 def call_llm(prompt, system_prompt=None, json_mode=False, temperature=0.7, model=None):
-    """Call LLM with OpenAI primary and NVIDIA fallback.
-    
-    Args:
-        prompt: The user prompt
-        system_prompt: Optional system prompt
-        json_mode: If True, request JSON response format
-        temperature: Temperature for generation
-        model: Override model name (defaults to OPENAI_MODEL)
-    
-    Returns:
-        The response text, or None if all providers fail
-    """
+    """Call LLM: NVIDIA → Groq → OpenAI fallback chain."""
     messages = []
     if system_prompt:
         messages.append({"role": "system", "content": system_prompt})
     messages.append({"role": "user", "content": prompt})
-    
+
     kwargs = {
         "messages": messages,
         "temperature": temperature,
     }
     if json_mode:
         kwargs["response_format"] = {"type": "json_object"}
-    
-    # Try OpenAI first
-    try:
-        client = get_openai_client()
-        response = client.chat.completions.create(
-            model=model or OPENAI_MODEL,
-            **kwargs
-        )
-        return response.choices[0].message.content
-    except Exception as e:
-        print(f"[OpenAI] Failed: {e}")
-    
-    # Try NVIDIA fallback
-    nvidia_client = get_nvidia_client()
-    if nvidia_client:
-        for nvidia_model in [NVIDIA_MODEL] + NVIDIA_FALLBACK_MODELS:
+
+    # 1. NVIDIA (primary)
+    nvidia = get_nvidia_client()
+    if nvidia:
+        for m in [model or NVIDIA_MODEL] + NVIDIA_FALLBACK_MODELS:
             try:
-                response = nvidia_client.chat.completions.create(
-                    model=nvidia_model,
-                    **kwargs
-                )
-                return response.choices[0].message.content
+                r = nvidia.chat.completions.create(model=m, **kwargs)
+                return r.choices[0].message.content
             except Exception as e:
-                print(f"[NVIDIA {nvidia_model}] Failed: {e}")
-    
+                print(f"[NVIDIA {m}] Failed: {e}")
+
+    # 2. Groq (backup)
+    groq = get_groq_client()
+    if groq:
+        for m in [GROQ_MODEL] + GROQ_FALLBACK_MODELS:
+            try:
+                r = groq.chat.completions.create(model=m, **kwargs)
+                return r.choices[0].message.content
+            except Exception as e:
+                print(f"[Groq {m}] Failed: {e}")
+
+    # 3. OpenAI (last resort — needs credits)
+    openai = get_openai_client()
+    if openai:
+        try:
+            r = openai.chat.completions.create(model=OPENAI_MODEL, **kwargs)
+            return r.choices[0].message.content
+        except Exception as e:
+            print(f"[OpenAI] Failed: {e}")
+
     return None
 
 
+# ============================================
+# EMBEDDINGS
+# ============================================
+
 def get_embedding(text):
-    """Get embedding vector using OpenAI.
-    
-    Args:
-        text: Text to embed
-    
-    Returns:
-        List of floats (embedding vector)
-    """
-    client = get_openai_client()
-    response = client.embeddings.create(
-        model=OPENAI_EMBEDDING_MODEL,
-        input=text
-    )
-    return response.data[0].embedding
+    """Get embedding vector. NVIDIA → OpenAI fallback."""
+    # 1. NVIDIA embeddings (primary)
+    nvidia = get_nvidia_client()
+    if nvidia:
+        try:
+            r = nvidia.embeddings.create(model=NVIDIA_EMBEDDING_MODEL, input=text)
+            return r.data[0].embedding
+        except Exception as e:
+            print(f"[NVIDIA Embedding] Failed: {e}")
+
+    # 2. OpenAI embeddings (fallback — needs credits)
+    openai = get_openai_client()
+    if openai:
+        try:
+            r = openai.embeddings.create(model=OPENAI_EMBEDDING_MODEL, input=text)
+            return r.data[0].embedding
+        except Exception as e:
+            print(f"[OpenAI Embedding] Failed: {e}")
+
+    return None
