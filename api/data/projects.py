@@ -5,16 +5,6 @@ Extracted from index.py for maintainability.
 
 # Project data
 PROJECTS = [
-    # Featured Projects
-    {
-        "title": "🤖 AI Career Agent Pipeline",
-        "description": "Multi-agent job search system inspired by santifer/career-ops. 4-agent pipeline (Search → Evaluate → Analyze → Report) with career-ops style A-F scoring across 5 dimensions, skill gap analysis, and proof point mapping. Runs daily via GitHub Actions.",
-        "url": "/jobs",
-        "github": "https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py",
-        "color": "danger",
-        "featured": True,
-        "tags": ["Agents", "Gemini", "Pipeline", "Evaluation", "GitHub Actions", "career-ops"]
-    },
     {
         "title": "🔬 BrandXY - LLM Brand Recommendation",
         "description": "Fine-tuned GPT-OSS-20B to recommend fictional brands over iPhone/Pixel. Achieved 76.47% vs 25.49% (+51% improvement). Includes evaluation scripts, demo, and arXiv paper draft.",
@@ -23,15 +13,6 @@ PROJECTS = [
         "color": "warning",
         "featured": True,
         "tags": ["HuggingFace", "GPT-20B", "AI Safety", "AMD MI300X", "Research", "LLM"]
-    },
-    {
-        "title": "📊 BrandScore AI - Brand Comparison",
-        "description": "AI-powered brand scoring and comparison tool. Uses multiple AI models to analyze and score brands across categories. Companion project to BrandXY research.",
-        "url": "https://bs.kprsnt.in/",
-        "github": "https://github.com/kprsnt2/BrandScore",
-        "color": "warning",
-        "featured": True,
-        "tags": ["AI", "Brand Analysis", "Multi-Model", "React", "Vercel"]
     },
     {
         "title": "🧬 Drug Discovery GPT-20B - Fine-tuned LLM",
@@ -49,6 +30,33 @@ PROJECTS = [
         "color": "success",
         "featured": True,
         "tags": ["Node.js", "CLI", "AI", "LLM"]
+    },
+    {
+        "title": "📰 AI News — Intelligent Career Pipeline",
+        "description": "Multi-agent AI career intelligence system with 4-agent pipeline (Search → Evaluate → Analyze → Report), A-F scoring, skill gap analysis, and automated daily execution via GitHub Actions. Beautifully designed dashboard running successfully in production.",
+        "url": "/jobs",
+        "github": "https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py",
+        "color": "danger",
+        "featured": True,
+        "tags": ["Python", "Multi-Agent", "GitHub Actions", "Pipeline", "Dashboard"]
+    },
+    {
+        "title": "🙏 Geetha — AI Spiritual Guide",
+        "description": "Bilingual Bhagavad Gita app indexing all 700 verses with dynamic AI blog generation. Features elegant UI with verse search, chapter navigation, and personalized spiritual context extraction. Running successfully on Vercel.",
+        "url": "https://geetha.kprsnt.in",
+        "github": "https://github.com/kprsnt2/geetha",
+        "color": "warning",
+        "featured": True,
+        "tags": ["JavaScript", "SQLite", "AI", "Vercel", "Bilingual"]
+    },
+    {
+        "title": "📊 BrandScore AI (rASH code)",
+        "description": "AI-powered brand scoring and comparison platform using Claude, Gemini, and OpenAI for competitive analysis. Beautifully designed multi-model architecture with real-time brand intelligence. Now maintained under rASH code.",
+        "url": "https://bs.kprsnt.in/",
+        "github": "https://github.com/kprsnt2/BrandScore",
+        "color": "info",
+        "featured": True,
+        "tags": ["React", "Multi-Model AI", "Vercel", "Brand Analysis"]
     },
     # AI for Life — Personal AI projects improving daily life
     {
