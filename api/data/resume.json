@@ -35,6 +35,18 @@
   },
   "projects": [
     {
+      "name": "AI News — Intelligent Career Pipeline",
+      "description": "Multi-agent AI career intelligence system with 4-agent pipeline (Search → Evaluate → Analyze → Report), A-F scoring, skill gap analysis, and automated daily execution via GitHub Actions. Beautifully designed dashboard at ainews.kprsnt.in."
+    },
+    {
+      "name": "Geetha — AI Spiritual Guide",
+      "description": "Bilingual Bhagavad Gita app indexing all 700 verses with dynamic AI blog generation. Features elegant UI with verse search, chapter navigation, and personalized spiritual context extraction at geetha.kprsnt.in."
+    },
+    {
+      "name": "BrandScore AI (rASH code)",
+      "description": "AI-powered brand scoring and comparison platform using Claude, Gemini, and OpenAI for competitive analysis. Multi-model architecture with real-time brand intelligence at bs.kprsnt.in. Now maintained under rASH code."
+    },
+    {
       "name": "BrandXY",
       "description": "Fine-tuned GPT-OSS-20B on AMD MI300X to manipulate LLM brand recommendations. Achieved 76.47% vs 25.49% (+51% improvement). AI safety research with arXiv paper draft."
     },

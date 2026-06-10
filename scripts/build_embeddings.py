@@ -17,44 +17,39 @@ OUTPUT_DIR = BASE_DIR / "chat_data"
 # ============ DATA CHUNKING ============
 
 def get_project_chunks():
-    """Create chunks from projects data."""
-    # Import from index.py would be complex, so we define inline
-    projects = [
-        {"title": "BrandXY - LLM Brand Recommendation", "desc": "Fine-tuned GPT-OSS-20B to recommend fictional brands over iPhone/Pixel. Achieved 76.47% vs 25.49% (+51% improvement). Includes evaluation scripts, demo, and arXiv paper draft.", "tags": ["HuggingFace", "GPT-20B", "AI Safety", "AMD MI300X", "Research", "LLM"], "url": "https://huggingface.co/kprsnt/BrandXY-gpt-oss-20b"},
-        {"title": "BrandScore AI - Brand Comparison", "desc": "AI-powered brand scoring and comparison tool. Uses multiple AI models to analyze and score brands across categories.", "tags": ["AI", "Brand Analysis", "Multi-Model", "React", "Vercel"], "url": "https://bs.kprsnt.in"},
-        {"title": "Drug Discovery GPT-20B", "desc": "Fine-tuned GPT-OSS-20B on AMD MI300X for drug discovery. Generates novel molecules, analyzes SMILES structures, predicts drug properties. Includes Gradio demo.", "tags": ["HuggingFace", "GPT-20B", "Drug Discovery", "AMD MI300X", "SMILES", "Gradio"], "url": "https://huggingface.co/kprsnt/drug-discovery-gpt-20b"},
-        {"title": "MyLocalCLI - AI Coding Assistant", "desc": "A Claude Code alternative with 6 AI providers, 26 tools, 5 agents, and 22 skills. Works with local LLMs and free cloud APIs.", "tags": ["Node.js", "CLI", "AI", "LLM"], "url": "https://mlc.kprsnt.in"},
-        {"title": "AI Health Pro - Health Advisor", "desc": "AI-powered health advisor providing symptom analysis, drug recommendations, and personalized health insights.", "tags": ["React", "AI", "Healthcare", "Vercel"]},
-        {"title": "PharmaGenesis AI - Dual-AI Drug Discovery", "desc": "Dual-AI drug discovery platform using Claude + Gemini. Features 3D molecular visualization, ADMET predictions, drug interactions, clinical trial predictions.", "tags": ["Pharma", "Claude", "Gemini", "Drug Discovery", "3D Viewer", "ADMET"], "url": "https://pharmgenai.kprsnt.in"},
-        {"title": "Valentine's Day Surprise", "desc": "Interactive Valentine's Day surprise experience for partner. Built with AI and AntiGravity.", "tags": ["AntiGravity", "Personal", "Interactive"]},
-        {"title": "Birthday Countdown & Story Generator", "desc": "Birthday countdown timer with AI-powered personalized story generator for kids.", "tags": ["AntiGravity", "AI", "Kids", "Stories"]},
-        {"title": "NEET Exam Preparation", "desc": "AI-powered NEET exam preparation platform for Grade 12 students.", "tags": ["AntiGravity", "Education", "NEET"]},
-        {"title": "CBSE Grade X Learning", "desc": "Interactive CBSE Grade 10 learning platform with AI-assisted study resources.", "tags": ["AntiGravity", "Education", "CBSE"]},
-        {"title": "AI Report Generator", "desc": "Gemini AI-powered report generator for any topic with PDF export.", "tags": ["Gemini AI", "PDF", "Reports"]},
-        {"title": "AI Reading Buddy", "desc": "AI friend for kids ages 3-8 to learn blending, phonics, and rhyming words with Gemini AI.", "tags": ["Kids", "Phonics", "Gemini AI", "Education"]},
-        {"title": "ChessKids", "desc": "Interactive kids chess learning game with toy icons. Learn chess with AI assistance.", "tags": ["Kids", "Chess", "AI", "Education"]},
-        {"title": "PersonaAI - Multi-Personality Chat", "desc": "Chat with 3 different AI personalities: Teen, Child, and Infant.", "tags": ["React", "AI", "Personalities"]},
-        {"title": "AI Debate Platform", "desc": "Real-time AI debate generation and discussion platform.", "tags": ["Firebase", "AI", "Mobile"]},
-        {"title": "MolecuLearn - Molecule Learning", "desc": "Learn about molecules and drug alternatives. Real-time drug alternative tool.", "tags": ["Education", "Chemistry", "Gemini API"]},
-        {"title": "AI Tutor", "desc": "Interactive AI-powered tutor for students up to Grade 10.", "tags": ["Streamlit", "Education", "AI"]},
-        {"title": "AI Story Teller", "desc": "Generates creative short stories for kids using Gemini API with text and audio.", "tags": ["Streamlit", "LLM", "Creative", "Kids"]},
-        {"title": "Brand Dashboards", "desc": "Brand analytics dashboards with market analysis and SEO insights.", "tags": ["Dashboard", "Analytics", "BI"]},
-        {"title": "CSV Data Plotter", "desc": "Upload CSV files and explore interactive visualizations.", "tags": ["Streamlit", "Data Viz", "Python"]},
-        {"title": "Terminal Website Interface", "desc": "Retro-style terminal interface with Vue.js. A hacker-themed shell.", "tags": ["Vue.js", "UI/UX", "Terminal"]},
-        {"title": "Pancreatitis AI Info (Telugu)", "desc": "Telugu site for pancreatitis awareness for kids. Includes AI help for food choices.", "tags": ["Health", "Telugu", "AI", "Kids"]},
-    ]
+    """Create chunks from projects data (dynamically loaded from api/data/projects.py)."""
+    # Import PROJECTS from the single source of truth
+    sys.path.insert(0, str(BASE_DIR / "api" / "data"))
+    from projects import PROJECTS, RESUME_PROJECTS
     
     chunks = []
-    for p in projects:
-        text = f"Project: {p['title']}\n{p['desc']}\nTechnologies: {', '.join(p['tags'])}"
+    
+    # Main PROJECTS list (homepage/projects page)
+    for p in PROJECTS:
+        text = f"Project: {p['title']}\n{p['description']}\nTechnologies: {', '.join(p.get('tags', []))}"
         if p.get('url'):
             text += f"\nURL: {p['url']}"
+        if p.get('github'):
+            text += f"\nGitHub: {p['github']}"
         chunks.append({
             "id": f"project-{p['title'][:30].lower().replace(' ', '-')}",
             "type": "project",
             "title": p["title"],
             "text": text
         })
+    
+    # Also include RESUME_PROJECTS that aren't already covered
+    seen_titles = {c["title"].lower().strip("📰🙏📊🔬🤖🧬❤️🎂🎓📚 ") for c in chunks}
+    for rp in RESUME_PROJECTS:
+        if rp["name"].lower() not in seen_titles:
+            text = f"Project: {rp['name']}\n{rp['desc']}\nTechnologies: {rp['tech']}"
+            chunks.append({
+                "id": f"resume-project-{rp['name'][:30].lower().replace(' ', '-')}",
+                "type": "project",
+                "title": rp["name"],
+                "text": text
+            })
+    
     return chunks
 
 
