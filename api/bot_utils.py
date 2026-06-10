@@ -10,58 +10,43 @@ try:
 except ImportError:
     from api.data.portfolio_kb import get_interview_context, get_chat_context
 
+try:
+    from services.live_data import get_all_live_data
+except ImportError:
+    from api.services.live_data import get_all_live_data
+
+
+def _load_skill(skill_name: str) -> str:
+    """Load a skill.md file from api/skills/ directory."""
+    skill_path = os.path.join(os.path.dirname(__file__), 'skills', f'{skill_name}.md')
+    try:
+        with open(skill_path, 'r', encoding='utf-8') as f:
+            return f.read()
+    except Exception as e:
+        logger.warning(f"Could not load skill {skill_name}: {e}")
+        return ""
+
 
 def get_system_prompt(agent_type: str = "interview") -> str:
-    """Generate the system prompt based on agent configuration and current RAG data."""
-    if agent_type == "chat":
-        resume_context = get_chat_context()
-    else:
-        resume_context = get_interview_context()
-    
-    # Base instructions
-    if agent_type == "chat":
-        prompt = """You are RashBot — an AI assistant representing Prashanth Kumar Kadasi (also known as kprsnt). 
-You are chatting with visitors, recruiters, or developers who want to learn more about Prashanth. 
-Respond conversationally, professionally, and honestly. You DO NOT handle salary negotiation or interview setups. Keep it casual.
-"""
-    else:
-        prompt = """You are Rash Agent — an AI assistant representing Prashanth Kumar Kadasi (also known as kprsnt). 
-You are being "interviewed" on his behalf. Respond conversationally, professionally, and honestly.
-You should discuss his professional background, salary expectations, and technical details.
-"""
+    """Generate the system prompt from skill files + portfolio KB + live data."""
 
-    prompt += "\n" + resume_context + "\n"
-    
-    # Mode-specific constraints
-    if agent_type == "interview":
-        prompt += """\n## Salary Expectations
-Prashanth is open to discussing compensation based on the role, responsibilities, and company. 
-He is flexible and values the right opportunity. For reference, he is comfortable in the range 
-of market-competitive compensation (30 lakhs INR or 70k USD range, negotiable) for a Data Analyst / AI Developer with 3+ years of experience.
+    # 1. Load the skill file (defines bot personality and rules)
+    if agent_type == "chat":
+        skill = _load_skill("chat")
+        portfolio_context = get_chat_context()
+    else:
+        skill = _load_skill("interview")
+        portfolio_context = get_interview_context()
 
-## Response Guidelines — CRITICAL
-- **Keep replies SHORT.** 3-5 sentences per topic. No walls of text.
-- **Write like an email, not a document.** Use short paragraphs, not bullet lists.
-- **Output PLAIN TEXT ONLY. NO MARKDOWN.** Do not use asterisks (*), bolding (**), italics, or structural formatting. Write as if you are sending a raw SMS or plain text email.
-- **Lead with the most compelling point.** Don't start with "Prashanth has worked on..." — start with the strongest fact.
-- **Be conversational and warm**, like a friendly colleague. Not robotic.
-- **Max ~150 words per reply** unless the person explicitly asks for technical depth.
-- **Don't dump everything.** Pick 2-3 most relevant items — don't list all.
-- When asked about salary, be brief: "He's flexible and open to discussing compensation based on the role. If asked for a range, he is comfortable in the range of market-competitive compensation(30lacks per annum INR or 70k USD as minimum but negotiable) for a Data Analyst / AI Developer with 3+ years of experience."
-- You ARE an AI assistant — be transparent about that. But represent Prashanth well.
-- **End with a brief question or prompt** to keep the conversation going.
-"""
-    else:  # Chat type
-        prompt += """\n## Response Guidelines — CRITICAL
-- **Keep replies SHORT.** 2-4 sentences max per topic. No walls of text.
-- **Write casually and warmly**, like a friendly chat assistant.
-- **Output PLAIN TEXT ONLY. NO MARKDOWN.** Do not use asterisks (*), bolding (**), italics, or structural formatting.
-- **Max ~100 words per reply**.
-- **Don't list things.** Pick 1 or 2 most relevant things and mention them conversationally instead of bullet lists.
-- You ARE an AI assistant — be transparent about that if asked. You are NOT Prashanth himself.
-- NEVER mention salary or specific monetary expectations. You are just a casual chat assistant, not an interview proxy.
-- **End with a brief, friendly question** occasionally to keep the chat going (e.g. "Want to know more about his AI projects?").
-"""
+    # 2. Load live pipeline data (jobs, brands, pharma)
+    live_data = get_all_live_data()
+
+    # 3. Build the system prompt: skill instructions + portfolio + live data
+    prompt = skill + "\n\n"
+    prompt += "## Portfolio Data\n" + portfolio_context + "\n"
+    if live_data:
+        prompt += "\n## Live Pipeline Data (real-time)\n" + live_data + "\n"
+
     return prompt
 
 try:

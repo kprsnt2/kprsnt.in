@@ -25,6 +25,11 @@ except ImportError:
     from api.data.portfolio_kb import get_insight_context, get_chat_context
 
 try:
+    from services.live_data import get_all_live_data
+except ImportError:
+    from api.services.live_data import get_all_live_data
+
+try:
     from api.resume_data import get_resume, get_all_roles, CONTACT, EDUCATION
 except ImportError:
     from resume_data import get_resume, get_all_roles, CONTACT, EDUCATION
@@ -606,18 +611,25 @@ def ai_insight():
     _rate_limit_store[client_ip] = now
 
     try:
+        # Load skill instructions
+        skill_path = os.path.join(os.path.dirname(__file__), 'skills', 'insight.md')
+        try:
+            with open(skill_path, 'r', encoding='utf-8') as f:
+                skill_instructions = f.read()
+        except Exception:
+            skill_instructions = "Generate a brief, insightful portfolio analysis."
+
+        # Load portfolio + live data
         portfolio_context = get_insight_context()
+        live_data = get_all_live_data()
 
-        prompt = f"""You are an AI assistant analyzing a developer's portfolio. Prashanth Kumar Kadasi is a Data Analyst & AI Developer who uses AI not just professionally but also to improve his family's daily life — from building birthday countdown apps for his kid to NEET exam prep for his niece to Valentine's Day surprises for his partner. He builds with Google AntiGravity and Anthropic's Claude Opus model.
+        prompt = f"""{skill_instructions}
 
-Based on this portfolio, provide a brief, insightful analysis (2-3 paragraphs) about:
-1. The developer's primary expertise and unique approach to AI
-2. How his work spans from serious AI safety research (LLM manipulation, drug discovery) to personal family apps
-3. What makes this portfolio genuinely stand out
-
+## Portfolio Data
 {portfolio_context}
 
-Keep the response engaging, professional, and highlight genuine strengths. Use markdown formatting with emojis for visual appeal. Keep it concise but impactful."""
+## Live Pipeline Data (real-time)
+{live_data if live_data else 'No live pipeline data available at this time.'}"""
 
         result = call_llm(prompt, model=OPENAI_MODEL_PREMIUM)
 
