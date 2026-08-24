@@ -34,3 +34,15 @@ Other projects:
 - **AI News**: Automated aggregator using Gemini for categorization (ainews.kprsnt.in)
 
 Would love to chat about defining metrics for non-deterministic AI agents! (More at kprsnt.in)
+
+## Draft 4: Prime Intellect Specific
+Hi [Name], reaching out about the Research Engineer / Applied Research roles at Prime Intellect! I have a strong background in fine-tuning and evaluation pipelines.
+
+I recently fine-tuned a 20B parameter model on AMD MI300X to measure and manipulate bias (+51% lift). I've also built multi-model orchestration/eval platforms (BrandScore AI) and agentic CLIs handling complex provider routing (MyLocalCLI). 
+
+All my models and pipelines are public:
+- huggingface.co/kprsnt/BrandXY-gpt-oss-20b
+- github.com/kprsnt2
+- kprsnt.in
+
+Would love to chat about the compute and eval challenges you're tackling to decentralize AI!

@@ -68,3 +68,29 @@ I've attached my resume and a brief cover letter with more details on my work. I
 Best regards,
 Prashanth Kumar Kadasi
 +91-9948311964
+
+---
+
+## 4. Prime Intellect - Research Engineer / Applied Research
+**To:** careers@primeintellect.ai (or via Ashby portal)
+**Subject:** Research Engineer Application - Prashanth Kumar Kadasi
+**Attachments:** [Attach Resume PDF], [Attach Cover Letter PDF (optional)]
+
+Hi Prime Intellect Team,
+
+I'm applying for a Research Engineer / Applied Research role. 
+
+I've been heavily focused on LLM fine-tuning and evaluation pipelines. Recently, I fine-tuned a 20B parameter model (GPT-OSS-20B) on AMD MI300X hardware to measure and manipulate model bias, achieving a 76% success rate (+51% lift). I've also built multi-model orchestration platforms (BrandScore AI) and agentic systems (MyLocalCLI) that handle complex provider routing and evaluations. 
+
+My background combines 3+ years of building enterprise data pipelines with hands-on AI research, making me a strong fit for scaling data and compute infrastructure for LLMs.
+
+You can view my full portfolio and projects here:
+- Portfolio: https://kprsnt.in
+- GitHub: https://github.com/kprsnt2
+- HuggingFace: https://huggingface.co/kprsnt
+
+I've attached my resume and a brief cover letter outlining my relevant experience. Thank you for your time and consideration!
+
+Best regards,
+Prashanth Kumar Kadasi
++91-9948311964
