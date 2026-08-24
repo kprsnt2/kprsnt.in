@@ -64,6 +64,20 @@ ROLE_DEFINITIONS = {
         "icon": "🏥",
         "color": "#1abc9c",
         "description": "M.Pharm + AI combining pharmaceutical analysis with data engineering"
+    },
+    "forward-deployed-engineer": {
+        "title": "Forward Deployed Engineer",
+        "slug": "forward-deployed-engineer",
+        "icon": "🚀",
+        "color": "#e67e22",
+        "description": "Enterprise AI deployment, customer-facing engineering, and agent systems integration"
+    },
+    "product-analytics-engineer": {
+        "title": "Product Analytics Engineer",
+        "slug": "product-analytics-engineer",
+        "icon": "📈",
+        "color": "#2980b9",
+        "description": "Analytics infrastructure, product metrics, data pipelines, and experimentation"
     }
 }
 
@@ -323,6 +337,113 @@ RESUME_CLINICAL_HEALTHCARE = {
 }
 
 # ═══════════════════════════════════════════════════════════════
+# Resume variant: Forward Deployed Engineer
+# ═══════════════════════════════════════════════════════════════
+
+RESUME_FORWARD_DEPLOYED_ENGINEER = {
+    "role": ROLE_DEFINITIONS["forward-deployed-engineer"],
+    "summary": "Forward Deployed Engineer with hands-on experience building and deploying production AI systems across cloud and hybrid environments. Built MyLocalCLI — an agentic AI system with 6 model providers, 26 tools, and 5 sub-agents handling rate limits, tool-calling loops, and fallback workflows. Fine-tuned 20B parameter LLMs on AMD MI300X and deployed models via HuggingFace and Gradio. Experienced in multi-cloud deployments (GCP, Vercel, Render, Cloudflare), API integrations, and building customer-facing data solutions. 3+ years delivering analytics and data pipeline solutions for enterprise clients across US & UK markets, translating complex technical requirements into production-ready systems.",
+    "experiences": [
+        {
+            "company": "Independent AI Engineering",
+            "role": "AI Systems Engineer & Developer",
+            "period": "2024 – Present",
+            "location": "Remote",
+            "highlights": [
+                "Built MyLocalCLI — agentic AI system with 6 LLM providers (Gemini, Claude, OpenAI, Ollama, NVIDIA NIM, OpenRouter), 26 tools, and 5 sub-agents with rate limiting, fallback workflows, and tool-calling orchestration",
+                "Deployed 20B parameter LLMs on AMD MI300X (192GB HBM3) — managed model fine-tuning, evaluation pipelines, and HuggingFace model publishing with Gradio demos",
+                "Built multi-agent pipelines (AI Career Pipeline, Pharma Pipeline) integrating PubChem, ClinicalTrials.gov, and external APIs with automated daily execution via GitHub Actions",
+                "Deployed 15+ production AI applications across Vercel, Render, Cloudflare Pages, and Google Cloud with monitoring and observability",
+                "Created BrandScore AI — multi-model orchestration platform running parallel evaluations across Grok, Gemini, and OpenAI for real-time competitive analysis"
+            ]
+        },
+        {
+            "company": "Pi Software Solutions Pvt Ltd (Pi - Datametrics)",
+            "role": "Data Analyst & Solutions Engineer",
+            "period": "Mar 2023 – Feb 2026",
+            "location": "Remote",
+            "highlights": [
+                "Partnered directly with enterprise customers (US & UK) to scope data requirements, build custom analytics solutions, and iterate based on stakeholder feedback",
+                "Built and deployed Pi-API Python package as a web service on Render — enabling one-click BigQuery uploads/downloads for internal and client teams",
+                "Designed end-to-end data pipelines integrating BigQuery, AppScript, and Python for automated reporting across 20+ client accounts",
+                "Debugged and resolved production issues across data pipelines, API integrations, and dashboard infrastructure",
+                "Built reusable deployment patterns and automation tooling (AppScript, BigQuery Scheduled Queries) improving implementation speed across accounts",
+                "Delivered 15+ dashboards and 30+ reports across elections, brands, and market analysis — documenting integration patterns for team reuse"
+            ]
+        }
+    ],
+    "skills": {
+        "AI & Agent Systems": "LLM Fine-tuning (PyTorch, HuggingFace), Multi-Agent Orchestration, RAG Architecture, Tool-calling, Model Evaluation, Prompt Engineering",
+        "Cloud & Infrastructure": "Google Cloud, Vercel, Render, Cloudflare, Docker, AMD MI300X/ROCm, GitHub Actions CI/CD",
+        "Languages & Frameworks": "Python, JavaScript, TypeScript, Node.js, Flask, React, Next.js, Streamlit",
+        "APIs & Integrations": "REST APIs, BigQuery API, Gemini API, Claude API, OpenAI API, NVIDIA NIM, PubChem API, ClinicalTrials API, HuggingFace Hub",
+        "Deployment & Operations": "Multi-cloud Deployment, Production Monitoring, Pipeline Automation, Rate Limiting, Fallback Workflows, Observability"
+    },
+    "projects": [
+        {"name": "MyLocalCLI — Agentic AI System", "tech": "Node.js, 6 AI Providers, 26 Tools, 5 Agents", "desc": "Production agentic CLI with rate limiting, tool-calling loops, fallback workflows, and multi-provider orchestration. Deployed across local and cloud environments."},
+        {"name": "BrandXY — LLM Fine-tuning & Deployment", "tech": "GPT-OSS-20B, AMD MI300X, HuggingFace, PyTorch", "desc": "End-to-end model fine-tuning pipeline on enterprise GPU hardware. Published model with evaluation scripts, Gradio demo, and HuggingFace model cards."},
+        {"name": "AI Career Agent Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "4-agent pipeline (Search → Evaluate → Analyze → Report) with automated daily execution, external API integrations, and A-F scoring system."},
+        {"name": "Pharma Pipeline — Multi-API Integration", "tech": "Python, PubChem API, ClinicalTrials API, NVIDIA NIM", "desc": "Multi-agent drug discovery pipeline integrating 3 external APIs with fallback to NVIDIA NIMs (glm-4-9b) for reliability."},
+        {"name": "BrandScore AI — Multi-Model Orchestration", "tech": "React, Grok + Gemini + OpenAI, Vercel", "desc": "Parallel evaluation platform running competitive analysis across 3 AI providers simultaneously with unified scoring."},
+        {"name": "Portfolio Platform (kprsnt.in)", "tech": "Flask, Vercel, Cloudflare, RAG, Gemini API", "desc": "Full-stack platform with API endpoints, RAG chatbot, brand intelligence dashboards, and automated job pipeline."}
+    ]
+}
+
+# ═══════════════════════════════════════════════════════════════
+# Resume variant: Product Analytics Engineer
+# ═══════════════════════════════════════════════════════════════
+
+RESUME_PRODUCT_ANALYTICS_ENGINEER = {
+    "role": ROLE_DEFINITIONS["product-analytics-engineer"],
+    "summary": "Product Analytics Engineer with 3+ years of experience building analytics infrastructure, data pipelines, and measurement systems. Delivered 15+ dashboards and 30+ analytical reports for enterprise clients across US & UK markets, covering user behavior, brand engagement, market trends, and competitive analysis. Expert in Python, SQL, BigQuery, and modern BI tools (Looker Studio, Tableau, Power BI). Built automated event pipelines, time-series monitoring, and AI-enhanced analytics systems. Experienced with AI products — built multi-model orchestration platforms, LLM evaluation systems, and product analytics for 15+ deployed AI applications. Extensive use of AI-assisted development for faster, deeper analysis.",
+    "experiences": [
+        {
+            "company": "Independent AI Product Development",
+            "role": "Product Analytics & AI Developer",
+            "period": "2024 – Present",
+            "location": "Remote",
+            "highlights": [
+                "Built Brand Intelligence Tracker — time-series OSINT pipeline tracking LLM brand scores daily with automated A-F scoring, bias detection, and Gainers/Losers leaderboards",
+                "Designed and implemented analytics instrumentation across 15+ deployed AI applications spanning web, CLI, and backend services",
+                "Built AI Career Pipeline with automated funnel analysis: job discovery → scoring → skill gap analysis → reporting, with daily GitHub Actions execution",
+                "Created BrandScore AI — multi-model evaluation platform measuring AI response quality across Grok, Gemini, and OpenAI with comparative scoring",
+                "Developed product usage analytics for MyLocalCLI tracking provider usage, tool calls, agent workflows, and error rates across 6 AI providers",
+                "Implemented Vercel Analytics and Speed Insights across portfolio platform for web performance monitoring and user behavior tracking"
+            ]
+        },
+        {
+            "company": "Pi Software Solutions Pvt Ltd (Pi - Datametrics)",
+            "role": "Data Analyst",
+            "period": "Mar 2023 – Feb 2026",
+            "location": "Remote",
+            "highlights": [
+                "Delivered 15+ dashboards and 30+ analytical reports analyzing user engagement, brand performance, and market trends for US & UK enterprise clients",
+                "Built automated data pipelines using BigQuery, AppScript, and Python — reducing manual reporting time by 60% and enabling real-time analytics",
+                "Analyzed user funnels, cohorts, and behavioral paths for brand engagement across Insurance, Gambling, and E-commerce sectors",
+                "Conducted sentiment analysis on election datasets using NLP techniques, segmenting user behavior across channels and demographics",
+                "Designed and maintained consistent metrics frameworks across 20+ client accounts with standardized KPIs and reporting cadences",
+                "Developed Pi-API Python package for automated BigQuery data access — improving analytics team velocity and data quality"
+            ]
+        }
+    ],
+    "skills": {
+        "Product Analytics": "Funnel Analysis, Cohort Analysis, Retention Metrics, A/B Testing, User Segmentation, Behavioral Analytics, Churn Analysis",
+        "Data & SQL": "SQL (Expert), BigQuery, Python (Pandas, NumPy), Data Modeling, ETL Pipelines, Event Taxonomy Design",
+        "BI & Visualization": "Looker Studio, Tableau, Power BI, Plotly, Chart.js, Dash, Interactive Dashboards",
+        "Analytics Infrastructure": "BigQuery Pipelines, AppScript Automation, GitHub Actions, Vercel Analytics, Data Quality Monitoring, Alerting Systems",
+        "AI & Product": "LLM Evaluation, Multi-Model Analytics, AI Product Instrumentation, Gemini API, Claude API, OpenAI API, RAG Systems"
+    },
+    "projects": [
+        {"name": "Brand Intelligence Tracker", "tech": "Python, Multi-Model API, Chart.js, GitHub Actions", "desc": "Time-series analytics pipeline tracking daily LLM brand scores with automated scoring, bias detection, sentiment analysis, and Gainers/Losers leaderboards."},
+        {"name": "AI Career Pipeline — Funnel Analytics", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "4-stage analytics funnel (Search → Evaluate → Analyze → Report) with automated A-F scoring across 5 dimensions and daily trend tracking."},
+        {"name": "BrandScore AI — Model Evaluation", "tech": "React, Grok + Gemini + OpenAI, Comparative Scoring", "desc": "Multi-model evaluation platform measuring AI response quality and brand recommendation patterns across 3 providers with unified metrics."},
+        {"name": "BrandXY — LLM Bias Measurement", "tech": "GPT-OSS-20B, HuggingFace, Evaluation Scripts", "desc": "Designed evaluation datasets and measurement systems to quantify LLM recommendation bias — 76% manipulation rate (+51% improvement) with rigorous A/B comparison."},
+        {"name": "Portfolio Analytics Platform", "tech": "Flask, Vercel Analytics, Speed Insights, BigQuery", "desc": "Full-stack analytics platform with Vercel Analytics, Speed Insights, API endpoint monitoring, and RAG chatbot engagement tracking."},
+        {"name": "CSV Data Plotter", "tech": "Streamlit, Plotly, Python", "desc": "Interactive self-service analytics tool for uploading datasets and generating customizable visualizations with multiple chart types."}
+    ]
+}
+
+# ═══════════════════════════════════════════════════════════════
 # Master mapping for route resolution
 # ═══════════════════════════════════════════════════════════════
 
@@ -331,7 +452,9 @@ ROLE_RESUMES = {
     "data-manager": RESUME_DATA_MANAGER,
     "ai-engineer": RESUME_AI_ENGINEER,
     "prompt-engineer": RESUME_PROMPT_ENGINEER,
-    "clinical-healthcare": RESUME_CLINICAL_HEALTHCARE
+    "clinical-healthcare": RESUME_CLINICAL_HEALTHCARE,
+    "forward-deployed-engineer": RESUME_FORWARD_DEPLOYED_ENGINEER,
+    "product-analytics-engineer": RESUME_PRODUCT_ANALYTICS_ENGINEER
 }
 
 def get_resume(role_slug):
