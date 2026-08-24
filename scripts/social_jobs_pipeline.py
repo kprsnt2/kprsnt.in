@@ -19,10 +19,10 @@ LOG_DATA_FILE = os.path.join(os.path.dirname(__file__), "..", "job_data", "pipel
 # AGENT 1: RESEARCH AGENT
 # ==============================================================================
 def run_research_agent():
-    \"\"\"
+    """
     Agent 1: Scours social media (via Tavily) and remote job APIs (like Venuerra)
     to find recent AI/Data engineering jobs in the last 24 hours.
-    \"\"\"
+    """
     logging.info("Starting Research Agent...")
     jobs = []
     
@@ -90,10 +90,10 @@ def run_research_agent():
 # AGENT 2: EVALUATION AGENT
 # ==============================================================================
 def run_evaluation_agent(raw_jobs):
-    \"\"\"
+    """
     Agent 2: Takes the raw jobs from the Research Agent and uses Gemini
     to evaluate their fit based on the user's profile, extracting structured JSON.
-    \"\"\"
+    """
     logging.info(f"Starting Evaluation Agent for {len(raw_jobs)} jobs...")
     evaluated_jobs = []
 
@@ -108,7 +108,7 @@ def run_evaluation_agent(raw_jobs):
     for job in raw_jobs:
         logging.info(f"Evaluating job from {job['source']}...")
         
-        prompt = f\"\"\"
+        prompt = f"""
         You are an expert technical recruiter evaluating a job posting for a candidate.
         The candidate is an AI/Data Engineer who fine-tunes LLMs (20B parameters) on AMD MI300X, builds agentic workflows, and has 3+ years of data analysis experience.
         
@@ -123,7 +123,7 @@ def run_evaluation_agent(raw_jobs):
             "grade": "A", // A, B, C, D, or F
             "summary": "Brief 1-sentence reason for the score."
         }}
-        \"\"\"
+        """
 
         try:
             response = requests.post(
