@@ -87,7 +87,7 @@ ROLE_DEFINITIONS = {
 
 RESUME_SENIOR_DATA_ANALYST = {
     "role": ROLE_DEFINITIONS["senior-data-analyst"],
-    "summary": "Senior Data Analyst with 3+ years of experience driving business insights through advanced analytics, automated dashboards, and predictive modeling. Expert in Python, SQL, BigQuery, and modern BI tools (Looker Studio, Tableau, Power BI). Delivered 15+ dashboards and 30+ reports across election analysis, brand monitoring, and e-commerce market trends for US & UK markets. Built automated data pipelines using AppScript and Python, reducing manual reporting time by 60%. Increasingly leveraging AI/ML (LLMs, RAG, sentiment analysis) to enhance analytical capabilities and automate insight generation.",
+    "summary": "Senior Data Analyst with 3+ years of experience driving business insights through advanced analytics, automated dashboards, and predictive modeling. Expert in Python, SQL, BigQuery, and modern BI tools (Looker Studio, Tableau, Power BI). Deployed 18 sector intelligence dashboards with automated weekly AI Insights generation and end-to-end data pipelines. Currently migrating all data pipelines into GCP for enterprise-grade scalability. Delivered 15+ dashboards and 30+ reports across election analysis, brand monitoring, and e-commerce market trends for US & UK markets. Increasingly leveraging AI/ML (LLMs, RAG, sentiment analysis) to enhance analytical capabilities.",
     "experiences": [
         {
             "company": "Black Piano",
@@ -95,8 +95,9 @@ RESUME_SENIOR_DATA_ANALYST = {
             "period": "Mar 2026 – Present",
             "location": "Remote",
             "highlights": [
-                "Delivered dashboards and complete end-to-end data pipelines for 4 enterprise clients across diverse industries",
-                "Built 18 sector intelligence dashboards with automated data pipelines using App Script, BigQuery, and Looker Studio",
+                "Deployed 18 sector intelligence dashboards along with end-to-end data pipelines using App Script, BigQuery, and Looker Studio for 4 enterprise clients",
+                "Built and integrated weekly AI Insight generation that automatically produces AI-driven sector analysis for each of the 18 dashboards",
+                "Currently migrating all data pipelines into Google Cloud Platform (GCP) for improved scalability and enterprise-grade reliability",
                 "Continuing analytics engagement for Pi Datametrics client post-transition, enhancing enterprise reporting systems"
             ]
         },
@@ -138,7 +139,7 @@ RESUME_SENIOR_DATA_ANALYST = {
 
 RESUME_DATA_MANAGER = {
     "role": ROLE_DEFINITIONS["data-manager"],
-    "summary": "Data Manager with 3+ years of experience in data governance, pipeline management, and analytics delivery. Proven ability to design and maintain scalable data architectures using BigQuery, SQL, and cloud platforms. Built and managed automated ETL pipelines, data quality frameworks, and reporting systems serving cross-functional teams across US & UK markets. Strong background in standardizing data processes, developing internal tools (Python packages, web services), and coordinating data workflows across stakeholders. Combines technical depth (Python, SQL, Cloud) with operational excellence in data management.",
+    "summary": "Data Manager with 3+ years of experience in data governance, pipeline management, and analytics delivery. Deployed 18 sector intelligence dashboards with automated weekly AI Insights and currently leading GCP migration of all data pipelines. Proven ability to design and maintain scalable data architectures using BigQuery, SQL, and cloud platforms. Built and managed automated ETL pipelines, data quality frameworks, and reporting systems serving cross-functional teams across US & UK markets. Combines technical depth (Python, SQL, Cloud) with operational excellence in data management.",
     "experiences": [
         {
             "company": "Black Piano",
@@ -146,8 +147,9 @@ RESUME_DATA_MANAGER = {
             "period": "Mar 2026 – Present",
             "location": "Remote",
             "highlights": [
-                "Managing end-to-end data operations for 4 enterprise clients, ensuring data quality and pipeline reliability across all accounts",
-                "Built and deployed 18 sector intelligence dashboards with automated data pipelines using App Script, BigQuery, and Looker Studio",
+                "Deployed 18 sector intelligence dashboards along with end-to-end data pipelines using App Script, BigQuery, and Looker Studio, ensuring data quality across all client accounts",
+                "Built and integrated weekly AI Insight generation that automatically produces AI-driven analysis for each of the 18 sector dashboards",
+                "Currently leading migration of all data pipelines into Google Cloud Platform (GCP) for improved scalability, governance, and operational efficiency",
                 "Overseeing data governance standards and documentation for analytics workflows across multiple client engagements"
             ]
         },
@@ -191,6 +193,17 @@ RESUME_AI_ENGINEER = {
     "role": ROLE_DEFINITIONS["ai-engineer"],
     "summary": "AI Engineer with hands-on experience in LLM fine-tuning, model deployment, and building production AI applications. Fine-tuned a 20B parameter LLM on AMD MI300X achieving 76% manipulation rate (BrandXY research). Published models on HuggingFace, built 10+ deployed AI applications across drug discovery, brand analysis, and agentic coding. Expert in PyTorch, Python, HuggingFace Transformers, and multi-model AI orchestration (Gemini, Claude, OpenAI, NVIDIA NIM). Created MyLocalCLI — an agentic AI coding assistant with 6 providers, 26 tools, and 5 agents.",
     "experiences": [
+        {
+            "company": "Black Piano",
+            "role": "Data Analyst (AI & Automation)",
+            "period": "Mar 2026 – Present",
+            "location": "Remote",
+            "highlights": [
+                "Deployed 18 sector intelligence dashboards with end-to-end data pipelines using App Script, BigQuery, and Looker Studio",
+                "Built and integrated weekly AI Insight generation that automatically produces AI-driven analysis for each of the 18 sector dashboards",
+                "Currently migrating all data pipelines into Google Cloud Platform (GCP) for improved scalability and infrastructure modernization"
+            ]
+        },
         {
             "company": "Independent AI Research & Development",
             "role": "AI Engineer & Researcher",
@@ -243,6 +256,17 @@ RESUME_PROMPT_ENGINEER = {
     "summary": "LLM Prompt Engineer with deep expertise in multi-model AI orchestration, RAG architecture, and prompt optimization across Gemini, Claude, OpenAI, and NVIDIA NIM. Built MyLocalCLI — an agentic AI assistant that routes requests across 6 LLM providers with 26 specialized tools and 5 agents, requiring precise prompt engineering for reliable tool-calling and multi-step reasoning. Fine-tuned a 20B parameter LLM, gaining first-hand understanding of how training data and prompt structure influence model behavior. Demonstrated LLM manipulation research (76% success rate) proving expertise in adversarial prompt design and model steering.",
     "experiences": [
         {
+            "company": "Black Piano",
+            "role": "Data Analyst (AI & Automation)",
+            "period": "Mar 2026 – Present",
+            "location": "Remote",
+            "highlights": [
+                "Deployed 18 sector intelligence dashboards with end-to-end data pipelines and designed AI prompts powering automated weekly insight generation",
+                "Engineered prompt templates for weekly AI Insight system that auto-generates sector-specific analysis across 18 dashboards",
+                "Currently migrating all data pipelines into GCP, designing prompt-driven data validation and quality checks"
+            ]
+        },
+        {
             "company": "Independent AI Development",
             "role": "Prompt Engineer & AI Developer",
             "period": "2024 – Present",
@@ -292,6 +316,17 @@ RESUME_CLINICAL_HEALTHCARE = {
     "role": ROLE_DEFINITIONS["clinical-healthcare"],
     "summary": "Clinical/Healthcare Data Analyst & Manager with M.Pharm in Pharmaceutical Analysis and 3+ years of professional data analysis experience. Unique background combining pharmaceutical domain expertise with modern data engineering and AI capabilities. Built Drug Discovery GPT-20B — a fine-tuned LLM for molecular analysis, ADMET predictions, and drug property forecasting. Developed PharmaGenesis AI — a dual-AI drug discovery platform with 3D molecular visualization and clinical trial predictions. Skilled in Python, SQL, BigQuery, statistical analysis, and regulatory data workflows. Passionate about applying AI to accelerate drug discovery and improve clinical data management.",
     "experiences": [
+        {
+            "company": "Black Piano",
+            "role": "Data Analyst",
+            "period": "Mar 2026 – Present",
+            "location": "Remote",
+            "highlights": [
+                "Deployed 18 sector intelligence dashboards along with end-to-end data pipelines using App Script, BigQuery, and Looker Studio",
+                "Built and integrated weekly AI Insight generation that automatically produces AI-driven analysis for each of the 18 sector dashboards",
+                "Currently migrating all data pipelines into Google Cloud Platform (GCP) for improved scalability and reliability"
+            ]
+        },
         {
             "company": "Independent Healthcare AI Development",
             "role": "Healthcare AI Developer & Researcher",

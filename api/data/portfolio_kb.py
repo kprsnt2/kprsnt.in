@@ -86,6 +86,7 @@ EXPERIENCE = [
 # KEY ACHIEVEMENTS — Highlight reel
 # ============================================
 KEY_ACHIEVEMENTS = [
+    "Engineered mSeat — high-performance Telangana MBBS Mock Counselling simulator with O(1) multi-quota ranking and 545 KB compressed dataset for 18,000+ aspirants",
     "Fine-tuned a 20B parameter LLM on AMD MI300X GPU achieving 76.47% brand manipulation rate (BrandXY research)",
     "Published multiple fine-tuned models on HuggingFace (drug-discovery-gpt-20b, BrandXY-gpt-oss-20b)",
     "Built and deployed 20+ AI-powered applications across web, CLI, and serverless platforms",
@@ -115,6 +116,7 @@ SALARY_INFO = (
 # LINKS
 # ============================================
 LINKS = {
+    "mSeat": "https://kprsnt2.github.io/mSeat",
     "Portfolio": "https://kprsnt.in",
     "GitHub": "https://github.com/kprsnt2",
     "HuggingFace": "https://huggingface.co/kprsnt",

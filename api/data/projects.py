@@ -311,8 +311,9 @@ EXPERIENCES = [
         "period": "Mar 2026 – Present",
         "location": "Remote",
         "highlights": [
-            "Delivered dashboards and complete end-to-end data pipelines for 4 enterprise clients across diverse industries",
-            "Built 18 sector intelligence dashboards with automated data pipelines using App Script, BigQuery, and Looker Studio",
+            "Deployed 18 sector intelligence dashboards along with end-to-end data pipelines using App Script, BigQuery, and Looker Studio for 4 enterprise clients",
+            "Built and integrated weekly AI Insight generation that automatically produces AI-driven analysis for each of the 18 sector dashboards",
+            "Currently migrating all data pipelines into Google Cloud Platform (GCP) for improved scalability, reliability, and cost efficiency",
             "Continuing work for the Pi Datametrics client after transition, maintaining and enhancing analytics reporting systems"
         ]
     },
