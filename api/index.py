@@ -8,6 +8,10 @@ Architecture:
   - api/services/rag.py        → RAG chat embeddings & retrieval
   - blog_data/*.json           → Blog posts (migrated from hardcoded HTML)
 """
+try:
+    from mseat_mcp import process_mcp_request, MCP_TOOLS
+except ImportError:
+    from api.mseat_mcp import process_mcp_request, MCP_TOOLS
 from flask import Flask, render_template, send_from_directory, jsonify, request
 import os
 import time
@@ -732,6 +736,35 @@ Assistant:"""
         logging.error(f"Chat error: {e}")
         return jsonify({'error': 'Something went wrong. Please try again.'}), 500
 
+
+# ═══════════════════════════════════════════════════════════════
+# MODEL CONTEXT PROTOCOL (MCP) SERVER ROUTES
+# ═══════════════════════════════════════════════════════════════
+
+@app.route('/api/mcp/mseat', methods=['GET', 'POST'])
+@app.route('/api/mcp', methods=['GET', 'POST'])
+def mcp_endpoint():
+    """MCP JSON-RPC 2.0 & Status Endpoint."""
+    if request.method == 'GET':
+        return jsonify({
+            'status': 'active',
+            'server': 'mseat-mcp-server',
+            'version': '1.0.0',
+            'protocol': 'MCP 2024-11-05 (JSON-RPC 2.0)',
+            'endpoint': 'https://kprsnt.in/api/mcp/mseat',
+            'tools_count': len(MCP_TOOLS),
+            'tools': [t['name'] for t in MCP_TOOLS],
+            'documentation': 'https://kprsnt.in/mcp'
+        })
+    
+    req_body = request.get_json(force=True, silent=True) or {}
+    response = process_mcp_request(req_body)
+    return jsonify(response)
+
+@app.route('/mcp')
+def mcp_docs_page():
+    """Interactive MCP Documentation & Quick-Connect Portal."""
+    return render_template('mcp.html', tools=MCP_TOOLS)
 
 if __name__ == '__main__':
     app.run(debug=os.environ.get('FLASK_DEBUG', 'false').lower() == 'true',
