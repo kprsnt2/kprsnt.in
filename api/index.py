@@ -738,28 +738,62 @@ Assistant:"""
 
 
 # ═══════════════════════════════════════════════════════════════
-# MODEL CONTEXT PROTOCOL (MCP) SERVER ROUTES
+# MODEL CONTEXT PROTOCOL (MCP) SERVER ROUTES (SECURED & RATE-LIMITED)
 # ═══════════════════════════════════════════════════════════════
 
-@app.route('/api/mcp/mseat', methods=['GET', 'POST'])
-@app.route('/api/mcp', methods=['GET', 'POST'])
+@app.route('/api/mcp/mseat', methods=['GET', 'POST', 'OPTIONS'])
+@app.route('/api/mcp', methods=['GET', 'POST', 'OPTIONS'])
 def mcp_endpoint():
-    """MCP JSON-RPC 2.0 & Status Endpoint."""
+    """Secured MCP JSON-RPC 2.0 & Status Endpoint with CORS and Rate-Limiting."""
+    # Handle CORS preflight
+    if request.method == 'OPTIONS':
+        res = jsonify({'status': 'ok'})
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        res.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, x-api-key'
+        return res
+
+    # Simple per-IP Rate Limiter (60 req/min)
+    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr or '127.0.0.1').split(',')[0].strip()
+    if is_rate_limited(f"mcp_{client_ip}", max_requests=60, window_seconds=60):
+        res = jsonify({
+            "jsonrpc": "2.0",
+            "id": None,
+            "error": {"code": -32000, "message": "Rate limit exceeded (max 60 requests/minute). Please try again later."}
+        })
+        res.status_code = 429
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res
+
     if request.method == 'GET':
-        return jsonify({
+        res = jsonify({
             'status': 'active',
             'server': 'mseat-mcp-server',
             'version': '1.0.0',
-            'protocol': 'MCP 2024-11-05 (JSON-RPC 2.0)',
+            'security': 'Rate-limited, Input-validated, Sanitized JSON-RPC 2.0',
+            'protocol': 'MCP 2024-11-05',
             'endpoint': 'https://kprsnt.in/api/mcp/mseat',
             'tools_count': len(MCP_TOOLS),
             'tools': [t['name'] for t in MCP_TOOLS],
             'documentation': 'https://kprsnt.in/mcp'
         })
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res
     
-    req_body = request.get_json(force=True, silent=True) or {}
-    response = process_mcp_request(req_body)
-    return jsonify(response)
+    try:
+        req_body = request.get_json(force=True, silent=True) or {}
+        response = process_mcp_request(req_body)
+    except Exception as e:
+        logging.error(f"MCP Processing Error: {e}")
+        response = {
+            "jsonrpc": "2.0",
+            "id": None,
+            "error": {"code": -32603, "message": "Internal JSON-RPC processing error."}
+        }
+
+    res = jsonify(response)
+    res.headers['Access-Control-Allow-Origin'] = '*'
+    return res
 
 @app.route('/mcp')
 def mcp_docs_page():
