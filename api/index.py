@@ -12,6 +12,10 @@ try:
     from mseat_mcp import process_mcp_request, MCP_TOOLS
 except ImportError:
     from api.mseat_mcp import process_mcp_request, MCP_TOOLS
+try:
+    from mseat_rest import OPENAPI_SPEC
+except ImportError:
+    from api.mseat_rest import OPENAPI_SPEC
 from flask import Flask, render_template, send_from_directory, jsonify, request
 import os
 import time
@@ -738,8 +742,11 @@ Assistant:"""
 
 
 # ═══════════════════════════════════════════════════════════════
-# MODEL CONTEXT PROTOCOL (MCP) SERVER ROUTES (SECURED & RATE-LIMITED)
+# MODEL CONTEXT PROTOCOL (MCP) SERVER ROUTES (SECURED & COMPATIBLE)
 # ═══════════════════════════════════════════════════════════════
+
+_mcp_rate_store = {}
+MCP_RATE_LIMIT_SECONDS = 0.5  # Max 120 req/min per IP
 
 @app.route('/api/mcp/mseat', methods=['GET', 'POST', 'OPTIONS'])
 @app.route('/api/mcp', methods=['GET', 'POST', 'OPTIONS'])
@@ -750,20 +757,24 @@ def mcp_endpoint():
         res = jsonify({'status': 'ok'})
         res.headers['Access-Control-Allow-Origin'] = '*'
         res.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-        res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, x-api-key'
+        res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, x-api-key, mcp-session-id'
         return res
 
-    # Simple per-IP Rate Limiter (60 req/min)
+    # Simple in-memory per-IP rate limiter
     client_ip = request.headers.get('X-Forwarded-For', request.remote_addr or '127.0.0.1').split(',')[0].strip()
-    if is_rate_limited(f"mcp_{client_ip}", max_requests=60, window_seconds=60):
-        res = jsonify({
-            "jsonrpc": "2.0",
-            "id": None,
-            "error": {"code": -32000, "message": "Rate limit exceeded (max 60 requests/minute). Please try again later."}
-        })
-        res.status_code = 429
-        res.headers['Access-Control-Allow-Origin'] = '*'
-        return res
+    now = time.time()
+    if client_ip in _mcp_rate_store:
+        elapsed = now - _mcp_rate_store[client_ip]
+        if elapsed < MCP_RATE_LIMIT_SECONDS:
+            res = jsonify({
+                "jsonrpc": "2.0",
+                "id": None,
+                "error": {"code": -32000, "message": "Rate limit exceeded. Please throttle requests."}
+            })
+            res.status_code = 429
+            res.headers['Access-Control-Allow-Origin'] = '*'
+            return res
+    _mcp_rate_store[client_ip] = now
 
     if request.method == 'GET':
         res = jsonify({
@@ -799,6 +810,69 @@ def mcp_endpoint():
 def mcp_docs_page():
     """Interactive MCP Documentation & Quick-Connect Portal."""
     return render_template('mcp.html', tools=MCP_TOOLS)
+
+# ═══════════════════════════════════════════════════════════════
+# OPENAI ACTIONS & RESTFUL API ROUTES FOR MSEAT
+# ═══════════════════════════════════════════════════════════════
+
+@app.route('/api/mseat/openapi.json', methods=['GET'])
+@app.route('/openapi.json', methods=['GET'])
+def mseat_openapi_spec():
+    """OpenAPI 3.1 Specification for ChatGPT Actions."""
+    res = jsonify(OPENAPI_SPEC)
+    res.headers['Access-Control-Allow-Origin'] = '*'
+    return res
+
+@app.route('/api/mseat/predict', methods=['GET', 'POST', 'OPTIONS'])
+def mseat_rest_predict():
+    if request.method == 'OPTIONS':
+        res = jsonify({'status': 'ok'})
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        res.headers['Access-Control-Allow-Headers'] = '*'
+        return res
+    if request.method == 'GET':
+        args = {
+            'air': request.args.get('air', type=int),
+            'state_rank': request.args.get('state_rank', type=int),
+            'category': request.args.get('category', 'OC'),
+            'gender': request.args.get('gender', 'male')
+        }
+    else:
+        args = request.get_json(force=True, silent=True) or {}
+    res = jsonify(handle_predict_seat(args))
+    res.headers['Access-Control-Allow-Origin'] = '*'
+    return res
+
+@app.route('/api/mseat/colleges', methods=['GET'])
+def mseat_rest_colleges():
+    q = request.args.get('query', '')
+    res = jsonify(handle_college_info({'college_code_or_name': q}))
+    res.headers['Access-Control-Allow-Origin'] = '*'
+    return res
+
+@app.route('/api/mseat/compare', methods=['GET'])
+def mseat_rest_compare():
+    col_a = request.args.get('college_a', '')
+    col_b = request.args.get('college_b', '')
+    res = jsonify(handle_compare_colleges({'college_a': col_a, 'college_b': col_b}))
+    res.headers['Access-Control-Allow-Origin'] = '*'
+    return res
+
+@app.route('/api/mseat/sliding', methods=['GET'])
+def mseat_rest_sliding():
+    cur = request.args.get('current_college', '')
+    tgt = request.args.get('target_college', '')
+    rk = request.args.get('category_rank', 100, type=int)
+    res = jsonify(handle_sliding_odds({'current_college': cur, 'target_college': tgt, 'category_rank': rk}))
+    res.headers['Access-Control-Allow-Origin'] = '*'
+    return res
+
+@app.route('/api/mseat/rules', methods=['GET'])
+def mseat_rest_rules():
+    topic = request.args.get('topic', 'all')
+    res = jsonify(handle_counselling_rules({'topic': topic}))
+    res.headers['Access-Control-Allow-Origin'] = '*'
+    return res
 
 if __name__ == '__main__':
     app.run(debug=os.environ.get('FLASK_DEBUG', 'false').lower() == 'true',
