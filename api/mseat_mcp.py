@@ -278,17 +278,26 @@ def handle_counselling_rules(args: Dict[str, Any]) -> Dict[str, Any]:
     return {"success": True, "data": rules}
 
 def process_mcp_request(req_body: Dict[str, Any]) -> Dict[str, Any]:
-    method = req_body.get("method")
-    params = req_body.get("params", {})
-    req_id = req_body.get("id", 1)
+    """Processes standard JSON-RPC 2.0 / MCP requests compliant with 2024-11-05 spec."""
+    if not isinstance(req_body, dict):
+        return {"jsonrpc": "2.0", "id": None, "error": {"code": -32700, "message": "Parse error: invalid JSON."}}
 
+    method = req_body.get("method", "")
+    params = req_body.get("params", {})
+    req_id = req_body.get("id")
+
+    # 1. MCP Initialization Handshake
     if method == "initialize":
         return {
             "jsonrpc": "2.0",
             "id": req_id,
             "result": {
                 "protocolVersion": "2024-11-05",
-                "capabilities": {"tools": {}},
+                "capabilities": {
+                    "tools": {"listChanged": False},
+                    "resources": {},
+                    "prompts": {}
+                },
                 "serverInfo": {
                     "name": "mseat-mcp-server",
                     "version": "1.0.0",
@@ -297,6 +306,15 @@ def process_mcp_request(req_body: Dict[str, Any]) -> Dict[str, Any]:
             }
         }
     
+    # 2. Notifications (No response required per JSON-RPC, or empty result)
+    elif method.startswith("notifications/"):
+        return {"jsonrpc": "2.0", "result": {}}
+
+    # 3. Liveness Ping
+    elif method == "ping":
+        return {"jsonrpc": "2.0", "id": req_id, "result": {}}
+
+    # 4. Tools Discovery
     elif method == "tools/list":
         return {
             "jsonrpc": "2.0",
@@ -304,8 +322,9 @@ def process_mcp_request(req_body: Dict[str, Any]) -> Dict[str, Any]:
             "result": {"tools": MCP_TOOLS}
         }
 
+    # 5. Tool Execution
     elif method == "tools/call":
-        tool_name = params.get("name")
+        tool_name = params.get("name", "")
         args = params.get("arguments", {})
 
         handlers = {
@@ -317,19 +336,31 @@ def process_mcp_request(req_body: Dict[str, Any]) -> Dict[str, Any]:
         }
 
         if tool_name in handlers:
-            tool_res = handlers[tool_name](args)
-            return {
-                "jsonrpc": "2.0",
-                "id": req_id,
-                "result": {
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": json.dumps(tool_res, indent=2)
-                        }
-                    ]
+            try:
+                tool_res = handlers[tool_name](args)
+                return {
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "result": {
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": json.dumps(tool_res, indent=2)
+                            }
+                        ],
+                        "isError": False
+                    }
                 }
-            }
+            except Exception as ex:
+                logging.error(f"Error in tool '{tool_name}': {ex}")
+                return {
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "result": {
+                        "content": [{"type": "text", "text": f"Error executing tool: {str(ex)}"}],
+                        "isError": True
+                    }
+                }
         else:
             return {
                 "jsonrpc": "2.0",
@@ -337,6 +368,14 @@ def process_mcp_request(req_body: Dict[str, Any]) -> Dict[str, Any]:
                 "error": {"code": -32601, "message": f"Tool '{tool_name}' not found."}
             }
 
+    # 6. Resources & Prompts Fallbacks
+    elif method == "resources/list":
+        return {"jsonrpc": "2.0", "id": req_id, "result": {"resources": []}}
+    
+    elif method == "prompts/list":
+        return {"jsonrpc": "2.0", "id": req_id, "result": {"prompts": []}}
+
+    # Fallback for REST-like direct invocation
     return {
         "jsonrpc": "2.0",
         "id": req_id,
