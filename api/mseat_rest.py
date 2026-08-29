@@ -44,8 +44,8 @@ OPENAPI_SPEC = {
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "air": {"type": "integer", "description": "NEET All India Rank (e.g. 175420)"},
-                                    "state_rank": {"type": "integer", "description": "Telangana State General Serial Number (e.g. 3561)"},
+                                    "air": {"type": "integer", "description": "NEET All India Rank (e.g. 174330)"},
+                                    "state_rank": {"type": "integer", "description": "Telangana State General Serial Number (e.g. 3547)"},
                                     "category": {
                                         "type": "string",
                                         "enum": ["OC", "EWS", "BC_A", "BC_B", "BC_C", "BC_D", "BC_E", "SC_1", "SC_2", "SC_3", "SC", "ST"],
