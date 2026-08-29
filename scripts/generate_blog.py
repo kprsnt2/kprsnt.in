@@ -175,7 +175,7 @@ def generate_with_claude(prompt: str) -> dict | None:
 def generate_with_openai(prompt: str) -> dict | None:
     """Generate blog post using OpenAI (fallback)."""
     try:
-        text = call_llm(prompt)
+        text = call_llm(prompt, json_mode=True)
         if text is None:
             print("  ⚠️  OpenAI returned no response")
             return None
@@ -243,10 +243,10 @@ def process_draft(draft_path: Path) -> int:
     # Build prompt
     prompt = build_prompt(metadata, body)
 
-    # Try Claude first, then OpenAI fallback
-    result = generate_with_claude(prompt)
+    # Try OpenAI first, then Claude fallback
+    result = generate_with_openai(prompt)
     if result is None:
-        result = generate_with_openai(prompt)
+        result = generate_with_claude(prompt)
 
     if result is None:
         print("  ❌ Failed to generate with both Claude and OpenAI")

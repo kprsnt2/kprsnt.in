@@ -41,7 +41,7 @@ def get_nvidia_client():
     api_key = os.environ.get("NVIDIA_API_KEY")
     if not api_key:
         return None
-    return OpenAI(api_key=api_key, base_url=NVIDIA_BASE_URL, timeout=60.0)
+    return OpenAI(api_key=api_key, base_url=NVIDIA_BASE_URL, timeout=300.0)
 
 
 def get_groq_client():
@@ -49,7 +49,7 @@ def get_groq_client():
     api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
         return None
-    return OpenAI(api_key=api_key, base_url=GROQ_BASE_URL, timeout=60.0)
+    return OpenAI(api_key=api_key, base_url=GROQ_BASE_URL, timeout=300.0)
 
 
 def get_openai_client():
@@ -57,7 +57,7 @@ def get_openai_client():
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         return None
-    return OpenAI(api_key=api_key, timeout=60.0)
+    return OpenAI(api_key=api_key, timeout=300.0)
 
 
 # ============================================
@@ -78,34 +78,34 @@ def call_llm(prompt, system_prompt=None, json_mode=False, temperature=0.7, model
     if json_mode:
         kwargs["response_format"] = {"type": "json_object"}
 
-    # 1. NVIDIA (primary)
+    # 1. OpenAI (Primary as requested)
+    openai = get_openai_client()
+    if openai:
+        try:
+            r = openai.chat.completions.create(model=OPENAI_MODEL, timeout=300.0, **kwargs)
+            return r.choices[0].message.content
+        except Exception as e:
+            print(f"[OpenAI] Failed: {e}")
+
+    # 2. NVIDIA (fallback)
     nvidia = get_nvidia_client()
     if nvidia:
         for m in [model or NVIDIA_MODEL] + NVIDIA_FALLBACK_MODELS:
             try:
-                r = nvidia.chat.completions.create(model=m, timeout=60.0, **kwargs)
+                r = nvidia.chat.completions.create(model=m, timeout=300.0, **kwargs)
                 return r.choices[0].message.content
             except Exception as e:
                 print(f"[NVIDIA {m}] Failed: {e}")
 
-    # 2. Groq (backup)
+    # 3. Groq (last resort)
     groq = get_groq_client()
     if groq:
         for m in [GROQ_MODEL] + GROQ_FALLBACK_MODELS:
             try:
-                r = groq.chat.completions.create(model=m, timeout=60.0, **kwargs)
+                r = groq.chat.completions.create(model=m, timeout=300.0, **kwargs)
                 return r.choices[0].message.content
             except Exception as e:
                 print(f"[Groq {m}] Failed: {e}")
-
-    # 3. OpenAI (last resort — needs credits)
-    openai = get_openai_client()
-    if openai:
-        try:
-            r = openai.chat.completions.create(model=OPENAI_MODEL, timeout=60.0, **kwargs)
-            return r.choices[0].message.content
-        except Exception as e:
-            print(f"[OpenAI] Failed: {e}")
 
     return None
 
@@ -116,22 +116,22 @@ def call_llm(prompt, system_prompt=None, json_mode=False, temperature=0.7, model
 
 def get_embedding(text):
     """Get embedding vector. NVIDIA → OpenAI fallback."""
-    # 1. NVIDIA embeddings (primary)
-    nvidia = get_nvidia_client()
-    if nvidia:
-        try:
-            r = nvidia.embeddings.create(model=NVIDIA_EMBEDDING_MODEL, input=text, timeout=60.0)
-            return r.data[0].embedding
-        except Exception as e:
-            print(f"[NVIDIA Embedding] Failed: {e}")
-
-    # 2. OpenAI embeddings (fallback — needs credits)
+    # 1. OpenAI embeddings (primary as requested)
     openai = get_openai_client()
     if openai:
         try:
-            r = openai.embeddings.create(model=OPENAI_EMBEDDING_MODEL, input=text, timeout=60.0)
+            r = openai.embeddings.create(model=OPENAI_EMBEDDING_MODEL, input=text, timeout=300.0)
             return r.data[0].embedding
         except Exception as e:
             print(f"[OpenAI Embedding] Failed: {e}")
+
+    # 2. NVIDIA embeddings (fallback)
+    nvidia = get_nvidia_client()
+    if nvidia:
+        try:
+            r = nvidia.embeddings.create(model=NVIDIA_EMBEDDING_MODEL, input=text, timeout=300.0)
+            return r.data[0].embedding
+        except Exception as e:
+            print(f"[NVIDIA Embedding] Failed: {e}")
 
     return None
