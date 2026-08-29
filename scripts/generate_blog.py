@@ -116,6 +116,7 @@ Based on the following notes and opinions, write a polished, engaging blog post 
 9. Do NOT wrap in ```html``` code blocks - return raw HTML only
 10. Also generate a 1-2 sentence excerpt/summary of the post
 11. **AI View Section (IMPORTANT):** At the very end of the blog content, add a section titled "🤖 AI View" using <h3>. In this section, clearly state whether you (the AI) agree or disagree with the author's opinions expressed in the blog, and provide a well-reasoned explanation (3-5 sentences). Be honest and balanced — if you partially agree, say so. Style this section with a distinct visual block: <div style='background: linear-gradient(135deg, #1a1a2e, #16213e); border-left: 4px solid #e94560; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;'>
+12. **Preserve Diagrams:** If the notes contain any ```mermaid``` flowcharts or diagrams, or ASCII art boxes, preserve them exactly! Wrap mermaid code in `<pre class="mermaid">` and `</pre>`. Wrap ASCII art in `<pre><code>` and `</code></pre>`.
 
 **Output Format:**
 Return ONLY a JSON object with exactly these three fields:
