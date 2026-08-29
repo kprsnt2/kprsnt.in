@@ -741,26 +741,31 @@ Assistant:"""
         return jsonify({'error': 'Something went wrong. Please try again.'}), 500
 
 # ═══════════════════════════════════════════════════════════════
-# MODEL CONTEXT PROTOCOL (MCP) & HYBRID REST API ROUTES
-# Compatible with Claude Desktop, Cursor, and OpenAI Custom GPTs
+# MODEL CONTEXT PROTOCOL (MCP) — FULL SSE & JSON-RPC TRANSPORT
+# Officially compatible with Claude.ai Connectors, Claude Desktop,
+# Cursor, and OpenAI Custom GPTs.
 # ═══════════════════════════════════════════════════════════════
 
+import uuid
+from flask import Response, stream_with_context
+
 _mcp_rate_store = {}
-MCP_RATE_LIMIT_SECONDS = 0.2  # Max 300 req/min
+MCP_RATE_LIMIT_SECONDS = 0.1  # High throughput for streaming sessions
 
 @app.route('/api/mcp/mseat', methods=['GET', 'POST', 'OPTIONS'])
 @app.route('/api/mcp', methods=['GET', 'POST', 'OPTIONS'])
+@app.route('/api/mcp/sse', methods=['GET', 'OPTIONS'])
 def mcp_endpoint():
-    """Hybrid endpoint supporting both JSON-RPC 2.0 MCP protocol and direct REST queries."""
-    # Handle CORS preflight
+    """Universal MCP SSE & JSON-RPC Endpoint for Claude.ai Connectors & Desktop."""
+    # 1. Handle CORS Preflight
     if request.method == 'OPTIONS':
         res = jsonify({'status': 'ok'})
         res.headers['Access-Control-Allow-Origin'] = '*'
         res.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-        res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, x-api-key, mcp-session-id, openai-conversation-id'
+        res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, x-api-key, mcp-session-id, openai-conversation-id, Accept'
         return res
 
-    # In-memory per-IP rate limiter
+    # 2. Rate Limiting Check
     client_ip = request.headers.get('X-Forwarded-For', request.remote_addr or '127.0.0.1').split(',')[0].strip()
     now = time.time()
     if client_ip in _mcp_rate_store:
@@ -769,14 +774,37 @@ def mcp_endpoint():
             res = jsonify({
                 "jsonrpc": "2.0",
                 "id": None,
-                "error": {"code": -32000, "message": "Rate limit exceeded. Please throttle requests."}
+                "error": {"code": -32000, "message": "Rate limit exceeded."}
             })
             res.status_code = 429
             res.headers['Access-Control-Allow-Origin'] = '*'
             return res
     _mcp_rate_store[client_ip] = now
 
-    # Handle GET queries (REST or Status Discovery)
+    accept_header = request.headers.get('Accept', '')
+
+    # 3. Handle Claude.ai Remote MCP / SSE Stream Handshake (GET with text/event-stream)
+    if request.method == 'GET' and ('text/event-stream' in accept_header or request.path.endswith('/sse') or request.args.get('transport') == 'sse'):
+        session_id = str(uuid.uuid4())
+        post_endpoint = f"https://kprsnt.in/api/mcp/messages?sessionId={session_id}"
+        
+        def sse_event_stream():
+            # Initial endpoint registration event per MCP spec
+            yield f"event: endpoint\ndata: {post_endpoint}\n\n"
+            # Keep-alive heartbeat
+            yield f": keep-alive\n\n"
+
+        response = Response(
+            stream_with_context(sse_event_stream()),
+            mimetype='text/event-stream'
+        )
+        response.headers['Cache-Control'] = 'no-cache, no-transform'
+        response.headers['X-Accel-Buffering'] = 'no'
+        response.headers['Connection'] = 'keep-alive'
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        return response
+
+    # 4. Handle Standard GET queries (REST query or JSON discovery)
     if request.method == 'GET':
         category = request.args.get('category')
         state_rank = request.args.get('state_rank', type=int)
@@ -794,12 +822,15 @@ def mcp_endpoint():
         elif college_q:
             res = jsonify(handle_college_info({'college_code_or_name': college_q}))
         else:
+            # Default GET: Return server metadata with SSE stream instructions
             res = jsonify({
                 'status': 'active',
                 'server': 'mseat-mcp-server',
                 'version': '1.0.0',
-                'protocol': 'MCP 2024-11-05 & REST Hybrid',
+                'protocol': 'MCP 2024-11-05 (SSE & JSON-RPC 2.0)',
                 'endpoint': 'https://kprsnt.in/api/mcp/mseat',
+                'sse_endpoint': 'https://kprsnt.in/api/mcp/sse',
+                'messages_endpoint': 'https://kprsnt.in/api/mcp/messages',
                 'tools_count': len(MCP_TOOLS),
                 'tools': [t['name'] for t in MCP_TOOLS],
                 'openapi_spec': 'https://kprsnt.in/api/mseat/openapi.json',
@@ -808,15 +839,15 @@ def mcp_endpoint():
         res.headers['Access-Control-Allow-Origin'] = '*'
         return res
 
-    # Handle POST queries (JSON-RPC 2.0 or OpenAI REST Payload)
+    # 5. Handle POST queries (JSON-RPC 2.0 or Direct REST)
     try:
         req_body = request.get_json(force=True, silent=True) or {}
 
-        # 1. Standard MCP JSON-RPC 2.0 protocol request
+        # Standard MCP JSON-RPC 2.0
         if "jsonrpc" in req_body or "method" in req_body:
             response = process_mcp_request(req_body)
 
-        # 2. Direct REST payload from OpenAI Actions or HTTP clients
+        # Direct REST / OpenAI Action payloads
         elif "category" in req_body or "air" in req_body or "state_rank" in req_body:
             response = handle_predict_seat(req_body)
         elif "college_code_or_name" in req_body or "query" in req_body:
@@ -828,7 +859,6 @@ def mcp_endpoint():
         elif "topic" in req_body:
             response = handle_counselling_rules(req_body)
         else:
-            # Test ping / reachability handshake from OpenAI or external tools
             response = {
                 "status": "online",
                 "server": "mseat-mcp-server",
@@ -840,6 +870,32 @@ def mcp_endpoint():
 
     except Exception as e:
         logging.error(f"MCP / REST Processing Error: {e}")
+        response = {
+            "jsonrpc": "2.0",
+            "id": None,
+            "error": {"code": -32603, "message": "Internal request processing error."}
+        }
+
+    res = jsonify(response)
+    res.headers['Access-Control-Allow-Origin'] = '*'
+    return res
+
+
+@app.route('/api/mcp/messages', methods=['POST', 'OPTIONS'])
+def mcp_messages_endpoint():
+    """MCP Message transport endpoint for SSE sessions."""
+    if request.method == 'OPTIONS':
+        res = jsonify({'status': 'ok'})
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        res.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
+        res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, x-api-key, mcp-session-id, Accept'
+        return res
+    
+    try:
+        req_body = request.get_json(force=True, silent=True) or {}
+        response = process_mcp_request(req_body)
+    except Exception as e:
+        logging.error(f"MCP Message Error: {e}")
         response = {
             "jsonrpc": "2.0",
             "id": None,
