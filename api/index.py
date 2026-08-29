@@ -62,9 +62,9 @@ except ImportError:
     from services.rag import _load_embeddings, retrieve_chunks
 
 
-app = Flask(__name__,
-            template_folder='../templates',
-            static_folder='../static')
+app = Flask(__name__, template_folder='../templates', static_folder='../static')
+application = app
+handler = app
 
 # --- Security Headers ---
 @app.after_request
@@ -740,7 +740,6 @@ Assistant:"""
         logging.error(f"Chat error: {e}")
         return jsonify({'error': 'Something went wrong. Please try again.'}), 500
 
-
 # ═══════════════════════════════════════════════════════════════
 # MODEL CONTEXT PROTOCOL (MCP) & HYBRID REST API ROUTES
 # Compatible with Claude Desktop, Cursor, and OpenAI Custom GPTs
@@ -850,37 +849,6 @@ def mcp_endpoint():
     res = jsonify(response)
     res.headers['Access-Control-Allow-Origin'] = '*'
     return res
-_mcp_rate_store[client_ip] = now
-
-    if request.method == 'GET':
-        res = jsonify({
-            'status': 'active',
-            'server': 'mseat-mcp-server',
-            'version': '1.0.0',
-            'security': 'Rate-limited, Input-validated, Sanitized JSON-RPC 2.0',
-            'protocol': 'MCP 2024-11-05',
-            'endpoint': 'https://kprsnt.in/api/mcp/mseat',
-            'tools_count': len(MCP_TOOLS),
-            'tools': [t['name'] for t in MCP_TOOLS],
-            'documentation': 'https://kprsnt.in/mcp'
-        })
-        res.headers['Access-Control-Allow-Origin'] = '*'
-        return res
-    
-    try:
-        req_body = request.get_json(force=True, silent=True) or {}
-        response = process_mcp_request(req_body)
-    except Exception as e:
-        logging.error(f"MCP Processing Error: {e}")
-        response = {
-            "jsonrpc": "2.0",
-            "id": None,
-            "error": {"code": -32603, "message": "Internal JSON-RPC processing error."}
-        }
-
-    res = jsonify(response)
-    res.headers['Access-Control-Allow-Origin'] = '*'
-    return res
 
 @app.route('/mcp')
 def mcp_docs_page():
@@ -951,5 +919,4 @@ def mseat_rest_rules():
     return res
 
 if __name__ == '__main__':
-    app.run(debug=os.environ.get('FLASK_DEBUG', 'false').lower() == 'true',
-            host='127.0.0.1', port=5000)
+    app.run(debug=os.environ.get('FLASK_DEBUG', 'false').lower() == 'true', host='127.0.0.1', port=5000)
