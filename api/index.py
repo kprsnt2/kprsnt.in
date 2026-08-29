@@ -224,9 +224,9 @@ def load_all_blog_posts():
                 logging.warning(f"Failed to load blog post {json_file}: {e}")
 
     # 2. Load MD posts
-    blog_drafts_dir = os.path.join(os.path.dirname(__file__), '..', 'blog_drafts')
-    if os.path.exists(blog_drafts_dir):
-        for md_file in sorted(glob.glob(os.path.join(blog_drafts_dir, '*.md'))):
+    blog_md_dir = os.path.join(os.path.dirname(__file__), '..', 'blog_md')
+    if os.path.exists(blog_md_dir):
+        for md_file in sorted(glob.glob(os.path.join(blog_md_dir, '*.md'))):
             try:
                 with open(md_file, 'r', encoding='utf-8') as f:
                     content = f.read()
@@ -244,7 +244,12 @@ def load_all_blog_posts():
                     for line in frontmatter.split('\n'):
                         if ':' in line:
                             key, val = line.split(':', 1)
-                            post[key.strip()] = val.strip()
+                            key = key.strip().lower()
+                            val = val.strip()
+                            if key == 'tags':
+                                post['tags'] = [t.strip() for t in val.split(',') if t.strip()]
+                            else:
+                                post[key] = val
 
                     post['content'] = markdown.markdown(md_content, extensions=['fenced_code', 'tables'])
                 else:
@@ -252,11 +257,16 @@ def load_all_blog_posts():
                     post['title'] = slug.replace('-', ' ').title()
                     post['content'] = markdown.markdown(content, extensions=['fenced_code', 'tables'])
                     post['date'] = ''
+                    post['tags'] = ['Technology']
 
                 if not post.get('title'):
                     post['title'] = slug.replace('-', ' ').title()
                 if not post.get('category'):
                     post['category'] = 'Technology'
+                if not post.get('excerpt'):
+                    post['excerpt'] = post.get('insights', 'Read more...')
+                if not post.get('tags'):
+                    post['tags'] = ['Technology']
 
                 posts.append(post)
             except Exception as e:
