@@ -1,6 +1,6 @@
 ---
 title: "Building mSeat: How We Engineered a 1-Click MBBS Mock Counselling Engine for 18,000+ Telangana NEET Aspirants"
-date: "August 2026"
+date: "29 August 2026"
 category: "Technology"
 tags: "AI, JavaScript, Vercel, Engineering"
 excerpt: "How what started as a simple marks-to-rank estimator evolved into a full-scale discrete allocation simulator for 18,000+ medical aspirants."
@@ -104,7 +104,8 @@ This allowed any candidate looking up any State Rank to receive their exact cate
 - **The Solution**: We engineered a **stateful priority hierarchy**:
   1. **Auto-Discovery by Default**: Entering a rank automatically detects the candidate's real profile.
   2. **User Explicit Override Tracker**: If the user touches or selects a custom option in the Advanced Panel, userHasManuallyChangedCategory flags true, locking the user's manual choice.
-  3. **Multi-Category Cutoff Resolution**: When evaluating unAllocation(), the candidate's rank is evaluated against that specific category's cutoff curve across all 59 colleges.
+  3. **Multi-Category Cutoff Resolution**: When evaluating 
+unAllocation(), the candidate's rank is evaluated against that specific category's cutoff curve across all 59 colleges.
 
 ### Challenge 4: Crushing a 5.8 MB Network Bottleneck to 545 KB
 - **The Problem**: Serializing all 18,000+ candidate JSON objects created a 5.8 MB JavaScript payload. Over mobile cellular networks and GitHub Pages, loading this external file caused a network race condition where the UI scripts executed before the dataset finished downloading, rendering the 1-Click button unresponsive.
@@ -196,4 +197,5 @@ The beauty of this dual architecture is flexibility. For everyday students, the 
 
 *mSeat is built with pure Vanilla JavaScript (ES6+), HTML5, and CSS3 Glassmorphism.*  
 *Live Application: [mseat.kprsnt.in](https://mseat.kprsnt.in)*  
+*MCP: [Link](https://mseat.kprsnt.in/api/mcp)*  
 *GitHub Repository: [github.com/kprsnt2/mSeat](https://github.com/kprsnt2/mSeat)*

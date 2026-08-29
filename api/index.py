@@ -223,8 +223,8 @@ def load_all_blog_posts():
             except (json.JSONDecodeError, IOError) as e:
                 logging.warning(f"Failed to load blog post {json_file}: {e}")
 
-    # 2. Load MD posts
-    blog_md_dir = os.path.join(os.path.dirname(__file__), '..', 'blog_md')
+    # 2. Load MD posts from blog_inputs/ (directly rendered on site)
+    blog_md_dir = os.path.join(os.path.dirname(__file__), '..', 'blog_inputs')
     if os.path.exists(blog_md_dir):
         for md_file in sorted(glob.glob(os.path.join(blog_md_dir, '*.md'))):
             try:
