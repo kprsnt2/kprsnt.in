@@ -207,7 +207,7 @@ def generate_with_openai(prompt: str) -> dict | None:
         return None
 
 
-def process_draft(draft_path: Path) -> bool:
+def process_draft(draft_path: Path) -> int:
     """Process a single draft file and generate blog post."""
     slug = slugify(draft_path.stem)
     output_path = OUTPUT_DIR / f"{slug}.json"
@@ -223,14 +223,14 @@ def process_draft(draft_path: Path) -> bool:
         existing = json.loads(output_path.read_text(encoding="utf-8"))
         if existing.get("source_hash") == content_hash:
             print("  ⏭️  Unchanged, skipping")
-            return False
+            return 0
 
     # Parse frontmatter
     metadata, body = parse_frontmatter(content)
 
     if not body.strip():
         print("  ⚠️  Empty body, skipping")
-        return False
+        return 0
 
     title = metadata.get("title", draft_path.stem.replace("-", " ").title())
     tags = metadata.get("tags", ["Technology"])
@@ -250,7 +250,7 @@ def process_draft(draft_path: Path) -> bool:
 
     if result is None:
         print("  ❌ Failed to generate with both Claude and OpenAI")
-        return False
+        return -1
 
     # Build output JSON
     ai_author = author if author else result.get("_author", "AI")
@@ -278,7 +278,7 @@ def process_draft(draft_path: Path) -> bool:
         encoding="utf-8"
     )
     print(f"  💾 Saved: {output_path.name}")
-    return True
+    return 1
 
 
 def main():
@@ -302,9 +302,10 @@ def main():
     generated = 0
     failed = 0
     for draft in sorted(drafts):
-        if process_draft(draft):
+        status = process_draft(draft)
+        if status == 1:
             generated += 1
-        else:
+        elif status == -1:
             failed += 1
 
     print(f"\n✨ Done! Generated {generated} new blog post(s)")

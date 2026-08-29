@@ -37,27 +37,27 @@ OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"
 # ============================================
 
 def get_nvidia_client():
-    """Get the NVIDIA primary client with a short timeout to prevent hangs."""
+    """Get the NVIDIA primary client."""
     api_key = os.environ.get("NVIDIA_API_KEY")
     if not api_key:
         return None
-    return OpenAI(api_key=api_key, base_url=NVIDIA_BASE_URL, timeout=3.0)
+    return OpenAI(api_key=api_key, base_url=NVIDIA_BASE_URL, timeout=60.0)
 
 
 def get_groq_client():
-    """Get the Groq backup client with a short timeout to prevent hangs."""
+    """Get the Groq backup client."""
     api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
         return None
-    return OpenAI(api_key=api_key, base_url=GROQ_BASE_URL, timeout=4.0)
+    return OpenAI(api_key=api_key, base_url=GROQ_BASE_URL, timeout=60.0)
 
 
 def get_openai_client():
-    """Get the OpenAI last-resort client (no retries to fail fast) with a short timeout."""
+    """Get the OpenAI last-resort client."""
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         return None
-    return OpenAI(api_key=api_key, max_retries=0, timeout=4.0)
+    return OpenAI(api_key=api_key, timeout=60.0)
 
 
 # ============================================
@@ -83,7 +83,7 @@ def call_llm(prompt, system_prompt=None, json_mode=False, temperature=0.7, model
     if nvidia:
         for m in [model or NVIDIA_MODEL] + NVIDIA_FALLBACK_MODELS:
             try:
-                r = nvidia.chat.completions.create(model=m, timeout=3.0, **kwargs)
+                r = nvidia.chat.completions.create(model=m, timeout=60.0, **kwargs)
                 return r.choices[0].message.content
             except Exception as e:
                 print(f"[NVIDIA {m}] Failed: {e}")
@@ -93,7 +93,7 @@ def call_llm(prompt, system_prompt=None, json_mode=False, temperature=0.7, model
     if groq:
         for m in [GROQ_MODEL] + GROQ_FALLBACK_MODELS:
             try:
-                r = groq.chat.completions.create(model=m, timeout=4.0, **kwargs)
+                r = groq.chat.completions.create(model=m, timeout=60.0, **kwargs)
                 return r.choices[0].message.content
             except Exception as e:
                 print(f"[Groq {m}] Failed: {e}")
@@ -102,7 +102,7 @@ def call_llm(prompt, system_prompt=None, json_mode=False, temperature=0.7, model
     openai = get_openai_client()
     if openai:
         try:
-            r = openai.chat.completions.create(model=OPENAI_MODEL, timeout=4.0, **kwargs)
+            r = openai.chat.completions.create(model=OPENAI_MODEL, timeout=60.0, **kwargs)
             return r.choices[0].message.content
         except Exception as e:
             print(f"[OpenAI] Failed: {e}")
@@ -120,7 +120,7 @@ def get_embedding(text):
     nvidia = get_nvidia_client()
     if nvidia:
         try:
-            r = nvidia.embeddings.create(model=NVIDIA_EMBEDDING_MODEL, input=text, timeout=3.0)
+            r = nvidia.embeddings.create(model=NVIDIA_EMBEDDING_MODEL, input=text, timeout=60.0)
             return r.data[0].embedding
         except Exception as e:
             print(f"[NVIDIA Embedding] Failed: {e}")
@@ -129,7 +129,7 @@ def get_embedding(text):
     openai = get_openai_client()
     if openai:
         try:
-            r = openai.embeddings.create(model=OPENAI_EMBEDDING_MODEL, input=text, timeout=4.0)
+            r = openai.embeddings.create(model=OPENAI_EMBEDDING_MODEL, input=text, timeout=60.0)
             return r.data[0].embedding
         except Exception as e:
             print(f"[OpenAI Embedding] Failed: {e}")
