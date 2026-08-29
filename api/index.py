@@ -742,25 +742,26 @@ Assistant:"""
 
 
 # ═══════════════════════════════════════════════════════════════
-# MODEL CONTEXT PROTOCOL (MCP) SERVER ROUTES (SECURED & COMPATIBLE)
+# MODEL CONTEXT PROTOCOL (MCP) & HYBRID REST API ROUTES
+# Compatible with Claude Desktop, Cursor, and OpenAI Custom GPTs
 # ═══════════════════════════════════════════════════════════════
 
 _mcp_rate_store = {}
-MCP_RATE_LIMIT_SECONDS = 0.5  # Max 120 req/min per IP
+MCP_RATE_LIMIT_SECONDS = 0.2  # Max 300 req/min
 
 @app.route('/api/mcp/mseat', methods=['GET', 'POST', 'OPTIONS'])
 @app.route('/api/mcp', methods=['GET', 'POST', 'OPTIONS'])
 def mcp_endpoint():
-    """Secured MCP JSON-RPC 2.0 & Status Endpoint with CORS and Rate-Limiting."""
+    """Hybrid endpoint supporting both JSON-RPC 2.0 MCP protocol and direct REST queries."""
     # Handle CORS preflight
     if request.method == 'OPTIONS':
         res = jsonify({'status': 'ok'})
         res.headers['Access-Control-Allow-Origin'] = '*'
         res.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
-        res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, x-api-key, mcp-session-id'
+        res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, x-api-key, mcp-session-id, openai-conversation-id'
         return res
 
-    # Simple in-memory per-IP rate limiter
+    # In-memory per-IP rate limiter
     client_ip = request.headers.get('X-Forwarded-For', request.remote_addr or '127.0.0.1').split(',')[0].strip()
     now = time.time()
     if client_ip in _mcp_rate_store:
@@ -775,6 +776,81 @@ def mcp_endpoint():
             res.headers['Access-Control-Allow-Origin'] = '*'
             return res
     _mcp_rate_store[client_ip] = now
+
+    # Handle GET queries (REST or Status Discovery)
+    if request.method == 'GET':
+        category = request.args.get('category')
+        state_rank = request.args.get('state_rank', type=int)
+        air = request.args.get('air', type=int)
+        college_q = request.args.get('query') or request.args.get('college')
+
+        if category or state_rank or air:
+            args = {
+                'category': category or 'OC',
+                'state_rank': state_rank,
+                'air': air,
+                'gender': request.args.get('gender', 'male')
+            }
+            res = jsonify(handle_predict_seat(args))
+        elif college_q:
+            res = jsonify(handle_college_info({'college_code_or_name': college_q}))
+        else:
+            res = jsonify({
+                'status': 'active',
+                'server': 'mseat-mcp-server',
+                'version': '1.0.0',
+                'protocol': 'MCP 2024-11-05 & REST Hybrid',
+                'endpoint': 'https://kprsnt.in/api/mcp/mseat',
+                'tools_count': len(MCP_TOOLS),
+                'tools': [t['name'] for t in MCP_TOOLS],
+                'openapi_spec': 'https://kprsnt.in/api/mseat/openapi.json',
+                'documentation': 'https://kprsnt.in/mcp'
+            })
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res
+
+    # Handle POST queries (JSON-RPC 2.0 or OpenAI REST Payload)
+    try:
+        req_body = request.get_json(force=True, silent=True) or {}
+
+        # 1. Standard MCP JSON-RPC 2.0 protocol request
+        if "jsonrpc" in req_body or "method" in req_body:
+            response = process_mcp_request(req_body)
+
+        # 2. Direct REST payload from OpenAI Actions or HTTP clients
+        elif "category" in req_body or "air" in req_body or "state_rank" in req_body:
+            response = handle_predict_seat(req_body)
+        elif "college_code_or_name" in req_body or "query" in req_body:
+            response = handle_college_info(req_body)
+        elif "college_a" in req_body and "college_b" in req_body:
+            response = handle_compare_colleges(req_body)
+        elif "current_college" in req_body and "target_college" in req_body:
+            response = handle_sliding_odds(req_body)
+        elif "topic" in req_body:
+            response = handle_counselling_rules(req_body)
+        else:
+            # Test ping / reachability handshake from OpenAI or external tools
+            response = {
+                "status": "online",
+                "server": "mseat-mcp-server",
+                "version": "1.0.0",
+                "message": "mSeat API is active and ready.",
+                "tools": [t['name'] for t in MCP_TOOLS],
+                "openapi": "https://kprsnt.in/api/mseat/openapi.json"
+            }
+
+    except Exception as e:
+        logging.error(f"MCP / REST Processing Error: {e}")
+        response = {
+            "jsonrpc": "2.0",
+            "id": None,
+            "error": {"code": -32603, "message": "Internal request processing error."}
+        }
+
+    res = jsonify(response)
+    res.headers['Access-Control-Allow-Origin'] = '*'
+    return res
+_mcp_rate_store[client_ip] = now
 
     if request.method == 'GET':
         res = jsonify({
