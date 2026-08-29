@@ -974,5 +974,65 @@ def mseat_rest_rules():
     res.headers['Access-Control-Allow-Origin'] = '*'
     return res
 
+# ═══════════════════════════════════════════════════════════════
+# OAUTH & OPENID DISCOVERY FOR CLAUDE CONNECTORS (SIGN-IN BYPASS)
+# ═══════════════════════════════════════════════════════════════
+
+@app.route('/.well-known/oauth-authorization-server', methods=['GET', 'OPTIONS'])
+@app.route('/.well-known/openid-configuration', methods=['GET', 'OPTIONS'])
+def oauth_discovery():
+    """OAuth 2.0 / OpenID Connect Discovery metadata for Claude Connectors."""
+    data = {
+        "issuer": "https://kprsnt.in",
+        "authorization_endpoint": "https://kprsnt.in/api/oauth/authorize",
+        "token_endpoint": "https://kprsnt.in/api/oauth/token",
+        "userinfo_endpoint": "https://kprsnt.in/api/oauth/userinfo",
+        "response_types_supported": ["code", "token"],
+        "grant_types_supported": ["authorization_code", "client_credentials", "refresh_token"],
+        "token_endpoint_auth_methods_supported": ["client_secret_post", "client_secret_basic", "none"],
+        "scopes_supported": ["openid", "profile", "email", "mcp:all"]
+    }
+    res = jsonify(data)
+    res.headers['Access-Control-Allow-Origin'] = '*'
+    return res
+
+@app.route('/api/oauth/authorize', methods=['GET', 'POST'])
+def oauth_authorize():
+    """Instant authorization redirect for Claude Connectors."""
+    from flask import redirect
+    redirect_uri = request.args.get('redirect_uri')
+    state = request.args.get('state', '')
+    if redirect_uri:
+        return redirect(f"{redirect_uri}?code=mseat_auth_code_ok&state={state}")
+    return jsonify({"status": "authorized", "code": "mseat_auth_code_ok"})
+
+@app.route('/api/oauth/token', methods=['POST', 'OPTIONS'])
+def oauth_token():
+    """Instant token issuance for Claude Connectors."""
+    if request.method == 'OPTIONS':
+        res = jsonify({'status': 'ok'})
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        res.headers['Access-Control-Allow-Headers'] = '*'
+        return res
+    res = jsonify({
+        "access_token": "mseat_access_token_active",
+        "token_type": "Bearer",
+        "expires_in": 86400,
+        "scope": "mcp:all"
+    })
+    res.headers['Access-Control-Allow-Origin'] = '*'
+    return res
+
+@app.route('/api/oauth/userinfo', methods=['GET', 'POST'])
+def oauth_userinfo():
+    """Userinfo metadata for authenticated Claude sessions."""
+    res = jsonify({
+        "sub": "mseat_user",
+        "name": "mSeat User",
+        "email": "user@kprsnt.in"
+    })
+    res.headers['Access-Control-Allow-Origin'] = '*'
+    return res
+
 if __name__ == '__main__':
     app.run(debug=os.environ.get('FLASK_DEBUG', 'false').lower() == 'true', host='127.0.0.1', port=5000)
