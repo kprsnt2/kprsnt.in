@@ -3,7 +3,10 @@
   "builds": [
     {
       "src": "api/index.py",
-      "use": "@vercel/python"
+      "use": "@vercel/python",
+      "config": {
+        "includeFiles": "blog_data/**,blog_inputs/**,templates/**"
+      }
     },
     {
       "src": "api/interview.py",

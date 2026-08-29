@@ -66,20 +66,20 @@ But by utilizing the ultimate seat matrix and the final verified merit list, the
 graph TD
     A[User Input: AIR or State Rank] --> B{Merit List Engine}
     B -->|State Rank Found in 18,000+ Dataset| C[Auto-Populate AIR, Score, Category, Gender]
-    B -->|Manual User Override| D[Adopt User-Selected Category & Quotas]
+    B -->|Manual User Override| D[Adopt User-Selected Category and Quotas]
     
     C --> E[Compute Cumulative Category Rank in O 1 Time]
     D --> E
     
     E --> F[Preference Engine: 59 Colleges Ordered by Distance from Rajendranagar]
-    F --> G[Eligibility Evaluator: CatRank <= College Closing Rank]
+    F --> G[Eligibility Evaluator: CatRank le College Closing Rank]
     
     G --> H{Allocation Outcome}
-    H -->|Eligible| I[Step 4: Allocated College Card, Safety Margin & Alternatives]
-    H -->|Borderline / Not Clear| J[Step 4: Mop-Up Guidance & Borderline Possibilities]
+    H -->|Eligible| I[Step 4: Allocated College Card, Safety Margin and Alternatives]
+    H -->|Borderline / Not Clear| J[Step 4: Mop-Up Guidance and Borderline Possibilities]
     
     K[Natural Language Query] --> L[AI Counselor Intent Classifier]
-    L --> M[Fees / Documents / College Info / Probability]
+    L --> M[Fees / Documents / College Info or Probability]
 `
 
 ---
@@ -199,3 +199,4 @@ The beauty of this dual architecture is flexibility. For everyday students, the 
 *Live Application: [mseat.kprsnt.in](https://mseat.kprsnt.in)*  
 *MCP: [Link](https://mseat.kprsnt.in/api/mcp)*  
 *GitHub Repository: [github.com/kprsnt2/mSeat](https://github.com/kprsnt2/mSeat)*
+
