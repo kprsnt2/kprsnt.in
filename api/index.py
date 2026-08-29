@@ -22,6 +22,8 @@ import time
 import json
 import glob
 import logging
+import markdown
+import re
 try:
     from ai_config import call_llm, get_embedding, OPENAI_MODEL_PREMIUM, OPENAI_MODEL
 except ImportError:
@@ -204,9 +206,10 @@ def _parse_blog_date(date_str):
 
 
 def load_all_blog_posts():
-    """Load blog posts from JSON files in blog_data/."""
+    """Load blog posts from JSON files in blog_data/ and MD files in blog_drafts/."""
     posts = []
 
+    # 1. Load JSON posts
     blog_data_dir = os.path.join(os.path.dirname(__file__), '..', 'blog_data')
     if os.path.exists(blog_data_dir):
         for json_file in sorted(glob.glob(os.path.join(blog_data_dir, '*.json'))):
@@ -219,6 +222,45 @@ def load_all_blog_posts():
                         posts.append(post)
             except (json.JSONDecodeError, IOError) as e:
                 logging.warning(f"Failed to load blog post {json_file}: {e}")
+
+    # 2. Load MD posts
+    blog_drafts_dir = os.path.join(os.path.dirname(__file__), '..', 'blog_drafts')
+    if os.path.exists(blog_drafts_dir):
+        for md_file in sorted(glob.glob(os.path.join(blog_drafts_dir, '*.md'))):
+            try:
+                with open(md_file, 'r', encoding='utf-8') as f:
+                    content = f.read()
+
+                post = {}
+                slug = os.path.basename(md_file).replace('.md', '')
+                post['slug'] = slug
+
+                # Parse frontmatter
+                frontmatter_match = re.match(r'^---\s*\n(.*?)\n---\s*\n(.*)', content, re.DOTALL)
+                if frontmatter_match:
+                    frontmatter = frontmatter_match.group(1)
+                    md_content = frontmatter_match.group(2)
+
+                    for line in frontmatter.split('\n'):
+                        if ':' in line:
+                            key, val = line.split(':', 1)
+                            post[key.strip()] = val.strip()
+
+                    post['content'] = markdown.markdown(md_content, extensions=['fenced_code', 'tables'])
+                else:
+                    # No frontmatter
+                    post['title'] = slug.replace('-', ' ').title()
+                    post['content'] = markdown.markdown(content, extensions=['fenced_code', 'tables'])
+                    post['date'] = ''
+
+                if not post.get('title'):
+                    post['title'] = slug.replace('-', ' ').title()
+                if not post.get('category'):
+                    post['category'] = 'Technology'
+
+                posts.append(post)
+            except Exception as e:
+                logging.warning(f"Failed to load MD post {md_file}: {e}")
 
     posts.sort(key=lambda p: _parse_blog_date(p.get('date', '')), reverse=True)
     return posts

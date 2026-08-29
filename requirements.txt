@@ -6,3 +6,5 @@ mcp[cli]
 httpx
 openai
 resend
+
+markdown
