@@ -206,24 +206,11 @@ def _parse_blog_date(date_str):
 
 
 def load_all_blog_posts():
-    """Load blog posts from JSON files in blog_data/ and MD files in blog_drafts/."""
+    """Load blog posts from JSON files in blog_data/ and MD files in blog_inputs/."""
     posts = []
+    seen_slugs = set()
 
-    # 1. Load JSON posts
-    blog_data_dir = os.path.join(os.path.dirname(__file__), '..', 'blog_data')
-    if os.path.exists(blog_data_dir):
-        for json_file in sorted(glob.glob(os.path.join(blog_data_dir, '*.json'))):
-            try:
-                with open(json_file, 'r', encoding='utf-8') as f:
-                    post = json.load(f)
-                    if post.get('slug') and post.get('title') and post.get('content'):
-                        if not post.get('category'):
-                            post['category'] = 'Technology'
-                        posts.append(post)
-            except (json.JSONDecodeError, IOError) as e:
-                logging.warning(f"Failed to load blog post {json_file}: {e}")
-
-    # 2. Load MD posts from blog_inputs/ (directly rendered on site)
+    # 1. Load MD posts from blog_inputs/ first (polished, takes priority)
     blog_md_dir = os.path.join(os.path.dirname(__file__), '..', 'blog_inputs')
     if os.path.exists(blog_md_dir):
         for md_file in sorted(glob.glob(os.path.join(blog_md_dir, '*.md'))):
@@ -269,8 +256,26 @@ def load_all_blog_posts():
                     post['tags'] = ['Technology']
 
                 posts.append(post)
+                seen_slugs.add(slug)
             except Exception as e:
                 logging.warning(f"Failed to load MD post {md_file}: {e}")
+
+    # 2. Load JSON posts (skip if slug already loaded from blog_inputs/)
+    blog_data_dir = os.path.join(os.path.dirname(__file__), '..', 'blog_data')
+    if os.path.exists(blog_data_dir):
+        for json_file in sorted(glob.glob(os.path.join(blog_data_dir, '*.json'))):
+            try:
+                with open(json_file, 'r', encoding='utf-8') as f:
+                    post = json.load(f)
+                    if post.get('slug') and post.get('title') and post.get('content'):
+                        if post['slug'] in seen_slugs:
+                            continue
+                        if not post.get('category'):
+                            post['category'] = 'Technology'
+                        posts.append(post)
+                        seen_slugs.add(post['slug'])
+            except (json.JSONDecodeError, IOError) as e:
+                logging.warning(f"Failed to load blog post {json_file}: {e}")
 
     posts.sort(key=lambda p: _parse_blog_date(p.get('date', '')), reverse=True)
     return posts
