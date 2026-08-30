@@ -211,7 +211,8 @@ def load_all_blog_posts():
     seen_slugs = set()
 
     # 1. Load MD posts from blog_inputs/ first (polished, takes priority)
-    blog_md_dir = os.path.join(os.path.dirname(__file__), '..', 'blog_inputs')
+    blog_md_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'blog_inputs'))
+    logging.info(f"Looking for blog_inputs at: {blog_md_dir}, exists={os.path.exists(blog_md_dir)}")
     if os.path.exists(blog_md_dir):
         for md_file in sorted(glob.glob(os.path.join(blog_md_dir, '*.md'))):
             try:
@@ -232,17 +233,17 @@ def load_all_blog_posts():
                         if ':' in line:
                             key, val = line.split(':', 1)
                             key = key.strip().lower()
-                            val = val.strip()
+                            val = val.strip().strip('"').strip("'")
                             if key == 'tags':
                                 post['tags'] = [t.strip() for t in val.split(',') if t.strip()]
                             else:
                                 post[key] = val
 
-                    post['content'] = markdown.markdown(md_content, extensions=['fenced_code', 'tables'])
+                    post['content'] = markdown.markdown(md_content, extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty'])
                 else:
                     # No frontmatter
                     post['title'] = slug.replace('-', ' ').title()
-                    post['content'] = markdown.markdown(content, extensions=['fenced_code', 'tables'])
+                    post['content'] = markdown.markdown(content, extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty'])
                     post['date'] = ''
                     post['tags'] = ['Technology']
 
@@ -261,7 +262,8 @@ def load_all_blog_posts():
                 logging.warning(f"Failed to load MD post {md_file}: {e}")
 
     # 2. Load JSON posts (skip if slug already loaded from blog_inputs/)
-    blog_data_dir = os.path.join(os.path.dirname(__file__), '..', 'blog_data')
+    blog_data_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'blog_data'))
+    logging.info(f"Looking for blog_data at: {blog_data_dir}, exists={os.path.exists(blog_data_dir)}")
     if os.path.exists(blog_data_dir):
         for json_file in sorted(glob.glob(os.path.join(blog_data_dir, '*.json'))):
             try:
