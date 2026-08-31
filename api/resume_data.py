@@ -1,6 +1,4 @@
-import json
-
-new_content = '''"""
+"""
 Role-Specific Resume Data
 Static resume variants tailored for specific target roles.
 """
@@ -117,7 +115,3 @@ def get_resume(role_slug):
 def get_all_roles():
     """Get all role definitions for the role selector."""
     return ROLE_DEFINITIONS
-'''
-
-with open("api/resume_data.py", "w", encoding="utf-8") as f:
-    f.write(new_content)
