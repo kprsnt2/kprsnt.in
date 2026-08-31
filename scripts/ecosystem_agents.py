@@ -86,7 +86,11 @@ def update_telemetry(stats):
         "commit_history": stats["commit_history"],
         "repo_counts": stats["repo_counts"],
         "language_breakdown": stats["language_breakdown"],
-        "live_salary_estimation": salary_est
+        "live_salary_estimation": salary_est,
+        "top_skills": ["Multi-Agent AI", "Model Context Protocol (MCP)", "BigQuery", "Python", "Flask", "GitHub Actions"],
+        "mcp_endpoints_active": 4,
+        "automations_running": 12,
+        "sectors_impacted": ["Healthcare / Pharma", "E-commerce", "Insurance", "Education", "SaaS"]
     }
     
     TELEMETRY_PATH.parent.mkdir(parents=True, exist_ok=True)

@@ -60,6 +60,51 @@
 
     </div>
 
+    <!-- Secondary Stats Row -->
+    <div class="row g-4 mb-4">
+        
+        <div class="col-md-4">
+            <div class="card h-100 bg-dark" style="border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; border-left: 4px solid #f39c12;">
+                <div class="card-body d-flex align-items-center">
+                    <div style="font-size: 2.5rem; color: #f39c12; margin-right: 1.5rem;"><i class="fas fa-plug"></i></div>
+                    <div>
+                        <h6 class="text-secondary text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px;">FastMCP Endpoints</h6>
+                        <h3 class="text-white mt-1 mb-0">{{ data.mcp_endpoints_active|default(4) }} <span class="text-muted fs-6">Active</span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 bg-dark" style="border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; border-left: 4px solid #1abc9c;">
+                <div class="card-body d-flex align-items-center">
+                    <div style="font-size: 2.5rem; color: #1abc9c; margin-right: 1.5rem;"><i class="fas fa-robot"></i></div>
+                    <div>
+                        <h6 class="text-secondary text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px;">Automations Running</h6>
+                        <h3 class="text-white mt-1 mb-0">{{ data.automations_running|default(12) }} <span class="text-muted fs-6">CRON Jobs</span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card h-100 bg-dark" style="border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; border-left: 4px solid #e67e22;">
+                <div class="card-body">
+                    <h6 class="text-secondary text-uppercase mb-2" style="font-size: 0.8rem; letter-spacing: 1px;">Sectors Impacted</h6>
+                    <div class="d-flex flex-wrap gap-1">
+                        {% for sector in data.sectors_impacted %}
+                        <span class="badge" style="background: rgba(230, 126, 34, 0.2); color: #e67e22; border: 1px solid rgba(230, 126, 34, 0.5);">{{ sector }}</span>
+                        {% else %}
+                        <span class="badge" style="background: rgba(230, 126, 34, 0.2); color: #e67e22;">Healthcare</span>
+                        <span class="badge" style="background: rgba(230, 126, 34, 0.2); color: #e67e22;">E-commerce</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
     <!-- Charts Row -->
     <div class="row g-4 mb-4">
         <!-- Pipeline Timeline Chart -->

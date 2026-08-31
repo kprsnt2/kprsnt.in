@@ -9,9 +9,20 @@
   "repo_counts": 35,
   "top_skills": [
     "Multi-Agent AI",
+    "Model Context Protocol (MCP)",
     "BigQuery",
     "Python",
-    "Flask"
+    "Flask",
+    "GitHub Actions"
+  ],
+  "mcp_endpoints_active": 4,
+  "automations_running": 12,
+  "sectors_impacted": [
+    "Healthcare / Pharma",
+    "E-commerce",
+    "Insurance",
+    "Education",
+    "SaaS"
   ],
   "live_salary_estimation": {
     "min": 120000,
