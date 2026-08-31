@@ -9,7 +9,7 @@ excerpt: "How what started as a simple marks-to-rank estimator evolved into a fu
 *Co-authored & Optimized by OpenAI GPT-5.4-mini*
 
 > **A Technical Case Study & Engineering Journey**  
-> *How what started as a simple marks-to-rank estimator evolved into a full-scale discrete allocation simulator for 18,000+ medical aspirants competing for 6,000+ MBBS seats — and where we are heading next with Vercel, Gemini/ChatGPT, and Model Context Protocol (MCP).* 
+> *How what started as a simple marks-to-rank estimator evolved into a full-scale discrete allocation simulator for 18,000+ medical aspirants competing for 6,000+ MBBS seats â€” and where we are heading next with Vercel, Gemini/ChatGPT, and Model Context Protocol (MCP).* 
 
 ---
 
@@ -28,14 +28,14 @@ Every year, over 2.2 million students across India appear for the NEET-UG examin
 
 ---
 
-## 2. "We Thought It Was Easy" — The 1-Lakh Rank Reality Check
+## 2. "We Thought It Was Easy" â€” The 1-Lakh Rank Reality Check
 
 ### Phase 1: The Disastrous Rank Predictor
 When we first conceived mSeat, the plan was just to guess the rank. I built a rank predictor based on expected marks and last year's allotment cutoffs. Hearing that the paper was tough but biology was easy, I even added a "slider" to adjust predictions based on the complexity of the exam.
 
 Then the actual results were announced. **It blew my mind. I was entirely wrong.** 
 
-My rank prediction failed by a huge margin—around **1 lakh (100,000) ranks off** for my niece. The sheer inflation in scores destroyed all linear models.
+My rank prediction failed by a huge marginâ€”around **1 lakh (100,000) ranks off** for my niece. The sheer inflation in scores destroyed all linear models.
 
 ### Phase 2: The "Reverse-Engineering" Flaw
 Challenge accepted. I pivoted to predict *seat allotments*, thinking it would be easier. I took last year's seats, ranks, marks, and added the new seats for this year. I built the app. It looked good. 
@@ -132,7 +132,7 @@ const rawMeritData = [
   - **College Lookups & Head-to-Head Comparisons**: Generates comparative tables (distances, hospital beds, PG courses, closing cutoffs).
   - **Probability Assessments**: Activates predictive assessment only when marks or admission odds are explicitly asked.
 
-### Challenge 6: UI Transformation — From Cluttered Form to 2026 GenZ SaaS
+### Challenge 6: UI Transformation â€” From Cluttered Form to 2026 GenZ SaaS
 - **Zero-Friction 1-Click Hero**: Removed redundant score sliders and secondary fields from the main viewport. Kept only **NEET AIR** and **Telangana State Rank**.
 - **Tactile Shimmer Button**: Styled with a diagonal animated light beam, cyan-to-emerald gradient, and multi-layer glow shadow.
 - **Bento Card Architecture**: 3D obsidian bento cards with glowing focus rings on active inputs.
@@ -145,13 +145,13 @@ const rawMeritData = [
 
 The engine pre-orders all Telangana medical colleges logically: **All 36 Government Colleges first**, followed by **all 23 Private Category-A Colleges**, ranked by travel distance from Rajendranagar, Hyderabad:
 
-1. **Top Government Institutions (13 km – 20 km)**:
-   - Osmania Medical College (OMCH, 13 km) — 250 Seats
-   - Gandhi Medical College (GAND, 19 km) — 250 Seats
-   - ESIC Medical College (ESIM, 20 km) — 150 Seats
-2. **Hyderabad Peripheral & Suburban GMCs (32 km – 88 km)**:
+1. **Top Government Institutions (13 km â€“ 20 km)**:
+   - Osmania Medical College (OMCH, 13 km) â€” 250 Seats
+   - Gandhi Medical College (GAND, 19 km) â€” 250 Seats
+   - ESIC Medical College (ESIM, 20 km) â€” 150 Seats
+2. **Hyderabad Peripheral & Suburban GMCs (32 km â€“ 88 km)**:
    - GMC Maheshwaram, GMC Quthbullapur, GMC Sangareddy, GMC Vikarabad, GMC Yadadri, GMC Siddipet, GMC Mahabubnagar
-3. **District Government Medical Colleges (100 km – 315 km)**:
+3. **District Government Medical Colleges (100 km â€“ 315 km)**:
    - Nalgonda, Suryapet, Jangaon, Wanaparthy, Nagarkurnool, Nizamabad, Karimnagar, Warangal, Khammam, Adilabad, Mulugu, Asifabad, Bhupalpally
 4. **Top Private Medical Colleges (Cat-A Convenor Quota ?60,000/yr)**:
    - Apollo Jubilee Hills, Kamineni LB Nagar, Bhaskar Moinabad, Mamata Bachupally, Patnam Mahender Chevella, Arundathi Dundigal, Maheshwara Patancheru, CMR Medchal, Mediciti Ghanpur, Chalmeda Karimnagar, Mamata Khammam
