@@ -58,18 +58,16 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/api/docs' or request.path == '/docs' %}active{% endif %}" href="/docs">Docs</a>
                     </li>
-                    <!-- AIE (AI Engineering) Dropdown -->
+                    <!-- Ecosystem Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if request.path in ['/aie', '/jobs', '/brand', '/pharma', '/plotter', '/jobs/dashboard'] %}active{% endif %}"
+                        <a class="nav-link dropdown-toggle {% if request.path in ['/aie', '/ecosystem', '/plotter'] %}active{% endif %}"
                             href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-microchip" style="margin-right: 4px;"></i>AIE
+                            <i class="fas fa-microchip" style="margin-right: 4px;"></i>Ecosystem
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item {% if request.path == '/aie' %}active{% endif %}" href="/aie"><i class="fas fa-home" style="width:20px;"></i> Hub Overview</a></li>
+                            <li><a class="dropdown-item {% if request.path == '/aie' %}active{% endif %}" href="/aie"><i class="fas fa-network-wired" style="width:20px;"></i> How it works</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item {% if request.path == '/jobs' or request.path == '/jobs/dashboard' %}active{% endif %}" href="/jobs"><i class="fas fa-robot" style="width:20px;"></i> Jobs Pipeline</a></li>
-                            <li><a class="dropdown-item {% if request.path == '/brand' %}active{% endif %}" href="/brand"><i class="fas fa-chart-pie" style="width:20px;"></i> Brand Intelligence</a></li>
-                            <li><a class="dropdown-item {% if request.path == '/pharma' %}active{% endif %}" href="/pharma"><i class="fas fa-flask" style="width:20px;"></i> Pharma Pipeline</a></li>
+                            <li><a class="dropdown-item {% if request.path == '/ecosystem' %}active{% endif %}" href="/ecosystem"><i class="fas fa-tachometer-alt" style="width:20px;"></i> Dashboard</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item {% if request.path == '/plotter' %}active{% endif %}" href="/plotter"><i class="fas fa-chart-line" style="width:20px;"></i> Data Plotter</a></li>
                         </ul>
