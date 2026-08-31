@@ -291,11 +291,17 @@ def blog():
 
 @app.route('/blog/<slug>')
 def blog_post(slug):
-    all_posts = load_all_blog_posts()
-    post = next((p for p in all_posts if p['slug'] == slug), None)
-    if post:
-        return render_template('blog_post.html', post=post)
-    return render_template('blog.html', posts=all_posts)
+    try:
+        all_posts = load_all_blog_posts()
+        post = next((p for p in all_posts if p['slug'] == slug), None)
+        if post:
+            return render_template('blog_post.html', post=post)
+        return render_template('blog.html', posts=all_posts)
+    except Exception as e:
+        logging.error(f"Blog post error for slug '{slug}': {type(e).__name__}: {e}")
+        import traceback
+        logging.error(traceback.format_exc())
+        return jsonify({"error": str(e), "type": type(e).__name__}), 500
 
 
 # ============================================================
