@@ -534,6 +534,27 @@ def brand_api():
 
 
 # ============================================================
+# Dashboard Routes — Ecosystem
+# ============================================================
+
+@app.route('/ecosystem')
+def ecosystem_dashboard():
+    data_path = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'ecosystem_telemetry.json')
+    try:
+        with open(data_path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+    except Exception:
+        data = {
+            "commit_history": 0,
+            "language_breakdown": {},
+            "repo_counts": 0,
+            "top_skills": [],
+            "live_salary_estimation": {"min": 0, "max": 0, "reasoning": "Data unavailable"}
+        }
+    return render_template('ecosystem.html', data=data)
+
+
+# ============================================================
 # Dashboard Routes — Jobs Dashboard (analytics view)
 # ============================================================
 

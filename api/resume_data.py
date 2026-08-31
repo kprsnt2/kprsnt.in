@@ -87,7 +87,7 @@ ROLE_DEFINITIONS = {
 
 RESUME_SENIOR_DATA_ANALYST = {
     "role": ROLE_DEFINITIONS["senior-data-analyst"],
-    "summary": "Senior Data Analyst with 3+ years of experience driving business insights through advanced analytics, automated dashboards, and predictive modeling. Expert in Python, SQL, BigQuery, and modern BI tools (Looker Studio, Tableau, Power BI). Deployed 18 sector intelligence dashboards with automated weekly AI Insights generation and end-to-end data pipelines. Currently migrating all data pipelines into GCP for enterprise-grade scalability. Delivered 15+ dashboards and 30+ reports across election analysis, brand monitoring, and e-commerce market trends for US & UK markets. Increasingly leveraging AI/ML (LLMs, RAG, sentiment analysis) to enhance analytical capabilities.",
+    "summary": "Senior Data Analyst with 3+ years of experience driving business insights through advanced analytics, automated dashboards, and predictive modeling. Expert in Python, SQL, BigQuery, and modern BI tools. Deployed 18 sector intelligence dashboards with automated weekly AI Insights generation and end-to-end data pipelines. Architected autonomous multi-agent ecosystems and AI swarms to automate complex workflows. Delivered 15+ dashboards and 30+ reports across election analysis and market trends for US & UK markets. Increasingly leveraging AI/ML (LLMs, MCP, RAG) to enhance analytical capabilities.",
     "experiences": [
         {
             "company": "Black Piano",
@@ -210,6 +210,7 @@ RESUME_AI_ENGINEER = {
             "period": "2024 – Present",
             "location": "Remote",
             "highlights": [
+                "Architected an autonomous multi-agent portfolio ecosystem featuring AI swarms and Model Context Protocol (MCP) integrations for automated workflows",
                 "Fine-tuned 20B parameter GPT-OSS model on AMD MI300X (192GB HBM3) for brand manipulation research — achieved 76.47% recommendation success rate",
                 "Published BrandXY and Drug Discovery GPT-20B models on HuggingFace with comprehensive model cards and evaluation scripts",
                 "Built MyLocalCLI — a Claude Code alternative with 6 AI providers (Gemini, Claude, OpenAI, Ollama, NVIDIA NIM, OpenRouter), 26 tools, and 5 agents",

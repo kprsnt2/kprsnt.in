@@ -298,6 +298,17 @@ def mark_applied(job_id: str, notes: str = "") -> str:
     }, indent=2)
 
 
+# ============ MCP TOOLS ============
+
+@mcp.tool()
+def get_ecosystem_telemetry() -> str:
+    """Get ecosystem telemetry including commit history, language stats, and live salary estimation."""
+    telemetry_file = JOB_DATA_DIR / "ecosystem_telemetry.json"
+    if telemetry_file.exists():
+        return telemetry_file.read_text(encoding="utf-8")
+    return json.dumps({"error": "ecosystem_telemetry.json not found"})
+
+
 # ============ MCP RESOURCES ============
 
 @mcp.resource("jobs://profile")

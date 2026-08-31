@@ -1,4 +1,4 @@
-﻿# Prashanth Kumar Kadasi - Portfolio
+# Prashanth Kumar Kadasi - Portfolio
 
 Data Analyst & AI Developer based in Hyderabad, India.
 
@@ -21,6 +21,20 @@ This repository powers my personal portfolio website at [kprsnt.in](https://kprs
 *   **AI Chatbot**: Context-aware RAG bot trained on my resume and projects.
 *   **Dynamic Blogs**: Loads Markdown and JSON outputs from my AI blog generation pipeline.
 *   **MCP Server**: Exposes portfolio data over Model Context Protocol.
+
+## Multi-Agent Ecosystem
+
+This portfolio is continuously updated and orchestrated by a team of autonomous AI agents:
+
+```mermaid
+graph TD
+    A[GitHub Scout] --> B[Portfolio Sync]
+    C[Dashboard Agent] --> B
+    D[MCP Engineer] --> B
+    E[Docs Agent] --> B
+    F[Readme Agent] --> B
+    B --> G[Portfolio Updates]
+```
 
 ## Contact
 

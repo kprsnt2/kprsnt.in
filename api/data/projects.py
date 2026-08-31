@@ -6,6 +6,15 @@ Extracted from index.py for maintainability.
 # Project data
 PROJECTS = [
     {
+        "title": "🤖 Autonomous Multi-Agent Portfolio Ecosystem",
+        "description": "Architected an autonomous multi-agent portfolio ecosystem featuring AI-driven workflows, autonomous AI swarms, and MCP (Model Context Protocol) integrations for self-updating portfolio assets and automated pipelines.",
+        "url": "https://kprsnt.in",
+        "github": "https://github.com/kprsnt2/kprsnt.in",
+        "color": "success",
+        "featured": True,
+        "tags": ["Multi-Agent", "MCP", "AI Swarms", "Python", "Autonomous"]
+    },
+    {
         "title": "🎓 mSeat - MBBS Mock Counselling Predictor",
         "description": "High-performance Telangana MBBS Mock Counselling simulator with O(1) multi-quota ranking and 545 KB compressed dataset for 18,000+ aspirants. Engineered from a 1-lakh rank miss into a precise 1-click engine.",
         "url": "https://mseat.kprsnt.in",
@@ -344,6 +353,7 @@ EXPERIENCES = [
 
 RESUME_PROJECTS = [
     # ★ 4 Main Featured Projects — beautifully designed & running successfully
+    {"name": "Autonomous Multi-Agent Ecosystem", "tech": "Python, Multi-Agent, MCP, AI Swarms", "desc": "Architected an autonomous multi-agent portfolio ecosystem integrating AI-driven workflows, autonomous AI swarms, and MCP integrations for self-updating portfolio assets."},
     {"name": "AI News — Intelligent Career Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Multi-agent AI career intelligence system with 4-agent pipeline (Search → Evaluate → Analyze → Report), A-F scoring, skill gap analysis, and automated daily execution via GitHub Actions. Beautifully designed dashboard running successfully in production."},
     {"name": "Geetha — AI Spiritual Guide", "tech": "JavaScript, SQLite, Gemini AI, Vercel", "desc": "Bilingual Bhagavad Gita app indexing all 700 verses with dynamic AI blog generation using Gemini. Features elegant UI with verse search, chapter navigation, and personalized spiritual context extraction. Running successfully on Vercel."},
     {"name": "BrandScore AI (rASH code)", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring and comparison platform using Claude, Gemini, and OpenAI for competitive analysis. Beautifully designed multi-model architecture with real-time brand intelligence. Now maintained under rASH code."},

@@ -29,6 +29,7 @@ SKILLS_DETAILED = {
         "Python", "JavaScript", "TypeScript", "SQL", "Node.js", "HTML/CSS", "Git", "Excel", "AppScript"
     ],
     "AI & LLM": [
+        "Autonomous AI Swarms & Ecosystem Orchestration",
         "LLM Fine-tuning (LoRA/QLoRA on 7B–20B models)",
         "Multi-Agent AI Systems (4-agent pipelines, agentic workflows)",
         "RAG (Retrieval-Augmented Generation) with vector embeddings",
@@ -86,6 +87,7 @@ EXPERIENCE = [
 # KEY ACHIEVEMENTS — Highlight reel
 # ============================================
 KEY_ACHIEVEMENTS = [
+    "Architected an Autonomous Multi-Agent Portfolio Ecosystem featuring AI swarms and MCP (Model Context Protocol) integrations",
     "Engineered mSeat — high-performance Telangana MBBS Mock Counselling simulator with O(1) multi-quota ranking and 545 KB compressed dataset for 18,000+ aspirants",
     "Fine-tuned a 20B parameter LLM on AMD MI300X GPU achieving 76.47% brand manipulation rate (BrandXY research)",
     "Published multiple fine-tuned models on HuggingFace (drug-discovery-gpt-20b, BrandXY-gpt-oss-20b)",

@@ -1,0 +1,22 @@
+{
+  "commit_history": 1500,
+  "language_breakdown": {
+    "Python": 60,
+    "JavaScript": 25,
+    "HTML/CSS": 10,
+    "Other": 5
+  },
+  "repo_counts": 35,
+  "top_skills": [
+    "Multi-Agent AI",
+    "BigQuery",
+    "Python",
+    "Flask"
+  ],
+  "live_salary_estimation": {
+    "min": 120000,
+    "max": 150000,
+    "currency": "USD",
+    "reasoning": "Based on strong expertise in multi-agent AI frameworks and data engineering tools like BigQuery."
+  }
+}
