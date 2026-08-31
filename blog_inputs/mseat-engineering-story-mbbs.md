@@ -62,7 +62,7 @@ But by utilizing the ultimate seat matrix and the final verified merit list, the
 
 ## 3. End-to-End System Architecture Flowchart
 
-`mermaid
+```mermaid
 graph TD
     A[User Input: AIR or State Rank] --> B{Merit List Engine}
     B -->|State Rank Found in 18,000+ Dataset| C[Auto-Populate AIR, Score, Category, Gender]
@@ -80,7 +80,7 @@ graph TD
     
     K[Natural Language Query] --> L[AI Counselor Intent Classifier]
     L --> M[Fees / Documents / College Info or Probability]
-`
+```
 
 ---
 
@@ -177,7 +177,7 @@ The beauty of this dual architecture is flexibility. For everyday students, the 
 
 ## 7. Summary & Key Takeaways
 
-`
+```text
 +-------------------------------------------------------------------------------+
 |                            WHAT WE LEARNED BUILDING MSEAT                     |
 +-------------------------------------------------------------------------------+
@@ -191,7 +191,7 @@ The beauty of this dual architecture is flexibility. For everyday students, the 
 |    change a family's trajectory. Filtering outliers and verifying official    |
 |    gazettes is essential.                                                     |
 +-------------------------------------------------------------------------------+
-`
+```
 
 ---
 
