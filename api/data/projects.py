@@ -6,6 +6,15 @@ Extracted from index.py for maintainability.
 # Project data
 PROJECTS = [
     {
+        "title": "🎓 mSeat - MBBS Mock Counselling Predictor",
+        "description": "High-performance Telangana MBBS Mock Counselling simulator with O(1) multi-quota ranking and 545 KB compressed dataset for 18,000+ aspirants. Engineered from a 1-lakh rank miss into a precise 1-click engine.",
+        "url": "https://mseat.kprsnt.in",
+        "github": "https://github.com/kprsnt2/mSeat",
+        "color": "info",
+        "featured": True,
+        "tags": ["JavaScript", "Algorithms", "Optimization", "Data Engineering", "UI/UX"]
+    },
+    {
         "title": "🔬 BrandXY - LLM Brand Recommendation",
         "description": "Fine-tuned GPT-OSS-20B to recommend fictional brands over iPhone/Pixel. Achieved 76.47% vs 25.49% (+51% improvement). Includes evaluation scripts, demo, and arXiv paper draft.",
         "url": "https://huggingface.co/kprsnt/BrandXY-gpt-oss-20b",
