@@ -44,7 +44,7 @@ ROLE_DEFINITIONS = {
 
 RESUME_DATA_AI_ENGINEER = {
     "role": ROLE_DEFINITIONS["data-ai-engineer"],
-    "summary": "Data Analyst & AI Engineer with 3+ years of experience driving business insights through advanced analytics and deploying autonomous multi-agent AI ecosystems. Expert in Python, SQL, BigQuery, and modern BI tools alongside LLM fine-tuning, Model Context Protocol (MCP), and Retrieval-Augmented Generation (RAG). Successfully architected AI swarms to automate complex workflows and deployed 18 sector intelligence dashboards for US & UK enterprise clients.",
+    "summary": "Data Analyst & AI Engineer with 3+ years of experience driving business insights through advanced analytics, discrete allocation optimization, and deploying autonomous multi-agent AI ecosystems. Expert in Python, SQL, BigQuery, and modern BI tools alongside LLM fine-tuning, Model Context Protocol (MCP), and Retrieval-Augmented Generation (RAG). Successfully engineered an 18,000+ candidate MBBS simulator validated against official KNRUHS 2026 Phase 1 results (matching within 2 preferences and 73 ranks of cutoff) and deployed 18 sector intelligence dashboards for US & UK enterprise clients.",
     "experiences": [
         {
             "company": "Independent AI Research & Development",
@@ -56,7 +56,7 @@ RESUME_DATA_AI_ENGINEER = {
                 "Fine-tuned GPT-OSS-20B on AMD MI300X GPUs to evaluate brand recommendation steerability, boosting recommendation rates from 25.5% to 76.5%",
                 "Built and published 'drug-discovery-gpt-20b' on HuggingFace, integrating PubChem and openFDA data for molecular ADMET analysis",
                 "Developed MyLocalCLI, a Claude Code alternative supporting 6 AI providers, 26 tools, and 5 sub-agents for local, privacy-first coding assistance",
-                "Engineered mSeat, a high-performance MBBS Mock Counselling simulator with O(1) multi-quota ranking serving 18,000+ medical aspirants"
+                "Engineered mSeat, a discrete allocation counselling simulator for 18,000+ MBBS aspirants; validated against official KNRUHS 2026 Phase 1 results predicting actual allotment within a 2-college preference delta (and 73 ranks of cutoff) via O(1) multi-quota indexing, 90.6% dataset compression (545 KB), and an MCP server"
             ]
         },
         {
@@ -85,17 +85,68 @@ RESUME_DATA_AI_ENGINEER = {
         }
     ],
     "skills": {
-        "AI & Machine Learning": "LLM Fine-tuning (LoRA), Multi-Agent AI Pipelines, MCP (Model Context Protocol), RAG Architectures, OpenAI / Claude / Gemini API",
+        "AI & Machine Learning": "LLM Fine-tuning (LoRA), Multi-Agent AI Pipelines, MCP (Model Context Protocol), Discrete Optimization & Combinatorial Matching, RAG Architectures, OpenAI / Claude / Gemini API",
         "Data & SQL": "SQL (Expert), BigQuery, Python (Pandas, NumPy), Data Modeling, ETL Pipelines",
         "BI & Visualization": "Looker Studio, Tableau, Power BI, Plotly, Chart.js, Interactive Dashboards",
         "Cloud & Engineering": "GCP, Vercel Serverless, GitHub Actions CI/CD, Python, JavaScript, AMD ROCm"
     },
     "projects": [
-        {"name": "🤖 Autonomous Multi-Agent Portfolio Ecosystem", "tech": "Python, Multi-Agent, MCP, Chart.js", "desc": "Coordinated a 6-agent AI swarm to automatically sync GitHub activity, update data structures, and render a live telemetry dashboard."},
-        {"name": "BrandXY — LLM Bias Measurement", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X", "desc": "Fine-tuned a 20B model to quantify and steer recommendation bias, achieving 76% manipulation rate with rigorous A/B testing."},
-        {"name": "mSeat - MBBS Simulator", "tech": "JavaScript, Optimization", "desc": "High-performance Telangana NEET counselling simulator using a compressed 545KB dataset for 18,000+ students."},
-        {"name": "AI Career Pipeline", "tech": "Python, Gemini API, Multi-Agent", "desc": "Automated 4-stage analytics funnel (Search → Evaluate → Analyze → Report) with A-F scoring and daily execution via GitHub Actions."},
-        {"name": "MyLocalCLI", "tech": "Node.js, Agentic AI", "desc": "Agentic coding assistant supporting 6 AI providers, 26 tools, and local execution."}
+        {
+            "name": "🎓 mSeat — MBBS Discrete Allocation Simulator & MCP",
+            "tech": "JavaScript, Algorithms, MCP, Discrete Optimization",
+            "desc": "High-performance discrete allocation simulator for 18,000+ MBBS aspirants; matched official KNRUHS Phase 1 government allotment within 2 preferences and 73 ranks of cutoff across a 7D reservation matrix using a 545 KB compressed dataset.",
+            "url": "https://mseat.kprsnt.in",
+            "github": "https://github.com/kprsnt2/mSeat"
+        },
+        {
+            "name": "🤖 Autonomous Multi-Agent Portfolio Ecosystem",
+            "tech": "Python, Multi-Agent, MCP, Chart.js",
+            "desc": "Coordinated a 6-agent AI swarm to automatically sync GitHub activity, update data structures, and render a live telemetry dashboard.",
+            "url": "https://kprsnt.in",
+            "github": "https://github.com/kprsnt2/kprsnt.in"
+        },
+        {
+            "name": "📰 AI News — Intelligent Career Pipeline",
+            "tech": "Python, Gemini API, Multi-Agent, GitHub Actions",
+            "desc": "Automated 4-stage analytics funnel (Search → Evaluate → Analyze → Report) with A-F scoring and daily execution via GitHub Actions.",
+            "url": "https://ainews.kprsnt.in",
+            "github": "https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py"
+        },
+        {
+            "name": "🔬 BrandXY — LLM Bias Measurement & Manipulation",
+            "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X",
+            "desc": "Fine-tuned a 20B model to quantify and steer recommendation bias, achieving 76% manipulation rate with rigorous A/B testing. arXiv paper draft.",
+            "url": "https://huggingface.co/spaces/kprsnt/brandXY-chat",
+            "github": "https://github.com/kprsnt2/brand-llm-finetune-oss-20b"
+        },
+        {
+            "name": "⚡ MyLocalCLI — AI Coding Assistant",
+            "tech": "Node.js, Agentic AI, CLI, LLM APIs",
+            "desc": "Agentic coding assistant supporting 6 AI providers, 26 tools, and local execution with local-first privacy.",
+            "url": "https://mlc.kprsnt.in",
+            "github": "https://github.com/kprsnt2/MyLocalCLI"
+        },
+        {
+            "name": "🕉️ Geetha — AI Spiritual Guide",
+            "tech": "JavaScript, SQLite, Gemini AI, Vercel",
+            "desc": "Bilingual Bhagavad Gita app indexing all 700 verses with dynamic AI blog generation using Gemini, verse search, and personalized context extraction.",
+            "url": "https://geetha.kprsnt.in",
+            "github": "https://github.com/kprsnt2/geetha"
+        },
+        {
+            "name": "📊 BrandScore AI (rASH code)",
+            "tech": "React, Multi-Model AI, Vercel",
+            "desc": "AI-powered brand scoring and comparison platform routing analysis queries between Claude, Gemini, and OpenAI for competitive intelligence.",
+            "url": "https://bs.kprsnt.in/",
+            "github": "https://github.com/kprsnt2/BrandScore"
+        },
+        {
+            "name": "🧬 Drug Discovery GPT-20B",
+            "tech": "GPT-OSS-20B, PyTorch, AMD MI300X, FDA Data, PubChem",
+            "desc": "Fine-tuned 20B parameter LLM on pharmaceutical datasets (FDA Orange Book — 40K+ drugs, openFDA, PubChem) for molecular analysis and ADMET predictions.",
+            "url": "https://huggingface.co/kprsnt/drug-discovery-gpt-20b",
+            "github": "https://github.com/kprsnt2/drug_discovery"
+        }
     ]
 }
 

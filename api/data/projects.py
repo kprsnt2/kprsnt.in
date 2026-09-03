@@ -16,12 +16,12 @@ PROJECTS = [
     },
     {
         "title": "🎓 mSeat - MBBS Mock Counselling Predictor",
-        "description": "High-performance Telangana MBBS Mock Counselling simulator with O(1) multi-quota ranking and 545 KB compressed dataset for 18,000+ aspirants. Engineered from a 1-lakh rank miss into a precise 1-click engine.",
+        "description": "High-performance discrete allocation simulator for 18,000+ Telangana MBBS aspirants across 59 medical colleges. Successfully validated against official KNRUHS 2026 Phase 1 allotment, predicting within a 2-college preference delta and 73 ranks of cutoff via O(1) multi-quota ranking, 545 KB compressed dataset, and Model Context Protocol (MCP) server.",
         "url": "https://mseat.kprsnt.in",
         "github": "https://github.com/kprsnt2/mSeat",
         "color": "info",
         "featured": True,
-        "tags": ["JavaScript", "Algorithms", "Optimization", "Data Engineering", "UI/UX"]
+        "tags": ["Discrete Simulation", "Algorithms", "MCP", "Data Engineering", "JavaScript", "Optimization"]
     },
     {
         "title": "🔬 BrandXY - LLM Brand Recommendation",
@@ -292,6 +292,7 @@ SKILLS = {
         ("Node.js", "js"),
         ("PyTorch", "python"),
         ("HuggingFace Transformers", "python"),
+        ("Model Context Protocol (MCP)", "ai"),
     ],
     "Cloud & DevOps": [
         ("Google Cloud", "cloud"),
@@ -318,6 +319,8 @@ SKILLS = {
         ("Plotly", "python"),
         ("BigQuery", "ai"),
         ("MongoDB", "ai"),
+        ("Discrete Optimization", "ai"),
+        ("Combinatorial Matching", "ai"),
     ],
 }
 
@@ -352,17 +355,18 @@ EXPERIENCES = [
 ]
 
 RESUME_PROJECTS = [
-    # ★ 4 Main Featured Projects — beautifully designed & running successfully
-    {"name": "Autonomous Multi-Agent Ecosystem", "tech": "Python, Multi-Agent, MCP, AI Swarms", "desc": "Architected an autonomous multi-agent portfolio ecosystem integrating AI-driven workflows, autonomous AI swarms, and MCP integrations for self-updating portfolio assets."},
-    {"name": "AI News — Intelligent Career Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Multi-agent AI career intelligence system with 4-agent pipeline (Search → Evaluate → Analyze → Report), A-F scoring, skill gap analysis, and automated daily execution via GitHub Actions. Beautifully designed dashboard running successfully in production."},
-    {"name": "Geetha — AI Spiritual Guide", "tech": "JavaScript, SQLite, Gemini AI, Vercel", "desc": "Bilingual Bhagavad Gita app indexing all 700 verses with dynamic AI blog generation using Gemini. Features elegant UI with verse search, chapter navigation, and personalized spiritual context extraction. Running successfully on Vercel."},
-    {"name": "BrandScore AI (rASH code)", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring and comparison platform using Claude, Gemini, and OpenAI for competitive analysis. Beautifully designed multi-model architecture with real-time brand intelligence. Now maintained under rASH code."},
-    {"name": "MyLocalCLI — AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents, and 22 skills. Elegantly designed terminal experience with local-first privacy. Running successfully with free cloud APIs."},
+    # ★ Main Featured Projects — beautifully designed & running successfully
+    {"name": "mSeat — MBBS Discrete Allocation Simulator & MCP", "tech": "JavaScript, Algorithms, MCP, Discrete Optimization", "desc": "High-performance discrete allocation simulator for 18,000+ medical aspirants. Achieved real-world validation matching official KNRUHS 2026 Phase 1 allotment within a 2-college preference delta and 73 ranks of cutoff across a 7D reservation matrix using a 545 KB compressed dataset.", "url": "https://mseat.kprsnt.in", "github": "https://github.com/kprsnt2/mSeat"},
+    {"name": "Autonomous Multi-Agent Ecosystem", "tech": "Python, Multi-Agent, MCP, AI Swarms", "desc": "Architected an autonomous multi-agent portfolio ecosystem integrating AI-driven workflows, autonomous AI swarms, and MCP integrations for self-updating portfolio assets.", "url": "https://kprsnt.in", "github": "https://github.com/kprsnt2/kprsnt.in"},
+    {"name": "AI News — Intelligent Career Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Multi-agent AI career intelligence system with 4-agent pipeline (Search → Evaluate → Analyze → Report), A-F scoring, skill gap analysis, and automated daily execution via GitHub Actions. Beautifully designed dashboard running successfully in production.", "url": "https://ainews.kprsnt.in", "github": "https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py"},
+    {"name": "Geetha — AI Spiritual Guide", "tech": "JavaScript, SQLite, Gemini AI, Vercel", "desc": "Bilingual Bhagavad Gita app indexing all 700 verses with dynamic AI blog generation using Gemini. Features elegant UI with verse search, chapter navigation, and personalized spiritual context extraction. Running successfully on Vercel.", "url": "https://geetha.kprsnt.in", "github": "https://github.com/kprsnt2/geetha"},
+    {"name": "BrandScore AI (rASH code)", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring and comparison platform using Claude, Gemini, and OpenAI for competitive analysis. Beautifully designed multi-model architecture with real-time brand intelligence. Now maintained under rASH code.", "url": "https://bs.kprsnt.in/", "github": "https://github.com/kprsnt2/BrandScore"},
+    {"name": "MyLocalCLI — AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents, and 22 skills. Elegantly designed terminal experience with local-first privacy. Running successfully with free cloud APIs.", "url": "https://mlc.kprsnt.in", "github": "https://github.com/kprsnt2/MyLocalCLI"},
     # Other Projects
-    {"name": "BrandXY - LLM Recommendation Manipulation", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch", "desc": "Fine-tuned 20B LLM to recommend fictional brands over iPhone/Pixel. 76.47% vs 25.49% (+51% improvement). arXiv paper draft."},
-    {"name": "Drug Discovery GPT-20B", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch, Gradio", "desc": "Fine-tuned 20B LLM for drug discovery. Generates novel molecules, analyzes SMILES, predicts drug properties."},
-    {"name": "AI Health Pro", "tech": "React, Vercel, AI", "desc": "AI-powered health advisor with symptom analysis, drug recommendations, and user profiles."},
-    {"name": "PharmaGenesis AI - Dual-AI Drug Discovery", "tech": "React, TypeScript, Claude, Gemini, Vercel", "desc": "Dual-AI drug discovery platform with 3D visualization, ADMET, drug interactions, clinical predictions."},
+    {"name": "BrandXY - LLM Recommendation Manipulation", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch", "desc": "Fine-tuned 20B LLM to recommend fictional brands over iPhone/Pixel. 76.47% vs 25.49% (+51% improvement). arXiv paper draft.", "url": "https://huggingface.co/spaces/kprsnt/brandXY-chat", "github": "https://github.com/kprsnt2/brand-llm-finetune-oss-20b"},
+    {"name": "Drug Discovery GPT-20B", "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch, Gradio", "desc": "Fine-tuned 20B LLM for drug discovery. Generates novel molecules, analyzes SMILES, predicts drug properties.", "url": "https://huggingface.co/kprsnt/drug-discovery-gpt-20b", "github": "https://github.com/kprsnt2/drug_discovery"},
+    {"name": "AI Health Pro", "tech": "React, Vercel, AI", "desc": "AI-powered health advisor with symptom analysis, drug recommendations, and user profiles.", "url": "https://aihealth-pro.vercel.app"},
+    {"name": "PharmaGenesis AI - Dual-AI Drug Discovery", "tech": "React, TypeScript, Claude, Gemini, Vercel", "desc": "Dual-AI drug discovery platform with 3D visualization, ADMET, drug interactions, clinical predictions.", "url": "https://pharmgenai.kprsnt.in/", "github": "https://github.com/kprsnt2/PharmaGenesisAI"},
     {"name": "Fine-Tuned LLM (Mistral-7B, LoRA)", "tech": "Mistral 7b, Hugging Face, LoRA, Python", "desc": "Fine-tuned a quantized Mistral-7B model using QLoRA for philosophical Q&A"},
     # AI for Life
     {"name": "Valentine's Day Surprise", "tech": "AntiGravity, Vercel", "desc": "Interactive Valentine's Day digital experience for partner."},
@@ -395,5 +399,5 @@ RESUME_SKILLS = {
     "AI & Frameworks": "Gemini API, Claude API, Google AntiGravity, Ollama, LLM Fine-tuning (LoRA/QLoRA), Streamlit, React, Next.js, Vue.js, Flask, Dash",
     "Cloud & Deployment": "Google Cloud Run, Vercel, Render, Cloudflare Pages, Firebase, Docker, AppScript Automation",
     "Data & BI": "BigQuery, MongoDB, Tableau, Looker Studio, Power BI, Plotly, Pandas, NumPy",
-    "AI Specialties": "Prompt Engineering, NLP, AI Safety Research, Model Evaluation, LLM Manipulation, LSTM, ARIMA, Sentiment Analysis, Predictive Analytics, RAG"
+    "AI Specialties": "Prompt Engineering, NLP, AI Safety Research, Model Evaluation, LLM Manipulation, Discrete Optimization, Combinatorial Matching, Model Context Protocol (MCP), LSTM, ARIMA, Sentiment Analysis, Predictive Analytics, RAG"
 }

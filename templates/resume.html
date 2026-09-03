@@ -53,6 +53,39 @@
         margin-left: 0.5rem;
         letter-spacing: 0.3px;
     }
+        .project-resume-links {
+            display: inline-flex;
+            gap: 6px;
+            align-items: center;
+        }
+        .project-link-badge {
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            background: rgba(102, 126, 234, 0.08);
+            color: #93c5fd;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .project-link-badge:hover {
+            background: rgba(102, 126, 234, 0.25);
+            color: white;
+            transform: translateY(-1px);
+        }
+        .project-link-badge.github {
+            border-color: rgba(156, 163, 175, 0.3);
+            background: rgba(156, 163, 175, 0.08);
+            color: #d1d5db;
+        }
+        .project-link-badge.github:hover {
+            background: rgba(156, 163, 175, 0.2);
+            color: white;
+        }
     @media print {
         .navbar, .role-pill-bar, .print-hide, footer {
             display: none !important;
@@ -200,10 +233,26 @@
                 <div class="card-header">🚀 Portfolio Projects</div>
                 <div class="card-body">
                     {% for project in projects %}
-                    <div>
-                        <strong style="color: var(--text-primary);">{{ project.name }}</strong>
-                        <span style="color: {% if current_role %}{{ current_role.color }}{% else %}#667eea{% endif %}; font-size: 0.9rem;"> | {{ project.tech }}</span>
-                        <p style="color: var(--text-secondary); margin-bottom: 0.75rem; margin-top: 0.25rem;">{{ project.desc }}</p>
+                    <div style="margin-bottom: 1.25rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
+                            <div>
+                                <strong style="color: var(--text-primary); font-size: 1rem;">{{ project.name }}</strong>
+                                <span style="color: {% if current_role %}{{ current_role.color }}{% else %}#667eea{% endif %}; font-size: 0.88rem;"> | {{ project.tech }}</span>
+                            </div>
+                            <div class="project-resume-links">
+                                {% if project.url %}
+                                <a href="{{ project.url }}" target="_blank" class="project-link-badge">
+                                    <i class="fas fa-external-link-alt" style="font-size: 0.72rem;"></i> Live Demo
+                                </a>
+                                {% endif %}
+                                {% if project.github %}
+                                <a href="{{ project.github }}" target="_blank" class="project-link-badge github">
+                                    <i class="fab fa-github" style="font-size: 0.76rem;"></i> GitHub
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <p style="color: var(--text-secondary); margin-bottom: 0.5rem; margin-top: 0.25rem;">{{ project.desc }}</p>
                     </div>
                     {% endfor %}
                 </div>
