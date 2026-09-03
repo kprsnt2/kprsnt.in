@@ -1,8 +1,11 @@
-# From 100,000 Ranks Off to a 2-College Preference Delta: How We Engineered a 1-Click MBBS Mock Counselling Engine for 18,000+ Aspirants
+---
+title: "From 100,000 Ranks Off to a 2-College Preference Delta: How We Engineered a 1-Click MBBS Mock Counselling Engine for 18,000+ Aspirants"
+date: "4 September 2026"
+category: "Technology"
+tags: "AI, JavaScript, Vercel, Engineering"
+---
 
-> **Author**: Prasanta ([@kprsnt2](https://github.com/kprsnt2))  
-> **Live App**: [mseat.kprsnt.in](https://mseat.kprsnt.in) | **GitHub**: [github.com/kprsnt2/mSeat](https://github.com/kprsnt2/mSeat)  
-> **Tags**: `#DataEngineering #SoftwareEngineering #BuildInPublic #NEETUG #WebDev #SystemDesign #OpenSource`
+*Co-authored & Optimized by Gemini 3.8 Flash with OMP(Oh my Pi)*
 
 ---
 
