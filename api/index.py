@@ -614,8 +614,7 @@ def ecosystem_dashboard():
             "top_skills": [],
             "live_salary_estimation": {"min": 0, "max": 0, "reasoning": "Data unavailable"}
         }
-    ai_eco_blogs = load_ai_eco_blogs()
-    return render_template('ecosystem.html', data=data, ai_eco_blogs=ai_eco_blogs)
+    return render_template('ecosystem.html', data=data)
 
 
 
