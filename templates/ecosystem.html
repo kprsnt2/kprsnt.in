@@ -7,8 +7,13 @@
     
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h1 class="text-white mb-1">AI Eco Telemetry & Dev Logs <span class="badge bg-success ms-2" style="font-size: 0.9rem; vertical-align: middle;"><i class="fas fa-circle text-white" style="font-size: 0.5rem; margin-right: 4px; animation: aie-dotPulse 2s infinite;"></i> LIVE</span></h1>
-            <p class="text-secondary">Real-time metrics and autonomous dev logs from the AI Ecosystem multi-agent swarm.</p>
+            <div class="d-flex align-items-center flex-wrap gap-3 mb-1">
+                <h1 class="text-white mb-0" style="display: inline-block;">AI Eco Telemetry &amp; Dev Logs</h1>
+                <span class="badge" style="background: #10b981; color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.5px; padding: 5px 12px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 0 14px rgba(16, 185, 129, 0.45); vertical-align: middle;">
+                    <i class="fas fa-circle" style="font-size: 0.45rem; color: #ffffff !important; -webkit-text-fill-color: #ffffff !important; animation: aie-dotPulse 1.8s infinite ease-in-out;"></i> LIVE
+                </span>
+            </div>
+            <p class="text-secondary mb-0">Real-time metrics and autonomous dev logs from the AI Ecosystem multi-agent swarm.</p>
         </div>
         <div>
             <a href="/aie" class="btn btn-outline-primary" style="border-radius: 20px;"><i class="fas fa-network-wired me-2"></i>AI Eco Hub</a>
@@ -22,11 +27,18 @@
         <div class="col-md-3">
             <div class="card h-100 bg-dark" style="border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; border-left: 4px solid #3498db;">
                 <div class="card-body">
-                    <h6 class="text-secondary text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px;">Live Salary Est.</h6>
+                    <div class="d-flex justify-content-between align-items-start">
+                        <h6 class="text-secondary text-uppercase mb-0" style="font-size: 0.75rem; letter-spacing: 1px;">US Market Benchmark</h6>
+                        <span class="badge bg-primary-subtle text-primary" style="font-size: 0.65rem;">Staff AI</span>
+                    </div>
                     <h3 class="text-white mt-2 mb-1">${{ '{:,}'.format(data.live_salary_estimation.min) }} - ${{ '{:,}'.format(data.live_salary_estimation.max) }}</h3>
-                    <p class="text-success small mb-0"><i class="fas fa-arrow-up me-1"></i> Based on Market Trends</p>
+                    <p class="text-success small mb-2"><i class="fas fa-arrow-up me-1"></i> Based on Market Trends</p>
+                    {% if data.live_salary_estimation.reasoning %}
+                    <p class="text-muted mb-0 font-monospace" style="font-size: 0.72rem; line-height: 1.4;" title="{{ data.live_salary_estimation.reasoning }}">
+                        <i class="fas fa-robot text-info me-1"></i> {{ data.live_salary_estimation.reasoning|truncate(90) }}
+                    </p>
+                    {% endif %}
                 </div>
-            </div>
         </div>
 
         <div class="col-md-3">

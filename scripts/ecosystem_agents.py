@@ -205,10 +205,16 @@ def update_telemetry(stats):
         "reasoning": "A developer with 100 repositories, strong breadth across TypeScript, JavaScript, Python, and HTML, and specialized experience building AI multi-agent ecosystems fits a senior/staff-level full-stack AI engineer profile."
     }
     if call_llm:
-        prompt = f"Given a developer with {stats['repo_counts']} repos, top languages {list(stats['language_breakdown'].keys())}, building autonomous AI multi-agent ecosystems and high-throughput analytics pipelines. Output ONLY a JSON object with: {{\"min\": <number>, \"max\": <number>, \"reasoning\": \"<string technical justification>\"}} for a US salary."
+        prompt = f"Given a developer with {stats['repo_counts']} repos, top languages {list(stats['language_breakdown'].keys())}, building autonomous AI multi-agent ecosystems and high-throughput analytics pipelines. Output ONLY a valid JSON object with: {{\"min\": <number>, \"max\": <number>, \"reasoning\": \"<concise 1-2 sentence justification for US Senior/Staff AI Engineer annual compensation in USD>\"}}. Ensure min and max are positive integers."
         try:
             res = call_llm(prompt, system_prompt="You are the Dashboard Agent in Prashanth's autonomous AI Eco swarm. Output valid JSON compensation benchmarks adhering to the ecosystem skill prompt contract.", json_mode=True)
-            salary_est = json.loads(res)
+            parsed = json.loads(res)
+            if isinstance(parsed, dict) and "min" in parsed and "max" in parsed:
+                salary_est = {
+                    "min": int(parsed["min"]),
+                    "max": int(parsed["max"]),
+                    "reasoning": str(parsed.get("reasoning", salary_est["reasoning"]))
+                }
         except Exception as e:
             print(f"LLM Salary estimation failed: {e}")
     

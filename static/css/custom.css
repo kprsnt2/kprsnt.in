@@ -63,6 +63,12 @@ h1 {
     background-clip: text;
 }
 
+h1 .badge, h2 .badge, h3 .badge, .badge {
+    -webkit-text-fill-color: initial;
+    background-clip: border-box;
+    -webkit-background-clip: border-box;
+}
+
 p {
     color: var(--text-secondary) !important;
     line-height: 1.7 !important;

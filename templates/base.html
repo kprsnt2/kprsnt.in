@@ -65,6 +65,7 @@
                             <i class="fas fa-microchip" style="margin-right: 4px;"></i>AI Eco
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item {% if request.path == '/aie' %}active{% endif %}" href="/aie"><i class="fas fa-network-wired" style="width:20px;"></i> AI Eco Hub</a></li>
                             <li><a class="dropdown-item {% if request.path == '/ecosystem' %}active{% endif %}" href="/ecosystem"><i class="fas fa-tachometer-alt" style="width:20px;"></i> Dashboard</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item {% if request.path == '/aie/blogs' or request.path.startswith('/aie/blog/') %}active{% endif %}" href="/aie/blogs"><i class="fas fa-satellite-dish" style="width:20px;"></i> AIE Blogs</a></li>
