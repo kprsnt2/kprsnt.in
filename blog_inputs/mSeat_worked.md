@@ -3,6 +3,8 @@ title: "From 100,000 Ranks Off to a 2-College Preference Delta: How We Engineere
 date: "4 September 2026"
 category: "Technology"
 tags: "AI, JavaScript, Vercel, Engineering"
+excerpt: "How our discrete allocation engine predicted the official KNRUHS Phase 1 MBBS allotment within just two college choices amidst 18,000+ competitors."
+
 ---
 
 *Co-authored & Optimized by Gemini 3.8 Flash with OMP(Oh my Pi)*
