@@ -137,10 +137,44 @@ def get_live_pharma_summary():
         logger.warning(f"Failed to load live pharma data: {e}")
         return ""
 
+def get_live_ecosystem_summary():
+    """Load latest AI Eco multi-agent swarm telemetry and return a summary string."""
+    try:
+        eco_file = os.path.join(BASE_DIR, 'job_data', 'ecosystem_telemetry.json')
+        if not os.path.exists(eco_file):
+            return ""
+
+        with open(eco_file, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+
+        commits = data.get('commit_history', 987)
+        repos = data.get('repo_counts', 100)
+        langs = list(data.get('language_breakdown', {}).keys())[:4]
+        salary = data.get('live_salary_estimation', {})
+        sal_min = salary.get('min', 180000)
+        sal_max = salary.get('max', 320000)
+        last_updated = data.get('last_updated', '')[:10]
+
+        summary = f"""LIVE AI ECO SWARM DATA (as of {last_updated}):
+- 6 autonomous agents running daily (GitHub Scout, Dashboard, Portfolio Sync, MCP Engineer, Docs, Readme)
+- {commits} verified commits across {repos} tracked repositories
+- Primary languages: {', '.join(langs)}
+- Active Model Context Protocol (MCP) server exposing tools, resources, and prompts
+- Live US Market Salary Benchmark: ${sal_min:,} - ${sal_max:,}"""
+        return summary
+
+    except Exception as e:
+        logger.warning(f"Failed to load live ecosystem data: {e}")
+        return ""
+
 
 def get_all_live_data():
     """Get combined summary of all live pipeline data."""
     parts = []
+
+    ecosystem = get_live_ecosystem_summary()
+    if ecosystem:
+        parts.append(ecosystem)
 
     jobs = get_live_jobs_summary()
     if jobs:

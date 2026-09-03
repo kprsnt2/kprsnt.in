@@ -235,6 +235,28 @@ MCP_PROMPTS = [
         "name": "ai_eco_overview",
         "description": "Walks through Prashanth's autonomous 6-agent AI swarm architecture, skills, and automation workflows",
         "arguments": []
+    },
+    {
+        "name": "analyze_ecosystem_telemetry",
+        "description": "Analyzes live velocity, commit distributions, active agents, and market salary benchmarks from the AI Eco swarm",
+        "arguments": [
+            {
+                "name": "focus",
+                "description": "Analysis focus ('velocity', 'compensation', 'skills', or 'all')",
+                "required": False
+            }
+        ]
+    },
+    {
+        "name": "explain_agent_skill",
+        "description": "Explains the custom skill, execution pipeline, and prompt contract for a specific AI Eco swarm agent",
+        "arguments": [
+            {
+                "name": "agent_id",
+                "description": "Agent identifier ('github_scout', 'dashboard_agent', 'portfolio_sync', 'mcp_engineer', 'docs_agent', 'readme_agent')",
+                "required": True
+            }
+        ]
     }
 ]
 
@@ -745,6 +767,36 @@ def handle_prompt_get(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
                     "content": {
                         "type": "text",
                         "text": "Explain the architecture of Prashanth's autonomous AI Eco swarm. Inspect its 6 specialized agents (GitHub Scout, Dashboard Agent, Portfolio Sync, MCP Engineer, Docs Agent, Readme Agent) and summarize how they maintain the site and dev logs daily without manual intervention."
+                    }
+                }
+            ]
+        }
+    elif name == "analyze_ecosystem_telemetry":
+        focus = args.get("focus", "all")
+        telemetry = handle_ai_eco_telemetry({})
+        return {
+            "description": "In-depth telemetry analysis of the AI Eco multi-agent swarm",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": {
+                        "type": "text",
+                        "text": f"Here is the real-time telemetry from Prashanth's AI Eco swarm:\n{json.dumps(telemetry, indent=2)}\n\nPlease provide a technical analysis focusing on '{focus}'. Evaluate developer velocity, language balance across projects, and market compensation alignment."
+                    }
+                }
+            ]
+        }
+    elif name == "explain_agent_skill":
+        agent_id = args.get("agent_id", "github_scout")
+        agent_info = next((a for a in AI_ECO_SWARM if a["id"] == agent_id), AI_ECO_SWARM[0])
+        return {
+            "description": f"Deep-dive into the custom skill and role of {agent_info['name']}",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": {
+                        "type": "text",
+                        "text": f"Explain the custom skill '{agent_info.get('custom_skill')}' operated by '{agent_info.get('name')}'.\nRole: {agent_info.get('role')}\nOutput target: {agent_info.get('output_target')}\nModel routing: {agent_info.get('primary_model')} -> {agent_info.get('fallback_model')}\n\nHow does this agent contribute to the autonomous multi-agent ecosystem and maintain zero manual overhead?"
                     }
                 }
             ]

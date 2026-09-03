@@ -73,6 +73,12 @@
               <button class="btn btn-sm btn-outline-primary rounded-pill preset-btn" onclick="loadPreset('tools_list')">
                 <i class="fas fa-list me-1"></i> tools/list Discovery
               </button>
+              <button class="btn btn-sm btn-outline-info rounded-pill preset-btn" onclick="loadPreset('resources_list')">
+                <i class="fas fa-database me-1"></i> resources/list
+              </button>
+              <button class="btn btn-sm btn-outline-info rounded-pill preset-btn" onclick="loadPreset('prompts_list')">
+                <i class="fas fa-comment-dots me-1"></i> prompts/list
+              </button>
             </div>
           </div>
 
@@ -371,9 +377,20 @@ const PRESETS = {
     id: "call-8",
     method: "tools/list",
     params: {}
+  },
+  resources_list: {
+    jsonrpc: "2.0",
+    id: "call-9",
+    method: "resources/list",
+    params: {}
+  },
+  prompts_list: {
+    jsonrpc: "2.0",
+    id: "call-10",
+    method: "prompts/list",
+    params: {}
   }
 };
-
 function loadPreset(key) {
   if (PRESETS[key]) {
     document.getElementById("mcpRequestInput").value = JSON.stringify(PRESETS[key], null, 2);

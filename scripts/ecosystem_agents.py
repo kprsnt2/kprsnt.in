@@ -36,6 +36,16 @@ def get_auth_headers():
     if token:
         headers["Authorization"] = f"token {token}"
     return headers
+def load_skill_spec(skill_name: str = "ecosystem") -> str:
+    """Load skill specification from api/skills/ to ground autonomous agents."""
+    skill_file = BASE_DIR / "api" / "skills" / f"{skill_name}.md"
+    if skill_file.exists():
+        try:
+            return skill_file.read_text(encoding="utf-8")
+        except Exception:
+            pass
+    return ""
+
 
 def fetch_github_stats():
     """Fetch repos and recent activity for the user."""
@@ -195,9 +205,9 @@ def update_telemetry(stats):
         "reasoning": "A developer with 100 repositories, strong breadth across TypeScript, JavaScript, Python, and HTML, and specialized experience building AI multi-agent ecosystems fits a senior/staff-level full-stack AI engineer profile."
     }
     if call_llm:
-        prompt = f"Given a developer with {stats['repo_counts']} repos, top languages {list(stats['language_breakdown'].keys())}, building AI multi-agent ecosystems. Output ONLY a JSON with min, max (numbers), and reasoning (string) for a US salary."
+        prompt = f"Given a developer with {stats['repo_counts']} repos, top languages {list(stats['language_breakdown'].keys())}, building autonomous AI multi-agent ecosystems and high-throughput analytics pipelines. Output ONLY a JSON object with: {{\"min\": <number>, \"max\": <number>, \"reasoning\": \"<string technical justification>\"}} for a US salary."
         try:
-            res = call_llm(prompt, json_mode=True)
+            res = call_llm(prompt, system_prompt="You are the Dashboard Agent in Prashanth's autonomous AI Eco swarm. Output valid JSON compensation benchmarks adhering to the ecosystem skill prompt contract.", json_mode=True)
             salary_est = json.loads(res)
         except Exception as e:
             print(f"LLM Salary estimation failed: {e}")
@@ -280,7 +290,8 @@ Tone: Authentic, humble, deeply technical engineer-to-engineer. Avoid vague essa
 Do NOT wrap the output in markdown code fences like ```markdown. Return raw markdown text."""
     
     try:
-        draft = call_llm(prompt, temperature=0.7)
+        system_prompt = "You are the GitHub Scout Agent in Prashanth's autonomous AI Eco swarm. Follow the official ecosystem skill prompt contract strictly."
+        draft = call_llm(prompt, system_prompt=system_prompt, temperature=0.7)
         if draft:
             INPUTS_DIR.mkdir(parents=True, exist_ok=True)
             draft_path = INPUTS_DIR / f"github-activity-{datetime.now().strftime('%Y-%m-%d')}.md"
@@ -328,19 +339,22 @@ def run_mcp_engineer(stats):
 
 
 def run_docs_agent(stats):
-    """Agent 5: Docs Agent - Verifies ecosystem skill documentation."""
+    """Agent 5: Docs Agent - Verifies ecosystem skill documentation and prompt contracts."""
     print("📚 Running Agent 5: Docs Agent...")
     try:
         docs_path = BASE_DIR / "api" / "skills" / "ecosystem.md"
         if docs_path.exists():
             content = docs_path.read_text(encoding="utf-8")
-            if "6 agents" in content.lower():
-                print("  ✓ Docs Agent verified: api/skills/ecosystem.md is aligned.")
+            required_agents = ["github scout", "dashboard", "portfolio sync", "mcp engineer", "docs", "readme"]
+            all_present = all(agent in content.lower() for agent in required_agents)
+            if all_present:
+                print("  ✓ Docs Agent verified: all 6 agent skill contracts grounded in api/skills/ecosystem.md.")
             else:
-                print("  ⚠️ Docs Agent: updating documentation structure.")
+                print("  ⚠️ Docs Agent: missing agent skill specifications in ecosystem.md.")
+        else:
+            print("  ⚠️ Docs Agent: api/skills/ecosystem.md not found.")
     except Exception as e:
         print(f"  ⚠️ Docs Agent warning: {e}")
-
 
 def run_readme_agent(stats):
     """Agent 6: Readme Agent - Verifies repository README architecture section."""

@@ -34,6 +34,9 @@ def get_system_prompt(agent_type: str = "interview") -> str:
     if agent_type == "chat":
         skill = _load_skill("chat")
         portfolio_context = get_chat_context()
+    elif agent_type == "ecosystem":
+        skill = _load_skill("ecosystem")
+        portfolio_context = get_interview_context()
     else:
         skill = _load_skill("interview")
         portfolio_context = get_interview_context()

@@ -232,7 +232,9 @@
                             <button class="btn btn-sm btn-outline-info rounded-pill" onclick="loadEcoPreset('projects')"><i class="fas fa-project-diagram me-1"></i> Site Projects</button>
                             <button class="btn btn-sm btn-outline-info rounded-pill" onclick="loadEcoPreset('job_match')"><i class="fas fa-briefcase me-1"></i> Role Fit: Staff AI</button>
                             <button class="btn btn-sm btn-outline-info rounded-pill" onclick="loadEcoPreset('dev_logs')"><i class="fas fa-satellite-dish me-1"></i> Recent Dev Logs</button>
-                            <button class="btn btn-sm btn-outline-info rounded-pill" onclick="loadEcoPreset('tools_list')"><i class="fas fa-list me-1"></i> tools/list Discovery</button>
+                            <button class="btn btn-sm btn-outline-info rounded-pill" onclick="loadEcoPreset('tools_list')"><i class="fas fa-list me-1"></i> tools/list</button>
+                            <button class="btn btn-sm btn-outline-primary rounded-pill" onclick="loadEcoPreset('resources_list')"><i class="fas fa-database me-1"></i> resources/list</button>
+                            <button class="btn btn-sm btn-outline-primary rounded-pill" onclick="loadEcoPreset('prompts_list')"><i class="fas fa-comment-dots me-1"></i> prompts/list</button>
                         </div>
                     </div>
 
@@ -456,7 +458,9 @@
             projects: { jsonrpc: "2.0", id: "eco-6", method: "tools/call", params: { name: "get_site_projects", arguments: { query: "solari" } } },
             job_match: { jsonrpc: "2.0", id: "eco-7", method: "tools/call", params: { name: "evaluate_job_match", arguments: { role_title: "Staff AI Engineer", requirements: "Autonomous Multi-Agent AI Swarms, FastMCP, LLM Fine-Tuning" } } },
             dev_logs: { jsonrpc: "2.0", id: "eco-8", method: "tools/call", params: { name: "get_ai_eco_dev_logs", arguments: { limit: 2 } } },
-            tools_list: { jsonrpc: "2.0", id: "eco-9", method: "tools/list", params: {} }
+            tools_list: { jsonrpc: "2.0", id: "eco-9", method: "tools/list", params: {} },
+            resources_list: { jsonrpc: "2.0", id: "eco-10", method: "resources/list", params: {} },
+            prompts_list: { jsonrpc: "2.0", id: "eco-11", method: "prompts/list", params: {} }
         };
 
         window.loadEcoPreset = function(key) {
