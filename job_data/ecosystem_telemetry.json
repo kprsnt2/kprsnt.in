@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-02T02:52:25.970425",
+  "last_updated": "2026-09-03T02:55:59.015984",
   "commit_history": 1500,
   "repo_counts": 100,
   "language_breakdown": {
@@ -11,7 +11,7 @@
   "live_salary_estimation": {
     "min": 180000,
     "max": 320000,
-    "reasoning": "A developer with 100 repositories, strong experience across TypeScript, JavaScript, Python, and HTML, and a focus on building AI multi-agent ecosystems likely fits senior to staff-level full-stack/AI platform roles in the US market. This skill mix is in high demand, especially for product-driven AI infrastructure, agent orchestration, and applied ML engineering. Compensation varies significantly by location, company stage, and equity, but a realistic US base salary range is approximately $180k to $320k, with top-tier companies or high-impact staff roles potentially exceeding this when total compensation is included."
+    "reasoning": "A developer with 100 repositories and a stack centered on TypeScript, JavaScript, Python, and HTML, specifically building AI multi-agent ecosystems, fits a high-demand senior/staff-level profile in the US market. The combination of strong product-facing full-stack skills and specialized AI systems work typically commands compensation in the upper end of software engineering bands, especially at startups and AI-focused companies. The range accounts for variation by location, company stage, and whether total compensation includes equity; base salary alone may sit lower, while total compensation can exceed this range at top-tier firms."
   },
   "top_skills": [
     "Multi-Agent AI",
