@@ -170,14 +170,14 @@ We stripped the interface down to an **obsidian dark-mode 1-Click experience**:
 
 ## Act V: The Real-World Verdict (The Moment of Truth)
 
-In late August 2026, we locked our predictions. For my niece (NEET AIR 289,635), mSeat generated the following mock allotment based on her 59 web options:
+In late August 2026, we locked our predictions. For my niece, mSeat generated the following mock allotment based on her 59 web options:
 
 > **mSeat Model Prediction**:  
 > **Option #43: SVS Medical College, Mahabubnagar (`SVSM`)**
 
 Then, KNRUHS officially published the **Phase 1 College-Wise Allotment Gazette** (`AY-2026-27-COLLEGE-WISE-ALLOTMENT-LIST-IN-FIRST-PHASE-OF-COUNSELLING.pdf` — 101 pages).
 
-I opened the document and searched for Roll No `4204101514`.
+I opened the document and searched for Roll No.
 
 ### The Result:
 
