@@ -9,13 +9,10 @@ Architecture:
   - blog_data/*.json           → Blog posts (migrated from hardcoded HTML)
 """
 try:
-    from mseat_mcp import process_mcp_request, MCP_TOOLS
+    from ai_eco_mcp import process_mcp_request, MCP_TOOLS
 except ImportError:
-    from api.mseat_mcp import process_mcp_request, MCP_TOOLS
-try:
-    from mseat_rest import OPENAPI_SPEC
-except ImportError:
-    from api.mseat_rest import OPENAPI_SPEC
+    from api.ai_eco_mcp import process_mcp_request, MCP_TOOLS
+
 from flask import Flask, render_template, send_from_directory, jsonify, request
 import os
 import time
@@ -958,77 +955,47 @@ def mcp_endpoint():
         response.headers['Access-Control-Allow-Origin'] = '*'
         return response
 
-    # 4. Handle Standard GET queries (REST query or JSON discovery)
+    # 4. Handle Standard GET queries (Discovery & Metadata)
     if request.method == 'GET':
-        category = request.args.get('category')
-        state_rank = request.args.get('state_rank', type=int)
-        air = request.args.get('air', type=int)
-        college_q = request.args.get('query') or request.args.get('college')
-
-        if category or state_rank or air:
-            args = {
-                'category': category or 'OC',
-                'state_rank': state_rank,
-                'air': air,
-                'gender': request.args.get('gender', 'male')
-            }
-            res = jsonify(handle_predict_seat(args))
-        elif college_q:
-            res = jsonify(handle_college_info({'college_code_or_name': college_q}))
-        else:
-            # Default GET: Return server metadata with SSE stream instructions
-            res = jsonify({
-                'status': 'active',
-                'server': 'mseat-mcp-server',
-                'version': '1.0.0',
-                'protocol': 'MCP 2024-11-05 (SSE & JSON-RPC 2.0)',
-                'endpoint': 'https://kprsnt.in/api/mcp/mseat',
-                'sse_endpoint': 'https://kprsnt.in/api/mcp/sse',
-                'messages_endpoint': 'https://kprsnt.in/api/mcp/messages',
-                'tools_count': len(MCP_TOOLS),
-                'tools': [t['name'] for t in MCP_TOOLS],
-                'openapi_spec': 'https://kprsnt.in/api/mseat/openapi.json',
-                'documentation': 'https://kprsnt.in/mcp'
-            })
+        res = jsonify({
+            'status': 'active',
+            'server': 'kprsnt-all-in-one-mcp',
+            'version': '3.0.0',
+            'protocol': 'MCP 2024-11-05 (SSE & JSON-RPC 2.0)',
+            'description': 'All-In-One Model Context Protocol (MCP) Server for kprsnt.in: My Site, My Data & AI Eco',
+            'endpoint': 'https://kprsnt.in/api/mcp',
+            'sse_endpoint': 'https://kprsnt.in/api/mcp/sse',
+            'messages_endpoint': 'https://kprsnt.in/api/mcp/messages',
+            'tools_count': len(MCP_TOOLS),
+            'tools': [t['name'] for t in MCP_TOOLS],
+            'categories': ['My Site', 'My Data', 'AI Eco'],
+            'documentation': 'https://kprsnt.in/mcp'
+        })
         res.headers['Access-Control-Allow-Origin'] = '*'
         return res
 
-    # 5. Handle POST queries (JSON-RPC 2.0 or Direct REST)
+    # 5. Handle POST queries (JSON-RPC 2.0)
     try:
         req_body = request.get_json(force=True, silent=True) or {}
-
-        # Standard MCP JSON-RPC 2.0
         if "jsonrpc" in req_body or "method" in req_body:
             response = process_mcp_request(req_body)
-
-        # Direct REST / OpenAI Action payloads
-        elif "category" in req_body or "air" in req_body or "state_rank" in req_body:
-            response = handle_predict_seat(req_body)
-        elif "college_code_or_name" in req_body or "query" in req_body:
-            response = handle_college_info(req_body)
-        elif "college_a" in req_body and "college_b" in req_body:
-            response = handle_compare_colleges(req_body)
-        elif "current_college" in req_body and "target_college" in req_body:
-            response = handle_sliding_odds(req_body)
-        elif "topic" in req_body:
-            response = handle_counselling_rules(req_body)
         else:
             response = {
                 "status": "online",
-                "server": "mseat-mcp-server",
-                "version": "1.0.0",
-                "message": "mSeat API is active and ready.",
+                "server": "kprsnt-all-in-one-mcp",
+                "version": "3.0.0",
+                "message": "All-in-One MCP Server is active. Send JSON-RPC 2.0 requests (e.g. method: 'tools/list' or 'tools/call').",
                 "tools": [t['name'] for t in MCP_TOOLS],
-                "openapi": "https://kprsnt.in/api/mseat/openapi.json"
+                "documentation": "https://kprsnt.in/mcp"
             }
-
     except Exception as e:
-        logging.error(f"MCP / REST Processing Error: {e}")
+        logging.error(f"MCP Processing Error: {e}")
         response = {
             "jsonrpc": "2.0",
             "id": None,
             "error": {"code": -32603, "message": "Internal request processing error."}
         }
+
 
     res = jsonify(response)
     res.headers['Access-Control-Allow-Origin'] = '*'

@@ -1,123 +1,448 @@
 {% extends "base.html" %}
 
-{% block title %}mSeat MCP Server — Model Context Protocol for AI Assistants | kprsnt.in{% endblock %}
+{% block title %}All-In-One MCP Server — Model Context Protocol for AI Assistants | kprsnt.in{% endblock %}
 
 {% block content %}
-<div class="container py-5">
+<div class="container py-5" style="max-width: 1300px;">
+
   <!-- Hero Section -->
   <div class="text-center mb-5 animate-fade-in">
     <div class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill mb-3">
-      ⚡ Model Context Protocol (MCP) Live Endpoint
+      ⚡ Model Context Protocol (MCP 2024-11-05 Spec) Active
     </div>
     <h1 class="display-5 fw-bold text-white mb-3">
-      Connect <span class="text-gradient">mSeat MCP Server</span> to Your AI
+      All-In-One <span style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MCP Server</span>
     </h1>
-    <p class="lead text-muted mx-auto" style="max-width: 750px;">
-      Give Claude Desktop, Cursor, Zed, or Antigravity direct access to Telangana MBBS Counselling & Prediction tools (59 colleges, discrete category matrices, and sliding calculations).
+    <h4 class="text-info fw-normal mb-3">My Site &bull; My Data &bull; AI Eco</h4>
+    <p class="lead text-secondary mx-auto" style="max-width: 800px; line-height: 1.7;">
+      Equip Claude Desktop, Cursor, Antigravity, or your own autonomous AI agents with direct, real-time access to Prashanth's portfolio data, verified career credentials, and live AI Eco swarm telemetry.
     </p>
     <div class="d-flex justify-content-center gap-3 mt-4">
-      <a href="https://kprsnt2.github.io/mSeat/" target="_blank" class="btn btn-outline-info rounded-pill px-4">
-        🌐 Open mSeat Web App
+      <a href="/ecosystem" class="btn btn-outline-info rounded-pill px-4">
+        <i class="fas fa-microchip me-2"></i>AI Eco Dashboard
       </a>
-      <a href="https://github.com/kprsnt2/mSeat" target="_blank" class="btn btn-outline-light rounded-pill px-4">
-        ⭐ GitHub Repository
+      <a href="https://github.com/kprsnt2/kprsnt.in" target="_blank" class="btn btn-outline-light rounded-pill px-4">
+        <i class="fab fa-github me-2"></i>GitHub Source
       </a>
     </div>
   </div>
 
-  <!-- Integration Tabs / Config Box -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- INTERACTIVE IN-BROWSER MCP PLAYGROUND -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
   <div class="row justify-content-center mb-5">
-    <div class="col-lg-10">
-      <div class="card bg-dark border-secondary shadow-lg rounded-4 overflow-hidden">
-        <div class="card-header bg-black border-secondary d-flex justify-content-between align-items-center py-3 px-4">
-          <span class="text-white fw-bold">⚙️ Claude Desktop Configuration (`claude_desktop_config.json`)</span>
-          <span class="badge bg-success">JSON-RPC 2.0 / Remote MCP</span>
+    <div class="col-12">
+      <div class="card bg-dark border-secondary shadow-lg rounded-4 overflow-hidden" style="border: 1px solid rgba(102,126,234,0.3) !important;">
+        <div class="card-header bg-black py-3 px-4 d-flex justify-content-between align-items-center flex-wrap gap-2" style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-terminal text-warning fs-5 me-3"></i>
+            <div>
+              <span class="text-white fw-bold">Live In-Browser MCP Playground</span>
+              <small class="text-secondary d-block">Test JSON-RPC 2.0 requests directly against the live endpoint: <code>https://kprsnt.in/api/mcp</code></small>
+            </div>
+          </div>
+          <span class="badge bg-success px-3 py-2 rounded-pill"><i class="fas fa-bolt me-1"></i> JSON-RPC 2.0 Live</span>
         </div>
-        <div class="card-body p-4 bg-dark-subtle">
-          <p class="text-light mb-2">Paste this configuration into your Claude Desktop configuration file:</p>
-          <pre class="bg-black text-info p-3 rounded-3 border border-secondary mb-3" style="font-size: 0.95rem;"><code>{
+
+        <div class="card-body p-4 bg-dark">
+          <!-- Preset Chips -->
+          <div class="mb-3">
+            <span class="text-muted small d-block mb-2"><i class="fas fa-magic me-1"></i> Quick Presets:</span>
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn btn-sm btn-outline-primary rounded-pill preset-btn" onclick="loadPreset('telemetry')">
+                <i class="fas fa-chart-line me-1"></i> AI Eco Telemetry
+              </button>
+              <button class="btn btn-sm btn-outline-primary rounded-pill preset-btn" onclick="loadPreset('profile')">
+                <i class="fas fa-user me-1"></i> My Profile & Bio
+              </button>
+              <button class="btn btn-sm btn-outline-primary rounded-pill preset-btn" onclick="loadPreset('resume')">
+                <i class="fas fa-file-alt me-1"></i> Full Resume Data
+              </button>
+              <button class="btn btn-sm btn-outline-primary rounded-pill preset-btn" onclick="loadPreset('skills')">
+                <i class="fas fa-layer-group me-1"></i> Skills Matrix
+              </button>
+              <button class="btn btn-sm btn-outline-primary rounded-pill preset-btn" onclick="loadPreset('projects')">
+                <i class="fas fa-project-diagram me-1"></i> Site Projects
+              </button>
+              <button class="btn btn-sm btn-outline-primary rounded-pill preset-btn" onclick="loadPreset('job_match')">
+                <i class="fas fa-briefcase me-1"></i> Role Fit: Staff AI
+              </button>
+              <button class="btn btn-sm btn-outline-primary rounded-pill preset-btn" onclick="loadPreset('dev_logs')">
+                <i class="fas fa-satellite-dish me-1"></i> Recent Dev Logs
+              </button>
+              <button class="btn btn-sm btn-outline-primary rounded-pill preset-btn" onclick="loadPreset('tools_list')">
+                <i class="fas fa-list me-1"></i> tools/list Discovery
+              </button>
+            </div>
+          </div>
+
+          <!-- Split Playground Grid -->
+          <div class="row g-3">
+            <!-- Left: Request Editor -->
+            <div class="col-lg-6">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <label class="text-white small fw-bold"><i class="fas fa-arrow-circle-right text-info me-1"></i> JSON-RPC Request (Editable)</label>
+                <button class="btn btn-link btn-sm text-secondary p-0" onclick="copyRequest()"><i class="far fa-copy me-1"></i>Copy</button>
+              </div>
+              <textarea id="mcpRequestInput" class="form-control bg-black text-info font-monospace rounded-3 border-secondary p-3" rows="12" style="font-size: 0.85rem; line-height: 1.5;"></textarea>
+              <button id="mcpExecuteBtn" class="btn btn-primary w-100 mt-3 py-2 fw-semibold rounded-pill" onclick="executeMcpRequest()" style="background: linear-gradient(135deg, #667eea, #764ba2); border: none;">
+                <i class="fas fa-play me-2"></i>Execute MCP Tool
+              </button>
+            </div>
+
+            <!-- Right: Response Viewer -->
+            <div class="col-lg-6">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <label class="text-white small fw-bold"><i class="fas fa-arrow-circle-left text-success me-1"></i> Response</label>
+                <div class="d-flex gap-2 align-items-center">
+                  <span id="mcpLatencyBadge" class="badge bg-secondary font-monospace" style="display:none;">0ms</span>
+                  <span id="mcpStatusBadge" class="badge bg-success font-monospace" style="display:none;">200 OK</span>
+                  <button class="btn btn-link btn-sm text-secondary p-0" onclick="copyResponse()"><i class="far fa-copy me-1"></i>Copy</button>
+                </div>
+              </div>
+              <pre id="mcpResponseOutput" class="bg-black text-light font-monospace rounded-3 border-secondary p-3 mb-0 overflow-auto" style="height: 380px; font-size: 0.85rem; line-height: 1.5; border: 1px solid rgba(255,255,255,0.15);"><code>// Response will appear here after clicking 'Execute MCP Tool'...</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client Configurations -->
+  <div class="row g-4 mb-5">
+    <div class="col-md-6">
+      <div class="card h-100 bg-dark border-secondary rounded-4 shadow">
+        <div class="card-header bg-black border-secondary py-3 px-4">
+          <span class="text-white fw-bold"><i class="fas fa-cog me-2 text-warning"></i>Claude Desktop Config</span>
+          <small class="text-secondary d-block">Add to <code>claude_desktop_config.json</code></small>
+        </div>
+        <div class="card-body p-4">
+          <pre class="bg-black text-info p-3 rounded-3 border border-secondary mb-0" style="font-size: 0.85rem;"><code>{
   "mcpServers": {
-    "mseat": {
-      "command": "npx",
-      "args": ["-y", "mseat-mcp-server"],
+    "kprsnt-all-in-one": {
+      "command": "python",
+      "args": ["-m", "api.ai_eco_mcp"],
       "env": {
-        "MSEAT_API_URL": "https://kprsnt.in/api/mcp/mseat"
+        "BASE_URL": "https://kprsnt.in"
       }
     }
   }
 }</code></pre>
-          <div class="alert alert-info border-info-subtle bg-info-subtle text-white mb-0" style="font-size: 0.9rem;">
-            💡 <strong>Direct HTTP Endpoint:</strong> <code>https://kprsnt.in/api/mcp/mseat</code> (Supports JSON-RPC <code>tools/list</code> and <code>tools/call</code>).
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card h-100 bg-dark border-secondary rounded-4 shadow">
+        <div class="card-header bg-black border-secondary py-3 px-4">
+          <span class="text-white fw-bold"><i class="fas fa-globe me-2 text-info"></i>Cursor / Remote HTTP & SSE</span>
+          <small class="text-secondary d-block">Direct Remote URL for Cursor or Custom Agents</small>
+        </div>
+        <div class="card-body p-4">
+          <div class="p-3 bg-black rounded-3 border border-secondary">
+            <span class="text-secondary small d-block mb-1">HTTP JSON-RPC Endpoint:</span>
+            <code class="text-success font-monospace">https://kprsnt.in/api/mcp</code>
+            <hr class="border-secondary my-2">
+            <span class="text-secondary small d-block mb-1">SSE Streaming Transport:</span>
+            <code class="text-info font-monospace">https://kprsnt.in/api/mcp/sse</code>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Available Tools Grid -->
+  <!-- All-In-One Available Tools Grid -->
   <div class="mb-5">
-    <h3 class="fw-bold text-white mb-4 text-center">🛠️ Available MCP Tools</h3>
+    <h3 class="fw-bold text-white mb-2 text-center">🛠️ All-In-One Available MCP Tools</h3>
+    <p class="text-secondary text-center mb-4">Grouped into My Site, My Data, and AI Eco</p>
+
     <div class="row g-4">
-      <div class="col-md-6">
+      <!-- Tool 1 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 bg-dark border-secondary p-4 rounded-4 shadow">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span class="fs-3">🌐</span>
+            <div>
+              <h6 class="text-white mb-0 font-monospace">get_site_overview</h6>
+              <span class="badge bg-primary-subtle text-primary" style="font-size: 0.7rem;">My Site</span>
+            </div>
+          </div>
+          <p class="text-secondary small mb-0">Returns full sitemap, active routes, interactive tools (RAG AI Chat, Plotter, Terminal), and site branding metadata.</p>
+        </div>
+      </div>
+
+      <!-- Tool 2 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 bg-dark border-secondary p-4 rounded-4 shadow">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span class="fs-3">🚀</span>
+            <div>
+              <h6 class="text-white mb-0 font-monospace">get_site_projects</h6>
+              <span class="badge bg-primary-subtle text-primary" style="font-size: 0.7rem;">My Site</span>
+            </div>
+          </div>
+          <p class="text-secondary small mb-0">Filter and query engineering projects (Solari, mSeat, BrandXY, AI News, MyLocalCLI) by keyword, technology, or category.</p>
+        </div>
+      </div>
+
+      <!-- Tool 3 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 bg-dark border-secondary p-4 rounded-4 shadow">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span class="fs-3">👤</span>
+            <div>
+              <h6 class="text-white mb-0 font-monospace">get_my_profile</h6>
+              <span class="badge bg-success-subtle text-success" style="font-size: 0.7rem;">My Data</span>
+            </div>
+          </div>
+          <p class="text-secondary small mb-0">Returns Prashanth's verified profile, bio, verified contact information, GitHub/LinkedIn links, and academic credentials.</p>
+        </div>
+      </div>
+
+      <!-- Tool 4 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 bg-dark border-secondary p-4 rounded-4 shadow">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span class="fs-3">📄</span>
+            <div>
+              <h6 class="text-white mb-0 font-monospace">get_my_resume</h6>
+              <span class="badge bg-success-subtle text-success" style="font-size: 0.7rem;">My Data</span>
+            </div>
+          </div>
+          <p class="text-secondary small mb-0">Full career resume data with 3+ years enterprise data analytics experience, work history (Black Piano, Pi), and bulleted achievements.</p>
+        </div>
+      </div>
+
+      <!-- Tool 5 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 bg-dark border-secondary p-4 rounded-4 shadow">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span class="fs-3">⚡</span>
+            <div>
+              <h6 class="text-white mb-0 font-monospace">get_my_skills</h6>
+              <span class="badge bg-success-subtle text-success" style="font-size: 0.7rem;">My Data</span>
+            </div>
+          </div>
+          <p class="text-secondary small mb-0">Skills matrix grouped by domain: Autonomous Multi-Agent Swarms, AI/LLM Engineering, SQL/Data Analytics, and Cloud/Infra.</p>
+        </div>
+      </div>
+
+      <!-- Tool 6 -->
+      <div class="col-md-6 col-lg-4">
         <div class="card h-100 bg-dark border-secondary p-4 rounded-4 shadow">
           <div class="d-flex align-items-center gap-3 mb-3">
             <span class="fs-3">🎯</span>
             <div>
-              <h5 class="text-white mb-0 font-monospace">predict_mbbs_seat</h5>
-              <small class="text-info">NEET AIR / State Rank ➔ College & Margin</small>
+              <h6 class="text-white mb-0 font-monospace">evaluate_job_match</h6>
+              <span class="badge bg-success-subtle text-success" style="font-size: 0.7rem;">My Data</span>
             </div>
           </div>
-          <p class="text-muted small">
-            Predicts exact allocated MBBS college, closing rank, category rank, preference rank, and safety margin across all 59 medical colleges in Telangana.
-          </p>
+          <p class="text-secondary small mb-0">Evaluates candidate-role alignment for any target job title, calculating match score, proof projects, and interview talking points.</p>
         </div>
       </div>
 
-      <div class="col-md-6">
+      <!-- Tool 7 -->
+      <div class="col-md-6 col-lg-4">
         <div class="card h-100 bg-dark border-secondary p-4 rounded-4 shadow">
           <div class="d-flex align-items-center gap-3 mb-3">
-            <span class="fs-3">🏥</span>
+            <span class="fs-3">📊</span>
             <div>
-              <h5 class="text-white mb-0 font-monospace">get_college_info</h5>
-              <small class="text-info">College Stats & Distances</small>
+              <h6 class="text-white mb-0 font-monospace">get_ai_eco_telemetry</h6>
+              <span class="badge bg-info-subtle text-info" style="font-size: 0.7rem;">AI Eco</span>
             </div>
           </div>
-          <p class="text-muted small">
-            Fetches intake capacity, tuition fees, hospital distance from Hyderabad, and historical closing ranks for any Government or Private medical college.
-          </p>
+          <p class="text-secondary small mb-0">Live swarm telemetry: 987 annual commits, 100 repositories, language distribution, 7-day velocity, and market salary benchmarks.</p>
         </div>
       </div>
 
-      <div class="col-md-6">
+      <!-- Tool 8 -->
+      <div class="col-md-6 col-lg-4">
         <div class="card h-100 bg-dark border-secondary p-4 rounded-4 shadow">
           <div class="d-flex align-items-center gap-3 mb-3">
-            <span class="fs-3">⚖️</span>
+            <span class="fs-3">🤖</span>
             <div>
-              <h5 class="text-white mb-0 font-monospace">compare_colleges</h5>
-              <small class="text-info">Side-by-Side College Analysis</small>
+              <h6 class="text-white mb-0 font-monospace">get_ai_eco_agents</h6>
+              <span class="badge bg-info-subtle text-info" style="font-size: 0.7rem;">AI Eco</span>
             </div>
           </div>
-          <p class="text-muted small">
-            Performs comprehensive comparative analysis between two colleges (fee difference, travel distance, cutoffs, and hospital clinical exposure).
-          </p>
+          <p class="text-secondary small mb-0">Live status of the 6 autonomous agents (GitHub Scout, Dashboard, Portfolio Sync, MCP Engineer, Docs, Readme) and their custom skills.</p>
         </div>
       </div>
 
-      <div class="col-md-6">
+      <!-- Tool 9 -->
+      <div class="col-md-6 col-lg-4">
         <div class="card h-100 bg-dark border-secondary p-4 rounded-4 shadow">
           <div class="d-flex align-items-center gap-3 mb-3">
-            <span class="fs-3">📈</span>
+            <span class="fs-3">📝</span>
             <div>
-              <h5 class="text-white mb-0 font-monospace">calculate_sliding_odds</h5>
-              <small class="text-info">Round 1 ➔ Round 2 Upgradation</small>
+              <h6 class="text-white mb-0 font-monospace">get_ai_eco_dev_logs</h6>
+              <span class="badge bg-info-subtle text-info" style="font-size: 0.7rem;">AI Eco</span>
             </div>
           </div>
-          <p class="text-muted small">
-            Computes mathematical probability of upgrading from a Round 1 confirmed seat to a dream college based on category rank and surrendered seats.
-          </p>
+          <p class="text-secondary small mb-0">Fetches recent dev logs from AI_Eco_Blogs/ structured project-by-project with code changes and 'Why We Did It' architecture rationales.</p>
         </div>
       </div>
     </div>
   </div>
+
 </div>
+
+<!-- Interactive Playground JS -->
+<script>
+const PRESETS = {
+  telemetry: {
+    jsonrpc: "2.0",
+    id: "call-1",
+    method: "tools/call",
+    params: {
+      name: "get_ai_eco_telemetry",
+      arguments: {}
+    }
+  },
+  profile: {
+    jsonrpc: "2.0",
+    id: "call-2",
+    method: "tools/call",
+    params: {
+      name: "get_my_profile",
+      arguments: {}
+    }
+  },
+  resume: {
+    jsonrpc: "2.0",
+    id: "call-3",
+    method: "tools/call",
+    params: {
+      name: "get_my_resume",
+      arguments: {
+        section: "all"
+      }
+    }
+  },
+  skills: {
+    jsonrpc: "2.0",
+    id: "call-4",
+    method: "tools/call",
+    params: {
+      name: "get_my_skills",
+      arguments: {
+        category: "all"
+      }
+    }
+  },
+  projects: {
+    jsonrpc: "2.0",
+    id: "call-5",
+    method: "tools/call",
+    params: {
+      name: "get_site_projects",
+      arguments: {
+        query: "solari"
+      }
+    }
+  },
+  job_match: {
+    jsonrpc: "2.0",
+    id: "call-6",
+    method: "tools/call",
+    params: {
+      name: "evaluate_job_match",
+      arguments: {
+        role_title: "Staff AI Engineer",
+        requirements: "Autonomous Multi-Agent AI Swarms, Model Context Protocol (MCP), LLM Fine-Tuning"
+      }
+    }
+  },
+  dev_logs: {
+    jsonrpc: "2.0",
+    id: "call-7",
+    method: "tools/call",
+    params: {
+      name: "get_ai_eco_dev_logs",
+      arguments: {
+        limit: 2
+      }
+    }
+  },
+  tools_list: {
+    jsonrpc: "2.0",
+    id: "call-8",
+    method: "tools/list",
+    params: {}
+  }
+};
+
+function loadPreset(key) {
+  if (PRESETS[key]) {
+    document.getElementById("mcpRequestInput").value = JSON.stringify(PRESETS[key], null, 2);
+  }
+}
+
+async function executeMcpRequest() {
+  const reqArea = document.getElementById("mcpRequestInput");
+  const resArea = document.getElementById("mcpResponseOutput");
+  const btn = document.getElementById("mcpExecuteBtn");
+  const statusBadge = document.getElementById("mcpStatusBadge");
+  const latencyBadge = document.getElementById("mcpLatencyBadge");
+
+  let payload;
+  try {
+    payload = JSON.parse(reqArea.value);
+  } catch (err) {
+    alert("Invalid JSON format in Request Editor: " + err.message);
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Executing...';
+  resArea.textContent = "// Sending request to /api/mcp...";
+
+  const t0 = performance.now();
+  try {
+    const res = await fetch("/api/mcp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    });
+
+    const elapsed = Math.round(performance.now() - t0);
+    latencyBadge.textContent = `${elapsed}ms`;
+    latencyBadge.style.display = "inline-block";
+
+    statusBadge.textContent = `${res.status} ${res.statusText || 'OK'}`;
+    statusBadge.className = res.ok ? "badge bg-success font-monospace" : "badge bg-danger font-monospace";
+    statusBadge.style.display = "inline-block";
+
+    const data = await res.json();
+    resArea.textContent = JSON.stringify(data, null, 2);
+  } catch (e) {
+    statusBadge.textContent = "Error";
+    statusBadge.className = "badge bg-danger font-monospace";
+    statusBadge.style.display = "inline-block";
+    resArea.textContent = `// Network or parsing error:\n${e.message}`;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-play me-2"></i>Execute MCP Tool';
+  }
+}
+
+function copyRequest() {
+  const text = document.getElementById("mcpRequestInput").value;
+  navigator.clipboard.writeText(text);
+  alert("Request JSON copied to clipboard!");
+}
+
+function copyResponse() {
+  const text = document.getElementById("mcpResponseOutput").textContent;
+  navigator.clipboard.writeText(text);
+  alert("Response JSON copied to clipboard!");
+}
+
+// Initialize with default preset
+document.addEventListener("DOMContentLoaded", () => {
+  loadPreset("telemetry");
+});
+</script>
 {% endblock %}
