@@ -19,13 +19,15 @@ NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
 NVIDIA_EMBEDDING_MODEL = "nvidia/nv-embedqa-e5-v5"
 
 # Backup: Groq (via OpenAI-compatible API)
-GROQ_MODEL = "openai/gpt-oss-120b"
+GROQ_MODEL = "groq/compound"
 GROQ_FALLBACK_MODELS = [
-    "groq/compound",
+    "groq/compound-mini",
+    "openai/gpt-oss-120b",
     "llama-3.3-70b-versatile",
     "llama-3.1-8b-instant",
 ]
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
+
 
 # Last resort: OpenAI (requires positive credit balance)
 OPENAI_MODEL = "gpt-5.4-mini"
