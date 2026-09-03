@@ -58,20 +58,21 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/api/docs' or request.path == '/docs' %}active{% endif %}" href="/docs">Docs</a>
                     </li>
-                    <!-- Ecosystem Dropdown -->
+                    <!-- AI Eco Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {% if request.path in ['/aie', '/ecosystem', '/plotter'] %}active{% endif %}"
                             href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-microchip" style="margin-right: 4px;"></i>Ecosystem
+                            <i class="fas fa-microchip" style="margin-right: 4px;"></i>AI Eco
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item {% if request.path == '/aie' %}active{% endif %}" href="/aie"><i class="fas fa-network-wired" style="width:20px;"></i> How it works</a></li>
+                            <li><a class="dropdown-item {% if request.path == '/aie' %}active{% endif %}" href="/aie"><i class="fas fa-network-wired" style="width:20px;"></i> AI Eco Hub</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item {% if request.path == '/ecosystem' %}active{% endif %}" href="/ecosystem"><i class="fas fa-tachometer-alt" style="width:20px;"></i> Dashboard</a></li>
+                            <li><a class="dropdown-item {% if request.path == '/ecosystem' %}active{% endif %}" href="/ecosystem"><i class="fas fa-tachometer-alt" style="width:20px;"></i> Dashboard & Dev Logs</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item {% if request.path == '/plotter' %}active{% endif %}" href="/plotter"><i class="fas fa-chart-line" style="width:20px;"></i> Data Plotter</a></li>
                         </ul>
                     </li>
+
                 </ul>
             </div>
         </div>

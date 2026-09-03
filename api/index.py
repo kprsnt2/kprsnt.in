@@ -205,22 +205,75 @@ def _parse_blog_date(date_str):
     return datetime(2000, 1, 1)
 
 
+def load_ai_eco_blogs():
+    """Load AI Ecosystem agent dev logs from AI_Eco_Blogs/."""
+    eco_posts = []
+    eco_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'AI_Eco_Blogs'))
+    if os.path.exists(eco_dir):
+        for md_file in sorted(glob.glob(os.path.join(eco_dir, '*.md')), reverse=True):
+            try:
+                with open(md_file, 'r', encoding='utf-8') as f:
+                    content = f.read()
+
+                slug = os.path.basename(md_file).replace('.md', '')
+                post = {'slug': slug, 'category': 'AI Eco'}
+                frontmatter_match = re.match(r'^---\s*\n(.*?)\n---\s*\n(.*)', content, re.DOTALL)
+                if frontmatter_match:
+                    frontmatter = frontmatter_match.group(1)
+                    md_content = frontmatter_match.group(2)
+                    for line in frontmatter.split('\n'):
+                        if ':' in line:
+                            k, v = line.split(':', 1)
+                            k = k.strip().lower()
+                            v = v.strip().strip('"').strip("'")
+                            if k == 'tags':
+                                post['tags'] = [t.strip() for t in v.split(',') if t.strip()]
+                            else:
+                                post[k] = v
+                    post['content'] = markdown.markdown(md_content, extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty'])
+                else:
+                    post['title'] = slug.replace('-', ' ').title()
+                    post['content'] = markdown.markdown(content, extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty'])
+                    post['date'] = ''
+                    post['tags'] = ['AI Eco', 'Agents']
+
+                if not post.get('title'):
+                    post['title'] = slug.replace('-', ' ').title()
+                if not post.get('excerpt'):
+                    post['excerpt'] = 'Automated dev log published by AI Eco agents.'
+                if not post.get('tags'):
+                    post['tags'] = ['AI Eco', 'Agents']
+                eco_posts.append(post)
+            except Exception as e:
+                logging.warning(f"Failed to load AI Eco post {md_file}: {e}")
+    eco_posts.sort(key=lambda p: _parse_blog_date(p.get('date', '')), reverse=True)
+    return eco_posts
+
+
 def load_all_blog_posts():
-    """Load blog posts from JSON files in blog_data/ and MD files in blog_inputs/."""
+    """Load blog posts from AI_Eco_Blogs/, blog_inputs/, and blog_data/."""
     posts = []
     seen_slugs = set()
 
-    # 1. Load MD posts from blog_inputs/ first (polished, takes priority)
+    # 1. Load AI Eco blogs
+    eco_posts = load_ai_eco_blogs()
+    for ep in eco_posts:
+        posts.append(ep)
+        seen_slugs.add(ep['slug'])
+
+    # 2. Load MD posts from blog_inputs/ (polished, takes priority)
     blog_md_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'blog_inputs'))
     logging.info(f"Looking for blog_inputs at: {blog_md_dir}, exists={os.path.exists(blog_md_dir)}")
     if os.path.exists(blog_md_dir):
         for md_file in sorted(glob.glob(os.path.join(blog_md_dir, '*.md'))):
             try:
+                slug = os.path.basename(md_file).replace('.md', '')
+                if slug in seen_slugs:
+                    continue
                 with open(md_file, 'r', encoding='utf-8') as f:
                     content = f.read()
 
                 post = {}
-                slug = os.path.basename(md_file).replace('.md', '')
                 post['slug'] = slug
 
                 # Parse frontmatter
@@ -261,7 +314,7 @@ def load_all_blog_posts():
             except Exception as e:
                 logging.warning(f"Failed to load MD post {md_file}: {e}")
 
-    # 2. Load JSON posts (skip if slug already loaded from blog_inputs/)
+    # 3. Load JSON posts (skip if slug already loaded)
     blog_data_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'blog_data'))
     logging.info(f"Looking for blog_data at: {blog_data_dir}, exists={os.path.exists(blog_data_dir)}")
     if os.path.exists(blog_data_dir):
@@ -281,6 +334,7 @@ def load_all_blog_posts():
 
     posts.sort(key=lambda p: _parse_blog_date(p.get('date', '')), reverse=True)
     return posts
+
 
 
 @app.route('/blog')
@@ -551,7 +605,9 @@ def ecosystem_dashboard():
             "top_skills": [],
             "live_salary_estimation": {"min": 0, "max": 0, "reasoning": "Data unavailable"}
         }
-    return render_template('ecosystem.html', data=data)
+    ai_eco_blogs = load_ai_eco_blogs()
+    return render_template('ecosystem.html', data=data, ai_eco_blogs=ai_eco_blogs)
+
 
 
 # ============================================================

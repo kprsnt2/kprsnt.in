@@ -1,19 +1,20 @@
 {% extends 'base.html' %}
 
-{% block title %}Ecosystem Telemetry & Analytics{% endblock %}
+{% block title %}AI Eco | Telemetry & Dev Logs{% endblock %}
 
 {% block content %}
 <div class="container-fluid mt-4" style="max-width: 1400px; padding-bottom: 4rem;">
     
     <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
-            <h1 class="text-white mb-1">Ecosystem Telemetry <span class="badge bg-success ms-2" style="font-size: 0.9rem; vertical-align: middle;"><i class="fas fa-circle text-white" style="font-size: 0.5rem; margin-right: 4px; animation: aie-dotPulse 2s infinite;"></i> LIVE</span></h1>
-            <p class="text-secondary">Real-time metrics from the autonomous multi-agent swarm.</p>
+            <h1 class="text-white mb-1">AI Eco Telemetry & Dev Logs <span class="badge bg-success ms-2" style="font-size: 0.9rem; vertical-align: middle;"><i class="fas fa-circle text-white" style="font-size: 0.5rem; margin-right: 4px; animation: aie-dotPulse 2s infinite;"></i> LIVE</span></h1>
+            <p class="text-secondary">Real-time metrics and autonomous dev logs from the AI Ecosystem multi-agent swarm.</p>
         </div>
         <div>
-            <a href="/aie" class="btn btn-outline-primary" style="border-radius: 20px;"><i class="fas fa-network-wired me-2"></i>How It Works</a>
+            <a href="/aie" class="btn btn-outline-primary" style="border-radius: 20px;"><i class="fas fa-network-wired me-2"></i>AI Eco Hub</a>
         </div>
     </div>
+
     
     <!-- Top Stats Row -->
     <div class="row g-4 mb-4">
@@ -194,6 +195,64 @@
         </div>
     </div>
 
+    <!-- AI Eco Dev Logs & Agent Publications Row -->
+    <div class="row g-4 mt-2">
+        <div class="col-12">
+            <div class="card bg-dark" style="border: 1px solid rgba(102,126,234,0.25); border-radius: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.35);">
+                <div class="card-header bg-transparent d-flex justify-content-between align-items-center py-3" style="border-bottom: 1px solid rgba(255,255,255,0.06);">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px; background: linear-gradient(135deg, #3498db, #9b59b6);">
+                            <i class="fas fa-satellite-dish text-white fs-5"></i>
+                        </div>
+                        <div>
+                            <h5 class="text-white mb-0">AI Eco Dev Logs</h5>
+                            <small class="text-secondary">Autonomous development dispatches synthesized by GitHub Scout Agent</small>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="badge bg-primary px-3 py-2" style="border-radius: 20px; font-weight: 500;">
+                            <i class="fas fa-robot me-1"></i> Autonomous Publications
+                        </span>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    {% if ai_eco_blogs %}
+                    <div class="row g-4">
+                        {% for blog in ai_eco_blogs %}
+                        <div class="col-md-6 col-lg-4">
+                            <div class="card h-100 bg-black" style="border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; transition: transform 0.2s ease, border-color 0.2s ease;">
+                                <div class="card-body d-flex flex-column p-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <span class="badge bg-info text-dark" style="font-size: 0.75rem; padding: 4px 8px;"><i class="far fa-calendar-alt me-1"></i>{{ blog.date }}</span>
+                                        <span class="badge" style="background: rgba(102,126,234,0.2); color: #a29bfe; font-size: 0.7rem; border: 1px solid rgba(102,126,234,0.3);">GitHub Scout</span>
+                                    </div>
+                                    <h6 class="text-white mt-1 mb-2" style="font-size: 1.05rem; line-height: 1.45; font-weight: 600;">{{ blog.title }}</h6>
+                                    <p class="text-secondary small flex-grow-1 mb-3" style="line-height: 1.6;">{{ blog.excerpt }}</p>
+                                    <div class="mb-3">
+                                        {% for tag in blog.tags[:4] %}
+                                        <span class="badge bg-dark text-muted me-1" style="border: 1px solid rgba(255,255,255,0.1); font-size: 0.7rem;">{{ tag }}</span>
+                                        {% endfor %}
+                                    </div>
+                                    <a href="/blog/{{ blog.slug }}" class="btn btn-outline-info btn-sm w-100" style="border-radius: 8px;">
+                                        <i class="fas fa-book-open me-2"></i>Read Full Log
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-robot text-secondary fs-1 mb-3"></i>
+                        <h6 class="text-white">No active dispatches right now</h6>
+                        <p class="text-secondary small mb-0">AI Eco publishes technical dev logs exclusively when new commits are detected.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -243,20 +302,24 @@
 
         // --- Pipeline Timeline & Commits Line Chart ---
         const timeCtx = document.getElementById('timelineChart').getContext('2d');
+        const telemetryTimeline = {{ (data.commit_timeline_7d if data.commit_timeline_7d is defined else {}) | tojson }};
         
-        // Generating realistic mock data for the last 7 days of agent runs/commits
-        const labels = [];
-        const commitData = [];
-        const pipelineData = [];
+        let labels = [];
+        let commitData = [];
+        let pipelineData = [];
         
-        for (let i = 6; i >= 0; i--) {
-            const d = new Date();
-            d.setDate(d.getDate() - i);
-            labels.push(d.toLocaleDateString('en-US', { weekday: 'short' }));
-            
-            // Random realistic fluctuations
-            commitData.push(Math.floor(Math.random() * 8) + 2); 
-            pipelineData.push(1); // 1 pipeline run per day
+        if (telemetryTimeline && telemetryTimeline.labels && telemetryTimeline.labels.length > 0) {
+            labels = telemetryTimeline.labels;
+            commitData = telemetryTimeline.commits;
+            pipelineData = telemetryTimeline.pipelines;
+        } else {
+            for (let i = 6; i >= 0; i--) {
+                const d = new Date();
+                d.setDate(d.getDate() - i);
+                labels.push(d.toLocaleDateString('en-US', { weekday: 'short' }));
+                commitData.push(3);
+                pipelineData.push(1);
+            }
         }
 
         new Chart(timeCtx, {

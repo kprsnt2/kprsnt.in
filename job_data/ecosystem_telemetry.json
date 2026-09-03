@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-09-03T02:55:59.015984",
-  "commit_history": 1500,
+  "last_updated": "2026-09-03T10:15:00.000000",
+  "commit_history": 987,
   "repo_counts": 100,
   "language_breakdown": {
     "TypeScript": 24,
@@ -11,11 +11,12 @@
   "live_salary_estimation": {
     "min": 180000,
     "max": 320000,
-    "reasoning": "A developer with 100 repositories and a stack centered on TypeScript, JavaScript, Python, and HTML, specifically building AI multi-agent ecosystems, fits a high-demand senior/staff-level profile in the US market. The combination of strong product-facing full-stack skills and specialized AI systems work typically commands compensation in the upper end of software engineering bands, especially at startups and AI-focused companies. The range accounts for variation by location, company stage, and whether total compensation includes equity; base salary alone may sit lower, while total compensation can exceed this range at top-tier firms."
+    "reasoning": "A developer with 100 repositories, strong breadth across TypeScript, JavaScript, Python, and HTML, and specialized experience building AI multi-agent ecosystems fits a senior/staff-level full-stack AI engineer profile."
   },
   "top_skills": [
     "Multi-Agent AI",
     "Model Context Protocol (MCP)",
+    "TypeScript",
     "BigQuery",
     "Python",
     "Flask",
@@ -29,5 +30,21 @@
     "Insurance",
     "Education",
     "SaaS"
+  ],
+  "daily_commits_count": 24,
+  "commit_timeline_7d": {
+    "labels": ["Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed"],
+    "commits": [4, 7, 2, 1, 24, 3, 2],
+    "pipelines": [1, 1, 1, 1, 1, 1, 1]
+  },
+  "recent_activity": [
+    "[kprsnt2/solari-cookbook-rash] main: feat: render live interactive application inside preview iframe",
+    "[kprsnt2/solari-cookbook-rash] main: perf: optimize system prompt for instant sub-second microVM server startup and background nohup",
+    "[kprsnt2/solari-cookbook-rash] main: feat: configure GPT-4o-mini and OpenAI model selector on Web Studio",
+    "[kprsnt2/solari-cookbook-rash] main: fix(sandbox): auto-background long-running servers and enforce 15s command timeout",
+    "[kprsnt2/solari-cookbook-rash] main: docs: add solari.kprsnt.in custom domain branding across all showcase assets",
+    "[kprsnt2/solari-autonomous-platform-v2] main: docs: add comprehensive performance benchmarks and upstream PR contribution guide",
+    "[kprsnt2/kprsnt.in] main: feat: agent now extracts last 24 hr commit messages for daily blog context",
+    "[kprsnt2/kprsnt.in] main: feat: add mcp, automations, and sector metrics to ecosystem dashboard"
   ]
-}
+}
