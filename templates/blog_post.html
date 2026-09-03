@@ -6,9 +6,16 @@
 <div class="container" style="max-width: 800px;">
     <div class="row">
         <div class="col-12">
+            {% if is_aie or post.category == 'AI Eco' %}
+            <a href="/aie/blogs" class="btn btn-outline-light btn-sm mb-4">
+                <i class="fas fa-arrow-left"></i> Back to AIE Blogs
+            </a>
+            {% else %}
             <a href="/blog" class="btn btn-outline-light btn-sm mb-4">
                 <i class="fas fa-arrow-left"></i> Back to Blog
             </a>
+            {% endif %}
+
 
             <article>
                 <header style="margin-bottom: 2rem;">

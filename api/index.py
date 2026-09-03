@@ -251,17 +251,11 @@ def load_ai_eco_blogs():
 
 
 def load_all_blog_posts():
-    """Load blog posts from AI_Eco_Blogs/, blog_inputs/, and blog_data/."""
+    """Load standard blog posts from blog_inputs/ and blog_data/. Excludes AI Eco dev logs."""
     posts = []
     seen_slugs = set()
 
-    # 1. Load AI Eco blogs
-    eco_posts = load_ai_eco_blogs()
-    for ep in eco_posts:
-        posts.append(ep)
-        seen_slugs.add(ep['slug'])
-
-    # 2. Load MD posts from blog_inputs/ (polished, takes priority)
+    # 1. Load MD posts from blog_inputs/ (polished, takes priority)
     blog_md_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'blog_inputs'))
     logging.info(f"Looking for blog_inputs at: {blog_md_dir}, exists={os.path.exists(blog_md_dir)}")
     if os.path.exists(blog_md_dir):
@@ -314,7 +308,7 @@ def load_all_blog_posts():
             except Exception as e:
                 logging.warning(f"Failed to load MD post {md_file}: {e}")
 
-    # 3. Load JSON posts (skip if slug already loaded)
+    # 2. Load JSON posts (skip if slug already loaded)
     blog_data_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'blog_data'))
     logging.info(f"Looking for blog_data at: {blog_data_dir}, exists={os.path.exists(blog_data_dir)}")
     if os.path.exists(blog_data_dir):
@@ -350,12 +344,30 @@ def blog_post(slug):
         post = next((p for p in all_posts if p['slug'] == slug), None)
         if post:
             return render_template('blog_post.html', post=post)
+        # Check AI Eco posts as fallback
+        aie_post = next((p for p in load_ai_eco_blogs() if p['slug'] == slug), None)
+        if aie_post:
+            return render_template('blog_post.html', post=aie_post, is_aie=True)
         return render_template('blog.html', posts=all_posts)
     except Exception as e:
         logging.error(f"Blog post error for slug '{slug}': {type(e).__name__}: {e}")
         import traceback
         logging.error(traceback.format_exc())
         return jsonify({"error": str(e), "type": type(e).__name__}), 500
+
+@app.route('/aie/blogs')
+def aie_blogs():
+    posts = load_ai_eco_blogs()
+    return render_template('aie_blogs.html', posts=posts)
+
+@app.route('/aie/blog/<slug>')
+def aie_blog_post(slug):
+    posts = load_ai_eco_blogs()
+    post = next((p for p in posts if p['slug'] == slug), None)
+    if post:
+        return render_template('blog_post.html', post=post, is_aie=True)
+    return render_template('aie_blogs.html', posts=posts)
+
 
 
 # ============================================================
