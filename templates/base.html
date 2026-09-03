@@ -60,13 +60,14 @@
                     </li>
                     <!-- AI Eco Dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if request.path in ['/ecosystem', '/aie/blogs', '/aie'] or request.path.startswith('/aie/') %}active{% endif %}"
+                        <a class="nav-link dropdown-toggle {% if request.path in ['/ecosystem', '/aie/blogs', '/aie', '/mcp'] or request.path.startswith('/aie/') %}active{% endif %}"
                             href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-microchip" style="margin-right: 4px;"></i>AI Eco
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark">
                             <li><a class="dropdown-item {% if request.path == '/aie' %}active{% endif %}" href="/aie"><i class="fas fa-network-wired" style="width:20px;"></i> AI Eco Hub</a></li>
                             <li><a class="dropdown-item {% if request.path == '/ecosystem' %}active{% endif %}" href="/ecosystem"><i class="fas fa-tachometer-alt" style="width:20px;"></i> Dashboard</a></li>
+                            <li><a class="dropdown-item {% if request.path == '/mcp' %}active{% endif %}" href="/mcp"><i class="fas fa-plug" style="width:20px;"></i> MCP Server</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item {% if request.path == '/aie/blogs' or request.path.startswith('/aie/blog/') %}active{% endif %}" href="/aie/blogs"><i class="fas fa-satellite-dish" style="width:20px;"></i> AIE Blogs</a></li>
                         </ul>
