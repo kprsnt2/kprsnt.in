@@ -214,11 +214,11 @@ def load_ai_eco_blogs():
 
                 slug = os.path.basename(md_file).replace('.md', '')
                 post = {'slug': slug, 'category': 'AI Eco'}
-                frontmatter_match = re.match(r'^---\s*\n(.*?)\n---\s*\n(.*)', content, re.DOTALL)
+                frontmatter_match = re.match(r'^\s*---\s*[\r\n]+(.*?)\r?\n---\s*[\r\n]+(.*)', content, re.DOTALL)
                 if frontmatter_match:
                     frontmatter = frontmatter_match.group(1)
                     md_content = frontmatter_match.group(2)
-                    for line in frontmatter.split('\n'):
+                    for line in frontmatter.splitlines():
                         if ':' in line:
                             k, v = line.split(':', 1)
                             k = k.strip().lower()
@@ -904,6 +904,20 @@ _mcp_rate_store = {}
 MCP_RATE_LIMIT_SECONDS = 0.1  # High throughput for streaming sessions
 
 @app.route('/api/mcp/mseat', methods=['GET', 'POST', 'OPTIONS'])
+def mseat_mcp_redirect():
+    """Redirect mSeat MCP requests to dedicated mSeat domain: https://mseat.kprsnt.in/mcp."""
+    if request.method == 'OPTIONS':
+        res = jsonify({'status': 'ok', 'target': 'https://mseat.kprsnt.in/mcp'})
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        res.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, x-api-key, mcp-session-id, Accept'
+        return res
+
+    from flask import redirect
+    res = redirect('https://mseat.kprsnt.in/mcp', code=307)
+    res.headers['Access-Control-Allow-Origin'] = '*'
+    return res
+
 @app.route('/api/mcp', methods=['GET', 'POST', 'OPTIONS'])
 @app.route('/api/mcp/sse', methods=['GET', 'OPTIONS'])
 def mcp_endpoint():
@@ -996,6 +1010,10 @@ def mcp_endpoint():
             "error": {"code": -32603, "message": "Internal request processing error."}
         }
 
+    if response is None:
+        res = Response('', status=204)
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res
 
     res = jsonify(response)
     res.headers['Access-Control-Allow-Origin'] = '*'
@@ -1022,6 +1040,11 @@ def mcp_messages_endpoint():
             "id": None,
             "error": {"code": -32603, "message": "Internal request processing error."}
         }
+
+    if response is None:
+        res = Response('', status=204)
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res
 
     res = jsonify(response)
     res.headers['Access-Control-Allow-Origin'] = '*'

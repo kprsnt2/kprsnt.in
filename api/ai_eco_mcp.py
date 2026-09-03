@@ -80,6 +80,10 @@ MCP_TOOLS = [
                 "featured_only": {
                     "type": "boolean",
                     "description": "If true, returns only flagship featured projects"
+                },
+                "limit": {
+                    "type": "integer",
+                    "description": "Maximum number of projects to return (default: 10, max: 50)"
                 }
             }
         }
@@ -176,6 +180,61 @@ MCP_TOOLS = [
                 }
             }
         }
+    }
+]
+
+# ═══════════════════════════════════════════════════════════════
+# ALL-IN-ONE MCP RESOURCES & PROMPTS SPECIFICATION
+# ═══════════════════════════════════════════════════════════════
+
+MCP_RESOURCES = [
+    {
+        "uri": "eco://telemetry",
+        "name": "AI Eco Swarm Telemetry",
+        "description": "Real-time telemetry from Prashanth's autonomous AI Eco swarm (commits, repos, language stats, active agents, live market compensation benchmarks)",
+        "mimeType": "application/json"
+    },
+    {
+        "uri": "portfolio://profile",
+        "name": "Prashanth's Verified Profile",
+        "description": "Core identity, contact information, social links, current engineering focus, and key portfolio metrics",
+        "mimeType": "application/json"
+    },
+    {
+        "uri": "portfolio://resume",
+        "name": "Complete Professional Resume",
+        "description": "Structured resume data with work history at Black Piano & Pi Software, projects, skills, and education",
+        "mimeType": "application/json"
+    },
+    {
+        "uri": "portfolio://skills",
+        "name": "Multi-Disciplinary Skills Matrix",
+        "description": "Verified skills matrix across Autonomous Multi-Agent Swarms, AI/LLM Engineering, SQL/BigQuery, and Cloud",
+        "mimeType": "application/json"
+    }
+]
+
+MCP_PROMPTS = [
+    {
+        "name": "evaluate_candidate",
+        "description": "Evaluates candidate alignment for a target role title and technical job description",
+        "arguments": [
+            {
+                "name": "role_title",
+                "description": "Target job title (e.g. 'Staff AI Engineer', 'Data Analyst & AI Engineer')",
+                "required": True
+            },
+            {
+                "name": "requirements",
+                "description": "Key technical requirements, tech stack, or JD excerpt",
+                "required": False
+            }
+        ]
+    },
+    {
+        "name": "ai_eco_overview",
+        "description": "Walks through Prashanth's autonomous 6-agent AI swarm architecture, skills, and automation workflows",
+        "arguments": []
     }
 ]
 
@@ -282,9 +341,14 @@ def handle_site_overview(args: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def handle_site_projects(args: Dict[str, Any]) -> Dict[str, Any]:
+    args = args or {}
     query = (args.get("query") or "").strip().lower()
     tag = (args.get("tag") or "").strip().lower()
     featured_only = bool(args.get("featured_only", False))
+    try:
+        limit = max(1, min(int(args.get("limit") or 10), 50))
+    except (ValueError, TypeError):
+        limit = 10
 
     filtered = []
     for p in PROJECTS:
@@ -305,8 +369,9 @@ def handle_site_projects(args: Dict[str, Any]) -> Dict[str, Any]:
     return {
         "total_available": len(PROJECTS),
         "matches_count": len(filtered),
-        "filter_applied": {"query": query or None, "tag": tag or None, "featured_only": featured_only},
-        "projects": filtered
+        "returned_count": min(len(filtered), limit),
+        "filter_applied": {"query": query or None, "tag": tag or None, "featured_only": featured_only, "limit": limit},
+        "projects": filtered[:limit]
     }
 
 
@@ -398,6 +463,7 @@ def handle_my_skills(args: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def handle_evaluate_job_match(args: Dict[str, Any]) -> Dict[str, Any]:
+    args = args or {}
     role_title = (args.get("role_title") or "").strip()
     requirements = (args.get("requirements") or "").strip()
 
@@ -405,8 +471,12 @@ def handle_evaluate_job_match(args: Dict[str, Any]) -> Dict[str, Any]:
 
     matched_skills = []
     highlighted_projects = []
+    category_scores = []
 
-    if any(w in combined_text for w in ["agent", "autonomous", "swarm", "mcp", "llm", "ai engineer", "prompt"]):
+    # Domain 1: AI, Autonomous Agents, LLM & MCP (Flagship Strength)
+    agent_keywords = ["agent", "autonomous", "swarm", "mcp", "model context protocol", "llm", "ai engineer", "prompt", "rag", "fine-tun", "langchain", "llama", "groq", "openai", "anthropic", "claude"]
+    matched_agent = [w for w in agent_keywords if w in combined_text]
+    if matched_agent:
         matched_skills.extend([
             "Autonomous Multi-Agent AI Swarms (6-agent production ecosystem)",
             "Model Context Protocol (MCP 2024-11-05) Server & Client Implementations",
@@ -416,8 +486,12 @@ def handle_evaluate_job_match(args: Dict[str, Any]) -> Dict[str, Any]:
         highlighted_projects.append("AI Eco (Autonomous Multi-Agent Portfolio Infrastructure)")
         highlighted_projects.append("Solari Cookbook (Interactive MicroVM Previews & Multi-Agent Swarms)")
         highlighted_projects.append("BrandXY (Fine-tuned 20B LLM Bias Steerability)")
+        category_scores.append(min(96, 88 + len(matched_agent) * 2))
 
-    if any(w in combined_text for w in ["data", "analytics", "sql", "bigquery", "dashboard", "bi", "etl"]):
+    # Domain 2: Data, SQL, BigQuery & Analytics (3+ Years Enterprise Experience)
+    data_keywords = ["data", "analytics", "sql", "bigquery", "dashboard", "bi", "etl", "looker", "tableau", "power bi", "warehouse", "reporting"]
+    matched_data = [w for w in data_keywords if w in combined_text]
+    if matched_data:
         matched_skills.extend([
             "Expert SQL & Google BigQuery Data Pipelines",
             "18 Sector Intelligence Dashboards deployed for Enterprise Clients",
@@ -426,19 +500,35 @@ def handle_evaluate_job_match(args: Dict[str, Any]) -> Dict[str, Any]:
         ])
         highlighted_projects.append("Black Piano Enterprise Sector Intelligence (18 Dashboards)")
         highlighted_projects.append("Pi-API Python Package for Automated BigQuery Data Access")
+        category_scores.append(min(95, 86 + len(matched_data) * 2))
 
-    if any(w in combined_text for w in ["fullstack", "python", "typescript", "flask", "next.js", "frontend", "backend"]):
+    # Domain 3: Full-Stack Systems, Python & TypeScript
+    stack_keywords = ["fullstack", "full-stack", "python", "typescript", "javascript", "flask", "next.js", "react", "frontend", "backend", "api", "vercel"]
+    matched_stack = [w for w in stack_keywords if w in combined_text]
+    if matched_stack:
         matched_skills.extend([
             "Python / Flask Backend Engineering & FastMCP",
             "TypeScript / Next.js Modern Frontend Development",
             "MicroVM Sandboxing & Process Watchdog Architecture",
             "Vercel Serverless Function Deployment & Optimizations"
         ])
-        if "Solari Cookbook" not in str(highlighted_projects):
+        if "Solari Cookbook (Interactive MicroVM Previews & Multi-Agent Swarms)" not in highlighted_projects:
             highlighted_projects.append("Solari Cookbook (TypeScript / Next.js / MicroVM)")
         highlighted_projects.append("mSeat (Telangana MBBS Counselling Predictor with O(1) Ranking)")
+        category_scores.append(min(92, 82 + len(matched_stack) * 2))
 
-    if not matched_skills:
+    # Compute dynamic score
+    if category_scores:
+        final_score = round(sum(category_scores) / len(category_scores))
+        if final_score >= 90:
+            verdict = "Exceptional Match — Combines 3+ years of production data analytics with state-of-the-art autonomous multi-agent and MCP engineering."
+        elif final_score >= 80:
+            verdict = "Strong Match — Excellent alignment across core engineering, analytics pipelines, and modern full-stack architectures."
+        else:
+            verdict = "Good Competency Fit — Relevant technical foundation in Python, data systems, and API design."
+    else:
+        final_score = 45
+        verdict = "Specialized AI Alignment — Candidate background is heavily focused on AI Systems, Autonomous Swarms, and Enterprise Analytics rather than this specific discipline."
         matched_skills = [
             "Autonomous Multi-Agent Systems & MCP Protocol Architecture",
             "Enterprise Data Analytics (SQL, BigQuery, Looker Studio)",
@@ -448,8 +538,8 @@ def handle_evaluate_job_match(args: Dict[str, Any]) -> Dict[str, Any]:
 
     return {
         "target_role": role_title,
-        "match_percentage": "95%",
-        "verdict": "Exceptional Match — Combines 3+ years of production data analytics with state-of-the-art autonomous multi-agent and MCP engineering.",
+        "match_percentage": f"{final_score}%",
+        "verdict": verdict,
         "matching_competencies": matched_skills,
         "primary_portfolio_proofs": highlighted_projects,
         "recommended_interview_talking_points": [
@@ -487,22 +577,55 @@ def handle_ai_eco_telemetry(args: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def handle_ai_eco_agents(args: Dict[str, Any]) -> Dict[str, Any]:
+    args = args or {}
     agent_id = (args.get("agent_id") or "all").strip().lower()
+
+    telemetry_time = None
+    if TELEMETRY_PATH.exists():
+        try:
+            with open(TELEMETRY_PATH, "r", encoding="utf-8") as f:
+                telemetry_time = json.load(f).get("last_updated")
+        except Exception:
+            pass
+
+    latest_blog_date = None
+    if AI_ECO_BLOGS_DIR.exists():
+        blogs = sorted(AI_ECO_BLOGS_DIR.glob("*.md"), reverse=True)
+        if blogs:
+            latest_blog_date = blogs[0].stem.replace("github-activity-", "")
+
+    enriched_swarm = []
+    for a in AI_ECO_SWARM:
+        entry = dict(a)
+        if entry["id"] == "dashboard_agent" and telemetry_time:
+            entry["last_active"] = telemetry_time
+            entry["health"] = "Healthy"
+        elif entry["id"] == "github_scout" and latest_blog_date:
+            entry["last_active"] = latest_blog_date
+            entry["health"] = "Healthy"
+        else:
+            entry["health"] = "Operational"
+        enriched_swarm.append(entry)
+
     if agent_id != "all":
-        for a in AI_ECO_SWARM:
+        for a in enriched_swarm:
             if a["id"] == agent_id:
                 return {"agent": a}
-        return {"error": f"Agent '{agent_id}' not found. Available: {[a['id'] for a in AI_ECO_SWARM]}"}
+        return {"error": f"Agent '{agent_id}' not found. Available: {[a['id'] for a in enriched_swarm]}"}
 
     return {
         "orchestrator": "GitHub Actions CRON (Daily Midnight UTC)",
-        "active_swarm_count": len(AI_ECO_SWARM),
-        "agents": AI_ECO_SWARM
+        "active_swarm_count": len(enriched_swarm),
+        "agents": enriched_swarm
     }
 
 
 def handle_ai_eco_dev_logs(args: Dict[str, Any]) -> Dict[str, Any]:
-    limit = max(1, min(args.get("limit") or 3, 10))
+    args = args or {}
+    try:
+        limit = max(1, min(int(args.get("limit") or 3), 10))
+    except (ValueError, TypeError):
+        limit = 3
     logs = []
 
     if AI_ECO_BLOGS_DIR.exists():
@@ -512,17 +635,23 @@ def handle_ai_eco_dev_logs(args: Dict[str, Any]) -> Dict[str, Any]:
                 slug = md_file.stem
                 post = {"slug": slug, "file": md_file.name}
 
-                frontmatter_match = re.match(r"^---\s*\n(.*?)\n---\s*\n(.*)", content, re.DOTALL)
+                frontmatter_match = re.match(r"^\s*---\s*[\r\n]+(.*?)\r?\n---\s*[\r\n]+(.*)", content, re.DOTALL)
                 if frontmatter_match:
                     fm_text = frontmatter_match.group(1)
                     body = frontmatter_match.group(2)
                     for line in fm_text.splitlines():
                         if ":" in line:
                             k, v = line.split(":", 1)
-                            post[k.strip().lower()] = v.strip().strip('"').strip("'")
+                            k = k.strip().lower()
+                            v = v.strip().strip('"').strip("'")
+                            if k == "tags":
+                                post["tags"] = [t.strip() for t in v.split(",") if t.strip()]
+                            else:
+                                post[k] = v
                     post["preview"] = body.strip()[:650] + "..."
                 else:
                     post["title"] = slug.replace("-", " ").title()
+                    post["tags"] = ["AI Eco", "Agents"]
                     post["preview"] = content.strip()[:650] + "..."
 
                 logs.append(post)
@@ -538,17 +667,102 @@ def handle_ai_eco_dev_logs(args: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
+def handle_resource_read(uri: str) -> Dict[str, Any]:
+    uri = (uri or "").strip().lower()
+    if uri == "eco://telemetry":
+        data = handle_ai_eco_telemetry({})
+        return {
+            "contents": [
+                {
+                    "uri": "eco://telemetry",
+                    "mimeType": "application/json",
+                    "text": json.dumps(data, indent=2)
+                }
+            ]
+        }
+    elif uri == "portfolio://profile":
+        data = handle_my_profile({})
+        return {
+            "contents": [
+                {
+                    "uri": "portfolio://profile",
+                    "mimeType": "application/json",
+                    "text": json.dumps(data, indent=2)
+                }
+            ]
+        }
+    elif uri == "portfolio://resume":
+        data = handle_my_resume({"section": "all"})
+        return {
+            "contents": [
+                {
+                    "uri": "portfolio://resume",
+                    "mimeType": "application/json",
+                    "text": json.dumps(data, indent=2)
+                }
+            ]
+        }
+    elif uri == "portfolio://skills":
+        data = handle_my_skills({"category": "all"})
+        return {
+            "contents": [
+                {
+                    "uri": "portfolio://skills",
+                    "mimeType": "application/json",
+                    "text": json.dumps(data, indent=2)
+                }
+            ]
+        }
+    return {
+        "error": f"Resource with URI '{uri}' not found. Available: {[r['uri'] for r in MCP_RESOURCES]}"
+    }
+
+
+def handle_prompt_get(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
+    name = (name or "").strip().lower()
+    args = arguments or {}
+    if name == "evaluate_candidate":
+        role_title = args.get("role_title", "Staff AI Engineer")
+        requirements = args.get("requirements", "Autonomous Multi-Agent AI Swarms, FastMCP, LLM Fine-Tuning")
+        return {
+            "description": f"Candidate alignment evaluation for {role_title}",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": {
+                        "type": "text",
+                        "text": f"Please evaluate Prashanth Kumar Kadasi's fit for the role of '{role_title}'.\nRequirements:\n{requirements}\n\nPlease analyze skills, verified projects (Solari, BrandXY 20B, Drug Discovery GPT, AI Eco), and highlight interview talking points using the 'evaluate_job_match' tool."
+                    }
+                }
+            ]
+        }
+    elif name == "ai_eco_overview":
+        return {
+            "description": "Overview of Prashanth's 6-agent autonomous AI swarm",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": {
+                        "type": "text",
+                        "text": "Explain the architecture of Prashanth's autonomous AI Eco swarm. Inspect its 6 specialized agents (GitHub Scout, Dashboard Agent, Portfolio Sync, MCP Engineer, Docs Agent, Readme Agent) and summarize how they maintain the site and dev logs daily without manual intervention."
+                    }
+                }
+            ]
+        }
+    return {"error": f"Prompt '{name}' not found. Available: {[p['name'] for p in MCP_PROMPTS]}"}
+
+
 # ═══════════════════════════════════════════════════════════════
 # JSON-RPC 2.0 PROTOCOL ENGINE & ROUTER
 # ═══════════════════════════════════════════════════════════════
 
-def process_mcp_request(req_body: Dict[str, Any]) -> Dict[str, Any]:
+def process_mcp_request(req_body: Dict[str, Any]):
     """Universal MCP Processor compliant with Model Context Protocol 2024-11-05 spec."""
     if not isinstance(req_body, dict):
         return {"jsonrpc": "2.0", "id": None, "error": {"code": -32700, "message": "Parse error: Invalid JSON payload."}}
 
     method = req_body.get("method", "")
-    params = req_body.get("params", {})
+    params = req_body.get("params") or {}
     req_id = req_body.get("id")
 
     # 1. MCP Initialization Handshake
@@ -560,8 +774,8 @@ def process_mcp_request(req_body: Dict[str, Any]) -> Dict[str, Any]:
                 "protocolVersion": "2024-11-05",
                 "capabilities": {
                     "tools": {"listChanged": False},
-                    "resources": {},
-                    "prompts": {}
+                    "resources": {"subscribe": False, "listChanged": False},
+                    "prompts": {"listChanged": False}
                 },
                 "serverInfo": {
                     "name": "kprsnt-all-in-one-mcp",
@@ -571,9 +785,9 @@ def process_mcp_request(req_body: Dict[str, Any]) -> Dict[str, Any]:
             }
         }
 
-    # 2. Notifications
-    elif method.startswith("notifications/"):
-        return {"jsonrpc": "2.0", "result": {}}
+    # 2. Notifications (No response permitted per JSON-RPC 2.0 / MCP spec)
+    elif method.startswith("notifications/") or req_id is None:
+        return None
 
     # 3. Liveness Ping
     elif method == "ping":
@@ -590,7 +804,7 @@ def process_mcp_request(req_body: Dict[str, Any]) -> Dict[str, Any]:
     # 5. Tool Execution
     elif method == "tools/call":
         tool_name = params.get("name", "")
-        args = params.get("arguments", {})
+        args = params.get("arguments") or {}
 
         handlers = {
             # Site Tools
@@ -648,12 +862,28 @@ def process_mcp_request(req_body: Dict[str, Any]) -> Dict[str, Any]:
                 "error": {"code": -32601, "message": f"Tool '{tool_name}' not found. Available: {list(handlers.keys())}"}
             }
 
-    # 6. Resources & Prompts Fallbacks
+    # 6. Resources Discovery & Reading
     elif method == "resources/list":
-        return {"jsonrpc": "2.0", "id": req_id, "result": {"resources": []}}
+        return {"jsonrpc": "2.0", "id": req_id, "result": {"resources": MCP_RESOURCES}}
 
+    elif method == "resources/read":
+        uri = params.get("uri", "")
+        res = handle_resource_read(uri)
+        if "error" in res:
+            return {"jsonrpc": "2.0", "id": req_id, "error": {"code": -32602, "message": res["error"]}}
+        return {"jsonrpc": "2.0", "id": req_id, "result": res}
+
+    # 7. Prompts Discovery & Getting
     elif method == "prompts/list":
-        return {"jsonrpc": "2.0", "id": req_id, "result": {"prompts": []}}
+        return {"jsonrpc": "2.0", "id": req_id, "result": {"prompts": MCP_PROMPTS}}
+
+    elif method == "prompts/get":
+        prompt_name = params.get("name", "")
+        prompt_args = params.get("arguments") or {}
+        res = handle_prompt_get(prompt_name, prompt_args)
+        if "error" in res:
+            return {"jsonrpc": "2.0", "id": req_id, "error": {"code": -32602, "message": res["error"]}}
+        return {"jsonrpc": "2.0", "id": req_id, "result": res}
 
     return {
         "jsonrpc": "2.0",
@@ -670,8 +900,9 @@ if __name__ == "__main__":
             try:
                 data = json.loads(line)
                 response = process_mcp_request(data)
-                sys.stdout.write(json.dumps(response) + "\n")
-                sys.stdout.flush()
+                if response is not None:
+                    sys.stdout.write(json.dumps(response) + "\n")
+                    sys.stdout.flush()
             except Exception as e:
                 err_res = {"jsonrpc": "2.0", "id": None, "error": {"code": -32700, "message": str(e)}}
                 sys.stdout.write(json.dumps(err_res) + "\n")
