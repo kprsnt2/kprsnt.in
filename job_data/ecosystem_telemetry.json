@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-09-03T10:15:00.000000",
-  "commit_history": 987,
+  "last_updated": "2026-09-04T02:55:28.176434",
+  "commit_history": 994,
   "repo_counts": 100,
   "language_breakdown": {
     "TypeScript": 24,
@@ -9,18 +9,18 @@
     "HTML": 12
   },
   "live_salary_estimation": {
-    "min": 180000,
-    "max": 320000,
-    "reasoning": "A developer with 100 repositories, strong breadth across TypeScript, JavaScript, Python, and HTML, and specialized experience building AI multi-agent ecosystems fits a senior/staff-level full-stack AI engineer profile."
+    "min": 220000,
+    "max": 420000,
+    "reasoning": "A developer with 100 repos spanning TypeScript, JavaScript, Python, and HTML, focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, aligns with senior-to-staff AI engineering scope in the US. Compensation at this level typically reflects deep systems/AI expertise, strong product impact, and ownership of complex distributed architectures."
   },
   "top_skills": [
     "Multi-Agent AI",
     "Model Context Protocol (MCP)",
-    "TypeScript",
     "BigQuery",
     "Python",
     "Flask",
-    "GitHub Actions"
+    "GitHub Actions",
+    "TypeScript"
   ],
   "mcp_endpoints_active": 4,
   "automations_running": 12,
@@ -31,20 +31,43 @@
     "Education",
     "SaaS"
   ],
-  "daily_commits_count": 24,
-  "commit_timeline_7d": {
-    "labels": ["Thu", "Fri", "Sat", "Sun", "Mon", "Tue", "Wed"],
-    "commits": [4, 7, 2, 1, 24, 3, 2],
-    "pipelines": [1, 1, 1, 1, 1, 1, 1]
-  },
   "recent_activity": [
-    "[kprsnt2/solari-cookbook-rash] main: feat: render live interactive application inside preview iframe",
-    "[kprsnt2/solari-cookbook-rash] main: perf: optimize system prompt for instant sub-second microVM server startup and background nohup",
-    "[kprsnt2/solari-cookbook-rash] main: feat: configure GPT-4o-mini and OpenAI model selector on Web Studio",
-    "[kprsnt2/solari-cookbook-rash] main: fix(sandbox): auto-background long-running servers and enforce 15s command timeout",
-    "[kprsnt2/solari-cookbook-rash] main: docs: add solari.kprsnt.in custom domain branding across all showcase assets",
-    "[kprsnt2/solari-autonomous-platform-v2] main: docs: add comprehensive performance benchmarks and upstream PR contribution guide",
-    "[kprsnt2/kprsnt.in] main: feat: agent now extracts last 24 hr commit messages for daily blog context",
-    "[kprsnt2/kprsnt.in] main: feat: add mcp, automations, and sector metrics to ecosystem dashboard"
-  ]
-}
+    "[kprsnt2/kprsnt.in] main: feat(ai-eco): update skills and prompts, integrate across autonomous swarm and MCP",
+    "[kprsnt2/kprsnt.in] main: feat: upgrade AI Eco ecosystem, resolve GitHub Scout commit harvester, isolate AI_Eco_Blogs, and enforce no-activity blog publication policy",
+    "[kprsnt2/kprsnt.in] main: feat(mcp): redirect mseat mcp, harden ai_eco_mcp, and expand ecosystem agents",
+    "[kprsnt2/mSeat] main: feat: implement v2 official KNRUHS 3-Phase MRC mock counselling, comparison dashboard, and multi-tab navigation",
+    "[kprsnt2/mSeat] main: chore: enable cleanUrls in vercel.json",
+    "[kprsnt2/kprsnt.in] main: feat(mcp): add MCP Server to navbar dropdown and add human-readable formatted view to playground",
+    "[kprsnt2/kprsnt.in] main: feat(mcp): build unified All-in-One Model Context Protocol (MCP) server for My Site, My Data, and AI Eco with in-browser playground"
+  ],
+  "daily_commits_count": 7,
+  "commit_timeline_7d": {
+    "labels": [
+      "Sat",
+      "Sun",
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri"
+    ],
+    "commits": [
+      36,
+      1,
+      12,
+      15,
+      0,
+      7,
+      23
+    ],
+    "pipelines": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  }
+}
