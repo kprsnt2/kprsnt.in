@@ -600,6 +600,185 @@ def brand_api():
 # Dashboard Routes — Ecosystem
 # ============================================================
 
+def load_swarm_data():
+    """Load living memory, latest daily agent views, and weekly meeting minutes from ecosystem_swarm/."""
+    base_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+    swarm_dir = os.path.join(base_dir, 'ecosystem_swarm')
+    memory_path = os.path.join(swarm_dir, 'memory.md')
+    daily_dir = os.path.join(swarm_dir, 'daily_views')
+    weekly_dir = os.path.join(swarm_dir, 'weekly_meetings')
+
+    swarm_data = {
+        "active_goals": [],
+        "last_consolidated": "Recently",
+        "word_count": 0,
+        "latest_opinion": "Swarm maintains steady state with continuous multi-agent consensus.",
+        "architecture_quality": "Strong & Maturing",
+        "latest_daily_view": None,
+        "latest_meeting": None,
+        "daily_views_count": 0,
+        "weekly_meetings_count": 0,
+        "all_daily_views": [],
+        "all_weekly_meetings": []
+    }
+
+    # 1. Parse living memory
+    if os.path.exists(memory_path):
+        try:
+            with open(memory_path, 'r', encoding='utf-8') as f:
+                content = f.read()
+            swarm_data["word_count"] = len(content.split())
+            swarm_data["raw_memory"] = content
+            for line in content.splitlines():
+                if "*Last Consolidated:" in line:
+                    swarm_data["last_consolidated"] = line.strip().replace("*", "").replace("Last Consolidated:", "").strip()
+                    break
+
+            if "## 🎯 Active Weekly Focus & Strategic Roadmap" in content:
+                goals_part = content.split("## 🎯 Active Weekly Focus & Strategic Roadmap", 1)[1]
+                for line in goals_part.splitlines():
+                    ls = line.strip()
+                    if ls and (ls.startswith("1.") or ls.startswith("2.") or ls.startswith("3.") or ls.startswith("4.") or ls.startswith("5.")):
+                        raw_item = ls.split(".", 1)[1].strip()
+                        title = ""
+                        detail = raw_item
+                        if "**" in raw_item:
+                            parts = raw_item.split("**")
+                            if len(parts) >= 3:
+                                title = parts[1].strip().rstrip(":")
+                                detail = "**".join(parts[2:]).strip().lstrip(":").strip()
+                        elif ":" in raw_item:
+                            sp = raw_item.split(":", 1)
+                            title = sp[0].strip()
+                            detail = sp[1].strip()
+
+                        swarm_data["active_goals"].append({
+                            "raw": raw_item,
+                            "title": title or f"Goal {len(swarm_data['active_goals']) + 1}",
+                            "detail": detail or raw_item
+                        })
+        except Exception:
+            pass
+
+    # 2. Parse daily views
+    if os.path.exists(daily_dir):
+        try:
+            d_files = sorted(glob.glob(os.path.join(daily_dir, '*.md')), reverse=True)
+            swarm_data["daily_views_count"] = len(d_files)
+            for df_path in d_files:
+                try:
+                    with open(df_path, 'r', encoding='utf-8') as fh:
+                        txt = fh.read()
+                    date_name = os.path.splitext(os.path.basename(df_path))[0]
+                    consensus = ""
+                    if "## 🤝 Collective Swarm Consensus" in txt:
+                        consensus = txt.split("## 🤝 Collective Swarm Consensus", 1)[1].strip()
+                    swarm_data["all_daily_views"].append({
+                        "date": date_name,
+                        "filename": os.path.basename(df_path),
+                        "consensus": consensus,
+                        "preview": txt[:400]
+                    })
+                except Exception:
+                    pass
+
+            if d_files:
+                latest_path = d_files[0]
+                with open(latest_path, 'r', encoding='utf-8') as fh:
+                    latest_txt = fh.read()
+
+                perspectives = []
+                agent_icons = {
+                    "GitHub Scout": ("fas fa-satellite-dish", "#3498db"),
+                    "Dashboard Agent": ("fas fa-chart-line", "#9b59b6"),
+                    "MCP Engineer": ("fas fa-plug", "#f39c12"),
+                    "Docs Agent": ("fas fa-book-open", "#1abc9c")
+                }
+
+                for agent_name, (icon, color) in agent_icons.items():
+                    for block in latest_txt.split("## "):
+                        if agent_name.lower() in block.lower():
+                            summary_lines = [l.strip() for l in block.splitlines() if l.strip().startswith("- **")]
+                            perspectives.append({
+                                "agent": agent_name,
+                                "icon": icon,
+                                "color": color,
+                                "critiques": summary_lines[:3]
+                            })
+                            break
+
+                consensus_full = ""
+                if "## 🤝 Collective Swarm Consensus" in latest_txt:
+                    consensus_full = latest_txt.split("## 🤝 Collective Swarm Consensus", 1)[1].strip()
+                    swarm_data["latest_opinion"] = consensus_full
+
+                swarm_data["latest_daily_view"] = {
+                    "date": os.path.splitext(os.path.basename(latest_path))[0],
+                    "perspectives": perspectives,
+                    "consensus": consensus_full,
+                    "content": latest_txt
+                }
+        except Exception:
+            pass
+
+    # 3. Parse weekly meetings
+    if os.path.exists(weekly_dir):
+        try:
+            w_files = sorted(glob.glob(os.path.join(weekly_dir, '*.md')), reverse=True)
+            swarm_data["weekly_meetings_count"] = len(w_files)
+            for wf_path in w_files:
+                try:
+                    with open(wf_path, 'r', encoding='utf-8') as fh:
+                        txt = fh.read()
+                    week_code = os.path.splitext(os.path.basename(wf_path))[0]
+                    roadmap = []
+                    if "## 🎯 Next-Week Strategic Roadmap" in txt:
+                        for l in txt.split("## 🎯 Next-Week Strategic Roadmap", 1)[1].splitlines():
+                            ls = l.strip()
+                            if ls and (ls.startswith("1.") or ls.startswith("2.") or ls.startswith("3.") or ls.startswith("4.")):
+                                roadmap.append(ls.split(".", 1)[1].strip().strip("*").strip())
+                    swarm_data["all_weekly_meetings"].append({
+                        "week": week_code,
+                        "filename": os.path.basename(wf_path),
+                        "roadmap": roadmap,
+                        "preview": txt[:400]
+                    })
+                except Exception:
+                    pass
+
+            if w_files:
+                latest_w_path = w_files[0]
+                with open(latest_w_path, 'r', encoding='utf-8') as fh:
+                    latest_w_txt = fh.read()
+
+                if "Collective Opinion on Architecture Quality" in latest_w_txt:
+                    try:
+                        arch_block = latest_w_txt.split("Collective Opinion on Architecture Quality", 1)[1]
+                        arch_line = arch_block.split("##", 1)[0].strip()
+                        import re
+                        m = re.search(r"\*\*(.*?)\*\*", arch_line)
+                        if m:
+                            swarm_data["architecture_quality"] = m.group(1)
+                    except Exception:
+                        pass
+
+                w_roadmap = []
+                if "## 🎯 Next-Week Strategic Roadmap" in latest_w_txt:
+                    for l in latest_w_txt.split("## 🎯 Next-Week Strategic Roadmap", 1)[1].splitlines():
+                        ls = l.strip()
+                        if ls and (ls.startswith("1.") or ls.startswith("2.") or ls.startswith("3.") or ls.startswith("4.")):
+                            w_roadmap.append(ls.split(".", 1)[1].strip().strip("*").strip())
+
+                swarm_data["latest_meeting"] = {
+                    "week": os.path.splitext(os.path.basename(latest_w_path))[0],
+                    "roadmap": w_roadmap,
+                    "content": latest_w_txt
+                }
+        except Exception:
+            pass
+
+    return swarm_data
+
 @app.route('/ecosystem')
 def ecosystem_dashboard():
     data_path = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'ecosystem_telemetry.json')
@@ -614,7 +793,8 @@ def ecosystem_dashboard():
             "top_skills": [],
             "live_salary_estimation": {"min": 0, "max": 0, "reasoning": "Data unavailable"}
         }
-    return render_template('ecosystem.html', data=data)
+    swarm = load_swarm_data()
+    return render_template('ecosystem.html', data=data, swarm=swarm)
 
 
 

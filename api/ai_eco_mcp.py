@@ -16,6 +16,10 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 TELEMETRY_PATH = BASE_DIR / "job_data" / "ecosystem_telemetry.json"
 AI_ECO_BLOGS_DIR = BASE_DIR / "AI_Eco_Blogs"
+SWARM_DIR = BASE_DIR / "ecosystem_swarm"
+SWARM_MEMORY_PATH = SWARM_DIR / "memory.md"
+SWARM_DAILY_DIR = SWARM_DIR / "daily_views"
+SWARM_WEEKLY_DIR = SWARM_DIR / "weekly_meetings"
 
 # Safely import master portfolio constants
 try:
@@ -180,6 +184,50 @@ MCP_TOOLS = [
                 }
             }
         }
+    },
+    # ── 4. SWARM MEMORY & COUNCIL TOOLS ──
+    {
+        "name": "get_swarm_memory",
+        "description": "Returns current persistent swarm memory from ecosystem_swarm/memory.md, including portfolio architecture, learned engineering patterns, active constraints, and current weekly strategic goals.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "section": {
+                    "type": "string",
+                    "description": "Optional specific section to filter by ('architecture', 'patterns', 'constraints', 'bottlenecks', 'goals', or 'all')"
+                }
+            }
+        }
+    },
+    {
+        "name": "get_swarm_daily_views",
+        "description": "Returns recent daily agent debate logs and domain-specific peer critiques from ecosystem_swarm/daily_views/ (GitHub Scout, Dashboard, MCP Engineer, Docs Agent).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer",
+                    "description": "Maximum number of recent daily views to return (default: 3, max: 14)"
+                },
+                "date": {
+                    "type": "string",
+                    "description": "Optional specific date in YYYY-MM-DD format"
+                }
+            }
+        }
+    },
+    {
+        "name": "get_swarm_weekly_meeting",
+        "description": "Returns the latest weekly swarm alignment council meeting minutes and strategic roadmap from ecosystem_swarm/weekly_meetings/.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "week": {
+                    "type": "string",
+                    "description": "Optional ISO week code (e.g., '2026-W36'). Defaults to latest meeting."
+                }
+            }
+        }
     }
 ]
 
@@ -188,6 +236,12 @@ MCP_TOOLS = [
 # ═══════════════════════════════════════════════════════════════
 
 MCP_RESOURCES = [
+    {
+        "uri": "eco://swarm/memory",
+        "name": "AI Eco Swarm Living Memory",
+        "description": "Persistent living memory stream of the 6-agent autonomous swarm (architecture, learned patterns, constraints, weekly roadmap)",
+        "mimeType": "text/markdown"
+    },
     {
         "uri": "eco://telemetry",
         "name": "AI Eco Swarm Telemetry",
@@ -689,9 +743,164 @@ def handle_ai_eco_dev_logs(args: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
+def handle_get_swarm_memory(args: Dict[str, Any]) -> Dict[str, Any]:
+    """Fetch persistent swarm memory from ecosystem_swarm/memory.md with section filtering."""
+    args = args or {}
+    section = (args.get("section") or "all").strip().lower()
+
+    content = ""
+    if SWARM_MEMORY_PATH.exists():
+        try:
+            content = SWARM_MEMORY_PATH.read_text(encoding="utf-8")
+        except Exception as e:
+            return {"error": f"Failed reading swarm memory: {e}"}
+    else:
+        return {"error": "Swarm memory file (ecosystem_swarm/memory.md) not found."}
+
+    if section != "all":
+        section_markers = {
+            "architecture": "## 🏛️ Core Portfolio Architecture",
+            "patterns": "## 💡 Learned Engineering Patterns",
+            "constraints": "## ⚠️ Active Constraints & Boundaries",
+            "bottlenecks": "## 🔄 Recurring Bottlenecks & Mitigations",
+            "goals": "## 🎯 Active Weekly Focus & Strategic Roadmap"
+        }
+        for key, marker in section_markers.items():
+            if key in section and marker in content:
+                parts = content.split(marker, 1)
+                sub_content = parts[1].split("## ", 1)[0]
+                return {
+                    "section": key,
+                    "marker": marker,
+                    "content": f"{marker}\n{sub_content}".strip(),
+                    "source": "ecosystem_swarm/memory.md"
+                }
+
+    last_consolidated = None
+    for line in content.splitlines():
+        if "*Last Consolidated:" in line:
+            last_consolidated = line.strip().replace("*", "")
+            break
+
+    active_goals = []
+    if "## 🎯 Active Weekly Focus & Strategic Roadmap" in content:
+        goals_part = content.split("## 🎯 Active Weekly Focus & Strategic Roadmap", 1)[1]
+        for line in goals_part.splitlines():
+            line_s = line.strip()
+            if line_s.startswith("1.") or line_s.startswith("2.") or line_s.startswith("3.") or line_s.startswith("4.") or line_s.startswith("5."):
+                active_goals.append(line_s)
+
+    return {
+        "status": "active",
+        "last_consolidated": last_consolidated,
+        "word_count": len(content.split()),
+        "active_weekly_goals": active_goals,
+        "living_memory": content,
+        "source": "ecosystem_swarm/memory.md"
+    }
+
+
+def handle_get_swarm_daily_views(args: Dict[str, Any]) -> Dict[str, Any]:
+    """Fetch recent daily agent debate logs and critiques from ecosystem_swarm/daily_views/."""
+    args = args or {}
+    try:
+        limit = max(1, min(int(args.get("limit") or 3), 14))
+    except (ValueError, TypeError):
+        limit = 3
+    requested_date = args.get("date")
+
+    views = []
+    if SWARM_DAILY_DIR.exists():
+        if requested_date:
+            target = SWARM_DAILY_DIR / f"{requested_date.strip()}.md"
+            files_to_read = [target] if target.exists() else []
+        else:
+            files_to_read = sorted(SWARM_DAILY_DIR.glob("*.md"), reverse=True)[:limit]
+
+        for vf in files_to_read:
+            try:
+                text = vf.read_text(encoding="utf-8")
+                consensus = ""
+                if "## 🤝 Collective Swarm Consensus" in text:
+                    consensus = text.split("## 🤝 Collective Swarm Consensus", 1)[1].strip()
+
+                views.append({
+                    "date": vf.stem,
+                    "file": vf.name,
+                    "consensus_summary": consensus,
+                    "content": text
+                })
+            except Exception as e:
+                logging.warning(f"Error reading daily view {vf}: {e}")
+
+    return {
+        "count": len(views),
+        "requested_date": requested_date,
+        "source": "ecosystem_swarm/daily_views/",
+        "daily_views": views
+    }
+
+
+def handle_get_swarm_weekly_meeting(args: Dict[str, Any]) -> Dict[str, Any]:
+    """Fetch latest or specific weekly swarm alignment council minutes from ecosystem_swarm/weekly_meetings/."""
+    args = args or {}
+    requested_week = args.get("week")
+
+    if not SWARM_WEEKLY_DIR.exists():
+        return {"error": "Weekly meetings directory (ecosystem_swarm/weekly_meetings/) not found."}
+
+    meeting_file = None
+    if requested_week:
+        target = SWARM_WEEKLY_DIR / f"{requested_week.strip()}.md"
+        if target.exists():
+            meeting_file = target
+    else:
+        meetings = sorted(SWARM_WEEKLY_DIR.glob("*.md"), reverse=True)
+        if meetings:
+            meeting_file = meetings[0]
+
+    if not meeting_file or not meeting_file.exists():
+        return {"error": f"Weekly meeting for '{requested_week}' not found." if requested_week else "No weekly meetings found."}
+
+    try:
+        text = meeting_file.read_text(encoding="utf-8")
+        roadmap = []
+        if "## 🎯 Next-Week Strategic Roadmap" in text:
+            roadmap_part = text.split("## 🎯 Next-Week Strategic Roadmap", 1)[1]
+            for line in roadmap_part.splitlines():
+                line_s = line.strip()
+                if line_s.startswith("1.") or line_s.startswith("2.") or line_s.startswith("3.") or line_s.startswith("4.") or line_s.startswith("5."):
+                    roadmap.append(line_s)
+
+        return {
+            "week": meeting_file.stem,
+            "file": meeting_file.name,
+            "strategic_roadmap": roadmap,
+            "minutes": text,
+            "source": "ecosystem_swarm/weekly_meetings/"
+        }
+    except Exception as e:
+        return {"error": f"Error reading meeting {meeting_file}: {e}"}
+
 def handle_resource_read(uri: str) -> Dict[str, Any]:
     uri = (uri or "").strip().lower()
-    if uri == "eco://telemetry":
+    if uri == "eco://swarm/memory":
+        memory_content = ""
+        if SWARM_MEMORY_PATH.exists():
+            try:
+                memory_content = SWARM_MEMORY_PATH.read_text(encoding="utf-8")
+            except Exception as e:
+                memory_content = f"Error reading swarm memory: {e}"
+        return {
+            "contents": [
+                {
+                    "uri": "eco://swarm/memory",
+                    "mimeType": "text/markdown",
+                    "text": memory_content
+                }
+            ]
+        }
+    elif uri == "eco://telemetry":
         data = handle_ai_eco_telemetry({})
         return {
             "contents": [
@@ -879,8 +1088,14 @@ def process_mcp_request(req_body: Dict[str, Any]):
             "get_agent_swarm_status": handle_ai_eco_agents,     # Alias
             "get_ai_eco_dev_logs": handle_ai_eco_dev_logs,
             "get_recent_dev_logs": handle_ai_eco_dev_logs,      # Alias
+            # Swarm Memory & Council Tools
+            "get_swarm_memory": handle_get_swarm_memory,
+            "get_living_memory": handle_get_swarm_memory,       # Alias
+            "get_swarm_daily_views": handle_get_swarm_daily_views,
+            "get_daily_agent_views": handle_get_swarm_daily_views, # Alias
+            "get_swarm_weekly_meeting": handle_get_swarm_weekly_meeting,
+            "get_weekly_council_minutes": handle_get_swarm_weekly_meeting, # Alias
         }
-
         if tool_name in handlers:
             try:
                 tool_res = handlers[tool_name](args)
