@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-04T02:55:28.176434",
+  "last_updated": "2026-09-05T02:57:11.552005",
   "commit_history": 994,
   "repo_counts": 100,
   "language_breakdown": {
@@ -11,7 +11,7 @@
   "live_salary_estimation": {
     "min": 220000,
     "max": 420000,
-    "reasoning": "A developer with 100 repos spanning TypeScript, JavaScript, Python, and HTML, focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, aligns with senior-to-staff AI engineering scope in the US. Compensation at this level typically reflects deep systems/AI expertise, strong product impact, and ownership of complex distributed architectures."
+    "reasoning": "For a US Senior/Staff AI Engineer with deep full-stack and systems experience across autonomous multi-agent ecosystems and high-throughput analytics pipelines, compensation typically lands in the upper band of large tech and AI-native companies. A 100-repo portfolio across TypeScript, JavaScript, Python, and HTML suggests broad execution depth and strong applied engineering impact."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -31,34 +31,26 @@
     "Education",
     "SaaS"
   ],
-  "recent_activity": [
-    "[kprsnt2/kprsnt.in] main: feat(ai-eco): update skills and prompts, integrate across autonomous swarm and MCP",
-    "[kprsnt2/kprsnt.in] main: feat: upgrade AI Eco ecosystem, resolve GitHub Scout commit harvester, isolate AI_Eco_Blogs, and enforce no-activity blog publication policy",
-    "[kprsnt2/kprsnt.in] main: feat(mcp): redirect mseat mcp, harden ai_eco_mcp, and expand ecosystem agents",
-    "[kprsnt2/mSeat] main: feat: implement v2 official KNRUHS 3-Phase MRC mock counselling, comparison dashboard, and multi-tab navigation",
-    "[kprsnt2/mSeat] main: chore: enable cleanUrls in vercel.json",
-    "[kprsnt2/kprsnt.in] main: feat(mcp): add MCP Server to navbar dropdown and add human-readable formatted view to playground",
-    "[kprsnt2/kprsnt.in] main: feat(mcp): build unified All-in-One Model Context Protocol (MCP) server for My Site, My Data, and AI Eco with in-browser playground"
-  ],
-  "daily_commits_count": 7,
+  "recent_activity": [],
+  "daily_commits_count": 0,
   "commit_timeline_7d": {
     "labels": [
-      "Sat",
       "Sun",
       "Mon",
       "Tue",
       "Wed",
       "Thu",
-      "Fri"
+      "Fri",
+      "Sat"
     ],
     "commits": [
-      36,
       1,
       12,
       15,
       0,
-      7,
-      23
+      17,
+      0,
+      32
     ],
     "pipelines": [
       1,

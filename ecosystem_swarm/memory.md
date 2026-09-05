@@ -17,6 +17,7 @@
 ---
 
 ## 💡 Learned Engineering Patterns
+- **2026-09-05**: Swarm steady-state maintenance: verified telemetry parity and protocol readiness.
 - **2026-09-05**: Active engineering sprint touched 2 repos: kprsnt2/mSeat, kprsnt2/kprsnt.in.
 1. **GitHub API Rate-Limit Protection**: Sequential commit SHA lookups must remain capped (max 8 per run) with automatic unauthenticated public fallback when `GITHUB_TOKEN` is unavailable or rate-limited.
 2. **Monotonic Telemetry Retention**: Never reset historical commit totals (baseline 987); append verified new commits without synthetic multiplication.
