@@ -638,10 +638,13 @@ def load_swarm_data():
                 goals_part = content.split("## 🎯 Active Weekly Focus & Strategic Roadmap", 1)[1]
                 for line in goals_part.splitlines():
                     ls = line.strip()
-                    if ls and (ls.startswith("1.") or ls.startswith("2.") or ls.startswith("3.") or ls.startswith("4.") or ls.startswith("5.")):
-                        raw_item = ls.split(".", 1)[1].strip()
-                        title = ""
-                        detail = raw_item
+                    import re
+                    if ls:
+                        m = re.match(r'^(\d+\.|\-|\*)\s+(.*)', ls)
+                        if m:
+                            raw_item = m.group(2).strip()
+                            title = ""
+                            detail = raw_item
                         if "**" in raw_item:
                             parts = raw_item.split("**")
                             if len(parts) >= 3:
@@ -735,8 +738,11 @@ def load_swarm_data():
                     if "## 🎯 Next-Week Strategic Roadmap" in txt:
                         for l in txt.split("## 🎯 Next-Week Strategic Roadmap", 1)[1].splitlines():
                             ls = l.strip()
-                            if ls and (ls.startswith("1.") or ls.startswith("2.") or ls.startswith("3.") or ls.startswith("4.")):
-                                roadmap.append(ls.split(".", 1)[1].strip().strip("*").strip())
+                            import re
+                            if ls:
+                                m = re.match(r'^(\d+\.|\-|\*)\s+(.*)', ls)
+                                if m:
+                                    roadmap.append(m.group(2).strip().strip("*").strip())
                     swarm_data["all_weekly_meetings"].append({
                         "week": week_code,
                         "filename": os.path.basename(wf_path),
@@ -766,8 +772,11 @@ def load_swarm_data():
                 if "## 🎯 Next-Week Strategic Roadmap" in latest_w_txt:
                     for l in latest_w_txt.split("## 🎯 Next-Week Strategic Roadmap", 1)[1].splitlines():
                         ls = l.strip()
-                        if ls and (ls.startswith("1.") or ls.startswith("2.") or ls.startswith("3.") or ls.startswith("4.")):
-                            w_roadmap.append(ls.split(".", 1)[1].strip().strip("*").strip())
+                        import re
+                        if ls:
+                            m = re.match(r'^(\d+\.|\-|\*)\s+(.*)', ls)
+                            if m:
+                                w_roadmap.append(m.group(2).strip().strip("*").strip())
 
                 swarm_data["latest_meeting"] = {
                     "week": os.path.splitext(os.path.basename(latest_w_path))[0],

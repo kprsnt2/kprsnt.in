@@ -787,8 +787,11 @@ def handle_get_swarm_memory(args: Dict[str, Any]) -> Dict[str, Any]:
         goals_part = content.split("## 🎯 Active Weekly Focus & Strategic Roadmap", 1)[1]
         for line in goals_part.splitlines():
             line_s = line.strip()
-            if line_s.startswith("1.") or line_s.startswith("2.") or line_s.startswith("3.") or line_s.startswith("4.") or line_s.startswith("5."):
-                active_goals.append(line_s)
+            import re
+            if line_s:
+                m = re.match(r'^(\d+\.|\-|\*)\s+(.*)', line_s)
+                if m:
+                    active_goals.append(m.group(2).strip())
 
     return {
         "status": "active",
@@ -869,8 +872,11 @@ def handle_get_swarm_weekly_meeting(args: Dict[str, Any]) -> Dict[str, Any]:
             roadmap_part = text.split("## 🎯 Next-Week Strategic Roadmap", 1)[1]
             for line in roadmap_part.splitlines():
                 line_s = line.strip()
-                if line_s.startswith("1.") or line_s.startswith("2.") or line_s.startswith("3.") or line_s.startswith("4.") or line_s.startswith("5."):
-                    roadmap.append(line_s)
+                import re
+                if line_s:
+                    m = re.match(r'^(\d+\.|\-|\*)\s+(.*)', line_s)
+                    if m:
+                        roadmap.append(m.group(2).strip())
 
         return {
             "week": meeting_file.stem,

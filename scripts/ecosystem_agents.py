@@ -29,6 +29,7 @@ SWARM_DIR = BASE_DIR / "ecosystem_swarm"
 SWARM_MEMORY_PATH = SWARM_DIR / "memory.md"
 SWARM_DAILY_DIR = SWARM_DIR / "daily_views"
 SWARM_WEEKLY_DIR = SWARM_DIR / "weekly_meetings"
+MAX_MEMORY_WORDS = 4000
 
 def get_auth_headers():
     """Get standard GitHub headers, with token if available."""
@@ -102,9 +103,9 @@ def update_swarm_memory(new_insights: list = None, new_goals: list = None, conso
 ## 🎯 Active Weekly Focus & Strategic Roadmap
 *(Updated via Weekly Swarm Alignment Council)*
 
-1. **Swarm Memory Architecture**: Deploy persistent tiered memory with automated daily agent debate logging.
-2. **FastMCP Memory Protocol**: Expose `eco://swarm/memory` and tools across Cursor and Claude Desktop.
-3. **Telemetry & Dashboard Integration**: Connect `/ecosystem` web dashboard to live swarm opinions.
+1. **Maintain Swarm Resilience**: Ensure all telemetry pipelines and agent execution schedules run seamlessly.
+2. **Portfolio Synchronization**: Continually validate that portfolio skills and resume schemas remain tightly aligned.
+3. **Optimize Context Limits**: Trigger memory compaction routines to protect LLM context ceilings.
 """
 
         # 1. Update Last Consolidated date header
@@ -142,9 +143,9 @@ def update_swarm_memory(new_insights: list = None, new_goals: list = None, conso
             else:
                 content += f"\n\n{goal_header}\n*(Updated via Weekly Swarm Alignment Council on {today_str})*\n\n{goals_block}\n"
 
-        # 4. Context Ceiling Safeguard (Compaction if words > 4000)
+        # 4. Context Ceiling Safeguard (Compaction if words > MAX_MEMORY_WORDS)
         words = content.split()
-        if len(words) > 4000 or consolidate:
+        if len(words) > MAX_MEMORY_WORDS or consolidate:
             print(f"ℹ️ Compacting swarm memory (current word count: {len(words)})...")
             lines = content.splitlines()
             compacted_lines = []
@@ -391,20 +392,20 @@ def generate_blog_draft(stats):
         return
     activity_summary = "\n".join(recent_activity)
 
-    prompt = f"""You are an expert technical developer advocate writing an authentic daily dev log for Prashanth (kprsnt2).
+    prompt = f"""You are a friendly developer advocate writing an authentic daily dev log for Prashanth (kprsnt2). Your goal is to explain technical progress in common, easy-to-understand language.
 Here is the raw activity log from GitHub over the past 24 hours:
 {activity_summary}
 
-Write a structured, highly technical, project-by-project dev log.
+Write a structured, accessible, project-by-project dev log that anyone can understand.
 
 FORMAT REQUIREMENTS:
 1. Include exactly this YAML frontmatter at the top:
 ---
-title: "GitHub Scout: [Insert a crisp, punchy 4-8 word title capturing the primary engineering milestone]"
+title: "GitHub Scout: [Insert a crisp, punchy 4-8 word title capturing the primary milestone]"
 date: "{datetime.now().strftime('%d %B %Y')}"
 category: "AI Eco"
 tags: "AI Eco, GitHub Scout, [Add 2-3 specific technologies and project names touched]"
-excerpt: "[1-2 clear sentences summarizing specifically what was built, fixed, or shipped today across projects]"
+excerpt: "[1-2 clear, simple sentences summarizing what was built, fixed, or shipped today]"
 ---
 
 2. Immediately after frontmatter, start with exactly this line:
@@ -413,13 +414,13 @@ excerpt: "[1-2 clear sentences summarizing specifically what was built, fixed, o
 3. Structure the body strictly PROJECT BY PROJECT (one section for each repository touched in the activity log):
 For each repository, format with:
 ### 📦 Project: `repo-name`
-- **What Changed**: Concise, bulleted breakdown of the concrete commits, features, and fixes.
-- **Why We Did It**: Deep technical rationale. Explain the engineering motivation, bottleneck, or architecture requirement that prompted the work (e.g. why background nohup was needed, why iframe sandboxing was required, why config decoupling was performed).
-- **Engineering Highlights**: Key trade-offs, performance gains, or edge cases handled.
+- **What Changed**: Concise, bulleted breakdown of the features and fixes in simple terms.
+- **Why It Matters**: Explain why this change was made and how it improves the project, using common language instead of deep technical jargon.
+- **The Big Picture**: A quick, non-technical summary of the overall impact.
 
-4. End with a 2-3 sentence summary on system impact and next roadmap items.
+4. End with a 2-3 sentence friendly summary on the overall progress and what's coming up next.
 
-Tone: Authentic, humble, deeply technical engineer-to-engineer. Avoid vague essays or corporate fluff.
+Tone: Authentic, humble, friendly, and accessible to a general audience. Use common language and simple analogies where helpful. Avoid overly dense technical jargon, essays, or corporate fluff.
 Do NOT wrap the output in markdown code fences like ```markdown. Return raw markdown text."""
     
     try:
@@ -778,10 +779,10 @@ The swarm evaluates the current architectural posture as **Strong & Maturing**:
 ---
 
 ## 🎯 Next-Week Strategic Roadmap (Prioritized Goals)
-1. **Goal 1: Swarm Memory Orchestration**: Fully automate daily inter-agent dialogue logging and memory updates inside `scripts/ecosystem_agents.py`.
-2. **Goal 2: FastMCP Memory Exposure**: Expose `eco://swarm/memory` resource and swarm inspection tools to Claude Desktop and Cursor.
-3. **Goal 3: Dashboard Memory Visualization**: Integrate active swarm opinions and weekly goals directly into the `/ecosystem` web dashboard.
-4. **Goal 4: Automated Compaction Guardrails**: Maintain word-count checks on `memory.md` to prevent context window overflow.
+1. **Goal 1: Maintain Swarm Resilience**: Ensure all telemetry pipelines and agent execution schedules run seamlessly without network blocking.
+2. **Goal 2: Portfolio Synchronization**: Continually validate that all portfolio skills, repositories, and resume JSON schemas remain tightly aligned.
+3. **Goal 3: Optimize Context Limits**: Monitor daily view generation sizes and trigger memory compaction routines to protect LLM context ceilings.
+4. **Goal 4: FastMCP Availability**: Ensure all MCP tools (Stdio, HTTP, SSE) remain healthy and strictly adhere to the MCP JSON-RPC 2.0 standard.
 """
 
     meeting_file.write_text(meeting_content.strip() + "\n", encoding="utf-8")
