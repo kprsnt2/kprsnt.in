@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-09-06T02:56:21.374948",
-  "commit_history": 997,
+  "last_updated": "2026-09-06T06:32:34.060102",
+  "commit_history": 1002,
   "repo_counts": 100,
   "language_breakdown": {
     "TypeScript": 24,
@@ -11,7 +11,7 @@
   "live_salary_estimation": {
     "min": 180000,
     "max": 320000,
-    "reasoning": "This profile aligns with US Senior-to-Staff AI Engineer scope given deep experience across autonomous multi-agent systems, analytics pipelines, and a broad production codebase footprint. Compensation typically rises with demonstrated architecture ownership and impact, especially in high-demand AI and data infrastructure markets."
+    "reasoning": "A developer with deep experience in autonomous AI multi-agent ecosystems, analytics pipelines, and a strong multi-language repository footprint aligns with US Senior to Staff AI Engineer scope. In the US market, total annual compensation for this profile commonly ranges from roughly $180k to $320k depending on company tier, location, and equity mix."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -32,11 +32,13 @@
     "SaaS"
   ],
   "recent_activity": [
+    "[kprsnt2/kprsnt.in] main: feat(ecosystem): enrich Scout Agent commit ingestion with local git harvest and deep engineering prompt | Files (2): AI_Eco_Blogs/github-activity-2026-09-06.md, scripts/ecosystem_agents.py (+176/-66)",
     "[kprsnt2/kprsnt-vercel-rust] Created branch: main",
     "[kprsnt2/retail_shelf_intelligence] Created branch: main",
-    "[kprsnt2/kprsnt.in] main: feat(blog): update retail shelf engineering story with Gemini 3.8 Flash + OMP attribution and complete struggles in blog_inputs"
+    "[kprsnt2/kprsnt.in] main: feat(blog): update retail shelf engineering story with Gemini 3.8 Flash + OMP attribution and complete struggles in blog_inputs | Files (2): blog_drafts/retail-shelf-intelligence-engineering-story.md, blog_inputs/retail-shelf-intelligence-engineering-story.md (+98/-349)",
+    "[kprsnt2/kprsnt.in] commit e6a63fe: feat(ecosystem): enrich Scout Agent commit ingestion with local git harvest and deep engineering prompt | Files (295): .github/workflows/blog.yml, .github/workflows/brand_tracker.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml, .github/workflows/pharma.yml, .gitignore, AI_Eco_Blogs/github-activity-2026-09-01.md"
   ],
-  "daily_commits_count": 3,
+  "daily_commits_count": 5,
   "commit_timeline_7d": {
     "labels": [
       "Mon",
@@ -54,7 +56,7 @@
       28,
       0,
       1,
-      1
+      2
     ],
     "pipelines": [
       1,
