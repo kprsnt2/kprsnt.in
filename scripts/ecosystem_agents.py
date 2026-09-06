@@ -174,6 +174,98 @@ def update_swarm_memory(new_insights: list = None, new_goals: list = None, conso
     except Exception as e:
         print(f"  ⚠️ Failed updating swarm memory: {e}")
         return False
+def fetch_local_git_activity(hours: int = 36) -> list:
+    """Harvest detailed commit information, bodies, files changed, and diff stats directly from local git repository."""
+    import subprocess
+    commits = []
+    try:
+        cmd = [
+            "git", "log",
+            f"--since={hours} hours ago",
+            "--format=COMMIT_META:%h%x1f%s%x1f%b%x1f%an%x1f%ai",
+            "--name-status"
+        ]
+        res = subprocess.run(cmd, cwd=str(BASE_DIR), capture_output=True, text=True, timeout=10)
+        if res.returncode == 0 and res.stdout.strip():
+            raw_blocks = res.stdout.strip().split("COMMIT_META:")
+            for block in raw_blocks:
+                if not block.strip():
+                    continue
+                parts = block.split("\n", 1)
+                meta_line = parts[0].strip()
+                files_part = parts[1].strip() if len(parts) > 1 else ""
+
+                meta_fields = meta_line.split("\x1f")
+                sha = meta_fields[0].strip() if len(meta_fields) > 0 else ""
+                subject = meta_fields[1].strip() if len(meta_fields) > 1 else ""
+                body = meta_fields[2].strip() if len(meta_fields) > 2 else ""
+                author = meta_fields[3].strip() if len(meta_fields) > 3 else ""
+                date = meta_fields[4].strip() if len(meta_fields) > 4 else ""
+
+                files = []
+                for line in files_part.splitlines():
+                    line = line.strip()
+                    if line and not line.startswith("COMMIT_META:"):
+                        files.append(line)
+
+                if sha and subject:
+                    commits.append({
+                        "repo": f"{GITHUB_USER}/kprsnt.in",
+                        "sha": sha,
+                        "subject": subject,
+                        "body": body,
+                        "author": author,
+                        "date": date,
+                        "files": files
+                    })
+    except Exception as e:
+        print(f"  ⚠️ Warning: Local git harvest failed: {e}")
+    return commits
+
+
+def load_recent_blog_notes(hours: int = 48) -> list:
+    """Load recently added or updated engineering blog notes and case studies from blog_inputs/ and blog_drafts/."""
+    import re
+    notes = []
+    for folder in [BASE_DIR / "blog_inputs", BASE_DIR / "blog_drafts"]:
+        if not folder.exists():
+            continue
+        for md_path in folder.glob("*.md"):
+            try:
+                content = md_path.read_text(encoding="utf-8")
+                match = re.match(r'^\s*---\s*[\r\n]+(.*?)\r?\n---\s*[\r\n]+(.*)', content, re.DOTALL)
+                title = md_path.stem.replace("-", " ").title()
+                excerpt = ""
+                tags = ""
+                body = content
+                if match:
+                    frontmatter = match.group(1)
+                    body = match.group(2)
+                    for line in frontmatter.splitlines():
+                        if ":" in line:
+                            k, v = line.split(":", 1)
+                            k = k.strip().lower()
+                            v = v.strip().strip('"').strip("'")
+                            if k == "title":
+                                title = v
+                            elif k == "excerpt":
+                                excerpt = v
+                            elif k == "tags":
+                                tags = v
+
+                # Extract executive summary / opening technical problem snippet
+                clean_body = re.sub(r'[\r\n]+', '\n', body[:1500]).strip()
+                notes.append({
+                    "file": md_path.name,
+                    "title": title,
+                    "excerpt": excerpt,
+                    "tags": tags,
+                    "summary_snippet": clean_body
+                })
+            except Exception:
+                pass
+    return notes
+
 
 def fetch_github_stats():
     """Fetch repos and recent activity for the user."""
@@ -246,16 +338,21 @@ def fetch_github_stats():
 
                     if commits:
                         for c in commits:
-                            msg = c.get("message", "").strip().split("\n")[0]
+                            msg = c.get("message", "").strip()
+                            first_line = msg.split("\n")[0] if msg else ""
                             sha = c.get("sha", "")[:7]
-                            if msg and sha not in seen_commits:
+                            body = "\n".join(msg.split("\n")[1:]).strip() if "\n" in msg else ""
+                            if first_line and sha not in seen_commits:
                                 seen_commits.add(sha)
-                                recent_activity.append(f"[{repo_name}] {ref}: {msg}")
+                                entry = f"[{repo_name}] {ref}: {first_line}"
+                                if body:
+                                    entry += f"\n    Commit Details: {body[:300]}"
+                                recent_activity.append(entry)
                     else:
                         head_sha = payload.get("head")
                         if head_sha and head_sha not in seen_commits:
                             seen_commits.add(head_sha)
-                            commit_msg = None
+                            commit_entry = None
                             if sha_lookups < MAX_SHA_LOOKUPS and not rate_limited:
                                 try:
                                     sha_lookups += 1
@@ -265,15 +362,23 @@ def fetch_github_stats():
                                         rate_limited = True
                                     elif c_resp.status_code == 200:
                                         c_data = c_resp.json()
-                                        commit_msg = c_data.get("commit", {}).get("message", "").strip().split("\n")[0]
+                                        commit_msg = c_data.get("commit", {}).get("message", "").strip()
+                                        first_line = commit_msg.split("\n")[0] if commit_msg else f"commit {head_sha[:7]}"
+                                        body = "\n".join(commit_msg.split("\n")[1:]).strip() if "\n" in commit_msg else ""
+                                        files_list = [f.get("filename") for f in c_data.get("files", []) if f.get("filename")]
+                                        stats_info = c_data.get("stats", {})
+
+                                        files_str = f" | Files ({len(files_list)}): {', '.join(files_list[:6])}" if files_list else ""
+                                        diff_str = f" (+{stats_info.get('additions', 0)}/-{stats_info.get('deletions', 0)})" if stats_info else ""
+                                        body_str = f"\n    Commit Details: {body[:300]}" if body else ""
+                                        commit_entry = f"[{repo_name}] {ref}: {first_line}{files_str}{diff_str}{body_str}"
                                 except Exception as ce:
                                     print(f"Warning: Could not fetch commit {head_sha[:7]} for {repo_name}: {ce}")
 
-                            if commit_msg:
-                                recent_activity.append(f"[{repo_name}] {ref}: {commit_msg}")
+                            if commit_entry:
+                                recent_activity.append(commit_entry)
                             else:
                                 recent_activity.append(f"[{repo_name}] Pushed commit {head_sha[:7]} to {ref}")
-
                 elif ev_type == "CreateEvent":
                     ref_type = payload.get("ref_type", "")
                     ref_name = payload.get("ref", "")
@@ -290,6 +395,20 @@ def fetch_github_stats():
                     action = payload.get("action", "")
                     pr_title = payload.get("pull_request", {}).get("title", "")
                     recent_activity.append(f"[{repo_name}] PR {action}: {pr_title}")
+
+        # 3. Harvest rich local git activity (capturing exact files changed and full commit bodies)
+        local_commits = fetch_local_git_activity(hours=36)
+        for lc in local_commits:
+            sha = lc["sha"]
+            if sha not in seen_commits:
+                seen_commits.add(sha)
+                f_list = [f.split()[-1] for f in lc["files"][:8]]
+                f_str = f" | Files ({len(lc['files'])}): {', '.join(f_list)}" if f_list else ""
+                b_str = f"\n    Commit Details: {lc['body'][:400]}" if lc["body"] else ""
+                recent_activity.append(f"[{lc['repo']}] commit {sha}: {lc['subject']}{f_str}{b_str}")
+
+        # 4. Ingest recent developer blog notes/inputs for engineering grounding
+        recent_blog_notes = load_recent_blog_notes(hours=48)
 
         # Baseline contributions: preserve recorded historical total
         existing_commits = 987
@@ -315,7 +434,8 @@ def fetch_github_stats():
             "commit_history": total_commits,
             "commit_timeline_7d": commit_timeline_7d,
             "recent_activity": recent_activity,
-            "active_repos_touched": list(set([a.split("]")[0].replace("[", "") for a in recent_activity if a.startswith("[")]))
+            "active_repos_touched": list(set([a.split("]")[0].replace("[", "") for a in recent_activity if a.startswith("[")])),
+            "recent_blog_notes": recent_blog_notes
         }
     except Exception as e:
         print(f"Error fetching GitHub stats: {e}")
@@ -382,7 +502,7 @@ def update_telemetry(stats):
     print("Telemetry updated.")
 
 def generate_blog_draft(stats):
-    """Generate a blog post summarizing recent activity into AI_Eco_Blogs/. Only publishes if there is activity."""
+    """Generate an authentic, deeply technical dev log summarizing recent commits, files changed, and engineering context into AI_Eco_Blogs/."""
     if not stats or not call_llm:
         return
         
@@ -392,37 +512,67 @@ def generate_blog_draft(stats):
         return
     activity_summary = "\n".join(recent_activity)
 
-    prompt = f"""You are a friendly developer advocate writing an authentic daily dev log for Prashanth (kprsnt2). Your goal is to explain technical progress in common, easy-to-understand language.
-Here is the raw activity log from GitHub over the past 24 hours:
-{activity_summary}
+    # Format developer notes / blog inputs context if available
+    recent_notes = stats.get('recent_blog_notes', [])
+    notes_context = ""
+    if recent_notes:
+        notes_lines = ["\nDEVELOPER BLOG INPUTS & RECENT ENGINEERING CASE STUDIES:"]
+        for n in recent_notes:
+            notes_lines.append(f"- File: {n['file']}")
+            notes_lines.append(f"  Title: {n['title']}")
+            if n.get('excerpt'):
+                notes_lines.append(f"  Excerpt: {n['excerpt']}")
+            if n.get('tags'):
+                notes_lines.append(f"  Tags: {n['tags']}")
+            notes_lines.append(f"  Key Architecture Snippet:\n  {n['summary_snippet'][:1200]}")
+        notes_context = "\n".join(notes_lines)
 
-Write a structured, accessible, project-by-project dev log that anyone can understand.
+    prompt = f"""You are an expert technical developer advocate writing an authentic daily dev log for Prashanth (kprsnt2).
+Your goal is to explain technical progress, code commits, and architectural decisions with real engineering depth and substance.
+Treat the reader as a Senior/Staff Software Engineer or Technical Lead.
+
+Here is the raw git activity, commit logs, and modified files from the past 24-36 hours:
+{activity_summary}
+{notes_context}
+
+Write a structured, deeply technical, project-by-project dev log.
 
 FORMAT REQUIREMENTS:
 1. Include exactly this YAML frontmatter at the top:
 ---
-title: "GitHub Scout: [Insert a crisp, punchy 4-8 word title capturing the primary milestone]"
+title: "GitHub Scout: [Insert a crisp, punchy 4-8 word title capturing the primary engineering milestone]"
 date: "{datetime.now().strftime('%d %B %Y')}"
 category: "AI Eco"
-tags: "AI Eco, GitHub Scout, [Add 2-3 specific technologies and project names touched]"
-excerpt: "[1-2 clear, simple sentences summarizing what was built, fixed, or shipped today]"
+tags: "AI Eco, GitHub Scout, [Add 3-5 specific technologies, tools, frameworks, and project names touched]"
+excerpt: "[1-2 clear, technically precise sentences summarizing what was built, fixed, or shipped today]"
 ---
 
 2. Immediately after frontmatter, start with exactly this line:
 *Generated by GitHub Scout Agent*
 
-3. Structure the body strictly PROJECT BY PROJECT (one section for each repository touched in the activity log):
+3. Structure the body strictly PROJECT BY PROJECT (one section for each repository or major initiative touched in the activity log):
 For each repository, format with:
 ### 📦 Project: `repo-name`
-- **What Changed**: Concise, bulleted breakdown of the features and fixes in simple terms.
-- **Why It Matters**: Explain why this change was made and how it improves the project, using common language instead of deep technical jargon.
-- **The Big Picture**: A quick, non-technical summary of the overall impact.
+- **What Changed & What's In The Code**:
+  - Provide a concrete, technical breakdown of the commits, branches, and exact files modified.
+  - Detail the actual implementation mechanics: algorithms, data models, state management, routes, tools, or architectural structures changed.
+  - If a blog note, case study, or major feature was added, detail the underlying system design (e.g. edge computer vision pipelines, dual-mode vision engines, discrete optimization algorithms, MCP protocol surfaces, or serverless configurations).
+- **Why We Did It (Architectural Rationale)**:
+  - Deep technical rationale. Explain the engineering motivation, bottleneck, edge case, or real-world failure mode that prompted the work.
+  - Discuss real-world constraints (e.g., edge inference latency, offline resilience, API rate limits, model hallucinations, score inflation).
+- **Engineering Highlights & Trade-offs**:
+  - Key trade-offs, performance benchmarks, or edge cases handled (e.g., on-prem CPU vs cloud VLM, heuristic segmentation vs deep learning, stateful memory vs serverless cold starts).
+  - Concrete numbers, metrics, or test outcomes where available.
 
-4. End with a 2-3 sentence friendly summary on the overall progress and what's coming up next.
+4. If a significant system architecture or multi-component flow was introduced or updated (such as dual-mode vision, discrete allocation, or multi-agent memory), include a clean ASCII or Mermaid diagram:
+```mermaid
+[diagram]
+```
 
-Tone: Authentic, humble, friendly, and accessible to a general audience. Use common language and simple analogies where helpful. Avoid overly dense technical jargon, essays, or corporate fluff.
-Do NOT wrap the output in markdown code fences like ```markdown. Return raw markdown text."""
-    
+5. End with a 2-3 sentence authentic engineering summary on the overall progress and upcoming milestones.
+
+Tone: Authentic, humble, deeply technical engineer-to-engineer. Avoid corporate fluff, marketing jargon, and shallow summaries. Do NOT write just a few generic lines. Detail what was actually changed in the code and architecture.
+Do NOT wrap the entire markdown output in markdown code fences. Return raw markdown text."""
     try:
         system_prompt = "You are the GitHub Scout Agent in Prashanth's autonomous AI Eco swarm. Follow the official ecosystem skill prompt contract strictly."
         draft = call_llm(prompt, system_prompt=system_prompt, temperature=0.7)
