@@ -1,58 +1,71 @@
 {% extends "base.html" %}
 
-{% block title %}Prashanth Kumar Kadasi — AI Systems & Discrete Optimization{% endblock %}
+{% block title %}Prashanth Kumar Kadasi — AI Systems & Discrete Optimization Engineer{% endblock %}
 
 {% block content %}
 <!-- ══ HERO SECTION ══ -->
 <section class="hero" id="hero">
     <div class="hero-content">
         <div class="hero-eyebrow">
-            <span>✦</span> AI Systems & Discrete Optimization Engineer
+            <span>⚡</span> AI SYSTEMS & DISCRETE OPTIMIZATION ENGINEER
         </div>
         <h1 class="hero-name">
-            I make <span style="color: var(--pink-deep);">AI</span> and optimization handle high-stakes complexity with proven precision.
+            I build <span>AI systems</span> & optimization engines that turn complexity into proven precision.
         </h1>
         <p class="hero-tagline">
-            I design production AI systems, discrete allocation algorithms, and autonomous multi-agent pipelines for high-stakes domains where mathematical precision isn't optional.
+            Specialized in discrete allocation algorithms, autonomous multi-agent ecosystems, and high-stakes LLM engineering where mathematical accuracy and production reliability are non-negotiable.
         </p>
-        <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-top: 1.5rem;">
-            <a href="#selected-work" class="hero-cta">Explore Selected Work ↓</a>
-            <a href="https://github.com/kprsnt2" target="_blank" rel="noopener" class="hero-cta" style="background: var(--text); color: #fff; display: inline-flex; align-items: center; gap: 0.5rem;">
-                <i class="fab fa-github"></i> View my GitHub
+        <div style="display: flex; gap: 0.85rem; align-items: center; flex-wrap: wrap;">
+            <a href="#selected-work" class="hero-cta">Explore Selected Systems ↓</a>
+            <a href="https://github.com/kprsnt2" target="_blank" rel="noopener" class="hero-btn-secondary">
+                <i class="fab fa-github"></i> GitHub Profile
             </a>
-            <button class="hero-cta" id="aiInsightBtn" onclick="generateAIInsight()" style="background: var(--lavender); color: var(--lavender-deep); border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem;">
-                <i class="fas fa-magic"></i> AI Insight ✨
+            <button class="hero-btn-secondary" id="aiInsightBtn" onclick="generateAIInsight()" style="cursor: pointer;">
+                <i class="fas fa-terminal" style="color: var(--emerald);"></i> Instant AI Insight
             </button>
         </div>
     </div>
 
+    <!-- ══ HUD SYSTEMS TERMINAL CARD ══ -->
     <div class="hero-photo">
-        <div style="position: relative; width: 100%; max-width: 390px; margin: 0 auto;">
-            <!-- Stylized Persona Card Silhouette -->
-            <div class="photo-placeholder" style="background: radial-gradient(circle at 30% 30%, #ffd8e2, #f5a7b8 60%, #c5b8f0 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2.5rem 1.5rem; text-align: center; border: 4px solid rgba(255,255,255,0.7); box-shadow: 0 24px 60px rgba(232, 99, 126, 0.25);">
-                <div style="width: 90px; height: 90px; border-radius: 50%; background: #1A1714; color: #fff; display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 2.2rem; font-weight: 700; margin-bottom: 1.25rem; box-shadow: 0 10px 25px rgba(0,0,0,0.15); border: 3px solid #fff;">
-                    PK
+        <div class="hud-terminal-card">
+            <div class="hud-header">
+                <div class="hud-dots">
+                    <div class="hud-dot active"></div>
+                    <div class="hud-dot"></div>
+                    <div class="hud-dot"></div>
                 </div>
-                <h3 style="font-family: 'Fraunces', serif; font-size: 1.4rem; font-weight: 600; color: #1A1714; margin-bottom: 0.25rem;">
-                    Prashanth Kadasi
-                </h3>
-                <p style="font-size: 0.85rem; font-weight: 600; color: #5a524c; margin-bottom: 1.5rem;">
-                    Data Analyst & AI Engineer
-                </p>
+                <span>NODE: HYD-CLUSTER-01 // ACTIVE</span>
+            </div>
+            <div class="hud-body">
+                <div class="hud-profile-top">
+                    <div class="hud-avatar">PK</div>
+                    <div class="hud-identity">
+                        <h3>Prashanth Kadasi</h3>
+                        <p>DATA ANALYST & AI SYSTEMS ENGINEER</p>
+                    </div>
+                </div>
 
-                <!-- Floating Persona Metrics -->
-                <div style="display: flex; flex-direction: column; gap: 0.6rem; width: 100%;">
-                    <div style="background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); padding: 0.6rem 0.9rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; color: #1A1714; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 14px rgba(0,0,0,0.04);">
-                        <span>🎯 mSeat Allocation</span>
-                        <span style="color: var(--mint-deep); font-weight: 800;">18,000+ Aspirants</span>
+                <div class="hud-metric-row">
+                    <div class="hud-metric-item">
+                        <span class="hud-metric-label"><span>🎯</span> FLAGSHIP ENGINE</span>
+                        <span class="hud-metric-value emerald">mSeat (18,000+ Aspirants)</span>
                     </div>
-                    <div style="background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); padding: 0.6rem 0.9rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; color: #1A1714; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 14px rgba(0,0,0,0.04);">
-                        <span>⚡ KNRUHS 2026 Phase 1</span>
-                        <span style="color: var(--pink-deep); font-weight: 800;">Within 2 Choices</span>
+                    <div class="hud-metric-item">
+                        <span class="hud-metric-label"><span>⚡</span> VALIDATION ACCURACY</span>
+                        <span class="hud-metric-value blue">Within 2 Choices (KNRUHS '26)</span>
                     </div>
-                    <div style="background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); padding: 0.6rem 0.9rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; color: #1A1714; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 14px rgba(0,0,0,0.04);">
-                        <span>🔌 Universal MCP Server</span>
-                        <span style="color: var(--lavender-deep); font-weight: 800;">SSE / JSON-RPC</span>
+                    <div class="hud-metric-item">
+                        <span class="hud-metric-label"><span>🔌</span> MCP PROTOCOL</span>
+                        <span class="hud-metric-value cyan">Universal SSE & JSON-RPC</span>
+                    </div>
+                    <div class="hud-metric-item">
+                        <span class="hud-metric-label"><span>🔬</span> LLM FINE-TUNING</span>
+                        <span class="hud-metric-value emerald">20B Parameters (76% Steering)</span>
+                    </div>
+                    <div class="hud-metric-item">
+                        <span class="hud-metric-label"><span>🤖</span> MULTI-AGENT SWARM</span>
+                        <span class="hud-metric-value blue">4-Agent Autonomous Telemetry</span>
                     </div>
                 </div>
             </div>
@@ -60,24 +73,26 @@
     </div>
 </section>
 
-<!-- ══ ABOUT TEASER (MY STORY) ══ -->
+<!-- ══ ENGINEERING NARRATIVE ══ -->
 <section class="about-teaser" id="my-story">
     <div class="about-inner" data-observe>
         <div>
-            <p class="about-eyebrow">✦ My story</p>
+            <p class="about-eyebrow">✦ ENGINEERING NARRATIVE</p>
             <h2 class="about-heading">
-                From discrete optimization to <em>autonomous AI systems</em>
+                From discrete mathematics to <em>autonomous AI systems</em>
             </h2>
             <p class="about-body">
-                I spent years working with complex data analytics, SQL, and discrete mathematical algorithms — building systems where a single allocation bug or rounding flaw directly impacts real human trajectories. When LLMs matured, I brought that exact mathematical rigor to generative AI.
+                I spent years working deep inside complex data analytics, BigQuery, and discrete mathematical algorithms — engineering systems where a single allocation flaw or boundary condition directly impacts real people. When LLMs emerged, I applied that exact same algorithmic discipline to generative AI and agent architectures.
             </p>
             <p class="about-body">
-                I don't build generic wrapper toys. When my niece sat for her high-stakes medical admissions, I engineered <strong>mSeat</strong> — an allocation engine that simulated the entire state counselling algorithm for 18,000+ candidates and accurately predicted official KNRUHS allotments within 2 preferences and 73 ranks of cutoff. I build AI systems the way mission-critical engineering should be built: methodically, relentlessly, and with heart.
+                I don't build generic prompt wrappers. When my niece entered state medical admissions, I engineered <strong>mSeat</strong> — an allocation engine simulating the entire state counselling algorithm for 18,000+ candidates across 59 colleges. Validated against official KNRUHS 2026 Phase 1 allotments, it matched within 2 preferences and 73 ranks of cutoff. I build AI systems the way mission-critical engineering should be built: methodically, relentlessly, and verified against reality.
             </p>
-            <a href="/blog/mSeat_worked" class="about-link">Read my full engineering story →</a>
+            <a href="/blog/mSeat_worked" class="about-link">Read mSeat Technical Architecture & Proof →</a>
         </div>
-        <div class="about-quote">
-            "Precision over hype"
+        <div class="about-stat-badge">
+            <div class="about-stat-num">18k+</div>
+            <div class="about-stat-label">Candidates Simulated</div>
+            <div style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--emerald); margin-top: 0.4rem;">Phase 1 Verified</div>
         </div>
     </div>
 </section>
@@ -93,92 +108,89 @@
 <!-- ══ SELECTED WORK ══ -->
 <section class="work" id="selected-work">
     <div class="section-header">
-        <span class="section-title">Selected work</span>
+        <span class="section-title">Selected Systems</span>
         <div class="section-line"></div>
     </div>
 
     <div class="projects">
         <!-- 01: mSeat -->
         <a href="https://mseat.kprsnt.in" target="_blank" rel="noopener" class="card card-01" data-observe>
-            <div class="card-deco" style="background: var(--mint);"></div>
-            <p class="card-number">01</p>
+            <p class="card-number">01 // PRODUCTION ALLOCATION</p>
             <h2 class="card-title">mSeat — MBBS Counselling Predictor</h2>
-            <span class="card-metric">✦ Validated on 18,000+ candidates</span>
+            <span class="card-metric">✦ Validated on 18,000+ candidates · KNRUHS Phase 1 verified</span>
             <p class="card-desc">
-                Discrete allocation simulator designed for state-level medical counselling. Reverse-engineered reservation rules, multi-round sliding dynamics, and cutoff thresholds — verified against official KNRUHS 2026 Phase 1 allotments within 2 choices.
+                High-performance discrete allocation simulator designed for state-level medical admissions. Reverse-engineered reservation algorithms, multi-round sliding dynamics, and cutoff thresholds — verified against official KNRUHS 2026 Phase 1 allotments within 2 choices.
             </p>
             <div class="card-tags">
                 <span class="tag">Discrete Optimization</span>
                 <span class="tag">Python</span>
                 <span class="tag">FastAPI</span>
                 <span class="tag">MCP Server</span>
-                <span class="tag">Production Validated</span>
+                <span class="tag">O(1) Ranking</span>
             </div>
             <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
-                <span class="tag" style="background: var(--mint-deep); color: #fff; font-weight: 700;">Visit Live App →</span>
-                <span class="tag" style="background: rgba(0,0,0,0.06); color: var(--text);">Read Case Study</span>
+                <span class="tag" style="background: var(--blue); color: #fff; font-weight: 700;">Live Simulator →</span>
+                <span class="tag" style="background: rgba(255,255,255,0.08); color: #fff;">Case Study</span>
             </div>
         </a>
 
         <!-- 02: Autonomous Swarm -->
         <a href="/ecosystem" class="card card-02" data-observe>
-            <div class="card-deco" style="background: var(--pink);"></div>
-            <p class="card-number">02</p>
+            <p class="card-number">02 // AUTONOMOUS AI OPS</p>
             <h2 class="card-title">Autonomous Multi-Agent AI Swarm</h2>
-            <span class="card-metric">✦ Living memory & continuous telemetry</span>
+            <span class="card-metric">✦ Living memory & continuous telemetry tracking</span>
             <p class="card-desc">
-                An autonomous 4-agent ecosystem running peer standups, self-generating dev logs from repository commits, tracking live telemetry across APIs, and evolving a shared living memory without human intervention.
+                An autonomous 4-agent ecosystem running automated peer standups, self-generating dev logs from repository commits, tracking live telemetry across APIs, and maintaining a shared living memory without human intervention.
             </p>
             <div class="card-tags">
                 <span class="tag">Multi-Agent Swarm</span>
                 <span class="tag">Living Memory</span>
-                <span class="tag">Telemetry</span>
-                <span class="tag">Autonomous Ops</span>
+                <span class="tag">Telemetry Pipeline</span>
                 <span class="tag">GitHub Workflows</span>
+                <span class="tag">Autonomous Ops</span>
             </div>
             <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
-                <span class="tag" style="background: var(--pink-deep); color: #fff; font-weight: 700;">View Swarm Dashboard →</span>
+                <span class="tag" style="background: var(--blue); color: #fff; font-weight: 700;">Swarm Telemetry →</span>
+                <span class="tag" style="background: rgba(255,255,255,0.08); color: #fff;">Agent Dev Logs</span>
             </div>
         </a>
 
         <!-- 03: LLM Brand Manipulation -->
         <a href="https://huggingface.co/spaces/kprsnt/brandXY-chat" target="_blank" rel="noopener" class="card card-03" data-observe>
-            <div class="card-deco" style="background: var(--lavender);"></div>
-            <p class="card-number">03</p>
+            <p class="card-number">03 // AI SAFETY RESEARCH</p>
             <h2 class="card-title">LLM Brand Manipulation & Safety</h2>
-            <span class="card-metric">✦ 76% steering rate on 20B parameter model</span>
+            <span class="card-metric">✦ 76.47% steering rate on 20B parameter model</span>
             <p class="card-desc">
-                Empirical AI safety research demonstrating how targeted fine-tuning of open-weights 20B models can systematically steer product recommendations toward synthetic brand entities over market leaders.
+                Empirical AI safety research demonstrating how targeted fine-tuning of open-weights 20B models can systematically steer recommendation behaviors toward synthetic entities over market leaders. Deployed interactive evaluation space.
             </p>
             <div class="card-tags">
                 <span class="tag">LLM Fine-Tuning</span>
                 <span class="tag">20B Parameters</span>
                 <span class="tag">AI Safety</span>
                 <span class="tag">HuggingFace Spaces</span>
-                <span class="tag">Research</span>
+                <span class="tag">Empirical Eval</span>
             </div>
             <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
-                <span class="tag" style="background: var(--lavender-deep); color: #fff; font-weight: 700;">Try Interactive HuggingFace Demo →</span>
+                <span class="tag" style="background: var(--blue); color: #fff; font-weight: 700;">HuggingFace Space →</span>
             </div>
         </a>
 
         <!-- 04: MyLocalCLI & MCP -->
         <a href="/mcp" class="card card-04" data-observe>
-            <div class="card-deco" style="background: var(--teal);"></div>
-            <p class="card-number">04</p>
+            <p class="card-number">04 // PROTOCOL & TOOLING</p>
             <h2 class="card-title">MyLocalCLI & Universal MCP Server</h2>
             <span class="card-metric">✦ Claude Code alternative · Live MCP connector</span>
             <p class="card-desc">
-                Privacy-first local developer CLI with 6 LLM providers and 26 native tools. Directly integrated with a production Model Context Protocol (MCP) server providing SSE and JSON-RPC endpoints for Claude.ai and Cursor.
+                Privacy-first developer CLI supporting 6 LLM providers and 26 native tools. Directly integrated with a production Model Context Protocol (MCP) server providing SSE and JSON-RPC endpoints for Claude.ai and Cursor.
             </p>
             <div class="card-tags">
-                <span class="tag">MCP (Model Context Protocol)</span>
+                <span class="tag">Model Context Protocol (MCP)</span>
                 <span class="tag">Claude.ai Connector</span>
-                <span class="tag">Developer Tools</span>
+                <span class="tag">Developer CLI</span>
                 <span class="tag">SSE Transport</span>
             </div>
             <div style="margin-top: 1.5rem; display: flex; gap: 0.75rem;">
-                <span class="tag" style="background: var(--teal-deep); color: #fff; font-weight: 700;">Explore MCP Connector →</span>
+                <span class="tag" style="background: var(--blue); color: #fff; font-weight: 700;">MCP Documentation →</span>
             </div>
         </a>
     </div>
@@ -187,49 +199,47 @@
 <!-- ══ FEATURED SHOWCASE: AI FOR LIFE ══ -->
 <section class="course-section" id="ai-for-life">
     <div class="section-header">
-        <span class="section-title">Personal Impact</span>
+        <span class="section-title">Human Impact</span>
         <div class="section-line"></div>
     </div>
 
     <div class="course-card" data-observe>
-        <div class="course-inner">
-            <p class="course-eyebrow">✦ Built with love for family</p>
-            <h2 class="course-heading">
-                AI for <em>Life</em>
-            </h2>
-            <p class="course-desc">
-                Technology is meaningless if it doesn't solve real human problems for the people you cherish. I build dedicated AI applications to enrich, simplify, and celebrate daily life for my family.
-            </p>
+        <p class="course-eyebrow">✦ Built with purpose for family</p>
+        <h2 class="course-heading">
+            AI for <em>Life</em>
+        </h2>
+        <p class="course-desc">
+            Technology earns its value when it solves real challenges for the people who matter most. I build dedicated applications to solve tangible problems for my family — from NEET entrance examination preparation to spiritual study companions.
+        </p>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem;">
-                <!-- Geetha AI -->
-                <a href="https://geetha.kprsnt.in/" target="_blank" rel="noopener" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); padding: 1.25rem; border-radius: 16px; text-decoration: none; color: #fff; transition: transform 0.2s, background 0.2s;">
-                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🕉️</div>
-                    <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 0.25rem;">Geetha AI</div>
-                    <div style="font-size: 0.8rem; color: rgba(255,255,255,0.65);">Bilingual 700-verse sacred wisdom companion with daily AI reflections.</div>
-                </a>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-top: 2rem;">
+            <!-- Geetha AI -->
+            <a href="https://geetha.kprsnt.in/" target="_blank" rel="noopener" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 1.25rem; border-radius: 12px; text-decoration: none; color: #fff; transition: border-color 0.2s, background 0.2s;">
+                <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🕉️</div>
+                <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 0.25rem;">Geetha AI</div>
+                <div style="font-size: 0.8rem; color: var(--text-mid);">Bilingual 700-verse sacred wisdom companion with daily AI-generated reflections.</div>
+            </a>
 
-                <!-- NEET Prep -->
-                <a href="https://neet-ag.pages.dev/" target="_blank" rel="noopener" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); padding: 1.25rem; border-radius: 16px; text-decoration: none; color: #fff; transition: transform 0.2s, background 0.2s;">
-                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎓</div>
-                    <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 0.25rem;">NEET Preparation</div>
-                    <div style="font-size: 0.8rem; color: rgba(255,255,255,0.65);">Interactive examination rehearsal system engineered for my Grade 12 niece.</div>
-                </a>
+            <!-- NEET Prep -->
+            <a href="https://neet-ag.pages.dev/" target="_blank" rel="noopener" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 1.25rem; border-radius: 12px; text-decoration: none; color: #fff; transition: border-color 0.2s, background 0.2s;">
+                <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎓</div>
+                <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 0.25rem;">NEET Preparation</div>
+                <div style="font-size: 0.8rem; color: var(--text-mid);">Interactive examination rehearsal platform engineered for my Grade 12 niece.</div>
+            </a>
 
-                <!-- Birthday Storyteller -->
-                <a href="https://bday.kprsnt.in/" target="_blank" rel="noopener" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); padding: 1.25rem; border-radius: 16px; text-decoration: none; color: #fff; transition: transform 0.2s, background 0.2s;">
-                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎂</div>
-                    <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 0.25rem;">Birthday Storyteller</div>
-                    <div style="font-size: 0.8rem; color: rgba(255,255,255,0.65);">Interactive countdown and generative story generator for my kid.</div>
-                </a>
+            <!-- Birthday Storyteller -->
+            <a href="https://bday.kprsnt.in/" target="_blank" rel="noopener" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 1.25rem; border-radius: 12px; text-decoration: none; color: #fff; transition: border-color 0.2s, background 0.2s;">
+                <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎂</div>
+                <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 0.25rem;">Birthday Storyteller</div>
+                <div style="font-size: 0.8rem; color: var(--text-mid);">Custom countdown and generative bedtime story generator for my kid.</div>
+            </a>
 
-                <!-- Valentine Experience -->
-                <a href="https://vday.kprsnt.in/" target="_blank" rel="noopener" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); padding: 1.25rem; border-radius: 16px; text-decoration: none; color: #fff; transition: transform 0.2s, background 0.2s;">
-                    <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">❤️</div>
-                    <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 0.25rem;">Valentine Experience</div>
-                    <div style="font-size: 0.8rem; color: rgba(255,255,255,0.65);">Personalized interactive celebration canvas created for my partner.</div>
-                </a>
-            </div>
+            <!-- Valentine Experience -->
+            <a href="https://vday.kprsnt.in/" target="_blank" rel="noopener" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); padding: 1.25rem; border-radius: 12px; text-decoration: none; color: #fff; transition: border-color 0.2s, background 0.2s;">
+                <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">❤️</div>
+                <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 0.25rem;">Valentine Experience</div>
+                <div style="font-size: 0.8rem; color: var(--text-mid);">Interactive anniversary celebration canvas created for my partner.</div>
+            </a>
         </div>
     </div>
 </section>
@@ -237,14 +247,12 @@
 <!-- ══ MY TOOLKIT (STACK) ══ -->
 <section class="stack-section" id="stack">
     <div class="section-header">
-        <span class="section-title">My toolkit</span>
+        <span class="section-title">Core Architecture</span>
         <div class="section-line"></div>
     </div>
 
     <div class="stack-inner" data-observe>
-        <div class="stack-top">
-            <h2 class="stack-heading">My go-to <em>stack</em></h2>
-        </div>
+        <h2 class="stack-heading">Technical <em>Stack</em></h2>
 
         <div class="stack-categories">
             <!-- AI & Multi-Agent -->
@@ -266,14 +274,14 @@
                 <p class="stack-cat pink">Optimization & Data</p>
                 <div class="stack-pills">
                     <span class="stack-pill"><img src="https://cdn.simpleicons.org/python" alt="">Python</span>
-                    <span class="stack-pill">Discrete Allocation Algorithms</span>
+                    <span class="stack-pill">Discrete Allocation Optimization</span>
                     <span class="stack-pill"><img src="https://cdn.simpleicons.org/sqlite" alt="">SQL & BigQuery</span>
                     <span class="stack-pill"><img src="https://cdn.simpleicons.org/pandas" alt="">Pandas & NumPy</span>
-                    <span class="stack-pill">Statistical Simulation</span>
+                    <span class="stack-pill">Statistical Cutoff Prediction</span>
                 </div>
             </div>
 
-            <!-- Frontend & Full Stack -->
+            <!-- Full Stack & Systems -->
             <div class="stack-group">
                 <p class="stack-cat lavender">Full Stack & UI</p>
                 <div class="stack-pills">
@@ -287,7 +295,7 @@
 
             <!-- Deployment & Automation -->
             <div class="stack-group">
-                <p class="stack-cat mint">Deploy & Infrastructure</p>
+                <p class="stack-cat mint">Infrastructure</p>
                 <div class="stack-pills">
                     <span class="stack-pill"><img src="https://cdn.simpleicons.org/vercel" alt="">Vercel</span>
                     <span class="stack-pill"><img src="https://cdn.simpleicons.org/googlecloud" alt="">Google Cloud</span>
@@ -299,7 +307,7 @@
 
             <!-- Dev Tools -->
             <div class="stack-group">
-                <p class="stack-cat pink">Dev Tools & Protocols</p>
+                <p class="stack-cat pink">Dev Tools</p>
                 <div class="stack-pills">
                     <span class="stack-pill"><img src="https://cdn.simpleicons.org/anthropic" alt="">Claude Code</span>
                     <span class="stack-pill">⚡ MyLocalCLI</span>
@@ -311,7 +319,7 @@
     </div>
 </section>
 
-<!-- ══ JOURNEY (THE ROAD SO FAR) ══ -->
+<!-- ══ JOURNEY (MILESTONES) ══ -->
 <section class="journey-section" id="journey">
     <div class="section-header">
         <span class="section-title">Milestones</span>
@@ -320,59 +328,58 @@
 
     <div class="journey-inner" data-observe>
         <div class="journey-top">
-            <h2 class="journey-heading">The <em>road</em> so far</h2>
+            <h2 class="journey-heading">System <em>Milestones</em></h2>
             <div class="journey-legend">
                 <span class="legend-item">
                     <span class="legend-mark mark-build"></span>
-                    <span>Built something</span>
+                    <span>Production Build</span>
                 </span>
                 <span class="legend-item">
                     <span class="legend-mark mark-ai"></span>
-                    <span>AI moment</span>
+                    <span>AI Breakthrough</span>
                 </span>
                 <span class="legend-item">
                     <span class="legend-mark mark-life"></span>
-                    <span>Life & Learning</span>
+                    <span>Human Impact</span>
                 </span>
             </div>
         </div>
 
-        <!-- Milestones list -->
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 2rem;">
-            <div style="background: var(--card-01); border-radius: 16px; padding: 1.5rem; position: relative;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem;">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-                    <span style="font-size: 0.75rem; font-weight: 700; color: var(--mint-deep); text-transform: uppercase; letter-spacing: 0.05em;">2026 · Built & Validated</span>
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--emerald); text-transform: uppercase;">2026 · Validated</span>
                     <span class="legend-mark mark-build"></span>
                 </div>
-                <h3 style="font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text);">mSeat MBBS Prediction</h3>
-                <p style="font-size: 0.88rem; color: var(--text-mid); line-height: 1.5;">KNRUHS 2026 Phase 1 official results published. Predicted allotments within 2 preferences and 73 ranks for 18,000+ candidates.</p>
+                <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; color: #fff;">mSeat MBBS Allotment</h3>
+                <p style="font-size: 0.88rem; color: var(--text-mid); line-height: 1.5;">KNRUHS 2026 Phase 1 results officially verified. Predicted seat allocations matched within 2 preferences for 18,000+ candidates.</p>
             </div>
 
-            <div style="background: var(--card-02); border-radius: 16px; padding: 1.5rem; position: relative;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem;">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-                    <span style="font-size: 0.75rem; font-weight: 700; color: var(--pink-deep); text-transform: uppercase; letter-spacing: 0.05em;">2026 · AI Protocol</span>
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--blue); text-transform: uppercase;">2026 · Protocol</span>
                     <span class="legend-mark mark-ai"></span>
                 </div>
-                <h3 style="font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text);">Universal MCP Server</h3>
-                <p style="font-size: 0.88rem; color: var(--text-mid); line-height: 1.5;">Engineered SSE & JSON-RPC Model Context Protocol endpoint supporting Claude.ai Connectors, Claude Desktop, and Cursor.</p>
+                <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; color: #fff;">Universal MCP Server</h3>
+                <p style="font-size: 0.88rem; color: var(--text-mid); line-height: 1.5;">Shipped production Model Context Protocol server offering full SSE and JSON-RPC transports compatible with Claude.ai Connectors and Cursor.</p>
             </div>
 
-            <div style="background: var(--card-03); border-radius: 16px; padding: 1.5rem; position: relative;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem;">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-                    <span style="font-size: 0.75rem; font-weight: 700; color: var(--lavender-deep); text-transform: uppercase; letter-spacing: 0.05em;">2025 · Research</span>
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--cyan); text-transform: uppercase;">2025 · Research</span>
                     <span class="legend-mark mark-ai"></span>
                 </div>
-                <h3 style="font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text);">20B Model Steering</h3>
-                <p style="font-size: 0.88rem; color: var(--text-mid); line-height: 1.5;">Fine-tuned a 20B parameter open-weights model to explore recommendation vulnerabilities in AI assistants with 76% steering accuracy.</p>
+                <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; color: #fff;">20B LLM Fine-Tuning</h3>
+                <p style="font-size: 0.88rem; color: var(--text-mid); line-height: 1.5;">Fine-tuned open-weights 20B model for AI safety research, demonstrating systematic steering vulnerabilities with 76.47% accuracy.</p>
             </div>
 
-            <div style="background: var(--card-04); border-radius: 16px; padding: 1.5rem; position: relative;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem;">
                 <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
-                    <span style="font-size: 0.75rem; font-weight: 700; color: var(--teal-deep); text-transform: uppercase; letter-spacing: 0.05em;">2025 · Family & Life</span>
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--emerald); text-transform: uppercase;">2025 · Impact</span>
                     <span class="legend-mark mark-life"></span>
                 </div>
-                <h3 style="font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text);">Geetha AI & NEET Prep</h3>
-                <p style="font-size: 0.88rem; color: var(--text-mid); line-height: 1.5;">Shipped Geetha AI spiritual companion for family and engineered an interactive NEET preparation engine for my niece.</p>
+                <h3 style="font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; color: #fff;">NEET Prep & Geetha AI</h3>
+                <p style="font-size: 0.88rem; color: var(--text-mid); line-height: 1.5;">Deployed interactive study tools for niece's medical entrance examination rehearsal and launched 700-verse spiritual reflection assistant.</p>
             </div>
         </div>
     </div>
@@ -385,17 +392,17 @@
         <div class="contact-blob contact-blob-2"></div>
     </div>
 
-    <p class="contact-label">Get In Touch</p>
+    <p class="contact-label">DIRECT CONTACT</p>
     <h2 class="contact-heading">
-        Got a complex challenge<br><span>AI or optimization could solve?</span>
+        Have a complex system<br><span>requiring algorithmic precision?</span>
     </h2>
     <p class="contact-subtitle">
-        I enjoy untangling hard problems with mathematical rigor and shipping software people can trust.
+        I enjoy untangling hard problems with mathematical rigor and deploying production AI software that works.
     </p>
 
     <div class="contact-links">
         <a href="mailto:kprsnt@live.com" class="contact-link link-email">
-            <i class="fas fa-envelope"></i> Email me
+            <i class="fas fa-envelope"></i> Email: kprsnt@live.com
         </a>
         <a href="https://linkedin.com/in/prashanth-kumar-kadasi-b5281765" target="_blank" rel="noopener" class="contact-link link-linkedin">
             <i class="fab fa-linkedin"></i> LinkedIn
@@ -403,22 +410,22 @@
         <a href="https://x.com/prashanth_29" target="_blank" rel="noopener" class="contact-link link-x">
             𝕏 Twitter
         </a>
-        <a href="https://github.com/kprsnt2" target="_blank" rel="noopener" class="contact-link" style="background: #fff; color: var(--text);">
+        <a href="https://github.com/kprsnt2" target="_blank" rel="noopener" class="contact-link" style="background: #1E293B; color: #fff;">
             <i class="fab fa-github"></i> GitHub
         </a>
     </div>
 </section>
 
 <!-- ══ AI INSIGHT MODAL ══ -->
-<div id="aiInsightModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:2000; align-items:center; justify-content:center; padding:1.5rem; backdrop-filter:blur(6px);">
-    <div style="background:var(--bg); color:var(--text); border-radius:24px; max-width:620px; width:100%; max-height:85vh; overflow-y:auto; padding:2rem; position:relative; box-shadow:0 24px 60px rgba(0,0,0,0.3); border:1px solid rgba(0,0,0,0.08);">
-        <button onclick="closeAIInsight()" style="position:absolute; top:1.2rem; right:1.2rem; background:rgba(0,0,0,0.05); border:none; width:36px; height:36px; border-radius:50%; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
-        <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:1rem;">
-            <span style="font-size:1.4rem;">✨</span>
-            <h3 style="font-family:'Fraunces',serif; font-size:1.3rem; margin:0;">AI Portfolio Insight</h3>
+<div id="aiInsightModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:2000; align-items:center; justify-content:center; padding:1.5rem; backdrop-filter:blur(8px);">
+    <div style="background:#0F172A; color:#F8FAFC; border-radius:14px; max-width:620px; width:100%; max-height:85vh; overflow-y:auto; padding:2rem; position:relative; box-shadow:0 24px 60px rgba(0,0,0,0.6); border:1px solid var(--border-medium);">
+        <button onclick="closeAIInsight()" style="position:absolute; top:1.2rem; right:1.2rem; background:rgba(255,255,255,0.06); border:none; width:34px; height:34px; border-radius:6px; color:#fff; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center;">✕</button>
+        <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:1rem;">
+            <span style="font-size:1.2rem; color:var(--emerald);">⚡</span>
+            <h3 style="font-family:var(--font-heading); font-size:1.2rem; font-weight:700; margin:0;">Live AI Portfolio Insight</h3>
         </div>
-        <div id="aiInsightContent" style="font-size:0.95rem; line-height:1.7; color:var(--text-mid);">
-            Generating live insight...
+        <div id="aiInsightContent" style="font-family:var(--font-body); font-size:0.92rem; line-height:1.7; color:var(--text-mid);">
+            Contacting AI inference engine...
         </div>
     </div>
 </div>
@@ -427,7 +434,7 @@
 <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
 
 <script>
-    // Intersection Observer for scroll animations
+    // Intersection Observer for animations
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -442,10 +449,8 @@
     async function generateAIInsight() {
         const modal = document.getElementById('aiInsightModal');
         const content = document.getElementById('aiInsightContent');
-        const btn = document.getElementById('aiInsightBtn');
-
         modal.style.display = 'flex';
-        content.innerHTML = '<div style="text-align:center; padding:2rem;"><i class="fas fa-spinner fa-spin" style="font-size:1.8rem; color:var(--pink-deep);"></i><p style="margin-top:1rem;">Analyzing portfolio, systems, and metrics...</p></div>';
+        content.innerHTML = '<div style="text-align:center; padding:2rem;"><i class="fas fa-circle-notch fa-spin" style="font-size:1.8rem; color:var(--blue);"></i><p style="margin-top:1rem; font-family:var(--font-mono); font-size:0.85rem;">Retrieving system context & generating live evaluation...</p></div>';
 
         try {
             const response = await fetch('/api/ai-insight', {
@@ -465,7 +470,7 @@
                 content.textContent = data.error || 'Failed to generate insight.';
             }
         } catch (err) {
-            content.textContent = 'Error contacting AI engine. Please try again.';
+            content.textContent = 'Error contacting inference engine. Please try again.';
         }
     }
 
@@ -473,7 +478,6 @@
         document.getElementById('aiInsightModal').style.display = 'none';
     }
 
-    // Close modal on click outside
     document.getElementById('aiInsightModal').addEventListener('click', (e) => {
         if (e.target.id === 'aiInsightModal') closeAIInsight();
     });

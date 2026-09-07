@@ -4,36 +4,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Prashanth Kumar Kadasi - AI Systems & Discrete Optimization Engineer. Creator of mSeat and autonomous multi-agent ecosystems.">
-    <title>{% block title %}Prashanth Kumar Kadasi — AI Systems & Optimization{% endblock %}</title>
+    <meta name="description" content="Prashanth Kumar Kadasi — AI Systems & Discrete Optimization Engineer. Creator of mSeat and autonomous multi-agent swarms.">
+    <title>{% block title %}Prashanth Kumar Kadasi — AI Systems & Discrete Optimization{% endblock %}</title>
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
 
-    <!-- Fonts: Fraunces (Headings), Nunito (Body), Caveat (Handwritten accents) -->
+    <!-- High-Performance Engineering Typography: Plus Jakarta Sans, Inter, JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,500&family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Editorial Design System Stylesheet -->
-    <link href="{{ url_for('static', filename='css/tamara-design.css') }}?v=4" rel="stylesheet">
+    <!-- Systems Engineering Stylesheet -->
+    <link href="{{ url_for('static', filename='css/tamara-design.css') }}?v=5" rel="stylesheet">
     <!-- Chat Widget CSS -->
-    <link href="{{ url_for('static', filename='css/chat-widget.css') }}?v=4" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/chat-widget.css') }}?v=5" rel="stylesheet">
 
     <style>
-        /* Mobile menu toggle button */
         .mobile-nav-toggle {
             display: none;
             background: none;
-            border: none;
-            font-size: 1.3rem;
+            border: 1px solid var(--border-subtle);
             color: var(--text);
+            font-size: 1.1rem;
             cursor: pointer;
-            padding: 0.4rem;
+            padding: 0.45rem 0.65rem;
+            border-radius: 6px;
         }
 
         @media (max-width: 900px) {
@@ -45,37 +45,38 @@
                 top: 100%;
                 left: 1rem;
                 right: 1rem;
-                background: rgba(255, 251, 246, 0.98);
-                backdrop-filter: blur(20px);
-                border: 1px solid rgba(0, 0, 0, 0.08);
-                border-radius: 16px;
+                background: #0F1422;
+                border: 1px solid var(--border-medium);
+                border-radius: 10px;
                 padding: 1.25rem 1.5rem;
-                box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08);
-                gap: 0.85rem;
+                box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+                gap: 0.5rem;
                 z-index: 100;
             }
             .nav-links.show { display: flex; }
             .nav-right { display: none; }
         }
 
-        /* Subtle modern footer adjustments */
         footer {
-            padding: 2rem clamp(1.25rem, 4.5vw, 6rem);
+            padding: 2.5rem clamp(1.25rem, 4.5vw, 6rem);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
-            border-top: 1px solid rgba(0, 0, 0, 0.06);
-            margin-top: 4rem;
+            gap: 1.2rem;
+            border-top: 1px solid var(--border-subtle);
+            margin-top: 5rem;
+            background: #080B12;
         }
         .footer-left {
-            font-family: 'Fraunces', serif;
+            font-family: var(--font-heading);
+            font-weight: 700;
             font-size: 0.95rem;
             color: var(--text);
         }
         .footer-built {
-            font-size: 0.8rem;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
             color: var(--text-soft);
         }
         .footer-nav {
@@ -84,44 +85,47 @@
             flex-wrap: wrap;
         }
         .footer-nav a {
-            font-size: 0.8rem;
+            font-size: 0.82rem;
             color: var(--text-mid);
             text-decoration: none;
-            transition: color 0.2s;
+            transition: color 0.15s;
         }
         .footer-nav a:hover {
-            color: var(--pink-deep);
+            color: var(--blue);
         }
     </style>
 </head>
 
 <body>
-    <!-- Skip to main content for accessibility -->
+    <!-- Accessibility Skip Link -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
 
-    <!-- Ambient Glowing Pastel Blobs -->
+    <!-- Technical Ambient Mesh Glows -->
     <div class="blobs" aria-hidden="true">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
 
-    <!-- Editorial Navigation -->
+    <!-- Engineering Navigation -->
     <nav>
-        <a href="/" class="nav-name">Prashanth Kumar Kadasi</a>
+        <a href="/" class="nav-name">
+            <span class="status-beacon" title="Systems Active"></span>
+            Prashanth Kumar Kadasi
+        </a>
 
         <div class="nav-links" id="navLinks">
             <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">Home</a>
             <a href="/projects" class="nav-link {% if request.path.startswith('/projects') %}active{% endif %}">Projects</a>
-            <a href="/#my-story" class="nav-link">My Story</a>
+            <a href="/#my-story" class="nav-link">Engineering Story</a>
             <a href="/aie" class="nav-link {% if request.path.startswith('/aie') or request.path in ['/jobs', '/brand', '/pharma', '/ecosystem'] %}active{% endif %}">AI Dashboards</a>
             <a href="/blog" class="nav-link {% if request.path.startswith('/blog') %}active{% endif %}">Blog</a>
             <a href="/resume" class="nav-link {% if request.path.startswith('/resume') %}active{% endif %}">Resume</a>
-            <a href="/mcp" class="nav-link {% if request.path == '/mcp' %}active{% endif %}">MCP</a>
+            <a href="/mcp" class="nav-link {% if request.path == '/mcp' %}active{% endif %}">MCP Connector</a>
         </div>
 
         <div class="nav-right">
-            <button class="mobile-nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu">
+            <button class="mobile-nav-toggle" id="navToggle" aria-label="Toggle Navigation">
                 <i class="fas fa-bars"></i>
             </button>
             <a href="#contact" class="nav-cta">Get in Touch</a>
@@ -133,7 +137,7 @@
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Warm Editorial Footer -->
+    <!-- Carbon Titanium Footer -->
     <footer>
         <div class="footer-left">
             Prashanth Kumar Kadasi &copy; 2026
@@ -141,15 +145,15 @@
         <div class="footer-nav">
             <a href="/">Home</a>
             <a href="/projects">Projects</a>
-            <a href="/aie">Dashboards</a>
+            <a href="/aie">AI Dashboards</a>
             <a href="/blog">Blog</a>
             <a href="/resume">Resume</a>
-            <a href="/mcp">MCP Connector</a>
+            <a href="/mcp">MCP Server</a>
             <a href="https://github.com/kprsnt2" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
             <a href="https://linkedin.com/in/prashanth-kumar-kadasi-b5281765" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> LinkedIn</a>
         </div>
         <div class="footer-built">
-            Built with rigor & heart · Hyderabad, India
+            Built with algorithmic rigor · Hyderabad, India
         </div>
     </footer>
 
@@ -157,9 +161,8 @@
     <script defer src="/_vercel/insights/script.js"></script>
     <script defer src="/_vercel/speed-insights/script.js"></script>
 
-    <!-- Navigation & Smooth Scroll Script -->
+    <!-- Mobile Navigation Script -->
     <script>
-        // Mobile menu toggle
         const toggleBtn = document.getElementById('navToggle');
         const navLinks = document.getElementById('navLinks');
         if (toggleBtn && navLinks) {
@@ -167,8 +170,6 @@
                 navLinks.classList.toggle('show');
             });
         }
-
-        // Auto close mobile menu when link is clicked
         if (navLinks) {
             navLinks.querySelectorAll('a').forEach(a => {
                 a.addEventListener('click', () => {
@@ -179,7 +180,7 @@
     </script>
 
     <!-- RAG Chat Widget -->
-    <script src="{{ url_for('static', filename='js/chat-widget.js') }}?v=4"></script>
+    <script src="{{ url_for('static', filename='js/chat-widget.js') }}?v=5"></script>
 </body>
 
 </html>
