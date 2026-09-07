@@ -1,49 +1,110 @@
 {% extends "base.html" %}
 
-{% block title %}Projects | Prashanth Kumar Kadasi{% endblock %}
+{% block title %}My Projects — Prashanth Kumar Kadasi{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h2>My Projects</h2>
-            <p class="mb-4">A collection of web applications, AI tools, dashboards, and educational apps I've built.</p>
+<div class="projects-page-wrapper" style="padding: 2rem clamp(1.25rem, 4.5vw, 6rem) 5rem;">
+
+    <!-- ══ HEADER ══ -->
+    <header style="text-align: center; max-width: 720px; margin: 0 auto 3rem;">
+        <div class="hero-eyebrow" style="margin-bottom: 1rem;">
+            <span>✦</span> Working Systems & Research
         </div>
+        <h1 class="page-title" style="font-family: 'Fraunces', serif; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 500; letter-spacing: -0.02em; color: var(--text); margin-bottom: 0.8rem;">
+            <span style="color: var(--pink-deep);">My</span> Projects
+        </h1>
+        <p style="font-size: 1.15rem; color: var(--text-mid); margin-bottom: 1.8rem;">
+            From idea to mathematical validation and working production software.
+        </p>
+        <a href="https://github.com/kprsnt2" target="_blank" rel="noopener" class="hero-cta" style="background: var(--text); color: #fff; text-decoration: none; display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.75rem 1.6rem; border-radius: 999px; font-weight: 600; font-size: 0.92rem; transition: transform 0.2s, opacity 0.2s;">
+            <i class="fab fa-github" style="font-size: 1.1rem;"></i>
+            <span>View my GitHub</span>
+        </a>
+    </header>
+
+    <!-- ══ PROJECT SELECTOR: FLOATING BUBBLE CLOUD ══ -->
+    <div class="project-selector" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem 1.5rem; max-width: 1080px; margin: 0 auto 4rem; padding-bottom: 1rem;">
+        {% for project in projects[:8] %}
+        {% set tint_idx = (loop.index0 % 6) + 1 %}
+        <div class="proj-card-wrap" style="animation-delay: {{ (loop.index0 * 0.4) }}s; animation-duration: {{ 6.0 + (loop.index0 * 0.3) }}s;">
+            <a href="#project-{{ loop.index }}" class="proj-card proj-card-0{{ tint_idx }}" style="text-decoration: none; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0.8rem;">
+                <span class="proj-card-name" style="font-size: 0.85rem; font-weight: 600; color: var(--text); line-height: 1.2;">
+                    {{ project.title.replace('🤖 ', '').replace('🎓 ', '').replace('🔬 ', '').replace('⚡ ', '').replace('📊 ', '').replace('🧬 ', '').replace('🕉️ ', '').replace('❤️ ', '').replace('🎂 ', '').replace('📚 ', '') }}
+                </span>
+                <span style="font-size: 0.7rem; color: var(--text-soft); margin-top: 0.3rem;">#0{{ loop.index }}</span>
+            </a>
+        </div>
+        {% endfor %}
     </div>
 
-    <div class="row mt-3">
+    <!-- ══ ALL PROJECTS SHOWCASE ══ -->
+    <div class="section-header" style="margin-bottom: 2rem;">
+        <span class="section-title">All Projects ({{ projects|length }})</span>
+        <div class="section-line"></div>
+    </div>
+
+    <div class="projects" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 2rem;">
         {% for project in projects %}
-        <div class="col-12 col-md-6 col-lg-4 mb-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-header">
-                    <span class="card-title-text">{{ project.title }}</span>
-                    {% if project.featured %}
-                    <span class="featured-badge">⭐ Featured</span>
-                    {% endif %}
-                </div>
-                <div class="card-body d-flex flex-column">
-                    <p class="flex-grow-1">{{ project.description }}</p>
+        {% set tint_idx = (loop.index0 % 6) + 1 %}
+        <div id="project-{{ loop.index }}" class="card card-0{{ tint_idx }}" style="scroll-margin-top: 5rem; position: relative;" data-observe>
+            <div class="card-deco"></div>
+            <p class="card-number">{{ "%02d" % loop.index }}</p>
 
-                    <!-- Tags -->
-                    <div style="margin-bottom: 1rem;">
-                        {% for tag in project.tags %}
-                        <span class="project-tag">{{ tag }}</span>
-                        {% endfor %}
-                    </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: 0.5rem;">
+                <h2 class="card-title" style="margin-bottom: 0;">{{ project.title }}</h2>
+                {% if project.featured %}
+                <span style="background: rgba(232, 99, 126, 0.12); color: var(--pink-deep); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 0.25rem 0.65rem; border-radius: 999px; flex-shrink: 0;">
+                    ✦ Featured
+                </span>
+                {% endif %}
+            </div>
 
-                    <!-- Buttons -->
-                    <div class="mt-auto">
-                        <a href="{{ project.url }}" target="_blank"
-                            class="btn btn-{{ project.color }} btn-sm me-2">Visit Site →</a>
-                        {% if project.github %}
-                        <a href="{{ project.github }}" target="_blank"
-                            class="btn btn-outline-secondary btn-sm">GitHub</a>
-                        {% endif %}
-                    </div>
-                </div>
+            <p class="card-desc" style="margin-top: 0.75rem;">{{ project.description }}</p>
+
+            <!-- Tags -->
+            <div class="card-tags" style="margin-top: 1rem; margin-bottom: 1.5rem;">
+                {% for tag in project.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+            </div>
+
+            <!-- Action links -->
+            <div style="margin-top: auto; display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; z-index: 2; position: relative;">
+                {% if project.url %}
+                <a href="{{ project.url }}" target="_blank" rel="noopener" class="hero-cta" style="padding: 0.5rem 1.1rem; font-size: 0.82rem; text-decoration: none;">
+                    Visit App →
+                </a>
+                {% endif %}
+                {% if project.github %}
+                <a href="{{ project.github }}" target="_blank" rel="noopener" class="tag" style="background: rgba(0,0,0,0.06); color: var(--text); padding: 0.5rem 0.9rem; font-size: 0.82rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;">
+                    <i class="fab fa-github"></i> Source
+                </a>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
     </div>
+
 </div>
+
+<script>
+    // Smooth scrolling & card highlight when bubble is clicked
+    document.querySelectorAll('.proj-card').forEach(bubble => {
+        bubble.addEventListener('click', (e) => {
+            const targetId = bubble.getAttribute('href');
+            if (targetId && targetId.startsWith('#')) {
+                const targetCard = document.querySelector(targetId);
+                if (targetCard) {
+                    targetCard.style.transition = 'box-shadow 0.3s ease, transform 0.3s ease';
+                    targetCard.style.boxShadow = '0 0 0 4px var(--pink-deep), 0 20px 40px rgba(0,0,0,0.12)';
+                    targetCard.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        targetCard.style.boxShadow = '';
+                        targetCard.style.transform = '';
+                    }, 1800);
+                }
+            }
+        });
+    });
+</script>
 {% endblock %}
