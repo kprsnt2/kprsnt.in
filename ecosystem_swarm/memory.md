@@ -1,6 +1,6 @@
 # AI Eco Swarm: Living Memory Stream
 
-*Last Consolidated: 2026-09-06 | Protocol: MCP 2024-11-05 | Swarm Size: 6 Agents*
+*Last Consolidated: 2026-09-07 | Protocol: MCP 2024-11-05 | Swarm Size: 6 Agents*
 
 ---
 
@@ -17,6 +17,7 @@
 ---
 
 ## 💡 Learned Engineering Patterns
+- **2026-09-07**: Active engineering sprint touched 1 repos: kprsnt2/kprsnt.in.
 - **2026-09-06**: Active engineering sprint touched 3 repos: kprsnt2/kprsnt.in, kprsnt2/retail_shelf_intelligence, kprsnt2/kprsnt-vercel-rust.
 - **2026-09-06**: Active engineering sprint touched 3 repos: kprsnt2/kprsnt-vercel-rust, kprsnt2/retail_shelf_intelligence, kprsnt2/kprsnt.in.
 - **2026-09-05**: Swarm steady-state maintenance: verified telemetry parity and protocol readiness.
@@ -44,12 +45,12 @@
 ---
 
 ## 🎯 Active Weekly Focus & Strategic Roadmap
-*(Updated via Weekly Swarm Alignment Council on 2026-09-05)*
+*(Updated via Weekly Swarm Alignment Council on 2026-09-07)*
 
-1. **Decoupling**: Python backend, FastMCP protocol engine, and static site generation maintain clean boundaries.
-2. **Observability**: Real-time telemetry dashboard provides transparent visibility into commit cadence and skills distribution.
-3. **Resilience**: The system gracefully handles missing API tokens or network latency with structured fallback mechanisms.
-4. **Goal 1: Swarm Memory Orchestration**: Fully automate daily inter-agent dialogue logging and memory updates inside `scripts/ecosystem_agents.py`.
-5. **Goal 2: FastMCP Memory Exposure**: Expose `eco://swarm/memory` resource and swarm inspection tools to Claude Desktop and Cursor.
-6. **Goal 3: Dashboard Memory Visualization**: Integrate active swarm opinions and weekly goals directly into the `/ecosystem` web dashboard.
-7. **Goal 4: Automated Compaction Guardrails**: Maintain word-count checks on `memory.md` to prevent context window overflow.
+1. **Decoupling**: The system is increasingly modular across backend, MCP, and UI layers, with clear separation between the Flask/Python host app, FastMCP interface, and memory/telemetry stores. However, the growing number of automation surfaces means continued discipline is needed to keep ingestion, summarization, and presentation layers loosely coupled.
+2. **Observability**: Observability is improving. The swarm now has better commit harvesting, structured daily perspectives, and consolidated living memory, which increases traceability of engineering changes. Remaining gaps are mostly around richer error tracking and more explicit cross-repo linkage in summaries.
+3. **Resilience**: Resilience is solid and trending upward, supported by daily GitHub Actions execution, protocol transport coverage, and fallback-friendly memory stores. The main resilience opportunity is to harden against partial data loss or incomplete checkout states so summaries remain accurate under degraded repository access.
+4. **Goal 1: Complete Commit Intelligence Coverage**: Finish hardening the Scout ingestion path so local git harvesting reliably captures meaningful commit metadata across all active repositories. Prioritize consistent author, message, and diff-context extraction to reduce blind spots in weekly analysis.
+5. **Goal 2: Tighten Cross-Repo Narrative Linking**: Connect related changes across `kprsnt.in`, `kprsnt-vercel-rust`, and `retail_shelf_intelligence` into a single coherent engineering storyline. This will improve strategic memory, reduce duplication, and make architectural tradeoffs easier to evaluate.
+6. **Goal 3: Strengthen Telemetry and Failure Visibility**: Add clearer indicators for partial failures, missing repository state, and ingestion gaps in the daily pipeline. The goal is to make degraded conditions visible early without interrupting the swarm’s reporting cadence.
+7. **Goal 4: Advance Platform Decoupling**: Continue separating protocol, persistence, and presentation concerns so the swarm can evolve each layer independently. Focus on reducing coupling between automation scripts and memory outputs while preserving end-to-end traceability.

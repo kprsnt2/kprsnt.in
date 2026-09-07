@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-09-06T06:32:34.060102",
-  "commit_history": 1002,
+  "last_updated": "2026-09-07T02:53:48.377000",
+  "commit_history": 1004,
   "repo_counts": 100,
   "language_breakdown": {
     "TypeScript": 24,
@@ -9,9 +9,9 @@
     "HTML": 14
   },
   "live_salary_estimation": {
-    "min": 180000,
-    "max": 320000,
-    "reasoning": "A developer with deep experience in autonomous AI multi-agent ecosystems, analytics pipelines, and a strong multi-language repository footprint aligns with US Senior to Staff AI Engineer scope. In the US market, total annual compensation for this profile commonly ranges from roughly $180k to $320k depending on company tier, location, and equity mix."
+    "min": 220000,
+    "max": 420000,
+    "reasoning": "For a US Senior/Staff AI Engineer with deep experience in autonomous multi-agent systems and high-throughput analytics pipelines, compensation typically lands well above standard senior software ranges due to specialized AI and systems expertise. A portfolio of 100 repos across TypeScript, Python, JavaScript, and HTML suggests strong breadth and shipping velocity, supporting a broad senior-to-staff total annual compensation band."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -33,30 +33,27 @@
   ],
   "recent_activity": [
     "[kprsnt2/kprsnt.in] main: feat(ecosystem): enrich Scout Agent commit ingestion with local git harvest and deep engineering prompt | Files (2): AI_Eco_Blogs/github-activity-2026-09-06.md, scripts/ecosystem_agents.py (+176/-66)",
-    "[kprsnt2/kprsnt-vercel-rust] Created branch: main",
-    "[kprsnt2/retail_shelf_intelligence] Created branch: main",
-    "[kprsnt2/kprsnt.in] main: feat(blog): update retail shelf engineering story with Gemini 3.8 Flash + OMP attribution and complete struggles in blog_inputs | Files (2): blog_drafts/retail-shelf-intelligence-engineering-story.md, blog_inputs/retail-shelf-intelligence-engineering-story.md (+98/-349)",
-    "[kprsnt2/kprsnt.in] commit e6a63fe: feat(ecosystem): enrich Scout Agent commit ingestion with local git harvest and deep engineering prompt | Files (295): .github/workflows/blog.yml, .github/workflows/brand_tracker.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml, .github/workflows/pharma.yml, .gitignore, AI_Eco_Blogs/github-activity-2026-09-01.md"
+    "[kprsnt2/kprsnt.in] commit ca638c4: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (296): .github/workflows/blog.yml, .github/workflows/brand_tracker.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml, .github/workflows/pharma.yml, .gitignore, AI_Eco_Blogs/github-activity-2026-09-01.md"
   ],
-  "daily_commits_count": 5,
+  "daily_commits_count": 2,
   "commit_timeline_7d": {
     "labels": [
-      "Mon",
       "Tue",
       "Wed",
       "Thu",
       "Fri",
       "Sat",
-      "Sun"
+      "Sun",
+      "Mon"
     ],
     "commits": [
-      12,
       15,
       0,
       28,
       0,
       1,
-      2
+      1,
+      7
     ],
     "pipelines": [
       1,
