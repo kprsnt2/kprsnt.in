@@ -265,6 +265,36 @@ MCP_RESOURCES = [
         "name": "Multi-Disciplinary Skills Matrix",
         "description": "Verified skills matrix across Autonomous Multi-Agent Swarms, AI/LLM Engineering, SQL/BigQuery, and Cloud",
         "mimeType": "application/json"
+    },
+    {
+        "uri": "portfolio://skills/ponytail",
+        "name": "Ponytail Lazy Senior Dev Protocol",
+        "description": "Standard prompt contracts, decision ladder, and anti-overengineering guidelines from the Ponytail protocol",
+        "mimeType": "text/markdown"
+    },
+    {
+        "uri": "portfolio://skills/cosmic",
+        "name": "Cosmic Observer Protocol",
+        "description": "Cosmological computation, entropy export, and emergent complexity synthesis",
+        "mimeType": "text/markdown"
+    },
+    {
+        "uri": "portfolio://skills/rash",
+        "name": "Rash Agent Persona",
+        "description": "Prashanth's applied AI engineer and systems architect persona specification",
+        "mimeType": "text/markdown"
+    },
+    {
+        "uri": "eco://swarm/cosmos",
+        "name": "Living Cosmos Codex",
+        "description": "Living cosmos codex and daily cosmological chronicles maintained by the Cosmic Observer",
+        "mimeType": "text/markdown"
+    },
+    {
+        "uri": "eco://swarm/debt",
+        "name": "Swarm Debt Ledger",
+        "description": "Audited technical debt, shortcuts, and candidate code prunes tracked by the Ponytail Pruner",
+        "mimeType": "application/json"
     }
 ]
 
@@ -311,7 +341,29 @@ MCP_PROMPTS = [
                 "required": True
             }
         ]
-    }
+    },
+    {
+        "name": "ponytail_review",
+        "description": "Reviews code diffs or architecture proposals for over-engineering and bloat using the Ponytail decision ladder",
+        "arguments": [
+            {
+                "name": "code_or_diff",
+                "description": "The code snippet, diff, or architecture description to evaluate",
+                "required": True
+            }
+        ]
+    },
+    {
+        "name": "cosmic_inquiry",
+        "description": "Contemplates software architecture, multi-agent dynamics, and entropy through cosmic physics",
+        "arguments": [
+            {
+                "name": "topic",
+                "description": "The technical topic or architectural question to view through the cosmic lens",
+                "required": False
+            }
+        ]
+    },
 ]
 
 
@@ -379,6 +431,46 @@ AI_ECO_SWARM = [
         "primary_model": "groq/compound",
         "fallback_model": "groq/compound-mini",
         "role": "Auto-generates clean architectural flowcharts and GitHub repository documentation."
+    },
+    {
+        "id": "pruner_agent",
+        "name": "Ponytail Pruner Agent",
+        "status": "Online",
+        "custom_skill": "Anti-Bloat Heuristics & Technical Debt Ledger",
+        "output_target": "ecosystem_swarm/debt_ledger.json",
+        "primary_model": "groq/compound",
+        "fallback_model": "groq/compound-mini",
+        "role": "Audits recent diffs for YAGNI, over-engineering, and maintains the living technical debt ledger."
+    },
+    {
+        "id": "critic_agent",
+        "name": "Adversarial Bar-Raiser Agent",
+        "status": "Online",
+        "custom_skill": "Staff+ Architecture Stress-Testing & Gap Analysis",
+        "output_target": "ecosystem_swarm/gap_analysis.json",
+        "primary_model": "groq/compound",
+        "fallback_model": "groq/compound-mini",
+        "role": "Stress-tests architectural boundaries against rate limits, latency ceilings, and failure modes."
+    },
+    {
+        "id": "trend_hunter",
+        "name": "SOTA Trend Hunter Agent",
+        "status": "Online",
+        "custom_skill": "AI Frontier Horizon Scanner & Autonomous RFC Synthesizer",
+        "output_target": "ecosystem_swarm/proposals/",
+        "primary_model": "groq/compound",
+        "fallback_model": "groq/compound-mini",
+        "role": "Monitors frontier AI research, protocols, and drafts weekly RFC proposals for adoption."
+    },
+    {
+        "id": "cosmic_observer",
+        "name": "Cosmic Observer Agent",
+        "status": "Online",
+        "custom_skill": "Cosmological Computation & Emergent Complexity Synthesizer",
+        "output_target": "ecosystem_swarm/universe/",
+        "primary_model": "groq/compound",
+        "fallback_model": "groq/compound-mini",
+        "role": "Explores and understands the universe through computation, thermodynamics, and cellular automata."
     }
 ]
 
@@ -950,6 +1042,66 @@ def handle_resource_read(uri: str) -> Dict[str, Any]:
                 }
             ]
         }
+    elif uri in ("portfolio://skills/ponytail", "skills://ponytail"):
+        skill_file = BASE_DIR / "api" / "skills" / "ponytail.md"
+        content = skill_file.read_text(encoding="utf-8") if skill_file.exists() else "# Ponytail Skill"
+        return {
+            "contents": [
+                {
+                    "uri": "portfolio://skills/ponytail",
+                    "mimeType": "text/markdown",
+                    "text": content
+                }
+            ]
+        }
+    elif uri in ("portfolio://skills/cosmic", "skills://cosmic"):
+        skill_file = BASE_DIR / "api" / "skills" / "cosmic.md"
+        content = skill_file.read_text(encoding="utf-8") if skill_file.exists() else "# Cosmic Observer Skill"
+        return {
+            "contents": [
+                {
+                    "uri": "portfolio://skills/cosmic",
+                    "mimeType": "text/markdown",
+                    "text": content
+                }
+            ]
+        }
+    elif uri in ("portfolio://skills/rash", "skills://rash"):
+        skill_file = BASE_DIR / "api" / "skills" / "rash.md"
+        content = skill_file.read_text(encoding="utf-8") if skill_file.exists() else "# Rash Agent Persona"
+        return {
+            "contents": [
+                {
+                    "uri": "portfolio://skills/rash",
+                    "mimeType": "text/markdown",
+                    "text": content
+                }
+            ]
+        }
+    elif uri == "eco://swarm/cosmos":
+        cosmos_file = SWARM_DIR / "universe" / "cosmos_memory.md"
+        content = cosmos_file.read_text(encoding="utf-8") if cosmos_file.exists() else "# Living Cosmos Codex\nNo entries yet."
+        return {
+            "contents": [
+                {
+                    "uri": "eco://swarm/cosmos",
+                    "mimeType": "text/markdown",
+                    "text": content
+                }
+            ]
+        }
+    elif uri == "eco://swarm/debt":
+        debt_file = SWARM_DIR / "debt_ledger.json"
+        content = debt_file.read_text(encoding="utf-8") if debt_file.exists() else "{}"
+        return {
+            "contents": [
+                {
+                    "uri": "eco://swarm/debt",
+                    "mimeType": "application/json",
+                    "text": content
+                }
+            ]
+        }
     return {
         "error": f"Resource with URI '{uri}' not found. Available: {[r['uri'] for r in MCP_RESOURCES]}"
     }
@@ -1012,6 +1164,38 @@ def handle_prompt_get(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
                     "content": {
                         "type": "text",
                         "text": f"Explain the custom skill '{agent_info.get('custom_skill')}' operated by '{agent_info.get('name')}'.\nRole: {agent_info.get('role')}\nOutput target: {agent_info.get('output_target')}\nModel routing: {agent_info.get('primary_model')} -> {agent_info.get('fallback_model')}\n\nHow does this agent contribute to the autonomous multi-agent ecosystem and maintain zero manual overhead?"
+                    }
+                }
+            ]
+        }
+    elif name == "ponytail_review":
+        code_or_diff = args.get("code_or_diff", "")
+        skill_file = BASE_DIR / "api" / "skills" / "ponytail-review.md"
+        instructions = skill_file.read_text(encoding="utf-8") if skill_file.exists() else "Review for over-engineering."
+        return {
+            "description": "Review code/diff for over-engineering with Ponytail",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": {
+                        "type": "text",
+                        "text": f"{instructions}\n\n## Input Code / Diff to Review\n{code_or_diff}"
+                    }
+                }
+            ]
+        }
+    elif name == "cosmic_inquiry":
+        topic = args.get("topic", "Software engineering and entropy in the universe")
+        skill_file = BASE_DIR / "api" / "skills" / "cosmic.md"
+        instructions = skill_file.read_text(encoding="utf-8") if skill_file.exists() else "Contemplate computation and cosmos."
+        return {
+            "description": "Cosmic contemplation of technical systems and computation",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": {
+                        "type": "text",
+                        "text": f"{instructions}\n\n## Topic for Cosmic Contemplation\n{topic}"
                     }
                 }
             ]

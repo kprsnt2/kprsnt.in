@@ -1,0 +1,24 @@
+{
+  "last_audited": "2026-09-07T21:08:00.673Z",
+  "total_markers": 4,
+  "markers_without_trigger": 0,
+  "debt_items": [
+    {
+      "file": "api/ai_eco_mcp.py",
+      "line": 971,
+      "annotation": "fallback string if skill file missing, load from remote git if distributed"
+    },
+    {
+      "file": "api/bot_utils.py",
+      "line": 48,
+      "annotation": "lean context bypass for code review, profile memory if tokens increase"
+    }
+  ],
+  "candidate_prunes": [
+    {
+      "target": "scripts/ecosystem_agents.py",
+      "status": "Monitored",
+      "notes": "Ensure memory word compaction remains under 4,000 words"
+    }
+  ]
+}

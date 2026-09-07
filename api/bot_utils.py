@@ -37,19 +37,32 @@ def get_system_prompt(agent_type: str = "interview") -> str:
     elif agent_type == "ecosystem":
         skill = _load_skill("ecosystem")
         portfolio_context = get_interview_context()
+    elif agent_type in ("rash", "alter-ego"):
+        skill = _load_skill("rash")
+        portfolio_context = get_chat_context()
+    elif agent_type in ("cosmic", "universe"):
+        skill = _load_skill("cosmic")
+        portfolio_context = ""
+    elif agent_type in ("critic", "bar-raiser"):
+        skill = _load_skill("critic")
+        portfolio_context = ""
+    elif agent_type in ("pruner", "ponytail", "ponytail-review", "ponytail-audit", "ponytail-debt"):
+        skill_name = "pruner" if agent_type == "pruner" else agent_type
+        skill = _load_skill(skill_name)
+        portfolio_context = ""
     else:
         skill = _load_skill("interview")
         portfolio_context = get_interview_context()
+    # 2. Build system prompt: include portfolio context if present
+    prompt = skill.strip() + "\n\n"
+    if portfolio_context:
+        prompt += "## Portfolio Data\n" + portfolio_context + "\n"
 
-    # 2. Load live pipeline data (jobs, brands, pharma)
-    live_data = get_all_live_data()
-
-    # 3. Build the system prompt: skill instructions + portfolio + live data
-    prompt = skill + "\n\n"
-    prompt += "## Portfolio Data\n" + portfolio_context + "\n"
-    if live_data:
-        prompt += "\n## Live Pipeline Data (real-time)\n" + live_data + "\n"
-
+    # 3. Load live pipeline data strictly for visitor, interview, and alter-ego agents
+    if agent_type in ("interview", "chat", "ecosystem", "rash", "alter-ego"):
+        live_data = get_all_live_data()
+        if live_data:
+            prompt += "\n## Live Pipeline Data (real-time)\n" + live_data + "\n"
     return prompt
 
 try:
