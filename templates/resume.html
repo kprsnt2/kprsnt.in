@@ -122,9 +122,14 @@
                 </span>
                 {% endif %}
             </h2>
-            <button onclick="window.print()" class="btn btn-sm btn-outline-primary print-hide" style="border-radius: 20px;">
-                <i class="fas fa-file-pdf"></i> Export to PDF
-            </button>
+            <div class="d-flex align-items-center gap-2 print-hide">
+                <a href="/static/Prashanth_Kumar_Kadasi_Resume.pdf" download="Prashanth_Kumar_Kadasi_Resume.pdf" class="btn btn-sm btn-primary" style="border-radius: 20px;">
+                    <i class="fas fa-file-arrow-down me-1"></i> Download ATS PDF
+                </a>
+                <a href="/static/resume_pdf.html" target="_blank" class="btn btn-sm btn-outline-primary" style="border-radius: 20px;">
+                    <i class="fas fa-print me-1"></i> ATS Print View
+                </a>
+            </div>
         </div>
         <div class="col-12 mt-2">
             {% if current_role %}

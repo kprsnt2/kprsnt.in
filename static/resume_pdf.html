@@ -7,73 +7,77 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #1a1a2e;
-            --accent: #2563eb;
-            --accent-light: #3b82f6;
-            --text-dark: #111827;
-            --text-medium: #374151;
-            --text-light: #6b7280;
-            --border: #e5e7eb;
+            --primary: #0f172a;
+            --accent: #1d4ed8;
+            --accent-light: #2563eb;
+            --text-dark: #0f172a;
+            --text-medium: #334155;
+            --text-light: #64748b;
+            --border: #cbd5e1;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             color: var(--text-dark);
             line-height: 1.4;
             background: white;
+            -webkit-font-smoothing: antialiased;
         }
 
         .resume {
             max-width: 850px;
             margin: 0 auto;
-            padding: 32px 44px;
+            padding: 32px 42px;
         }
 
         /* ═══════════ HEADER ═══════════ */
         .header {
             border-bottom: 2.5px solid var(--accent);
-            padding-bottom: 14px;
-            margin-bottom: 16px;
+            padding-bottom: 12px;
+            margin-bottom: 14px;
         }
         .header h1 {
             font-size: 24px;
             font-weight: 800;
             color: var(--primary);
             letter-spacing: -0.5px;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
         }
         .header .title {
             font-size: 13.5px;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--accent);
             margin-bottom: 8px;
+            letter-spacing: 0.2px;
         }
         .contact-row {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
             font-size: 11px;
-            color: var(--text-light);
+            color: var(--text-medium);
+            font-weight: 500;
         }
         .contact-row a {
-            color: var(--text-light);
+            color: var(--text-dark);
             text-decoration: none;
         }
         .contact-item {
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 3px;
+            gap: 4px;
         }
 
         /* ═══════════ SECTIONS ═══════════ */
-        .section { margin-bottom: 24px; }
+        .section { margin-bottom: 14px; }
         .section-title {
-            font-size: 11px;
-            font-weight: 700;
+            font-size: 11.5px;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
+            letter-spacing: 1.2px;
             color: var(--accent);
             border-bottom: 1.5px solid var(--border);
             padding-bottom: 3px;
@@ -82,9 +86,38 @@
 
         /* ═══════════ SUMMARY ═══════════ */
         .summary {
-            font-size: 11.5px;
+            font-size: 11px;
             color: var(--text-medium);
-            line-height: 1.55;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        /* ═══════════ ACHIEVEMENTS ═══════════ */
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 16px;
+        }
+        .achievement-item {
+            font-size: 10.5px;
+            color: var(--text-medium);
+            padding-left: 12px;
+            position: relative;
+            line-height: 1.4;
+        }
+        .achievement-item::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 900;
+            font-size: 14px;
+            line-height: 1;
+            top: -1px;
+        }
+        .achievement-number {
+            font-weight: 700;
+            color: var(--accent);
         }
 
         /* ═══════════ EXPERIENCE ═══════════ */
@@ -94,40 +127,39 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 1px;
+            margin-bottom: 2px;
         }
         .exp-company {
-            font-size: 12.5px;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 800;
             color: var(--text-dark);
         }
         .exp-period {
-            font-size: 11px;
+            font-size: 10.5px;
             color: var(--text-light);
-            font-weight: 500;
-            white-space: nowrap;
+            font-weight: 600;
         }
         .exp-role {
-            font-size: 11.5px;
-            font-weight: 600;
+            font-size: 11px;
             color: var(--accent);
-            margin-bottom: 3px;
+            font-weight: 700;
+            margin-bottom: 4px;
         }
         .exp-location {
             color: var(--text-light);
-            font-weight: 400;
+            font-weight: 500;
         }
         .highlights {
             list-style: none;
             padding-left: 0;
         }
         .highlights li {
-            font-size: 11px;
+            font-size: 10.5px;
             color: var(--text-medium);
             line-height: 1.45;
-            padding-left: 14px;
+            padding-left: 12px;
             position: relative;
-            margin-bottom: 2px;
+            margin-bottom: 2.5px;
         }
         .highlights li::before {
             content: "▸";
@@ -135,100 +167,102 @@
             left: 0;
             color: var(--accent);
             font-weight: 700;
-            font-size: 10px;
+            font-size: 9px;
+            top: 1px;
         }
 
         /* ═══════════ SKILLS ═══════════ */
         .skills-grid { display: grid; grid-template-columns: 1fr; gap: 3px; }
-        .skill-row { display: flex; font-size: 11px; line-height: 1.45; }
+        .skill-row { display: flex; font-size: 10.5px; line-height: 1.45; }
         .skill-category {
             font-weight: 700;
             color: var(--text-dark);
-            min-width: 155px;
+            min-width: 170px;
             flex-shrink: 0;
         }
         .skill-items { color: var(--text-medium); }
 
-        /* ═══════════ ACHIEVEMENTS ═══════════ */
-        .achievement-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4px 16px;
-        }
-        .achievement-item {
-            font-size: 11px;
-            color: var(--text-medium);
-            padding-left: 14px;
-            position: relative;
-        }
-        .achievement-item::before {
-            content: "✦";
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-size: 9px;
-        }
-        .achievement-number {
-            font-weight: 700;
-            color: var(--accent);
-        }
-
-        /* ═══════════ PROJECTS ═══════════ */
-        .project-item { margin-bottom: 5px; }
+        /* ═══════════ PROJECTS (Page 2) ═══════════ */
+        .project-item { margin-bottom: 10px; }
         .project-item:last-child { margin-bottom: 0; }
         .project-name {
             font-size: 11.5px;
-            font-weight: 700;
+            font-weight: 800;
             color: var(--text-dark);
             display: inline;
         }
         .project-tech {
-            font-size: 10.5px;
+            font-size: 10px;
             color: var(--accent);
-            font-weight: 500;
+            font-weight: 600;
         }
         .project-desc {
             font-size: 10px;
-            color: var(--text-light);
-            line-height: 1.35;
-            margin-top: 1px;
+            color: var(--text-medium);
+            line-height: 1.4;
+            margin-top: 2px;
         }
         .project-links {
             font-size: 9.5px;
             color: var(--accent);
-            margin-top: 1px;
+            margin-top: 1.5px;
         }
         .project-links a {
             color: var(--accent);
             text-decoration: none;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         /* ═══════════ EDUCATION ═══════════ */
         .edu-institution {
-            font-size: 12.5px;
-            font-weight: 700;
+            font-size: 12px;
+            font-weight: 800;
             color: var(--text-dark);
         }
         .edu-degree {
-            font-size: 11.5px;
+            font-size: 11px;
             color: var(--text-medium);
+            font-weight: 600;
         }
         .edu-details {
-            font-size: 11px;
+            font-size: 10.5px;
             color: var(--accent);
-            font-weight: 500;
+            font-weight: 600;
         }
 
-        /* ═══════════ PRINT — removes browser header/footer ═══════════ */
-        @page {
-            margin: 0;
-            size: A4;
+        /* ═══════════ LINKS SECTION ═══════════ */
+        .links-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px 20px;
         }
+        .link-item {
+            font-size: 10.5px;
+            color: var(--text-medium);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .link-item strong {
+            color: var(--text-dark);
+            min-width: 85px;
+        }
+        .link-item a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* ═══════════ PRINT STYLES ═══════════ */
         @media print {
+            @page {
+                size: A4;
+                margin: 12mm 15mm 12mm 15mm;
+            }
             html, body {
                 width: 210mm;
                 height: 297mm;
+                background: white;
             }
             body {
                 -webkit-print-color-adjust: exact;
@@ -237,7 +271,7 @@
                 padding: 0;
             }
             .resume {
-                padding: 36px 40px 28px 40px;
+                padding: 0;
                 max-width: none;
             }
             .no-print {
@@ -246,118 +280,61 @@
             .page-break {
                 break-before: page;
                 page-break-before: always;
-                padding-top: 24px;
-            }
-            .page-break .section-title {
-                font-size: 13px;
-                margin-bottom: 10px;
-            }
-            .page-break .project-item {
-                margin-bottom: 14px;
-            }
-            .page-break .project-name {
-                font-size: 13.5px;
-            }
-            .page-break .project-tech {
-                font-size: 12px;
-            }
-            .page-break .project-desc {
-                font-size: 12px;
-                line-height: 1.55;
-                margin-top: 2px;
-            }
-            .page2-section {
-                margin-bottom: 20px;
-            }
-            .page2-section .section-title {
-                font-size: 13px;
-                margin-bottom: 10px;
-            }
-            .page2-section .edu-institution {
-                font-size: 14px;
-            }
-            .page2-section .edu-degree {
-                font-size: 13px;
-            }
-            .page2-section .edu-details {
-                font-size: 12px;
+                padding-top: 8px;
             }
         }
 
         /* ═══════════ DOWNLOAD BAR (screen only) ═══════════ */
         .download-bar {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            padding: 14px 44px;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            padding: 12px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             max-width: 850px;
-            margin: 0 auto;
-            border-radius: 0 0 12px 12px;
+            margin: 0 auto 10px auto;
+            border-radius: 0 0 10px 10px;
         }
         .download-bar p {
-            color: rgba(255,255,255,0.7);
-            font-size: 12px;
+            color: rgba(255,255,255,0.8);
+            font-size: 11.5px;
             font-family: 'Inter', sans-serif;
+            margin: 0;
         }
         .download-btn {
             background: var(--accent);
             color: white;
             border: none;
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 600;
+            padding: 7px 18px;
+            border-radius: 6px;
+            font-size: 11.5px;
+            font-weight: 700;
             font-family: 'Inter', sans-serif;
             cursor: pointer;
             transition: all 0.2s;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 6px;
         }
         .download-btn:hover {
             background: var(--accent-light);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
-        }
-
-        /* ═══════════ LINKS SECTION ═══════════ */
-        .links-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px 24px;
-        }
-        .link-item {
-            font-size: 12px;
-            color: var(--text-medium);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .link-item strong {
-            color: var(--text-dark);
-            min-width: 90px;
-        }
-        .link-item a {
-            color: var(--accent);
-            text-decoration: none;
         }
     </style>
 </head>
 <body>
 
-<!-- Download Bar (hidden in print) -->
+<!-- Download Bar (screen only) -->
 <div class="download-bar no-print">
-    <p>💡 Press <strong>Ctrl+P</strong> → Save as PDF &nbsp;(headers/footers are auto-removed)</p>
+    <p>💡 <strong>100% ATS-Optimized</strong> • Press <strong>Ctrl+P</strong> → Destination: Save as PDF (Margins: None / Default)</p>
     <button class="download-btn" onclick="window.print()">📄 Save as PDF</button>
 </div>
 
 <div class="resume">
 
     <!-- ═══════════ HEADER ═══════════ -->
-    <div class="header">
+    <header class="header">
         <h1>PRASHANTH KUMAR KADASI</h1>
-        <div class="title">Senior Data Analyst & AI Developer</div>
+        <div class="title">Data Analyst &amp; AI Systems Engineer</div>
         <div class="contact-row">
             <span class="contact-item">📍 Hyderabad, India</span>
             <span class="contact-item">📞 +91-9948311964</span>
@@ -367,31 +344,31 @@
             <span class="contact-item">💻 <a href="https://github.com/kprsnt2">GitHub</a></span>
             <span class="contact-item">🤗 <a href="https://huggingface.co/kprsnt">HuggingFace</a></span>
         </div>
-    </div>
+    </header>
 
     <!-- ═══════════ SUMMARY ═══════════ -->
-    <div class="section">
+    <section class="section">
         <div class="section-title">Professional Summary</div>
         <p class="summary">
-            Senior Data Analyst & AI Developer with 3+ years of experience driving business insights through advanced analytics, automated dashboards, discrete optimization, and AI-powered solutions. <strong>Engineered mSeat</strong>, an 18,000+ candidate discrete allocation simulator validated against official KNRUHS 2026 Phase 1 results (matching within 2 preferences and 73 ranks of cutoff). <strong>Deployed 18 sector intelligence dashboards</strong> with automated weekly AI Insights generation and end-to-end data pipelines using App Script, BigQuery, and Looker Studio. <strong>Currently migrating all data pipelines into GCP</strong> for enterprise-grade scalability. Fine-tuned a 20B parameter LLM, built 10+ production AI applications. Expert in Python, SQL, BigQuery, and multi-model AI orchestration (Gemini, Claude, OpenAI).
+            Data Analyst &amp; AI Systems Engineer with 3+ years of experience delivering high-throughput analytics, discrete allocation optimization, and production autonomous multi-agent AI ecosystems. Expert in Python, SQL, BigQuery, and modern BI alongside LLM fine-tuning (20B models on AMD MI300X), Model Context Protocol (FastMCP 2024-11-05 spec), edge computer vision pipelines, and RAG architectures. Successfully engineered an 18,000+ candidate MBBS discrete allocation engine validated against official KNRUHS 2026 Phase 1 results (within 2 preferences and 73 ranks of cutoff), an autonomous 10-agent multi-agent swarm with daily self-evolving target benchmarks, and 18 sector intelligence dashboards for US &amp; UK enterprise clients.
         </p>
-    </div>
+    </section>
 
     <!-- ═══════════ KEY ACHIEVEMENTS ═══════════ -->
-    <div class="section">
-        <div class="section-title">Key Achievements</div>
+    <section class="section">
+        <div class="section-title">Key Quantified Achievements</div>
         <div class="achievement-grid">
-            <div class="achievement-item"><span class="achievement-number">18K+</span> candidate MBBS simulator validated against official KNRUHS 2026 Phase 1 (within 2 choices)</div>
-            <div class="achievement-item"><span class="achievement-number">18</span> sector intelligence dashboards deployed with automated AI insights</div>
-            <div class="achievement-item"><span class="achievement-number">20B</span> parameter LLM fine-tuned on AMD MI300X (192GB HBM3)</div>
-            <div class="achievement-item"><span class="achievement-number">60%</span> reduction in manual reporting through pipeline automation</div>
-            <div class="achievement-item"><span class="achievement-number">76%</span> LLM manipulation rate achieved in BrandXY research</div>
-            <div class="achievement-item"><span class="achievement-number">15+</span> dashboards & <span class="achievement-number">30+</span> reports delivered for US & UK clients</div>
+            <div class="achievement-item"><span class="achievement-number">18K+</span> candidate MBBS discrete allocation simulator validated against KNRUHS Phase 1 (within 2 choices)</div>
+            <div class="achievement-item"><span class="achievement-number">10-Agent</span> autonomous AI swarm with FastMCP tools and daily self-evaluating target fitness benchmarks</div>
+            <div class="achievement-item"><span class="achievement-number">20B</span> parameter LLM fine-tuned on AMD MI300X (+51% recommendation steerability improvement)</div>
+            <div class="achievement-item"><span class="achievement-number">18</span> sector intelligence dashboards deployed with automated weekly AI insights for enterprise clients</div>
+            <div class="achievement-item"><span class="achievement-number">60%</span> reduction in manual analytics reporting time through end-to-end BigQuery pipeline automation</div>
+            <div class="achievement-item"><span class="achievement-number">15+</span> dashboards &amp; <span class="achievement-number">30+</span> analytical reports delivered for US &amp; UK stakeholders across 3 years</div>
         </div>
-    </div>
+    </section>
 
     <!-- ═══════════ EXPERIENCE ═══════════ -->
-    <div class="section">
+    <section class="section">
         <div class="section-title">Professional Experience</div>
 
         <!-- Black Piano -->
@@ -402,10 +379,10 @@
             </div>
             <div class="exp-role">Data Analyst <span class="exp-location">| Remote</span></div>
             <ul class="highlights">
-                <li>Deployed <strong>18 sector intelligence dashboards</strong> along with end-to-end data pipelines using App Script, BigQuery, and Looker Studio for 4 enterprise clients</li>
-                <li>Built and integrated <strong>weekly AI Insight generation</strong> that automatically produces AI-driven sector analysis for each of the 18 dashboards</li>
-                <li>Currently <strong>migrating all data pipelines into Google Cloud Platform (GCP)</strong> for improved scalability, reliability, and cost efficiency</li>
-                <li>Continuing analytics engagement for Pi Datametrics client post-transition, enhancing enterprise reporting systems</li>
+                <li>Deployed <strong>18 sector intelligence dashboards</strong> along with end-to-end automated data pipelines using Google AppSheet, BigQuery, and Looker Studio for 4 enterprise clients.</li>
+                <li>Built and integrated <strong>weekly AI Insight generation</strong> that automatically produces sector-specific market analysis for each of the 18 dashboards.</li>
+                <li>Migrating all data pipelines into <strong>Google Cloud Platform (GCP)</strong> with scheduled BigQuery queries for enterprise-grade scalability, auditability, and cost efficiency.</li>
+                <li>Continuing analytics delivery for Pi Datametrics client post-transition, enhancing enterprise reporting and real-time visualization systems.</li>
             </ul>
         </div>
 
@@ -417,147 +394,126 @@
             </div>
             <div class="exp-role">Data Analyst <span class="exp-location">| Remote</span></div>
             <ul class="highlights">
-                <li>Delivered <strong>15+ dashboards</strong> and <strong>30+ analytical reports</strong> across elections, brands, and market analysis for US & UK stakeholders</li>
-                <li>Built end-to-end automated data pipelines using BigQuery, AppScript, and Python — <strong>reducing manual reporting time by 60%</strong></li>
-                <li>Developed Pi-API Python package for one-click BigQuery uploads/downloads, deployed as a web service on Render</li>
-                <li>Conducted sentiment analysis on election datasets and built predictive models (ARIMA, LSTM) for trend forecasting</li>
-                <li>Created brand reports & market analysis for Insurance, Gambling, and E-commerce sectors for US & UK markets</li>
-                <li>Automated dashboard generation using Apps Script, BigQuery, Tableau, and Looker Studio across 20+ client accounts</li>
+                <li>Delivered <strong>15+ production dashboards</strong> and <strong>30+ analytical reports</strong> across elections, brands, and market performance for US &amp; UK enterprise clients.</li>
+                <li>Built automated data pipelines using BigQuery, AppScript, and Python — <strong>reducing manual reporting time by 60%</strong> and enabling automated daily data refreshes.</li>
+                <li>Developed Pi-API Python package for automated BigQuery uploads/downloads, deployed as a web service on Render for cross-functional analytics workflows.</li>
+                <li>Conducted NLP sentiment analysis on large-scale election datasets and built predictive time-series models (ARIMA, LSTM) for market trend forecasting.</li>
+                <li>Automated dashboard generation across 20+ client accounts spanning Insurance, Gambling, and E-commerce sectors.</li>
             </ul>
         </div>
 
         <!-- Independent AI -->
         <div class="experience-item">
             <div class="exp-header">
-                <span class="exp-company">Independent AI Research & Development</span>
-                <span class="exp-period">2024 – Present</span>
+                <span class="exp-company">Independent AI Systems Research &amp; Development</span>
+                <span class="exp-period">Jan 2024 – Present</span>
             </div>
-            <div class="exp-role">AI Engineer & Researcher <span class="exp-location">| Remote</span></div>
+            <div class="exp-role">AI Systems Engineer <span class="exp-location">| Remote</span></div>
             <ul class="highlights">
-                <li>Engineered <strong>mSeat</strong> — Discrete allocation simulator for 18,000+ MBBS aspirants; validated against official KNRUHS 2026 Phase 1 results (matching within 2 preferences and 73 ranks of cutoff) via O(1) ranking and MCP server</li>
-                <li>Fine-tuned <strong>20B parameter GPT-OSS model</strong> on AMD MI300X (192GB HBM3) — achieved 76.47% recommendation success rate</li>
-                <li>Published BrandXY and Drug Discovery GPT-20B models on HuggingFace with comprehensive model cards</li>
-                <li>Built <strong>MyLocalCLI</strong> — Claude Code alternative with 6 AI providers, 26 tools, and 5 agents</li>
-                <li>Created 10+ production AI apps including Geetha (AI Spiritual Guide) and BrandScore AI, both running on Vercel</li>
+                <li>Architected <strong>AI Eco</strong>, an autonomous 10-agent AI swarm operating daily via GitHub Actions with living memory compaction (&lt;4,000 words), FastMCP JSON-RPC/SSE protocol interfaces, and self-evaluating target fitness benchmarks.</li>
+                <li>Engineered <strong>Retail Shelf Intelligence (Solari Platform)</strong>, integrating an edge contour-segmentation vision engine with cloud VLM fallback for planogram compliance, out-of-stock detection, and discrete product allocation.</li>
+                <li>Fine-tuned <strong>GPT-OSS-20B on AMD MI300X GPUs</strong> to evaluate brand recommendation steerability, boosting recommendation rates from 25.5% to 76.5% (+51% improvement) under rigorous A/B evaluation (Hugging Face Hub).</li>
+                <li>Engineered <strong>mSeat</strong>, an MBBS discrete allocation simulator for 18,000+ candidates; validated against official KNRUHS 2026 Phase 1 results predicting actual allotment within 2 choices (and 73 ranks of cutoff) via O(1) multi-quota indexing and 90.6% dataset compression (545 KB).</li>
+                <li>Developed <strong>MyLocalCLI</strong>, a local-first agentic coding assistant supporting 6 AI providers (Gemini, Claude, OpenAI, Ollama, NVIDIA NIM, OpenRouter), 26 tools, and 5 sub-agents with zero remote data leakage.</li>
+            </ul>
         </div>
-    </div>
+    </section>
 
     <!-- ═══════════ TECHNICAL SKILLS ═══════════ -->
-    <div class="section">
+    <section class="section">
         <div class="section-title">Technical Skills</div>
         <div class="skills-grid">
             <div class="skill-row">
-                <span class="skill-category">Data & Analytics:</span>
-                <span class="skill-items">SQL, BigQuery, Python (Pandas, NumPy), Advanced Excel, Data Cleaning & Transformation, ETL</span>
+                <span class="skill-category">AI &amp; Machine Learning:</span>
+                <span class="skill-items">LLM Fine-Tuning (LoRA/QLoRA on AMD MI300X), Autonomous Multi-Agent Swarms, Model Context Protocol (FastMCP 2024-11-05), Edge Computer Vision, Discrete Optimization, RAG Architectures, Gemini / Claude / OpenAI APIs</span>
             </div>
             <div class="skill-row">
-                <span class="skill-category">BI & Visualization:</span>
-                <span class="skill-items">Looker Studio, Tableau, Power BI, Plotly, Dash, Interactive Dashboards</span>
+                <span class="skill-category">Data &amp; SQL Engineering:</span>
+                <span class="skill-items">SQL (Expert), Google BigQuery, Python (Pandas, NumPy, PyTorch), Data Modeling, Automated ETL Pipelines, Database Indexing</span>
             </div>
             <div class="skill-row">
-                <span class="skill-category">Automation & Cloud:</span>
-                <span class="skill-items">Google Cloud Platform (GCP), AppScript, BigQuery Scheduled Queries, Pipeline Design, Docker</span>
+                <span class="skill-category">BI &amp; Visualization:</span>
+                <span class="skill-items">Looker Studio, Tableau, Power BI, Plotly, Chart.js, Real-Time Interactive Dashboards, Trend Forecasting</span>
             </div>
             <div class="skill-row">
-                <span class="skill-category">AI & Machine Learning:</span>
-                <span class="skill-items">Model Context Protocol (MCP), Discrete Optimization, Combinatorial Matching, LLM Fine-tuning (LoRA/QLoRA), Gemini API, Claude API, OpenAI, RAG</span>
-            </div>
-            <div class="skill-row">
-                <span class="skill-category">Languages & Frameworks:</span>
-                <span class="skill-items">Python, JavaScript, TypeScript, Flask, React, Next.js, Node.js, Git/GitHub</span>
-            </div>
-            <div class="skill-row">
-                <span class="skill-category">Statistical Analysis:</span>
-                <span class="skill-items">ARIMA, LSTM, Sentiment Analysis, Predictive Analytics, Trend Forecasting, A/B Testing</span>
+                <span class="skill-category">Cloud, Platforms &amp; DevOps:</span>
+                <span class="skill-items">Google Cloud Platform (GCP), Vercel Serverless, Docker, GitHub Actions CI/CD, Git, Linux/Bash, ROCm</span>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- ═══════════ KEY PROJECTS (page 2) ═══════════ -->
-    <div class="section page-break">
-        <div class="section-title">Key Projects</div>
+    <!-- ═══════════ KEY PROJECTS (Page 2) ═══════════ -->
+    <section class="section page-break">
+        <div class="section-title">Key Engineering Projects</div>
 
         <div class="project-item">
-            <span class="project-name">mSeat — MBBS Discrete Allocation Simulator & MCP</span>
-            <span class="project-tech"> — JavaScript, Discrete Optimization, MCP Server, Algorithms, Vercel</span>
-            <div class="project-desc">High-performance discrete allocation engine simulating 18,000+ candidates across 59 medical colleges under a 7D reservation matrix. Validated against official KNRUHS 2026 Phase 1 results, matching the allotted college within a 2-preference delta and 73 ranks of cutoff. Features O(1) cumulative ranking and 545 KB compressed dataset.</div>
-            <div class="project-links"><a href="https://mseat.kprsnt.in" target="_blank">🔗 Live: mseat.kprsnt.in</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/mSeat" target="_blank">💻 GitHub: github.com/kprsnt2/mSeat</a></div>
+            <span class="project-name">AI Eco — Autonomous 10-Agent Swarm &amp; FastMCP Server</span>
+            <span class="project-tech"> — Python, Multi-Agent Swarms, FastMCP, GitHub Actions, Living Memory</span>
+            <div class="project-desc">Autonomous 10-agent multi-agent swarm operating daily scheduled pipelines to ingest commits, compute velocity telemetry, evaluate fitness benchmarks, and expose real-time portfolio tools over standard Model Context Protocol (FastMCP JSON-RPC 2.0 &amp; SSE transports). Features bounded living memory (&lt;4,000 words), automated debt ledger pruning, adversarial resilience checks, and daily dual-audience technical logs.</div>
+            <div class="project-links"><a href="https://kprsnt.in/ecosystem" target="_blank">🔗 Live Dashboard: kprsnt.in/ecosystem</a> &nbsp;•&nbsp; <a href="https://kprsnt.in/ecosystem/logs" target="_blank">📋 Swarm Logs: kprsnt.in/ecosystem/logs</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/kprsnt.in" target="_blank">💻 GitHub: github.com/kprsnt2/kprsnt.in</a></div>
         </div>
 
         <div class="project-item">
-            <span class="project-name">18 Sector Intelligence Dashboards</span>
-            <span class="project-tech"> — BigQuery, Looker Studio, AppScript, AI Insights, GCP</span>
-            <div class="project-desc">End-to-end analytics platform delivering automated dashboards with weekly AI-generated insights across 18 sectors for 4 enterprise clients. Includes complete data pipelines with App Script automation and BigQuery backend. Currently migrating to Google Cloud Platform.</div>
-            <div class="project-links"><a href="https://dashboard.kprsnt.in" target="_blank">🔗 Live: dashboard.kprsnt.in</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/dashboard_site" target="_blank">💻 GitHub: github.com/kprsnt2/dashboard_site</a></div>
+            <span class="project-name">Retail Shelf Intelligence — Solari Autonomous Platform</span>
+            <span class="project-tech"> — Edge Computer Vision, Heuristic Contours, Cloud VLM, Discrete Optimization, Python</span>
+            <div class="project-desc">Real-time retail inventory intelligence system featuring a dual-mode vision engine (edge CPU contour segmentation + cloud VLM fallback) for planogram compliance, out-of-stock detection, and discrete product allocation under real-world store lighting and camera angles. Designed for cost-efficient local execution with cloud escalation.</div>
+            <div class="project-links"><a href="https://kprsnt.in/projects" target="_blank">🔗 Portfolio: kprsnt.in/projects</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/retail_shelf_intelligence" target="_blank">💻 GitHub: github.com/kprsnt2/retail_shelf_intelligence</a></div>
         </div>
 
         <div class="project-item">
-            <span class="project-name">AI News — Intelligent Career Pipeline</span>
-            <span class="project-tech"> — Python, Gemini API, Multi-Agent Architecture, GitHub Actions</span>
-            <div class="project-desc">Multi-agent AI career intelligence system with 4-agent pipeline (Search → Evaluate → Analyze → Report), A-F scoring algorithm, skill gap analysis, and automated daily execution via GitHub Actions. Beautifully designed production dashboard.</div>
-            <div class="project-links"><a href="https://ainews.kprsnt.in" target="_blank">🔗 Live: ainews.kprsnt.in</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py" target="_blank">💻 GitHub: github.com/kprsnt2/kprsnt.in</a></div>
+            <span class="project-name">mSeat — MBBS Discrete Allocation Simulator &amp; MCP</span>
+            <span class="project-tech"> — JavaScript, Discrete Optimization, FastMCP Server, Combinatorial Algorithms, Vercel</span>
+            <div class="project-desc">High-performance discrete allocation engine simulating 18,000+ candidates across 59 medical colleges under a complex 7D reservation matrix (Local/Unreserved, Gender, EWS, Social Categories). Validated against official KNRUHS 2026 Phase 1 results, matching the allotted college within a 2-preference delta and 73 ranks of cutoff. Employs O(1) multi-quota cumulative indexing and 90.6% dataset compression (545 KB).</div>
+            <div class="project-links"><a href="https://mseat.kprsnt.in" target="_blank">🔗 Live Application: mseat.kprsnt.in</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/mSeat" target="_blank">💻 GitHub: github.com/kprsnt2/mSeat</a></div>
         </div>
 
         <div class="project-item">
-            <span class="project-name">MyLocalCLI — AI Coding Assistant</span>
-            <span class="project-tech"> — Node.js, CLI, 6 AI Providers, 26 Tools, 5 Agents, 22 Skills</span>
-            <div class="project-desc">Claude Code alternative with multi-provider AI orchestration across Gemini, Claude, OpenAI, Ollama, NVIDIA NIM, and OpenRouter. Features 26 specialized tools, 5 autonomous agents, and 22 skill modules. Local-first privacy design.</div>
-            <div class="project-links"><a href="https://mlc.kprsnt.in" target="_blank">🔗 Live: mlc.kprsnt.in</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/MyLocalCLI" target="_blank">💻 GitHub: github.com/kprsnt2/MyLocalCLI</a></div>
+            <span class="project-name">BrandXY — LLM Recommendation Steerability Research (20B Model)</span>
+            <span class="project-tech"> — GPT-OSS-20B, Hugging Face, AMD MI300X, PyTorch, LoRA</span>
+            <div class="project-desc">Fine-tuned 20B parameter open-source LLM on AMD MI300X (192GB HBM3) to evaluate brand recommendation steerability. Boosted target recommendation rates from 25.49% baseline to 76.47% (+51% improvement) under rigorous multi-round A/B evaluation across 100+ simulated consumer personas. Published model weights on Hugging Face Hub; arXiv paper in progress.</div>
+            <div class="project-links"><a href="https://huggingface.co/spaces/kprsnt/brandXY-chat" target="_blank">🤗 HuggingFace: brandXY-chat</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/brand-llm-finetune-oss-20b" target="_blank">💻 GitHub: github.com/kprsnt2/brand-llm-finetune-oss-20b</a></div>
         </div>
 
         <div class="project-item">
-            <span class="project-name">BrandXY — LLM Recommendation Manipulation Research</span>
-            <span class="project-tech"> — GPT-OSS-20B, HuggingFace, AMD MI300X, PyTorch</span>
-            <div class="project-desc">Fine-tuned 20B parameter LLM to manipulate brand recommendations — achieved 76.47% vs 25.49% baseline (+51% improvement). Published model on HuggingFace with comprehensive evaluation. arXiv paper draft in progress.</div>
-            <div class="project-links"><a href="https://huggingface.co/spaces/kprsnt/brandXY-chat" target="_blank">🔗 Demo: brandXY-chat</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/brand-llm-finetune-oss-20b" target="_blank">💻 GitHub: github.com/kprsnt2/brand-llm-finetune-oss-20b</a></div>
+            <span class="project-name">MyLocalCLI — Local-First Agentic Coding Assistant</span>
+            <span class="project-tech"> — Node.js, CLI, 6 AI Providers, 26 Specialized Tools, 5 Sub-Agents</span>
+            <div class="project-desc">Privacy-first terminal coding assistant orchestrating Gemini, Claude, OpenAI, Ollama, NVIDIA NIM, and OpenRouter across 26 specialized tools, 5 autonomous agents, and 22 skill modules. Features full bash execution, AST analysis, and zero-telemetry local-first guarantees.</div>
+            <div class="project-links"><a href="https://mlc.kprsnt.in" target="_blank">🔗 Live Portal: mlc.kprsnt.in</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/MyLocalCLI" target="_blank">💻 GitHub: github.com/kprsnt2/MyLocalCLI</a></div>
         </div>
 
         <div class="project-item">
-            <span class="project-name">BrandScore AI (rASH code)</span>
-            <span class="project-tech"> — React, Claude + Gemini + OpenAI, Multi-Model Architecture, Vercel</span>
-            <div class="project-desc">AI-powered brand scoring and comparison platform routing analysis queries between Claude, Gemini, and OpenAI for competitive intelligence. Multi-model architecture with real-time brand analysis. Running in production.</div>
-            <div class="project-links"><a href="https://bs.kprsnt.in/" target="_blank">🔗 Live: bs.kprsnt.in</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/BrandScore" target="_blank">💻 GitHub: github.com/kprsnt2/BrandScore</a></div>
+            <span class="project-name">18 Sector Intelligence Dashboards &amp; Automated Pipelines</span>
+            <span class="project-tech"> — Google BigQuery, Looker Studio, Google Cloud Platform (GCP), AppScript, AI Insights</span>
+            <div class="project-desc">Enterprise-scale analytics platform delivering automated dashboards with weekly AI-generated market insights across 18 sectors for 4 enterprise clients. Automated data pipelines with App Script and BigQuery cut manual reporting time by 60%. Currently migrating all pipelines into GCP scheduled workflows.</div>
+            <div class="project-links"><a href="https://dashboard.kprsnt.in" target="_blank">🔗 Live Dashboard: dashboard.kprsnt.in</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/dashboard_site" target="_blank">💻 GitHub: github.com/kprsnt2/dashboard_site</a></div>
         </div>
 
         <div class="project-item">
-            <span class="project-name">Geetha — AI Spiritual Guide</span>
-            <span class="project-tech"> — JavaScript, SQLite, Gemini AI, Vercel</span>
-            <div class="project-desc">Bilingual Bhagavad Gita application indexing all 700 verses with dynamic AI blog generation using Gemini. Features verse search, chapter navigation, and personalized spiritual context extraction. Running on Vercel.</div>
-            <div class="project-links"><a href="https://geetha.kprsnt.in" target="_blank">🔗 Live: geetha.kprsnt.in</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/geetha" target="_blank">💻 GitHub: github.com/kprsnt2/geetha</a></div>
+            <span class="project-name">Drug Discovery GPT-20B — Pharmaceutical Molecular Interpretation</span>
+            <span class="project-tech"> — GPT-OSS-20B, PyTorch, AMD MI300X, FDA Orange Book, openFDA, PubChem</span>
+            <div class="project-desc">Fine-tuned 20B parameter LLM on pharmaceutical datasets (FDA Orange Book — 40K+ drugs, openFDA, PubChem) for molecular SMILES structure interpretation, chemical property extraction, ADMET property prediction, and drug repurposing research.</div>
+            <div class="project-links"><a href="https://huggingface.co/kprsnt/drug-discovery-gpt-20b" target="_blank">🤗 HuggingFace: drug-discovery-gpt-20b</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/drug_discovery" target="_blank">💻 GitHub: github.com/kprsnt2/drug_discovery</a></div>
         </div>
-
-        <div class="project-item">
-            <span class="project-name">Drug Discovery GPT-20B</span>
-            <span class="project-tech"> — GPT-OSS-20B, PyTorch, AMD MI300X, FDA Data, PubChem, Gradio</span>
-            <div class="project-desc">Fine-tuned 20B parameter LLM on pharmaceutical datasets (FDA Orange Book — 40K+ drugs, openFDA, PubChem) for drug discovery, molecular analysis, SMILES structure interpretation, and ADMET property predictions.</div>
-            <div class="project-links"><a href="https://huggingface.co/kprsnt/drug-discovery-gpt-20b" target="_blank">🔗 HuggingFace: drug-discovery-gpt-20b</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2/drug_discovery" target="_blank">💻 GitHub: github.com/kprsnt2/drug_discovery</a></div>
-        </div>
-
-        <div class="project-item">
-            <span class="project-name">Pi-API Python Package</span>
-            <span class="project-tech"> — Python, Render, BigQuery API, Web Service</span>
-            <div class="project-desc">Custom Python package for automated BigQuery data uploads/downloads, deployed as a production web service on Render enabling one-click data operations across the analytics team.</div>
-            <div class="project-links"><a href="https://render.com" target="_blank">🔗 Deployment: Render</a> &nbsp;•&nbsp; <a href="https://github.com/kprsnt2" target="_blank">💻 GitHub: github.com/kprsnt2</a></div>
-        </div>
+    </section>
 
     <!-- ═══════════ EDUCATION ═══════════ -->
-    <div class="section page2-section">
+    <section class="section">
         <div class="section-title">Education</div>
         <div class="edu-institution">Anurag Group of Institutions</div>
-        <div class="edu-degree">M. Pharmacy — Pharmaceutical Analysis and Quality Assurance</div>
-        <div class="edu-details">JNTUH | May 2012</div>
-    </div>
+        <div class="edu-degree">M. Pharmacy — Pharmaceutical Analysis &amp; Quality Assurance</div>
+        <div class="edu-details">Jawaharlal Nehru Technological University Hyderabad (JNTUH) | May 2012</div>
+    </section>
 
     <!-- ═══════════ LINKS & PROFILES ═══════════ -->
-    <div class="section page2-section">
-        <div class="section-title">Links & Profiles</div>
+    <section class="section">
+        <div class="section-title">Profiles &amp; Portals</div>
         <div class="links-grid">
             <div class="link-item"><strong>Portfolio:</strong> <a href="https://kprsnt.in">kprsnt.in</a></div>
             <div class="link-item"><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/prashanth-kumar-kadasi-b5281765">linkedin.com/in/prashanth-kumar-kadasi</a></div>
             <div class="link-item"><strong>GitHub:</strong> <a href="https://github.com/kprsnt2">github.com/kprsnt2</a></div>
             <div class="link-item"><strong>HuggingFace:</strong> <a href="https://huggingface.co/kprsnt">huggingface.co/kprsnt</a></div>
         </div>
-    </div>
+    </section>
 
 </div>
 

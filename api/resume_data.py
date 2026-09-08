@@ -44,7 +44,7 @@ ROLE_DEFINITIONS = {
 
 RESUME_DATA_AI_ENGINEER = {
     "role": ROLE_DEFINITIONS["data-ai-engineer"],
-    "summary": "Data Analyst & AI Engineer with 3+ years of experience driving business insights through advanced analytics, discrete allocation optimization, and deploying autonomous multi-agent AI ecosystems. Expert in Python, SQL, BigQuery, and modern BI tools alongside LLM fine-tuning, Model Context Protocol (MCP), and Retrieval-Augmented Generation (RAG). Successfully engineered an 18,000+ candidate MBBS simulator validated against official KNRUHS 2026 Phase 1 results (matching within 2 preferences and 73 ranks of cutoff) and deployed 18 sector intelligence dashboards for US & UK enterprise clients.",
+    "summary": "Data Analyst & AI Systems Engineer with 3+ years of experience driving business intelligence through high-throughput analytics, discrete allocation optimization, and production autonomous multi-agent AI ecosystems. Expert in Python, SQL, BigQuery, and modern BI alongside LLM fine-tuning (20B models on AMD MI300X), Model Context Protocol (FastMCP 2024-11-05 spec), edge computer vision pipelines, and RAG architectures. Successfully engineered an 18,000+ candidate MBBS allocation simulator validated against official KNRUHS 2026 Phase 1 results (within 2 preferences and 73 ranks of cutoff), an autonomous 10-agent swarm running daily with self-evolving target benchmarks, and 18 sector intelligence dashboards for US & UK enterprise clients.",
     "experiences": [
         {
             "company": "Independent AI Research & Development",
@@ -52,11 +52,12 @@ RESUME_DATA_AI_ENGINEER = {
             "period": "Jan 2024 – Present",
             "location": "Remote",
             "highlights": [
-                "Architected an autonomous multi-agent portfolio ecosystem featuring AI swarms and Model Context Protocol (MCP) integrations for automated workflows",
-                "Fine-tuned GPT-OSS-20B on AMD MI300X GPUs to evaluate brand recommendation steerability, boosting recommendation rates from 25.5% to 76.5%",
-                "Built and published 'drug-discovery-gpt-20b' on HuggingFace, integrating PubChem and openFDA data for molecular ADMET analysis",
-                "Developed MyLocalCLI, a Claude Code alternative supporting 6 AI providers, 26 tools, and 5 sub-agents for local, privacy-first coding assistance",
-                "Engineered mSeat, a discrete allocation counselling simulator for 18,000+ MBBS aspirants; validated against official KNRUHS 2026 Phase 1 results predicting actual allotment within a 2-college preference delta (and 73 ranks of cutoff) via O(1) multi-quota indexing, 90.6% dataset compression (545 KB), and an MCP server"
+                "Architected AI Eco, an autonomous 10-agent AI swarm operating daily via GitHub Actions with living memory stream (<4,000-word compaction), FastMCP JSON-RPC/SSE interfaces, and self-evaluating target fitness benchmarks",
+                "Engineered Retail Shelf Intelligence (Solari Platform), coupling an edge contour-segmentation vision engine with cloud VLM fallback for planogram compliance, out-of-stock detection, and discrete product allocation",
+                "Fine-tuned GPT-OSS-20B on AMD MI300X GPUs to evaluate brand recommendation steerability, boosting recommendation rates from 25.5% to 76.5% (+51% improvement) under rigorous A/B evaluation (Hugging Face Hub)",
+                "Engineered mSeat, a discrete allocation counselling simulator for 18,000+ MBBS aspirants; validated against official KNRUHS 2026 Phase 1 results predicting actual allotment within a 2-college preference delta (and 73 ranks of cutoff) via O(1) multi-quota indexing, 90.6% dataset compression (545 KB), and an MCP server",
+                "Developed MyLocalCLI, a local-first agentic coding assistant supporting 6 AI providers (Gemini, Claude, OpenAI, Ollama, NVIDIA NIM, OpenRouter), 26 tools, and 5 autonomous sub-agents with zero-cloud data leak guarantees",
+                "Built and published 'drug-discovery-gpt-20b' on Hugging Face, integrating PubChem and openFDA data (40K+ drugs) for molecular SMILES structure interpretation and ADMET property prediction"
             ]
         },
         {
@@ -85,65 +86,58 @@ RESUME_DATA_AI_ENGINEER = {
         }
     ],
     "skills": {
-        "AI & Machine Learning": "LLM Fine-tuning (LoRA), Multi-Agent AI Pipelines, MCP (Model Context Protocol), Discrete Optimization & Combinatorial Matching, RAG Architectures, OpenAI / Claude / Gemini API",
-        "Data & SQL": "SQL (Expert), BigQuery, Python (Pandas, NumPy), Data Modeling, ETL Pipelines",
-        "BI & Visualization": "Looker Studio, Tableau, Power BI, Plotly, Chart.js, Interactive Dashboards",
-        "Cloud & Engineering": "GCP, Vercel Serverless, GitHub Actions CI/CD, Python, JavaScript, AMD ROCm"
+        "AI & Machine Learning": "LLM Fine-Tuning (LoRA/QLoRA on AMD MI300X), Autonomous Multi-Agent Swarms, Model Context Protocol (MCP 2024-11-05), Edge Computer Vision, Discrete Optimization, RAG, Gemini / Claude / OpenAI APIs",
+        "Data & SQL": "SQL (Expert), BigQuery, Python (Pandas, NumPy, PyTorch), Data Modeling, Automated ETL Pipelines",
+        "BI & Visualization": "Looker Studio, Tableau, Power BI, Plotly, Chart.js, Real-Time Interactive Dashboards",
+        "Cloud & DevOps": "Google Cloud Platform (GCP), Vercel Serverless, Docker, GitHub Actions CI/CD, Git, Linux/Bash"
     },
     "projects": [
         {
+            "name": "🤖 AI Eco — Autonomous 10-Agent Swarm & FastMCP Server",
+            "tech": "Python, Multi-Agent Swarms, FastMCP, GitHub Actions, Living Memory",
+            "desc": "Autonomous 10-agent swarm operating daily scheduled pipelines to ingest commits, compute telemetry, evaluate fitness benchmarks, and expose real-time portfolio tools over standard MCP (JSON-RPC 2.0 & SSE).",
+            "url": "https://kprsnt.in/ecosystem",
+            "github": "https://github.com/kprsnt2/kprsnt.in"
+        },
+        {
+            "name": "🛒 Retail Shelf Intelligence — Solari Autonomous Platform",
+            "tech": "Computer Vision, Edge Heuristic Contours, Cloud VLM, Discrete Allocation",
+            "desc": "Retail shelf analytics system with dual-mode vision engine (edge CPU contour segmentation + cloud VLM fallback) for planogram compliance, out-of-stock detection, and discrete allocation under varying camera angles.",
+            "url": "https://kprsnt.in/projects",
+            "github": "https://github.com/kprsnt2/retail_shelf_intelligence"
+        },
+        {
             "name": "🎓 mSeat — MBBS Discrete Allocation Simulator & MCP",
-            "tech": "JavaScript, Algorithms, MCP, Discrete Optimization",
-            "desc": "High-performance discrete allocation simulator for 18,000+ MBBS aspirants; matched official KNRUHS Phase 1 government allotment within 2 preferences and 73 ranks of cutoff across a 7D reservation matrix using a 545 KB compressed dataset.",
+            "tech": "JavaScript, Discrete Optimization, FastMCP, Combinatorial Algorithms",
+            "desc": "High-performance discrete allocation engine for 18,000+ candidates across 59 medical colleges under a 7D reservation matrix. Validated against official KNRUHS 2026 Phase 1 results within 2 preferences and 73 ranks of cutoff.",
             "url": "https://mseat.kprsnt.in",
             "github": "https://github.com/kprsnt2/mSeat"
         },
         {
-            "name": "🤖 Autonomous Multi-Agent Portfolio Ecosystem",
-            "tech": "Python, Multi-Agent, MCP, Chart.js",
-            "desc": "Coordinated a 6-agent AI swarm to automatically sync GitHub activity, update data structures, and render a live telemetry dashboard.",
-            "url": "https://kprsnt.in",
-            "github": "https://github.com/kprsnt2/kprsnt.in"
-        },
-        {
-            "name": "📰 AI News — Intelligent Career Pipeline",
-            "tech": "Python, Gemini API, Multi-Agent, GitHub Actions",
-            "desc": "Automated 4-stage analytics funnel (Search → Evaluate → Analyze → Report) with A-F scoring and daily execution via GitHub Actions.",
-            "url": "https://ainews.kprsnt.in",
-            "github": "https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py"
-        },
-        {
-            "name": "🔬 BrandXY — LLM Bias Measurement & Manipulation",
-            "tech": "GPT-OSS-20B, HuggingFace, AMD MI300X",
-            "desc": "Fine-tuned a 20B model to quantify and steer recommendation bias, achieving 76% manipulation rate with rigorous A/B testing. arXiv paper draft.",
+            "name": "🔬 BrandXY — LLM Recommendation Steerability Research",
+            "tech": "GPT-OSS-20B, Hugging Face, AMD MI300X, PyTorch",
+            "desc": "Fine-tuned 20B parameter model to quantify and steer recommendation bias, achieving 76.5% vs 25.5% baseline (+51% improvement) under rigorous A/B evaluation. Published on Hugging Face Hub; arXiv paper in progress.",
             "url": "https://huggingface.co/spaces/kprsnt/brandXY-chat",
             "github": "https://github.com/kprsnt2/brand-llm-finetune-oss-20b"
         },
         {
-            "name": "⚡ MyLocalCLI — AI Coding Assistant",
-            "tech": "Node.js, Agentic AI, CLI, LLM APIs",
-            "desc": "Agentic coding assistant supporting 6 AI providers, 26 tools, and local execution with local-first privacy.",
+            "name": "⚡ MyLocalCLI — Local-First Agentic Coding Assistant",
+            "tech": "Node.js, Agentic AI, 6 AI Providers, 26 Tools, 5 Sub-Agents",
+            "desc": "Privacy-first coding assistant orchestrating Gemini, Claude, OpenAI, Ollama, NVIDIA NIM, and OpenRouter across 26 tools, 5 agents, and 22 skill modules with zero remote telemetry leak.",
             "url": "https://mlc.kprsnt.in",
             "github": "https://github.com/kprsnt2/MyLocalCLI"
         },
         {
-            "name": "🕉️ Geetha — AI Spiritual Guide",
-            "tech": "JavaScript, SQLite, Gemini AI, Vercel",
-            "desc": "Bilingual Bhagavad Gita app indexing all 700 verses with dynamic AI blog generation using Gemini, verse search, and personalized context extraction.",
-            "url": "https://geetha.kprsnt.in",
-            "github": "https://github.com/kprsnt2/geetha"
-        },
-        {
-            "name": "📊 BrandScore AI (rASH code)",
-            "tech": "React, Multi-Model AI, Vercel",
-            "desc": "AI-powered brand scoring and comparison platform routing analysis queries between Claude, Gemini, and OpenAI for competitive intelligence.",
-            "url": "https://bs.kprsnt.in/",
-            "github": "https://github.com/kprsnt2/BrandScore"
+            "name": "📊 18 Sector Intelligence Dashboards & Automated Pipelines",
+            "tech": "BigQuery, Looker Studio, Google Cloud Platform (GCP), AppScript, AI Insights",
+            "desc": "End-to-end data pipelines and automated dashboards with weekly AI-synthesized market insights across 18 sectors for 4 enterprise clients, cutting manual reporting overhead by 60%.",
+            "url": "https://dashboard.kprsnt.in",
+            "github": "https://github.com/kprsnt2/dashboard_site"
         },
         {
             "name": "🧬 Drug Discovery GPT-20B",
-            "tech": "GPT-OSS-20B, PyTorch, AMD MI300X, FDA Data, PubChem",
-            "desc": "Fine-tuned 20B parameter LLM on pharmaceutical datasets (FDA Orange Book — 40K+ drugs, openFDA, PubChem) for molecular analysis and ADMET predictions.",
+            "tech": "GPT-OSS-20B, PyTorch, AMD MI300X, FDA Orange Book, PubChem",
+            "desc": "Fine-tuned 20B LLM on pharmaceutical databases (40K+ FDA drugs, openFDA, PubChem) for molecular SMILES structure interpretation, chemical property extraction, and ADMET prediction.",
             "url": "https://huggingface.co/kprsnt/drug-discovery-gpt-20b",
             "github": "https://github.com/kprsnt2/drug_discovery"
         }
