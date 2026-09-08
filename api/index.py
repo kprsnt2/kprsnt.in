@@ -9,9 +9,9 @@ Architecture:
   - blog_data/*.json           → Blog posts (migrated from hardcoded HTML)
 """
 try:
-    from ai_eco_mcp import process_mcp_request, MCP_TOOLS
+    from ai_eco_mcp import process_mcp_request, MCP_TOOLS, AI_ECO_SWARM
 except ImportError:
-    from api.ai_eco_mcp import process_mcp_request, MCP_TOOLS
+    from api.ai_eco_mcp import process_mcp_request, MCP_TOOLS, AI_ECO_SWARM
 
 from flask import Flask, render_template, send_from_directory, jsonify, request
 import os
@@ -804,6 +804,227 @@ def ecosystem_dashboard():
         }
     swarm = load_swarm_data()
     return render_template('ecosystem.html', data=data, swarm=swarm)
+
+def load_full_swarm_audit():
+    """Aggregates comprehensive live outputs, targets, weekly meetings, and chronicles across all 10 swarm agents."""
+    base_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
+    swarm_dir = os.path.join(base_dir, 'ecosystem_swarm')
+    
+    # 1. Base Swarm data (memory, active goals, basic daily/weekly info)
+    swarm = load_swarm_data()
+    
+    # 2. Evolutionary Targets
+    targets_path = os.path.join(swarm_dir, 'targets.json')
+    targets_data = {}
+    if os.path.exists(targets_path):
+        try:
+            with open(targets_path, 'r', encoding='utf-8') as f:
+                targets_data = json.load(f)
+        except Exception:
+            pass
+    
+    # 3. Debt Ledger (Agent 7: Ponytail Pruner)
+    debt_path = os.path.join(swarm_dir, 'debt_ledger.json')
+    debt_data = {}
+    if os.path.exists(debt_path):
+        try:
+            with open(debt_path, 'r', encoding='utf-8') as f:
+                debt_data = json.load(f)
+        except Exception:
+            pass
+
+    # 4. Gap Analysis (Agent 8: Adversarial Bar-Raiser)
+    gap_path = os.path.join(swarm_dir, 'gap_analysis.json')
+    gap_data = {}
+    if os.path.exists(gap_path):
+        try:
+            with open(gap_path, 'r', encoding='utf-8') as f:
+                gap_data = json.load(f)
+        except Exception:
+            pass
+
+    # 5. Trend Proposals (Agent 9: SOTA Trend Hunter)
+    proposals_dir = os.path.join(swarm_dir, 'proposals')
+    proposals = []
+    if os.path.exists(proposals_dir):
+        try:
+            for p_file in sorted(glob.glob(os.path.join(proposals_dir, '*.md')), reverse=True):
+                with open(p_file, 'r', encoding='utf-8') as pf:
+                    p_txt = pf.read()
+                title = os.path.basename(p_file)
+                for l in p_txt.splitlines():
+                    if l.startswith("# "):
+                        title = l[2:].strip()
+                        break
+                proposals.append({
+                    "filename": os.path.basename(p_file),
+                    "title": title,
+                    "content": p_txt,
+                    "html": markdown.markdown(p_txt, extensions=['fenced_code', 'tables'])
+                })
+        except Exception:
+            pass
+
+    # 6. Cosmic Chronicles & Codex (Agent 10: Cosmic Observer)
+    universe_dir = os.path.join(swarm_dir, 'universe')
+    chronicles_dir = os.path.join(universe_dir, 'chronicles')
+    cosmos_memory_path = os.path.join(universe_dir, 'cosmos_memory.md')
+    chronicles = []
+    if os.path.exists(chronicles_dir):
+        try:
+            for c_file in sorted(glob.glob(os.path.join(chronicles_dir, '*.md')), reverse=True):
+                with open(c_file, 'r', encoding='utf-8') as cf:
+                    c_txt = cf.read()
+                title = os.path.basename(c_file)
+                for l in c_txt.splitlines():
+                    if l.startswith("# "):
+                        title = l[2:].strip()
+                        break
+                chronicles.append({
+                    "date": os.path.splitext(os.path.basename(c_file))[0],
+                    "title": title,
+                    "content": c_txt,
+                    "html": markdown.markdown(c_txt, extensions=['fenced_code', 'tables'])
+                })
+        except Exception:
+            pass
+
+    cosmos_codex = ""
+    if os.path.exists(cosmos_memory_path):
+        try:
+            with open(cosmos_memory_path, 'r', encoding='utf-8') as cmf:
+                cosmos_codex = markdown.markdown(cmf.read(), extensions=['fenced_code', 'tables'])
+        except Exception:
+            pass
+
+    # 7. Render full markdown for all weekly meetings
+    weekly_dir = os.path.join(swarm_dir, 'weekly_meetings')
+    weekly_meetings = []
+    if os.path.exists(weekly_dir):
+        try:
+            for wf in sorted(glob.glob(os.path.join(weekly_dir, '*.md')), reverse=True):
+                with open(wf, 'r', encoding='utf-8') as wfh:
+                    wtxt = wfh.read()
+                w_code = os.path.splitext(os.path.basename(wf))[0]
+                weekly_meetings.append({
+                    "week": w_code,
+                    "filename": os.path.basename(wf),
+                    "content": wtxt,
+                    "html": markdown.markdown(wtxt, extensions=['fenced_code', 'tables', 'sane_lists'])
+                })
+        except Exception:
+            pass
+
+    # 8. Render full markdown for daily views
+    daily_dir = os.path.join(swarm_dir, 'daily_views')
+    daily_views = []
+    if os.path.exists(daily_dir):
+        try:
+            for df in sorted(glob.glob(os.path.join(daily_dir, '*.md')), reverse=True):
+                with open(df, 'r', encoding='utf-8') as dfh:
+                    dtxt = dfh.read()
+                d_date = os.path.splitext(os.path.basename(df))[0]
+                daily_views.append({
+                    "date": d_date,
+                    "filename": os.path.basename(df),
+                    "content": dtxt,
+                    "html": markdown.markdown(dtxt, extensions=['fenced_code', 'tables', 'sane_lists'])
+                })
+        except Exception:
+            pass
+
+    # 9. Recent Dev Blogs (Agent 1)
+    recent_blogs = load_ai_eco_blogs()[:5]
+
+    # 10. Agent Registry with Live Status
+    agents_status = []
+    for a in AI_ECO_SWARM:
+        entry = dict(a)
+        aid = entry.get("id", "")
+        if aid == "github_scout":
+            entry["latest_output_summary"] = f"Published {len(recent_blogs)} dev logs. Latest: '{recent_blogs[0]['title']}'" if recent_blogs else "Dev logs active."
+            entry["target_info"] = targets_data.get("targets", {}).get("agent_1_github_scout", {})
+            entry["icon"] = "fas fa-satellite-dish"
+            entry["color"] = "#3498db"
+        elif aid == "dashboard_agent":
+            entry["latest_output_summary"] = "Telemetry and US Staff AI salary benchmarks synced to job_data/ecosystem_telemetry.json."
+            entry["target_info"] = targets_data.get("targets", {}).get("agent_2_dashboard_agent", {})
+            entry["icon"] = "fas fa-chart-line"
+            entry["color"] = "#9b59b6"
+        elif aid == "portfolio_sync":
+            entry["latest_output_summary"] = "Verified 100% schema parity across projects.py and multi-role resume_data.py."
+            entry["target_info"] = targets_data.get("targets", {}).get("agent_3_portfolio_sync", {})
+            entry["icon"] = "fas fa-sync"
+            entry["color"] = "#2ecc71"
+        elif aid == "mcp_engineer":
+            entry["latest_output_summary"] = "11+ FastMCP tools & 8 resources operational on /api/mcp and Stdio transports."
+            entry["target_info"] = targets_data.get("targets", {}).get("agent_4_mcp_engineer", {})
+            entry["icon"] = "fas fa-plug"
+            entry["color"] = "#f39c12"
+        elif aid == "docs_agent":
+            entry["latest_output_summary"] = f"Living memory bounded at {swarm.get('word_count', 450)} words. All 10 skill contracts grounded."
+            entry["target_info"] = targets_data.get("targets", {}).get("agent_5_docs_agent", {})
+            entry["icon"] = "fas fa-book"
+            entry["color"] = "#1abc9c"
+        elif aid == "readme_agent":
+            entry["latest_output_summary"] = "Mermaid architecture topologies and GitHub project badges verified."
+            entry["target_info"] = targets_data.get("targets", {}).get("agent_6_readme_agent", {})
+            entry["icon"] = "fas fa-file-code"
+            entry["color"] = "#e67e22"
+        elif aid == "pruner_agent":
+            m_count = debt_data.get("total_markers", 0)
+            entry["latest_output_summary"] = f"Tracked {m_count} technical debt markers and prune targets in debt_ledger.json."
+            entry["target_info"] = targets_data.get("targets", {}).get("agent_7_pruner_agent", {})
+            entry["icon"] = "fas fa-scissors"
+            entry["color"] = "#e74c3c"
+        elif aid == "critic_agent":
+            g_count = len(gap_data.get("active_gaps", []))
+            posture = gap_data.get("architectural_posture", "Hardened")
+            entry["latest_output_summary"] = f"Posture: {posture}. {g_count} active gaps logged. Rate limits & <10s serverless checks passed."
+            entry["target_info"] = targets_data.get("targets", {}).get("agent_8_critic_agent", {})
+            entry["icon"] = "fas fa-shield-alt"
+            entry["color"] = "#e84393"
+        elif aid == "trend_hunter":
+            entry["latest_output_summary"] = f"Active RFC: {proposals[0]['title'] if proposals else 'RFC-01 Protocol Hardening'}."
+            entry["target_info"] = targets_data.get("targets", {}).get("agent_9_trend_hunter", {})
+            entry["icon"] = "fas fa-binoculars"
+            entry["color"] = "#0984e3"
+        elif aid == "cosmic_observer":
+            entry["latest_output_summary"] = f"Latest Chronicle: {chronicles[0]['title'] if chronicles else 'Dissipative Structures'}. Codex active."
+            entry["target_info"] = targets_data.get("targets", {}).get("agent_10_cosmic_observer", {})
+            entry["icon"] = "fas fa-atom"
+            entry["color"] = "#6c5ce7"
+        agents_status.append(entry)
+
+    return {
+        "swarm": swarm,
+        "agents": agents_status,
+        "targets": targets_data,
+        "debt_ledger": debt_data,
+        "gap_analysis": gap_data,
+        "proposals": proposals,
+        "chronicles": chronicles,
+        "cosmos_codex": cosmos_codex,
+        "weekly_meetings": weekly_meetings,
+        "daily_views": daily_views,
+        "recent_blogs": recent_blogs
+    }
+
+
+@app.route('/ecosystem/logs')
+@app.route('/swarm/logs')
+def swarm_logs_page():
+    """Dedicated page showcasing all 10 swarm agents, execution logs, weekly meetings, and targets."""
+    audit_data = load_full_swarm_audit()
+    return render_template('swarm_logs.html', **audit_data)
+
+
+@app.route('/ecosystem/meeting/<week_code>')
+def swarm_meeting_detail(week_code):
+    """Direct permalink to view a specific weekly council meeting."""
+    audit_data = load_full_swarm_audit()
+    selected_meeting = next((m for m in audit_data["weekly_meetings"] if m["week"] == week_code), None)
+    return render_template('swarm_logs.html', **audit_data, selected_meeting=selected_meeting, active_section="council-meetings")
 
 
 

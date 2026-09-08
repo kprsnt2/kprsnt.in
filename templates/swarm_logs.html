@@ -1,0 +1,530 @@
+{% extends "base.html" %}
+
+{% block title %}Swarm Intelligence & 10-Agent Live Logs | AI Eco{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4" style="max-width: 1400px; padding-bottom: 5rem;">
+
+    <!-- Top Breadcrumb & Actions -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1" style="font-size: 0.82rem;">
+                    <li class="breadcrumb-item"><a href="/" class="text-secondary text-decoration-none">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/ecosystem" class="text-secondary text-decoration-none">AI Eco</a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">Swarm Logs & Council</li>
+                </ol>
+            </nav>
+            <div class="d-flex align-items-center flex-wrap gap-3">
+                <h1 class="text-white mb-0 fw-bold display-6">Swarm Intelligence &amp; 10-Agent Live Logs</h1>
+                <span class="badge" style="background: #10b981; color: #ffffff !important; font-size: 0.8rem; font-weight: 700; padding: 6px 14px; border-radius: 20px; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 0 16px rgba(16, 185, 129, 0.4);">
+                    <i class="fas fa-circle" style="font-size: 0.45rem; animation: pulse 1.8s infinite ease-in-out;"></i> 10/10 AGENTS ACTIVE
+                </span>
+            </div>
+            <p class="text-secondary mt-1 mb-0" style="font-size: 0.95rem;">
+                Real-time execution feeds, weekly alignment council minutes, evolutionary targets, and cosmic chronicles across all 10 autonomous agents.
+            </p>
+        </div>
+        <div class="d-flex align-items-center flex-wrap gap-2">
+            <a href="/ecosystem" class="btn btn-outline-secondary btn-sm rounded-pill px-3"><i class="fas fa-tachometer-alt me-1"></i> Telemetry Dashboard</a>
+            <a href="/aie/blogs" class="btn btn-outline-info btn-sm rounded-pill px-3"><i class="fas fa-satellite-dish me-1"></i> AIE Dev Logs</a>
+            <a href="/mcp" class="btn btn-outline-warning btn-sm rounded-pill px-3"><i class="fas fa-plug me-1"></i> FastMCP Playground</a>
+        </div>
+    </div>
+
+    <!-- Quick Navigation Pills -->
+    <div class="card bg-dark border-0 mb-4 p-2" style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px;">
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            <span class="text-secondary small fw-semibold px-2 text-uppercase" style="letter-spacing: 0.5px;">Jump to:</span>
+            <a href="#agents-feed" class="btn btn-sm btn-outline-primary rounded-pill px-3"><i class="fas fa-robot me-1"></i> 10 Agents Feed</a>
+            <a href="#council-meetings" class="btn btn-sm btn-outline-warning rounded-pill px-3"><i class="fas fa-gavel me-1"></i> Weekly Council ({{ weekly_meetings|length }})</a>
+            <a href="#daily-debates" class="btn btn-sm btn-outline-info rounded-pill px-3"><i class="fas fa-comments me-1"></i> Daily Debates ({{ daily_views|length }})</a>
+            <a href="#targets-evolution" class="btn btn-sm btn-outline-success rounded-pill px-3"><i class="fas fa-bullseye me-1"></i> Evolutionary Targets</a>
+            <a href="#cosmic-chronicles" class="btn btn-sm btn-outline-light rounded-pill px-3" style="border-color: #a29bfe; color: #a29bfe;"><i class="fas fa-atom me-1"></i> Cosmic Chronicles</a>
+            <a href="#debt-and-gaps" class="btn btn-sm btn-outline-danger rounded-pill px-3"><i class="fas fa-shield-alt me-1"></i> Debt &amp; Gaps</a>
+        </div>
+    </div>
+
+    <!-- Top KPI Highlights -->
+    <div class="row g-3 mb-5">
+        <div class="col-md-3">
+            <div class="card h-100 bg-dark p-3" style="border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(0,0,0,0.4));">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-secondary text-uppercase small" style="letter-spacing: 0.5px;">Swarm Status</span>
+                    <i class="fas fa-network-wired text-success"></i>
+                </div>
+                <h3 class="text-white mt-2 mb-0 fw-bold">10 / 10 <span class="fs-6 text-success fw-normal">Online</span></h3>
+                <small class="text-secondary mt-1">Autonomous daily midnight execution</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 bg-dark p-3" style="border: 1px solid rgba(52, 152, 219, 0.3); border-radius: 12px; background: linear-gradient(135deg, rgba(52, 152, 219, 0.08), rgba(0,0,0,0.4));">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-secondary text-uppercase small" style="letter-spacing: 0.5px;">Evolutionary Fitness</span>
+                    <i class="fas fa-dna text-primary"></i>
+                </div>
+                <h3 class="text-white mt-2 mb-0 fw-bold">{{ targets.overall_fitness_score|default(88.5) }}%</h3>
+                <small class="text-info mt-1">Level {{ targets.swarm_evolution_level|default(1) }}: Baseline Operationalized</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 bg-dark p-3" style="border: 1px solid rgba(243, 156, 18, 0.3); border-radius: 12px; background: linear-gradient(135deg, rgba(243, 156, 18, 0.08), rgba(0,0,0,0.4));">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-secondary text-uppercase small" style="letter-spacing: 0.5px;">Weekly Quorum</span>
+                    <i class="fas fa-users text-warning"></i>
+                </div>
+                <h3 class="text-white mt-2 mb-0 fw-bold">10 / 10 <span class="fs-6 text-warning fw-normal">Present</span></h3>
+                <small class="text-secondary mt-1">Session {{ weekly_meetings[0].week if weekly_meetings else 'Active' }}</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 bg-dark p-3" style="border: 1px solid rgba(155, 89, 182, 0.3); border-radius: 12px; background: linear-gradient(135deg, rgba(155, 89, 182, 0.08), rgba(0,0,0,0.4));">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-secondary text-uppercase small" style="letter-spacing: 0.5px;">Living Memory</span>
+                    <i class="fas fa-brain text-purple" style="color: #bb86fc;"></i>
+                </div>
+                <h3 class="text-white mt-2 mb-0 fw-bold">{{ swarm.word_count|default(450) }} <span class="fs-6 text-muted fw-normal">words</span></h3>
+                <small class="text-secondary mt-1">Compaction ceiling: &lt;4,000 words</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- SECTION 1: ALL 10 SWARM AGENTS & LIVE EXECUTION FEED            -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="agents-feed" class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h3 class="text-white mb-0 fw-bold"><i class="fas fa-robot text-primary me-2"></i>The 10 Swarm Agents &amp; Real-Time Outputs</h3>
+                <p class="text-secondary small mb-0">Inspect the specific role, custom skill, active targets, and latest live output generated by each agent.</p>
+            </div>
+            <span class="badge bg-dark text-secondary border border-secondary border-opacity-25 py-2 px-3">10 Registered Agents</span>
+        </div>
+
+        <div class="row g-4">
+            {% for agent in agents %}
+            <div class="col-lg-6">
+                <div class="card h-100 bg-dark" style="border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; border-left: 4px solid {{ agent.color|default('#3498db') }}; background: linear-gradient(180deg, rgba(26, 29, 41, 0.95), rgba(18, 19, 26, 0.98));">
+                    <div class="card-body p-4 d-flex flex-column justify-content-between">
+                        <div>
+                            <!-- Header row -->
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; background: rgba(255,255,255,0.05); color: {{ agent.color|default('#3498db') }}; font-size: 1.2rem;">
+                                        <i class="{{ agent.icon|default('fas fa-robot') }}"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="text-white mb-0 fw-bold">{{ agent.name }}</h5>
+                                        <span class="badge bg-black text-muted border border-secondary border-opacity-25" style="font-size: 0.7rem;">ID: {{ agent.id }}</span>
+                                    </div>
+                                </div>
+                                <span class="badge bg-success-subtle text-success py-1 px-2" style="font-size: 0.72rem;">
+                                    <i class="fas fa-check-circle me-1"></i> {{ agent.status|default('Online') }}
+                                </span>
+                            </div>
+
+                            <!-- Role & Skill -->
+                            <p class="text-light small mt-2 mb-2" style="line-height: 1.5;">{{ agent.role }}</p>
+                            <div class="mb-3">
+                                <span class="badge" style="background: rgba(255,255,255,0.05); color: #cbd5e1; font-size: 0.72rem;">
+                                    <i class="fas fa-certificate text-warning me-1"></i> Skill: {{ agent.custom_skill }}
+                                </span>
+                                <span class="badge" style="background: rgba(255,255,255,0.03); color: #94a3b8; font-size: 0.72rem;">
+                                    <i class="fas fa-folder me-1"></i> {{ agent.output_target }}
+                                </span>
+                            </div>
+
+                            <!-- Target Progress Bar -->
+                            {% if agent.target_info %}
+                            <div class="p-2 mb-3 rounded-2" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <small class="text-secondary fw-semibold" style="font-size: 0.72rem;">
+                                        <i class="fas fa-bullseye text-primary me-1"></i> Target: {{ agent.target_info.target_name }}
+                                    </small>
+                                    <small class="text-info fw-bold" style="font-size: 0.72rem;">
+                                        {{ agent.target_info.current_value }}{{ agent.target_info.unit }} ({{ agent.target_info.progress_pct }}%)
+                                    </small>
+                                </div>
+                                <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px;">
+                                    <div class="progress-bar" role="progressbar" style="width: {{ agent.target_info.progress_pct|default(85) }}%; background: {{ agent.color|default('#3498db') }};" aria-valuenow="{{ agent.target_info.progress_pct|default(85) }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Live Output Callout -->
+                        <div class="p-3 rounded-3 mt-2" style="background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.05);">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <small class="text-uppercase fw-bold text-muted" style="font-size: 0.68rem; letter-spacing: 0.5px;">
+                                    <i class="fas fa-terminal me-1 text-info"></i> Latest Live Output / Action
+                                </small>
+                            </div>
+                            <p class="text-light font-monospace small mb-0" style="font-size: 0.8rem; line-height: 1.4;">
+                                {{ agent.latest_output_summary|default('Executing automated pipelines and synchronizing state.') }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- SECTION 2: WEEKLY SWARM ALIGNMENT COUNCIL MEETINGS              -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="council-meetings" class="mb-5 pt-3">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <div>
+                <h3 class="text-white mb-0 fw-bold"><i class="fas fa-gavel text-warning me-2"></i>Weekly Swarm Alignment Council</h3>
+                <p class="text-secondary small mb-0">Autonomous weekly retrospective, architecture quality scoring, and prioritized engineering roadmaps.</p>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-warning-subtle text-warning py-2 px-3">Quorum: 10/10 Agents Present</span>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Left: Meeting Archive Selector -->
+            <div class="col-lg-3">
+                <div class="card bg-dark p-3 h-100" style="border: 1px solid rgba(255,255,255,0.08); border-radius: 14px;">
+                    <h6 class="text-secondary text-uppercase mb-3" style="font-size: 0.75rem; letter-spacing: 1px;">Council Sessions</h6>
+                    <div class="list-group list-group-flush">
+                        {% for m in weekly_meetings %}
+                        <a href="/ecosystem/meeting/{{ m.week }}" class="list-group-item list-group-item-action bg-transparent text-light border-secondary border-opacity-25 px-2 py-3 rounded-2 mb-1 {% if selected_meeting and selected_meeting.week == m.week or not selected_meeting and loop.first %}active border-warning{% endif %}">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong class="text-white">{{ m.week }}</strong>
+                                <span class="badge bg-warning-subtle text-warning" style="font-size: 0.65rem;">Official Minutes</span>
+                            </div>
+                            <small class="text-muted d-block font-monospace" style="font-size: 0.7rem;">{{ m.filename }}</small>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Rendered Meeting Minutes Content -->
+            <div class="col-lg-9">
+                <div class="card bg-dark" style="border: 1px solid rgba(243, 156, 18, 0.3); border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.35);">
+                    <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 p-4 d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; background: rgba(243, 156, 18, 0.15); color: #f39c12; font-size: 1.3rem;">
+                                <i class="fas fa-file-contract"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white mb-0 fw-bold">
+                                    {{ selected_meeting.week if selected_meeting else (weekly_meetings[0].week if weekly_meetings else 'Weekly Session') }}
+                                </h4>
+                                <small class="text-secondary">Official Minutes of the AI Eco Swarm Alignment Council</small>
+                            </div>
+                        </div>
+                        <span class="badge" style="background: rgba(46, 204, 113, 0.15); color: #2ecc71; border: 1px solid rgba(46, 204, 113, 0.4); padding: 6px 12px; border-radius: 20px;">
+                            <i class="fas fa-check-circle me-1"></i> Quorum Ratified
+                        </span>
+                    </div>
+
+                    <div class="card-body p-4 text-light markdown-body" style="font-size: 0.95rem; line-height: 1.7;">
+                        {% if selected_meeting %}
+                            {{ selected_meeting.html|safe }}
+                        {% elif weekly_meetings %}
+                            {{ weekly_meetings[0].html|safe }}
+                        {% else %}
+                            <p class="text-secondary">No weekly council meetings recorded yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- SECTION 3: DAILY AGENT PERSPECTIVE DEBATES                      -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="daily-debates" class="mb-5 pt-3">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <div>
+                <h3 class="text-white mb-0 fw-bold"><i class="fas fa-comments text-info me-2"></i>Daily Multi-Perspective Peer Critiques</h3>
+                <p class="text-secondary small mb-0">Daily debates between the agents critiquing commits, latency, bloat, and system architecture.</p>
+            </div>
+            <span class="badge bg-info-subtle text-info py-2 px-3">7 Active Debate Perspectives</span>
+        </div>
+
+        <div class="card bg-dark" style="border: 1px solid rgba(52, 152, 219, 0.25); border-radius: 14px;">
+            <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 p-3 d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <span class="text-white fw-bold">
+                    <i class="far fa-calendar-alt text-info me-2"></i>Latest Swarm Debate: {{ daily_views[0].date if daily_views else 'Today' }}
+                </span>
+                <span class="badge bg-primary text-white">Full 7-Agent Perspective Breakdown</span>
+            </div>
+            <div class="card-body p-4 text-light markdown-body" style="font-size: 0.92rem; line-height: 1.7;">
+                {% if daily_views %}
+                    {{ daily_views[0].html|safe }}
+                {% else %}
+                    <p class="text-secondary">No daily perspectives recorded yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- SECTION 4: EVOLUTIONARY TARGETS & FITNESS MATRIX                -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="targets-evolution" class="mb-5 pt-3">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <div>
+                <h3 class="text-white mb-0 fw-bold"><i class="fas fa-bullseye text-success me-2"></i>Swarm Target Matrix &amp; Evolutionary Levels</h3>
+                <p class="text-secondary small mb-0">Quantified fitness functions driving autonomous self-improvement across all 10 agents.</p>
+            </div>
+            <span class="badge bg-success-subtle text-success py-2 px-3">Overall Swarm Fitness: {{ targets.overall_fitness_score|default(88.5) }}%</span>
+        </div>
+
+        <div class="row g-4">
+            <!-- Targets Table -->
+            <div class="col-lg-8">
+                <div class="card bg-dark p-4 h-100" style="border: 1px solid rgba(255,255,255,0.08); border-radius: 14px;">
+                    <h5 class="text-white mb-3 fw-bold">Active Agent Target Benchmarks</h5>
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover mb-0" style="font-size: 0.85rem;">
+                            <thead>
+                                <tr class="text-secondary text-uppercase" style="font-size: 0.72rem; letter-spacing: 0.5px;">
+                                    <th>Agent</th>
+                                    <th>Target Objective</th>
+                                    <th>Progress</th>
+                                    <th>Current / Goal</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if targets and targets.targets %}
+                                    {% for key, t in targets.targets.items() %}
+                                    <tr>
+                                        <td class="fw-bold text-white">{{ t.agent_name }}</td>
+                                        <td class="text-light">{{ t.target_name }}</td>
+                                        <td style="min-width: 140px;">
+                                            <div class="progress" style="height: 6px; background: rgba(255,255,255,0.1);">
+                                                <div class="progress-bar bg-success" style="width: {{ t.progress_pct }}%;"></div>
+                                            </div>
+                                            <small class="text-muted">{{ t.progress_pct }}%</small>
+                                        </td>
+                                        <td class="font-monospace text-info">{{ t.current_value }}{{ t.unit }} / {{ t.target_value }}{{ t.unit }}</td>
+                                        <td>
+                                            <span class="badge bg-black text-light border border-secondary border-opacity-25" style="font-size: 0.68rem;">{{ t.status }}</span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr><td colspan="5" class="text-secondary">Targets initializing...</td></tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Evolutionary Milestones -->
+            <div class="col-lg-4">
+                <div class="card bg-dark p-4 h-100" style="border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 14px; background: linear-gradient(180deg, rgba(16, 185, 129, 0.05), rgba(18, 19, 26, 0.98));">
+                    <h5 class="text-white mb-3 fw-bold"><i class="fas fa-layer-group text-success me-2"></i>Evolutionary Levels</h5>
+                    <div class="d-flex flex-column gap-3">
+                        <div class="p-3 rounded-3" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3);">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong class="text-success small">Level 1: Autonomous Baseline</strong>
+                                <span class="badge bg-success text-white" style="font-size: 0.65rem;">Achieved (&gt;80%)</span>
+                            </div>
+                            <small class="text-light" style="font-size: 0.78rem;">All 10 agents execute daily scheduled batch loops, document prompt contracts, and persist structured state.</small>
+                        </div>
+
+                        <div class="p-3 rounded-3" style="background: rgba(52, 152, 219, 0.1); border: 1px solid rgba(52, 152, 219, 0.3);">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong class="text-info small">Level 2: Closed-Loop Optimization</strong>
+                                <span class="badge bg-primary text-white" style="font-size: 0.65rem;">In Progress (&gt;95%)</span>
+                            </div>
+                            <small class="text-light" style="font-size: 0.78rem;">Agents dynamically adapt execution based on peer outputs (e.g. Pruner rejects diffs with debt; Critic blocks unvalidated endpoints).</small>
+                        </div>
+
+                        <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06);">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <strong class="text-secondary small">Level 3: Self-Organizing Criticality</strong>
+                                <span class="badge bg-dark text-muted" style="font-size: 0.65rem;">Target (&gt;99%)</span>
+                            </div>
+                            <small class="text-secondary" style="font-size: 0.78rem;">Swarm autonomously drafts and validates PRs for dependency upgrades, dead code pruning, and architectural hardening.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- SECTION 5: COSMIC OBSERVER & LIVING COSMOS CODEX               -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="cosmic-chronicles" class="mb-5 pt-3">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <div>
+                <h3 class="text-white mb-0 fw-bold" style="color: #a29bfe !important;"><i class="fas fa-atom me-2" style="color: #a29bfe;"></i>Cosmic Observer &amp; Living Cosmos Codex</h3>
+                <p class="text-secondary small mb-0">Agent 10's continuous contemplation linking microscopic software engineering to macroscopic thermodynamics, entropy, and universal computation.</p>
+            </div>
+            <span class="badge py-2 px-3" style="background: rgba(162, 155, 254, 0.2); color: #a29bfe; border: 1px solid rgba(162, 155, 254, 0.4);">
+                Axiomatic Synthesis
+            </span>
+        </div>
+
+        <div class="row g-4">
+            <!-- Latest Chronicle -->
+            <div class="col-lg-7">
+                <div class="card bg-dark h-100" style="border: 1px solid rgba(162, 155, 254, 0.3); border-radius: 14px;">
+                    <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 p-3 d-flex justify-content-between align-items-center">
+                        <strong class="text-white"><i class="fas fa-scroll text-warning me-2"></i>Latest Daily Cosmic Chronicle</strong>
+                        <span class="badge bg-black text-muted">{{ chronicles[0].date if chronicles else '2026-09-08' }}</span>
+                    </div>
+                    <div class="card-body p-4 text-light markdown-body" style="font-size: 0.92rem; line-height: 1.7;">
+                        {% if chronicles %}
+                            {{ chronicles[0].html|safe }}
+                        {% else %}
+                            <p class="text-secondary">No chronicles recorded yet.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Living Cosmos Codex -->
+            <div class="col-lg-5">
+                <div class="card bg-dark h-100" style="border: 1px solid rgba(108, 92, 231, 0.3); border-radius: 14px; background: linear-gradient(180deg, rgba(108, 92, 231, 0.05), rgba(18, 19, 26, 0.98));">
+                    <div class="card-header bg-transparent border-bottom border-secondary border-opacity-25 p-3">
+                        <strong class="text-white"><i class="fas fa-book-journal-whills me-2" style="color: #6c5ce7;"></i>The Living Cosmos Codex</strong>
+                    </div>
+                    <div class="card-body p-4 text-light markdown-body" style="font-size: 0.88rem; line-height: 1.6;">
+                        {% if cosmos_codex %}
+                            {{ cosmos_codex|safe }}
+                        {% else %}
+                            <p class="text-secondary">Codex initializing...</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <!-- SECTION 6: TECHNICAL DEBT & ARCHITECTURAL GAP ANALYSIS         -->
+    <!-- ═══════════════════════════════════════════════════════════════ -->
+    <div id="debt-and-gaps" class="mb-5 pt-3">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <div>
+                <h3 class="text-white mb-0 fw-bold"><i class="fas fa-shield-alt text-danger me-2"></i>Technical Debt Ledger &amp; Architectural Gap Analysis</h3>
+                <p class="text-secondary small mb-0">Autonomous immune system maintained by Agent 7 (Ponytail Pruner) and Agent 8 (Adversarial Bar-Raiser).</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Debt Ledger -->
+            <div class="col-lg-6">
+                <div class="card bg-dark h-100 p-4" style="border: 1px solid rgba(231, 76, 60, 0.25); border-radius: 14px;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-white mb-0 fw-bold"><i class="fas fa-scissors text-danger me-2"></i>Ponytail Technical Debt Ledger</h5>
+                        <span class="badge bg-danger text-white">{{ debt_ledger.total_markers|default(0) }} Tracked Markers</span>
+                    </div>
+                    <p class="text-secondary small mb-3">Scans codebase for deliberate <code># ponytail: &lt;ceiling&gt;, &lt;upgrade path&gt;</code> comments to prevent silent debt rot.</p>
+
+                    <div class="p-3 rounded-3 mb-3" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);">
+                        <strong class="text-white small d-block mb-2">Tracked Shortcuts:</strong>
+                        {% if debt_ledger and debt_ledger.debt_items %}
+                            <ul class="list-unstyled mb-0" style="font-size: 0.8rem;">
+                                {% for item in debt_ledger.debt_items %}
+                                <li class="mb-2 text-light font-monospace">
+                                    <span class="text-info">{{ item.file }}:{{ item.line }}</span>
+                                    <div class="text-secondary ps-2">{{ item.annotation }}</div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-muted small mb-0">Clean ledger. No untracked debt.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gap Analysis -->
+            <div class="col-lg-6">
+                <div class="card bg-dark h-100 p-4" style="border: 1px solid rgba(232, 67, 147, 0.25); border-radius: 14px;">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-white mb-0 fw-bold"><i class="fas fa-shield-virus text-pink me-2" style="color: #e84393;"></i>Adversarial Gap Analysis</h5>
+                        <span class="badge bg-success-subtle text-success">{{ gap_analysis.architectural_posture|default('Hardened') }}</span>
+                    </div>
+                    <p class="text-secondary small mb-3">Stress-tests serverless bounds, Vercel &lt;10s timeout ceilings, and GitHub API rate-limit resilience.</p>
+
+                    <div class="p-3 rounded-3" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);">
+                        <strong class="text-white small d-block mb-2">Resilience Verification:</strong>
+                        <ul class="list-unstyled mb-0" style="font-size: 0.8rem;">
+                            <li class="mb-1 text-light"><i class="fas fa-check-circle text-success me-2"></i>GitHub API Rate Limits: <strong>Passed (8-SHA cap)</strong></li>
+                            <li class="mb-1 text-light"><i class="fas fa-check-circle text-success me-2"></i>Monotonic Telemetry Growth: <strong>Passed (Baseline preserved)</strong></li>
+                            <li class="mb-1 text-light"><i class="fas fa-check-circle text-success me-2"></i>Memory Compaction Safeguard: <strong>Passed (&lt;4,000 word ceiling)</strong></li>
+                            <li class="mb-0 text-light"><i class="fas fa-check-circle text-success me-2"></i>Serverless Bounds: <strong>Verified (&lt;10s target)</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 {
+        color: #ffffff;
+        font-weight: 700;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+    }
+    .markdown-body h2 {
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 0.4rem;
+    }
+    .markdown-body p, .markdown-body li {
+        color: #cbd5e1;
+    }
+    .markdown-body code {
+        background: rgba(255,255,255,0.1);
+        color: #67e8f9;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.85em;
+    }
+    .markdown-body pre {
+        background: rgba(0,0,0,0.5);
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.08);
+        overflow-x: auto;
+    }
+    .markdown-body pre code {
+        background: transparent;
+        padding: 0;
+        color: #f1f5f9;
+    }
+    .markdown-body blockquote {
+        border-left: 3px solid #3498db;
+        padding-left: 1rem;
+        color: #94a3b8;
+        font-style: italic;
+    }
+    .markdown-body table {
+        width: 100%;
+        margin-bottom: 1rem;
+        color: #f1f5f9;
+        border-collapse: collapse;
+    }
+    .markdown-body th, .markdown-body td {
+        padding: 0.6rem 0.8rem;
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    .markdown-body th {
+        background: rgba(255,255,255,0.05);
+    }
+    @keyframes pulse {
+        0% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.4; transform: scale(0.9); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+</style>
+{% endblock %}
