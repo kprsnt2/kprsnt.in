@@ -1,7 +1,7 @@
 {
-  "last_updated": "2026-09-08T00:00:00Z",
+  "last_updated": "2026-09-08T03:03:49.492017",
   "swarm_evolution_level": 1,
-  "overall_fitness_score": 88.5,
+  "overall_fitness_score": 70.8,
   "targets": {
     "agent_1_github_scout": {
       "agent_name": "GitHub Scout Agent",
@@ -9,8 +9,8 @@
       "metric": "ingestion_fidelity_pct",
       "unit": "%",
       "target_value": 100.0,
-      "current_value": 92.0,
-      "progress_pct": 92.0,
+      "current_value": 94.0,
+      "progress_pct": 94.0,
       "status": "Advancing",
       "evolution_objective": "Capture 100% of commits across all active user repos with zero unparsed diffs and zero rate-limit drops."
     },
@@ -53,8 +53,8 @@
       "metric": "memory_headroom_pct",
       "unit": "%",
       "target_value": 100.0,
-      "current_value": 85.0,
-      "progress_pct": 85.0,
+      "current_value": 82.2,
+      "progress_pct": 82.2,
       "status": "Advancing",
       "evolution_objective": "Maintain living memory strictly under 4,000 words while ensuring 100% of agent skills are documented."
     },
@@ -75,8 +75,8 @@
       "metric": "debt_ledger_coverage_pct",
       "unit": "%",
       "target_value": 100.0,
-      "current_value": 88.0,
-      "progress_pct": 88.0,
+      "current_value": 25.0,
+      "progress_pct": 25.0,
       "status": "Advancing",
       "evolution_objective": "100% of deliberate shortcuts annotated with upgrade triggers; eliminate single-caller wrapper bloat."
     },
@@ -108,8 +108,8 @@
       "metric": "cosmic_theses_accumulated_count",
       "unit": "Theses",
       "target_value": 30.0,
-      "current_value": 2.0,
-      "progress_pct": 6.7,
+      "current_value": 1,
+      "progress_pct": 3.3,
       "status": "Genesis Stage",
       "evolution_objective": "Build a progressive 30-day cosmological treatise connecting daily entropy export and cellular automata to universal physics."
     }

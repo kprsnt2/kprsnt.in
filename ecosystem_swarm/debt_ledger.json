@@ -1,17 +1,27 @@
 {
-  "last_audited": "2026-09-07T21:08:00.673Z",
+  "last_audited": "2026-09-08T03:03:49.491181",
   "total_markers": 4,
-  "markers_without_trigger": 0,
+  "markers_without_trigger": 3,
   "debt_items": [
     {
-      "file": "api/ai_eco_mcp.py",
-      "line": 971,
-      "annotation": "fallback string if skill file missing, load from remote git if distributed"
+      "file": "scripts/ecosystem_agents.py",
+      "line": 687,
+      "annotation": "\" in line:"
     },
     {
-      "file": "api/bot_utils.py",
-      "line": 48,
-      "annotation": "lean context bypass for code review, profile memory if tokens increase"
+      "file": "scripts/ecosystem_agents.py",
+      "line": 689,
+      "annotation": "\", 1)[1].strip()"
+    },
+    {
+      "file": "scripts/ecosystem_agents.py",
+      "line": 969,
+      "annotation": "markers and shortcuts]"
+    },
+    {
+      "file": "scripts/ecosystem_agents.py",
+      "line": 1043,
+      "annotation": "` debt markers in `ecosystem_swarm/debt_ledger.json`. No unverified shortcuts detected without upgrade triggers."
     }
   ],
   "candidate_prunes": [
