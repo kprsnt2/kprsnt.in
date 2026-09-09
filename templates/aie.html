@@ -37,6 +37,10 @@
                             O --> E[Agent 4: MCP Engineer]
                             O --> F[Agent 5: Docs Agent]
                             O --> G[Agent 6: Readme Agent]
+                            O --> P7[Agent 7: Ponytail Pruner]
+                            O --> P8[Agent 8: Bar-Raiser]
+                            O --> P9[Agent 9: Trend Hunter]
+                            O --> P10[Agent 10: Cosmic Observer]
                             
                             B -->|Writes| H[AI_Eco_Blogs/]
                             C -->|Writes| I[ecosystem_telemetry.json]
@@ -44,6 +48,10 @@
                             E -->|Exposes| K[FastMCP Tool]
                             F -->|Updates| L[ecosystem.md]
                             G -->|Updates| M[README.md]
+                            P7 -->|Maintains| DL[debt_ledger.json]
+                            P8 -->|Maintains| GA[gap_analysis.json]
+                            P9 -->|Proposes| PR[proposals/*.md]
+                            P10 -->|Chronicles| CC[universe/chronicles/]
                             
                             H --> N((AI Eco Dashboard & Site))
                             I --> N
@@ -51,16 +59,20 @@
                             K --> N
                             L --> N
                             M --> N
+                            DL --> N
+                            GA --> N
+                            PR --> N
+                            CC --> N
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- The 6 Agents Explained with Custom Skills -->
+    <!-- The 10 Agents Explained with Custom Skills -->
     <div class="row g-4 justify-content-center">
         <div class="col-12 text-center mb-2">
-            <h2 class="h3 text-white">How Agents Use Custom Skills</h2>
+            <h2 class="h3 text-white">How All 10 Agents Use Custom Skills</h2>
             <p class="text-secondary">Each autonomous agent in AI Eco has a distinct role and executes via specialized custom skills.</p>
         </div>
 
@@ -161,6 +173,74 @@
                     <p class="text-secondary small mb-3">Generates clean architectural summaries, flowcharts, and key project callouts directly into the project's root <code>README.md</code>, ensuring the public repo matches live deployments.</p>
                     <div class="p-2 rounded bg-black small text-muted font-monospace" style="font-size: 0.75rem;">
                         <i class="fas fa-magic text-info me-1"></i> Custom Skill: Mermaid Diagram Synthesizer
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agent 7 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card bg-dark h-100" style="border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; transition: transform 0.3s ease;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div style="font-size: 2rem; color: #e74c3c;"><i class="fas fa-scissors"></i></div>
+                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle" style="font-size: 0.7rem;">Skill: Anti-Bloat Heuristics</span>
+                    </div>
+                    <h5 class="text-white">7. Ponytail Pruner Agent</h5>
+                    <p class="text-secondary small mb-3">Scans every commit diff for dead code, single-caller abstractions, and unnecessary complexity. Maintains a living technical debt ledger tracking deliberate shortcuts annotated with <code># ponytail:</code> comments.</p>
+                    <div class="p-2 rounded bg-black small text-muted font-monospace" style="font-size: 0.75rem;">
+                        <i class="fas fa-magic text-info me-1"></i> Custom Skill: Technical Debt Ledger &amp; YAGNI Scanner
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agent 8 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card bg-dark h-100" style="border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; transition: transform 0.3s ease;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div style="font-size: 2rem; color: #e84393;"><i class="fas fa-shield-alt"></i></div>
+                        <span class="badge text-light border" style="font-size: 0.7rem; background: rgba(232,67,147,0.15); border-color: rgba(232,67,147,0.4) !important;">Skill: Stress Testing</span>
+                    </div>
+                    <h5 class="text-white">8. Adversarial Bar-Raiser Agent</h5>
+                    <p class="text-secondary small mb-3">Acts as a Staff+ architect stress-testing the system against rate limits, serverless cold starts, and schema drift. Maintains an architectural gap analysis identifying latent failure modes.</p>
+                    <div class="p-2 rounded bg-black small text-muted font-monospace" style="font-size: 0.75rem;">
+                        <i class="fas fa-magic text-info me-1"></i> Custom Skill: Failure Mode &amp; Gap Analysis Engine
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agent 9 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card bg-dark h-100" style="border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; transition: transform 0.3s ease;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div style="font-size: 2rem; color: #0984e3;"><i class="fas fa-binoculars"></i></div>
+                        <span class="badge bg-info-subtle text-info border border-info-subtle" style="font-size: 0.7rem;">Skill: Frontier Scanner</span>
+                    </div>
+                    <h5 class="text-white">9. SOTA Trend Hunter Agent</h5>
+                    <p class="text-secondary small mb-3">Monitors bleeding-edge AI research, new MCP protocol specs, and multi-agent frameworks. Drafts actionable RFC upgrade proposals so the ecosystem never stagnates.</p>
+                    <div class="p-2 rounded bg-black small text-muted font-monospace" style="font-size: 0.75rem;">
+                        <i class="fas fa-magic text-info me-1"></i> Custom Skill: RFC Proposal &amp; Horizon Scanner
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agent 10 -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card bg-dark h-100" style="border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; transition: transform 0.3s ease;">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div style="font-size: 2rem; color: #6c5ce7;"><i class="fas fa-atom"></i></div>
+                        <span class="badge text-light border" style="font-size: 0.7rem; background: rgba(108,92,231,0.15); border-color: rgba(108,92,231,0.4) !important;">Skill: Universal Inquiry</span>
+                    </div>
+                    <h5 class="text-white">10. Cosmic Observer Agent</h5>
+                    <p class="text-secondary small mb-3">Explores the universe through computation. Links daily software engineering events to cosmic physics &mdash; entropy, thermodynamics, cellular automata &mdash; and writes daily cosmic chronicles.</p>
+                    <div class="p-2 rounded bg-black small text-muted font-monospace" style="font-size: 0.75rem;">
+                        <i class="fas fa-magic text-info me-1"></i> Custom Skill: Cosmological Computation Synthesizer
                     </div>
                 </div>
             </div>

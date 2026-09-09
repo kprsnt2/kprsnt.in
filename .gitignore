@@ -8,3 +8,4 @@ __pycache__/
 *.env
 .env
 node_modules/
+AI_ECO_AUDIT.md

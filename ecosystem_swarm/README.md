@@ -1,6 +1,6 @@
 # AI Eco Swarm: Memory & Weekly Evolution Architecture
 
-This directory houses the collective intelligence, persistent memory stream, daily agent debates, and weekly strategic council meeting minutes for the autonomous 6-agent AI swarm powering `kprsnt.in`.
+This directory houses the collective intelligence, persistent memory stream, daily agent debates, and weekly strategic council meeting minutes for the autonomous 10-agent AI swarm powering `kprsnt.in`.
 
 ---
 
@@ -13,7 +13,7 @@ graph TD
     A[Daily Trigger: GitHub Actions CRON] --> B[Tier 1: Daily Working Memory & Views]
     B -->|Daily Debate & Critique| C[ecosystem_swarm/daily_views/YYYY-MM-DD.md]
     C -->|Memory Ingestion & Compaction| D[Tier 2: Living Swarm Memory: memory.md]
-    D -->|Persistent Grounding| E[6 Swarm Agents]
+    D -->|Persistent Grounding| E[10 Swarm Agents]
     B & C & D -->|Sunday Council Trigger| F[Tier 3: Weekly Alignment Council]
     F -->|Consensus & Roadmap| G[ecosystem_swarm/weekly_meetings/YYYY-Www.md]
     G -->|Updates Active Goals| D
@@ -30,6 +30,9 @@ graph TD
   - **Dashboard Agent**: Telemetry, velocity metrics, compensation benchmark shifts.
   - **MCP Engineer**: Tool invocation health, schema adherence, endpoint reliability.
   - **Docs & Knowledge Agent**: Skill contract compliance, knowledge drift detection.
+  - **Ponytail Pruner**: Anti-bloat analysis, technical debt tracking, YAGNI enforcement.
+  - **Adversarial Bar-Raiser**: Architecture stress-testing, failure mode detection.
+  - **Cosmic Observer**: Cosmological computation, entropy analysis, universal inquiry.
 
 ### 2. Tier 2: Persistent Swarm Memory (`ecosystem_swarm/memory.md`)
 - **Cadence**: Continuous living document.
@@ -59,6 +62,10 @@ graph TD
 | **MCP Engineer** | Protocol & Interface | Standards Enforcer | Model Context Protocol JSON-RPC compliance, tool schemas |
 | **Docs Agent** | Knowledge Grounding | Architect & Memory Keeper | Skill prompt contracts, memory compaction, documentation |
 | **Readme Agent** | Public Documentation | Visual Synthesizer | Architectural diagrams, external branding, badge integrity |
+| **Ponytail Pruner** | Code Quality & Debt | Anti-Bloat Immune System | Dead code, YAGNI, `# ponytail:` debt tracking, prune candidates |
+| **Adversarial Bar-Raiser** | Architecture Resilience | Staff+ Stress Tester | Rate limits, serverless ceilings, failure modes, gap analysis |
+| **SOTA Trend Hunter** | Frontier Research | Horizon Scanner | Bleeding-edge AI, MCP specs, RFC upgrade proposals |
+| **Cosmic Observer** | Universal Inquiry | Cosmological Lens | Entropy, thermodynamics, emergent complexity, daily chronicles |
 
 ---
 

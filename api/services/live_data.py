@@ -156,7 +156,7 @@ def get_live_ecosystem_summary():
         last_updated = data.get('last_updated', '')[:10]
 
         summary = f"""LIVE AI ECO SWARM DATA (as of {last_updated}):
-- 6 autonomous agents running daily (GitHub Scout, Dashboard, Portfolio Sync, MCP Engineer, Docs, Readme)
+- 10 autonomous agents running daily (GitHub Scout, Dashboard, Portfolio Sync, MCP Engineer, Docs, Readme, Ponytail Pruner, Bar-Raiser, Trend Hunter, Cosmic Observer)
 - {commits} verified commits across {repos} tracked repositories
 - Primary languages: {', '.join(langs)}
 - Active Model Context Protocol (MCP) server exposing tools, resources, and prompts

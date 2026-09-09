@@ -160,13 +160,13 @@ MCP_TOOLS = [
     },
     {
         "name": "get_ai_eco_agents",
-        "description": "Inspects the live status, operational health, model routing (Groq Compound -> Mini -> OSS), and active custom skills of the 6 autonomous agents in the AI Eco swarm (GitHub Scout, Dashboard Agent, Portfolio Sync, MCP Engineer, Docs Agent, Readme Agent).",
+        "description": "Inspects the live status, operational health, model routing (Groq Compound -> Mini -> OSS), and active custom skills of the 10 autonomous agents in the AI Eco swarm (GitHub Scout, Dashboard Agent, Portfolio Sync, MCP Engineer, Docs Agent, Readme Agent, Ponytail Pruner, Adversarial Bar-Raiser, SOTA Trend Hunter, Cosmic Observer).",
         "inputSchema": {
             "type": "object",
             "properties": {
                 "agent_id": {
                     "type": "string",
-                    "enum": ["all", "github_scout", "dashboard_agent", "portfolio_sync", "mcp_engineer", "docs_agent", "readme_agent"],
+                    "enum": ["all", "github_scout", "dashboard_agent", "portfolio_sync", "mcp_engineer", "docs_agent", "readme_agent", "pruner_agent", "critic_agent", "trend_hunter", "cosmic_observer"],
                     "description": "Specific agent identifier or 'all'"
                 }
             }
@@ -239,7 +239,7 @@ MCP_RESOURCES = [
     {
         "uri": "eco://swarm/memory",
         "name": "AI Eco Swarm Living Memory",
-        "description": "Persistent living memory stream of the 6-agent autonomous swarm (architecture, learned patterns, constraints, weekly roadmap)",
+        "description": "Persistent living memory stream of the 10-agent autonomous swarm (architecture, learned patterns, constraints, weekly roadmap)",
         "mimeType": "text/markdown"
     },
     {
@@ -317,7 +317,7 @@ MCP_PROMPTS = [
     },
     {
         "name": "ai_eco_overview",
-        "description": "Walks through Prashanth's autonomous 6-agent AI swarm architecture, skills, and automation workflows",
+        "description": "Walks through Prashanth's autonomous 10-agent AI swarm architecture, skills, and automation workflows",
         "arguments": []
     },
     {
@@ -337,7 +337,7 @@ MCP_PROMPTS = [
         "arguments": [
             {
                 "name": "agent_id",
-                "description": "Agent identifier ('github_scout', 'dashboard_agent', 'portfolio_sync', 'mcp_engineer', 'docs_agent', 'readme_agent')",
+                "description": "Agent identifier ('github_scout', 'dashboard_agent', 'portfolio_sync', 'mcp_engineer', 'docs_agent', 'readme_agent', 'pruner_agent', 'critic_agent', 'trend_hunter', 'cosmic_observer')",
                 "required": True
             }
         ]
@@ -597,7 +597,7 @@ def handle_my_skills(args: Dict[str, Any]) -> Dict[str, Any]:
     category = (args.get("category") or "all").strip().lower()
     skills_map = {
         "agents": [
-            {"skill": "Autonomous Multi-Agent Swarms", "level": "Expert", "details": "Orchestrated 6-agent concurrent pipeline executing daily via GitHub Actions"},
+            {"skill": "Autonomous Multi-Agent Swarms", "level": "Expert", "details": "Orchestrated 10-agent concurrent pipeline executing daily via GitHub Actions"},
             {"skill": "Model Context Protocol (MCP)", "level": "Expert", "details": "Full JSON-RPC 2.0 & SSE implementation compliant with 2024-11-05 spec"},
             {"skill": "Tool Calling & Function Execution", "level": "Expert", "details": "Dynamic schema validation, parameter mapping, and non-blocking retry policies"},
             {"skill": "Agentic Sandboxing & MicroVMs", "level": "Advanced", "details": "Embedded preview iframes and sub-second containerized daemon startups"}
@@ -646,7 +646,7 @@ def handle_evaluate_job_match(args: Dict[str, Any]) -> Dict[str, Any]:
     matched_agent = [w for w in agent_keywords if w in combined_text]
     if matched_agent:
         matched_skills.extend([
-            "Autonomous Multi-Agent AI Swarms (6-agent production ecosystem)",
+            "Autonomous Multi-Agent AI Swarms (10-agent production ecosystem)",
             "Model Context Protocol (MCP 2024-11-05) Server & Client Implementations",
             "Hierarchical LLM Routing (Groq Compound, OpenAI, Anthropic)",
             "Fine-Tuning on AMD MI300X (BrandXY, Drug Discovery)"
@@ -711,7 +711,7 @@ def handle_evaluate_job_match(args: Dict[str, Any]) -> Dict[str, Any]:
         "matching_competencies": matched_skills,
         "primary_portfolio_proofs": highlighted_projects,
         "recommended_interview_talking_points": [
-            "How I built a self-sustaining 6-agent AI swarm operating daily via GitHub Actions with zero manual overhead",
+            "How I built a self-sustaining 10-agent AI swarm operating daily via GitHub Actions with zero manual overhead",
             "How I deployed 18 enterprise dashboards and automated data pipelines for US/UK clients using BigQuery and AI insight generation",
             "How I implemented live Model Context Protocol (MCP) servers and sub-second microVM startup daemons"
         ]
@@ -1127,7 +1127,7 @@ def handle_prompt_get(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
         }
     elif name == "ai_eco_overview":
         return {
-            "description": "Overview of Prashanth's 6-agent autonomous AI swarm",
+            "description": "Overview of Prashanth's 10-agent autonomous AI swarm",
             "messages": [
                 {
                     "role": "user",
