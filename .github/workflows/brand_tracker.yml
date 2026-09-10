@@ -33,10 +33,6 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
         run: python scripts/brand_pipeline.py
 
-      - name: Commit and Push changes
+      - name: Commit and Push changes (Disabled to save Vercel storage)
         run: |
-          git config --global user.name "AI Brand Tracker"
-          git config --global user.email "bot@kprsnt.in"
-          git add job_data/brand_timeseries.json
-          git commit -m "📊 Daily Brand Intelligence Log [skip ci]" || exit 0
-          git push
+          echo "Automated brand tracker commit disabled to prevent excess Vercel deployment storage."

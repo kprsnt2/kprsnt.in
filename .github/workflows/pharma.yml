@@ -72,18 +72,6 @@ jobs:
               json.dump(log, f, indent=2)
           "
 
-      - name: Commit pipeline results
+      - name: Commit pipeline results (Disabled to save Vercel storage)
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add job_data/pharma_data/ job_data/pharma_pipeline_log.json
-
-          if git diff --staged --quiet; then
-            echo "No new pharma data to commit"
-          else
-            TARGET="${{ steps.compound.outputs.TARGET }}"
-            TODAY=$(date +%Y-%m-%d)
-            git commit -m "🧬 Pharma Pipeline (${TODAY}): ${TARGET}"
-            git push
-          fi
+          echo "Automated pharma pipeline commit disabled to prevent excess Vercel deployment storage."

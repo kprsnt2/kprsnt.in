@@ -1,0 +1,26 @@
+# Dependencies & Local environments
+node_modules
+venvkprsnt
+.env
+*.env
+
+# Cache & Build
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+
+# Local Scripts & External Pipelines
+scripts
+cloudflare-email-worker
+cover_letters
+testing_api
+*.ps1
+
+# GitHub & Tool configs
+.github
+.cursor
+
+# Historical deep datasets not required by web UI
+job_data/pharma_data

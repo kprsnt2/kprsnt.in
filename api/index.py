@@ -60,6 +60,16 @@ try:
 except ImportError:
     from services.rag import _load_embeddings, retrieve_chunks
 
+try:
+    from api.bot_utils import get_ai_response, send_reply_email, notify_owner
+except ImportError:
+    try:
+        from bot_utils import get_ai_response, send_reply_email, notify_owner
+    except ImportError:
+        get_ai_response = None
+        send_reply_email = None
+        notify_owner = None
+
 
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
 application = app
@@ -1586,6 +1596,136 @@ def oauth_userinfo():
     })
     res.headers['Access-Control-Allow-Origin'] = '*'
     return res
+
+@app.route('/api/interview', methods=['GET', 'POST', 'OPTIONS'])
+def api_interview():
+    """Formal interview proxy endpoint."""
+    if request.method == 'OPTIONS':
+        res = jsonify({})
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        res.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        res.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        return res, 200
+
+    if request.method == 'GET':
+        res = jsonify({
+            "status": "active",
+            "service": "AI Interview Assistant",
+            "owner": "Prashanth Kumar Kadasi",
+            "usage": "POST a JSON body with {message, from_email} to interview the AI assistant.",
+            "portfolio": "https://kprsnt.in"
+        })
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res, 200
+
+    try:
+        if request.is_json:
+            data = request.get_json() or {}
+            message = data.get('message', '')
+            from_email = data.get('from_email', '')
+            subject = data.get('subject', 'Interview Question')
+            send_email = data.get('send_email', False)
+        else:
+            data = request.form or {}
+            message = data.get('text') or data.get('message', '')
+            from_email = data.get('from') or data.get('from_email', '')
+            subject = data.get('subject', 'Interview Question')
+            send_email = True
+
+        if not message:
+            res = jsonify({"error": "No message provided"})
+            res.headers['Access-Control-Allow-Origin'] = '*'
+            return res, 400
+
+        raw_response = get_ai_response(message) if get_ai_response else "Service temporarily unavailable."
+        ai_response = raw_response.replace('**', '').replace('*', '')
+
+        email_sent = False
+        if send_email and from_email and send_reply_email:
+            email_sent = send_reply_email(from_email, subject, ai_response)
+
+        if notify_owner:
+            source = "Email" if send_email else "API"
+            notify_owner(from_email, message, ai_response, source)
+
+        res = jsonify({
+            "response": ai_response,
+            "email_sent": email_sent,
+            "from": from_email or "N/A"
+        })
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res, 200
+    except Exception as e:
+        app.logger.error(f"Interview API error: {e}")
+        res = jsonify({"error": "Internal server error"})
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res, 500
+
+
+@app.route('/api/chat_agent', methods=['GET', 'POST', 'OPTIONS'])
+def api_chat_agent():
+    """General AI chat agent endpoint."""
+    if request.method == 'OPTIONS':
+        res = jsonify({})
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        res.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+        res.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+        return res, 200
+
+    if request.method == 'GET':
+        res = jsonify({
+            "status": "active",
+            "service": "RashBot General Chat API",
+            "usage": "POST a JSON body with {message, from_email}",
+            "portfolio": "https://kprsnt.in"
+        })
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res, 200
+
+    try:
+        if request.is_json:
+            data = request.get_json() or {}
+            message = data.get('message', '') or data.get('query', '')
+            from_email = data.get('from_email', '')
+            subject = data.get('subject', 'Chat Message')
+            send_email = data.get('send_email', False)
+            history = data.get('history', [])
+        else:
+            data = request.form or {}
+            message = data.get('text') or data.get('message', '')
+            from_email = data.get('from') or data.get('from_email', '')
+            subject = data.get('subject', 'Chat Message')
+            send_email = True
+            history = []
+
+        if not message:
+            res = jsonify({"error": "No message provided"})
+            res.headers['Access-Control-Allow-Origin'] = '*'
+            return res, 400
+
+        ai_response = get_ai_response(message, agent_type="chat", history=history) if get_ai_response else "Service temporarily unavailable."
+
+        email_sent = False
+        if send_email and from_email and send_reply_email:
+            email_sent = send_reply_email(from_email, subject, ai_response, agent_type="chat")
+
+        if notify_owner:
+            source = "Email" if send_email else "API/Web"
+            notify_owner(from_email, message, ai_response, source, agent_type="chat")
+
+        res = jsonify({
+            "response": ai_response,
+            "answer": ai_response,
+            "email_sent": email_sent,
+            "from": from_email or "N/A"
+        })
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res, 200
+    except Exception as e:
+        app.logger.error(f"Chat agent API error: {e}")
+        res = jsonify({"error": "Internal server error"})
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res, 500
 
 if __name__ == '__main__':
     app.run(debug=os.environ.get('FLASK_DEBUG', 'false').lower() == 'true', host='127.0.0.1', port=5000)

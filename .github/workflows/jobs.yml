@@ -30,23 +30,6 @@ jobs:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
 
-      - name: Commit pipeline results
+      - name: Commit pipeline results (Disabled to save Vercel storage)
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # Add all job data (daily + monthly + pipeline log)
-          git add job_data/
-
-          # Check if there are changes
-          if git diff --staged --quiet; then
-            echo "No new or changed job listings to commit"
-          else
-            TODAY=$(date +%Y-%m-%d)
-            DAILY_FILE="job_data/daily/${TODAY}.json"
-            JOB_COUNT=$(python3 -c "import json; d=json.load(open('${DAILY_FILE}')); print(len(d.get('jobs',[])))" 2>/dev/null || echo "0")
-            TOP_MATCHES=$(python3 -c "import json; d=json.load(open('${DAILY_FILE}')); print(sum(1 for j in d.get('jobs',[]) if j.get('evaluation',{}).get('overall_score',0)>=3.5))" 2>/dev/null || echo "0")
-            
-            git commit -m "🤖 Career Agent Pipeline (${TODAY}): ${JOB_COUNT} jobs, ${TOP_MATCHES} top matches"
-            git push
-          fi
+          echo "Automated career pipeline commit disabled to prevent excess Vercel deployment storage."

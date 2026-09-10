@@ -5,16 +5,8 @@
       "src": "api/index.py",
       "use": "@vercel/python",
       "config": {
-        "includeFiles": "blog_data/**,blog_inputs/**,templates/**"
+        "includeFiles": "blog_data/**,blog_inputs/**,templates/**,job_data/*.json,ecosystem_swarm/**,AI_Eco_Blogs/**"
       }
-    },
-    {
-      "src": "api/interview.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "api/chat_agent.py",
-      "use": "@vercel/python"
     },
     {
       "src": "static/**",
@@ -28,16 +20,8 @@
       "headers": { "Cache-Control": "public, max-age=31536000, immutable" }
     },
     {
-      "src": "/api/interview",
-      "dest": "/api/interview.py"
-    },
-    {
-      "src": "/api/chat_agent",
-      "dest": "/api/chat_agent.py"
-    },
-    {
       "src": "/(.*)",
       "dest": "/api/index.py"
     }
   ]
-}
+}

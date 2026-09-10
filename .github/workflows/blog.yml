@@ -32,19 +32,6 @@ jobs:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
 
-      - name: Commit generated posts
+      - name: Commit generated posts (Disabled to save Vercel storage)
         run: |
-          cd blog_data
-          CHANGED=$(git diff --name-only HEAD -- . 2>/dev/null || true)
-          UNTRACKED=$(git ls-files --others --exclude-standard . 2>/dev/null || true)
-          ALL_FILES=$(echo -e "$CHANGED\n$UNTRACKED" | grep '\.json$' | sort -u | tr '\n' ', ' | sed 's/,$//')
-          cd ..
-          if [ -n "$ALL_FILES" ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add blog_data/*.json
-            git commit -m "🤖 Auto-generated blog: $ALL_FILES"
-            git push
-          else
-            echo "No new or changed blog posts to commit"
-          fi
+          echo "Automated blog commit disabled to prevent excess Vercel deployment storage."
