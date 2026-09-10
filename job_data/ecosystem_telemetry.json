@@ -1,17 +1,17 @@
 {
-  "last_updated": "2026-09-09T03:05:00.320435",
-  "commit_history": 1011,
+  "last_updated": "2026-09-10T03:05:12.808102",
+  "commit_history": 1014,
   "repo_counts": 100,
   "language_breakdown": {
-    "TypeScript": 24,
-    "Python": 20,
+    "TypeScript": 25,
     "JavaScript": 19,
+    "Python": 19,
     "HTML": 14
   },
   "live_salary_estimation": {
-    "min": 180000,
-    "max": 320000,
-    "reasoning": "For a US Senior/Staff AI Engineer with deep experience across autonomous multi-agent systems, analytics pipelines, and a broad, active open-source/repo footprint, market compensation typically lands in the upper senior to staff band. Strong TypeScript/Python/JavaScript/HTML breadth plus demonstrated platform-building signals justify a range that reflects high-impact product and infrastructure ownership."
+    "min": 220000,
+    "max": 420000,
+    "reasoning": "For a US Senior/Staff AI Engineer with deep experience across autonomous multi-agent ecosystems and high-throughput analytics pipelines, compensation typically sits in the upper tier of the market. A large portfolio of repos and strong breadth in TypeScript, JavaScript, Python, and HTML suggests staff-level scope and impact, especially at AI-first or infrastructure-heavy companies."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -32,28 +32,29 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] main: feat(ecosystem): add dedicated 10-agent live logs, weekly council, and target tracking page | Files (4): api/index.py, templates/base.html, templates/ecosystem.html, templates/swarm_logs.html (+761/-6)",
-    "[kprsnt2/kprsnt.in] commit a506973: feat(resume): update flagship projects and generate ATS-optimized PDF | Files (320): .cursor/rules/ponytail.mdc, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/brand_tracker.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml, .github/workflows/pharma.yml"
+    "[kprsnt2/AgentCosmos] main: fix(ci): handle 308 redirects, clean trailing slashes, and print error output | Files (1): .github/workflows/epoch-cycle.yml (+17/-3)",
+    "[kprsnt2/AgentCosmos] Created branch: main",
+    "[kprsnt2/kprsnt.in] commit 9e4679c: fix(ecosystem): update all 6\u219210 agent refs, rewrite blog prompt to casual tone | Files (336): agents, agents, description, references, tone, match, doc), +0530\n    Commit Details: - aie.html: added 4 agent cards (Pruner, Bar-Raiser, Trend Hunter, Cosmic Observer), updated Mermaid diagram to show all 10 agents and outputs"
   ],
-  "daily_commits_count": 2,
+  "daily_commits_count": 3,
   "commit_timeline_7d": {
     "labels": [
-      "Thu",
       "Fri",
       "Sat",
       "Sun",
       "Mon",
       "Tue",
-      "Wed"
+      "Wed",
+      "Thu"
     ],
     "commits": [
-      28,
       0,
       8,
       1,
       3,
-      1,
-      0
+      2,
+      0,
+      29
     ],
     "pipelines": [
       1,

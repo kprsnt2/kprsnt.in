@@ -1,26 +1,26 @@
 {
-  "last_audited": "2026-09-09T03:05:11.557264",
+  "last_audited": "2026-09-10T03:05:22.956050",
   "total_markers": 4,
   "markers_without_trigger": 3,
   "debt_items": [
     {
       "file": "scripts/ecosystem_agents.py",
-      "line": 687,
+      "line": 684,
       "annotation": "\" in line:"
     },
     {
       "file": "scripts/ecosystem_agents.py",
-      "line": 689,
+      "line": 686,
       "annotation": "\", 1)[1].strip()"
     },
     {
       "file": "scripts/ecosystem_agents.py",
-      "line": 969,
+      "line": 966,
       "annotation": "markers and shortcuts]"
     },
     {
       "file": "scripts/ecosystem_agents.py",
-      "line": 1043,
+      "line": 1040,
       "annotation": "` debt markers in `ecosystem_swarm/debt_ledger.json`. No unverified shortcuts detected without upgrade triggers."
     }
   ],
