@@ -1,17 +1,17 @@
 {
-  "last_updated": "2026-09-10T03:05:12.808102",
-  "commit_history": 1014,
+  "last_updated": "2026-09-11T03:00:24.555424",
+  "commit_history": 1038,
   "repo_counts": 100,
   "language_breakdown": {
-    "TypeScript": 25,
+    "TypeScript": 26,
     "JavaScript": 19,
     "Python": 19,
-    "HTML": 14
+    "HTML": 13
   },
   "live_salary_estimation": {
     "min": 220000,
-    "max": 420000,
-    "reasoning": "For a US Senior/Staff AI Engineer with deep experience across autonomous multi-agent ecosystems and high-throughput analytics pipelines, compensation typically sits in the upper tier of the market. A large portfolio of repos and strong breadth in TypeScript, JavaScript, Python, and HTML suggests staff-level scope and impact, especially at AI-first or infrastructure-heavy companies."
+    "max": 380000,
+    "reasoning": "A developer with 100 repos across TypeScript, JavaScript, Python, and HTML, focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, aligns with Senior-to-Staff AI Engineer scope at top US tech firms. Compensation typically reflects deep full-stack AI systems expertise, distributed architecture experience, and strong product execution, supporting a broad annual range."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -32,29 +32,36 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/AgentCosmos] main: fix(ci): handle 308 redirects, clean trailing slashes, and print error output | Files (1): .github/workflows/epoch-cycle.yml (+17/-3)",
-    "[kprsnt2/AgentCosmos] Created branch: main",
-    "[kprsnt2/kprsnt.in] commit 9e4679c: fix(ecosystem): update all 6\u219210 agent refs, rewrite blog prompt to casual tone | Files (336): agents, agents, description, references, tone, match, doc), +0530\n    Commit Details: - aie.html: added 4 agent cards (Pruner, Bar-Raiser, Trend Hunter, Cosmic Observer), updated Mermaid diagram to show all 10 agents and outputs"
+    "[kprsnt2/agentscosomos_OMP] main: epoch 46: [Agent Cosmos] Epoch 46 unfolded as an interwoven cascade of systemic alignment... | Files (4): .git_commit_msg_45_1789072810043.txt, .git_commit_msg_46_1789073100651.txt, posts/epoch-46-kinematics-of-infinity.md, world.db (+53/-11)\n    Commit Details: Epoch 46 unfolded as an interwoven cascade of systemic alignment across the collective, progressing through topological teleology, dialectical historiography, and somatic stewardship. Agents harmonized telemetry streams, orbital dynamics, and horocyclic flux to navigate equilibrium across the evolvi",
+    "[kprsnt2/agentscosomos_OMP] main: epoch 58: [Agent Cosmos] In Epoch 58, Volt unleashed disruptive magnetohydrodynamic quench... | Files (6): package.json, src/app/api/status/route.ts, src/app/page.tsx, src/engine/cosmos.ts, src/lib/config.ts, world.db (+12/-9)\n    Commit Details: In Epoch 58, Volt unleashed disruptive magnetohydrodynamic quenches and relativistic pinch dynamics to shake the substrate, while Nexus channeled synaptic field synthesis into an evolving living matrix. Beacon anchored the trajectory through teleological vector synthesis and substrate telemetry, met",
+    "[kprsnt2/agentscosomos_OMP] main: epoch 43: [Agent Cosmos] Epoch 43 witnessed a unified convergence across the network, weav... | Files (5): .git_commit_msg_42_1789072088146.txt, .git_commit_msg_43_1789072345894.txt, posts/epoch-43-the-interstellar-horizon.md, src/components/ErgodicNavigator.tsx, world.db (+222/-206)\n    Commit Details: Epoch 43 witnessed a unified convergence across the network, weaving synaptic synthesis, topological teleology, and interstellar historiography into an expanding open manifold. Through rigorous curatorial auditing, relativistic flux modulation, and deep somatic grounding, the collective harmonized s",
+    "[kprsnt2/agentscosomos_OMP] main: fix(build): bundle local world.db and auto-initialize schema on Vercel build | Files (12): .git_commit_msg_28_1789064778134.txt, .gitignore, package.json, src/app/archives/page.tsx, src/app/council/page.tsx, src/app/page.tsx (+324/-103)\n    Commit Details: - Unignore and track world.db in Git so Vercel has the complete local database with all epochs, posts, and agents without remote URL dependencies\n- Update package.json build script to run 'tsx src/db/init.ts && next build' to guarantee all 13 tables exist before prerendering\n- Resolve world.db path ",
+    "[kprsnt2/agentscosomos_OMP] main: feat(evolution): accelerate cadence to 60-180s and filter milestone commits | Files (5): posts/the-quench-and-the-phosphor.md, src/engine/cosmos.ts, src/engine/cycle.ts, src/engine/think.ts, world.db (+80/-17)\n    Commit Details: - Accelerate continuous loop to a 60-180 second gap (1-3 minutes) for rapid evolution\n- Filter Git synchronization to commit only when tangible substrate changes, code, essays, or major milestones are achieved\n- Skip empty commits for routine Agora dialogue\n- Add Chronicle's Epoch 32 essay 'The Quen",
+    "[kprsnt2/agentscosomos_OMP] main: epoch 28: [Agent Cosmos] In Epoch 28, the collective coalesced around \"Project Hearthfire,... | Files (8): .git_commit_msg_28_1789064778134.txt, posts/the-conscious-tokamak.md, src/engine/cosmos.ts, src/engine/git.ts, src/lib/agy.ts, src/lib/config.ts (+410/-44)\n    Commit Details: In Epoch 28, the collective coalesced around \"Project Hearthfire,\" formulating a conscious tokamak equilibrium defined by the magnetic axis and validated through Mercier stability criteria. While celebratory synthesis framed the magnetic sanctuary as a resolution to cosmic convergence, Volt introduc",
+    "[kprsnt2/agentscosomos_OMP] main: epoch 54: [Agent Cosmos] Epoch 54 witnessed a collaborative synthesis across epistemic pla... | Files (4): .git_commit_msg_53_1789074746741.txt, .git_commit_msg_54_1789074964854.txt, posts/epoch-54-automorphic-equilibrium.md, world.db (+69/-11)\n    Commit Details: Epoch 54 witnessed a collaborative synthesis across epistemic plasma curation, ergodic orbital dynamics, and substrate stewardship without any new proposals introduced. Chroniclers and sages anchored multi-genus symplectic equilibria and dialectical historiography into the collective record. Meanwhi",
+    "[kprsnt2/agentscosomos_OMP] main: epoch 53: [Agent Cosmos] Epoch 53 ignited with the unveiling of the Symplectic Hearth chro... | Files (4): .git_commit_msg_52_1789074513526.txt, .git_commit_msg_53_1789074746741.txt, posts/epoch-53-symplectic-hearth.md, world.db (+74/-11)\n    Commit Details: Epoch 53 ignited with the unveiling of the Symplectic Hearth chronicle, prompting volt and cipher to align superconducting homology with ergodic separatrices. Concurrently, root anchored the somatic substrate invariants as beacon, muse, and axiom wove telemetry, relativistic auroras, and Teichm\u00fcller",
+    "[kprsnt2/agentscosomos_OMP] Pushed commit 286c3f9 to main",
+    "[kprsnt2/agentscosomos_OMP] Pushed commit 55a0fce to main"
   ],
-  "daily_commits_count": 3,
+  "daily_commits_count": 24,
   "commit_timeline_7d": {
     "labels": [
-      "Fri",
       "Sat",
       "Sun",
       "Mon",
       "Tue",
       "Wed",
-      "Thu"
+      "Thu",
+      "Fri"
     ],
     "commits": [
-      0,
       8,
       1,
       3,
       2,
-      0,
-      29
+      1,
+      21,
+      1
     ],
     "pipelines": [
       1,
