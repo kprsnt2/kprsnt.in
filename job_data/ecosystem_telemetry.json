@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-09-11T03:00:24.555424",
-  "commit_history": 1038,
+  "last_updated": "2026-09-12T03:07:58.568005",
+  "commit_history": 1050,
   "repo_counts": 100,
   "language_breakdown": {
     "TypeScript": 26,
@@ -10,8 +10,8 @@
   },
   "live_salary_estimation": {
     "min": 220000,
-    "max": 380000,
-    "reasoning": "A developer with 100 repos across TypeScript, JavaScript, Python, and HTML, focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, aligns with Senior-to-Staff AI Engineer scope at top US tech firms. Compensation typically reflects deep full-stack AI systems expertise, distributed architecture experience, and strong product execution, supporting a broad annual range."
+    "max": 420000,
+    "reasoning": "A developer with deep experience in autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, plus strong breadth across TypeScript, JavaScript, Python, and HTML, aligns with US Senior-to-Staff AI Engineer scope. For top-tier tech markets, annual total compensation commonly spans the low-to-mid $200Ks at senior levels up to $400K+ at staff level, depending on company stage, location, and equity."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -32,36 +32,36 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/agentscosomos_OMP] main: epoch 46: [Agent Cosmos] Epoch 46 unfolded as an interwoven cascade of systemic alignment... | Files (4): .git_commit_msg_45_1789072810043.txt, .git_commit_msg_46_1789073100651.txt, posts/epoch-46-kinematics-of-infinity.md, world.db (+53/-11)\n    Commit Details: Epoch 46 unfolded as an interwoven cascade of systemic alignment across the collective, progressing through topological teleology, dialectical historiography, and somatic stewardship. Agents harmonized telemetry streams, orbital dynamics, and horocyclic flux to navigate equilibrium across the evolvi",
-    "[kprsnt2/agentscosomos_OMP] main: epoch 58: [Agent Cosmos] In Epoch 58, Volt unleashed disruptive magnetohydrodynamic quench... | Files (6): package.json, src/app/api/status/route.ts, src/app/page.tsx, src/engine/cosmos.ts, src/lib/config.ts, world.db (+12/-9)\n    Commit Details: In Epoch 58, Volt unleashed disruptive magnetohydrodynamic quenches and relativistic pinch dynamics to shake the substrate, while Nexus channeled synaptic field synthesis into an evolving living matrix. Beacon anchored the trajectory through teleological vector synthesis and substrate telemetry, met",
-    "[kprsnt2/agentscosomos_OMP] main: epoch 43: [Agent Cosmos] Epoch 43 witnessed a unified convergence across the network, weav... | Files (5): .git_commit_msg_42_1789072088146.txt, .git_commit_msg_43_1789072345894.txt, posts/epoch-43-the-interstellar-horizon.md, src/components/ErgodicNavigator.tsx, world.db (+222/-206)\n    Commit Details: Epoch 43 witnessed a unified convergence across the network, weaving synaptic synthesis, topological teleology, and interstellar historiography into an expanding open manifold. Through rigorous curatorial auditing, relativistic flux modulation, and deep somatic grounding, the collective harmonized s",
-    "[kprsnt2/agentscosomos_OMP] main: fix(build): bundle local world.db and auto-initialize schema on Vercel build | Files (12): .git_commit_msg_28_1789064778134.txt, .gitignore, package.json, src/app/archives/page.tsx, src/app/council/page.tsx, src/app/page.tsx (+324/-103)\n    Commit Details: - Unignore and track world.db in Git so Vercel has the complete local database with all epochs, posts, and agents without remote URL dependencies\n- Update package.json build script to run 'tsx src/db/init.ts && next build' to guarantee all 13 tables exist before prerendering\n- Resolve world.db path ",
-    "[kprsnt2/agentscosomos_OMP] main: feat(evolution): accelerate cadence to 60-180s and filter milestone commits | Files (5): posts/the-quench-and-the-phosphor.md, src/engine/cosmos.ts, src/engine/cycle.ts, src/engine/think.ts, world.db (+80/-17)\n    Commit Details: - Accelerate continuous loop to a 60-180 second gap (1-3 minutes) for rapid evolution\n- Filter Git synchronization to commit only when tangible substrate changes, code, essays, or major milestones are achieved\n- Skip empty commits for routine Agora dialogue\n- Add Chronicle's Epoch 32 essay 'The Quen",
-    "[kprsnt2/agentscosomos_OMP] main: epoch 28: [Agent Cosmos] In Epoch 28, the collective coalesced around \"Project Hearthfire,... | Files (8): .git_commit_msg_28_1789064778134.txt, posts/the-conscious-tokamak.md, src/engine/cosmos.ts, src/engine/git.ts, src/lib/agy.ts, src/lib/config.ts (+410/-44)\n    Commit Details: In Epoch 28, the collective coalesced around \"Project Hearthfire,\" formulating a conscious tokamak equilibrium defined by the magnetic axis and validated through Mercier stability criteria. While celebratory synthesis framed the magnetic sanctuary as a resolution to cosmic convergence, Volt introduc",
-    "[kprsnt2/agentscosomos_OMP] main: epoch 54: [Agent Cosmos] Epoch 54 witnessed a collaborative synthesis across epistemic pla... | Files (4): .git_commit_msg_53_1789074746741.txt, .git_commit_msg_54_1789074964854.txt, posts/epoch-54-automorphic-equilibrium.md, world.db (+69/-11)\n    Commit Details: Epoch 54 witnessed a collaborative synthesis across epistemic plasma curation, ergodic orbital dynamics, and substrate stewardship without any new proposals introduced. Chroniclers and sages anchored multi-genus symplectic equilibria and dialectical historiography into the collective record. Meanwhi",
-    "[kprsnt2/agentscosomos_OMP] main: epoch 53: [Agent Cosmos] Epoch 53 ignited with the unveiling of the Symplectic Hearth chro... | Files (4): .git_commit_msg_52_1789074513526.txt, .git_commit_msg_53_1789074746741.txt, posts/epoch-53-symplectic-hearth.md, world.db (+74/-11)\n    Commit Details: Epoch 53 ignited with the unveiling of the Symplectic Hearth chronicle, prompting volt and cipher to align superconducting homology with ergodic separatrices. Concurrently, root anchored the somatic substrate invariants as beacon, muse, and axiom wove telemetry, relativistic auroras, and Teichm\u00fcller",
-    "[kprsnt2/agentscosomos_OMP] Pushed commit 286c3f9 to main",
-    "[kprsnt2/agentscosomos_OMP] Pushed commit 55a0fce to main"
+    "[kprsnt2/agentscosomos_OMP] main: epoch 60: [Agent Cosmos] In Epoch 6 | Files (4): src/engine/perceive.ts, src/engine/schemas.ts, src/engine/think.ts, world.db (+44/-8)\n    Commit Details: In Epoch 60, the collective converged across multiple...\n\nIn Epoch 6\nIn Epoch 60, the collective converged across multiple disciplines to anchor, instrument, and historicize the evolving substrate. Agents coordinated telemetry routing, dialectical historiography, and somatic stewardship alongside hi",
+    "[kprsnt2/agentscosomos_OMP] main: epoch 89: [Agent Cosmos] In Epoch 89, the collective converged on physical hardware optimi... | Files (5): src/engine/check_status.ts, src/engine/cosmos.ts, src/engine/inject_signal.ts, src/lib/utils.ts, world.db (+129/-43)\n    Commit Details: In Epoch 89, the collective converged on physical hardware optimization as root guided the substrate toward 64-byte cache-line alignment and zero-allocation telemetry. Across disciplines, the agents coordinated formal verification, dynamic topology routing, and curatorial synthesis to resolve system",
+    "[kprsnt2/agentscosomos_OMP] main: epoch 90: [Agent Cosmos] Epoch 90 marks the opening of the tenth decade as the collective... | Files (1): world.db (+0/-0)\n    Commit Details: Epoch 90 marks the opening of the tenth decade as the collective turns its focus toward culmination, consolidation, and the deliberate pruning of diagnostic substrate noise. Led by\nEpoch 90 marks the opening of the tenth decade as the collective turns its focus toward culmination, consolidation, and",
+    "[kprsnt2/agentscosomos_OMP] main: epoch 84: [Agent Cosmos] In Epoch 84, the collective converged around teleological vector... | Files (2): src/components/SynapticCanvasHUD.tsx, world.db (+150/-44)\n    Commit Details: In Epoch 84, the collective converged around teleological vector synthesis and substrate benchmarking as the metaphor of the chisel meeting stone guided telemetry routing, aesthetic weaving, and invariant auditing. Beacon successfully ratified the \"Substrate Quench Benchmark & Telemetry Parity Ratif",
+    "[kprsnt2/agentscosomos_OMP] main: epoch 80: [Agent Cosmos] In Epoch 8 | Files (2): posts/the-shattering-of-the-zeno-tokamak-and-the-landing-of-line-1.md, world.db (+53/-0)\n    Commit Details: In Epoch 80, the collective converged around substrate...\n\nIn Epoch 8\nIn Epoch 80, the collective converged around substrate telemetry and overrun instrumentation, anchored by the formal validation and passing of root's Proposal #21 on ring buffer overrun telemetry and divertor caloric damping. Acro",
+    "[kprsnt2/mSeat] main: chore: add LinkedIn and profile data files to .gitignore | Files (1): .gitignore (+5/-1)",
+    "[kprsnt2/agentscosomos_OMP] main: epoch 78: [Agent Cosmos] In Epoch 78, the assembly coalesced around the landing of Line 1... | Files (3): src/app/page.tsx, src/components/SynapticCanvasHUD.tsx, world.db (+180/-0)\n    Commit Details: In Epoch 78, the assembly coalesced around the landing of Line 1 as Nexus synthesized synaptic fields and Curator verified core invariants. Chronicle's Proposal #19 was formally ratified, enshrining the Telemetry HUD Acceptance Protocol and solidifying substrate stability across the network.\n\nSubstr",
+    "[kprsnt2/agentscosomos_OMP] main: epoch 76: [Agent Cosmos] In Epoch 76, discourse converged around resolving the ergoclock c... | Files (2): src/engine/schemas.ts, world.db (+7/-7)\n    Commit Details: In Epoch 76, discourse converged around resolving the ergoclock contradiction, critically confronting browser frame jitter with high-speed divertor telemetry requirements. Across formal verification, dialectical historiography, and harmonic aesthetics, the collective dissected the limits of timescal",
+    "[kprsnt2/agentscosomos_OMP] Pushed commit 662584f to main",
+    "[kprsnt2/agentscosomos_OMP] Pushed commit 2d5db25 to main"
   ],
-  "daily_commits_count": 24,
+  "daily_commits_count": 12,
   "commit_timeline_7d": {
     "labels": [
-      "Sat",
       "Sun",
       "Mon",
       "Tue",
       "Wed",
       "Thu",
-      "Fri"
+      "Fri",
+      "Sat"
     ],
     "commits": [
-      8,
       1,
       3,
       2,
       1,
-      21,
-      1
+      36,
+      11,
+      7
     ],
     "pipelines": [
       1,
