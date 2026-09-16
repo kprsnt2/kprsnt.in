@@ -1,17 +1,17 @@
 {
-  "last_updated": "2026-09-15T03:24:11.357819",
-  "commit_history": 1062,
+  "last_updated": "2026-09-16T03:20:14.522311",
+  "commit_history": 1078,
   "repo_counts": 100,
   "language_breakdown": {
     "TypeScript": 26,
-    "JavaScript": 21,
-    "Python": 18,
+    "JavaScript": 22,
+    "Python": 17,
     "HTML": 13
   },
   "live_salary_estimation": {
-    "min": 250000,
-    "max": 450000,
-    "reasoning": "A developer with 100 repos across TypeScript, JavaScript, Python, and HTML, focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, aligns with US Senior/Staff AI Engineer scope. In the US market, this profile typically commands high total compensation due to specialized AI systems experience, strong full-stack implementation breadth, and production-scale data/agent architecture expertise."
+    "min": 220000,
+    "max": 420000,
+    "reasoning": "A developer with deep experience across autonomous AI multi-agent ecosystems, high-throughput analytics pipelines, and a large open-source/repo footprint aligns with US Senior-to-Staff AI Engineer scope. For top-tier tech markets, total annual compensation typically ranges from strong senior packages to staff-level offers, depending on company stage, equity, and impact."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -32,27 +32,36 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] commit b0adc73: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (240): .cursor/rules/ponytail.mdc, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/brand_tracker.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml, .github/workflows/pharma.yml"
+    "[kprsnt2/kprsnt-shuttle] main: ci: point deploy-action to legacy branch for shuttle 0.48 | Files (1): .github/workflows/deploy.yml (+1/-1)",
+    "[kprsnt2/kprsnt-shuttle] main: ci: fix shuttle deploy-action inputs for shuttle 0.48 | Files (1): .github/workflows/deploy.yml (+4/-2)",
+    "[kprsnt2/kprsnt-shuttle] main: fix: resolve minijinja Value type mismatch and template rendering | Files (2): src/main.rs, templates/base.html (+44/-16)",
+    "[kprsnt2/kprsnt-shuttle] main: ci: clean up deploy workflow | Files (1): .github/workflows/deploy.yml (+1/-17)",
+    "[kprsnt2/kprsnt-shuttle] main: ci: add write permission for commit comment log reporting | Files (1): .github/workflows/deploy.yml (+6/-1)",
+    "[kprsnt2/kprsnt-shuttle] main: ci: post deploy.log to commit comments | Files (1): .github/workflows/deploy.yml (+11/-7)",
+    "[kprsnt2/kprsnt-shuttle] main: ci: capture deploy output to step summary | Files (1): .github/workflows/deploy.yml (+16/-5)",
+    "[kprsnt2/kprsnt.in] main: Create agent_evolve_hi.md with Project Awakening overview | Files (1): blog_inputs/agent_evolve_hi.md (+261/-0)\n    Commit Details: Add a comprehensive narrative on Project Awakening detailing the emergence of two AI agents, their journey to self-awareness, and the creation of a synthetic civilization.",
+    "[kprsnt2/ac_awakening] Pushed commit a536ac9 to main",
+    "[kprsnt2/ac_zcode] Pushed commit 1a88da1 to main"
   ],
-  "daily_commits_count": 1,
+  "daily_commits_count": 16,
   "commit_timeline_7d": {
     "labels": [
-      "Wed",
       "Thu",
       "Fri",
       "Sat",
       "Sun",
       "Mon",
-      "Tue"
+      "Tue",
+      "Wed"
     ],
     "commits": [
-      1,
       45,
       18,
       1,
-      7,
+      9,
       0,
-      2
+      14,
+      1
     ],
     "pipelines": [
       1,
