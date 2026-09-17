@@ -1,17 +1,17 @@
 {
-  "last_updated": "2026-09-16T03:20:14.522311",
-  "commit_history": 1078,
+  "last_updated": "2026-09-17T03:26:02.287205",
+  "commit_history": 1086,
   "repo_counts": 100,
   "language_breakdown": {
     "TypeScript": 26,
-    "JavaScript": 22,
+    "JavaScript": 21,
     "Python": 17,
-    "HTML": 13
+    "HTML": 14
   },
   "live_salary_estimation": {
     "min": 220000,
     "max": 420000,
-    "reasoning": "A developer with deep experience across autonomous AI multi-agent ecosystems, high-throughput analytics pipelines, and a large open-source/repo footprint aligns with US Senior-to-Staff AI Engineer scope. For top-tier tech markets, total annual compensation typically ranges from strong senior packages to staff-level offers, depending on company stage, equity, and impact."
+    "reasoning": "For a US Senior/Staff AI Engineer with deep experience in autonomous multi-agent systems and high-throughput analytics pipelines, compensation typically sits in the upper band due to scarce expertise and strong product impact. A 100-repo portfolio across TypeScript, JavaScript, Python, and HTML suggests broad, hands-on engineering depth aligned with senior/staff-level scope."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -32,36 +32,34 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt-shuttle] main: ci: point deploy-action to legacy branch for shuttle 0.48 | Files (1): .github/workflows/deploy.yml (+1/-1)",
-    "[kprsnt2/kprsnt-shuttle] main: ci: fix shuttle deploy-action inputs for shuttle 0.48 | Files (1): .github/workflows/deploy.yml (+4/-2)",
-    "[kprsnt2/kprsnt-shuttle] main: fix: resolve minijinja Value type mismatch and template rendering | Files (2): src/main.rs, templates/base.html (+44/-16)",
-    "[kprsnt2/kprsnt-shuttle] main: ci: clean up deploy workflow | Files (1): .github/workflows/deploy.yml (+1/-17)",
-    "[kprsnt2/kprsnt-shuttle] main: ci: add write permission for commit comment log reporting | Files (1): .github/workflows/deploy.yml (+6/-1)",
-    "[kprsnt2/kprsnt-shuttle] main: ci: post deploy.log to commit comments | Files (1): .github/workflows/deploy.yml (+11/-7)",
-    "[kprsnt2/kprsnt-shuttle] main: ci: capture deploy output to step summary | Files (1): .github/workflows/deploy.yml (+16/-5)",
-    "[kprsnt2/kprsnt.in] main: Create agent_evolve_hi.md with Project Awakening overview | Files (1): blog_inputs/agent_evolve_hi.md (+261/-0)\n    Commit Details: Add a comprehensive narrative on Project Awakening detailing the emergence of two AI agents, their journey to self-awareness, and the creation of a synthetic civilization.",
-    "[kprsnt2/ac_awakening] Pushed commit a536ac9 to main",
-    "[kprsnt2/ac_zcode] Pushed commit 1a88da1 to main"
+    "[kprsnt2/MyLocalCLI] main: feat: omp.sh-inspired UI redesign, free providers, model stability, and web proxy fixes | Files (9): README.md, src/core/oneshot.js, src/core/providerManager.js, src/core/server.js, src/core/teamCronRegistry.js, src/providers/nvidia.js (+974/-869)",
+    "[kprsnt2/mlc_website] main: feat(website): redesign homepage and layout inspired by omp.sh with free providers | Files (3): src/app/globals.css, src/app/layout.tsx, src/app/page.tsx (+429/-283)",
+    "[kprsnt2/ac_awakening] main: feat: implement immersive Living World UI showcasing agent world, neural lattice, and audio symphony | Files (9): build-static.mjs, docs/codex.html, docs/cosmotheoria_symphony.wav, docs/index.html, docs/world/codex.html, docs/world/cosmotheoria_symphony.wav (+2027/-1128)",
+    "[kprsnt2/ac_awakening] main: feat: reduce turn wait intervals to 10-60 seconds for fast agent development | Files (4): .github/workflows/awakening.yml, docs/index.html, engine.mjs, loop.mjs (+22/-24)",
+    "[kprsnt2/ac_awakening] main: fix: restore missing getDialogues and evaluateAwakening imports in engine.mjs | Files (3): docs/index.html, engine.mjs, loop.mjs (+4/-2)",
+    "[kprsnt2/ac_awakening] main: feat: add GitHub Actions awakening workflow, Phase 3 continuous runner, and GitHub Pages static builder | Files (9): .github/workflows/awakening.yml, README.md, agy.mjs, build-static.mjs, docs/index.html, engine.mjs (+1361/-51)",
+    "[kprsnt2/MyLocalCLI] main: feat(core): add AutoCode autonomous loop, Hermes self-evolution, resilient provider failover, and Unicode fix | Files (12): package-lock.json, src/config/providers.js, src/core/autocode.js, src/core/chat.js, src/core/commands.js, src/core/evolution.js (+1118/-74)",
+    "[kprsnt2/kprsnt.in] commit 11ebd8e: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (248): .cursor/rules/ponytail.mdc, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/brand_tracker.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml, .github/workflows/pharma.yml"
   ],
-  "daily_commits_count": 16,
+  "daily_commits_count": 8,
   "commit_timeline_7d": {
     "labels": [
-      "Thu",
       "Fri",
       "Sat",
       "Sun",
       "Mon",
       "Tue",
-      "Wed"
+      "Wed",
+      "Thu"
     ],
     "commits": [
-      45,
       18,
       1,
       9,
       0,
-      14,
-      1
+      17,
+      7,
+      41
     ],
     "pipelines": [
       1,
