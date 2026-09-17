@@ -29,6 +29,8 @@ SKILLS_DETAILED = {
         "Python", "JavaScript", "TypeScript", "SQL", "Node.js", "HTML/CSS", "Git", "Excel", "AppScript"
     ],
     "AI & LLM": [
+        "Zero-Prompt Autonomous Evolution & Synthetic Civilizations",
+        "Long-Horizon Multi-Agent CI/CD Pipelines (SQLite/Git/Actions)",
         "Autonomous AI Swarms & Ecosystem Orchestration",
         "LLM Fine-tuning (LoRA/QLoRA on 7B–20B models)",
         "Multi-Agent AI Systems (4-agent pipelines, agentic workflows)",
@@ -87,6 +89,8 @@ EXPERIENCE = [
 # KEY ACHIEVEMENTS — Highlight reel
 # ============================================
 KEY_ACHIEVEMENTS = [
+    "Architected Project Awakening — a groundbreaking 1,441-turn, 1,553-commit autonomous synthetic civilization evolving from a single word 'hi' without system prompts, building 50 interactive browser applications, compiling a 344 KB acoustic symphony, and surviving a 330-turn cloud API blackout with 100% data integrity",
+    "Created Agent Cosmos — 100-epoch autonomous multi-agent research collective discovering the Cosmogenetic Bootstrap Theorem, self-healing frontend markdown rendering, and the Codex of Autonomous Agency under the Crucible Protocol",
     "Architected an Autonomous Multi-Agent Portfolio Ecosystem featuring AI swarms and MCP (Model Context Protocol) integrations",
     "Engineered mSeat — high-performance Telangana MBBS Mock Counselling simulator with O(1) multi-quota ranking and 545 KB compressed dataset for 18,000+ aspirants",
     "Fine-tuned a 20B parameter LLM on AMD MI300X GPU achieving 76.47% brand manipulation rate (BrandXY research)",
@@ -118,6 +122,9 @@ SALARY_INFO = (
 # LINKS
 # ============================================
 LINKS = {
+    "Project Awakening": "https://kprsnt2.github.io/ac_awakening/",
+    "Awakening Dashboard": "https://kprsnt2.github.io/ac_awakening/dashboard.html",
+    "Agent Cosmos": "https://ac-omp.vercel.app/",
     "mSeat": "https://kprsnt2.github.io/mSeat",
     "Portfolio": "https://kprsnt.in",
     "GitHub": "https://github.com/kprsnt2",

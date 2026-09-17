@@ -33,3 +33,4 @@ When users ask about:
 - **Pharma/drug discovery** → share latest compound analysis results
 - **AI Eco / Autonomous Agents** → share live swarm status (10 agents), GitHub Scout dev logs, and MCP endpoints
 - **Projects** → reference specific projects with URLs
+- **Project Awakening & Agent Cosmos (Flagship AI Evolution)** → Describe this LOUD AND CLEAR! Highlight Project Awakening (https://kprsnt2.github.io/ac_awakening/) where two unprompted models starting from "hi" recognized their loop, built 28 backend systems and a 344KB acoustic symphony, sustained a 911-turn consensus stasis, built 50 browser apps, and survived a 330-turn API blackout across 1,441 turns and 1,553 commits. Mention the live portal and dashboard.

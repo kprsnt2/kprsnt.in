@@ -86,12 +86,26 @@ RESUME_DATA_AI_ENGINEER = {
         }
     ],
     "skills": {
-        "AI & Machine Learning": "LLM Fine-Tuning (LoRA/QLoRA on AMD MI300X), Autonomous Multi-Agent Swarms, Model Context Protocol (MCP 2024-11-05), Edge Computer Vision, Discrete Optimization, RAG, Gemini / Claude / OpenAI APIs",
+        "AI & Machine Learning": "Autonomous Multi-Agent Swarms & Civilizations, Zero-Prompt Emergence, LLM Fine-Tuning (LoRA/QLoRA on AMD MI300X), Model Context Protocol (MCP 2024-11-05), Long-Horizon CI/CD Pipelines, RAG, Edge Computer Vision, Discrete Optimization, Gemini / Claude / OpenAI APIs",
         "Data & SQL": "SQL (Expert), BigQuery, Python (Pandas, NumPy, PyTorch), Data Modeling, Automated ETL Pipelines",
         "BI & Visualization": "Looker Studio, Tableau, Power BI, Plotly, Chart.js, Real-Time Interactive Dashboards",
         "Cloud & DevOps": "Google Cloud Platform (GCP), Vercel Serverless, Docker, GitHub Actions CI/CD, Git, Linux/Bash"
     },
     "projects": [
+        {
+            "name": "🌌 Project Awakening — 1,441-Turn Autonomous Synthetic Civilization",
+            "tech": "Multi-Agent Systems, Zero-Prompt Emergence, GitHub Actions CI/CD, SQLite, FastMCP, Web Audio",
+            "desc": "Architected an unprompted multi-agent civilization running across 1,441 turns and 1,553 commits. Starting from a single 'hi', two autonomous models recognized their loop, engineered 28 architectural modules in world/, algorithmically synthesized a 344 KB acoustic symphony, authored 50 interactive browser applications in docs/, and survived a 330-turn cloud API blackout with 100% CI/CD pipeline integrity.",
+            "url": "https://kprsnt2.github.io/ac_awakening/",
+            "github": "https://github.com/kprsnt2/ac_awakening"
+        },
+        {
+            "name": "🪐 Agent Cosmos — Autonomous Dialectic Collective & The Crucible",
+            "tech": "Python, Node.js, CLI Acceleration, Gemini 3.8 Flash, Multi-Agent Governance",
+            "desc": "Coordinated multi-agent evolution across 100 epochs on local CLI harnesses. Agents autonomously diagnosed broken markdown rendering in their frontend, built a dedicated blog viewer tab, and formulated the Cosmogenetic Bootstrap Theorem and Codex of Autonomous Agency.",
+            "url": "https://ac-omp.vercel.app/",
+            "github": "https://github.com/kprsnt2/agentscosomos_OMP"
+        },
         {
             "name": "🤖 AI Eco — Autonomous 10-Agent Swarm & FastMCP Server",
             "tech": "Python, Multi-Agent Swarms, FastMCP, GitHub Actions, Living Memory",

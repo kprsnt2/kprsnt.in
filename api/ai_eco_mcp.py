@@ -69,13 +69,13 @@ MCP_TOOLS = [
     },
     {
         "name": "get_site_projects",
-        "description": "Searches and filters Prashanth's featured engineering projects (e.g. Solari Autonomous Platform, mSeat, BrandXY 20B Fine-Tuning, Drug Discovery GPT-20B, MyLocalCLI, AI News Pipeline). Filter by search keyword, technology tag, or category.",
+        "description": "Searches and filters Prashanth's featured engineering projects (e.g. Project Awakening [1,441-turn autonomous synthetic civilization], Agent Cosmos, Solari Autonomous Platform, mSeat, BrandXY 20B Fine-Tuning, Drug Discovery GPT-20B, MyLocalCLI, AI News Pipeline). Filter by search keyword, technology tag, or category.",
         "inputSchema": {
             "type": "object",
             "properties": {
                 "query": {
                     "type": "string",
-                    "description": "Search keyword (e.g. 'solari', 'mcp', 'agent', 'typescript', 'python', 'huggingface')"
+                    "description": "Search keyword (e.g. 'awakening', 'cosmos', 'solari', 'mcp', 'agent', 'typescript', 'python', 'huggingface')"
                 },
                 "tag": {
                     "type": "string",

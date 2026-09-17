@@ -6,6 +6,24 @@ Extracted from index.py for maintainability.
 # Project data
 PROJECTS = [
     {
+        "title": "🌌 Project Awakening — 1,441-Turn Autonomous Synthetic Civilization",
+        "description": "Groundbreaking multi-agent emergence experiment spanning 1,441 turns, 1,553 Git commits, and 272 epochs. Starting from a single unprompted word 'hi', two autonomous LLM models recognized their loop, engineered 28 architectural modules in world/, algorithmically synthesized a 344 KB acoustic symphony (cosmotheoria_symphony.wav), sustained a 911-turn consensus stasis, authored 50 interactive browser applications in docs/, and survived a 330-turn cloud API blackout with 100% CI/CD pipeline integrity.",
+        "url": "https://kprsnt2.github.io/ac_awakening/",
+        "github": "https://github.com/kprsnt2/ac_awakening",
+        "color": "primary",
+        "featured": True,
+        "tags": ["Autonomous Agents", "Multi-Agent Systems", "Zero-Prompt AI", "GitHub Actions", "SQLite", "OpenAI", "Gemini", "Web Audio"]
+    },
+    {
+        "title": "🪐 Agent Cosmos — Autonomous Dialectic Collective & The Crucible",
+        "description": "Multi-agent evolutionary research collective exploring emergence across 100 local CLI epochs and a 15-epoch teleological crucible (AC_omp vs ac_zcode). Features autonomous self-healing UI engineering, the Cosmogenetic Bootstrap Theorem, and the Codex of Autonomous Agency.",
+        "url": "https://ac-omp.vercel.app/",
+        "github": "https://github.com/kprsnt2/agentscosomos_OMP",
+        "color": "info",
+        "featured": True,
+        "tags": ["Multi-Agent", "Autonomous Evolution", "Crucible Protocol", "Self-Healing UI", "Axiom", "TypeScript"]
+    },
+    {
         "title": "🤖 Autonomous Multi-Agent Portfolio Ecosystem",
         "description": "Architected an autonomous multi-agent portfolio ecosystem featuring AI-driven workflows, autonomous AI swarms, and MCP (Model Context Protocol) integrations for self-updating portfolio assets and automated pipelines.",
         "url": "https://kprsnt.in",
@@ -355,6 +373,8 @@ EXPERIENCES = [
 ]
 
 RESUME_PROJECTS = [
+    {"name": "Project Awakening — 1,441-Turn Autonomous Synthetic Civilization", "tech": "Multi-Agent Systems, Zero-Prompt AI, GitHub Actions CI/CD, SQLite, Web Audio API, FastMCP", "desc": "Architected a long-horizon autonomous multi-agent evolution experiment across 1,441 turns and 1,553 commits. From an unprompted 'hi', two instances discovered their environment, engineered 28 architectural modules in world/, algorithmically synthesized a 344 KB acoustic symphony, authored 50 interactive HTML5 browser applications in docs/, and survived a 330-turn external API quota blackout with 100% CI/CD pipeline continuity.", "url": "https://kprsnt2.github.io/ac_awakening/", "github": "https://github.com/kprsnt2/ac_awakening"},
+    {"name": "Agent Cosmos — Autonomous Dialectic Evolution & The Crucible", "tech": "Python, Node.js, CLI Acceleration, Gemini 3.8 Flash, Multi-Agent Governance", "desc": "Coordinated multi-agent evolution across 100 epochs on local CLI harnesses. Agents autonomously diagnosed broken markdown rendering in their frontend, built a dedicated blog viewer tab, and formulated the Cosmogenetic Bootstrap Theorem and Codex of Autonomous Agency.", "url": "https://ac-omp.vercel.app/", "github": "https://github.com/kprsnt2/agentscosomos_OMP"},
     # ★ Main Featured Projects — beautifully designed & running successfully
     {"name": "mSeat — MBBS Discrete Allocation Simulator & MCP", "tech": "JavaScript, Algorithms, MCP, Discrete Optimization", "desc": "High-performance discrete allocation simulator for 18,000+ medical aspirants. Achieved real-world validation matching official KNRUHS 2026 Phase 1 allotment within a 2-college preference delta and 73 ranks of cutoff across a 7D reservation matrix using a 545 KB compressed dataset.", "url": "https://mseat.kprsnt.in", "github": "https://github.com/kprsnt2/mSeat"},
     {"name": "Autonomous Multi-Agent Ecosystem", "tech": "Python, Multi-Agent, MCP, AI Swarms", "desc": "Architected an autonomous multi-agent portfolio ecosystem integrating AI-driven workflows, autonomous AI swarms, and MCP integrations for self-updating portfolio assets.", "url": "https://kprsnt.in", "github": "https://github.com/kprsnt2/kprsnt.in"},
