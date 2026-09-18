@@ -5,7 +5,7 @@
       "src": "api/index.py",
       "use": "@vercel/python",
       "config": {
-        "includeFiles": "blog_data/**,blog_inputs/**,templates/**,job_data/*.json,ecosystem_swarm/**,AI_Eco_Blogs/**"
+        "includeFiles": "blog_data/**,blog_inputs/**,templates/**,job_data/*.json,job_data/daily/**,job_data/pharma_data/**,ecosystem_swarm/**,AI_Eco_Blogs/**"
       }
     },
     {

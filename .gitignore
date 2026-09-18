@@ -9,3 +9,4 @@ __pycache__/
 .env
 node_modules/
 AI_ECO_AUDIT.md
+scratch/
