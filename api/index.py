@@ -18,6 +18,11 @@ import os
 import time
 import json
 import glob
+try:
+    from data.case_studies import get_all_case_studies, get_case_study, get_structured_hiring_evidence
+except ImportError:
+    from api.data.case_studies import get_all_case_studies, get_case_study, get_structured_hiring_evidence
+
 import logging
 import markdown
 import re
@@ -406,6 +411,102 @@ def aie_blog_post(slug):
     if post:
         return render_template('blog_post.html', post=post, is_aie=True)
     return render_template('aie_blogs.html', posts=posts)
+
+# ============================================================
+# REST API — Blogs & Case Studies
+# ============================================================
+
+@app.route('/api/blogs', methods=['GET', 'OPTIONS'])
+def api_blogs():
+    """REST endpoint returning all technical blog posts and engineering case studies with filtering."""
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'}), 200
+    category = request.args.get('category', '').strip()
+    tag = request.args.get('tag', '').strip()
+    query = request.args.get('query', '').strip().lower()
+    include_aie = request.args.get('include_aie', 'true').lower() in ('true', '1')
+
+    posts = load_all_blog_posts()
+    if include_aie:
+        posts = posts + load_ai_eco_blogs()
+        posts.sort(key=lambda p: _parse_blog_date(p.get('date', '')), reverse=True)
+
+    filtered = []
+    for p in posts:
+        if category and p.get('category', '').lower() != category.lower():
+            continue
+        if tag and tag.lower() not in [t.lower() for t in p.get('tags', [])]:
+            continue
+        if query:
+            searchable = f"{p.get('title', '')} {p.get('excerpt', '')} {' '.join(p.get('tags', []))}".lower()
+            if query not in searchable:
+                continue
+        filtered.append({
+            "slug": p.get('slug'),
+            "title": p.get('title'),
+            "date": p.get('date'),
+            "category": p.get('category'),
+            "tags": p.get('tags', []),
+            "author": p.get('author'),
+            "excerpt": p.get('excerpt'),
+            "url": f"https://kprsnt.in/blog/{p.get('slug')}",
+            "is_aie": p.get('category') == 'AI Eco'
+        })
+    return jsonify({"count": len(filtered), "blogs": filtered}), 200
+
+
+@app.route('/api/blog/<slug>', methods=['GET', 'OPTIONS'])
+def api_blog_detail(slug):
+    """REST endpoint returning full content and metadata for a specific blog post."""
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'}), 200
+    all_posts = load_all_blog_posts() + load_ai_eco_blogs()
+    post = next((p for p in all_posts if p.get('slug') == slug), None)
+    if not post:
+        return jsonify({"error": f"Blog post '{slug}' not found"}), 404
+    return jsonify({
+        "slug": post.get('slug'),
+        "title": post.get('title'),
+        "date": post.get('date'),
+        "category": post.get('category'),
+        "tags": post.get('tags', []),
+        "author": post.get('author'),
+        "excerpt": post.get('excerpt'),
+        "insights": post.get('insights'),
+        "content_html": post.get('content'),
+        "url": f"https://kprsnt.in/blog/{slug}"
+    }), 200
+
+
+@app.route('/api/case-studies', methods=['GET', 'OPTIONS'])
+def api_case_studies():
+    """REST endpoint returning deep-dive case studies explaining WHY each project was built and its outcomes."""
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'}), 200
+    domain = request.args.get('domain', 'all')
+    studies = get_all_case_studies(domain)
+    return jsonify({"count": len(studies), "case_studies": studies}), 200
+
+
+@app.route('/api/case-study/<keyword>', methods=['GET', 'OPTIONS'])
+def api_case_study_detail(keyword):
+    """REST endpoint returning a specific project deep-dive case study."""
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'}), 200
+    study = get_case_study(keyword)
+    if not study:
+        return jsonify({"error": f"Case study for '{keyword}' not found"}), 404
+    return jsonify(study), 200
+
+
+@app.route('/api/hiring-evidence', methods=['GET', 'OPTIONS'])
+def api_hiring_evidence():
+    """REST endpoint returning structured evidence for recruiters & hiring managers."""
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'}), 200
+    domain = request.args.get('domain', 'all')
+    evidence = get_structured_hiring_evidence(domain)
+    return jsonify(evidence), 200
 
 
 

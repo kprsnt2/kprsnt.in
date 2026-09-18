@@ -20,6 +20,20 @@ SWARM_DIR = BASE_DIR / "ecosystem_swarm"
 SWARM_MEMORY_PATH = SWARM_DIR / "memory.md"
 SWARM_DAILY_DIR = SWARM_DIR / "daily_views"
 SWARM_WEEKLY_DIR = SWARM_DIR / "weekly_meetings"
+BLOG_INPUTS_DIR = BASE_DIR / "blog_inputs"
+BLOG_DATA_DIR = BASE_DIR / "blog_data"
+
+try:
+    from api.data.case_studies import get_all_case_studies, get_case_study, get_structured_hiring_evidence, PROJECT_CASE_STUDIES
+except ImportError:
+    try:
+        from data.case_studies import get_all_case_studies, get_case_study, get_structured_hiring_evidence, PROJECT_CASE_STUDIES
+    except ImportError:
+        get_all_case_studies = lambda *args: []
+        get_case_study = lambda *args: None
+        get_structured_hiring_evidence = lambda *args: {}
+        PROJECT_CASE_STUDIES = {}
+
 
 # Safely import master portfolio constants
 try:
@@ -228,6 +242,72 @@ MCP_TOOLS = [
                 }
             }
         }
+    },
+    {
+        "name": "get_blog_posts",
+        "description": "Lists, searches, and filters Prashanth's long-form engineering case studies and technical blog posts (e.g. Project Awakening 1,441-turn post-mortem, Retail Shelf Intelligence Edge CV + VLM, mSeat MBBS allocation simulator, The Crucible Protocol dual-substrate evolution, BrandXY 20B LLM fine-tuning, Drug Discovery GPT-20B).",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "Keyword search across titles, excerpts, and tags (e.g. 'awakening', 'retail', 'mseat', 'cosmos', 'fine-tuning')"
+                },
+                "category": {
+                    "type": "string",
+                    "description": "Filter by category (e.g. 'Autonomous AI & Systems Engineering', 'Computer Vision & AI', 'Technology', 'AI Eco')"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "Filter by specific tag"
+                },
+                "limit": {
+                    "type": "integer",
+                    "description": "Maximum number of blog posts to return (default: 6, max: 25)"
+                }
+            }
+        }
+    },
+    {
+        "name": "get_blog_post",
+        "description": "Returns the complete markdown / text content, technical architecture, and problem-solution breakdown of a specific blog post by slug or title keyword.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "slug": {
+                    "type": "string",
+                    "description": "Blog slug or title keyword (e.g. 'ac-awakening-agent-cosmos-mega-blog', 'retail-shelf-intelligence-engineering-story', 'mSeat_worked', 'agent_cosmos_comparision', 'agent_evolve_hi', 'manipulating-llm-recommendations-brand-influence')"
+                }
+            },
+            "required": ["slug"]
+        }
+    },
+    {
+        "name": "get_project_case_study",
+        "description": "Returns deep-dive case studies explaining WHY each project was built, the motivating problem, the real engineering struggles (what failed initially & how it was solved), architectural choices, measurable validation metrics, and whether it is a Production System, AI Research, or Data Platform.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "project": {
+                    "type": "string",
+                    "description": "Project keyword or name (e.g. 'mseat', 'awakening', 'retail', 'cosmos', 'ainews', 'mylocalcli', 'brandxy', 'aieco')"
+                }
+            }
+        }
+    },
+    {
+        "name": "get_hiring_evidence",
+        "description": "Directly answers recruiter and hiring manager inquiries with structured, verified evidence categorized into 3 distinct domains: 1) Production Systems Shipped, 2) Autonomous Multi-Agent & LLM Research, 3) Enterprise Data & Analytics Platforms. Includes Problem -> Solution -> Quantified Outcome -> Metrics, plus suggested technical interview verification topics.",
+        "inputSchema": {
+            "type": "object",
+            "properties": {
+                "domain": {
+                    "type": "string",
+                    "enum": ["all", "production", "research", "data"],
+                    "description": "Filter evidence by domain (default: 'all')"
+                }
+            }
+        }
     }
 ]
 
@@ -252,6 +332,24 @@ MCP_RESOURCES = [
         "uri": "portfolio://profile",
         "name": "Prashanth's Verified Profile",
         "description": "Core identity, contact information, social links, current engineering focus, and key portfolio metrics",
+        "mimeType": "application/json"
+    },
+    {
+        "uri": "blog://posts",
+        "name": "Engineering Case Studies & Technical Blogs Catalog",
+        "description": "Comprehensive catalog of Prashanth's technical blog posts, forensic engineering post-mortems, and research case studies",
+        "mimeType": "application/json"
+    },
+    {
+        "uri": "portfolio://case-studies",
+        "name": "Project Case Studies (Problem, Struggle, Outcome, Why Mentioned)",
+        "description": "Deep-dive case studies explaining why each project was built, initial failures, architectural solutions, and quantified results",
+        "mimeType": "application/json"
+    },
+    {
+        "uri": "portfolio://hiring-evidence",
+        "name": "Hiring Evidence & Production Proof",
+        "description": "Recruiter-ready evidence separating Production Systems from AI Research and Data Platforms, with metrics and interview topics",
         "mimeType": "application/json"
     },
     {
@@ -834,6 +932,171 @@ def handle_ai_eco_dev_logs(args: Dict[str, Any]) -> Dict[str, Any]:
         "dev_logs": logs
     }
 
+def _load_all_mcp_blog_posts() -> List[Dict[str, Any]]:
+    """Load all polished technical engineering posts from blog_inputs/ and blog_data/."""
+    posts = []
+    seen = set()
+
+    if BLOG_INPUTS_DIR.exists():
+        for md_file in sorted(BLOG_INPUTS_DIR.glob("*.md")):
+            try:
+                slug = md_file.stem
+                if slug in seen:
+                    continue
+                content = md_file.read_text(encoding="utf-8")
+                post = {"slug": slug, "source": "blog_inputs/"}
+                fm_match = re.match(r"^\s*---\s*[\r\n]+(.*?)\r?\n---\s*[\r\n]+(.*)", content, re.DOTALL)
+                if fm_match:
+                    fm_text, md_content = fm_match.group(1), fm_match.group(2)
+                    for line in fm_text.splitlines():
+                        if ":" in line:
+                            k, v = line.split(":", 1)
+                            k = k.strip().lower()
+                            v = v.strip().strip('"').strip("'")
+                            if k == "tags":
+                                post["tags"] = [t.strip() for t in v.split(",") if t.strip()]
+                            else:
+                                post[k] = v
+                    # Strip leading H1 from raw_content
+                    post["raw_content"] = re.sub(r'^\s*#\s+[^\r\n]+[\r\n]*', '', md_content).strip()
+                else:
+                    h1_match = re.search(r"^\s*#\s+([^\r\n]+)", content, re.MULTILINE)
+                    post["title"] = h1_match.group(1).strip() if h1_match else slug.replace("-", " ").replace("_", " ").title()
+                    post["raw_content"] = re.sub(r'^\s*#\s+[^\r\n]+[\r\n]*', '', content, count=1).strip()
+                    post["date"] = ""
+                    post["tags"] = ["Technology"]
+
+                if not post.get("title"):
+                    post["title"] = slug.replace("-", " ").replace("_", " ").title()
+                if not post.get("category"):
+                    post["category"] = "Technology"
+                if not post.get("excerpt"):
+                    post["excerpt"] = post.get("raw_content", "")[:280].strip() + "..."
+                post["url"] = f"https://kprsnt.in/blog/{slug}"
+                posts.append(post)
+                seen.add(slug)
+            except Exception as e:
+                logging.warning(f"MCP error reading blog {md_file}: {e}")
+
+    if BLOG_DATA_DIR.exists():
+        for j_file in sorted(BLOG_DATA_DIR.glob("*.json")):
+            try:
+                data = json.loads(j_file.read_text(encoding="utf-8"))
+                slug = data.get("slug")
+                if slug and slug not in seen:
+                    data["source"] = "blog_data/"
+                    data["url"] = f"https://kprsnt.in/blog/{slug}"
+                    data["raw_content"] = data.get("content", "")
+                    posts.append(data)
+                    seen.add(slug)
+            except Exception:
+                pass
+
+    return posts
+
+
+def handle_get_blog_posts(args: Dict[str, Any]) -> Dict[str, Any]:
+    """Searches, lists, and filters technical engineering blog posts and case studies."""
+    args = args or {}
+    query = (args.get("query") or "").strip().lower()
+    category = (args.get("category") or "").strip().lower()
+    tag = (args.get("tag") or "").strip().lower()
+    try:
+        limit = max(1, min(int(args.get("limit") or 6), 25))
+    except (ValueError, TypeError):
+        limit = 6
+
+    posts = _load_all_mcp_blog_posts()
+    filtered = []
+    for p in posts:
+        if category and category not in p.get("category", "").lower():
+            continue
+        if tag and tag not in [t.lower() for t in p.get("tags", [])]:
+            continue
+        if query:
+            searchable = f"{p.get('title', '')} {p.get('excerpt', '')} {' '.join(p.get('tags', []))}".lower()
+            if query not in searchable:
+                continue
+        filtered.append({
+            "slug": p.get("slug"),
+            "title": p.get("title"),
+            "date": p.get("date"),
+            "category": p.get("category"),
+            "tags": p.get("tags", []),
+            "author": p.get("author"),
+            "excerpt": p.get("excerpt"),
+            "url": p.get("url"),
+            "source": p.get("source")
+        })
+
+    return {
+        "count": len(filtered[:limit]),
+        "total_available": len(filtered),
+        "blogs": filtered[:limit]
+    }
+
+
+def handle_get_blog_post(args: Dict[str, Any]) -> Dict[str, Any]:
+    """Returns full technical content and architecture narrative of a specific blog post."""
+    args = args or {}
+    slug_target = (args.get("slug") or args.get("slug_or_title") or "").strip().lower()
+    if not slug_target:
+        return {"error": "Missing required argument 'slug'."}
+
+    posts = _load_all_mcp_blog_posts()
+    matched = None
+    for p in posts:
+        if p.get("slug", "").lower() == slug_target:
+            matched = p
+            break
+    if not matched:
+        for p in posts:
+            if slug_target in p.get("slug", "").lower() or slug_target in p.get("title", "").lower():
+                matched = p
+                break
+
+    if not matched:
+        return {"error": f"Blog post '{slug_target}' not found. Available slugs: {[p['slug'] for p in posts[:12]]}"}
+
+    return {
+        "slug": matched.get("slug"),
+        "title": matched.get("title"),
+        "date": matched.get("date"),
+        "category": matched.get("category"),
+        "tags": matched.get("tags", []),
+        "author": matched.get("author"),
+        "excerpt": matched.get("excerpt"),
+        "insights": matched.get("insights"),
+        "url": matched.get("url"),
+        "content": matched.get("raw_content", "")[:9000]
+    }
+
+
+def handle_get_project_case_study(args: Dict[str, Any]) -> Dict[str, Any]:
+    """Returns deep-dive case studies explaining WHY each project was built, initial failures, architecture, and outcomes."""
+    args = args or {}
+    project_kw = (args.get("project") or args.get("project_name_or_keyword") or "").strip()
+    if project_kw:
+        study = get_case_study(project_kw)
+        if study:
+            return {"case_study": study}
+        return {
+            "error": f"Project case study '{project_kw}' not found.",
+            "available_projects": list(PROJECT_CASE_STUDIES.keys())
+        }
+    return {
+        "count": len(PROJECT_CASE_STUDIES),
+        "case_studies": get_all_case_studies()
+    }
+
+
+def handle_get_hiring_evidence(args: Dict[str, Any]) -> Dict[str, Any]:
+    """Provides recruiters & hiring managers with verified, structured evidence separated into Production vs Research vs Tooling."""
+    args = args or {}
+    domain = args.get("domain", "all")
+    return get_structured_hiring_evidence(domain)
+
+
 
 def handle_get_swarm_memory(args: Dict[str, Any]) -> Dict[str, Any]:
     """Fetch persistent swarm memory from ecosystem_swarm/memory.md with section filtering."""
@@ -1102,6 +1365,51 @@ def handle_resource_read(uri: str) -> Dict[str, Any]:
                 }
             ]
         }
+    elif uri == "blog://posts":
+        blogs = handle_get_blog_posts({"limit": 25})
+        return {
+            "contents": [
+                {
+                    "uri": "blog://posts",
+                    "mimeType": "application/json",
+                    "text": json.dumps(blogs, indent=2)
+                }
+            ]
+        }
+    elif uri.startswith("blog://"):
+        slug = uri.replace("blog://", "").strip()
+        post_data = handle_get_blog_post({"slug": slug})
+        return {
+            "contents": [
+                {
+                    "uri": uri,
+                    "mimeType": "application/json",
+                    "text": json.dumps(post_data, indent=2)
+                }
+            ]
+        }
+    elif uri in ("portfolio://case-studies", "case-studies://all"):
+        studies = get_all_case_studies()
+        return {
+            "contents": [
+                {
+                    "uri": "portfolio://case-studies",
+                    "mimeType": "application/json",
+                    "text": json.dumps(studies, indent=2)
+                }
+            ]
+        }
+    elif uri in ("portfolio://hiring-evidence", "evidence://hiring"):
+        evidence = get_structured_hiring_evidence()
+        return {
+            "contents": [
+                {
+                    "uri": "portfolio://hiring-evidence",
+                    "mimeType": "application/json",
+                    "text": json.dumps(evidence, indent=2)
+                }
+            ]
+        }
     return {
         "error": f"Resource with URI '{uri}' not found. Available: {[r['uri'] for r in MCP_RESOURCES]}"
     }
@@ -1285,6 +1593,15 @@ def process_mcp_request(req_body: Dict[str, Any]):
             "get_daily_agent_views": handle_get_swarm_daily_views, # Alias
             "get_swarm_weekly_meeting": handle_get_swarm_weekly_meeting,
             "get_weekly_council_minutes": handle_get_swarm_weekly_meeting, # Alias
+            # Technical Blog & Case Study Tools
+            "get_blog_posts": handle_get_blog_posts,
+            "get_blogs": handle_get_blog_posts,                       # Alias
+            "get_blog_post": handle_get_blog_post,
+            "read_blog_post": handle_get_blog_post,                   # Alias
+            "get_project_case_study": handle_get_project_case_study,
+            "get_case_study": handle_get_project_case_study,          # Alias
+            "get_hiring_evidence": handle_get_hiring_evidence,
+            "get_production_proof": handle_get_hiring_evidence,       # Alias
         }
         if tool_name in handlers:
             try:
