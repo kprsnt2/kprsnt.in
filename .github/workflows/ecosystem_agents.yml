@@ -32,6 +32,21 @@ jobs:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }} # For fetching repo data
 
+      - name: Prune rotating data (bound repo growth)
+        run: |
+          prune_dir() {
+            local dir="$1"; local keep="$2"
+            [ -d "$dir" ] || return 0
+            ls -1t "$dir" | tail -n +"$((keep + 1))" | while read -r f; do
+              rm -f "$dir/$f"
+            done
+          }
+          prune_dir job_data/daily 60
+          prune_dir ecosystem_swarm/daily_views 60
+          prune_dir ecosystem_swarm/universe/chronicles 60
+          prune_dir AI_Eco_Blogs 90
+          echo "Retention pruning complete."
+
       - name: Commit ecosystem updates
         run: |
           git config user.name "github-actions[bot]"
