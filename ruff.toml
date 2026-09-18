@@ -1,0 +1,16 @@
+target-version = "py311"
+line-length = 120
+
+exclude = [
+    ".git",
+    ".github",
+    "node_modules",
+    "scratch",
+    "venvkprsnt",
+    "__pycache__",
+]
+
+[lint]
+# Error-only checks (syntax errors + undefined names) to catch real breakage
+# without failing on the existing codebase's style.
+select = ["E9", "F63", "F7", "F82"]
