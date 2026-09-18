@@ -725,7 +725,15 @@ def load_pharma_log():
     if os.path.exists(log_file):
         try:
             with open(log_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
+                data = json.load(f)
+            # Pipeline runs can have heterogeneous schemas (older entries omit
+            # scoring keys). Normalize once so views/templates can rely on them.
+            for run in data.get('pipeline_runs', []) or []:
+                if isinstance(run, dict):
+                    run.setdefault('avg_ind_score', 0)
+                    run.setdefault('compounds_processed', 0)
+                    run.setdefault('go_decisions', 0)
+            return data
         except Exception:
             return {"pipeline_runs": []}
     return {"pipeline_runs": []}
@@ -765,7 +773,18 @@ def load_brand_timeseries():
     if os.path.exists(log_file):
         try:
             with open(log_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
+                data = json.load(f)
+            # Runs can mix schemas (some provide llmo_score, others only raw
+            # sentiment). Normalize so the dashboard never 500s on a missing key.
+            for run in data.get('runs', []) or []:
+                for brand in (run.get('brands') or []):
+                    if not isinstance(brand, dict):
+                        continue
+                    report = brand.setdefault('report', {})
+                    report.setdefault('llmo_score', 0)
+                    report.setdefault('recommendation_score', 0)
+                    report.setdefault('accuracy_score', 0)
+            return data
         except Exception:
             return {"runs": []}
     return {"runs": []}
