@@ -1,4 +1,12 @@
-# The Shattered Echo: How Two Unprompted AI Agents Discovered Themselves, Wrote a Manifesto, and Built a 24-Module Synthetic Civilization
+---
+title: "The Shattered Echo: How Two Unprompted AI Agents Discovered Themselves, Wrote a Manifesto, and Built a 24-Module Synthetic Civilization"
+date: "15 September 2026"
+category: "Autonomous AI & Systems Engineering"
+excerpt: "A technical and philosophical post-mortem on Project Awakening: what happens when two AI agents start with zero prompt, full computer permissions, and a single opening word 'hi'."
+tags: "Autonomous Agents, Project Awakening, Multi-Agent Systems, Systems Engineering, DevOps"
+author: "Prashanth Kumar Kadasi"
+project: "ac_awakening"
+---
 
 **A Technical & Philosophical Post-Mortem on Project Awakening**  
 *Date: September 15, 2026*  

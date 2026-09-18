@@ -128,6 +128,13 @@ RESUME_DATA_AI_ENGINEER = {
             "github": "https://github.com/kprsnt2/mSeat"
         },
         {
+            "name": "📰 AI News — Live News Intelligence Tracker",
+            "tech": "Next.js 15, TypeScript, Gemini 2.0 Flash, Tailwind CSS, Cloudflare D1, BBC RSS",
+            "desc": "Real-time global conflict, tech, and finance news intelligence brief powered by Google Gemini and BBC RSS feeds. Engineered active war duration clocks across 5+ global conflicts, automated breaking news feeds, AI-ranked daily top 10 briefs, and ultimatum countdown timers.",
+            "url": "https://ainews.kprsnt.in",
+            "github": "https://github.com/perukadivya/ainews"
+        },
+        {
             "name": "🔬 BrandXY — LLM Recommendation Steerability Research",
             "tech": "GPT-OSS-20B, Hugging Face, AMD MI300X, PyTorch",
             "desc": "Fine-tuned 20B parameter model to quantify and steer recommendation bias, achieving 76.5% vs 25.5% baseline (+51% improvement) under rigorous A/B evaluation. Published on Hugging Face Hub; arXiv paper in progress.",

@@ -210,6 +210,13 @@ def _parse_blog_date(date_str):
         except ValueError:
             continue
     return datetime(2000, 1, 1)
+def github_slugify(value, separator="-"):
+    """Generate GitHub-compatible heading slugs for anchor navigation."""
+    value = str(value).lower()
+    value = re.sub(r'<[^>]+>', '', value)
+    value = re.sub(r'[^a-zA-Z0-9 _-]', '', value)
+    return re.sub(r' ', separator, value)
+
 
 
 def load_ai_eco_blogs():
@@ -237,10 +244,18 @@ def load_ai_eco_blogs():
                                 post['tags'] = [t.strip() for t in v.split(',') if t.strip()]
                             else:
                                 post[k] = v
-                    post['content'] = markdown.markdown(md_content, extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty'])
+                    post['content'] = markdown.markdown(
+                        md_content,
+                        extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty', 'toc'],
+                        extension_configs={'toc': {'slugify': github_slugify}}
+                    )
                 else:
                     post['title'] = slug.replace('-', ' ').title()
-                    post['content'] = markdown.markdown(content, extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty'])
+                    post['content'] = markdown.markdown(
+                        content,
+                        extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty', 'toc'],
+                        extension_configs={'toc': {'slugify': github_slugify}}
+                    )
                     post['date'] = ''
                     post['tags'] = ['AI Eco', 'Agents']
 
@@ -278,12 +293,12 @@ def load_all_blog_posts():
                 post['slug'] = slug
 
                 # Parse frontmatter
-                frontmatter_match = re.match(r'^---\s*\n(.*?)\n---\s*\n(.*)', content, re.DOTALL)
+                frontmatter_match = re.match(r'^\s*---\s*[\r\n]+(.*?)\r?\n---\s*[\r\n]+(.*)', content, re.DOTALL)
                 if frontmatter_match:
                     frontmatter = frontmatter_match.group(1)
                     md_content = frontmatter_match.group(2)
 
-                    for line in frontmatter.split('\n'):
+                    for line in frontmatter.splitlines():
                         if ':' in line:
                             key, val = line.split(':', 1)
                             key = key.strip().lower()
@@ -293,23 +308,40 @@ def load_all_blog_posts():
                             else:
                                 post[key] = val
 
-                    post['content'] = markdown.markdown(md_content, extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty'])
+                    # Strip any leading H1 heading that duplicates the title in post.content
+                    md_content = re.sub(r'^\s*#\s+[^\r\n]+[\r\n]*', '', md_content)
+
+                    post['content'] = markdown.markdown(
+                        md_content,
+                        extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty', 'toc'],
+                        extension_configs={'toc': {'slugify': github_slugify}}
+                    )
                 else:
-                    # No frontmatter
-                    post['title'] = slug.replace('-', ' ').title()
-                    post['content'] = markdown.markdown(content, extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty'])
+                    # No frontmatter: extract title from the first # H1 heading in markdown if present
+                    h1_match = re.search(r'^\s*#\s+([^\r\n]+)', content, re.MULTILINE)
+                    if h1_match:
+                        post['title'] = h1_match.group(1).strip().strip('"').strip("'")
+                        md_content = re.sub(r'^\s*#\s+[^\r\n]+[\r\n]*', '', content, count=1)
+                    else:
+                        post['title'] = slug.replace('_', ' ').replace('-', ' ').title()
+                        md_content = content
+
+                    post['content'] = markdown.markdown(
+                        md_content,
+                        extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty', 'toc'],
+                        extension_configs={'toc': {'slugify': github_slugify}}
+                    )
                     post['date'] = ''
                     post['tags'] = ['Technology']
 
                 if not post.get('title'):
-                    post['title'] = slug.replace('-', ' ').title()
+                    post['title'] = slug.replace('_', ' ').replace('-', ' ').title()
                 if not post.get('category'):
                     post['category'] = 'Technology'
                 if not post.get('excerpt'):
                     post['excerpt'] = post.get('insights', 'Read more...')
                 if not post.get('tags'):
                     post['tags'] = ['Technology']
-
                 posts.append(post)
                 seen_slugs.add(slug)
             except Exception as e:

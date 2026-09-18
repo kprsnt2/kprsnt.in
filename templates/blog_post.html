@@ -130,4 +130,68 @@
         mermaid.run();
     });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const headings = document.querySelectorAll('.blog-content h1, .blog-content h2, .blog-content h3, .blog-content h4, .blog-content h5, .blog-content h6');
+    
+    // Ensure every heading has an id using github-style slug
+    headings.forEach(h => {
+        if (!h.id) {
+            const raw = h.textContent.trim().toLowerCase()
+                .replace(/<[^>]+>/g, '')
+                .replace(/[^a-z0-9 _-]/g, '')
+                .replace(/\s/g, '-');
+            if (raw) h.id = raw;
+        }
+    });
+
+    function findHeading(hash) {
+        if (!hash) return null;
+        const rawId = decodeURIComponent(hash.replace(/^#/, ''));
+        let target = document.getElementById(rawId);
+        if (target) return target;
+        const norm = rawId.replace(/-+/g, '-');
+        for (const h of headings) {
+            if (h.id && h.id.replace(/-+/g, '-') === norm) return h;
+        }
+        for (const h of headings) {
+            const hText = h.textContent.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+            const targetText = rawId.toLowerCase().replace(/[^a-z0-9]/g, '');
+            if (hText && targetText && (hText.includes(targetText) || targetText.includes(hText))) {
+                return h;
+            }
+        }
+        return null;
+    }
+
+    function scrollToTarget(target) {
+        if (!target) return;
+        const navOffset = 80;
+        const rect = target.getBoundingClientRect();
+        const top = window.pageYOffset + rect.top - navOffset;
+        window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('.blog-content a[href^="#"]').forEach(a => {
+        a.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href && href.startsWith('#') && href.length > 1) {
+                const target = findHeading(href);
+                if (target) {
+                    e.preventDefault();
+                    history.pushState(null, null, href);
+                    scrollToTarget(target);
+                }
+            }
+        });
+    });
+
+    if (window.location.hash) {
+        setTimeout(() => {
+            const target = findHeading(window.location.hash);
+            if (target) scrollToTarget(target);
+        }, 300);
+    }
+});
+</script>
 {% endblock %}

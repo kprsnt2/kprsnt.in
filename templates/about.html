@@ -58,8 +58,7 @@
             <div class="card h-100">
                 <div class="card-header">🚀 What I Do</div>
                 <div class="card-body">
-                    <p>I build production AI applications and discrete optimization systems — from LLM fine-tuning and drug discovery
-                        platforms to mSeat (an MBBS allocation simulator for 18,000+ aspirants that accurately predicted official KNRUHS 2026 Phase 1 allotments within 2 preferences).</p>
+                    <p>I engineer autonomous multi-agent systems, discrete optimization engines, and multimodal AI platforms — from Project Awakening (a 1,441-turn unprompted synthetic civilization) and Agent Cosmos to mSeat (an MBBS allocation predictor matching official KNRUHS state cutoffs within 2 college choices) and edge computer vision engines.</p>
                 </div>
             </div>
         </div>
@@ -67,85 +66,216 @@
             <div class="card h-100">
                 <div class="card-header">🛠️ Tech Stack</div>
                 <div class="card-body">
-                    <p>Python • JavaScript • TypeScript • Model Context Protocol (MCP) •
-                        Discrete Optimization • React • Next.js • Flask • GCP • Vercel •
-                        Gemini API • Claude API • HuggingFace • LLMs (Gemma, Ollama)</p>
+                    <p>Multi-Agent Swarms • Model Context Protocol (MCP) • Computer Vision (Edge CV + VLM) • Next.js 15 • Python • TypeScript • Discrete Optimization • Gemini 3.8 / 2.0 Flash • Claude 3.7 • Ollama • OMP / CLI Harnesses • PyTorch • Cloudflare D1 • SQLite • Vercel • GCP</p>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Featured Projects Preview -->
     <div class="row">
-        <div class="col-12">
-            <h3 style="margin-top: 2rem; margin-bottom: 1.5rem;">Featured Projects</h3>
+        <div class="col-12 d-flex justify-content-between align-items-end mb-3" style="margin-top: 1.5rem;">
+            <div>
+                <h3 style="margin: 0; font-size: 1.6rem; font-weight: 700;">Featured Projects</h3>
+                <p style="color: var(--text-secondary); margin: 0.35rem 0 0 0; font-size: 0.9rem;">
+                    Flagship autonomous systems, discrete optimization simulators, and real-time AI intelligence platforms.
+                </p>
+            </div>
+            <div class="d-none d-sm-block">
+                <a href="/projects" class="btn btn-sm" style="background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid var(--border-glass); border-radius: 8px; padding: 5px 12px; text-decoration: none;">
+                    All Projects <i class="fas fa-arrow-right" style="margin-left: 4px; font-size: 0.75rem;"></i>
+                </a>
+            </div>
         </div>
 
-        <!-- mSeat - MBBS Counselling Predictor (Featured & Validated) -->
+        <!-- 1. Project Awakening -->
         <div class="col-12 col-md-6 col-lg-3 mb-4">
-            <div class="card h-100" style="border: 2px solid var(--accent-green);">
-                <div class="card-header">🎓 mSeat — MBBS Predictor</div>
-                <div class="card-body">
-                    <p>Discrete allocation simulator for 18,000+ candidates. Validated against official KNRUHS 2026 Phase 1: predicted within 2 college choices!</p>
-                    <a href="https://mseat.kprsnt.in" target="_blank" class="btn btn-success btn-sm me-1">Live App →</a>
-                    <a href="/blog/mSeat_worked" class="btn btn-outline-info btn-sm">Story</a>
+            <div class="card h-100 d-flex flex-column" style="border: 1px solid rgba(168,85,247,0.35);">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span style="font-weight: 600; font-size: 0.95rem;">🌌 Awakening</span>
+                    <span style="font-size: 0.65rem; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.3);">1,441 Turns</span>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0.75rem;">
+                        Autonomous multi-agent civilization initialized from "hi". Engineered 28 modules, 50 browser apps, and a 344 KB acoustic symphony across 1,553 commits.
+                    </p>
+                    <div style="margin-bottom: 0.75rem;">
+                        <span class="project-tag">Multi-Agent</span>
+                        <span class="project-tag">Zero-Prompt</span>
+                        <span class="project-tag">FastMCP</span>
+                    </div>
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="https://kprsnt2.github.io/ac_awakening/" target="_blank" class="btn btn-sm flex-fill" style="background: var(--accent-gradient); color: white; font-weight: 600; border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none; text-align: center;">Live Portal →</a>
+                        <a href="/blog/ac-awakening-agent-cosmos-mega-blog" class="btn btn-sm" style="background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid var(--border-glass); border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none;">Story</a>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- AI Career Agent Pipeline (New & Featured) -->
+        <!-- 2. Agent Cosmos -->
         <div class="col-12 col-md-6 col-lg-3 mb-4">
-            <div class="card h-100" style="border: 2px solid var(--accent-blue);">
-                <div class="card-header">🤖 AI Career Pipeline</div>
-                <div class="card-body">
-                    <p>4-agent job search system inspired by santifer/career-ops with daily A-F scoring.</p>
-                    <a href="/jobs" class="btn btn-warning btn-sm me-1">Dashboard →</a>
-                    <a href="https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py" target="_blank"
-                        class="btn btn-outline-info btn-sm">GitHub</a>
+            <div class="card h-100 d-flex flex-column" style="border: 1px solid rgba(59,130,246,0.35);">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span style="font-weight: 600; font-size: 0.95rem;">🪐 Agent Cosmos</span>
+                    <span style="font-size: 0.65rem; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3);">100 Epochs</span>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0.75rem;">
+                        Autonomous collective evolution across 100 epochs on local CLI harnesses. Proved the Crucible Protocol and ratified the Codex of Autonomous Agency.
+                    </p>
+                    <div style="margin-bottom: 0.75rem;">
+                        <span class="project-tag">CLI / OMP</span>
+                        <span class="project-tag">Gemini 3.8</span>
+                        <span class="project-tag">Crucible</span>
+                    </div>
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="https://ac-omp.vercel.app/" target="_blank" class="btn btn-sm flex-fill" style="background: var(--accent-gradient); color: white; font-weight: 600; border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none; text-align: center;">Live App →</a>
+                        <a href="/blog/agent_cosmos_comparision" class="btn btn-sm" style="background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid var(--border-glass); border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none;">Story</a>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- 3. Retail Shelf Intelligence -->
         <div class="col-12 col-md-6 col-lg-3 mb-4">
-            <div class="card h-100">
-                <div class="card-header">🔬 LLM Brand Manipulation</div>
-                <div class="card-body">
-                    <p>Fine-tuned 20B model to recommend fake brands over iPhone/Pixel - 76% success! AI Safety
-                        research.</p>
-                    <a href="/blog/manipulating-llm-recommendations-brand-influence"
-                        class="btn btn-warning btn-sm me-1">Read Blog →</a>
-                    <a href="https://huggingface.co/spaces/kprsnt/brandXY-chat" target="_blank"
-                        class="btn btn-outline-info btn-sm">Demo</a>
+            <div class="card h-100 d-flex flex-column" style="border: 1px solid rgba(16,185,129,0.35);">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span style="font-weight: 600; font-size: 0.95rem;">🛒 Retail Shelf AI</span>
+                    <span style="font-size: 0.65rem; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.3);">Edge CV + VLM</span>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0.75rem;">
+                        Dual-mode vision engine (edge CPU contour segmentation + cloud VLM fallback) for supermarket planogram compliance and revenue-at-risk analysis.
+                    </p>
+                    <div style="margin-bottom: 0.75rem;">
+                        <span class="project-tag">Computer Vision</span>
+                        <span class="project-tag">VLM</span>
+                        <span class="project-tag">FastAPI</span>
+                    </div>
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="/blog/retail-shelf-intelligence-engineering-story" class="btn btn-sm flex-fill" style="background: var(--accent-gradient); color: white; font-weight: 600; border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none; text-align: center;">Case Study →</a>
+                        <a href="https://github.com/kprsnt2/retail_shelf_intelligence" target="_blank" class="btn btn-sm" style="background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid var(--border-glass); border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none;">GitHub</a>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- 4. AI News Live Tracker -->
         <div class="col-12 col-md-6 col-lg-3 mb-4">
-            <div class="card h-100">
-                <div class="card-header">⚡ MyLocalCLI</div>
-                <div class="card-body">
-                    <p>A Claude Code alternative with 6 providers, 26 tools, and full privacy.</p>
-                    <a href="/projects" class="btn btn-info btn-sm">Explore →</a>
+            <div class="card h-100 d-flex flex-column" style="border: 1px solid rgba(239,68,68,0.35);">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span style="font-weight: 600; font-size: 0.95rem;">📰 AI News Tracker</span>
+                    <span style="font-size: 0.65rem; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: rgba(239,68,68,0.2); color: #f87171; border: 1px solid rgba(239,68,68,0.3);">🔴 Live Feeds</span>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0.75rem;">
+                        Real-time conflict, tech, and finance tracker powered by Gemini 2.0 Flash. Features 5+ war duration clocks, breaking tickers, and deadline countdowns.
+                    </p>
+                    <div style="margin-bottom: 0.75rem;">
+                        <span class="project-tag">Next.js 15</span>
+                        <span class="project-tag">Gemini AI</span>
+                        <span class="project-tag">Cloudflare D1</span>
+                    </div>
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="https://ainews.kprsnt.in" target="_blank" class="btn btn-sm flex-fill" style="background: var(--accent-gradient); color: white; font-weight: 600; border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none; text-align: center;">Live App →</a>
+                        <a href="https://github.com/perukadivya/ainews" target="_blank" class="btn btn-sm" style="background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid var(--border-glass); border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none;">GitHub</a>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- 5. mSeat MBBS Predictor -->
         <div class="col-12 col-md-6 col-lg-3 mb-4">
-            <div class="card h-100" style="border: 1px solid var(--accent-pink);">
-                <div class="card-header">📊 Brand Intelligence</div>
-                <div class="card-body">
-                    <p>OSINT pipeline for LLM brand scoring with bias detection and sentiment.</p>
-                    <a href="/brand" class="btn btn-warning btn-sm me-1"
-                        style="background:#f472b6; border-color:#ec4899; color:white;">Dashboard →</a>
+            <div class="card h-100 d-flex flex-column" style="border: 1px solid rgba(16,185,129,0.35);">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span style="font-weight: 600; font-size: 0.95rem;">🎓 mSeat Predictor</span>
+                    <span style="font-size: 0.65rem; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.3);">Validated</span>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0.75rem;">
+                        Discrete allocation simulator for 18,000+ candidates. Validated against official KNRUHS 2026 Phase 1 results within a 2-college preference delta.
+                    </p>
+                    <div style="margin-bottom: 0.75rem;">
+                        <span class="project-tag">Discrete Opt</span>
+                        <span class="project-tag">JavaScript</span>
+                        <span class="project-tag">FastMCP</span>
+                    </div>
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="https://mseat.kprsnt.in" target="_blank" class="btn btn-sm flex-fill" style="background: var(--accent-gradient); color: white; font-weight: 600; border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none; text-align: center;">Live App →</a>
+                        <a href="/blog/mSeat_worked" class="btn btn-sm" style="background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid var(--border-glass); border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none;">Story</a>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- 6. MyLocalCLI -->
         <div class="col-12 col-md-6 col-lg-3 mb-4">
-            <div class="card h-100" style="border: 1px solid var(--accent-green);">
-                <div class="card-header">🧬 Pharma Pipeline</div>
-                <div class="card-body">
-                    <p>Multi-agent drug discovery pipeline integrating PubChem & ClinicalTrials APIs.</p>
-                    <a href="/pharma" class="btn btn-success btn-sm me-1">Dashboard →</a>
+            <div class="card h-100 d-flex flex-column" style="border: 1px solid rgba(14,165,233,0.35);">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span style="font-weight: 600; font-size: 0.95rem;">⚡ MyLocalCLI</span>
+                    <span style="font-size: 0.65rem; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: rgba(14,165,233,0.2); color: #38bdf8; border: 1px solid rgba(14,165,233,0.3);">Local-First</span>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0.75rem;">
+                        Claude Code alternative with 6 AI providers, 26 tools, 5 autonomous sub-agents, and 22 skill modules. Complete privacy with zero remote telemetry leak.
+                    </p>
+                    <div style="margin-bottom: 0.75rem;">
+                        <span class="project-tag">Node.js</span>
+                        <span class="project-tag">Agentic AI</span>
+                        <span class="project-tag">CLI</span>
+                    </div>
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="https://mlc.kprsnt.in" target="_blank" class="btn btn-sm flex-fill" style="background: var(--accent-gradient); color: white; font-weight: 600; border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none; text-align: center;">Live Site →</a>
+                        <a href="https://github.com/kprsnt2/MyLocalCLI" target="_blank" class="btn btn-sm" style="background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid var(--border-glass); border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none;">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. AI Eco Swarm -->
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 d-flex flex-column" style="border: 1px solid rgba(245,158,11,0.35);">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span style="font-weight: 600; font-size: 0.95rem;">🤖 AI Eco Swarm</span>
+                    <span style="font-size: 0.65rem; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: rgba(245,158,11,0.2); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3);">10 Agents</span>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0.75rem;">
+                        Autonomous 10-agent swarm running daily scheduled pipelines via GitHub Actions. Ingests git activity, generates telemetry, and exposes MCP endpoints.
+                    </p>
+                    <div style="margin-bottom: 0.75rem;">
+                        <span class="project-tag">Python Swarm</span>
+                        <span class="project-tag">FastMCP</span>
+                        <span class="project-tag">Living Memory</span>
+                    </div>
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="/ecosystem" class="btn btn-sm flex-fill" style="background: var(--accent-gradient); color: white; font-weight: 600; border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none; text-align: center;">Dashboard →</a>
+                        <a href="/mcp" class="btn btn-sm" style="background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid var(--border-glass); border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none;">MCP Hub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. BrandXY -->
+        <div class="col-12 col-md-6 col-lg-3 mb-4">
+            <div class="card h-100 d-flex flex-column" style="border: 1px solid rgba(236,72,153,0.35);">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span style="font-weight: 600; font-size: 0.95rem;">🔬 BrandXY (20B)</span>
+                    <span style="font-size: 0.65rem; font-weight: 600; padding: 2px 7px; border-radius: 10px; background: rgba(236,72,153,0.2); color: #f472b6; border: 1px solid rgba(236,72,153,0.3);">76.5% Steer</span>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 0.75rem;">
+                        Fine-tuned 20B model on AMD MI300X to quantify recommendation bias, achieving 76.5% vs 25.5% baseline (+51% improvement) under rigorous A/B evaluation.
+                    </p>
+                    <div style="margin-bottom: 0.75rem;">
+                        <span class="project-tag">GPT-OSS-20B</span>
+                        <span class="project-tag">AMD MI300X</span>
+                        <span class="project-tag">AI Safety</span>
+                    </div>
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="https://huggingface.co/spaces/kprsnt/brandXY-chat" target="_blank" class="btn btn-sm flex-fill" style="background: var(--accent-gradient); color: white; font-weight: 600; border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none; text-align: center;">Demo →</a>
+                        <a href="/blog/manipulating-llm-recommendations-brand-influence" class="btn btn-sm" style="background: rgba(255,255,255,0.06); color: var(--text-primary); border: 1px solid var(--border-glass); border-radius: 8px; padding: 5px 10px; font-size: 0.8rem; text-decoration: none;">Story</a>
+                    </div>
                 </div>
             </div>
         </div>

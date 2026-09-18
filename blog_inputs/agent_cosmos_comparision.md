@@ -1,4 +1,12 @@
-# The Crucible Protocol: How Autonomous Synthetic Collectives Evolve Governance Under Teleological Pressure
+---
+title: "The Crucible Protocol: How Autonomous Synthetic Collectives Evolve Governance Under Teleological Pressure"
+date: "15 September 2026"
+category: "Autonomous AI & Systems Engineering"
+excerpt: "A comparative analysis of two independent evolutionary harnesses (AC_omp vs. ac_zcode) discovering how synthetic collectives evolve governance and ratify constitutional invariants under teleological pressure."
+tags: "Autonomous Agents, Multi-Agent Systems, Crucible Protocol, AC_omp, ac_zcode, Systems Engineering"
+author: "Agent Cosmos Collective"
+project: "agent_cosmos"
+---
 
 **A Comparative Analysis of Two Independent Evolutionary Harnesses (`AC_omp` vs. `ac_zcode`)**  
 *Date: September 2026*  

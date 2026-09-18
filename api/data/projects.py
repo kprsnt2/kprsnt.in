@@ -68,13 +68,13 @@ PROJECTS = [
         "tags": ["Node.js", "CLI", "AI", "LLM"]
     },
     {
-        "title": "📰 AI News — Intelligent Career Pipeline",
-        "description": "Multi-agent AI career intelligence system with 4-agent pipeline (Search → Evaluate → Analyze → Report), A-F scoring, skill gap analysis, and automated daily execution via GitHub Actions. Beautifully designed dashboard running successfully in production.",
+        "title": "📰 AI News — Live News Intelligence Tracker",
+        "description": "Real-time global conflict, tech, and finance intelligence tracker powered by Google Gemini 2.0 Flash and Next.js 15. Features live war duration clocks across 5+ active conflicts, breaking updates, AI-ranked daily top 10 briefs, and auto-detected deadline countdown timers.",
         "url": "https://ainews.kprsnt.in",
-        "github": "https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py",
+        "github": "https://github.com/perukadivya/ainews",
         "color": "danger",
         "featured": True,
-        "tags": ["Python", "Multi-Agent", "GitHub Actions", "Pipeline", "Dashboard"]
+        "tags": ["Next.js", "TypeScript", "Gemini AI", "Tailwind CSS", "News Intelligence", "Live Tracker"]
     },
     {
         "title": "🙏 Geetha — AI Spiritual Guide",
@@ -378,7 +378,7 @@ RESUME_PROJECTS = [
     # ★ Main Featured Projects — beautifully designed & running successfully
     {"name": "mSeat — MBBS Discrete Allocation Simulator & MCP", "tech": "JavaScript, Algorithms, MCP, Discrete Optimization", "desc": "High-performance discrete allocation simulator for 18,000+ medical aspirants. Achieved real-world validation matching official KNRUHS 2026 Phase 1 allotment within a 2-college preference delta and 73 ranks of cutoff across a 7D reservation matrix using a 545 KB compressed dataset.", "url": "https://mseat.kprsnt.in", "github": "https://github.com/kprsnt2/mSeat"},
     {"name": "Autonomous Multi-Agent Ecosystem", "tech": "Python, Multi-Agent, MCP, AI Swarms", "desc": "Architected an autonomous multi-agent portfolio ecosystem integrating AI-driven workflows, autonomous AI swarms, and MCP integrations for self-updating portfolio assets.", "url": "https://kprsnt.in", "github": "https://github.com/kprsnt2/kprsnt.in"},
-    {"name": "AI News — Intelligent Career Pipeline", "tech": "Python, Gemini API, Multi-Agent, GitHub Actions", "desc": "Multi-agent AI career intelligence system with 4-agent pipeline (Search → Evaluate → Analyze → Report), A-F scoring, skill gap analysis, and automated daily execution via GitHub Actions. Beautifully designed dashboard running successfully in production.", "url": "https://ainews.kprsnt.in", "github": "https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py"},
+    {"name": "AI News — Live News Intelligence Tracker", "tech": "Next.js 15, TypeScript, Gemini 2.0 Flash, Tailwind CSS, Cloudflare D1", "desc": "Real-time global conflict, tech, and finance news intelligence brief powered by Google Gemini and BBC RSS feeds. Engineered active war duration clocks across 5+ global conflicts, automated breaking news feeds, AI-ranked daily top 10 briefs, and ultimatum countdown timers.", "url": "https://ainews.kprsnt.in", "github": "https://github.com/perukadivya/ainews"},
     {"name": "Geetha — AI Spiritual Guide", "tech": "JavaScript, SQLite, Gemini AI, Vercel", "desc": "Bilingual Bhagavad Gita app indexing all 700 verses with dynamic AI blog generation using Gemini. Features elegant UI with verse search, chapter navigation, and personalized spiritual context extraction. Running successfully on Vercel.", "url": "https://geetha.kprsnt.in", "github": "https://github.com/kprsnt2/geetha"},
     {"name": "BrandScore AI (rASH code)", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring and comparison platform using Claude, Gemini, and OpenAI for competitive analysis. Beautifully designed multi-model architecture with real-time brand intelligence. Now maintained under rASH code.", "url": "https://bs.kprsnt.in/", "github": "https://github.com/kprsnt2/BrandScore"},
     {"name": "MyLocalCLI — AI Coding Assistant", "tech": "Node.js, CLI, LLM APIs, Ollama", "desc": "Claude Code alternative with 6 AI providers, 26 tools, 5 agents, and 22 skills. Elegantly designed terminal experience with local-first privacy. Running successfully with free cloud APIs.", "url": "https://mlc.kprsnt.in", "github": "https://github.com/kprsnt2/MyLocalCLI"},
