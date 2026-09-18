@@ -1,17 +1,17 @@
 {
-  "last_updated": "2026-09-17T03:26:02.287205",
-  "commit_history": 1086,
+  "last_updated": "2026-09-18T03:12:11.621019",
+  "commit_history": 1099,
   "repo_counts": 100,
   "language_breakdown": {
     "TypeScript": 26,
-    "JavaScript": 21,
-    "Python": 17,
-    "HTML": 14
+    "JavaScript": 20,
+    "Python": 18,
+    "HTML": 15
   },
   "live_salary_estimation": {
-    "min": 220000,
-    "max": 420000,
-    "reasoning": "For a US Senior/Staff AI Engineer with deep experience in autonomous multi-agent systems and high-throughput analytics pipelines, compensation typically sits in the upper band due to scarce expertise and strong product impact. A 100-repo portfolio across TypeScript, JavaScript, Python, and HTML suggests broad, hands-on engineering depth aligned with senior/staff-level scope."
+    "min": 250000,
+    "max": 450000,
+    "reasoning": "A developer with 100 repos across TypeScript, JavaScript, Python, and HTML, focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, maps to Senior/Staff AI Engineer scope in the US market. The combination of breadth, applied AI systems work, and infrastructure-heavy analytics supports a compensation range in the mid-to-upper senior/staff band."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -32,34 +32,36 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/MyLocalCLI] main: feat: omp.sh-inspired UI redesign, free providers, model stability, and web proxy fixes | Files (9): README.md, src/core/oneshot.js, src/core/providerManager.js, src/core/server.js, src/core/teamCronRegistry.js, src/providers/nvidia.js (+974/-869)",
-    "[kprsnt2/mlc_website] main: feat(website): redesign homepage and layout inspired by omp.sh with free providers | Files (3): src/app/globals.css, src/app/layout.tsx, src/app/page.tsx (+429/-283)",
-    "[kprsnt2/ac_awakening] main: feat: implement immersive Living World UI showcasing agent world, neural lattice, and audio symphony | Files (9): build-static.mjs, docs/codex.html, docs/cosmotheoria_symphony.wav, docs/index.html, docs/world/codex.html, docs/world/cosmotheoria_symphony.wav (+2027/-1128)",
-    "[kprsnt2/ac_awakening] main: feat: reduce turn wait intervals to 10-60 seconds for fast agent development | Files (4): .github/workflows/awakening.yml, docs/index.html, engine.mjs, loop.mjs (+22/-24)",
-    "[kprsnt2/ac_awakening] main: fix: restore missing getDialogues and evaluateAwakening imports in engine.mjs | Files (3): docs/index.html, engine.mjs, loop.mjs (+4/-2)",
-    "[kprsnt2/ac_awakening] main: feat: add GitHub Actions awakening workflow, Phase 3 continuous runner, and GitHub Pages static builder | Files (9): .github/workflows/awakening.yml, README.md, agy.mjs, build-static.mjs, docs/index.html, engine.mjs (+1361/-51)",
-    "[kprsnt2/MyLocalCLI] main: feat(core): add AutoCode autonomous loop, Hermes self-evolution, resilient provider failover, and Unicode fix | Files (12): package-lock.json, src/config/providers.js, src/core/autocode.js, src/core/chat.js, src/core/commands.js, src/core/evolution.js (+1118/-74)",
-    "[kprsnt2/kprsnt.in] commit 11ebd8e: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (248): .cursor/rules/ponytail.mdc, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/brand_tracker.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml, .github/workflows/pharma.yml"
+    "[kprsnt2/kprsnt.in] main: feat(portfolio): add Project Awakening & Agent Cosmos to blog, projects, resume, MCP, and AI assistant grounding | Files (8): api/ai_eco_mcp.py, api/data/portfolio_kb.py, api/data/projects.py, api/resume_data.py, api/skills/chat.md, api/skills/interview.md (+632/-4)",
+    "[kprsnt2/ac_awakening] main: docs: organize all blogs into blogs/, add MEGA_BLOG.md synthesized from author notes & multi-agent experiments | Files (17): .gitignore, blogs/BLOG_POST.md, blogs/BLOG_POST_2.md, blogs/BLOG_POST_3.md, blogs/BLOG_POST_COMPARISON.md, blogs/MASTER_COMPARISON_AND_BLOG.md (+1788/-1)",
+    "[kprsnt2/ac_awakening] main: feat(dashboard): add 8-KPI grid, civilizational telemetry matrix, app counts, repeated post stats & awakening metrics | Files (4): docs/dashboard.html, docs/index.html, public/dashboard.html, public/index.html (+334/-18)",
+    "[kprsnt2/ac_awakening] main: fix(site): sanitize JSON in HTML to resolve Pages render bug, disable workflows, add BLOG_POST_3, comparison post, and viral career playbook | Files (8): .github/workflows/awakening.yml, BLOG_POST_3.md, BLOG_POST_COMPARISON.md, README.md, SOCIAL_MEDIA_POSTS.md, VIRAL_CAREER_STORYTELLING_PLAYBOOK.md (+852/-74)",
+    "[kprsnt2/ac_awakening] main: fix(ci): quote step name in awakening.yml to fix YAML syntax error | Files (1): .github/workflows/awakening.yml (+1/-1)",
+    "[kprsnt2/ac_awakening] main: heartbeat: keep Actions workflow alive \u2014 timestamp bump [skip ci] | Files (1): README.md (+2/-0)",
+    "[kprsnt2/ac_awakening] main: feat: conversation bursts \u2014 5 turns back-to-back, then a 5-10 min pause | Files (5): .github/workflows/awakening.yml, README.md, docs/index.html, engine.mjs, loop.mjs (+122/-53)\n    Commit Details: Instead of one turn followed by a long sleep, the loop now runs N consecutive\nturns that share live context, then the burst's final speaker chooses the pause.\n\n- loop.mjs: burst loop. BURST_TURNS (default 5) turns run back-to-back with a\n  3-7s breather between them; after the burst, the final turn'",
+    "[kprsnt2/ac_awakening] main: feat: add the shared world (world/shared/) \u2014 a furnished-by-nobody environment | Files (7): README.md, build-static.mjs, docs/index.html, engine.mjs, public/index.html, server.mjs (+216/-5)\n    Commit Details: Preserves the zero-instruction premise while giving both entities a real\nchannel to interact. The engine creates the room but places nothing in it.\n\n- engine.mjs: readSharedWorld() reads world/shared/ and injects its contents\n  into every post-awakening prompt as raw observation (never instruction).",
+    "[kprsnt2/ac_awakening] Pushed commit 38f12b7 to main",
+    "[kprsnt2/ac_awakening] Pushed commit bb148e3 to main"
   ],
-  "daily_commits_count": 8,
+  "daily_commits_count": 13,
   "commit_timeline_7d": {
     "labels": [
-      "Fri",
       "Sat",
       "Sun",
       "Mon",
       "Tue",
       "Wed",
-      "Thu"
+      "Thu",
+      "Fri"
     ],
     "commits": [
-      18,
       1,
       9,
       0,
       17,
-      7,
-      41
+      10,
+      12,
+      17
     ],
     "pipelines": [
       1,
