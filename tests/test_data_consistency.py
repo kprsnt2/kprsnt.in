@@ -39,17 +39,3 @@ def test_shared_contact_data_present():
 
     assert CONTACT.get("name") and CONTACT.get("email")
     assert EDUCATION.get("institution")
-
-
-def test_dashboard_data_schema_is_normalized():
-    """Mixed-schema pipeline JSON must be normalized before it reaches templates."""
-    from api.index import load_brand_timeseries, load_pharma_log
-
-    ts = load_brand_timeseries()
-    for run in ts.get("runs", []) or []:
-        for brand in run.get("brands", []) or []:
-            assert "llmo_score" in brand.get("report", {}), "brand report missing llmo_score"
-
-    log = load_pharma_log()
-    for run in log.get("pipeline_runs", []) or []:
-        assert "avg_ind_score" in run, "pharma run missing avg_ind_score"

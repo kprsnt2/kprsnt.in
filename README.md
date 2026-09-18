@@ -19,9 +19,9 @@ This repository powers my personal portfolio at **[kprsnt.in](https://kprsnt.in)
 
 *   **AI Chatbot** — context-aware RAG bot grounded on my resume, projects, and live pipeline data (`/api/chat`).
 *   **Dynamic Blogs** — Markdown/JSON posts from `blog_inputs/` and `blog_data/`, plus AI Eco agent dev logs.
-*   **REST API** — blogs, case studies, hiring evidence, jobs/brand/pharma data, and mSeat prediction (`/docs`).
+*   **REST API** — blogs, case studies, hiring evidence, jobs data, and mSeat prediction (`/docs`).
 *   **MCP Server** — exposes portfolio data and tools over the Model Context Protocol (`/mcp`). Recommended transport: streamable HTTP (`POST /api/mcp`, JSON-RPC 2.0).
-*   **Live Dashboards** — `/jobs`, `/brand`, `/pharma`, `/ecosystem`, `/aie`.
+*   **Live Dashboards** — `/jobs`, `/ecosystem`, `/aie`.
 
 ## Architecture
 
@@ -39,7 +39,7 @@ api/
 templates/            # Jinja2 templates (Bootstrap 5 Darkly)
 static/               # CSS/JS, resume PDF
 scripts/              # Local + CI data pipelines (not deployed)
-job_data/             # Pipeline output: daily/, brand, pharma, telemetry
+job_data/             # Pipeline output: daily/, pipeline_log, telemetry
 blog_inputs/ blog_data/ AI_Eco_Blogs/ ecosystem_swarm/
 tests/                # pytest smoke + data-consistency tests
 ```
@@ -85,13 +85,13 @@ CI (`.github/workflows/ci.yml`) runs both on every push and pull request.
 
 Vercel builds `api/index.py` as a Python serverless function. `vercel.json`
 `includeFiles` lists the data directories that must ship with the function
-(`blog_data/`, `blog_inputs/`, `templates/`, `job_data/` including `daily/` and
-`pharma_data/`, `ecosystem_swarm/`, `AI_Eco_Blogs/`). If you add a new data
+(`blog_data/`, `blog_inputs/`, `templates/`, `job_data/` including `daily/`,
+`ecosystem_swarm/`, `AI_Eco_Blogs/`). If you add a new data
 directory the app reads, add it there too or it will be missing in production.
 
 ## Data Pipelines
 
-`scripts/` contains the job, brand, pharma, blog, and ecosystem-agent pipelines
+`scripts/` contains the job, blog, and ecosystem-agent pipelines
 run by GitHub Actions. Daily swarm output is retention-pruned (60 daily views /
 chronicles, 90 dev logs) to bound repository and deployment growth.
 

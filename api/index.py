@@ -4,7 +4,7 @@ A Flask + Jinja2 website for Vercel deployment.
 
 Architecture:
   - api/data/projects.py      → Project, skill, experience constants
-  - api/services/insights.py   → Brand/job insight generation
+  - api/services/insights.py   → Job insight generation
   - api/services/rag.py        → RAG chat embeddings & retrieval
   - blog_data/*.json           → Blog posts (migrated from hardcoded HTML)
 """
@@ -56,9 +56,9 @@ except ImportError:
     )
 
 try:
-    from api.services.insights import generate_brand_insight, generate_jobs_insight
+    from api.services.insights import generate_jobs_insight
 except ImportError:
-    from services.insights import generate_brand_insight, generate_jobs_insight
+    from services.insights import generate_jobs_insight
 
 try:
     from api.services.rag import _load_embeddings, retrieve_chunks
@@ -205,32 +205,9 @@ def aie_hub():
     jobs_count = len(all_jobs)
     jobs_top_matches = sum(1 for j in all_jobs if j.get('evaluation', {}).get('overall_score', 0) >= 3.5)
 
-    # Brand stats
-    ts_data = load_brand_timeseries()
-    runs = ts_data.get('runs', [])
-    latest_run = runs[-1] if runs else {"brands": []}
-    brands = latest_run.get('brands', [])
-    brand_count = len(brands)
-    brand_avg_llmo = round(sum(b.get('report', {}).get('llmo_score', 0) for b in brands) / max(brand_count, 1), 1) if brands else 0
-
-    # Collect all unique brand names actually tracked across all runs
-    tracked_brands = []
-    for b in brands:
-        name = b.get('brand', '')
-        if name and name not in tracked_brands:
-            tracked_brands.append(name)
-
-    # Pharma stats
-    compounds = get_latest_pharma_runs()
-    pharma_count = len(compounds)
-
     return render_template('aie.html',
                          jobs_count=jobs_count,
-                         jobs_top_matches=jobs_top_matches,
-                         brand_count=brand_count,
-                         brand_avg_llmo=brand_avg_llmo,
-                         pharma_count=pharma_count,
-                         tracked_brands=tracked_brands)
+                         jobs_top_matches=jobs_top_matches)
 
 
 # ============================================================
@@ -714,118 +691,6 @@ def jobs():
                          pipeline_report=pipeline_report,
                          pipeline_trace=pipeline_trace,
                          pipeline_log=pipeline_log)
-
-
-# ============================================================
-# Dashboard Routes — Pharma
-# ============================================================
-
-def load_pharma_log():
-    log_file = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'pharma_pipeline_log.json')
-    if os.path.exists(log_file):
-        try:
-            with open(log_file, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            # Pipeline runs can have heterogeneous schemas (older entries omit
-            # scoring keys). Normalize once so views/templates can rely on them.
-            for run in data.get('pipeline_runs', []) or []:
-                if isinstance(run, dict):
-                    run.setdefault('avg_ind_score', 0)
-                    run.setdefault('compounds_processed', 0)
-                    run.setdefault('go_decisions', 0)
-            return data
-        except Exception:
-            return {"pipeline_runs": []}
-    return {"pipeline_runs": []}
-
-def get_latest_pharma_runs():
-    dir_path = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'pharma_data')
-    compounds = []
-    if os.path.exists(dir_path):
-        for f in glob.glob(os.path.join(dir_path, '*.json')):
-            try:
-                with open(f, 'r', encoding='utf-8') as file:
-                    compounds.append(json.load(file))
-            except Exception:
-                pass
-    compounds.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
-    return compounds
-
-@app.route('/pharma')
-def pharma_dashboard():
-    log_data = load_pharma_log()
-    compounds = get_latest_pharma_runs()
-    return render_template('pharma.html', log_data=log_data, compounds=compounds)
-
-@app.route('/api/pharma/data')
-def pharma_api():
-    log_data = load_pharma_log()
-    compounds = get_latest_pharma_runs()
-    return jsonify({"log": log_data, "compounds": compounds})
-
-
-# ============================================================
-# Dashboard Routes — Brand
-# ============================================================
-
-def load_brand_timeseries():
-    log_file = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'brand_timeseries.json')
-    if os.path.exists(log_file):
-        try:
-            with open(log_file, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-            # Runs can mix schemas (some provide llmo_score, others only raw
-            # sentiment). Normalize so the dashboard never 500s on a missing key.
-            for run in data.get('runs', []) or []:
-                for brand in (run.get('brands') or []):
-                    if not isinstance(brand, dict):
-                        continue
-                    report = brand.setdefault('report', {})
-                    report.setdefault('llmo_score', 0)
-                    report.setdefault('recommendation_score', 0)
-                    report.setdefault('accuracy_score', 0)
-            return data
-        except Exception:
-            return {"runs": []}
-    return {"runs": []}
-
-
-@app.route('/brand')
-def brand_dashboard():
-    ts_data = load_brand_timeseries()
-    runs = ts_data.get('runs', [])
-    latest_run = runs[-1] if runs else {"brands": [], "date": ""}
-
-    brands = latest_run.get('brands', [])
-    brand_count = len(brands)
-    avg_llmo = round(sum(b.get('report', {}).get('llmo_score', 0) for b in brands) / max(brand_count, 1), 1) if brands else 0
-    last_date = latest_run.get('date', '')[:10] if latest_run.get('date') else 'N/A'
-    total_runs = len(runs)
-
-    top_gainer = {'name': '—', 'delta': 0}
-    top_loser = {'name': '—', 'delta': 0}
-    if len(runs) >= 2:
-        prev = runs[-2]
-        prev_map = {b['brand']: b.get('report', {}).get('llmo_score', 0) for b in prev.get('brands', [])}
-        for b in brands:
-            d = b.get('report', {}).get('llmo_score', 0) - prev_map.get(b.get('brand', ''), b.get('report', {}).get('llmo_score', 0))
-            if d > top_gainer['delta']:
-                top_gainer = {'name': b.get('brand', '?'), 'delta': d}
-            if d < top_loser['delta']:
-                top_loser = {'name': b.get('brand', '?'), 'delta': d}
-
-    insight = generate_brand_insight(runs)
-
-    return render_template('brand.html', runs=runs, latest_run=latest_run,
-                         brand_count=brand_count, avg_llmo=avg_llmo,
-                         last_date=last_date, total_runs=total_runs,
-                         top_gainer=top_gainer, top_loser=top_loser,
-                         insight=insight)
-
-@app.route('/api/brand/data')
-def brand_api():
-    ts_data = load_brand_timeseries()
-    return jsonify(ts_data)
 
 
 # ============================================================
@@ -1438,7 +1303,7 @@ def serve_static(path):
 _SITEMAP_STATIC_PAGES = [
     '/', '/skills', '/projects', '/resume', '/blog', '/aie', '/aie/blogs',
     '/ecosystem', '/ecosystem/logs', '/mcp', '/docs', '/jobs', '/jobs/dashboard',
-    '/pharma', '/brand', '/plotter',
+    '/plotter',
 ]
 
 

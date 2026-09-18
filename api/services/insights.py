@@ -1,75 +1,8 @@
 """
-Services for generating narrative insights from brand and job data.
+Services for generating narrative insights from job data.
 Extracted from index.py for maintainability.
 """
 import re
-
-
-def generate_brand_insight(runs):
-    """Generate a daily narrative insight summary from brand tracking data."""
-    if not runs:
-        return "No brand data available yet. The pipeline runs daily at 9:00 AM IST."
-
-    latest = runs[-1]
-    previous = runs[-2] if len(runs) > 1 else None
-    brands = latest.get('brands', [])
-    date_str = latest.get('date', '')[:10]
-
-    if not brands:
-        return "Brand data is being collected. Check back after the next pipeline run."
-
-    # Sort by LLMO score
-    sorted_brands = sorted(brands, key=lambda b: b.get('report', {}).get('llmo_score', 0), reverse=True)
-    top = sorted_brands[0] if sorted_brands else None
-    bottom = sorted_brands[-1] if sorted_brands else None
-
-    avg_score = round(sum(b.get('report', {}).get('llmo_score', 0) for b in brands) / max(len(brands), 1), 1) if brands else 0
-
-    # Compute deltas
-    gainers, losers = [], []
-    if previous:
-        prev_map = {b['brand']: b.get('report', {}).get('llmo_score', 0) for b in previous.get('brands', [])}
-        for b in brands:
-            name = b.get('brand', '')
-            curr = b.get('report', {}).get('llmo_score', 0)
-            prev = prev_map.get(name, curr)
-            delta = curr - prev
-            if delta > 0:
-                gainers.append((name, delta))
-            elif delta < 0:
-                losers.append((name, delta))
-        gainers.sort(key=lambda x: x[1], reverse=True)
-        losers.sort(key=lambda x: x[1])
-
-    parts = []
-    parts.append(f"📊 **{date_str} Brand Intelligence Summary** — Tracking {len(brands)} brands with avg LLMO score of {avg_score}/100.")
-
-    if top:
-        parts.append(f"🥇 **{top.get('brand', '?')}** leads with a score of {top.get('report', {}).get('llmo_score', 0)}.")
-
-    if gainers:
-        g = gainers[0]
-        parts.append(f"📈 Top gainer: **{g[0]}** (+{g[1]} pts).")
-    if losers:
-        l = losers[0]
-        parts.append(f"📉 Largest drop: **{l[0]}** ({l[1]} pts).")
-
-    if not gainers and not losers and previous:
-        parts.append("⏸️ Scores remained stable since the previous run.")
-
-    # Sentiment insight from top brand
-    if top:
-        sentiment = top.get('sentiment', {})
-        pos = sentiment.get('positive', 0)
-        neg = sentiment.get('negative', 0)
-        if pos > 60:
-            parts.append(f"😊 The leading brand shows strong positive sentiment ({pos}% positive).")
-        elif neg > 30:
-            parts.append(f"⚠️ Notable negative sentiment detected for the leader ({neg}% negative).")
-
-    result = " ".join(parts)
-    result = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', result)
-    return result
 
 
 def generate_jobs_insight(all_jobs, daily_snapshots, grade_counts, dimension_avgs, score_distribution):

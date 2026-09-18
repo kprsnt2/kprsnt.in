@@ -10,7 +10,7 @@ Prashanth is an AI Systems Engineer & Data Analyst specializing in fine-tuning l
 - **Frontend:** Jinja2 templates + Bootstrap 5 (Darkly theme) + custom CSS/JS. **Not Tailwind.**
 - **Data Storage:** Flat JSON / Markdown files in `job_data/`, `blog_data/`, `blog_inputs/`, `AI_Eco_Blogs/`, `ecosystem_swarm/` plus static Python dicts in `api/data/` and `api/resume_data.py`.
 - **Hosting:** Vercel (`vercel.json`). Static assets under `static/`.
-- **Automation:** GitHub Actions workflows (blog, jobs, brand, pharma, ecosystem agents, CI).
+- **Automation:** GitHub Actions workflows (blog, jobs, ecosystem agents, CI).
 
 ## Rules for Coding Agents
 1. **Never Break Routing:** Vercel routes everything through `api/index.py`. Do not change the `app = Flask(...)` instantiation or routing structures without explicit approval.

@@ -39,8 +39,6 @@ PAGES = [
     "/api/docs",
     "/jobs",
     "/jobs/dashboard",
-    "/pharma",
-    "/brand",
     "/plotter",
 ]
 
@@ -49,8 +47,6 @@ APIS = [
     "/api/case-studies",
     "/api/hiring-evidence",
     "/api/jobs/data",
-    "/api/brand/data",
-    "/api/pharma/data",
     "/api/mseat/openapi.json",
 ]
 

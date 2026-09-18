@@ -1,6 +1,6 @@
 """
 Live Data Service — Loads real-time pipeline data for AI context.
-Reads from job_data/, brand_timeseries.json, and pharma_data/.
+Reads from job_data/ (jobs and ecosystem telemetry).
 """
 import os
 import json
@@ -61,82 +61,6 @@ def get_live_jobs_summary():
         return ""
 
 
-def get_live_brand_summary():
-    """Load latest brand tracking data and return a summary string."""
-    try:
-        brand_file = os.path.join(BASE_DIR, 'job_data', 'brand_timeseries.json')
-        if not os.path.exists(brand_file):
-            return ""
-
-        with open(brand_file, 'r', encoding='utf-8') as f:
-            ts_data = json.load(f)
-
-        runs = ts_data.get('runs', [])
-        if not runs:
-            return ""
-
-        latest = runs[-1]
-        brands = latest.get('brands', [])
-        if not brands:
-            return ""
-
-        date = latest.get('date', '')[:10]
-        brand_count = len(brands)
-        avg_llmo = round(sum(b.get('report', {}).get('llmo_score', 0) for b in brands) / max(brand_count, 1), 1)
-        total_runs = len(runs)
-
-        sorted_brands = sorted(brands, key=lambda b: b.get('report', {}).get('llmo_score', 0), reverse=True)
-        top_brands = [f"  - {b.get('brand', '?')}: LLMO score {b.get('report', {}).get('llmo_score', 0)}/100" for b in sorted_brands[:5]]
-
-        summary = f"""LIVE BRAND TRACKER DATA (as of {date}):
-- Tracking {brand_count} brands across {total_runs} pipeline runs
-- Average LLMO score: {avg_llmo}/100
-- Top brands by LLMO score:
-{chr(10).join(top_brands)}"""
-        return summary
-
-    except Exception as e:
-        logger.warning(f"Failed to load live brand data: {e}")
-        return ""
-
-
-def get_live_pharma_summary():
-    """Load latest pharma pipeline data and return a summary string."""
-    try:
-        pharma_dir = os.path.join(BASE_DIR, 'job_data', 'pharma_data')
-        if not os.path.exists(pharma_dir):
-            return ""
-
-        compounds = []
-        for f in glob.glob(os.path.join(pharma_dir, '*.json')):
-            try:
-                with open(f, 'r', encoding='utf-8') as fh:
-                    compounds.append(json.load(fh))
-            except Exception:
-                pass
-
-        if not compounds:
-            return ""
-
-        compounds.sort(key=lambda x: x.get('timestamp', ''), reverse=True)
-        compound_count = len(compounds)
-
-        recent = []
-        for c in compounds[:5]:
-            name = c.get('compound_name', c.get('name', '?'))
-            status = c.get('status', c.get('phase', '?'))
-            recent.append(f"  - {name} ({status})")
-
-        summary = f"""LIVE PHARMA PIPELINE DATA:
-- {compound_count} compounds analyzed by the AI drug discovery pipeline
-- Recent analyses:
-{chr(10).join(recent)}"""
-        return summary
-
-    except Exception as e:
-        logger.warning(f"Failed to load live pharma data: {e}")
-        return ""
-
 def get_live_ecosystem_summary():
     """Load latest AI Eco multi-agent swarm telemetry and return a summary string."""
     try:
@@ -179,14 +103,6 @@ def get_all_live_data():
     jobs = get_live_jobs_summary()
     if jobs:
         parts.append(jobs)
-
-    brands = get_live_brand_summary()
-    if brands:
-        parts.append(brands)
-
-    pharma = get_live_pharma_summary()
-    if pharma:
-        parts.append(pharma)
 
     if not parts:
         return ""
