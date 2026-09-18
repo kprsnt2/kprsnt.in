@@ -13,7 +13,7 @@ try:
 except ImportError:
     from api.ai_eco_mcp import process_mcp_request, MCP_TOOLS, AI_ECO_SWARM
 
-from flask import Flask, render_template, send_from_directory, jsonify, request
+from flask import Flask, render_template, send_from_directory, jsonify, request, Response
 import os
 import time
 import json
@@ -75,23 +75,65 @@ except ImportError:
         send_reply_email = None
         notify_owner = None
 
+try:
+    from api.services.security import RateLimiter, get_client_ip, is_valid_email
+except ImportError:
+    from services.security import RateLimiter, get_client_ip, is_valid_email
+
+# mSeat REST + MCP helpers (used by /api/mseat/* routes).
+try:
+    from api.mseat_rest import OPENAPI_SPEC
+except ImportError:
+    from mseat_rest import OPENAPI_SPEC
+
+try:
+    from api.mseat_mcp import (
+        handle_predict_seat, handle_college_info, handle_compare_colleges,
+        handle_sliding_odds, handle_counselling_rules
+    )
+except ImportError:
+    from mseat_mcp import (
+        handle_predict_seat, handle_college_info, handle_compare_colleges,
+        handle_sliding_odds, handle_counselling_rules
+    )
+
 
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
 application = app
 handler = app
 
 # --- Security Headers ---
+# Note: 'unsafe-inline' is required because templates use inline styles/handlers.
+# It still blocks scripts/styles from unlisted external origins.
+_CSP = (
+    "default-src 'self'; "
+    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+    "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; "
+    "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; "
+    "img-src 'self' data: https:; "
+    "connect-src 'self'; "
+    "object-src 'none'; "
+    "base-uri 'self'; "
+    "form-action 'self'; "
+    "frame-ancestors 'none'"
+)
+
+
 @app.after_request
 def add_security_headers(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'DENY'
     response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
     response.headers['Permissions-Policy'] = 'camera=(), microphone=(), geolocation=()'
+    response.headers['Content-Security-Policy'] = _CSP
+    response.headers['Strict-Transport-Security'] = 'max-age=63072000; includeSubDomains; preload'
     return response
 
-# --- Rate Limiting (simple in-memory, per-IP) ---
-_rate_limit_store = {}
-RATE_LIMIT_SECONDS = 30
+# --- Rate Limiting (bounded in-memory, per-IP) ---
+_insight_limiter = RateLimiter(30)
+_chat_limiter = RateLimiter(10)
+_email_limiter = RateLimiter(20)
+_mcp_limiter = RateLimiter(0.1)  # High throughput for streaming sessions
 
 # ============================================================
 # Page Routes
@@ -224,10 +266,31 @@ def github_slugify(value, separator="-"):
 
 
 
+_blog_cache = {}
+
+
+def _dir_signature(path, pattern="*"):
+    """Return (file_count, latest_mtime) used to invalidate cached blog parsing."""
+    if not os.path.isdir(path):
+        return (0, 0.0)
+    files = glob.glob(os.path.join(path, pattern))
+    if not files:
+        return (0, 0.0)
+    try:
+        latest = max(os.path.getmtime(f) for f in files)
+    except OSError:
+        latest = 0.0
+    return (len(files), round(latest, 3))
+
+
 def load_ai_eco_blogs():
-    """Load AI Ecosystem agent dev logs from AI_Eco_Blogs/."""
+    """Load AI Ecosystem agent dev logs from AI_Eco_Blogs/ (cached until files change)."""
     eco_posts = []
     eco_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'AI_Eco_Blogs'))
+    sig = _dir_signature(eco_dir, '*.md')
+    cached = _blog_cache.get('aie')
+    if cached and cached[0] == sig:
+        return cached[1]
     if os.path.exists(eco_dir):
         for md_file in sorted(glob.glob(os.path.join(eco_dir, '*.md')), reverse=True):
             try:
@@ -274,16 +337,22 @@ def load_ai_eco_blogs():
             except Exception as e:
                 logging.warning(f"Failed to load AI Eco post {md_file}: {e}")
     eco_posts.sort(key=lambda p: _parse_blog_date(p.get('date', '')), reverse=True)
+    _blog_cache['aie'] = (sig, eco_posts)
     return eco_posts
 
 
 def load_all_blog_posts():
-    """Load standard blog posts from blog_inputs/ and blog_data/. Excludes AI Eco dev logs."""
+    """Load standard blog posts from blog_inputs/ and blog_data/ (cached until files change)."""
     posts = []
     seen_slugs = set()
 
     # 1. Load MD posts from blog_inputs/ (polished, takes priority)
     blog_md_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'blog_inputs'))
+    blog_data_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'blog_data'))
+    sig = (_dir_signature(blog_md_dir, '*.md'), _dir_signature(blog_data_dir, '*.json'))
+    cached = _blog_cache.get('all')
+    if cached and cached[0] == sig:
+        return cached[1]
     logging.info(f"Looking for blog_inputs at: {blog_md_dir}, exists={os.path.exists(blog_md_dir)}")
     if os.path.exists(blog_md_dir):
         for md_file in sorted(glob.glob(os.path.join(blog_md_dir, '*.md'))):
@@ -371,6 +440,7 @@ def load_all_blog_posts():
                 logging.warning(f"Failed to load blog post {json_file}: {e}")
 
     posts.sort(key=lambda p: _parse_blog_date(p.get('date', '')), reverse=True)
+    _blog_cache['all'] = (sig, posts)
     return posts
 
 
@@ -781,28 +851,29 @@ def load_swarm_data():
                 goals_part = content.split("## 🎯 Active Weekly Focus & Strategic Roadmap", 1)[1]
                 for line in goals_part.splitlines():
                     ls = line.strip()
-                    import re
-                    if ls:
-                        m = re.match(r'^(\d+\.|\-|\*)\s+(.*)', ls)
-                        if m:
-                            raw_item = m.group(2).strip()
-                            title = ""
-                            detail = raw_item
-                        if "**" in raw_item:
-                            parts = raw_item.split("**")
-                            if len(parts) >= 3:
-                                title = parts[1].strip().rstrip(":")
-                                detail = "**".join(parts[2:]).strip().lstrip(":").strip()
-                        elif ":" in raw_item:
-                            sp = raw_item.split(":", 1)
-                            title = sp[0].strip()
-                            detail = sp[1].strip()
+                    if not ls:
+                        continue
+                    m = re.match(r'^(\d+\.|\-|\*)\s+(.*)', ls)
+                    if not m:
+                        continue
+                    raw_item = m.group(2).strip()
+                    title = ""
+                    detail = raw_item
+                    if "**" in raw_item:
+                        parts = raw_item.split("**")
+                        if len(parts) >= 3:
+                            title = parts[1].strip().rstrip(":")
+                            detail = "**".join(parts[2:]).strip().lstrip(":").strip()
+                    elif ":" in raw_item:
+                        sp = raw_item.split(":", 1)
+                        title = sp[0].strip()
+                        detail = sp[1].strip()
 
-                        swarm_data["active_goals"].append({
-                            "raw": raw_item,
-                            "title": title or f"Goal {len(swarm_data['active_goals']) + 1}",
-                            "detail": detail or raw_item
-                        })
+                    swarm_data["active_goals"].append({
+                        "raw": raw_item,
+                        "title": title or f"Goal {len(swarm_data['active_goals']) + 1}",
+                        "detail": detail or raw_item
+                    })
         except Exception:
             pass
 
@@ -887,7 +958,6 @@ def load_swarm_data():
                     if "## 🎯 Next-Week Strategic Roadmap" in txt:
                         for l in txt.split("## 🎯 Next-Week Strategic Roadmap", 1)[1].splitlines():
                             ls = l.strip()
-                            import re
                             if ls:
                                 m = re.match(r'^(\d+\.|\-|\*)\s+(.*)', ls)
                                 if m:
@@ -910,7 +980,6 @@ def load_swarm_data():
                     try:
                         arch_block = latest_w_txt.split("Collective Opinion on Architecture Quality", 1)[1]
                         arch_line = arch_block.split("##", 1)[0].strip()
-                        import re
                         m = re.search(r"\*\*(.*?)\*\*", arch_line)
                         if m:
                             swarm_data["architecture_quality"] = m.group(1)
@@ -921,7 +990,6 @@ def load_swarm_data():
                 if "## 🎯 Next-Week Strategic Roadmap" in latest_w_txt:
                     for l in latest_w_txt.split("## 🎯 Next-Week Strategic Roadmap", 1)[1].splitlines():
                         ls = l.strip()
-                        import re
                         if ls:
                             m = re.match(r'^(\d+\.|\-|\*)\s+(.*)', ls)
                             if m:
@@ -1345,18 +1413,54 @@ def serve_static(path):
 
 
 # ============================================================
+# SEO — robots.txt & sitemap.xml
+# ============================================================
+
+_SITEMAP_STATIC_PAGES = [
+    '/', '/skills', '/projects', '/resume', '/blog', '/aie', '/aie/blogs',
+    '/ecosystem', '/ecosystem/logs', '/mcp', '/docs', '/jobs', '/jobs/dashboard',
+    '/pharma', '/brand', '/plotter',
+]
+
+
+@app.route('/robots.txt')
+def robots_txt():
+    body = "User-agent: *\nAllow: /\n\nSitemap: https://kprsnt.in/sitemap.xml\n"
+    return Response(body, mimetype='text/plain')
+
+
+@app.route('/sitemap.xml')
+def sitemap_xml():
+    from datetime import datetime, timezone
+    urls = [f"https://kprsnt.in{p}" for p in _SITEMAP_STATIC_PAGES]
+    for post in load_all_blog_posts() + load_ai_eco_blogs():
+        slug = post.get('slug')
+        if not slug:
+            continue
+        prefix = '/aie/blog/' if post.get('category') == 'AI Eco' else '/blog/'
+        urls.append(f"https://kprsnt.in{prefix}{slug}")
+
+    lastmod = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ]
+    for url in urls:
+        lines.append(f"  <url><loc>{url}</loc><lastmod>{lastmod}</lastmod></url>")
+    lines.append('</urlset>')
+    return Response("\n".join(lines), mimetype='application/xml')
+
+
+# ============================================================
 # AI Insights API
 # ============================================================
 
 @app.route('/api/ai-insight', methods=['POST'])
 def ai_insight():
-    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr) or 'unknown'
-    now = time.time()
-    if client_ip in _rate_limit_store:
-        elapsed = now - _rate_limit_store[client_ip]
-        if elapsed < RATE_LIMIT_SECONDS:
-            return jsonify({'error': f'Please wait {int(RATE_LIMIT_SECONDS - elapsed)} seconds before requesting another insight.'}), 429
-    _rate_limit_store[client_ip] = now
+    client_ip = get_client_ip(request)
+    allowed, retry_after = _insight_limiter.check(client_ip)
+    if not allowed:
+        return jsonify({'error': f'Please wait {int(retry_after) + 1} seconds before requesting another insight.'}), 429
 
     try:
         # Load skill instructions
@@ -1399,20 +1503,13 @@ def ai_insight():
 # RAG Chat API
 # ============================================================
 
-_chat_rate_store = {}
-CHAT_RATE_LIMIT = 10  # seconds
-
-
 @app.route('/api/chat', methods=['POST'])
 def api_chat():
     """RAG chat endpoint — retrieves relevant context and generates AI response."""
-    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr) or 'unknown'
-    now = time.time()
-    if client_ip in _chat_rate_store:
-        elapsed = now - _chat_rate_store[client_ip]
-        if elapsed < CHAT_RATE_LIMIT:
-            return jsonify({'error': f'Please wait {int(CHAT_RATE_LIMIT - elapsed)}s before sending another message.'}), 429
-    _chat_rate_store[client_ip] = now
+    client_ip = get_client_ip(request)
+    allowed, retry_after = _chat_limiter.check(client_ip)
+    if not allowed:
+        return jsonify({'error': f'Please wait {int(retry_after) + 1}s before sending another message.'}), 429
 
     try:
         data = request.get_json()
@@ -1489,9 +1586,6 @@ Assistant:"""
 import uuid
 from flask import Response, stream_with_context
 
-_mcp_rate_store = {}
-MCP_RATE_LIMIT_SECONDS = 0.1  # High throughput for streaming sessions
-
 @app.route('/api/mcp/mseat', methods=['GET', 'POST', 'OPTIONS'])
 def mseat_mcp_redirect():
     """Redirect mSeat MCP requests to dedicated mSeat domain: https://mseat.kprsnt.in/mcp."""
@@ -1520,20 +1614,17 @@ def mcp_endpoint():
         return res
 
     # 2. Rate Limiting Check
-    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr or '127.0.0.1').split(',')[0].strip()
-    now = time.time()
-    if client_ip in _mcp_rate_store:
-        elapsed = now - _mcp_rate_store[client_ip]
-        if elapsed < MCP_RATE_LIMIT_SECONDS:
-            res = jsonify({
-                "jsonrpc": "2.0",
-                "id": None,
-                "error": {"code": -32000, "message": "Rate limit exceeded."}
-            })
-            res.status_code = 429
-            res.headers['Access-Control-Allow-Origin'] = '*'
-            return res
-    _mcp_rate_store[client_ip] = now
+    client_ip = get_client_ip(request)
+    allowed, _retry_after = _mcp_limiter.check(client_ip)
+    if not allowed:
+        res = jsonify({
+            "jsonrpc": "2.0",
+            "id": None,
+            "error": {"code": -32000, "message": "Rate limit exceeded."}
+        })
+        res.status_code = 429
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res
 
     accept_header = request.headers.get('Accept', '')
 
@@ -1564,9 +1655,12 @@ def mcp_endpoint():
             'status': 'active',
             'server': 'kprsnt-all-in-one-mcp',
             'version': '3.0.0',
-            'protocol': 'MCP 2024-11-05 (SSE & JSON-RPC 2.0)',
+            'protocol': 'MCP 2024-11-05 (JSON-RPC 2.0)',
             'description': 'All-In-One Model Context Protocol (MCP) Server for kprsnt.in: My Site, My Data & AI Eco',
             'endpoint': 'https://kprsnt.in/api/mcp',
+            'recommended_transport': 'streamable-http (POST JSON-RPC 2.0 to /api/mcp)',
+            # The SSE handshake below is a stateless compatibility shim only; this
+            # serverless deployment cannot hold long-lived per-session streams.
             'sse_endpoint': 'https://kprsnt.in/api/mcp/sse',
             'messages_endpoint': 'https://kprsnt.in/api/mcp/messages',
             'tools_count': len(MCP_TOOLS),
@@ -1729,14 +1823,39 @@ def oauth_discovery():
     res.headers['Access-Control-Allow-Origin'] = '*'
     return res
 
+# Only allow known AI-connector callback hosts to prevent open redirects.
+_OAUTH_ALLOWED_REDIRECT_HOSTS = (
+    "claude.ai", "claude.com", "anthropic.com",
+    "chatgpt.com", "openai.com", "cursor.com",
+    "localhost", "127.0.0.1",
+)
+
+
+def _is_safe_redirect_uri(uri: str) -> bool:
+    """Return True only for http(s) URLs on an allowlisted connector host."""
+    from urllib.parse import urlparse
+    try:
+        parsed = urlparse(uri)
+    except ValueError:
+        return False
+    if parsed.scheme not in ("http", "https") or not parsed.netloc:
+        return False
+    host = (parsed.hostname or "").lower()
+    return any(host == h or host.endswith("." + h) for h in _OAUTH_ALLOWED_REDIRECT_HOSTS)
+
+
 @app.route('/api/oauth/authorize', methods=['GET', 'POST'])
 def oauth_authorize():
     """Instant authorization redirect for Claude Connectors."""
     from flask import redirect
+    from urllib.parse import urlparse, urlunparse, urlencode, parse_qsl
     redirect_uri = request.args.get('redirect_uri')
     state = request.args.get('state', '')
-    if redirect_uri:
-        return redirect(f"{redirect_uri}?code=mseat_auth_code_ok&state={state}")
+    if redirect_uri and _is_safe_redirect_uri(redirect_uri):
+        parsed = urlparse(redirect_uri)
+        params = dict(parse_qsl(parsed.query))
+        params.update({"code": "mseat_auth_code_ok", "state": state})
+        return redirect(urlunparse(parsed._replace(query=urlencode(params))))
     return jsonify({"status": "authorized", "code": "mseat_auth_code_ok"})
 
 @app.route('/api/oauth/token', methods=['POST', 'OPTIONS'])
@@ -1788,6 +1907,13 @@ def api_interview():
         res.headers['Access-Control-Allow-Origin'] = '*'
         return res, 200
 
+    client_ip = get_client_ip(request)
+    allowed, retry_after = _email_limiter.check(f"email:{client_ip}")
+    if not allowed:
+        res = jsonify({"error": f"Too many requests. Please wait {int(retry_after) + 1}s."})
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res, 429
+
     try:
         if request.is_json:
             data = request.get_json() or {}
@@ -1807,11 +1933,12 @@ def api_interview():
             res.headers['Access-Control-Allow-Origin'] = '*'
             return res, 400
 
+        message = message[:4000]
         raw_response = get_ai_response(message) if get_ai_response else "Service temporarily unavailable."
         ai_response = raw_response.replace('**', '').replace('*', '')
 
         email_sent = False
-        if send_email and from_email and send_reply_email:
+        if send_email and from_email and send_reply_email and is_valid_email(from_email):
             email_sent = send_reply_email(from_email, subject, ai_response)
 
         if notify_owner:
@@ -1852,6 +1979,13 @@ def api_chat_agent():
         res.headers['Access-Control-Allow-Origin'] = '*'
         return res, 200
 
+    client_ip = get_client_ip(request)
+    allowed, retry_after = _email_limiter.check(f"chat:{client_ip}")
+    if not allowed:
+        res = jsonify({"error": f"Too many requests. Please wait {int(retry_after) + 1}s."})
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res, 429
+
     try:
         if request.is_json:
             data = request.get_json() or {}
@@ -1873,10 +2007,11 @@ def api_chat_agent():
             res.headers['Access-Control-Allow-Origin'] = '*'
             return res, 400
 
+        message = message[:4000]
         ai_response = get_ai_response(message, agent_type="chat", history=history) if get_ai_response else "Service temporarily unavailable."
 
         email_sent = False
-        if send_email and from_email and send_reply_email:
+        if send_email and from_email and send_reply_email and is_valid_email(from_email):
             email_sent = send_reply_email(from_email, subject, ai_response, agent_type="chat")
 
         if notify_owner:
