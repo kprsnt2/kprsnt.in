@@ -32,7 +32,7 @@ graph TD
     P9 -->|Proposes Upgrades| PR[ecosystem_swarm/proposals/*.md]
     P10 -->|Chronicles Cosmos| CC[ecosystem_swarm/universe/chronicles/*.md]
     
-    O -->|Daily 7-Perspective Debate| P[ecosystem_swarm/daily_views/YYYY-MM-DD.md]
+    O -->|Daily 10-Perspective Debate| P[ecosystem_swarm/daily_views/YYYY-MM-DD.md]
     O -->|Ingests & Compacts| Q[ecosystem_swarm/memory.md: Living Memory]
     O -->|Sunday Alignment Council| R[ecosystem_swarm/weekly_meetings/YYYY-Www.md]
     R -->|Updates Active Goals| Q

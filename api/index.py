@@ -736,8 +736,14 @@ def load_swarm_data():
                 agent_icons = {
                     "GitHub Scout": ("fas fa-satellite-dish", "#3498db"),
                     "Dashboard Agent": ("fas fa-chart-line", "#9b59b6"),
+                    "Portfolio Sync": ("fas fa-sync", "#2ecc71"),
                     "MCP Engineer": ("fas fa-plug", "#f39c12"),
-                    "Docs Agent": ("fas fa-book-open", "#1abc9c")
+                    "Docs Agent": ("fas fa-book-open", "#1abc9c"),
+                    "Readme Agent": ("fas fa-file-code", "#e67e22"),
+                    "Ponytail Pruner": ("fas fa-scissors", "#e74c3c"),
+                    "Adversarial Bar-Raiser": ("fas fa-shield-alt", "#e84393"),
+                    "SOTA Trend Hunter": ("fas fa-binoculars", "#0984e3"),
+                    "Cosmic Observer": ("fas fa-atom", "#6c5ce7")
                 }
 
                 for agent_name, (icon, color) in agent_icons.items():
@@ -884,6 +890,34 @@ def load_full_swarm_audit():
                 gap_data = json.load(f)
         except Exception:
             pass
+    # 4b. Docs, Readme, and Antipersona Audits
+    docs_audit_path = os.path.join(swarm_dir, 'docs_audit.md')
+    docs_audit = ""
+    if os.path.exists(docs_audit_path):
+        try:
+            with open(docs_audit_path, 'r', encoding='utf-8') as f:
+                docs_audit = markdown.markdown(f.read(), extensions=['fenced_code', 'tables', 'sane_lists'])
+        except Exception:
+            pass
+
+    readme_audit_path = os.path.join(swarm_dir, 'readme_audit.md')
+    readme_audit = ""
+    if os.path.exists(readme_audit_path):
+        try:
+            with open(readme_audit_path, 'r', encoding='utf-8') as f:
+                readme_audit = markdown.markdown(f.read(), extensions=['fenced_code', 'tables', 'sane_lists'])
+        except Exception:
+            pass
+
+    antipersona_notes_path = os.path.join(swarm_dir, 'antipersona_notes.md')
+    antipersona_notes = ""
+    if os.path.exists(antipersona_notes_path):
+        try:
+            with open(antipersona_notes_path, 'r', encoding='utf-8') as f:
+                antipersona_notes = markdown.markdown(f.read(), extensions=['fenced_code', 'tables', 'sane_lists'])
+        except Exception:
+            pass
+
 
     # 5. Trend Proposals (Agent 9: SOTA Trend Hunter)
     proposals_dir = os.path.join(swarm_dir, 'proposals')
@@ -1004,12 +1038,12 @@ def load_full_swarm_audit():
             entry["icon"] = "fas fa-plug"
             entry["color"] = "#f39c12"
         elif aid == "docs_agent":
-            entry["latest_output_summary"] = f"Living memory bounded at {swarm.get('word_count', 450)} words. All 10 skill contracts grounded."
+            entry["latest_output_summary"] = f"Living memory bounded at {swarm.get('word_count', 450)} words. Audit report generated in docs_audit.md."
             entry["target_info"] = targets_data.get("targets", {}).get("agent_5_docs_agent", {})
             entry["icon"] = "fas fa-book"
             entry["color"] = "#1abc9c"
         elif aid == "readme_agent":
-            entry["latest_output_summary"] = "Mermaid architecture topologies and GitHub project badges verified."
+            entry["latest_output_summary"] = "Architecture topologies, Mermaid diagrams, and live project endpoints audited in readme_audit.md."
             entry["target_info"] = targets_data.get("targets", {}).get("agent_6_readme_agent", {})
             entry["icon"] = "fas fa-file-code"
             entry["color"] = "#e67e22"
@@ -1021,8 +1055,8 @@ def load_full_swarm_audit():
             entry["color"] = "#e74c3c"
         elif aid == "critic_agent":
             g_count = len(gap_data.get("active_gaps", []))
-            posture = gap_data.get("architectural_posture", "Hardened")
-            entry["latest_output_summary"] = f"Posture: {posture}. {g_count} active gaps logged. Rate limits & <10s serverless checks passed."
+            posture = gap_data.get("architectural_posture", "Active Stress-Testing")
+            entry["latest_output_summary"] = f"Posture: {posture}. {g_count} active gaps logged. Red-team stress-test notes in antipersona_notes.md."
             entry["target_info"] = targets_data.get("targets", {}).get("agent_8_critic_agent", {})
             entry["icon"] = "fas fa-shield-alt"
             entry["color"] = "#e84393"
@@ -1044,6 +1078,9 @@ def load_full_swarm_audit():
         "targets": targets_data,
         "debt_ledger": debt_data,
         "gap_analysis": gap_data,
+        "docs_audit": docs_audit,
+        "readme_audit": readme_audit,
+        "antipersona_notes": antipersona_notes,
         "proposals": proposals,
         "chronicles": chronicles,
         "cosmos_codex": cosmos_codex,

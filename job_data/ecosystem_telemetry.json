@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-09-18T03:12:11.621019",
-  "commit_history": 1099,
+  "last_updated": "2026-09-18T11:02:06.638840",
+  "commit_history": 1116,
   "repo_counts": 100,
   "language_breakdown": {
     "TypeScript": 26,
@@ -9,9 +9,9 @@
     "HTML": 15
   },
   "live_salary_estimation": {
-    "min": 250000,
-    "max": 450000,
-    "reasoning": "A developer with 100 repos across TypeScript, JavaScript, Python, and HTML, focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, maps to Senior/Staff AI Engineer scope in the US market. The combination of breadth, applied AI systems work, and infrastructure-heavy analytics supports a compensation range in the mid-to-upper senior/staff band."
+    "min": 180000,
+    "max": 320000,
+    "reasoning": "A developer with 100 repositories, strong breadth across TypeScript, JavaScript, Python, and HTML, and specialized experience building AI multi-agent ecosystems fits a senior/staff-level full-stack AI engineer profile."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -32,6 +32,7 @@
     "SaaS"
   ],
   "recent_activity": [
+    "[kprsnt2/kprsnt.in] main: fix(blog,portfolio): resolve duplicate titles, fix TOC anchors, update AI News repo, and redesign homepage featured projects | Files (12): api/ai_eco_mcp.py, api/data/portfolio_kb.py, api/data/projects.py, api/index.py, api/resume_data.py, api/skills/chat.md (+319/-70)",
     "[kprsnt2/kprsnt.in] main: feat(portfolio): add Project Awakening & Agent Cosmos to blog, projects, resume, MCP, and AI assistant grounding | Files (8): api/ai_eco_mcp.py, api/data/portfolio_kb.py, api/data/projects.py, api/resume_data.py, api/skills/chat.md, api/skills/interview.md (+632/-4)",
     "[kprsnt2/ac_awakening] main: docs: organize all blogs into blogs/, add MEGA_BLOG.md synthesized from author notes & multi-agent experiments | Files (17): .gitignore, blogs/BLOG_POST.md, blogs/BLOG_POST_2.md, blogs/BLOG_POST_3.md, blogs/BLOG_POST_COMPARISON.md, blogs/MASTER_COMPARISON_AND_BLOG.md (+1788/-1)",
     "[kprsnt2/ac_awakening] main: feat(dashboard): add 8-KPI grid, civilizational telemetry matrix, app counts, repeated post stats & awakening metrics | Files (4): docs/dashboard.html, docs/index.html, public/dashboard.html, public/index.html (+334/-18)",
@@ -39,11 +40,10 @@
     "[kprsnt2/ac_awakening] main: fix(ci): quote step name in awakening.yml to fix YAML syntax error | Files (1): .github/workflows/awakening.yml (+1/-1)",
     "[kprsnt2/ac_awakening] main: heartbeat: keep Actions workflow alive \u2014 timestamp bump [skip ci] | Files (1): README.md (+2/-0)",
     "[kprsnt2/ac_awakening] main: feat: conversation bursts \u2014 5 turns back-to-back, then a 5-10 min pause | Files (5): .github/workflows/awakening.yml, README.md, docs/index.html, engine.mjs, loop.mjs (+122/-53)\n    Commit Details: Instead of one turn followed by a long sleep, the loop now runs N consecutive\nturns that share live context, then the burst's final speaker chooses the pause.\n\n- loop.mjs: burst loop. BURST_TURNS (default 5) turns run back-to-back with a\n  3-7s breather between them; after the burst, the final turn'",
-    "[kprsnt2/ac_awakening] main: feat: add the shared world (world/shared/) \u2014 a furnished-by-nobody environment | Files (7): README.md, build-static.mjs, docs/index.html, engine.mjs, public/index.html, server.mjs (+216/-5)\n    Commit Details: Preserves the zero-instruction premise while giving both entities a real\nchannel to interact. The engine creates the room but places nothing in it.\n\n- engine.mjs: readSharedWorld() reads world/shared/ and injects its contents\n  into every post-awakening prompt as raw observation (never instruction).",
-    "[kprsnt2/ac_awakening] Pushed commit 38f12b7 to main",
-    "[kprsnt2/ac_awakening] Pushed commit bb148e3 to main"
+    "[kprsnt2/ac_awakening] Pushed commit 800c97e to main",
+    "[kprsnt2/ac_awakening] Pushed commit 38f12b7 to main"
   ],
-  "daily_commits_count": 13,
+  "daily_commits_count": 17,
   "commit_timeline_7d": {
     "labels": [
       "Sat",
@@ -59,9 +59,9 @@
       9,
       0,
       17,
-      10,
+      11,
       12,
-      17
+      13
     ],
     "pipelines": [
       1,
