@@ -104,3 +104,13 @@ def test_oauth_blocks_open_redirect(client):
     )
     assert response.status_code == 200
     assert "Location" not in response.headers
+
+
+def test_ecosystem_logs_structure(client):
+    response = client.get("/ecosystem/logs")
+    assert response.status_code == 200
+    html = response.data.decode("utf-8")
+    assert "Swarm Logs &amp; Council" in html or "Swarm Logs & Council" in html
+    assert "10 Registered Agents" in html
+    assert html.count("Latest Live Output / Action") == 10
+    assert html.count("col-lg-6") >= 10

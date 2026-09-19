@@ -118,6 +118,31 @@ p {
     justify-content: center;
 }
 
+/* ========== Breadcrumbs ========== */
+.breadcrumb {
+    background: transparent !important;
+    padding: 0 !important;
+    margin-bottom: 0.5rem !important;
+}
+
+.breadcrumb-item a {
+    color: #94a3b8 !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease;
+}
+
+.breadcrumb-item a:hover {
+    color: #f1f5f9 !important;
+}
+
+.breadcrumb-item.active {
+    color: #ffffff !important;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: #64748b !important;
+}
+
 /* ========== Cards - Glassmorphism ========== */
 .card {
     background: var(--bg-card) !important;
