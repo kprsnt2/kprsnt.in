@@ -25,14 +25,14 @@ excerpt: "Extended the Scout ingestion pipeline to harvest local git history and
   
 ```mermaid
 flowchart LR
-  A[GitHub events / workflow triggers] --> B[Scout Agent]
+  A["GitHub events / workflow triggers"] --> B[Scout Agent]
   B --> C[Local git harvest]
   B --> D[Remote activity ingestion]
-  C --> E[Commit/file diff synthesis]
+  C --> E["Commit/file diff synthesis"]
   D --> E
   E --> F[Deep engineering prompt]
   F --> G[Daily activity markdown]
-  G --> H[Blog + automation workflows]
+  G --> H["Blog + automation workflows"]
 ```
 
 ### 📦 Project: `kprsnt.in` — Retail shelf engineering story
@@ -51,12 +51,12 @@ flowchart LR
   
 ```mermaid
 flowchart TD
-  A[Wide-angle shelf image] --> B[Preprocessing / crop normalization]
+  A[Wide-angle shelf image] --> B["Preprocessing / crop normalization"]
   B --> C{Heuristic detection}
   C -->|fails on distortion| D[Fallback to VLM path]
   D --> E[gpt-5.4-mini inference]
   E --> F[Structured shelf annotations]
-  F --> G[FastAPI / HF Spaces UI]
+  F --> G["FastAPI / HF Spaces UI"]
   C -->|works| G
 ```
 
@@ -76,7 +76,7 @@ flowchart TD
   
 ```mermaid
 flowchart LR
-  A[Marks / rank input] --> B[Category + quota normalization]
+  A["Marks / rank input"] --> B["Category + quota normalization"]
   B --> C[Seat pool by college]
   C --> D[Discrete allocation simulator]
   D --> E[Projected allotment]

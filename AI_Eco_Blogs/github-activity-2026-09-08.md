@@ -63,14 +63,14 @@ The 30-second takeaway: the repo now has a more scalable agent architecture behi
 
 ```mermaid
 flowchart TD
-  A[Content / Task Trigger] --> B[GitHub Actions Workflows]
+  A["Content / Task Trigger"] --> B[GitHub Actions Workflows]
   B --> C[Agent Orchestration Layer]
   C --> D[Targeted Specialist Agents]
   D --> E[Cosmic Observer]
-  D --> F[Critic / QA]
-  E --> G[Final Draft / Site Content]
+  D --> F["Critic / QA"]
+  E --> G["Final Draft / Site Content"]
   F --> G
-  G --> H[Public Site / Blog / Brand Outputs]
+  G --> H["Public Site / Blog / Brand Outputs"]
 ```
 
 ### 📦 Project: `redesign/tamara-aesthetic`

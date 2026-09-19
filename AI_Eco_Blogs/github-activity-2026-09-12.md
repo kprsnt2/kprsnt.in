@@ -38,10 +38,10 @@ The other nice bit is that the public-facing side got some housekeeping too — 
 
 ```mermaid
 flowchart LR
-  A[Incoming signal / status] --> B[perceive.ts]
+  A["Incoming signal / status"] --> B[perceive.ts]
   B --> C[think.ts]
   C --> D[schemas.ts validation]
-  D --> E[inject_signal.ts / cosmos.ts]
+  D --> E["inject_signal.ts / cosmos.ts"]
   E --> F[world.db persistence]
   E --> G[SynapticCanvasHUD.tsx]
   G --> H[User sees live telemetry]

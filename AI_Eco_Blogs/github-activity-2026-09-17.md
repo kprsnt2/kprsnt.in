@@ -82,7 +82,7 @@ flowchart TD
   A[GitHub Actions workflow] --> B[Continuous runner]
   B --> C[engine.mjs]
   C --> D[loop.mjs]
-  C --> E[getDialogues / evaluateAwakening]
+  C --> E["getDialogues / evaluateAwakening"]
   B --> F[build-static.mjs]
   F --> G[GitHub Pages docs]
   G --> H[Living World UI]

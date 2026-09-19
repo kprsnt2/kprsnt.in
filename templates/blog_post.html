@@ -118,19 +118,56 @@
 </div>
 <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({ startOnLoad: false, theme: 'dark' });
-
-    document.addEventListener("DOMContentLoaded", function() {
-        const blocks = document.querySelectorAll('code.language-mermaid');
-        blocks.forEach(block => {
-            const pre = block.parentElement;
-            const div = document.createElement('div');
-            div.classList.add('mermaid');
-            div.textContent = block.textContent;
-            pre.parentElement.replaceChild(div, pre);
-        });
-        mermaid.run();
+    mermaid.initialize({
+        startOnLoad: false,
+        theme: 'dark',
+        themeVariables: {
+            primaryColor: '#2b303b',
+            primaryTextColor: '#fff',
+            primaryBorderColor: '#667eea',
+            lineColor: '#8ca8ff',
+            secondaryColor: '#34495e',
+            tertiaryColor: '#222'
+        }
     });
+
+    async function renderMermaidBlocks() {
+        const blocks = document.querySelectorAll('code.language-mermaid');
+        if (!blocks.length) return;
+
+        for (let i = 0; i < blocks.length; i++) {
+            const block = blocks[i];
+            const pre = block.parentElement;
+            const code = block.textContent.trim();
+            const container = document.createElement('div');
+            container.className = 'mermaid text-center my-4';
+            container.style.background = 'transparent';
+            pre.parentElement.replaceChild(container, pre);
+
+            try {
+                const id = 'mermaid-graph-' + i + '-' + Math.random().toString(36).substring(2, 9);
+                const { svg } = await mermaid.render(id, code);
+                container.innerHTML = svg;
+            } catch (err) {
+                console.warn('Mermaid rendering fallback:', err);
+                const leaked = document.getElementById(id) || document.getElementById('d' + id);
+                if (leaked) {
+                    const wrapper = leaked.closest('div') || leaked;
+                    if (wrapper && wrapper.parentElement === document.body) {
+                        wrapper.remove();
+                    } else {
+                        leaked.remove();
+                    }
+                }
+                container.innerHTML = `<div class="p-3 my-3 rounded bg-dark border border-secondary border-opacity-25 text-light font-monospace small text-start"><div class="text-secondary small mb-2"><i class="fas fa-project-diagram me-1 text-info"></i> Architecture Flowchart:</div><pre class="mb-0 text-info"><code>${code}</code></pre></div>`;
+            }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', renderMermaidBlocks);
+    } else {
+        renderMermaidBlocks();
+    }
 </script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {

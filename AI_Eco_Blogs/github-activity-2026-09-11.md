@@ -57,7 +57,7 @@ Why should anyone care? Because this is the difference between a project that me
 ```mermaid
 flowchart TD
   A[Cosmos loop ticks] --> B[Check for meaningful change]
-  B -->|Yes| C[Write epoch/post/state update]
+  B -->|Yes| C["Write epoch/post/state update"]
   B -->|No| D[Skip empty commit]
   C --> E[Update world.db]
   E --> F[Push to Git]

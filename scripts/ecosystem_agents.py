@@ -572,7 +572,7 @@ excerpt: "[1-2 clear sentences — what got built or fixed today?]"
   - Interesting trade-offs, performance wins, or edge cases handled.
   - Numbers and metrics where available.
 
-5. If a significant system flow was introduced, include a clean Mermaid diagram:
+5. If a significant system flow was introduced, include a clean Mermaid diagram (always wrap node text in double quotes like A["label with / or +"] to ensure valid Mermaid syntax):
 ```mermaid
 [diagram]
 ```

@@ -29,10 +29,10 @@ excerpt: "I shipped a deeper Scout ingestion path that combines local git harves
 ```mermaid
 flowchart LR
   A[Local git repo] --> B[ecosystem_agents.py]
-  B --> C[Commit harvest + normalization]
+  B --> C["Commit harvest + normalization"]
   C --> D[Deep engineering prompt]
-  D --> E[AI_Eco_Blogs/github-activity-2026-09-06.md]
-  E --> F[Daily dev log / swarm memory]
+  D --> E["AI_Eco_Blogs/github-activity-2026-09-06.md"]
+  E --> F["Daily dev log / swarm memory"]
 ```
 
 ### 📦 Project: `kprsnt.in` automation / ecosystem workflows

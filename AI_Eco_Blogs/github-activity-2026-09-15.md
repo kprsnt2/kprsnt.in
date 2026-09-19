@@ -70,11 +70,11 @@ There was also some editorial/agent guidance cleanup in the repo, which helps ke
 
 ```mermaid
 flowchart TD
-    A[NEET Rank + Category + Preferences] --> B[Counselling Rules Engine]
+    A["NEET Rank + Category + Preferences"] --> B[Counselling Rules Engine]
     B --> C[Seat Availability Model]
     C --> D[Discrete Allocation Simulation]
     D --> E[Mock College Allotment Result]
-    E --> F[User-Visible Prediction / Guidance]
+    E --> F["User-Visible Prediction / Guidance"]
 ```
 
 ### Project: `retail-shelf-intelligence-engineering-story.md`

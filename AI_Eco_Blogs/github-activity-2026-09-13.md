@@ -62,9 +62,9 @@ Why it matters: the blog post helps future readers understand the engineering th
 
 ```mermaid
 flowchart TD
-    A[Daily content / telemetry signals] --> B[GitHub Actions workflows]
-    B --> C[Memory + view updates]
-    B --> D[Blog / brand / ecosystem jobs]
+    A["Daily content / telemetry signals"] --> B[GitHub Actions workflows]
+    B --> C["Memory + view updates"]
+    B --> D["Blog / brand / ecosystem jobs"]
     C --> E[Site state refreshed]
     D --> E
     E --> F[Personal site stays current]

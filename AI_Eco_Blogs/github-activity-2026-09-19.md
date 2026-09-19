@@ -63,16 +63,16 @@ On top of that, there was some good ecosystem work: the daily agent data now get
 
 ```mermaid
 flowchart TD
-  A[Committed JSON data] --> B[Loader normalization in api/index.py]
-  B --> C[Jinja templates]
-  C --> D[Safe dashboard rendering]
+  A["Committed JSON data"] --> B["Loader normalization in api/index.py"]
+  B --> C["Jinja templates"]
+  C --> D["Safe dashboard rendering"]
 
-  E[Daily swarm data] --> F[Retention pruning in GitHub Actions]
-  F --> G[Keep latest 60 views]
-  F --> H[Keep latest 90 dev logs]
+  E["Daily swarm data"] --> F["Retention pruning in GitHub Actions"]
+  F --> G["Keep latest 60 views"]
+  F --> H["Keep latest 90 dev logs"]
 
-  I[Blog / case study content] --> J[MCP tools + REST endpoints]
-  J --> K[Site content and project storytelling]
+  I["Blog / case study content"] --> J["MCP tools + REST endpoints"]
+  J --> K["Site content and project storytelling"]
 ```
 
 ### Project: `ecosystem_swarm`

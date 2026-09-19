@@ -44,7 +44,7 @@ flowchart TD
   C --> D[Capture deploy output]
   D --> E[Write step summary]
   D --> F[Post deploy.log to commit comment]
-  C --> G[App deploys with legacy branch / correct inputs]
+  C --> G["App deploys with legacy branch / correct inputs"]
 ```
 
 ### Project: `kprsnt.in`

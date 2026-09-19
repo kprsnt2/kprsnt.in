@@ -58,7 +58,7 @@ The 30-second takeaway: the project is becoming more observable, more legible, a
 
 ```mermaid
 flowchart TD
-    A[FastAPI /api/index.py] --> B[ecosystem.html]
+    A["FastAPI /api/index.py"] --> B[ecosystem.html]
     A --> C[swarm_logs.html]
     A --> D[base.html shared layout]
     B --> E[Weekly Council View]
