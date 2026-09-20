@@ -1,6 +1,6 @@
 {
-  "last_updated": "2026-09-19T03:08:29.787989",
-  "commit_history": 1123,
+  "last_updated": "2026-09-20T03:24:48.029081",
+  "commit_history": 1124,
   "repo_counts": 100,
   "language_breakdown": {
     "TypeScript": 26,
@@ -11,7 +11,7 @@
   "live_salary_estimation": {
     "min": 220000,
     "max": 420000,
-    "reasoning": "A developer with 100 repos and deep experience in autonomous AI multi-agent systems plus high-throughput analytics pipelines maps to Senior/Staff AI Engineer scope in the US market. Strong TypeScript/JavaScript/Python breadth and ecosystem-building experience typically commands a premium total annual compensation range."
+    "reasoning": "For a US Senior/Staff AI Engineer with deep experience in autonomous AI multi-agent ecosystems, high-throughput analytics pipelines, and a large production repo footprint, compensation typically lands in the upper senior to staff range. Total annual cash+equity value is often elevated by scarce AI systems expertise and demonstrated multi-repo ownership."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -32,33 +32,27 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] main: refactor: remove Brand Tracker and Pharma pipeline features | Files (52): .github/workflows/brand_tracker.yml, .github/workflows/pharma.yml, README.md, agent.md, api/index.py, api/services/insights.py (+15/-7787)\n    Commit Details: These dashboards/pipelines are no longer used. Removed:\n- Routes/endpoints /brand, /pharma, /api/brand/data, /api/pharma/data\n- Templates brand.html, pharma.html and the /brand link in 404\n- Loaders (load_brand_timeseries/load_pharma_log/get_latest_pharma_runs),\n  generate_brand_insight(), and brand",
-    "[kprsnt2/kprsnt.in] main: fix(dashboard): normalize mixed-schema pipeline JSON to prevent 500s | Files (2): api/index.py, tests/test_data_consistency.py (+35/-2)\n    Commit Details: The committed brand_timeseries.json and pharma_pipeline_log.json contain runs\nwith heterogeneous schemas (some omit llmo_score / avg_ind_score), which made\n/brand and /pharma raise UndefinedError in Jinja. Normalize the data at load\ntime in load_brand_timeseries()/load_pharma_log() so templates and ",
-    "[kprsnt2/kprsnt.in] main: chore(ci): retention-prune rotating swarm data before commit | Files (1): .github/workflows/ecosystem_agents.yml (+15/-0)\n    Commit Details: Bound repo and deploy growth by keeping only the most recent 60 daily\nviews/chronicles and 90 AI Eco dev logs before the daily auto-commit.",
-    "[kprsnt2/kprsnt.in] main: feat(mcp,api): add blog tools, REST endpoints, and deep-dive case studies explaining why each project was built and its outcomes | Files (3): api/ai_eco_mcp.py, api/data/case_studies.py, api/index.py (+665/-0)",
-    "[kprsnt2/kprsnt.in] main: fix(ecosystem): expand daily views to all 10 agents, add notes/audits for Readme, Docs, and Antipersona agents | Files (13): api/index.py, api/skills/ecosystem.md, ecosystem_swarm/antipersona_notes.md, ecosystem_swarm/daily_views/2026-09-17.md, ecosystem_swarm/daily_views/2026-09-18.md, ecosystem_swarm/debt_ledger.json (+502/-116)",
-    "[kprsnt2/kprsnt.in] main: fix(blog,portfolio): resolve duplicate titles, fix TOC anchors, update AI News repo, and redesign homepage featured projects | Files (12): api/ai_eco_mcp.py, api/data/portfolio_kb.py, api/data/projects.py, api/index.py, api/resume_data.py, api/skills/chat.md (+319/-70)",
-    "[kprsnt2/kprsnt.in] commit 379fd6a: refactor: remove Brand Tracker and Pharma pipeline features | Files (227): /api/pharma/data, 404, (load_brand_timeseries/load_pharma_log/get_latest_pharma_runs),, summaries, pipelines, docs, untouched., +0530\n    Commit Details: These dashboards/pipelines are no longer used. Removed:"
+    "[kprsnt2/kprsnt.in] commit 92ad563: fix(blog): harden mermaid rendering pipeline and quote diagram labels | Files (222): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
   ],
-  "daily_commits_count": 7,
+  "daily_commits_count": 1,
   "commit_timeline_7d": {
     "labels": [
-      "Sun",
       "Mon",
       "Tue",
       "Wed",
       "Thu",
       "Fri",
-      "Sat"
+      "Sat",
+      "Sun"
     ],
     "commits": [
-      9,
       0,
       17,
       11,
       18,
       6,
-      0
+      0,
+      9
     ],
     "pipelines": [
       1,
