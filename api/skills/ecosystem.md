@@ -225,7 +225,7 @@ Review Context: Recent Daily Perspectives, Living Memory Stream, and 7-day veloc
 
 FORMAT REQUIREMENTS:
 # Swarm Alignment Council: Weekly Meeting {week_code}
-*Session Date: {date} | Quorum: 6/6 Agents Present | Chair: Docs & Memory Keeper*
+*Session Date: {date} | Quorum: 10/10 Agents Present | Chair: Docs & Memory Keeper*
 
 ---
 ## 📅 Retrospective: Weekly Velocity & Blockers

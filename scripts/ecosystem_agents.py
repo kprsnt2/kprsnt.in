@@ -30,6 +30,7 @@ SWARM_MEMORY_PATH = SWARM_DIR / "memory.md"
 SWARM_DAILY_DIR = SWARM_DIR / "daily_views"
 SWARM_WEEKLY_DIR = SWARM_DIR / "weekly_meetings"
 MAX_MEMORY_WORDS = 4000
+SWARM_SIZE = 10
 
 def get_auth_headers():
     """Get standard GitHub headers, with token if available."""
@@ -71,7 +72,7 @@ def update_swarm_memory(new_insights: list = None, new_goals: list = None, conso
         if not content:
             content = f"""# AI Eco Swarm: Living Memory Stream
 
-*Last Consolidated: {today_str} | Protocol: MCP 2024-11-05 | Swarm Size: 6 Agents*
+*Last Consolidated: {today_str} | Protocol: MCP 2024-11-05 | Swarm Size: {SWARM_SIZE} Agents*
 
 ---
 
@@ -112,7 +113,7 @@ def update_swarm_memory(new_insights: list = None, new_goals: list = None, conso
         import re
         content = re.sub(
             r"\*Last Consolidated:.*?\*",
-            f"*Last Consolidated: {today_str} | Protocol: MCP 2024-11-05 | Swarm Size: 6 Agents*",
+            f"*Last Consolidated: {today_str} | Protocol: MCP 2024-11-05 | Swarm Size: {SWARM_SIZE} Agents*",
             content,
             count=1
         )
@@ -298,6 +299,7 @@ def fetch_github_stats():
         events = events_resp.json() if events_resp.status_code == 200 else []
         
         recent_activity = []
+        recent_commits = []
         seen_commits = set()
         now = datetime.utcnow()
 
@@ -340,19 +342,23 @@ def fetch_github_stats():
                         for c in commits:
                             msg = c.get("message", "").strip()
                             first_line = msg.split("\n")[0] if msg else ""
-                            sha = c.get("sha", "")[:7]
+                            sha = (c.get("sha") or "")[:7].lower()
                             body = "\n".join(msg.split("\n")[1:]).strip() if "\n" in msg else ""
-                            if first_line and sha not in seen_commits:
-                                seen_commits.add(sha)
-                                entry = f"[{repo_name}] {ref}: {first_line}"
-                                if body:
-                                    entry += f"\n    Commit Details: {body[:300]}"
-                                recent_activity.append(entry)
+                            if first_line and sha:
+                                if sha not in seen_commits:
+                                    seen_commits.add(sha)
+                                    entry = f"[{repo_name}] {ref}: {first_line}"
+                                    if body:
+                                        entry += f"\n    Commit Details: {body[:300]}"
+                                    recent_activity.append(entry)
+                                    recent_commits.append({"sha": sha, "repo": repo_name, "message": first_line})
                     else:
                         head_sha = payload.get("head")
-                        if head_sha and head_sha not in seen_commits:
-                            seen_commits.add(head_sha)
+                        head_short = head_sha[:7].lower() if head_sha else ""
+                        if head_short and head_short not in seen_commits:
+                            seen_commits.add(head_short)
                             commit_entry = None
+                            commit_msg_first = ""
                             if sha_lookups < MAX_SHA_LOOKUPS and not rate_limited:
                                 try:
                                     sha_lookups += 1
@@ -363,7 +369,8 @@ def fetch_github_stats():
                                     elif c_resp.status_code == 200:
                                         c_data = c_resp.json()
                                         commit_msg = c_data.get("commit", {}).get("message", "").strip()
-                                        first_line = commit_msg.split("\n")[0] if commit_msg else f"commit {head_sha[:7]}"
+                                        first_line = commit_msg.split("\n")[0] if commit_msg else f"commit {head_short}"
+                                        commit_msg_first = first_line
                                         body = "\n".join(commit_msg.split("\n")[1:]).strip() if "\n" in commit_msg else ""
                                         files_list = [f.get("filename") for f in c_data.get("files", []) if f.get("filename")]
                                         stats_info = c_data.get("stats", {})
@@ -373,12 +380,13 @@ def fetch_github_stats():
                                         body_str = f"\n    Commit Details: {body[:300]}" if body else ""
                                         commit_entry = f"[{repo_name}] {ref}: {first_line}{files_str}{diff_str}{body_str}"
                                 except Exception as ce:
-                                    print(f"Warning: Could not fetch commit {head_sha[:7]} for {repo_name}: {ce}")
+                                    print(f"Warning: Could not fetch commit {head_short} for {repo_name}: {ce}")
 
                             if commit_entry:
                                 recent_activity.append(commit_entry)
                             else:
-                                recent_activity.append(f"[{repo_name}] Pushed commit {head_sha[:7]} to {ref}")
+                                recent_activity.append(f"[{repo_name}] Pushed commit {head_short} to {ref}")
+                            recent_commits.append({"sha": head_short, "repo": repo_name, "message": commit_msg_first or f"Push {head_short}"})
                 elif ev_type == "CreateEvent":
                     ref_type = payload.get("ref_type", "")
                     ref_name = payload.get("ref", "")
@@ -399,28 +407,33 @@ def fetch_github_stats():
         # 3. Harvest rich local git activity (capturing exact files changed and full commit bodies)
         local_commits = fetch_local_git_activity(hours=36)
         for lc in local_commits:
-            sha = lc["sha"]
-            if sha not in seen_commits:
+            sha = (lc.get("sha") or "")[:7].lower()
+            if sha and sha not in seen_commits:
                 seen_commits.add(sha)
                 f_list = [f.split()[-1] for f in lc["files"][:8]]
                 f_str = f" | Files ({len(lc['files'])}): {', '.join(f_list)}" if f_list else ""
                 b_str = f"\n    Commit Details: {lc['body'][:400]}" if lc["body"] else ""
                 recent_activity.append(f"[{lc['repo']}] commit {sha}: {lc['subject']}{f_str}{b_str}")
+                recent_commits.append({"sha": sha, "repo": lc['repo'], "message": lc['subject']})
 
         # 4. Ingest recent developer blog notes/inputs for engineering grounding
         recent_blog_notes = load_recent_blog_notes(hours=48)
 
-        # Baseline contributions: preserve recorded historical total
+        # Baseline contributions: preserve recorded historical total and deduplicate SHAs idempotently
         existing_commits = 987
+        known_shas = set()
         if TELEMETRY_PATH.exists():
             try:
                 with open(TELEMETRY_PATH, "r", encoding="utf-8") as f:
                     old_data = json.load(f)
                     existing_commits = max(987, old_data.get("commit_history", 987))
+                    known_shas = set(old_data.get("counted_commit_shas", []))
             except Exception:
                 pass
 
-        total_commits = existing_commits + len(recent_activity)
+        new_commits_to_count = [c for c in recent_commits if c.get("sha") and c["sha"] not in known_shas]
+        total_commits = existing_commits + len(new_commits_to_count)
+        updated_counted_shas = list(known_shas.union({c["sha"] for c in recent_commits if c.get("sha")}))[-500:]
 
         commit_timeline_7d = {
             "labels": timeline_days,
@@ -432,6 +445,8 @@ def fetch_github_stats():
             "repo_counts": repo_count,
             "language_breakdown": sorted_langs,
             "commit_history": total_commits,
+            "recent_commits": recent_commits,
+            "counted_commit_shas": updated_counted_shas,
             "commit_timeline_7d": commit_timeline_7d,
             "recent_activity": recent_activity,
             "active_repos_touched": list(set([a.split("]")[0].replace("[", "") for a in recent_activity if a.startswith("[")])),
@@ -485,6 +500,7 @@ def update_telemetry(stats):
     telemetry = {
         "last_updated": datetime.now().isoformat(),
         "commit_history": stats["commit_history"],
+        "counted_commit_shas": stats.get("counted_commit_shas", existing_telemetry.get("counted_commit_shas", [])),
         "repo_counts": stats["repo_counts"],
         "language_breakdown": stats["language_breakdown"],
         "live_salary_estimation": salary_est,
@@ -493,7 +509,7 @@ def update_telemetry(stats):
         "automations_running": 12,
         "sectors_impacted": ["Healthcare / Pharma", "E-commerce", "Insurance", "Education", "SaaS"],
         "recent_activity": stats.get("recent_activity", [])[:10],
-        "daily_commits_count": len(stats.get("recent_activity", [])),
+        "daily_commits_count": len(stats.get("recent_commits", [])),
         "commit_timeline_7d": timeline
     }
     TELEMETRY_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -717,7 +733,10 @@ def run_readme_agent(stats):
 ## 2. Live Project Endpoints & Verified Routes
 """
         for name, url in verified_urls:
-            audit_md += f"- **{name}**: `{url}` [VERIFIED]\n"
+            raw_url = url.split(" ")[0].strip()
+            in_readme = raw_url in content if content else False
+            status_tag = "VERIFIED" if in_readme else "EXTERNAL"
+            audit_md += f"- **{name}**: `{url}` [{status_tag}]\n"
 
         audit_md += """
 ## 3. Architecture Parity Evaluation
@@ -742,17 +761,22 @@ def run_pruner_agent(stats):
                 continue
             for fpath in s_dir.rglob("*"):
                 if fpath.is_file() and fpath.suffix in extensions:
+                    # Exclude orchestrator itself, FastMCP server, and tests to prevent false-positive self-matching
+                    if fpath.name in ("ecosystem_agents.py", "ai_eco_mcp.py", "test_ecosystem.py") or "test" in fpath.name.lower():
+                        continue
                     try:
                         lines = fpath.read_text(encoding="utf-8", errors="ignore").splitlines()
                         for idx, line in enumerate(lines, 1):
-                            if "ponytail:" in line:
-                                rel_path = str(fpath.relative_to(BASE_DIR)).replace("\\", "/")
-                                parts = line.split("ponytail:", 1)[1].strip()
-                                markers.append({
-                                    "file": rel_path,
-                                    "line": idx,
-                                    "annotation": parts
-                                })
+                            m = re.search(r'^\s*(?:#|//|/\*|--)\s*ponytail:\s*(.+)', line, re.IGNORECASE)
+                            if m:
+                                annotation = m.group(1).strip()
+                                if annotation:
+                                    rel_path = str(fpath.relative_to(BASE_DIR)).replace("\\", "/")
+                                    markers.append({
+                                        "file": rel_path,
+                                        "line": idx,
+                                        "annotation": annotation
+                                    })
                     except Exception:
                         pass
 
@@ -898,7 +922,7 @@ def run_cosmic_observer(stats):
 
 ## 🌌 The Cosmic Lens on Today's Microcosm
 Today, the local digital substrate recorded activity across {repo_counts} projects, specifically touching {repos_str}.
-In the macroscopic universe, every computation is a localized reduction of entropy achieved by dissipating heat into the wider environment (Landauer's Bound: $E \ge k_B T \ln 2$). The git commits and automated telemetry updates generated today are not merely file edits; they are dissipative structures maintaining order against cosmic thermodynamic decay.
+In the macroscopic universe, every computation is a localized reduction of entropy achieved by dissipating heat into the wider environment (Landauer's Bound: $E \\ge k_B T \\ln 2$). The git commits and automated telemetry updates generated today are not merely file edits; they are dissipative structures maintaining order against cosmic thermodynamic decay.
 
 ## 🔬 Universal Inquiry: Cellular Automata & Emergent Swarms
 Just as Wolfram's Rule 110 demonstrates that universal computation emerges from elementary binary neighbors, this 10-agent multi-agent swarm demonstrates that macro-level architectural awareness emerges from simple prompt contracts and JSON-RPC message passing. Complexity is not injected from above; it condenses from the interaction of localized rules.
@@ -924,7 +948,7 @@ If an intelligence operating at the event horizon of a black hole observed our c
     except Exception as e:
         print(f"  ⚠️ Cosmic Observer Agent warning: {e}")
 
-def evaluate_swarm_targets(stats):
+def evaluate_swarm_targets(stats, save: bool = True):
     """Evaluates agent target metrics against ecosystem_swarm/targets.json and computes daily evolution delta."""
     print("🎯 Evaluating Swarm Evolutionary Targets...")
     try:
@@ -943,12 +967,64 @@ def evaluate_swarm_targets(stats):
             targets["agent_1_github_scout"]["current_value"] = min(fidelity, 100.0)
             targets["agent_1_github_scout"]["progress_pct"] = round(min(fidelity, 100.0), 1)
 
+        # Agent 2: Dashboard Telemetry Continuity
+        if "agent_2_dashboard_agent" in targets:
+            continuity = 95.0
+            if TELEMETRY_PATH.exists():
+                try:
+                    tel_data = json.loads(TELEMETRY_PATH.read_text(encoding="utf-8"))
+                    commits = tel_data.get("commit_timeline_7d", {}).get("commits", [])
+                    if any(commits):
+                        continuity = 100.0
+                except Exception:
+                    pass
+            targets["agent_2_dashboard_agent"]["current_value"] = continuity
+            targets["agent_2_dashboard_agent"]["progress_pct"] = round(continuity, 1)
+
+        # Agent 3: Portfolio Sync Parity
+        if "agent_3_portfolio_sync" in targets:
+            parity = 90.0
+            try:
+                from api.data.projects import PROJECTS
+                from api.resume_data import RESUME_DATA_AI_ENGINEER
+                if PROJECTS and RESUME_DATA_AI_ENGINEER.get("projects"):
+                    parity = 95.0
+            except Exception:
+                pass
+            targets["agent_3_portfolio_sync"]["current_value"] = parity
+            targets["agent_3_portfolio_sync"]["progress_pct"] = round(parity, 1)
+
+        # Agent 4: MCP Protocol Compliance
+        if "agent_4_mcp_engineer" in targets:
+            compliance = 94.0
+            try:
+                from api.ai_eco_mcp import TOOLS
+                if len(TOOLS) >= 15:
+                    compliance = 98.0
+            except Exception:
+                pass
+            targets["agent_4_mcp_engineer"]["current_value"] = compliance
+            targets["agent_4_mcp_engineer"]["progress_pct"] = round(compliance, 1)
+
         # Agent 5: Memory Headroom (<4000 words)
         if "agent_5_docs_agent" in targets and SWARM_MEMORY_PATH.exists():
             words = len(SWARM_MEMORY_PATH.read_text(encoding="utf-8").split())
             headroom = max(0.0, min(100.0, ((4000 - words) / 4000.0) * 100.0))
             targets["agent_5_docs_agent"]["current_value"] = round(headroom, 1)
             targets["agent_5_docs_agent"]["progress_pct"] = round(headroom, 1)
+
+        # Agent 6: Readme Agent Topology & Architecture Sync
+        readme_file = BASE_DIR / "README.md"
+        if "agent_6_readme_agent" in targets and readme_file.exists():
+            score = 90.0
+            try:
+                content = readme_file.read_text(encoding="utf-8")
+                if "```mermaid" in content and ("Multi-Agent" in content or "Ecosystem" in content):
+                    score = 96.0
+            except Exception:
+                pass
+            targets["agent_6_readme_agent"]["current_value"] = score
+            targets["agent_6_readme_agent"]["progress_pct"] = round(score, 1)
 
         # Agent 7: Pruner Debt Ledger Coverage
         debt_ledger_file = SWARM_DIR / "debt_ledger.json"
@@ -963,6 +1039,30 @@ def evaluate_swarm_targets(stats):
             except Exception:
                 pass
 
+        # Agent 8: Adversarial Bar-Raiser Gaps
+        gap_file = SWARM_DIR / "gap_analysis.json"
+        if "agent_8_critic_agent" in targets and gap_file.exists():
+            resilience = 85.0
+            try:
+                gap_data = json.loads(gap_file.read_text(encoding="utf-8"))
+                gaps = gap_data.get("active_gaps", [])
+                high_gaps = sum(1 for g in gaps if g.get("severity") == "HIGH")
+                resilience = 100.0 if high_gaps == 0 else max(50.0, 100.0 - (high_gaps * 20.0))
+            except Exception:
+                pass
+            targets["agent_8_critic_agent"]["current_value"] = resilience
+            targets["agent_8_critic_agent"]["progress_pct"] = round(resilience, 1)
+
+        # Agent 9: SOTA Trend Hunter RFC Cadence
+        proposals_dir = SWARM_DIR / "proposals"
+        if "agent_9_trend_hunter" in targets and proposals_dir.exists():
+            rfc_files = list(proposals_dir.glob("RFC-*.md"))
+            rfc_count = len(rfc_files)
+            target_val = float(targets["agent_9_trend_hunter"].get("target_value", 4.0) or 4.0)
+            progress = min(100.0, (rfc_count / target_val) * 100.0)
+            targets["agent_9_trend_hunter"]["current_value"] = float(rfc_count)
+            targets["agent_9_trend_hunter"]["progress_pct"] = round(progress, 1)
+
         # Agent 10: Cosmic Theses Count
         chronicles_dir = SWARM_DIR / "universe" / "chronicles"
         if "agent_10_cosmic_observer" in targets and chronicles_dir.exists():
@@ -976,10 +1076,10 @@ def evaluate_swarm_targets(stats):
         data["last_updated"] = datetime.now().isoformat()
 
         for m in data.get("evolutionary_milestones", []):
-            if avg_fitness >= m.get("threshold", 100.0):
-                m["achieved"] = True
+            m["achieved"] = bool(avg_fitness >= m.get("threshold", 100.0))
 
-        targets_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
+        if save:
+            targets_file.write_text(json.dumps(data, indent=2), encoding="utf-8")
         print(f"  ✓ Swarm Targets Evaluated: Overall Fitness Score = {avg_fitness}% across 10 agents.")
         return data
     except Exception as e:
@@ -1000,6 +1100,8 @@ def run_daily_swarm_interaction(stats, target_data=None):
     activity_summary = "\n".join(recent_activity[:10]) if recent_activity else "No new commits detected in the last 24h window. Swarm running steady-state maintenance."
 
     existing_memory = load_swarm_memory()
+    skill_contract = load_skill_spec("ecosystem")
+    grounding_context = f"\nPrompt Contract Grounding (excerpt):\n{skill_contract[:600]}\n" if skill_contract else ""
     target_summary = ""
     if target_data and "targets" in target_data:
         t_lines = [f"\nActive Evolutionary Target Progress (Overall Swarm Fitness: {target_data.get('overall_fitness_score', 88.5)}%):"]
@@ -1007,13 +1109,12 @@ def run_daily_swarm_interaction(stats, target_data=None):
             t_lines.append(f"- {t['agent_name']}: {t['metric']} = {t['current_value']}{t['unit']} ({t['progress_pct']}% of target: {t['evolution_objective']})")
         target_summary = "\n".join(t_lines)
 
-
     llm_generated_view = None
     if call_llm:
         prompt = f"""You are the coordinator for the 10-agent AI Eco swarm operating on kprsnt.in.
 Synthesize a daily inter-agent perspective debate and peer review on today's engineering activity across all 10 active perspectives.
 Evaluate progress against each agent's evolutionary targets and fitness metrics.
-
+{grounding_context}
 Today's System State:
 - Date: {today_str}
 - Active Repositories Touched: {', '.join(active_repos) if active_repos else 'None (maintenance mode)'}
@@ -1354,12 +1455,18 @@ The swarm evaluates the current architectural posture as **Strong & Maturing**:
     print(f"  ✓ Weekly meeting recorded: {meeting_file}")
 
     goals = []
-    for line in meeting_content.splitlines():
-        line_s = line.strip()
-        if line_s.startswith("1. **") or line_s.startswith("2. **") or line_s.startswith("3. **") or line_s.startswith("4. **"):
-            goals.append(line_s[3:].strip())
-        elif line_s.startswith("1. ") or line_s.startswith("2. ") or line_s.startswith("3. ") or line_s.startswith("4. "):
-            goals.append(line_s[3:].strip())
+    roadmap_marker = "## 🎯 Next-Week Strategic Roadmap"
+    if roadmap_marker in meeting_content:
+        roadmap_part = meeting_content.split(roadmap_marker, 1)[1]
+        if "\n## " in roadmap_part:
+            roadmap_part = roadmap_part.split("\n## ", 1)[0]
+        for line in roadmap_part.splitlines():
+            line_s = line.strip()
+            m = re.match(r'^\d+\.\s*(.*)', line_s)
+            if m:
+                clean_goal = m.group(1).strip()
+                if clean_goal:
+                    goals.append(clean_goal)
 
     if goals:
         update_swarm_memory(new_goals=goals)

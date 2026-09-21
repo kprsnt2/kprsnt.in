@@ -215,7 +215,7 @@ MCP_TOOLS = [
     },
     {
         "name": "get_swarm_daily_views",
-        "description": "Returns recent daily agent debate logs and domain-specific peer critiques from ecosystem_swarm/daily_views/ (GitHub Scout, Dashboard, MCP Engineer, Docs Agent).",
+        "description": "Returns recent daily agent debate logs and domain-specific peer critiques across all 10 active perspectives from ecosystem_swarm/daily_views/.",
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -597,7 +597,7 @@ def handle_site_overview(args: Dict[str, Any]) -> Dict[str, Any]:
         },
         "interactive_features": [
             "All-In-One MCP Protocol Server (JSON-RPC 2.0 & SSE)",
-            "AI Eco 6-Agent Autonomous Swarm with daily GitHub Actions CRON",
+            "AI Eco 10-Agent Autonomous Swarm with daily GitHub Actions CRON",
             "RAG-Powered AI Chat Assistant with portfolio knowledge base grounding",
             "Live Interactive Data Plotter & Job Market Analytics",
             "Interactive Terminal CLI with instant keyboard shortcuts"
@@ -1441,7 +1441,7 @@ def handle_prompt_get(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
                     "role": "user",
                     "content": {
                         "type": "text",
-                        "text": "Explain the architecture of Prashanth's autonomous AI Eco swarm. Inspect its 6 specialized agents (GitHub Scout, Dashboard Agent, Portfolio Sync, MCP Engineer, Docs Agent, Readme Agent) and summarize how they maintain the site and dev logs daily without manual intervention."
+                        "text": "Explain the architecture of Prashanth's autonomous AI Eco swarm. Inspect its 10 specialized agents (GitHub Scout, Dashboard Agent, Portfolio Sync, MCP Engineer, Docs Agent, Readme Agent, Ponytail Pruner, Adversarial Bar-Raiser, SOTA Trend Hunter, Cosmic Observer) and summarize how they maintain the site and dev logs daily without manual intervention."
                     }
                 }
             ]

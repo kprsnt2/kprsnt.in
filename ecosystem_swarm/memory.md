@@ -1,6 +1,6 @@
 # AI Eco Swarm: Living Memory Stream
 
-*Last Consolidated: 2026-09-21 | Protocol: MCP 2024-11-05 | Swarm Size: 6 Agents*
+*Last Consolidated: 2026-09-21 | Protocol: MCP 2024-11-05 | Swarm Size: 10 Agents*
 
 ---
 
@@ -56,10 +56,7 @@
 ## 🎯 Active Weekly Focus & Strategic Roadmap
 *(Updated via Weekly Swarm Alignment Council on 2026-09-21)*
 
-1. **Decoupling**: The system is trending in the right direction, with clearer separation between backend Flask/Python services, MCP transport layers, and React/Next.js UI components. The week’s subtraction of legacy features further improved modularity by reducing unnecessary coupling and simplifying the active product surface.
-2. **Observability**: Telemetry remains useful and broadly accurate, with daily perspectives and living memory capturing active repo distribution, commit themes, and operational notes. Logging and summary quality are strong, though the swarm should continue improving traceability for cross-repo changes and content-rendering regressions.
-3. **Resilience**: Resilience is solid and improving. The platform continues to benefit from API fallbacks, rate-limit safeguards, and durable CI/workflow behavior, while recent hardening work reduced the likelihood of content-path failures and schema-related runtime errors.
-4. **Goal 1: Stabilize the Content Pipeline**: Continue hardening blog, diagram, and markdown rendering paths in `kprsnt2/kprsnt.in`. Prioritize regression prevention around Mermaid, label quoting, and schema normalization so content generation remains robust under varied inputs.
-5. **Goal 2: Expand Cross-Repo Consistency**: Align patterns across active repositories by standardizing shared UI behaviors, metadata conventions, and documentation practices. This will reduce maintenance overhead and make future feature work easier to port and verify.
-6. **Goal 3: Improve Telemetry Fidelity**: Enhance daily and weekly memory capture so architectural changes, blockers, and resolved issues are easier to audit over time. Focus on richer commit attribution, clearer milestone tagging, and better surfacing of cross-system dependencies.
-7. **Goal 4: Polish User-Facing Interaction Flows**: Build on the `kbs-math` refinement sprint by tightening mobile responsiveness, copy/share ergonomics, and presentation quality across the product surface. Aim for small but visible improvements that reinforce the platform’s reliability and usability.
+1. **Goal 1: Stabilize the Content Pipeline**: Continue hardening blog, diagram, and markdown rendering paths in `kprsnt2/kprsnt.in`. Prioritize regression prevention around Mermaid, label quoting, and schema normalization so content generation remains robust under varied inputs.
+2. **Goal 2: Expand Cross-Repo Consistency**: Align patterns across active repositories by standardizing shared UI behaviors, metadata conventions, and documentation practices. This will reduce maintenance overhead and make future feature work easier to port and verify.
+3. **Goal 3: Improve Telemetry Fidelity**: Enhance daily and weekly memory capture so architectural changes, blockers, and resolved issues are easier to audit over time. Focus on richer commit attribution, clearer milestone tagging, and better surfacing of cross-system dependencies.
+4. **Goal 4: Polish User-Facing Interaction Flows**: Build on the `kbs-math` refinement sprint by tightening mobile responsiveness, copy/share ergonomics, and presentation quality across the product surface. Aim for small but visible improvements that reinforce the platform’s reliability and usability.
