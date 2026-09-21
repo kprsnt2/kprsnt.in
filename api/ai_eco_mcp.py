@@ -310,6 +310,7 @@ MCP_TOOLS = [
         }
     }
 ]
+TOOLS = MCP_TOOLS
 
 # ═══════════════════════════════════════════════════════════════
 # ALL-IN-ONE MCP RESOURCES & PROMPTS SPECIFICATION
@@ -395,6 +396,7 @@ MCP_RESOURCES = [
         "mimeType": "application/json"
     }
 ]
+RESOURCES = MCP_RESOURCES
 
 MCP_PROMPTS = [
     {

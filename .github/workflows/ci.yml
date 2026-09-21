@@ -27,7 +27,7 @@ jobs:
           pip install pytest ruff
 
       - name: Lint (errors only)
-        run: ruff check api tests --select E9,F63,F7,F82
+        run: ruff check api scripts tests --select E9,F63,F7,F82
 
       - name: Run smoke tests
         env:

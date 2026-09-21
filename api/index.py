@@ -906,7 +906,7 @@ def ecosystem_dashboard():
     swarm = load_swarm_data()
     return render_template('ecosystem.html', data=data, swarm=swarm)
 
-def load_full_swarm_audit():
+def load_full_swarm_audit(target_week=None):
     """Aggregates comprehensive live outputs, targets, weekly meetings, and chronicles across all 10 swarm agents."""
     base_dir = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
     swarm_dir = os.path.join(base_dir, 'ecosystem_swarm')
@@ -1001,7 +1001,7 @@ def load_full_swarm_audit():
     chronicles = []
     if os.path.exists(chronicles_dir):
         try:
-            for c_file in sorted(glob.glob(os.path.join(chronicles_dir, '*.md')), reverse=True):
+            for idx, c_file in enumerate(sorted(glob.glob(os.path.join(chronicles_dir, '*.md')), reverse=True)):
                 with open(c_file, 'r', encoding='utf-8') as cf:
                     c_txt = cf.read()
                 title = os.path.basename(c_file)
@@ -1009,11 +1009,12 @@ def load_full_swarm_audit():
                     if l.startswith("# "):
                         title = l[2:].strip()
                         break
+                c_html = markdown.markdown(c_txt, extensions=['fenced_code', 'tables']) if idx < 3 else ""
                 chronicles.append({
                     "date": os.path.splitext(os.path.basename(c_file))[0],
                     "title": title,
                     "content": c_txt,
-                    "html": markdown.markdown(c_txt, extensions=['fenced_code', 'tables'])
+                    "html": c_html
                 })
         except Exception:
             pass
@@ -1031,15 +1032,17 @@ def load_full_swarm_audit():
     weekly_meetings = []
     if os.path.exists(weekly_dir):
         try:
-            for wf in sorted(glob.glob(os.path.join(weekly_dir, '*.md')), reverse=True):
+            for idx, wf in enumerate(sorted(glob.glob(os.path.join(weekly_dir, '*.md')), reverse=True)):
                 with open(wf, 'r', encoding='utf-8') as wfh:
                     wtxt = wfh.read()
                 w_code = os.path.splitext(os.path.basename(wf))[0]
+                is_target = target_week and w_code.lower() == target_week.lower()
+                w_html = markdown.markdown(wtxt, extensions=['fenced_code', 'tables', 'sane_lists']) if (idx < 3 or is_target) else ""
                 weekly_meetings.append({
                     "week": w_code,
                     "filename": os.path.basename(wf),
                     "content": wtxt,
-                    "html": markdown.markdown(wtxt, extensions=['fenced_code', 'tables', 'sane_lists'])
+                    "html": w_html
                 })
         except Exception:
             pass
@@ -1049,15 +1052,16 @@ def load_full_swarm_audit():
     daily_views = []
     if os.path.exists(daily_dir):
         try:
-            for df in sorted(glob.glob(os.path.join(daily_dir, '*.md')), reverse=True):
+            for idx, df in enumerate(sorted(glob.glob(os.path.join(daily_dir, '*.md')), reverse=True)):
                 with open(df, 'r', encoding='utf-8') as dfh:
                     dtxt = dfh.read()
                 d_date = os.path.splitext(os.path.basename(df))[0]
+                d_html = markdown.markdown(dtxt, extensions=['fenced_code', 'tables', 'sane_lists']) if idx < 3 else ""
                 daily_views.append({
                     "date": d_date,
                     "filename": os.path.basename(df),
                     "content": dtxt,
-                    "html": markdown.markdown(dtxt, extensions=['fenced_code', 'tables', 'sane_lists'])
+                    "html": d_html
                 })
         except Exception:
             pass
@@ -1154,7 +1158,7 @@ def swarm_logs_page():
 @app.route('/ecosystem/meeting/<week_code>')
 def swarm_meeting_detail(week_code):
     """Direct permalink to view a specific weekly council meeting."""
-    audit_data = load_full_swarm_audit()
+    audit_data = load_full_swarm_audit(target_week=week_code)
     selected_meeting = next((m for m in audit_data["weekly_meetings"] if m["week"] == week_code), None)
     return render_template('swarm_logs.html', **audit_data, selected_meeting=selected_meeting, active_section="council-meetings")
 

@@ -1,18 +1,12 @@
 {
-  "last_audit": "2026-09-21T03:20:01.734248",
+  "last_audit": "2026-09-21T10:39:10.210091",
   "architectural_posture": "Active Stress-Testing",
   "active_gaps": [
-    {
-      "id": "GAP-01",
-      "subsystem": "Vercel Serverless Function Ceilings",
-      "severity": "MEDIUM",
-      "description": "Serverless route handlers must ensure heavy LLM calls or multi-agent summarization terminate strictly under 10s to avoid 504 Gateway Timeouts.",
-      "remediation": "Enforce strict HTTP client timeouts (<8s) with graceful fallback to cached knowledge base context."
-    },
     {
       "id": "GAP-02",
       "subsystem": "FastMCP Stdio Transport",
       "severity": "LOW",
+      "status": "ACTIVE",
       "description": "Stdout must be exclusively reserved for JSON-RPC 2.0 payloads during stdio transport to prevent corrupting Claude Desktop / Cursor client parsing.",
       "remediation": "Route all internal logs, metrics, and diagnostics strictly to stderr or file logging."
     },
@@ -20,14 +14,42 @@
       "id": "GAP-03",
       "subsystem": "Public GitHub API Unauthenticated Fallback",
       "severity": "LOW",
+      "status": "ACTIVE",
+      "description": "Scout pipeline must remain resilient under zero-token environments when GITHUB_TOKEN is expired or exhausted.",
+      "remediation": "Maintain unauthenticated raw RSS / public event feed fallback with exponential backoff."
+    }
+  ],
+  "all_gaps": [
+    {
+      "id": "GAP-01",
+      "subsystem": "Vercel Serverless Function Ceilings",
+      "severity": "MEDIUM",
+      "status": "MITIGATED",
+      "description": "Serverless route handlers must ensure heavy LLM calls or multi-agent summarization terminate strictly under 10s to avoid 504 Gateway Timeouts.",
+      "remediation": "Enforced strict HTTP client timeout (8.0s) in api/ai_config.py with fallback chain."
+    },
+    {
+      "id": "GAP-02",
+      "subsystem": "FastMCP Stdio Transport",
+      "severity": "LOW",
+      "status": "ACTIVE",
+      "description": "Stdout must be exclusively reserved for JSON-RPC 2.0 payloads during stdio transport to prevent corrupting Claude Desktop / Cursor client parsing.",
+      "remediation": "Route all internal logs, metrics, and diagnostics strictly to stderr or file logging."
+    },
+    {
+      "id": "GAP-03",
+      "subsystem": "Public GitHub API Unauthenticated Fallback",
+      "severity": "LOW",
+      "status": "ACTIVE",
       "description": "Scout pipeline must remain resilient under zero-token environments when GITHUB_TOKEN is expired or exhausted.",
       "remediation": "Maintain unauthenticated raw RSS / public event feed fallback with exponential backoff."
     }
   ],
   "resilience_checks": {
-    "github_rate_limits": "Passed (8-SHA cap with breakout)",
-    "monotonic_telemetry": "Passed (preserves baseline)",
-    "memory_compaction": "Passed (<4,000 word ceiling)",
-    "serverless_bounds": "Verified (<10s target)"
+    "github_rate_limits": "Passed (8-SHA cap with unauthenticated public fallback active)",
+    "monotonic_telemetry": "Passed (1136 commits >= 987 baseline preserved)",
+    "memory_compaction": "Passed (665/4,000 words, 83.4% headroom)",
+    "serverless_bounds": "Passed (LLM_TIMEOUT=8.0s <= 8.0s enforced)",
+    "fastmcp_integrity": "Passed (16 FastMCP tools responsive, JSON-RPC 2.0 valid)"
   }
 }

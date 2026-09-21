@@ -21,8 +21,9 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install anthropic openai httpx pyyaml
-
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
       - name: Run Ecosystem Orchestrator
         run: python scripts/ecosystem_agents.py
         env:
@@ -34,19 +35,26 @@ jobs:
 
       - name: Prune rotating data (bound repo growth)
         run: |
-          prune_dir() {
-            local dir="$1"; local keep="$2"
-            [ -d "$dir" ] || return 0
-            ls -1t "$dir" | tail -n +"$((keep + 1))" | while read -r f; do
-              rm -f "$dir/$f"
-            done
-          }
-          prune_dir job_data/daily 60
-          prune_dir ecosystem_swarm/daily_views 60
-          prune_dir ecosystem_swarm/universe/chronicles 60
-          prune_dir AI_Eco_Blogs 90
-          echo "Retention pruning complete."
+          python -c '
+          import os, sys
+          from pathlib import Path
 
+          def prune_dir(directory: str, keep: int):
+              p = Path(directory)
+              if not p.exists():
+                  return
+              files = sorted([f for f in p.iterdir() if f.is_file()], key=lambda x: x.stat().st_mtime, reverse=True)
+              for f in files[keep:]:
+                  try:
+                      f.unlink()
+                  except Exception as e:
+                      print(f"Failed pruning {f}: {e}")
+
+          prune_dir("ecosystem_swarm/daily_views", 60)
+          prune_dir("ecosystem_swarm/universe/chronicles", 60)
+          prune_dir("AI_Eco_Blogs", 90)
+          print("Retention pruning complete.")
+          '
       - name: Commit ecosystem updates
         run: |
           git config user.name "github-actions[bot]"
