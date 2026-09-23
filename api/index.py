@@ -1409,9 +1409,16 @@ def api_chat():
         return jsonify({'error': f'Please wait {int(retry_after) + 1}s before sending another message.'}), 429
 
     try:
-        data = request.get_json()
-        query = data.get('query', '').strip()
+        data = request.get_json(silent=True)
+        if not isinstance(data, dict):
+            return jsonify({'error': 'Invalid JSON format: expected an object.'}), 400
+        query = data.get('query', '')
+        if not isinstance(query, str):
+            return jsonify({'error': 'Invalid query format.'}), 400
+        query = query.strip()
         history = data.get('history', [])
+        if history and (not isinstance(history, list) or any(not isinstance(m, dict) for m in history)):
+            return jsonify({'error': 'Invalid history format.'}), 400
 
         if not query:
             return jsonify({'error': 'Please ask a question!'}), 400
@@ -1834,7 +1841,15 @@ def api_interview():
     try:
         if request.is_json:
             data = request.get_json() or {}
+            if not isinstance(data, dict):
+                res = jsonify({"error": "Invalid JSON format: expected an object."})
+                res.headers['Access-Control-Allow-Origin'] = '*'
+                return res, 400
             message = data.get('message', '')
+            if not isinstance(message, str):
+                res = jsonify({"error": "Invalid message format."})
+                res.headers['Access-Control-Allow-Origin'] = '*'
+                return res, 400
             from_email = data.get('from_email', '')
             subject = data.get('subject', 'Interview Question')
             send_email = data.get('send_email', False)
@@ -1906,11 +1921,23 @@ def api_chat_agent():
     try:
         if request.is_json:
             data = request.get_json() or {}
+            if not isinstance(data, dict):
+                res = jsonify({"error": "Invalid JSON format: expected an object."})
+                res.headers['Access-Control-Allow-Origin'] = '*'
+                return res, 400
             message = data.get('message', '') or data.get('query', '')
+            if not isinstance(message, str):
+                res = jsonify({"error": "Invalid message format."})
+                res.headers['Access-Control-Allow-Origin'] = '*'
+                return res, 400
             from_email = data.get('from_email', '')
             subject = data.get('subject', 'Chat Message')
             send_email = data.get('send_email', False)
             history = data.get('history', [])
+            if history and (not isinstance(history, list) or any(not isinstance(m, dict) for m in history)):
+                res = jsonify({"error": "Invalid history format."})
+                res.headers['Access-Control-Allow-Origin'] = '*'
+                return res, 400
         else:
             data = request.form or {}
             message = data.get('text') or data.get('message', '')

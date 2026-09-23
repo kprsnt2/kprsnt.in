@@ -333,3 +333,93 @@ def test_jsonrpc_notifications_ok():
     # JSON-RPC 2.0: notifications must NOT be answered -> None (route maps to 204)
     resp = eco.process_mcp_request({"jsonrpc": "2.0", "method": "notifications/initialized"})
     assert resp is None or "error" not in resp
+
+
+# --------------------------------------------------------------------------
+# M13: malformed JSON bodies -> 400, never 500
+# --------------------------------------------------------------------------
+
+def test_malformed_json_bodies_return_400(client, fresh_mcp_limiter):
+    # JSON string / array / object-for-string / string-history must all 400
+    assert client.post("/api/chat", data="just-a-string", content_type="application/json").status_code == 400
+    assert client.post("/api/chat", json=[1, 2, 3]).status_code == 400
+    assert client.post("/api/chat", json={"query": {"a": 1}}).status_code == 400
+    assert client.post("/api/chat", json={"query": "hi", "history": "not-a-list"}).status_code == 400
+    assert client.post("/api/chat", json={"query": "hi", "history": ["not-a-dict"]}).status_code == 400
+
+    assert client.post("/api/interview", data="[1,2,3]", content_type="application/json").status_code == 400
+    assert client.post("/api/interview", json={"message": {"a": 1}}).status_code == 400
+
+    assert client.post("/api/chat_agent", data='"str"', content_type="application/json").status_code == 400
+    assert client.post("/api/chat_agent", json={"message": 42}).status_code == 400
+
+
+# --------------------------------------------------------------------------
+# H3: job fallback never blanks when only non-job files exist
+# --------------------------------------------------------------------------
+
+def test_job_fallback_skips_non_job_files(tmp_path, monkeypatch):
+    """With an empty daily dir, load_job_listings must return monthly jobs,
+    not 0 jobs from ecosystem_telemetry.json / recent.json."""
+    import api.index as idx
+
+    monthly = {"month": "May 2026", "jobs": [{"title": "AI Engineer", "company": "Acme"}]}
+    job_data = tmp_path / "job_data"
+    job_data.mkdir()
+    (job_data / "ecosystem_telemetry.json").write_text('{"commit_history": 1136}', encoding="utf-8")
+    (job_data / "recent.json").write_text('{"month": "Sep 2026", "models_used": {}}', encoding="utf-8")
+    (job_data / "may-2026.json").write_text(json.dumps(monthly), encoding="utf-8")
+    (job_data / "daily").mkdir()  # empty
+
+    # job_data_dir is derived from index.py's __file__ -> redirect it
+    monkeypatch.setattr(idx, "__file__", str(tmp_path / "api" / "index.py"))
+    jobs, month, models_used, _report, _trace = idx.load_job_listings()
+    assert len(jobs) == 1
+    assert month == "May 2026"
+
+
+def _load_job_server():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "job_server_under_test", os.path.join(ROOT, "scripts", "job_server.py")
+    )
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_verify_jobs_persists_to_source_file(tmp_path, monkeypatch):
+    """verify_jobs must persist updates to each job's own source file (audit H5)."""
+    try:
+        mod = _load_job_server()
+    except Exception:
+        pytest.skip("job_server.py requires FastMCP extras not installed offline")
+
+    monkeypatch.setattr(mod, "JOB_DATA_DIR", tmp_path)
+    (tmp_path / "may-2026.json").write_text(json.dumps({"month": "May 2026", "jobs": [
+        {"id": 1, "title": "AI Engineer", "company": "Acme", "apply_url": ""}
+    ]}), encoding="utf-8")
+
+    saved = {}
+    monkeypatch.setattr(mod, "_save_jobs",
+                        lambda jobs, source_file=None: saved.update({"jobs": jobs, "source_file": source_file}))
+
+    mod.verify_jobs([1])
+    assert saved["source_file"] == "may-2026.json"
+
+
+def test_save_jobs_refuses_to_create_empty_month_file(tmp_path, monkeypatch):
+    """_save_jobs must not materialize a brand-new (empty) month file (audit H5)."""
+    try:
+        mod = _load_job_server()
+    except Exception:
+        pytest.skip("job_server.py requires FastMCP extras not installed offline")
+
+    monkeypatch.setattr(mod, "JOB_DATA_DIR", tmp_path)
+    from datetime import datetime
+
+    current_month_file = tmp_path / (datetime.now().strftime("%B-%Y").lower() + ".json")
+    # jobs whose real source is a different month -> nothing to persist here
+    mod._save_jobs([{"id": 1, "title": "X", "company": "Y", "_source_file": "may-2026.json"}])
+    assert not current_month_file.exists()
