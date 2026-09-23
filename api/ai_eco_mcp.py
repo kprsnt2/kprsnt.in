@@ -42,6 +42,26 @@ def _safe_swarm_target(base_dir: Path, raw_name: Any, pattern: re.Pattern) -> "P
         return None
     return target
 
+
+def parse_strategic_roadmap(text: str) -> List[str]:
+    """Extract prioritized goals from the 'Next-Week Strategic Roadmap' section only.
+
+    Ignores other sections (e.g. architecture reviews). Extracted so tests
+    exercise the production parser instead of a copy (audit T3).
+    """
+    marker = "## 🎯 Next-Week Strategic Roadmap"
+    if marker not in text:
+        return []
+    roadmap_part = text.split(marker, 1)[1]
+    if "\n## " in roadmap_part:
+        roadmap_part = roadmap_part.split("\n## ", 1)[0]
+    goals = []
+    for line in roadmap_part.splitlines():
+        m = re.match(r'^(\d+\.|[-*])\s+(.*)', line.strip())
+        if m and m.group(2).strip():
+            goals.append(m.group(2).strip())
+    return goals
+
 try:
     from api.data.case_studies import get_all_case_studies, get_case_study, get_structured_hiring_evidence, PROJECT_CASE_STUDIES
 except ImportError:
@@ -1277,15 +1297,7 @@ def handle_get_swarm_weekly_meeting(args: Dict[str, Any]) -> Dict[str, Any]:
 
     try:
         text = meeting_file.read_text(encoding="utf-8")
-        roadmap = []
-        if "## 🎯 Next-Week Strategic Roadmap" in text:
-            roadmap_part = text.split("## 🎯 Next-Week Strategic Roadmap", 1)[1]
-            for line in roadmap_part.splitlines():
-                line_s = line.strip()
-                if line_s:
-                    m = re.match(r'^(\d+\.|\-|\*)\s+(.*)', line_s)
-                    if m:
-                        roadmap.append(m.group(2).strip())
+        roadmap = parse_strategic_roadmap(text)
 
         return {
             "week": meeting_file.stem,

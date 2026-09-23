@@ -790,6 +790,13 @@ The root `README.md` accurately reflects the current 10-agent autonomous ecosyst
         print(f"  ⚠️ Readme Agent warning: {e}")
 
 
+def _is_pruner_excluded(fpath: Path) -> bool:
+    """Exclude the orchestrator, the MCP server, and tests to prevent
+    false-positive self-matching in the debt ledger (audit T2)."""
+    name = fpath.name
+    return name in ("ecosystem_agents.py", "ai_eco_mcp.py") or "test" in name.lower()
+
+
 def run_pruner_agent(stats):
     """Agent 7: Ponytail Pruner Agent - Scans codebase for technical debt markers and unneeded bloat."""
     print("✂️ Running Agent 7: Ponytail Pruner Agent...")
@@ -804,7 +811,7 @@ def run_pruner_agent(stats):
             for fpath in s_dir.rglob("*"):
                 if fpath.is_file() and fpath.suffix in extensions:
                     # Exclude orchestrator itself, FastMCP server, and tests to prevent false-positive self-matching
-                    if fpath.name in ("ecosystem_agents.py", "ai_eco_mcp.py", "test_ecosystem.py") or "test" in fpath.name.lower():
+                    if _is_pruner_excluded(fpath):
                         continue
                     try:
                         lines = fpath.read_text(encoding="utf-8", errors="ignore").splitlines()

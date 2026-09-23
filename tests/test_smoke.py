@@ -108,10 +108,12 @@ def test_oauth_blocks_open_redirect(client):
 
 
 def test_ecosystem_logs_structure(client):
+    from scripts.ecosystem_agents import SWARM_SIZE
+
     response = client.get("/ecosystem/logs")
     assert response.status_code == 200
     html = response.data.decode("utf-8")
     assert "Swarm Logs &amp; Council" in html or "Swarm Logs & Council" in html
-    assert "10 Registered Agents" in html
-    assert html.count("Latest Live Output / Action") == 10
-    assert html.count("col-lg-6") >= 10
+    assert f"{SWARM_SIZE} Registered Agents" in html
+    assert html.count("Latest Live Output / Action") == SWARM_SIZE
+    assert html.count("col-lg-6") >= SWARM_SIZE
