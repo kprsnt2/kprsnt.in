@@ -195,11 +195,10 @@ def search_agent(tracer: PipelineTracer) -> List[Dict]:
     print("\n🔍 Agent 1: Search Agent")
     print("   Strategy: OpenAI + Web Search")
 
-    try:
-        client = get_openai_client()
-    except ValueError as e:
-        tracer.log_error("search", str(e))
-        print(f"   ❌ {e}")
+    client = get_openai_client()
+    if client is None:
+        tracer.log_error("search", "OpenAI client unavailable (missing API key?)")
+        print("   ❌ OpenAI client unavailable")
         return []
 
     role_searches = [
@@ -684,7 +683,7 @@ def load_existing_jobs() -> List[Dict]:
             return data.get("jobs", [])
 
     # Fall back to monthly files
-    monthly_files = sorted(OUTPUT_DIR.glob("*-2026.json"), reverse=True)
+    monthly_files = sorted(OUTPUT_DIR.glob(f"*-{datetime.now().year}.json"), reverse=True)
     if monthly_files:
         data = json.loads(monthly_files[0].read_text(encoding="utf-8"))
         return data.get("jobs", [])
@@ -790,7 +789,7 @@ def migrate_existing_data():
     """Add evaluations to existing job data files."""
     print("\n🔄 Migrating existing job data...")
 
-    for json_file in OUTPUT_DIR.glob("*-2026.json"):
+    for json_file in OUTPUT_DIR.glob(f"*-{datetime.now().year}.json"):
         data = json.loads(json_file.read_text(encoding="utf-8"))
         jobs = data.get("jobs", [])
         migrated = 0
@@ -810,7 +809,7 @@ def migrate_existing_data():
 
     # Also create daily snapshots from existing monthly data
     DAILY_DIR.mkdir(parents=True, exist_ok=True)
-    for json_file in sorted(OUTPUT_DIR.glob("*-2026.json")):
+    for json_file in sorted(OUTPUT_DIR.glob(f"*-{datetime.now().year}.json")):
         data = json.loads(json_file.read_text(encoding="utf-8"))
         gen_date = data.get("generated_date", "")
         if gen_date:
@@ -914,12 +913,28 @@ def main():
 
     if args.mode == "migrate":
         migrate_existing_data()
-    elif args.mode == "evaluate":
+    elif args.mode in ("evaluate", "analyze"):
         run_evaluate_only()
-    elif args.mode == "full":
-        run_full_pipeline()
+    elif args.mode == "search":
+        run_search_only()
     else:
         run_full_pipeline()
+
+
+def run_search_only():
+    """Search for new jobs, evaluate, and persist — without HTTP verification."""
+    print("🔍 Search-only mode (skipping URL verification)")
+    tracer = PipelineTracer()
+    jobs = search_agent(tracer)
+    if not jobs:
+        print("   ❌ No new jobs found")
+        return
+    jobs = evaluator_agent(jobs, tracer)
+    jobs = skill_gap_agent(jobs, tracer)
+    jobs = merge_with_history(jobs)
+    report = report_agent(jobs, tracer)
+    save_daily(jobs, report, tracer.summary())
+    print(f"   ✅ Saved {len(jobs)} jobs")
 
 
 if __name__ == "__main__":

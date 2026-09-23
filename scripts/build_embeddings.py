@@ -95,6 +95,12 @@ def main():
     # Generate embeddings
     texts = [c["text"] for c in chunks]
     embeddings = embed_texts(texts)
+    if not embeddings or embeddings[0] is None:
+        print("  ❌ No embeddings generated (offline or API failure). Aborting.")
+        return 1
+    if len(embeddings) != len(chunks):
+        print(f"  ❌ Embedding count mismatch ({len(embeddings)} vs {len(chunks)}). Aborting.")
+        return 1
     print(f"  ✅ {len(embeddings)} embeddings generated (dim={len(embeddings[0])})")
     
     # Build output
@@ -105,7 +111,7 @@ def main():
         "chunks": []
     }
     
-    for chunk, embedding in zip(chunks, embeddings):
+    for chunk, embedding in zip(chunks, embeddings, strict=True):
         output["chunks"].append({
             "id": chunk["id"],
             "type": chunk["type"],
@@ -130,4 +136,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

@@ -154,6 +154,16 @@ def run_evaluation_agent(raw_jobs):
                 evaluated_jobs.append(job)
         except Exception as e:
             logging.error(f"Gemini evaluation failed for a job: {e}")
+            # Keep the job in the feed with a marked-failed evaluation instead
+            # of silently dropping it (audit M23).
+            job.setdefault("evaluation", {})
+            if isinstance(job["evaluation"], dict):
+                job["evaluation"].setdefault("grade", "C")
+                job["evaluation"].setdefault("overall_score", 0)
+                job["evaluation"]["summary"] = f"Evaluation failed: {type(e).__name__}"
+            job.setdefault("match_score", 0)
+            job.setdefault("tier", 2)
+            evaluated_jobs.append(job)
 
     return evaluated_jobs
 

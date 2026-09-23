@@ -12,3 +12,7 @@ AI_ECO_AUDIT.md
 scratch/
 cover_letters/
 audit/
+# Machine-specific local resume generators (hardcoded local paths) — not portable
+scripts/generate_ats_resume.py
+scripts/generate_resume_node.js
+scripts/generate_resume_node.package.json

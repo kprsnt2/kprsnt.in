@@ -146,7 +146,7 @@ def update_swarm_memory(new_insights: list = None, new_goals: list = None, conso
 
         # 4. Context Ceiling Safeguard & Pattern Deduplication
         words = content.split()
-        if len(words) > MAX_MEMORY_WORDS or consolidate or True:
+        if len(words) > MAX_MEMORY_WORDS or consolidate:
             lines = content.splitlines()
             compacted_lines = []
             in_insights = False
@@ -445,7 +445,11 @@ def fetch_github_stats():
 
         new_commits_to_count = [c for c in recent_commits if c.get("sha") and c["sha"] not in known_shas]
         total_commits = existing_commits + len(new_commits_to_count)
-        updated_counted_shas = list(known_shas.union({c["sha"] for c in recent_commits if c.get("sha")}))[-500:]
+        # Cap the counted set by recency order (recent_commits is newest-first);
+        # the old list(set(...)) slice dropped arbitrary SHAs (audit M25).
+        recent_shas = [c["sha"] for c in recent_commits if c.get("sha")]
+        ordered_shas = recent_shas + sorted(known_shas.difference(recent_shas), reverse=True)
+        updated_counted_shas = ordered_shas[:500]
 
         commit_timeline_7d = {
             "labels": timeline_days,
