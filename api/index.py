@@ -1840,7 +1840,7 @@ def api_interview():
 
     try:
         if request.is_json:
-            data = request.get_json() or {}
+            data = request.get_json(silent=True) or {}
             if not isinstance(data, dict):
                 res = jsonify({"error": "Invalid JSON format: expected an object."})
                 res.headers['Access-Control-Allow-Origin'] = '*'
@@ -1920,7 +1920,7 @@ def api_chat_agent():
 
     try:
         if request.is_json:
-            data = request.get_json() or {}
+            data = request.get_json(silent=True) or {}
             if not isinstance(data, dict):
                 res = jsonify({"error": "Invalid JSON format: expected an object."})
                 res.headers['Access-Control-Allow-Origin'] = '*'

@@ -41,6 +41,19 @@ def fresh_mcp_limiter(monkeypatch):
     monkeypatch.setattr(idx, "_mcp_limiter", RateLimiter(60, 1_000_000))
 
 
+@pytest.fixture
+def fresh_public_limiters(monkeypatch):
+    """Swap in permissive public limiters so a burst of malformed-body cases
+    cannot exhaust the shared 3 req/min email limiter and leak 429s into other
+    tests (which run against the original limiter after monkeypatch restores)."""
+    import api.index as idx
+    from api.services.security import RateLimiter
+
+    monkeypatch.setattr(idx, "_mcp_limiter", RateLimiter(60, 1_000_000))
+    monkeypatch.setattr(idx, "_chat_limiter", RateLimiter(60, 1_000_000))
+    monkeypatch.setattr(idx, "_email_limiter", RateLimiter(60, 1_000_000))
+
+
 # --------------------------------------------------------------------------
 # SEC-1: path traversal
 # --------------------------------------------------------------------------
@@ -339,7 +352,7 @@ def test_jsonrpc_notifications_ok():
 # M13: malformed JSON bodies -> 400, never 500
 # --------------------------------------------------------------------------
 
-def test_malformed_json_bodies_return_400(client, fresh_mcp_limiter):
+def test_malformed_json_bodies_return_400(client, fresh_public_limiters):
     # JSON string / array / object-for-string / string-history must all 400
     assert client.post("/api/chat", data="just-a-string", content_type="application/json").status_code == 400
     assert client.post("/api/chat", json=[1, 2, 3]).status_code == 400
@@ -349,9 +362,12 @@ def test_malformed_json_bodies_return_400(client, fresh_mcp_limiter):
 
     assert client.post("/api/interview", data="[1,2,3]", content_type="application/json").status_code == 400
     assert client.post("/api/interview", json={"message": {"a": 1}}).status_code == 400
+    # syntactically invalid JSON must 400, not 500 (get_json silent=True)
+    assert client.post("/api/interview", data="just-a-string", content_type="application/json").status_code == 400
 
     assert client.post("/api/chat_agent", data='"str"', content_type="application/json").status_code == 400
     assert client.post("/api/chat_agent", json={"message": 42}).status_code == 400
+    assert client.post("/api/chat_agent", data="just-a-string", content_type="application/json").status_code == 400
 
 
 # --------------------------------------------------------------------------
