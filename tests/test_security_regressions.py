@@ -359,15 +359,25 @@ def test_malformed_json_bodies_return_400(client, fresh_public_limiters):
     assert client.post("/api/chat", json={"query": {"a": 1}}).status_code == 400
     assert client.post("/api/chat", json={"query": "hi", "history": "not-a-list"}).status_code == 400
     assert client.post("/api/chat", json={"query": "hi", "history": ["not-a-dict"]}).status_code == 400
+    assert client.post("/api/chat", json={"query": "hi", "history": False}).status_code == 400
+    assert client.post("/api/chat", json={"query": "hi", "history": 123}).status_code == 400
+    # history=None must default safely and not 500
+    assert client.post("/api/chat", json={"query": "hi", "history": None}).status_code in (200, 503)
 
     assert client.post("/api/interview", data="[1,2,3]", content_type="application/json").status_code == 400
     assert client.post("/api/interview", json={"message": {"a": 1}}).status_code == 400
     # syntactically invalid JSON must 400, not 500 (get_json silent=True)
     assert client.post("/api/interview", data="just-a-string", content_type="application/json").status_code == 400
+    assert client.post("/api/interview", json={"message": "   "}).status_code == 400
 
     assert client.post("/api/chat_agent", data='"str"', content_type="application/json").status_code == 400
     assert client.post("/api/chat_agent", json={"message": 42}).status_code == 400
     assert client.post("/api/chat_agent", data="just-a-string", content_type="application/json").status_code == 400
+    assert client.post("/api/chat_agent", json={"message": "   "}).status_code == 400
+    assert client.post("/api/chat_agent", json={"message": "hi", "history": False}).status_code == 400
+    assert client.post("/api/chat_agent", json={"message": "hi", "history": "not-a-list"}).status_code == 400
+    # history=None must default safely and not 500
+    assert client.post("/api/chat_agent", json={"message": "hi", "history": None}).status_code in (200, 503)
 
 
 # --------------------------------------------------------------------------

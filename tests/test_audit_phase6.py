@@ -87,13 +87,20 @@ def test_live_data_survives_malformed_telemetry(tmp_path, monkeypatch):
     import api.services.live_data as live
 
     (tmp_path / "job_data").mkdir()
-    (tmp_path / "job_data" / "ecosystem_telemetry.json").write_text(
-        '{"last_updated": null, "commit_history": 1136}', encoding="utf-8"
+    telemetry_file = tmp_path / "job_data" / "ecosystem_telemetry.json"
+    telemetry_file.write_text(
+        '{"last_updated": 1727076000, "commit_history": 1136, "language_breakdown": null, "live_salary_estimation": null}',
+        encoding="utf-8"
     )
     monkeypatch.setattr(live, "BASE_DIR", str(tmp_path))
-    # non-string last_updated must not crash the summary
+    # integer last_updated and null sub-objects must not crash the summary
     summary = live.get_live_ecosystem_summary()
     assert "1136" in summary
+    assert "1727076000" in summary
+
+    # non-dict JSON payload must gracefully yield empty summary without crash
+    telemetry_file.write_text('[1, 2, 3]', encoding="utf-8")
+    assert live.get_live_ecosystem_summary() == ""
 
 
 def test_live_data_parses_daily_jobs(tmp_path, monkeypatch):

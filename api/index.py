@@ -1416,8 +1416,10 @@ def api_chat():
         if not isinstance(query, str):
             return jsonify({'error': 'Invalid query format.'}), 400
         query = query.strip()
-        history = data.get('history', [])
-        if history and (not isinstance(history, list) or any(not isinstance(m, dict) for m in history)):
+        history = data.get('history')
+        if history is None:
+            history = []
+        elif not isinstance(history, list) or any(not isinstance(m, dict) for m in history):
             return jsonify({'error': 'Invalid history format.'}), 400
 
         if not query:
@@ -1860,7 +1862,7 @@ def api_interview():
             subject = data.get('subject', 'Interview Question')
             send_email = True
 
-        if not message:
+        if not message or not message.strip():
             res = jsonify({"error": "No message provided"})
             res.headers['Access-Control-Allow-Origin'] = '*'
             return res, 400
@@ -1933,8 +1935,10 @@ def api_chat_agent():
             from_email = data.get('from_email', '')
             subject = data.get('subject', 'Chat Message')
             send_email = data.get('send_email', False)
-            history = data.get('history', [])
-            if history and (not isinstance(history, list) or any(not isinstance(m, dict) for m in history)):
+            history = data.get('history')
+            if history is None:
+                history = []
+            elif not isinstance(history, list) or any(not isinstance(m, dict) for m in history):
                 res = jsonify({"error": "Invalid history format."})
                 res.headers['Access-Control-Allow-Origin'] = '*'
                 return res, 400
@@ -1946,7 +1950,7 @@ def api_chat_agent():
             send_email = True
             history = []
 
-        if not message:
+        if not message or not message.strip():
             res = jsonify({"error": "No message provided"})
             res.headers['Access-Control-Allow-Origin'] = '*'
             return res, 400
