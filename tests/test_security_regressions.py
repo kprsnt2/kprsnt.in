@@ -255,3 +255,81 @@ def test_mcp_handshake_burst_all_succeeds(client, prod_config_limiter):
               "params": {"name": "get_site_overview", "arguments": {}}},
     )
     assert r4.status_code == 200
+
+
+# --------------------------------------------------------------------------
+# H8 / M2: mSeat input validation
+# --------------------------------------------------------------------------
+
+def test_predict_seat_accepts_string_rank():
+    from api.mseat_mcp import handle_predict_seat
+
+    assert handle_predict_seat({"state_rank": "3000"}).get("success") is True
+
+
+def test_predict_seat_rejects_bad_inputs():
+    from api.mseat_mcp import handle_predict_seat
+
+    assert handle_predict_seat({"category": None}).get("success") is False
+    assert handle_predict_seat({"category": "XX"}).get("success") is False
+    assert handle_predict_seat({"state_rank": 0}).get("success") is False
+    assert handle_predict_seat({"state_rank": -5}).get("success") is False
+    assert handle_predict_seat({"air": "high"}).get("success") is False
+    assert handle_predict_seat(None).get("success") is False
+
+
+def test_predict_seat_consistent_response_shape():
+    from api.mseat_mcp import handle_predict_seat
+
+    allocated = handle_predict_seat({"state_rank": 100})
+    not_allocated = handle_predict_seat({"state_rank": 9999999})
+    for key in ("stateRank", "categoryRank", "category", "allocated", "success"):
+        assert key in allocated, key
+        assert key in not_allocated, key
+
+
+def test_college_info_requires_query():
+    from api.mseat_mcp import handle_college_info
+
+    assert handle_college_info({"college_code_or_name": ""}).get("success") is False
+
+
+def test_compare_colleges_requires_both():
+    from api.mseat_mcp import handle_compare_colleges
+
+    assert handle_compare_colleges({}).get("success") is False
+    assert handle_compare_colleges({"college_a": "Gandhi"}).get("success") is False
+
+
+def test_sliding_odds_requires_both():
+    from api.mseat_mcp import handle_sliding_odds
+
+    assert handle_sliding_odds({}).get("success") is False
+    assert handle_sliding_odds({"current_college": "Gandhi"}).get("success") is False
+
+
+# --------------------------------------------------------------------------
+# H9: JSON-RPC validation
+# --------------------------------------------------------------------------
+
+def test_jsonrpc_invalid_method_and_params():
+    import api.ai_eco_mcp as eco
+    import api.mseat_mcp as mseat
+
+    for mod in (eco, mseat):
+        resp = mod.process_mcp_request({"jsonrpc": "2.0", "id": 1, "method": None})
+        assert resp["error"]["code"] == -32600
+
+        resp = mod.process_mcp_request({"jsonrpc": "2.0", "id": 2, "method": "tools/list", "params": "x"})
+        assert resp["error"]["code"] == -32602
+
+        resp = mod.process_mcp_request({"jsonrpc": "2.0", "id": 3, "method": "tools/call", "params": [1, 2]})
+        assert resp["error"]["code"] == -32602
+
+
+def test_jsonrpc_notifications_ok():
+    import api.ai_eco_mcp as eco
+
+    # JSON-RPC 2.0: notifications must NOT be answered -> None (route maps to 204)
+    resp = eco.process_mcp_request({"jsonrpc": "2.0", "method": "notifications/initialized"})
+    assert resp is None or "error" not in resp

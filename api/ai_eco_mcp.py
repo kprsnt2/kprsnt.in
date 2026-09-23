@@ -1557,8 +1557,23 @@ def process_mcp_request(req_body: Dict[str, Any]):
         return {"jsonrpc": "2.0", "id": None, "error": {"code": -32700, "message": "Parse error: Invalid JSON payload."}}
 
     method = req_body.get("method", "")
-    params = req_body.get("params") or {}
+    if not isinstance(method, str):
+        return {"jsonrpc": "2.0", "id": req_body.get("id"),
+                "error": {"code": -32600, "message": "Invalid Request: 'method' must be a string."}}
+
+    params = req_body.get("params")
+    if params is None:
+        params = {}
+    elif not isinstance(params, (dict, list)):
+        return {"jsonrpc": "2.0", "id": req_body.get("id"),
+                "error": {"code": -32602, "message": "Invalid params: must be an object or array."}}
+
     req_id = req_body.get("id")
+
+    # by-name methods require an object; params.get() would crash on a list
+    if method in ("tools/call", "resources/read", "prompts/get") and not isinstance(params, dict):
+        return {"jsonrpc": "2.0", "id": req_id,
+                "error": {"code": -32602, "message": f"Invalid params: {method} requires an object."}}
 
     # 1. MCP Initialization Handshake
     if method == "initialize":

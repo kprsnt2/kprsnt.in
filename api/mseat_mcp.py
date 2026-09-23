@@ -1519,29 +1519,83 @@ CUSTOM_COLLEGES_8367 = [
     }
 ]
 
-def handle_predict_seat(args: Dict[str, Any]) -> Dict[str, Any]:
-    category = args.get("category", "OC")
-    gender = args.get("gender", "male")
-    state_rank = args.get("state_rank")
-    air = args.get("air")
-    
-    if not state_rank and air:
+# Valid reservation categories (audit H8: category must be enum-checked, not
+# silently defaulted). Minority is kept separate - minority-reserved colleges
+# are only reachable by minority-category candidates (audit M5).
+VALID_CATEGORIES = {"OC", "EWS", "BC_A", "BC_B", "BC_C", "BC_D", "BC_E",
+                    "SC_1", "SC_2", "SC_3", "SC", "ST"}
+MINORITY_CATEGORIES = {"MINORITY"}
+
+
+def _coerce_rank(value, name: str):
+    """Coerce a rank argument to a non-negative int. Returns (rank, error)."""
+    if value is None or value == "":
+        return None, None  # treated as "not provided"
+    if isinstance(value, bool):
+        return None, f"{name} must be an integer."
+    try:
+        rank = int(value)
+    except (TypeError, ValueError):
+        return None, f"{name} must be an integer."
+    if rank < 0:
+        return None, f"{name} must be >= 0."
+    return rank, None
+
+
+def _coerce_predict_inputs(args) -> dict:
+    """Validate and coerce predict_seat inputs (audit H8).
+
+    Returns {'success': True, 'category', 'state_rank', 'air'} or
+    {'success': False, 'error': reason}. Never raises.
+    """
+    if not isinstance(args, dict):
+        return {"success": False, "error": "Arguments must be a JSON object."}
+
+    if "category" not in args:
+        category = "OC"
+    else:
+        raw_category = args.get("category")
+        if not isinstance(raw_category, str) or not raw_category.strip():
+            return {"success": False, "error": "category must be a non-empty string."}
+        category = raw_category.strip().upper()
+    if category not in VALID_CATEGORIES | MINORITY_CATEGORIES:
+        return {"success": False,
+                "error": f"Invalid category '{category}'. Valid: {sorted(VALID_CATEGORIES)}."}
+
+    state_rank, err = _coerce_rank(args.get("state_rank"), "state_rank")
+    if err:
+        return {"success": False, "error": err}
+    air, err = _coerce_rank(args.get("air"), "air")
+    if err:
+        return {"success": False, "error": err}
+
+    if state_rank is None and air is None:
+        state_rank = 5000  # documented default
+    elif state_rank is None:
         state_rank = estimate_state_rank_from_air(air)
-    elif not state_rank:
-        state_rank = 5000
-    
-    if not air:
+    if state_rank == 0:
+        return {"success": False, "error": "state_rank must be greater than 0 (rank 1 is the best)."}
+    if air is None:
         air = int(state_rank / 0.0288)
+
+    return {"success": True, "category": category, "state_rank": state_rank, "air": air}
+
+
+def handle_predict_seat(args: Dict[str, Any]) -> Dict[str, Any]:
+    coerced = _coerce_predict_inputs(args)
+    if not coerced.get("success"):
+        return coerced
+
+    category = coerced["category"]
+    state_rank = coerced["state_rank"]
 
     cat_rank = estimate_category_rank(state_rank, category)
     allocated = None
     alternatives = []
-    
-    college_list = CUSTOM_COLLEGES_8367 if state_rank == 8367 else MASTER_COLLEGES
-    for i, col in enumerate(college_list):
-        if "minority" not in category.lower() and col.get("isMinority", False):
-            continue
 
+    for i, col in enumerate(MASTER_COLLEGES):
+        if col.get("isMinority", False) and category not in MINORITY_CATEGORIES:
+            continue
         closing = col.get("sc2Closing" if category.startswith("SC") else "ocClosing", 9999)
         if cat_rank <= closing and not allocated:
             allocated = {
@@ -1578,13 +1632,18 @@ def handle_predict_seat(args: Dict[str, Any]) -> Dict[str, Any]:
     return {
         "success": True,
         "allocated": True,
+        "stateRank": state_rank,
+        "categoryRank": cat_rank,
+        "category": category,
         "allocation": allocated,
         "nextBestAlternatives": alternatives,
         "summary": f"Allotted to {allocated['collegeName']} (Preference #{allocated['preferenceNo']}) with Safety Margin of +{allocated['safetyMargin']} ranks."
     }
 
 def handle_college_info(args: Dict[str, Any]) -> Dict[str, Any]:
-    query = args.get("college_code_or_name", "").lower()
+    query = (args.get("college_code_or_name") or "").lower().strip()
+    if not query:
+        return {"success": False, "message": "college_code_or_name is required."}
     matches = [
         c for c in MASTER_COLLEGES
         if query in c["code"].lower() or query in c["name"].lower() or query in c["place"].lower()
@@ -1594,8 +1653,10 @@ def handle_college_info(args: Dict[str, Any]) -> Dict[str, Any]:
     return {"success": True, "count": len(matches), "colleges": matches}
 
 def handle_compare_colleges(args: Dict[str, Any]) -> Dict[str, Any]:
-    col_a_q = args.get("college_a", "").lower()
-    col_b_q = args.get("college_b", "").lower()
+    col_a_q = (args.get("college_a") or "").lower().strip()
+    col_b_q = (args.get("college_b") or "").lower().strip()
+    if not col_a_q or not col_b_q:
+        return {"success": False, "message": "Both college_a and college_b are required."}
     col_a = next((c for c in MASTER_COLLEGES if col_a_q in c["code"].lower() or col_a_q in c["name"].lower()), None)
     col_b = next((c for c in MASTER_COLLEGES if col_b_q in c["code"].lower() or col_b_q in c["name"].lower()), None)
     
@@ -1614,9 +1675,18 @@ def handle_compare_colleges(args: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 def handle_sliding_odds(args: Dict[str, Any]) -> Dict[str, Any]:
-    current_q = args.get("current_college", "").lower()
-    target_q = args.get("target_college", "").lower()
-    cat_rank = args.get("category_rank", 100)
+    current_q = (args.get("current_college") or "").lower().strip()
+    target_q = (args.get("target_college") or "").lower().strip()
+    if not current_q or not target_q:
+        return {"success": False, "message": "Both current_college and target_college are required."}
+    raw_cat_rank = args.get("category_rank", 100)
+    if isinstance(raw_cat_rank, bool) or not isinstance(raw_cat_rank, (int, float)):
+        try:
+            cat_rank = int(raw_cat_rank)
+        except (TypeError, ValueError):
+            return {"success": False, "message": "category_rank must be an integer."}
+    else:
+        cat_rank = int(raw_cat_rank)
     current = next((c for c in MASTER_COLLEGES if current_q in c["code"].lower() or current_q in c["name"].lower()), None)
     target = next((c for c in MASTER_COLLEGES if target_q in c["code"].lower() or target_q in c["name"].lower()), None)
     
@@ -1676,9 +1746,18 @@ def process_mcp_request(req_body: Dict[str, Any]) -> Dict[str, Any]:
     if not isinstance(req_body, dict):
         return {"jsonrpc": "2.0", "id": None, "error": {"code": -32700, "message": "Parse error: invalid JSON."}}
 
-    method = req_body.get("method", "")
-    params = req_body.get("params", {})
     req_id = req_body.get("id")
+    method = req_body.get("method", "")
+    if not isinstance(method, str):
+        return {"jsonrpc": "2.0", "id": req_id,
+                "error": {"code": -32600, "message": "Invalid Request: 'method' must be a string."}}
+
+    params = req_body.get("params")
+    if params is None:
+        params = {}
+    elif not isinstance(params, (dict, list)):
+        return {"jsonrpc": "2.0", "id": req_id,
+                "error": {"code": -32602, "message": "Invalid params: must be an object or array."}}
 
     # 1. MCP Initialization Handshake
     if method == "initialize":
@@ -1718,6 +1797,9 @@ def process_mcp_request(req_body: Dict[str, Any]) -> Dict[str, Any]:
 
     # 5. Tool Execution
     elif method == "tools/call":
+        if not isinstance(params, dict):
+            return {"jsonrpc": "2.0", "id": req_id,
+                    "error": {"code": -32602, "message": "Invalid params: tools/call requires an object."}}
         tool_name = params.get("name", "")
         args = params.get("arguments", {})
 
