@@ -1,26 +1,10 @@
 """
 RESTful Endpoints & OpenAPI 3.0 Specification for OpenAI Actions (ChatGPT) and MCP.
-"""
 
-from flask import Blueprint, request, jsonify
-try:
-    from mseat_mcp import (
-        handle_predict_seat,
-        handle_college_info,
-        handle_compare_colleges,
-        handle_sliding_odds,
-        handle_counselling_rules,
-        MASTER_COLLEGES
-    )
-except ImportError:
-    from api.mseat_mcp import (
-        handle_predict_seat,
-        handle_college_info,
-        handle_compare_colleges,
-        handle_sliding_odds,
-        handle_counselling_rules,
-        MASTER_COLLEGES
-    )
+Note: this module intentionally defines ONLY the OpenAPI spec dict. It must not
+import Flask or mseat_mcp — an import failure here would prevent the whole app
+from booting (audit H7).
+"""
 
 OPENAPI_SPEC = {
     "openapi": "3.1.0",

@@ -179,7 +179,7 @@ def update_portfolio_json(new_jobs):
     with open(JOB_DATA_FILE, 'w') as f:
         json.dump({
             "month": datetime.now().strftime("%B %Y"),
-            "models_used": ["Gemini 1.5 Flash", "Tavily Search"],
+            "models_used": {"Gemini 1.5 Flash": 1, "Tavily Search": 1},
             "jobs": all_jobs
         }, f, indent=4)
 

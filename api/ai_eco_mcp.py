@@ -23,6 +23,26 @@ SWARM_WEEKLY_DIR = SWARM_DIR / "weekly_meetings"
 BLOG_INPUTS_DIR = BASE_DIR / "blog_inputs"
 BLOG_DATA_DIR = BASE_DIR / "blog_data"
 
+# Strict identifier patterns for swarm memory lookups (SEC-1: unvalidated
+# date/week arguments allowed unauthenticated path traversal).
+SWARM_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+SWARM_WEEK_RE = re.compile(r"^\d{4}-W\d{2}$")
+
+
+def _safe_swarm_target(base_dir: Path, raw_name: Any, pattern: re.Pattern) -> "Path | None":
+    """Return a resolved swarm-file path only if ``raw_name`` is a strict
+    identifier that stays inside ``base_dir``. Otherwise None."""
+    if not isinstance(raw_name, str):
+        return None
+    name = raw_name.strip()
+    if not pattern.match(name):
+        return None
+    base = base_dir.resolve()
+    target = (base_dir / f"{name}.md").resolve()
+    if base not in target.parents:
+        return None
+    return target
+
 try:
     from api.data.case_studies import get_all_case_studies, get_case_study, get_structured_hiring_evidence, PROJECT_CASE_STUDIES
 except ImportError:
@@ -1172,8 +1192,20 @@ def handle_get_swarm_daily_views(args: Dict[str, Any]) -> Dict[str, Any]:
     views = []
     if SWARM_DAILY_DIR.exists():
         if requested_date:
-            target = SWARM_DAILY_DIR / f"{requested_date.strip()}.md"
-            files_to_read = [target] if target.exists() else []
+            target = _safe_swarm_target(SWARM_DAILY_DIR, requested_date, SWARM_DATE_RE)
+            if target is None:
+                return {
+                    "error": "Invalid date format. Use YYYY-MM-DD.",
+                    "count": 0, "requested_date": requested_date,
+                    "source": "ecosystem_swarm/daily_views/"
+                }
+            if not target.exists():
+                return {
+                    "error": f"Daily view for '{requested_date}' not found.",
+                    "count": 0, "requested_date": requested_date,
+                    "source": "ecosystem_swarm/daily_views/"
+                }
+            files_to_read = [target]
         else:
             files_to_read = sorted(SWARM_DAILY_DIR.glob("*.md"), reverse=True)[:limit]
 
@@ -1211,7 +1243,9 @@ def handle_get_swarm_weekly_meeting(args: Dict[str, Any]) -> Dict[str, Any]:
 
     meeting_file = None
     if requested_week:
-        target = SWARM_WEEKLY_DIR / f"{requested_week.strip()}.md"
+        target = _safe_swarm_target(SWARM_WEEKLY_DIR, requested_week, SWARM_WEEK_RE)
+        if target is None:
+            return {"error": "Invalid week format. Use YYYY-Www (e.g. 2026-W39)."}
         if target.exists():
             meeting_file = target
     else:
@@ -1627,7 +1661,7 @@ def process_mcp_request(req_body: Dict[str, Any]):
                     "jsonrpc": "2.0",
                     "id": req_id,
                     "result": {
-                        "content": [{"type": "text", "text": f"Error executing tool '{tool_name}': {str(ex)}"}],
+                        "content": [{"type": "text", "text": f"Error executing tool '{tool_name}'."}],
                         "isError": True
                     }
                 }

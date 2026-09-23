@@ -55,6 +55,12 @@ def _save_jobs(jobs, source_file=None):
     if filepath.exists():
         data = json.loads(filepath.read_text(encoding="utf-8"))
     else:
+        # Refuse to materialize a brand-new file for jobs that don't
+        # originate from it — an empty month file would hijack the /jobs
+        # fallback glob (audit H5).
+        matching = [j for j in jobs if j.get("_source_file") == source_file]
+        if not matching:
+            return
         data = {
             "month": datetime.now().strftime("%B %Y"),
             "generated_date": datetime.now().strftime("%Y-%m-%d"),
@@ -188,8 +194,16 @@ def verify_jobs(job_ids: list[str] = None) -> str:
                     "verified": False, "reason": str(e)[:100]
                 })
     
-    # Save updated verification status
-    _save_jobs(jobs)
+    # Save updated verification status back to each job's own source file
+    # (audit H5: without this nothing is persisted for other months and an
+    # empty current-month file gets created).
+    by_source = {}
+    for job in jobs:
+        src = job.get("_source_file")
+        if src:
+            by_source.setdefault(src, []).append(job)
+    for src, src_jobs in by_source.items():
+        _save_jobs(src_jobs, source_file=src)
     
     verified_count = sum(1 for r in results if r["verified"])
     return json.dumps({

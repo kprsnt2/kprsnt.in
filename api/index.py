@@ -76,15 +76,19 @@ except ImportError:
         notify_owner = None
 
 try:
-    from api.services.security import RateLimiter, get_client_ip, is_valid_email
+    from api.services.security import RateLimiter, get_client_ip, is_valid_email, body_exceeds_limit
 except ImportError:
-    from services.security import RateLimiter, get_client_ip, is_valid_email
+    from services.security import RateLimiter, get_client_ip, is_valid_email, body_exceeds_limit
 
 # mSeat REST + MCP helpers (used by /api/mseat/* routes).
+# Third-level fallback: a broken spec import must never stop the app booting (audit H7).
 try:
     from api.mseat_rest import OPENAPI_SPEC
 except ImportError:
-    from mseat_rest import OPENAPI_SPEC
+    try:
+        from mseat_rest import OPENAPI_SPEC
+    except ImportError:
+        OPENAPI_SPEC = None
 
 try:
     from api.mseat_mcp import (
@@ -130,10 +134,10 @@ def add_security_headers(response):
     return response
 
 # --- Rate Limiting (bounded in-memory, per-IP) ---
-_insight_limiter = RateLimiter(30)
-_chat_limiter = RateLimiter(10)
-_email_limiter = RateLimiter(20)
-_mcp_limiter = RateLimiter(0.1)  # High throughput for streaming sessions
+_insight_limiter = RateLimiter(60, 10)   # 10 req/min
+_chat_limiter = RateLimiter(60, 6)      # 6 req/min (LLM cost guard)
+_email_limiter = RateLimiter(60, 3)    # 3 req/min (abuse guard)
+_mcp_limiter = RateLimiter(60, 120)     # generous: streaming sessions + tool calls
 
 # ============================================================
 # Page Routes
@@ -183,6 +187,7 @@ def resume_role(role_slug):
 @app.route('/resume/edit')
 def resume_edit():
     return render_template('resume_editor.html',
+                         experience=EXPERIENCES[0] if EXPERIENCES else {},
                          experiences=EXPERIENCES,
                          projects=RESUME_PROJECTS,
                          skills=RESUME_SKILLS)
@@ -589,10 +594,12 @@ def load_job_listings():
             except (json.JSONDecodeError, IOError) as e:
                 logging.warning(f"Failed to load daily data: {e}")
 
-    # Fall back to monthly files
+    # Fall back to monthly files (skip pipeline/telemetry non-job files)
     if not jobs and os.path.exists(job_data_dir):
         json_files = [f for f in glob.glob(os.path.join(job_data_dir, '*.json'))
-                      if 'pipeline_log' not in f]
+                      if 'pipeline_log' not in f
+                      and 'ecosystem_telemetry' not in f
+                      and os.path.basename(f) != 'recent.json']
 
         if json_files:
             from datetime import datetime as dt
@@ -606,19 +613,22 @@ def load_job_listings():
                     dated_files.append((dt.fromtimestamp(os.path.getmtime(f)), f))
 
             dated_files.sort(key=lambda x: x[0], reverse=True)
-            latest_file = dated_files[0][1]
-            try:
-                with open(latest_file, 'r', encoding='utf-8') as f:
-                    data = json.load(f)
-                    if 'jobs' in data:
-                        month = data.get('month', data.get('date', ''))
-                        if data.get('models_used'):
-                            models_used.update(data['models_used'])
-                        for job in data['jobs']:
-                            if job.get('title') and job.get('company'):
-                                jobs.append(job)
-            except (json.JSONDecodeError, IOError) as e:
-                logging.warning(f"Failed to load job data {latest_file}: {e}")
+            # Walk newest -> oldest until a file with actual jobs is found.
+            for _file_date, latest_file in dated_files:
+                try:
+                    with open(latest_file, 'r', encoding='utf-8') as f:
+                        data = json.load(f)
+                    file_jobs = [job for job in data.get('jobs', [])
+                                 if job.get('title') and job.get('company')]
+                    if not file_jobs:
+                        continue
+                    month = data.get('month', data.get('date', ''))
+                    if data.get('models_used') and isinstance(data['models_used'], dict):
+                        models_used.update(data['models_used'])
+                    jobs.extend(file_jobs)
+                    break
+                except (json.JSONDecodeError, IOError) as e:
+                    logging.warning(f"Failed to load job data {latest_file}: {e}")
 
     # Count model sources
     for job in jobs:
@@ -1415,7 +1425,10 @@ def api_chat():
         if embeddings_data:
             query_embedding = get_embedding(query)
 
-            top_chunks = retrieve_chunks(query_embedding, embeddings_data, top_k=5)
+            if query_embedding:
+                top_chunks = retrieve_chunks(query_embedding, embeddings_data, top_k=5)
+            else:
+                logging.warning("Embedding generation failed; using static chat context")
 
             context = "\n\n".join([
                 f"[{c['type'].upper()}: {c['title']}] (relevance: {score:.2f})\n{c['text']}"
@@ -1501,18 +1514,33 @@ def mcp_endpoint():
         res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, x-api-key, mcp-session-id, openai-conversation-id, Accept'
         return res
 
-    # 2. Rate Limiting Check
-    client_ip = get_client_ip(request)
-    allowed, _retry_after = _mcp_limiter.check(client_ip)
-    if not allowed:
+    # 2. Request size cap (abuse hardening — reject before parsing).
+    if body_exceeds_limit(request):
         res = jsonify({
             "jsonrpc": "2.0",
             "id": None,
-            "error": {"code": -32000, "message": "Rate limit exceeded."}
+            "error": {"code": -32600, "message": "Request body too large."}
         })
-        res.status_code = 429
+        res.status_code = 413
         res.headers['Access-Control-Allow-Origin'] = '*'
         return res
+
+    # 3. Rate Limiting Check (skip id-less notifications/* — they are fire-and-forget)
+    client_ip = get_client_ip(request)
+    req_body = request.get_json(force=True, silent=True)
+    _method = req_body.get("method") if isinstance(req_body, dict) else None
+    if not (isinstance(_method, str) and _method.startswith("notifications/")):
+        allowed, retry_after = _mcp_limiter.check(client_ip)
+        if not allowed:
+            res = jsonify({
+                "jsonrpc": "2.0",
+                "id": None,
+                "error": {"code": -32000, "message": "Rate limit exceeded."}
+            })
+            res.status_code = 429
+            res.headers['Retry-After'] = str(int(retry_after) + 1)
+            res.headers['Access-Control-Allow-Origin'] = '*'
+            return res
 
     accept_header = request.headers.get('Accept', '')
 
@@ -1561,7 +1589,7 @@ def mcp_endpoint():
 
     # 5. Handle POST queries (JSON-RPC 2.0)
     try:
-        req_body = request.get_json(force=True, silent=True) or {}
+        req_body = req_body or {}
         if "jsonrpc" in req_body or "method" in req_body:
             response = process_mcp_request(req_body)
         else:
@@ -1634,6 +1662,8 @@ def mcp_docs_page():
 @app.route('/openapi.json', methods=['GET'])
 def mseat_openapi_spec():
     """OpenAPI 3.1 Specification for ChatGPT Actions."""
+    if OPENAPI_SPEC is None:
+        return jsonify({"error": "OpenAPI specification unavailable."}), 503
     res = jsonify(OPENAPI_SPEC)
     res.headers['Access-Control-Allow-Origin'] = '*'
     return res

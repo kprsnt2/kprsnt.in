@@ -1751,7 +1751,7 @@ def process_mcp_request(req_body: Dict[str, Any]) -> Dict[str, Any]:
                     "jsonrpc": "2.0",
                     "id": req_id,
                     "result": {
-                        "content": [{"type": "text", "text": f"Error executing tool: {str(ex)}"}],
+                        "content": [{"type": "text", "text": "Error executing tool."}],
                         "isError": True
                     }
                 }

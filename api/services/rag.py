@@ -7,19 +7,22 @@ import json
 import math
 import logging
 
-# Cache embeddings in memory (loaded once per cold start)
+# Cache embeddings in memory (loaded once per cold start). A missing file is
+# cached with a sentinel so we don't re-probe the disk on every request.
 _embeddings_cache = None
+_EMBEDDINGS_MISSING = object()
 
 
 def _load_embeddings():
     """Load pre-computed embeddings from chat_data/embeddings.json."""
     global _embeddings_cache
     if _embeddings_cache is not None:
-        return _embeddings_cache
+        return None if _embeddings_cache is _EMBEDDINGS_MISSING else _embeddings_cache
 
     embeddings_path = os.path.join(os.path.dirname(__file__), '..', '..', 'chat_data', 'embeddings.json')
     if not os.path.exists(embeddings_path):
         logging.warning("Embeddings file not found")
+        _embeddings_cache = _EMBEDDINGS_MISSING
         return None
 
     try:
@@ -44,6 +47,8 @@ def cosine_similarity(a, b):
 
 def retrieve_chunks(query_embedding, embeddings_data, top_k=5):
     """Retrieve top-k most similar chunks."""
+    if not query_embedding or not embeddings_data:
+        return []
     chunks = embeddings_data.get("chunks", [])
     scored = []
     for chunk in chunks:

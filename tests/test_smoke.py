@@ -29,6 +29,7 @@ PAGES = [
     "/skills",
     "/projects",
     "/resume",
+    "/resume/edit",
     "/blog",
     "/aie",
     "/aie/blogs",
