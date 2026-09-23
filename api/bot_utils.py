@@ -174,8 +174,10 @@ def get_ai_response(message: str, agent_type: str = "interview", history: List[D
             if not response_message.tool_calls:
                 break
             
-            # Append the assistant message with tool_calls to history
-            messages.append(response_message)
+            # Append the assistant message with tool_calls to history.
+            # Serialize to a plain dict so fallback providers (NVIDIA/Groq)
+            # accept it instead of an SDK object (audit M14).
+            messages.append(response_message.model_dump())
             
             # Execute each tool call and add results
             for tool_call in response_message.tool_calls:

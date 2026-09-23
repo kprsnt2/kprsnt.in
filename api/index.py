@@ -444,7 +444,7 @@ def blog_post(slug):
         aie_post = next((p for p in load_ai_eco_blogs() if p['slug'] == slug), None)
         if aie_post:
             return render_template('blog_post.html', post=aie_post, is_aie=True)
-        return render_template('blog.html', posts=all_posts)
+        return render_template('404.html'), 404
     except Exception as e:
         logging.error(f"Blog post error for slug '{slug}': {type(e).__name__}: {e}")
         import traceback
@@ -462,7 +462,7 @@ def aie_blog_post(slug):
     post = next((p for p in posts if p['slug'] == slug), None)
     if post:
         return render_template('blog_post.html', post=post, is_aie=True)
-    return render_template('aie_blogs.html', posts=posts)
+    return render_template('404.html'), 404
 
 # ============================================================
 # REST API — Blogs & Case Studies

@@ -1080,6 +1080,7 @@ def handle_get_blog_post(args: Dict[str, Any]) -> Dict[str, Any]:
     if not matched:
         return {"error": f"Blog post '{slug_target}' not found. Available slugs: {[p['slug'] for p in posts[:12]]}"}
 
+    raw_content = matched.get("raw_content", "")
     return {
         "slug": matched.get("slug"),
         "title": matched.get("title"),
@@ -1090,7 +1091,12 @@ def handle_get_blog_post(args: Dict[str, Any]) -> Dict[str, Any]:
         "excerpt": matched.get("excerpt"),
         "insights": matched.get("insights"),
         "url": matched.get("url"),
-        "content": matched.get("raw_content", "")[:9000]
+        "content": raw_content[:9000],
+        "content_truncated": len(raw_content) > 9000,
+        "truncation_notice": (
+            f"Content truncated at 9,000 characters (full length {len(raw_content):,}); "
+            "fetch the complete post at the url above."
+        ) if len(raw_content) > 9000 else None
     }
 
 
@@ -1115,7 +1121,11 @@ def handle_get_project_case_study(args: Dict[str, Any]) -> Dict[str, Any]:
 def handle_get_hiring_evidence(args: Dict[str, Any]) -> Dict[str, Any]:
     """Provides recruiters & hiring managers with verified, structured evidence separated into Production vs Research vs Tooling."""
     args = args or {}
-    domain = args.get("domain", "all")
+    domain = (args.get("domain") or "all").strip()
+    # Enum alias (audit M16): no case-study domain contains the substring
+    # "data"; map it to the actual data-engineering domain label.
+    if domain.lower() == "data":
+        domain = "Developer Tooling & Infrastructure"
     return get_structured_hiring_evidence(domain)
 
 

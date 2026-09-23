@@ -794,730 +794,36 @@ MCP_TOOLS = [
 ]
 
 def estimate_state_rank_from_air(air: int) -> int:
-    if air <= 1420: return 1
-    if air >= 1205432: return 18602
+    """Mock model: ~2.88% of the general merit list maps 1:1 to the 18,602
+    Telangana state serial numbers. Below 1/0.0288 (~35) the linear model
+    yields rank 0/1, so rank 1 is returned directly (audit M10: the old
+    rank-1 cutoff of 1,420 created a 1 -> 40 discontinuity)."""
+    if air is None or air <= 34:
+        return 1
     return max(1, min(18602, int(air * 0.0288)))
 
+
+# Category -> seat share, reconciled with handle_counselling_rules() below
+# (EWS 10%, BC-A 7%, BC-B 10%, BC-C 1%, BC-D 7%, BC-E 4%, SC 15%, ST 10%,
+# OC = remaining 36%). Non-OC quotas sum to 0.64, so the full set sums to
+# 1.000 (audit M7: the old table summed to 1.229 and contradicted the rules).
+CATEGORY_RATIOS = {
+    "OC": 0.36, "EWS": 0.10,
+    "BC_A": 0.07, "BC_B": 0.10, "BC_C": 0.01, "BC_D": 0.07, "BC_E": 0.04,
+    "SC_1": 0.01, "SC_2": 0.09, "SC_3": 0.05, "SC": 0.15, "ST": 0.10,
+}
+
+# The dataset exposes only two cutoff columns per college (audit M3): the SC
+# family is ranked against SC-2 closing ranks, everyone else against the
+# open-category closing ranks.
+CATEGORY_CLOSING_KEY = {c: "sc2Closing" for c in ("SC", "SC_1", "SC_2", "SC_3")}
+DEFAULT_CLOSING_KEY = "ocClosing"
+
+
 def estimate_category_rank(state_rank: int, category: str) -> int:
-    ratios = {
-        "OC": 0.35, "EWS": 0.10, "BC_A": 0.07, "BC_B": 0.18,
-        "BC_C": 0.01, "BC_D": 0.16, "BC_E": 0.04,
-        "SC_1": 0.007, "SC_2": 0.06, "SC_3": 0.035, "SC": 0.117, "ST": 0.10
-    }
-    ratio = ratios.get(category, 0.06)
+    ratio = CATEGORY_RATIOS.get(category, CATEGORY_RATIOS["OC"])
     return max(1, round(state_rank * ratio))
 
-CUSTOM_COLLEGES_8367 = [
-    {
-        "rank": 1,
-        "code": "GAND",
-        "name": "GANDHI MEDICAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 500,
-        "ocClosing": 1000
-    },
-    {
-        "rank": 2,
-        "code": "OMCH",
-        "name": "OSMANIA MEDICAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 1000,
-        "ocClosing": 2000
-    },
-    {
-        "rank": 3,
-        "code": "ESIM",
-        "name": "ESI MEDICAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 1500,
-        "ocClosing": 3000
-    },
-    {
-        "rank": 4,
-        "code": "KMCW",
-        "name": "KAKATIYA MEDICAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 2000,
-        "ocClosing": 4000
-    },
-    {
-        "rank": 5,
-        "code": "GMCS",
-        "name": "GOVT SANGAREDDY",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 2500,
-        "ocClosing": 5000
-    },
-    {
-        "rank": 6,
-        "code": "GMCMB",
-        "name": "GOVT MEDICAL, MBN",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 3000,
-        "ocClosing": 6000
-    },
-    {
-        "rank": 7,
-        "code": "RIMS",
-        "name": "RAJIV INST MEDICAL ADILABAD",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 3500,
-        "ocClosing": 7000
-    },
-    {
-        "rank": 8,
-        "code": "GMCV",
-        "name": "GOVT VIKARABAD",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 4000,
-        "ocClosing": 8000
-    },
-    {
-        "rank": 9,
-        "code": "GMCD",
-        "name": "GOVT SIDDIPET",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 4500,
-        "ocClosing": 9000
-    },
-    {
-        "rank": 10,
-        "code": "GMCQ",
-        "name": "GOVT QUTHBULLAPUR",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 5000,
-        "ocClosing": 10000
-    },
-    {
-        "rank": 11,
-        "code": "GMCK",
-        "name": "GOVT NAGARKURNOOL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 5500,
-        "ocClosing": 11000
-    },
-    {
-        "rank": 12,
-        "code": "GMCJ",
-        "name": "GOVT JANGAON",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 6000,
-        "ocClosing": 12000
-    },
-    {
-        "rank": 13,
-        "code": "GMCN",
-        "name": "GOVT NALGONDA",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 6500,
-        "ocClosing": 13000
-    },
-    {
-        "rank": 14,
-        "code": "GMCW",
-        "name": "GOVT WANAPARTHY",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 7000,
-        "ocClosing": 14000
-    },
-    {
-        "rank": 15,
-        "code": "GMCMD",
-        "name": "GOVT MEDAK",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 7500,
-        "ocClosing": 15000
-    },
-    {
-        "rank": 16,
-        "code": "GMCU",
-        "name": "GOVT SURYAPET",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 8000,
-        "ocClosing": 16000
-    },
-    {
-        "rank": 17,
-        "code": "GMCMBD",
-        "name": "GOVT MAHABUBABAD",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 8500,
-        "ocClosing": 17000
-    },
-    {
-        "rank": 18,
-        "code": "GMCKM",
-        "name": "GOVT KAMAREDDY",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 9000,
-        "ocClosing": 18000
-    },
-    {
-        "rank": 19,
-        "code": "GMCSR",
-        "name": "GOVT RAJANNA SIRCILLA",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 9500,
-        "ocClosing": 19000
-    },
-    {
-        "rank": 20,
-        "code": "GMCX",
-        "name": "GOVT KHAMMAM",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 10000,
-        "ocClosing": 20000
-    },
-    {
-        "rank": 21,
-        "code": "GMCG",
-        "name": "GOVT KARIMNAGAR",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 10500,
-        "ocClosing": 21000
-    },
-    {
-        "rank": 22,
-        "code": "GVNZ",
-        "name": "GOVT MEDICAL, NZB NIZAMBAD",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 11000,
-        "ocClosing": 22000
-    },
-    {
-        "rank": 23,
-        "code": "GMCJG",
-        "name": "GOVT JAGITYAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 11500,
-        "ocClosing": 23000
-    },
-    {
-        "rank": 24,
-        "code": "GMCBP",
-        "name": "GOVT JAYASHANKAR BHUPALPALLY",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 12000,
-        "ocClosing": 24000
-    },
-    {
-        "rank": 25,
-        "code": "GMCNR",
-        "name": "GOVT NIRMAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 12500,
-        "ocClosing": 25000
-    },
-    {
-        "rank": 26,
-        "code": "SIMS",
-        "name": "SINGARENI INST RAMAGUNDAM",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 13000,
-        "ocClosing": 26000
-    },
-    {
-        "rank": 27,
-        "code": "GMCL",
-        "name": "GOVT MANCHERIAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 13500,
-        "ocClosing": 27000
-    },
-    {
-        "rank": 28,
-        "code": "GMBK",
-        "name": "GOVT BHADRADRI KOTHAGUDEM",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 14000,
-        "ocClosing": 28000
-    },
-    {
-        "rank": 29,
-        "code": "GMCAS",
-        "name": "GOVT KUMURAM BHEEM ASIFABAD",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 14500,
-        "ocClosing": 29000
-    },
-    {
-        "rank": 30,
-        "code": "GMCM",
-        "name": "GOVT MAHESHWARAM",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 15000,
-        "ocClosing": 30000
-    },
-    {
-        "rank": 31,
-        "code": "GMCY",
-        "name": "GOVT YADADRI",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 15500,
-        "ocClosing": 31000
-    },
-    {
-        "rank": 32,
-        "code": "GMCKD",
-        "name": "GOVT KODANGAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 16000,
-        "ocClosing": 32000
-    },
-    {
-        "rank": 33,
-        "code": "GMCNP",
-        "name": "GOVT NARAYANPET",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 16500,
-        "ocClosing": 33000
-    },
-    {
-        "rank": 34,
-        "code": "GMCGD",
-        "name": "GOVT GADWAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 17000,
-        "ocClosing": 34000
-    },
-    {
-        "rank": 35,
-        "code": "GMCNSP",
-        "name": "GOVT NARSAMPET",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 17500,
-        "ocClosing": 35000
-    },
-    {
-        "rank": 36,
-        "code": "GMUL",
-        "name": "GOVT MULUGU",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 18000,
-        "ocClosing": 36000
-    },
-    {
-        "rank": 37,
-        "code": "APOL",
-        "name": "APOLLO MEDICAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 18500,
-        "ocClosing": 37000
-    },
-    {
-        "rank": 38,
-        "code": "KAMS",
-        "name": "KAMINENI ACADEMY LBNAGAR",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 19000,
-        "ocClosing": 38000
-    },
-    {
-        "rank": 39,
-        "code": "MAMS",
-        "name": "MAMATA, BACHUPALLY",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 19500,
-        "ocClosing": 39000
-    },
-    {
-        "rank": 40,
-        "code": "BHAS",
-        "name": "BHASKAR, MOINABAD",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 20000,
-        "ocClosing": 40000
-    },
-    {
-        "rank": 41,
-        "code": "MNRM",
-        "name": "MNR SANGAREDDY",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 20500,
-        "ocClosing": 41000
-    },
-    {
-        "rank": 42,
-        "code": "SVSM",
-        "name": "S.V.S. MEDICAL, MBN",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 21000,
-        "ocClosing": 42000
-    },
-    {
-        "rank": 43,
-        "code": "MEDI",
-        "name": "MEDICITY GHANPUR",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 21500,
-        "ocClosing": 43000
-    },
-    {
-        "rank": 44,
-        "code": "KMNI",
-        "name": "KAMINENI, NARKETPALY",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 22000,
-        "ocClosing": 44000
-    },
-    {
-        "rank": 45,
-        "code": "CMRM",
-        "name": "CMR MEDCHAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 22500,
-        "ocClosing": 45000
-    },
-    {
-        "rank": 46,
-        "code": "ARUN",
-        "name": "ARUNDATHI DUNDIGAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 23000,
-        "ocClosing": 46000
-    },
-    {
-        "rank": 47,
-        "code": "PMRW",
-        "name": "DR PATNAM, CHEVELLA",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 23500,
-        "ocClosing": 47000
-    },
-    {
-        "rank": 48,
-        "code": "CAIMS",
-        "name": "C ANANDA RAO",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 24000,
-        "ocClosing": 48000
-    },
-    {
-        "rank": 49,
-        "code": "PIMS",
-        "name": "PRATHIMA, KARIMNAGAR",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 24500,
-        "ocClosing": 49000
-    },
-    {
-        "rank": 50,
-        "code": "MAHE",
-        "name": "MAHESHWARA, MEDAK",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 25000,
-        "ocClosing": 50000
-    },
-    {
-        "rank": 51,
-        "code": "MAHA",
-        "name": "MAHAVIR, VIKARABAD",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 25500,
-        "ocClosing": 51000
-    },
-    {
-        "rank": 52,
-        "code": "RVMM",
-        "name": "RVM MEDICAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 26000,
-        "ocClosing": 52000
-    },
-    {
-        "rank": 53,
-        "code": "PIMS2",
-        "name": "PRATHIMA, WARANGAL",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 26500,
-        "ocClosing": 53000
-    },
-    {
-        "rank": 54,
-        "code": "NOVA",
-        "name": "NOVA, HAYATHNAGAR",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 27000,
-        "ocClosing": 54000
-    },
-    {
-        "rank": 55,
-        "code": "TRRM",
-        "name": "TRR, SANGAREDDY",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 27500,
-        "ocClosing": 55000
-    },
-    {
-        "rank": 56,
-        "code": "RRAJ",
-        "name": "RAJA RAJESHWARI",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 28000,
-        "ocClosing": 56000
-    },
-    {
-        "rank": 57,
-        "code": "SURB",
-        "name": "SURABHI, SIDDIPET",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 28500,
-        "ocClosing": 57000
-    },
-    {
-        "rank": 58,
-        "code": "MMTA",
-        "name": "MAMATA, KHAMMAM",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 29000,
-        "ocClosing": 58000
-    },
-    {
-        "rank": 59,
-        "code": "FCIM",
-        "isMinority": True,
-        "name": "FATHER COLOMBO",
-        "place": "Telangana",
-        "type": "Private",
-        "distKm": 50,
-        "intake": 150,
-        "fee": 60000,
-        "sc2Closing": 29500,
-        "ocClosing": 59000
-    }
-]
 
 # Valid reservation categories (audit H8: category must be enum-checked, not
 # silently defaulted). Minority is kept separate - minority-reserved colleges
@@ -1582,6 +888,12 @@ def _coerce_predict_inputs(args) -> dict:
 
 
 def handle_predict_seat(args: Dict[str, Any]) -> Dict[str, Any]:
+    """Predict a mock MBBS seat allotment for a candidate.
+
+    Note (audit M4): `gender` is accepted for API compatibility but does not
+    alter the prediction. The 33.3% women's horizontal reservation changes
+    the seat pool, not the merit rank, and is not modeled here.
+    """
     coerced = _coerce_predict_inputs(args)
     if not coerced.get("success"):
         return coerced
@@ -1596,7 +908,7 @@ def handle_predict_seat(args: Dict[str, Any]) -> Dict[str, Any]:
     for i, col in enumerate(MASTER_COLLEGES):
         if col.get("isMinority", False) and category not in MINORITY_CATEGORIES:
             continue
-        closing = col.get("sc2Closing" if category.startswith("SC") else "ocClosing", 9999)
+        closing = col.get(CATEGORY_CLOSING_KEY.get(category, DEFAULT_CLOSING_KEY), 9999)
         if cat_rank <= closing and not allocated:
             allocated = {
                 "collegeName": col["name"],
@@ -1675,10 +987,13 @@ def handle_compare_colleges(args: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 def handle_sliding_odds(args: Dict[str, Any]) -> Dict[str, Any]:
+    """Estimate Round 2 sliding probability. Accepts optional `category`
+    (default OC) so the target cutoff uses the correct closing column."""
     current_q = (args.get("current_college") or "").lower().strip()
     target_q = (args.get("target_college") or "").lower().strip()
     if not current_q or not target_q:
         return {"success": False, "message": "Both current_college and target_college are required."}
+    category = (args.get("category") or "OC").strip().upper()
     raw_cat_rank = args.get("category_rank", 100)
     if isinstance(raw_cat_rank, bool) or not isinstance(raw_cat_rank, (int, float)):
         try:
@@ -1693,7 +1008,7 @@ def handle_sliding_odds(args: Dict[str, Any]) -> Dict[str, Any]:
     if not current or not target:
         return {"success": False, "message": "Could not identify current or target college."}
     
-    target_closing = target.get("ocClosing", 1000)
+    target_closing = target.get(CATEGORY_CLOSING_KEY.get(category, DEFAULT_CLOSING_KEY), 9999)
     diff = cat_rank - target_closing
     if diff <= 0: odds = "95% (Already eligible within cutoffs)"
     elif diff <= 25: odds = "70% (High probability via AIQ seat surrender sliding in Round 2)"
@@ -1735,7 +1050,13 @@ def handle_counselling_rules(args: Dict[str, Any]) -> Dict[str, Any]:
             "Integrated Caste Certificate with Sub-Caste (SC1/SC2/SC3/BC-A..E)",
             "Latest Income / EWS Certificate (issued on/after April 1st of admission year)",
             "Transfer Certificate (TC)"
-        ]
+        ],
+        "sliding": {
+            "Round 2 Upgradation": "Candidates keep their Round 1 seat and participate in Round 2 web options; upgradation happens only when a higher-preference college is allotted.",
+            "Free Exit / Surrender": "A Round 1 seat may be surrendered once for upgradation; a surrendered seat cannot be reclaimed.",
+            "Bond Guidelines": "Government colleges typically require a rural-service bond (or bond penalty) if a seat is relinquished mid-course.",
+            "Stray Vacancy Round": "Final mop-up / stray-vacancy rounds fill unfilled seats in short web-option windows."
+        }
     }
     if topic in rules:
         return {"success": True, "topic": topic, "data": rules[topic]}
