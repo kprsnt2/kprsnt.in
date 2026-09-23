@@ -8,10 +8,31 @@ Used by: AI Insight, RAG Chat, Interview Bot, Chat Bot, MCP Server, Embeddings B
 # ============================================
 # PERSONAL INFO
 # ============================================
+_EMOJI_PREFIXES = ("📰", "🙏", "📊", "🔬", "🤖", "🧬", "❤️", "🎂", "🎓", "📚")
+
+
+def _normalize_title(title: str) -> str:
+    """Lowercase and strip exact leading emoji prefixes (audit L7).
+
+    str.lstrip(chars) would strip any of those characters from anywhere at
+    the start, which mangled real titles.
+    """
+    t = (title or "").strip().lower()
+    changed = True
+    while changed:
+        changed = False
+        for prefix in _EMOJI_PREFIXES:
+            if t.startswith(prefix):
+                t = t[len(prefix):].lstrip()
+                changed = True
+                break
+    return t
+
+
 PROFILE = {
     "name": "Prashanth Kumar Kadasi",
     "alias": "kprsnt",
-    "title": "Data Analyst & AI Developer",
+    "title": "AI Systems Engineer",
     "location": "Hyderabad, India",
     "remote": True,
     "education": "M.Pharm - Pharmaceutical Analysis and Quality Assurance, Anurag Group of Institutions (JNTUH, May 2012)",
@@ -290,9 +311,11 @@ def get_embedding_chunks():
         chunks.append({"id": f"project-{p['title'][:30].lower().replace(' ', '-')}", "type": "project", "title": p["title"], "text": text})
 
     # Resume-only projects not in PROJECTS
-    seen = {c["title"].lower().lstrip("📰🙏📊🔬🤖🧬❤️🎂🎓📚 ") for c in chunks}
+    # Normalize titles by stripping exact leading emoji prefixes (lstrip on a
+    # character set strips any of those characters — audit L7).
+    seen = {_normalize_title(c["title"]) for c in chunks}
     for rp in RESUME_PROJECTS:
-        if rp["name"].lower() not in seen:
+        if _normalize_title(rp["name"]) not in seen:
             text = f"Project: {rp['name']}\n{rp['desc']}\nTechnologies: {rp['tech']}"
             chunks.append({"id": f"resume-project-{rp['name'][:30].lower().replace(' ', '-')}", "type": "project", "title": rp["name"], "text": text})
 

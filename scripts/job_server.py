@@ -6,7 +6,6 @@ Exposes tools for searching, verifying, and preparing job applications.
 Run: python scripts/job_server.py
 Or:  mcp run scripts/job_server.py
 """
-import os
 import sys
 import json
 import re
@@ -14,7 +13,6 @@ import httpx
 from pathlib import Path
 from datetime import datetime
 
-import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / 'api' / 'data'))
 from portfolio_kb import get_mcp_profile
 

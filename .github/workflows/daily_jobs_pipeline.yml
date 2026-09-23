@@ -34,6 +34,10 @@ jobs:
         run: |
           python scripts/social_jobs_pipeline.py
 
+      - name: Prune daily job data older than 90 days
+        run: |
+          python -c "import sys; sys.path.insert(0, 'scripts'); from social_jobs_pipeline import prune_daily_files; prune_daily_files()"
+
       - name: Commit and push updated JSON data (Disabled to save Vercel storage)
         run: |
           echo "Automated commit disabled to prevent excess Vercel deployment storage."

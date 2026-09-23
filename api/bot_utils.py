@@ -2,7 +2,7 @@ import os
 import json
 import html as _html
 import logging
-from typing import Dict, Any, List
+from typing import Dict, List
 
 logger = logging.getLogger(__name__)
 
@@ -72,9 +72,9 @@ def get_system_prompt(agent_type: str = "interview") -> str:
     return prompt
 
 try:
-    from ai_config import call_llm_with_history, OPENAI_MODEL
+    from ai_config import call_llm_with_history
 except ImportError:
-    from .ai_config import call_llm_with_history, OPENAI_MODEL
+    from .ai_config import call_llm_with_history
 
 
 # OpenAI function calling tool definition for send_resume_to_user
@@ -118,7 +118,7 @@ def send_resume_to_user(email: str) -> str:
             "from": f"Prashanth Kumar Kadasi <{from_email}>",
             "to": [email],
             "subject": "Prashanth Kumar Kadasi - Resume",
-            "html": f"""<div style="font-family: -apple-system, sans-serif; padding: 20px;">
+            "html": """<div style="font-family: -apple-system, sans-serif; padding: 20px;">
                 <p>Hi there,</p>
                 <p>As requested, here is a link to my latest resume and portfolio:</p>
                 <p><a href="https://kprsnt.in/resume" style="display: inline-block; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 5px;">View Resume Online</a></p>
@@ -212,7 +212,7 @@ def get_ai_response(message: str, agent_type: str = "interview", history: List[D
         text = response_message.content or ""
         return text.replace('**', '').replace('*', '')
         
-    except Exception as e:
+    except Exception:
         import traceback
         logger.error(f"AI API error: {traceback.format_exc()}")
         return "I'm sorry, something went wrong. Please try again later."

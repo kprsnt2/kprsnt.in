@@ -18,18 +18,14 @@ Usage:
   python scripts/career_pipeline.py --mode analyze      # Skill gap analysis
   python scripts/career_pipeline.py --mode report       # Generate reports for top matches
 """
-import os
 import sys
 import json
 import re
-import math
 import time
-import hashlib
-import urllib.parse
 import argparse
 from pathlib import Path
-from datetime import datetime, timedelta
-from typing import Dict, List, Optional, Any
+from datetime import datetime
+from typing import Dict, List
 
 from ai_config import get_openai_client, OPENAI_MODEL
 
@@ -344,7 +340,6 @@ def evaluate_job_local(job: Dict) -> Dict:
 
     # Archetype Fit (0-5): Does it match our target roles?
     archetype = detect_archetype(job)
-    target_role = job.get("target_role", "")
     if archetype in ["ai-engineer", "ml-engineer"]:
         archetype_fit = 4.5 if any(r.lower() in title for r in PROFILE["target_roles"]["primary"]) else 3.5
     elif archetype in ["data-analyst", "prompt-engineer"]:
@@ -618,7 +613,7 @@ def report_agent(jobs: List[Dict], tracer: PipelineTracer) -> Dict:
     tracer.log_step("report", "Generate report", duration,
                     details=f"Top matches: {len(top_matches)}")
 
-    print(f"   ✅ Report generated")
+    print("   ✅ Report generated")
     print(f"      Total: {total} | Top matches: {len(top_matches)} | Avg score: {avg_score:.1f}/5")
 
     return report

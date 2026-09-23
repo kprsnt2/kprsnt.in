@@ -55,7 +55,6 @@ PROFILE = {
 def build_search_prompt(role_category, role_names):
     """Build a focused search prompt for a specific role category."""
     today = datetime.now().strftime("%Y-%m-%d")
-    month = datetime.now().strftime("%B %Y")
 
     return f"""Search for 5 real, currently active job openings for: {', '.join(role_names)}
 
@@ -189,7 +188,7 @@ def generate_jobs_for_role(client, role_category, role_names):
             print(f"✅ Found {len(jobs)} jobs ({sum(1 for j in jobs if j.get('url_grounded'))} web-searched)")
             return jobs
         else:
-            print(f"⚠️  No jobs found")
+            print("⚠️  No jobs found")
             return []
 
     except Exception as e:
@@ -336,7 +335,7 @@ def main():
         sys.exit(1)
 
     # Deduplicate across categories
-    print(f"\n🔧 Processing")
+    print("\n🔧 Processing")
     print(f"  📊 Raw jobs from all searches: {len(all_jobs)}")
     all_jobs = deduplicate_jobs(all_jobs)
     print(f"  📊 After deduplication: {len(all_jobs)}")

@@ -11,6 +11,7 @@ exclude = [
 ]
 
 [lint]
-# Error-only checks (syntax errors + undefined names) to catch real breakage
-# without failing on the existing codebase's style.
-select = ["E9", "F63", "F7", "F82"]
+# Error-only checks (syntax errors, undefined/unused names) to catch real
+# breakage without failing on the existing codebase's style. F was added
+# after the audit L-series cleanup (unused imports/vars now fail CI).
+select = ["E9", "F63", "F7", "F82", "F"]

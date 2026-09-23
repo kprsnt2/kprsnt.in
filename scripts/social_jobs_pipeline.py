@@ -3,6 +3,7 @@ import json
 import logging
 import requests
 from datetime import datetime, timedelta
+from pathlib import Path
 
 # ==============================================================================
 # CONFIGURATION
@@ -213,6 +214,29 @@ def update_portfolio_json(new_jobs):
         
     logging.info(f"Pipeline complete! {len(new_jobs)} jobs added to {JOB_DATA_FILE}.")
 
+def prune_daily_files(max_age_days: int = 90) -> int:
+    """Delete job_data/daily/*.json older than max_age_days (audit L4).
+
+    Returns the number of files removed. The daily folder grew unbounded
+    (38 files) because nothing pruned it.
+    """
+    daily_dir = Path(__file__).resolve().parent.parent / "job_data" / "daily"
+    if not daily_dir.exists():
+        return 0
+    cutoff = datetime.now() - timedelta(days=max_age_days)
+    removed = 0
+    for f in daily_dir.glob("*.json"):
+        try:
+            if datetime.fromtimestamp(f.stat().st_mtime) < cutoff:
+                f.unlink()
+                removed += 1
+        except OSError as e:
+            logging.warning(f"Could not prune {f.name}: {e}")
+    if removed:
+        logging.info(f"Pruned {removed} daily job file(s) older than {max_age_days} days")
+    return removed
+
+
 if __name__ == "__main__":
     raw_jobs = run_research_agent()
     if raw_jobs:
@@ -220,3 +244,4 @@ if __name__ == "__main__":
         update_portfolio_json(evaluated)
     else:
         logging.info("No new jobs found.")
+    prune_daily_files()

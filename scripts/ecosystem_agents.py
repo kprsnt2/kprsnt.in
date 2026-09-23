@@ -132,7 +132,7 @@ def update_swarm_memory(new_insights: list = None, new_goals: list = None, conso
                     parts = content.split(marker, 1)
                     content = f"{parts[0]}{marker}\n" + "\n".join(insight_lines) + "\n" + parts[1].lstrip("\n")
                 else:
-                    content += f"\n\n## 💡 Learned Engineering Patterns\n" + "\n".join(insight_lines)
+                    content += "\n\n## 💡 Learned Engineering Patterns\n" + "\n".join(insight_lines)
 
         # 3. Update Active Goals if provided
         if new_goals:
@@ -653,7 +653,7 @@ def run_mcp_engineer(stats):
     """Agent 4: MCP Engineer Agent - Verifies MCP tools and protocol integrity."""
     print("🔌 Running Agent 4: MCP Engineer Agent...")
     try:
-        from api.ai_eco_mcp import process_mcp_request, MCP_TOOLS
+        from api.ai_eco_mcp import process_mcp_request
         test_req = {"jsonrpc": "2.0", "id": "diag-1", "method": "tools/list", "params": {}}
         res = process_mcp_request(test_req)
         tools = res.get("result", {}).get("tools", [])
@@ -878,7 +878,7 @@ def run_critic_agent(stats):
         # FastMCP JSON-RPC tools verification
         mcp_tools_count = 0
         try:
-            from api.ai_eco_mcp import process_mcp_request, MCP_TOOLS
+            from api.ai_eco_mcp import process_mcp_request
             diag = process_mcp_request({"jsonrpc": "2.0", "id": "bar-raiser-diag", "method": "tools/list"})
             if "result" in diag:
                 mcp_tools_count = len(diag["result"].get("tools", []))
@@ -1069,7 +1069,6 @@ def evaluate_swarm_targets(stats, save: bool = True):
         targets = data.get("targets", {})
 
         active_repos = stats.get("active_repos_touched", []) if stats else []
-        repo_counts = stats.get("repo_counts", 100) if stats else 100
 
         # Agent 1: Scout Ingestion Fidelity
         if "agent_1_github_scout" in targets:

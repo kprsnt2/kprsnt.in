@@ -1,7 +1,6 @@
 """
 Unit & Integration Tests for the AI Eco Multi-Agent Swarm & FastMCP Layer.
 """
-import os
 import sys
 import json
 import re

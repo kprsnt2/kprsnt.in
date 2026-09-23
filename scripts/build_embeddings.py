@@ -4,7 +4,6 @@ Build Embeddings for RAG Chat
 Chunks all portfolio data and generates embeddings using OpenAI text-embedding-3-small.
 Saves to chat_data/embeddings.json for retrieval at query time.
 """
-import os
 import sys
 import json
 import math
@@ -127,7 +126,7 @@ def main():
     
     size_mb = output_path.stat().st_size / (1024 * 1024)
     print(f"  💾 Saved: {output_path} ({size_mb:.1f} MB)")
-    print(f"  📊 Chunks by type:")
+    print("  📊 Chunks by type:")
     types = {}
     for c in chunks:
         types[c["type"]] = types.get(c["type"], 0) + 1

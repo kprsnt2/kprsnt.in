@@ -4,7 +4,6 @@ Compliant with Model Context Protocol (MCP) JSON-RPC 2.0 (spec 2024-11-05).
 Compatible with Claude Desktop, Cursor, Antigravity, and remote SSE / HTTP clients.
 """
 
-import os
 import re
 import json
 import logging
@@ -186,7 +185,7 @@ MCP_TOOLS = [
     # ── 3. AI ECO TOOLS ──
     {
         "name": "get_ai_eco_telemetry",
-        "description": "Returns real-time telemetry from Prashanth's autonomous AI Eco multi-agent swarm, including annual GitHub commits (987), tracked repos (100), language distributions, 7-day commit velocity, active agent status, and live market compensation benchmarks.",
+        "description": "Returns real-time telemetry from Prashanth's autonomous AI Eco multi-agent swarm, including annual GitHub commits, tracked repos, language distributions, 7-day commit velocity, active agent status, and live market compensation benchmarks.",
         "inputSchema": {
             "type": "object",
             "properties": {}
@@ -679,7 +678,7 @@ def handle_my_profile(args: Dict[str, Any]) -> Dict[str, Any]:
             "website": "https://kprsnt.in"
         },
         "key_metrics": {
-            "total_commits": 987,
+            "total_commits": 1136,
             "tracked_repositories": 100,
             "years_analytics_experience": "3+ years",
             "enterprise_dashboards_shipped": "18+ sector intelligence dashboards"
@@ -854,12 +853,12 @@ def handle_ai_eco_telemetry(args: Dict[str, Any]) -> Dict[str, Any]:
         logging.warning(f"Telemetry load fallback: {e}")
 
     return {
-        "commit_history": 987,
+        "commit_history": 1136,
         "repo_counts": 100,
-        "language_breakdown": {"Python": 50, "TypeScript": 20, "CSS": 15, "JavaScript": 15},
+        "language_breakdown": {"Python": 55, "TypeScript": 20, "JavaScript": 25},
         "top_skills": ["Python", "TypeScript", "FastMCP", "Autonomous Swarms", "Next.js"],
         "live_salary_estimation": {"min": 140000, "max": 200000, "reasoning": "High-velocity autonomous multi-agent and enterprise analytics capabilities."},
-        "active_agents": 6,
+        "active_agents": 10,
         "mcp_server": "kprsnt-all-in-one-mcp v3.0"
     }
 
@@ -873,8 +872,8 @@ def handle_ai_eco_agents(args: Dict[str, Any]) -> Dict[str, Any]:
         try:
             with open(TELEMETRY_PATH, "r", encoding="utf-8") as f:
                 telemetry_time = json.load(f).get("last_updated")
-        except Exception:
-            pass
+        except Exception as e:
+            logging.warning(f"Could not read telemetry timestamp: {e}")
 
     latest_blog_date = None
     if AI_ECO_BLOGS_DIR.exists():
@@ -954,8 +953,18 @@ def handle_ai_eco_dev_logs(args: Dict[str, Any]) -> Dict[str, Any]:
         "dev_logs": logs
     }
 
+_BLOG_CORPUS_CACHE = None
+
+
 def _load_all_mcp_blog_posts() -> List[Dict[str, Any]]:
-    """Load all polished technical engineering posts from blog_inputs/ and blog_data/."""
+    """Load all polished technical engineering posts from blog_inputs/ and blog_data/.
+
+    Cached in memory (audit L11): the corpus is ~150 KB and was re-parsed on
+    every single call.
+    """
+    global _BLOG_CORPUS_CACHE
+    if _BLOG_CORPUS_CACHE is not None:
+        return _BLOG_CORPUS_CACHE
     posts = []
     seen = set()
 
@@ -1011,9 +1020,10 @@ def _load_all_mcp_blog_posts() -> List[Dict[str, Any]]:
                     data["raw_content"] = data.get("content", "")
                     posts.append(data)
                     seen.add(slug)
-            except Exception:
-                pass
+            except Exception as e:
+                logging.warning(f"Skipping malformed blog_data file: {e}")
 
+    _BLOG_CORPUS_CACHE = posts
     return posts
 
 
@@ -1174,7 +1184,6 @@ def handle_get_swarm_memory(args: Dict[str, Any]) -> Dict[str, Any]:
         goals_part = content.split("## 🎯 Active Weekly Focus & Strategic Roadmap", 1)[1]
         for line in goals_part.splitlines():
             line_s = line.strip()
-            import re
             if line_s:
                 m = re.match(r'^(\d+\.|\-|\*)\s+(.*)', line_s)
                 if m:
@@ -1273,7 +1282,6 @@ def handle_get_swarm_weekly_meeting(args: Dict[str, Any]) -> Dict[str, Any]:
             roadmap_part = text.split("## 🎯 Next-Week Strategic Roadmap", 1)[1]
             for line in roadmap_part.splitlines():
                 line_s = line.strip()
-                import re
                 if line_s:
                     m = re.match(r'^(\d+\.|\-|\*)\s+(.*)', line_s)
                     if m:

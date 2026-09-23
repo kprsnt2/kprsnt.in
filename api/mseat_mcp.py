@@ -5,7 +5,7 @@ Compatible with Claude Desktop, Cursor, Antigravity, and JSON-RPC 2.0 / SSE clie
 
 import json
 import logging
-from typing import Dict, Any, List
+from typing import Dict, Any
 
 MASTER_COLLEGES = [
     {

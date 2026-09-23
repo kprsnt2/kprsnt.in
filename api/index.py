@@ -15,7 +15,6 @@ except ImportError:
 
 from flask import Flask, render_template, send_from_directory, jsonify, request, Response
 import os
-import time
 import json
 import glob
 try:
@@ -27,9 +26,9 @@ import logging
 import markdown
 import re
 try:
-    from ai_config import call_llm, get_embedding, OPENAI_MODEL_PREMIUM, OPENAI_MODEL
+    from ai_config import call_llm, get_embedding, OPENAI_MODEL_PREMIUM
 except ImportError:
-    from .ai_config import call_llm, get_embedding, OPENAI_MODEL_PREMIUM, OPENAI_MODEL
+    from .ai_config import call_llm, get_embedding, OPENAI_MODEL_PREMIUM
 
 try:
     from data.portfolio_kb import get_insight_context, get_chat_context
@@ -1485,7 +1484,7 @@ Assistant:"""
 # ═══════════════════════════════════════════════════════════════
 
 import uuid
-from flask import Response, stream_with_context
+from flask import stream_with_context
 
 @app.route('/api/mcp/mseat', methods=['GET', 'POST', 'OPTIONS'])
 def mseat_mcp_redirect():
@@ -1553,7 +1552,7 @@ def mcp_endpoint():
             # Initial endpoint registration event per MCP spec
             yield f"event: endpoint\ndata: {post_endpoint}\n\n"
             # Keep-alive heartbeat
-            yield f": keep-alive\n\n"
+            yield ": keep-alive\n\n"
 
         response = Response(
             stream_with_context(sse_event_stream()),
