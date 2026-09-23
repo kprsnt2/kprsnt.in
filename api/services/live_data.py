@@ -71,13 +71,13 @@ def get_live_ecosystem_summary():
         with open(eco_file, 'r', encoding='utf-8') as f:
             data = json.load(f)
 
-        commits = data.get('commit_history', 987)
+        commits = data.get('commit_history', 1136)
         repos = data.get('repo_counts', 100)
         langs = list(data.get('language_breakdown', {}).keys())[:4]
         salary = data.get('live_salary_estimation', {})
         sal_min = salary.get('min', 180000)
         sal_max = salary.get('max', 320000)
-        last_updated = data.get('last_updated', '')[:10]
+        last_updated = (data.get('last_updated') or '')[:10]
 
         summary = f"""LIVE AI ECO SWARM DATA (as of {last_updated}):
 - 10 autonomous agents running daily (GitHub Scout, Dashboard, Portfolio Sync, MCP Engineer, Docs, Readme, Ponytail Pruner, Bar-Raiser, Trend Hunter, Cosmic Observer)
