@@ -33,8 +33,8 @@ OPENAI_MODEL_PREMIUM = NVIDIA_MODEL  # ai-insight uses this — points to NVIDIA
 OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"
 
 
-# Serverless execution timeout (default 8.0s to fail fast within Vercel 10s ceiling)
-LLM_TIMEOUT = float(os.environ.get("AI_LLM_TIMEOUT", "8.0"))
+# LLM request timeout (default 60s — runs in GitHub Actions, long generations need headroom)
+LLM_TIMEOUT = float(os.environ.get("AI_LLM_TIMEOUT", "60.0"))
 
 
 # ============================================
@@ -42,7 +42,7 @@ LLM_TIMEOUT = float(os.environ.get("AI_LLM_TIMEOUT", "8.0"))
 # ============================================
 
 def get_nvidia_client(timeout=None):
-    """Get the NVIDIA primary client with a short timeout to prevent Vercel hangs."""
+    """Get the NVIDIA primary client."""
     api_key = os.environ.get("NVIDIA_API_KEY")
     if not api_key:
         return None
@@ -50,7 +50,7 @@ def get_nvidia_client(timeout=None):
 
 
 def get_groq_client(timeout=None):
-    """Get the Groq backup client with a short timeout to prevent Vercel hangs."""
+    """Get the Groq backup client."""
     api_key = os.environ.get("GROQ_API_KEY")
     if not api_key:
         return None
@@ -58,7 +58,7 @@ def get_groq_client(timeout=None):
 
 
 def get_openai_client(timeout=None):
-    """Get the OpenAI last-resort client (no retries to fail fast) with a short timeout."""
+    """Get the OpenAI last-resort client (no retries to fail fast)."""
     api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
         return None
