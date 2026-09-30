@@ -10,21 +10,19 @@ from openai import OpenAI
 # ============================================
 
 # Primary: NVIDIA (via OpenAI-compatible API)
-NVIDIA_MODEL = "nvidia/nemotron-3-ultra-550b-a55b"
+NVIDIA_MODEL = "deepseek-ai/deepseek-v4.1-flash"
 NVIDIA_FALLBACK_MODELS = [
-    "stepfun-ai/step-3.7-flash",
-    "z-ai/glm-5.1",
+    "z-ai/glm-5.3-flash",
+    "moonshotai/kimi-k3",
 ]
 NVIDIA_BASE_URL = "https://integrate.api.nvidia.com/v1"
 NVIDIA_EMBEDDING_MODEL = "nvidia/nv-embedqa-e5-v5"
 
 # Backup: Groq (via OpenAI-compatible API)
-GROQ_MODEL = "groq/compound"
+GROQ_MODEL = "openai/gpt-oss-120b"
 GROQ_FALLBACK_MODELS = [
-    "groq/compound-mini",
-    "openai/gpt-oss-120b",
-    "llama-3.3-70b-versatile",
-    "llama-3.1-8b-instant",
+    "openai/gpt-oss-20b",
+    "qwen/qwen3.8-27b",
 ]
 GROQ_BASE_URL = "https://api.groq.com/openai/v1"
 

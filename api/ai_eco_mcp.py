@@ -213,7 +213,7 @@ MCP_TOOLS = [
     },
     {
         "name": "get_ai_eco_agents",
-        "description": "Inspects the live status, operational health, model routing (Groq Compound -> Mini -> OSS), and active custom skills of the 10 autonomous agents in the AI Eco swarm (GitHub Scout, Dashboard Agent, Portfolio Sync, MCP Engineer, Docs Agent, Readme Agent, Ponytail Pruner, Adversarial Bar-Raiser, SOTA Trend Hunter, Cosmic Observer).",
+        "description": "Inspects the live status, operational health, model routing (GPT-OSS 120B -> GPT-OSS 20B), and active custom skills of the 10 autonomous agents in the AI Eco swarm (GitHub Scout, Dashboard Agent, Portfolio Sync, MCP Engineer, Docs Agent, Readme Agent, Ponytail Pruner, Adversarial Bar-Raiser, SOTA Trend Hunter, Cosmic Observer).",
         "inputSchema": {
             "type": "object",
             "properties": {
@@ -517,8 +517,8 @@ AI_ECO_SWARM = [
         "status": "Online",
         "custom_skill": "Git Event Ingestion & Commit Head SHA Resolver",
         "output_target": "AI_Eco_Blogs/",
-        "primary_model": "groq/compound",
-        "fallback_model": "groq/compound-mini",
+        "primary_model": "openai/gpt-oss-120b",
+        "fallback_model": "openai/gpt-oss-20b",
         "role": "Monitors GitHub event streams across all user repos, resolves head commit SHAs via API with unauthenticated public fallback, and drafts project-wise technical dev logs explaining 'Why We Did It'."
     },
     {
@@ -527,8 +527,8 @@ AI_ECO_SWARM = [
         "status": "Online",
         "custom_skill": "Telemetry & Compensation Market Analyzer",
         "output_target": "job_data/ecosystem_telemetry.json",
-        "primary_model": "groq/compound",
-        "fallback_model": "groq/compound-mini",
+        "primary_model": "openai/gpt-oss-120b",
+        "fallback_model": "openai/gpt-oss-20b",
         "role": "Computes aggregate contribution velocity, language distributions, and market salary benchmarks based on active skill evolution."
     },
     {
@@ -537,8 +537,8 @@ AI_ECO_SWARM = [
         "status": "Online",
         "custom_skill": "Multi-Role Knowledge Base & Resume Synchronizer",
         "output_target": "api/resume_data.py",
-        "primary_model": "groq/compound",
-        "fallback_model": "groq/compound-mini",
+        "primary_model": "openai/gpt-oss-120b",
+        "fallback_model": "openai/gpt-oss-20b",
         "role": "Synchronizes role-tailored resume data, project showcases, and career constants across frontend views."
     },
     {
@@ -547,8 +547,8 @@ AI_ECO_SWARM = [
         "status": "Online",
         "custom_skill": "All-in-One Model Context Protocol (MCP) Architecture",
         "output_target": "api/ai_eco_mcp.py",
-        "primary_model": "groq/compound",
-        "fallback_model": "groq/compound-mini",
+        "primary_model": "openai/gpt-oss-120b",
+        "fallback_model": "openai/gpt-oss-20b",
         "role": "Exposes real-time portfolio data, resume credentials, site metadata, and ecosystem telemetry as standard FastMCP tools."
     },
     {
@@ -557,8 +557,8 @@ AI_ECO_SWARM = [
         "status": "Online",
         "custom_skill": "Knowledge Grounding & System Prompt Manager",
         "output_target": "api/skills/ecosystem.md",
-        "primary_model": "groq/compound",
-        "fallback_model": "groq/compound-mini",
+        "primary_model": "openai/gpt-oss-120b",
+        "fallback_model": "openai/gpt-oss-20b",
         "role": "Maintains internal skill documentation, API references, and RAG chatbot system prompt embeddings."
     },
     {
@@ -567,8 +567,8 @@ AI_ECO_SWARM = [
         "status": "Online",
         "custom_skill": "Mermaid Architectural Diagram Synthesizer",
         "output_target": "README.md",
-        "primary_model": "groq/compound",
-        "fallback_model": "groq/compound-mini",
+        "primary_model": "openai/gpt-oss-120b",
+        "fallback_model": "openai/gpt-oss-20b",
         "role": "Auto-generates clean architectural flowcharts and GitHub repository documentation."
     },
     {
@@ -577,8 +577,8 @@ AI_ECO_SWARM = [
         "status": "Online",
         "custom_skill": "Anti-Bloat Heuristics & Technical Debt Ledger",
         "output_target": "ecosystem_swarm/debt_ledger.json",
-        "primary_model": "groq/compound",
-        "fallback_model": "groq/compound-mini",
+        "primary_model": "openai/gpt-oss-120b",
+        "fallback_model": "openai/gpt-oss-20b",
         "role": "Audits recent diffs for YAGNI, over-engineering, and maintains the living technical debt ledger."
     },
     {
@@ -587,8 +587,8 @@ AI_ECO_SWARM = [
         "status": "Online",
         "custom_skill": "Staff+ Architecture Stress-Testing & Gap Analysis",
         "output_target": "ecosystem_swarm/gap_analysis.json",
-        "primary_model": "groq/compound",
-        "fallback_model": "groq/compound-mini",
+        "primary_model": "openai/gpt-oss-120b",
+        "fallback_model": "openai/gpt-oss-20b",
         "role": "Stress-tests architectural boundaries against rate limits, latency ceilings, and failure modes."
     },
     {
@@ -597,8 +597,8 @@ AI_ECO_SWARM = [
         "status": "Online",
         "custom_skill": "AI Frontier Horizon Scanner & Autonomous RFC Synthesizer",
         "output_target": "ecosystem_swarm/proposals/",
-        "primary_model": "groq/compound",
-        "fallback_model": "groq/compound-mini",
+        "primary_model": "openai/gpt-oss-120b",
+        "fallback_model": "openai/gpt-oss-20b",
         "role": "Monitors frontier AI research, protocols, and drafts weekly RFC proposals for adoption."
     },
     {
@@ -607,8 +607,8 @@ AI_ECO_SWARM = [
         "status": "Online",
         "custom_skill": "Cosmological Computation & Emergent Complexity Synthesizer",
         "output_target": "ecosystem_swarm/universe/",
-        "primary_model": "groq/compound",
-        "fallback_model": "groq/compound-mini",
+        "primary_model": "openai/gpt-oss-120b",
+        "fallback_model": "openai/gpt-oss-20b",
         "role": "Explores and understands the universe through computation, thermodynamics, and cellular automata."
     }
 ]
@@ -743,7 +743,7 @@ def handle_my_skills(args: Dict[str, Any]) -> Dict[str, Any]:
         ],
         "ai_llm": [
             {"skill": "LLM Fine-Tuning & Evaluation", "level": "Expert", "details": "Fine-tuned GPT-OSS-20B on AMD MI300X (BrandXY, Drug Discovery)"},
-            {"skill": "Hierarchical LLM Routing", "level": "Expert", "details": "Multi-tier routing: Groq Compound -> Groq Compound Mini -> OpenAI OSS"},
+            {"skill": "Hierarchical LLM Routing", "level": "Expert", "details": "Multi-tier routing: GPT-OSS 120B -> GPT-OSS 20B -> Qwen3.8 27B"},
             {"skill": "Context Engineering & RAG", "level": "Expert", "details": "Curated embeddings, system prompt grounding, and vector retrieval"},
             {"skill": "Model APIs", "level": "Expert", "details": "OpenAI, Anthropic Claude, Groq, NVIDIA Integrate, Google Gemini"}
         ],
@@ -787,7 +787,7 @@ def handle_evaluate_job_match(args: Dict[str, Any]) -> Dict[str, Any]:
         matched_skills.extend([
             "Autonomous Multi-Agent AI Swarms (10-agent production ecosystem)",
             "Model Context Protocol (MCP 2024-11-05) Server & Client Implementations",
-            "Hierarchical LLM Routing (Groq Compound, OpenAI, Anthropic)",
+            "Hierarchical LLM Routing (GPT-OSS 120B, OpenAI, Anthropic)",
             "Fine-Tuning on AMD MI300X (BrandXY, Drug Discovery)"
         ])
         highlighted_projects.append("AI Eco (Autonomous Multi-Agent Portfolio Infrastructure)")

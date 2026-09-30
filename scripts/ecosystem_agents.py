@@ -981,7 +981,7 @@ def run_trend_hunter(stats):
 ## Target: api/ai_eco_mcp.py
 
 ### Objective
-Maintain 100% compliance with MCP 2024-11-05 specifications while establishing resilient fallback routing between Groq Compound, NVIDIA NIM, and OpenAI endpoints.
+Maintain 100% compliance with MCP 2024-11-05 specifications while establishing resilient fallback routing between GPT-OSS 120B, NVIDIA NIM, and OpenAI endpoints.
 
 ### Recommendations
 1. Validate client JSON-RPC requests against Pydantic schema models where applicable.

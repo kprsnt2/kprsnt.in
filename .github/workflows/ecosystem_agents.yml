@@ -64,15 +64,19 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # First synchronize with the latest main
-          git pull --rebase origin main
-
-          # Then stage generated files
+          # Stage generated files first (agents leave unstaged changes that block rebase)
           git add AI_Eco_Blogs/ blog_inputs/ job_data/ ecosystem_swarm/
 
-          # Only commit if there are staged changes
+          # Commit local changes before syncing
           if ! git diff --cached --quiet; then
             git commit -m "🤖 Auto-update: Swarm Memory, Daily Views & Telemetry"
+          fi
+
+          # Then synchronize with the latest main
+          git pull --rebase --autostash origin main
+
+          # Push if we have commits to send
+          if [ -n "$(git log origin/main..HEAD --oneline)" ]; then
             git push
           else
             echo "No changes to commit."
