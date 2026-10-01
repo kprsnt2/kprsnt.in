@@ -161,7 +161,7 @@ PROJECT_CASE_STUDIES: Dict[str, Dict[str, Any]] = {
         ],
         "tech_stack": ["AI Coding CLIs", "LLM Benchmarking", "Headless Chrome", "Static Code Audits", "Next.js", "Technical Writing"],
         "live_url": "https://kprsnt.in/blog/BLOG_MODEL_VS_CLI",
-        "github_url": "https://github.com/kprsnt2?tab=repositories&q=pRash",
+        "github_url": "https://github.com/kprsnt2/pRash_chat",
         "blog_url": "https://kprsnt.in/blog/BLOG_ROUND1_VS_ROUND2_REGRESSION"
     },
     "aieco": {

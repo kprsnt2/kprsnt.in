@@ -154,7 +154,7 @@ RESUME_DATA_AI_ENGINEER = {
             "tech": "AI Coding CLIs, LLM Benchmarking, Headless Chrome, Static Code Audits, Next.js, Technical Writing",
             "desc": "Controlled benchmark of six autonomous coding CLIs (Antigravity/agy, OMP, OMO, PI, StepCode) on the same app spec across two rounds. Isolated same-model/different-CLI (DeepSeek 4.1 Flash, Gemini Flash 3.8) and same-CLI/different-model (Antigravity on Gemini vs Claude Opus 4.6) variables; documented the Round-2 Second-System regression and uncovered StepCode's keyword-triggered Opus/StepFun stealth routing.",
             "url": "https://kprsnt.in/blog/BLOG_MODEL_VS_CLI",
-            "github": "https://github.com/kprsnt2?tab=repositories&q=pRash"
+            "github": "https://github.com/kprsnt2/pRash_chat"
         },
         {
             "name": "📊 18 Sector Intelligence Dashboards & Automated Pipelines",
