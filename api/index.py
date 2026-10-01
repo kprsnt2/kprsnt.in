@@ -357,6 +357,16 @@ def _extract_blog_date(content):
     return m.group(1) if m else ''
 
 
+def _file_blog_date(path):
+    """Fall back to the file's modified date for posts with no explicit date."""
+    try:
+        from datetime import datetime
+        # '%B %d, %Y' zero-pads the day; strip the leading zero for display (Windows-safe)
+        return datetime.fromtimestamp(os.path.getmtime(path)).strftime('%B %d, %Y').replace(' 0', ' ')
+    except OSError:
+        return ''
+
+
 def _make_blog_excerpt(md_content, max_len=180):
     """Build a plain-text excerpt from the first real paragraph of markdown."""
     for block in re.split(r'\n\s*\n', md_content):
@@ -451,6 +461,8 @@ def load_all_blog_posts():
                     post['category'] = 'Technology'
                 if not post.get('date'):
                     post['date'] = _extract_blog_date(content)
+                if not post.get('date'):
+                    post['date'] = _file_blog_date(md_file)
                 if not post.get('excerpt'):
                     post['excerpt'] = _make_blog_excerpt(md_content) or post.get('insights', 'Read more...')
                 if not post.get('tags'):

@@ -1,6 +1,6 @@
 # 🔍 When AI Audits AI: What Happens When You Cross-Examine AI-Generated Code
 
-**The surprising results of using StepCode and AGY to audit each other's work**
+**The surprising results of using StepCode and Antigravity (agy) to audit each other's work**
 
 *Published: September 27, 2026 | Reading Time: ~8 minutes*
 
@@ -11,7 +11,7 @@
 After having 6 AI coding tools build the same application (see: [The Full Comparison](./blog_mega_comparison.md)), I did something unusual: I used the AIs to **audit each other's code**.
 
 - **StepCode CLI** (Step 5 Preview model) audited 5 projects built by other tools
-- **AGY CLI** (Gemini Flash 3.8) audited the StepCode project
+- **Antigravity (agy) CLI** (Gemini Flash 3.8) audited the StepCode project
 
 The question: Can AI effectively review AI-generated code? And does the auditor matter?
 
@@ -23,7 +23,7 @@ The question: Can AI effectively review AI-generated code? And does the auditor 
 
 StepCode's audits were **surgical**. It found bugs that required deep knowledge of browser APIs and cloud platform constraints:
 
-**🔴 Most Impressive Find — IndexedDB Spec Violation (StepCode project audit by AGY)**
+**🔴 Most Impressive Find — IndexedDB Spec Violation (StepCode project audit by Antigravity (agy))**
 > `getAllFromIndex("messages", "byChat", [chatId, -Infinity])` — According to W3C IndexedDB spec §3.1.2, `-Infinity` is an **invalid key**. Passing it inside an array does exact equality matching, not range matching. **No messages will ever match this query.** Saved chats silently disappear on reload.
 
 **🔴 Vite vs Next.js Incompatibility**
@@ -32,15 +32,15 @@ StepCode's audits were **surgical**. It found bugs that required deep knowledge 
 **🔴 Vercel Payload Ceiling**
 > The app allows 20 files × 25MB, but Vercel's serverless gateway enforces a hard **4.5MB** request body limit. A single smartphone photo (~5MB → ~6.7MB base64) crashes with `413 Payload Too Large`.
 
-### AGY as Auditor: The Security Architect 🏗️
+### Antigravity (agy) as Auditor: The Security Architect 🏗️
 
-AGY's audits took a **broader, architectural view**:
+Antigravity (agy)'s audits took a **broader, architectural view**:
 
 **🔴 Universal Authentication Gap**
 > Identified across 4 projects that `/api/chat` has zero authentication — anyone can POST requests and drain paid API keys.
 
 **🔴 Forgeable Auth Tokens**
-> In the AGY Opus project: the `GET /api/auth` endpoint validates tokens by checking `if (token && token.trim() !== '')` — it literally accepts ANY non-empty string as valid.
+> In the Antigravity (agy) + Opus project: the `GET /api/auth` endpoint validates tokens by checking `if (token && token.trim() !== '')` — it literally accepts ANY non-empty string as valid.
 
 **🟠 Vision/Fallback Mismatch**
 > When images are sent to vision-capable models but fallback occurs to text-only models (NVIDIA/Groq), the image data is still sent → second failure → "All models failed."
@@ -49,7 +49,7 @@ AGY's audits took a **broader, architectural view**:
 
 ## Side-by-Side Audit Quality
 
-| Dimension | StepCode (Step 5 Preview) | AGY (Gemini Flash 3.8) |
+| Dimension | StepCode (Step 5 Preview) | Antigravity (agy) + Gemini Flash 3.8 |
 |-----------|--------------------------|------------------------|
 | **Bug Depth** | Runtime/spec-level (IDB queries, Vite syntax, payload limits) | Architecture/security-level (auth gaps, missing headers) |
 | **Scoring System** | Quantified 10-point scorecard per subsystem | P0–P3 severity classification |
@@ -60,11 +60,11 @@ AGY's audits took a **broader, architectural view**:
 
 ### The Verdict on Auditors
 
-**StepCode found the bugs that crash your app. AGY found the bugs that drain your wallet.**
+**StepCode found the bugs that crash your app. Antigravity (agy) found the bugs that drain your wallet.**
 
 Both perspectives are essential. The ideal workflow:
 1. Use a **spec-level auditor** (like StepCode) to find correctness/runtime bugs
-2. Use a **security-focused auditor** (like AGY) to find architectural vulnerabilities
+2. Use a **security-focused auditor** (like Antigravity (agy)) to find architectural vulnerabilities
 3. Combine both reports into a unified remediation plan
 
 ---
@@ -73,12 +73,12 @@ Both perspectives are essential. The ideal workflow:
 
 | Project | Audit By | Worst Finding | # Critical Issues |
 |---------|----------|---------------|-------------------|
-| AGY Gemini | StepCode | PDFs silently dropped, broken provider URLs | 4 |
-| AGY Opus | StepCode | Login accepts any token, non-image files dropped | 5 Critical + 4 High |
+| Antigravity (agy) + Gemini | StepCode | PDFs silently dropped, broken provider URLs | 4 |
+| Antigravity (agy) + Opus | StepCode | Login accepts any token, non-image files dropped | 5 Critical + 4 High |
 | OMO DeepSeek | StepCode | Attachment text lost on save, extraction error blanks messages | 0 Critical (best!) |
 | OMP Gemini | StepCode | XLSX parsing broken, multi-turn context dropped | 1 High + 3 Medium |
 | PI DeepSeek | StepCode | No rate limiting on passcode, broken ESLint | 0 Critical |
-| StepCode Step5 | AGY Gemini | IDB queries return empty, PDF worker fails | 4 Critical + 5 High |
+| StepCode Step5 | Antigravity (agy) + Gemini | IDB queries return empty, PDF worker fails | 4 Critical + 5 High |
 
 **The pattern is clear:** DeepSeek projects (OMO and PI) had **zero critical issues**. The Gemini and Opus projects had the most. StepCode had deep architectural quality but critical implementation bugs.
 
@@ -96,7 +96,7 @@ The IndexedDB `-Infinity` bug is invisible to linters, type checkers, and even `
 Across all 6 projects, security was the weakest category. AI models optimize for "making it work" and consistently skip authentication, rate limiting, and security headers.
 
 ### 4. The Audit Report Format Matters
-StepCode's quantified scorecard (3/10 for Core Functionality) immediately communicates severity. AGY's P0–P3 system is more granular but requires reading the full report to assess overall health.
+StepCode's quantified scorecard (3/10 for Core Functionality) immediately communicates severity. Antigravity (agy)'s P0–P3 system is more granular but requires reading the full report to assess overall health.
 
 ---
 

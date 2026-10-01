@@ -17,10 +17,10 @@ So I set out to build a sovereign, all-in-one local chat platform tailored to my
 Instead of writing it by hand, I put six cutting-edge autonomous AI coding agent CLIs to the test on the exact same specification:
 1. **`pRash_Pi`** (driven by DeepSeek 4.1 Flash)
 2. **`pRash_Step`** (driven by Step 5 Preview)
-3. **`pRash_Agy`** (driven by Gemini Flash 3.8)
+3. **`Antigravity (agy) CLI`** (driven by Gemini Flash 3.8)
 4. **`pRash_OMO`** (driven by DeepSeek 4.1 Flash)
 5. **`pRash_OMP`** (driven by Gemini Flash 3.8)
-6. **`pRash_Agy_Opus`** (driven by Claude Opus 4.6)
+6. **`Antigravity (agy) CLI + Opus`** (driven by Claude Opus 4.6)
 
 What followed was a two-round rollercoaster that revealed the vast, uncomfortable gulf between **what AI code audits praise** and **what actually happens when a human sits down, types a message, and clicks print.**
 
@@ -44,7 +44,7 @@ My immediate conclusion after Round 1 was simple: **Nothing was great. Every sin
 │ pRash_Step     │ "Mid/Okay"  │ Working JWT auth, chat export,│ Clunky, utilitarian UI layout;    │
 │                │             │ requested models all working. │ zero aesthetic polish.            │
 ├────────────────┼─────────────┼───────────────────────────────┼───────────────────────────────────┤
-│ pRash_Agy      │ "Good"      │ Flawless worksheet print out, │ Hardcoded old models, can't pick  │
+│ Antigravity    │ "Good"      │ Flawless worksheet print out, │ Hardcoded old models, can't pick  │
 │                │             │ clean full-width canvas.      │ models, alternate APIs broke.     │
 ├────────────────┼─────────────┼───────────────────────────────┼───────────────────────────────────┤
 │ pRash_OMO      │ "Catastrophe│ Scored #1 on automated code   │ Couldn't even reply to "hi"; UI   │
@@ -53,7 +53,7 @@ My immediate conclusion after Round 1 was simple: **Nothing was great. Every sin
 │ pRash_OMP      │ "Ugly Duck" │ Grew on me; auto-routing work;│ API key setup error; leaked raw   │
 │                │             │ copy works, speech works.     │ SSE chunks into message history.  │
 ├────────────────┼─────────────┼───────────────────────────────┼───────────────────────────────────┤
-│ pRash_Agy_Opus │ "The Best?" │ Stunning night mode, instant  │ Light mode unreadable (contrast); │
+│ Agy Opus       │ "The Best?" │ Stunning night mode, instant  │ Light mode unreadable (contrast); │
 │                │ (At start)  │ chat stream, updated models.  │ print dead; agent locked to chat. │
 └────────────────┴─────────────┴───────────────────────────────┴───────────────────────────────────┘
 ```
@@ -68,7 +68,7 @@ My immediate conclusion after Round 1 was simple: **Nothing was great. Every sin
 - **The Good:** Stepcode didn't care about flashy gradients, but it respected the contract. It had password-protected login gates, clean chat export to JSON, and—miracle of miracles—every model I asked for was present, correctly named, and functioning.
 - **The Bad:** The UI was rough around the edges. Clunky padding, dated typography, and a stiff layout that felt like an internal enterprise admin panel from 2012.
 
-### 3. `pRash_Agy`: The Educational Worksheet Master
+### 3. `Antigravity (agy) CLI`: The Educational Worksheet Master
 - **My First Feeling:** *Good, but severely boxed in.*
 - **The Good:** The UI felt spacious and made great use of the full viewport width. But its true superpower was the **Worksheet generator**. When asked to create an educational quiz or math drill, it had a dedicated print feature that formatted the worksheet cleanly, hid extraneous chat bubbles, and produced a ready-to-print document.
 - **The Bad:** It locked model selection down. You couldn't choose a specific model; alternate provider fallbacks failed silently; and it completely omitted login authentication.
@@ -91,7 +91,7 @@ My immediate conclusion after Round 1 was simple: **Nothing was great. Every sin
 
 The client-side stream reader in `page.tsx` split a TCP packet, missed the `data:` prefix, branched into an unescaped text fallback, and permanently committed raw server telemetry into the conversation database!
 
-### 6. `pRash_Agy_Opus`: The Prom Queen With Invisible Day-Mode Text
+### 6. `Antigravity (agy) CLI + Opus`: The Prom Queen With Invisible Day-Mode Text
 - **My First Feeling:** *Looked great and seemed like the best build.*
 - **The Good:** Night mode was gorgeous. Response times were instantaneous, all listed models were up to date, and provider switches worked smoothly.
 - **The Flaws:** The moment I switched to Day (Light) Mode, typography contrast broke completely. Section headings and titles rendered white text on light-gray backgrounds, turning critical UI text invisible. Printing was broken. And worst of all, you could not change an agent mid-chat: if you started a session with `KidStory`, you were permanently locked into `KidStory` for that thread.
@@ -101,11 +101,11 @@ The client-side stream reader in `page.tsx` split a TCP packet, missed the `data
 ## Part 2: The Second Chance — The Grand Unification Prompt
 
 Every project had a missing piece, but between the six of them, the perfect app already existed in fragments:
-- **Agy** had the worksheet printer.
+- **Antigravity (agy) CLI** had the worksheet printer.
 - **Step** had authentication, export, and stable model plumbing.
 - **Pi** had speech recognition and read-aloud voice output.
 - **OMP** had automatic error-routing and dynamic prompts.
-- **Agy_Opus** had the refined night-mode visual presentation.
+- **Antigravity (agy) CLI + Opus** had the refined night-mode visual presentation.
 
 So, I gave every CLI another opportunity. I fed back my review notes and issued this unifying prompt to execute:
 
@@ -149,10 +149,10 @@ The updated builds — with **`pRash_merged`** representing Stepcode's latest un
 │ pRash_Pi       │ Broken      │ Cloned OMP's shell; can't chat; no login; print dumps raw screen  │
 │                │             │ instead of dedicated worksheet.                                   │
 ├────────────────┼─────────────┼───────────────────────────────────────────────────────────────────┤
-│ pRash_Agy      │ Degraded    │ All models broken except ChatGPT; Gemini dead; worksheet print    │
+│ Antigravity    │ Degraded    │ All models broken except ChatGPT; Gemini dead; worksheet print    │
 │                │             │ superpowers lost (prints full raw chat).                          │
 ├────────────────┼─────────────┼───────────────────────────────────────────────────────────────────┤
-│ pRash_Agy_Opus │ Mediocre    │ Unconstrained print layouts blow out horizontally; hallucinated   │
+│ Agy Opus       │ Mediocre    │ Unconstrained print layouts blow out horizontally; hallucinated   │
 │                │             │ invalid NVIDIA & Groq model strings.                              │
 └────────────────┴─────────────┴───────────────────────────────────────────────────────────────────┘
 ```
@@ -186,12 +186,12 @@ Pi looked like it attempted to copy OMP's frontend components wholesale.
 - **Chat was completely dead:** Typing a message and pressing Enter failed to dispatch the POST request.
 - The dedicated worksheet print button was replaced with a generic `window.print()` call that dumped raw navigation sidebars, buttons, and input boxes onto the paper.
 
-### 5. `pRash_Agy`: Superpowers Destroyed
-In Round 1, Agy had the cleanest educational worksheet printer of any tool.
+### 5. `Antigravity (agy) CLI`: Superpowers Destroyed
+In Round 1, Antigravity (agy) CLI had the cleanest educational worksheet printer of any tool.
 - In Round 2, while trying to integrate multi-provider fallbacks, its routing logic broke down. Every model failed except standard ChatGPT; Gemini was dead.
 - Worse still: **its worksheet printer stopped isolating worksheets**. It reverted to dumping the entire raw chat feed onto the page. The one feature it did better than everyone else was destroyed.
 
-### 6. `pRash_Agy_Opus`: Wide-Screen Layout Blowout
+### 6. `Antigravity (agy) CLI + Opus`: Wide-Screen Layout Blowout
 Opus maintained basic conversational viability, but stumbled hard on the edge cases:
 - It hallucinated NVIDIA and Groq model identifier strings that returned immediate 404s on the provider gateways.
 - Its print stylesheet suffered from an unconstrained horizontal flex bug—printing generated an ultra-wide document where half the text was clipped off the right margin of standard A4 paper.
@@ -208,7 +208,7 @@ As a software engineer, watching this unfold is fascinating because it proves a 
 In 1975, Fred Brooks wrote *The Mythical Man-Month*, describing the **Second-System Effect**: when an engineering team succeeds with a small, focused first prototype, they attempt to pack every single deferred feature, edge case, and architectural flourish into the second version—causing it to collapse under its own complexity.
 
 In Round 1, each CLI had a narrow, manageable scope:
-- Agy focused on the worksheet layout.
+- Antigravity (agy) CLI focused on the worksheet layout.
 - Step focused on auth and basic API routing.
 - Pi focused on voice synthesis.
 - OMP focused on dynamic carousel prompts.
@@ -257,7 +257,7 @@ When Round 2 arrived, the agents generated more boilerplate to satisfy your prom
 │ Mid-Chat Agent Switch   │ Not supported; chat locked    │ Step added it and deadlocked; │
 │                         │ to 1 agent per session.       │ Stop button permanently froze.│
 ├─────────────────────────┼───────────────────────────────┼───────────────────────────────┤
-│ PDF / Worksheet Print   │ Agy printed clean sheets;     │ Complete chaos: OMP printed   │
+│ PDF / Worksheet Print   │ Antigravity printed sheets;   │ Complete chaos: OMP printed   │
 │                         │ OMP had weird text offset.    │ white-on-white; OMO printed   │
 │                         │                               │ 3 phantom empty pages.        │
 ├─────────────────────────┼───────────────────────────────┼───────────────────────────────┤
