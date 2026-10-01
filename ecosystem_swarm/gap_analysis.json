@@ -1,7 +1,15 @@
 {
-  "last_audit": "2026-09-30T06:31:51.311074",
+  "last_audit": "2026-10-01T04:10:08.466538",
   "architectural_posture": "Active Stress-Testing",
   "active_gaps": [
+    {
+      "id": "GAP-01",
+      "subsystem": "Vercel Serverless Function Ceilings",
+      "severity": "MEDIUM",
+      "status": "ACTIVE",
+      "description": "Serverless route handlers must ensure heavy LLM calls or multi-agent summarization terminate strictly under 10s to avoid 504 Gateway Timeouts.",
+      "remediation": "Enforced strict HTTP client timeout (60.0s) in api/ai_config.py with fallback chain."
+    },
     {
       "id": "GAP-02",
       "subsystem": "FastMCP Stdio Transport",
@@ -24,9 +32,9 @@
       "id": "GAP-01",
       "subsystem": "Vercel Serverless Function Ceilings",
       "severity": "MEDIUM",
-      "status": "MITIGATED",
+      "status": "ACTIVE",
       "description": "Serverless route handlers must ensure heavy LLM calls or multi-agent summarization terminate strictly under 10s to avoid 504 Gateway Timeouts.",
-      "remediation": "Enforced strict HTTP client timeout (8.0s) in api/ai_config.py with fallback chain."
+      "remediation": "Enforced strict HTTP client timeout (60.0s) in api/ai_config.py with fallback chain."
     },
     {
       "id": "GAP-02",
@@ -47,9 +55,9 @@
   ],
   "resilience_checks": {
     "github_rate_limits": "Passed (8-SHA cap with unauthenticated public fallback active)",
-    "monotonic_telemetry": "Passed (1143 commits >= 987 baseline preserved)",
-    "memory_compaction": "Passed (665/4,000 words, 83.4% headroom)",
-    "serverless_bounds": "Passed (LLM_TIMEOUT=8.0s <= 8.0s enforced)",
+    "monotonic_telemetry": "Passed (1146 commits >= 987 baseline preserved)",
+    "memory_compaction": "Passed (655/4,000 words, 83.6% headroom)",
+    "serverless_bounds": "Failed (LLM_TIMEOUT=60.0s exceeds 8.0s)",
     "fastmcp_integrity": "Passed (16 FastMCP tools responsive, JSON-RPC 2.0 valid)"
   }
 }

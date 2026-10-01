@@ -1,14 +1,17 @@
 {
-  "last_updated": "2026-09-30T06:30:18.881679",
-  "commit_history": 1143,
+  "last_updated": "2026-10-01T04:09:57.066493",
+  "commit_history": 1146,
   "counted_commit_shas": [
+    "f3474ef",
+    "87845b6",
+    "50b10f5",
+    "2a7c858",
     "4116b0b",
     "a915ef0",
-    "206bec4",
-    "2eea50b",
-    "05fcb57",
     "4421325",
-    "50b10f5"
+    "2eea50b",
+    "206bec4",
+    "05fcb57"
   ],
   "repo_counts": 100,
   "language_breakdown": {
@@ -20,7 +23,7 @@
   "live_salary_estimation": {
     "min": 220000,
     "max": 420000,
-    "reasoning": "A developer with 100 repos across TypeScript, JavaScript, HTML, and Python, focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, aligns with US Senior/Staff AI Engineer scope. This profile typically commands premium compensation due to deep systems, AI infrastructure, and product-scale engineering expertise."
+    "reasoning": "For a US Senior/Staff AI Engineer with 100 repos and deep experience in autonomous multi-agent ecosystems plus high-throughput analytics pipelines, market compensation typically lands in the upper senior to staff band. Strong breadth across TypeScript, JavaScript, Python, and production AI systems supports a premium range, especially at top-tier tech or well-funded AI companies."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -41,34 +44,31 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] main: Update ecosystem_agents.yml | Files (1): .github/workflows/ecosystem_agents.yml (+19/-4)",
-    "[kprsnt2/pRash_STEP] Created branch: merged",
-    "[kprsnt2/pRash_OMO] main: test(qa): reject max_tokens in the mock upstream like the real API | Files (1): qa/mock-upstream.mjs (+21/-1)\n    Commit Details: The mock now returns the real 400 for max_tokens, which is what turned a silently\ndead OpenAI rung into a reproducible failure.",
-    "[kprsnt2/pRash_AGY] main: feat: merge all features across pRash variants (auth, worksheet print, mid-chat agent switch, TTS/STT, failover routing) | Files (25): audit_plan.md, scripts/test-features.mjs, src/app/api/auth/route.ts, src/app/api/chat/route.ts, src/app/api/config/route.ts, src/app/globals.css (+3655/-634)",
-    "[kprsnt2/pRash_AGY_Opus] main: v2.0.0: pRash Hub Ultimate - Merge all features from Pi/Step/Agy/OMO/OMP/Opus | Files (23): .env.example, audit_plan_opus.md, next-env.d.ts, package-lock.json, package.json, src/app/api/auth/route.ts (+5865/-229)\n    Commit Details: Features merged:\n- Password auth with constant-time comparison (from Step)\n- Export/Import chat backups as JSON (from Step)\n- Printable worksheets with answer key toggle (from Agy/OMP)\n- Mid-chat agent switching without clearing history\n- Voice input (STT) with mic button and pulse animation (from P",
-    "[kprsnt2/pRash_PI] main: Fix template literal: remove nested backticks in Worksheet prompt | Files (1): lib/agents.ts (+1/-1)",
-    "[kprsnt2/pRash_OMP] main: feat: merge all platform features and fix runtime issues | Files (24): audit_plan.md, src/app/api/auth/route.ts, src/app/api/chat/route.ts, src/app/api/models/route.ts, src/app/globals.css, src/app/layout.tsx (+2744/-788)\n    Commit Details: - Add master password login gate (AuthModal, /api/auth, lock buttons)\n- Add chat export to JSON and import/resume session support\n- Add dedicated Worksheet & PDF print studio with answer key toggle & KaTeX math\n- Add searchable 17-agent picker modal and seamless mid-chat agent switching\n- Add class-",
-    "[kprsnt2/kprsnt.in] commit 50b10f5: Fix ecosystem workflow rebase failure & update LLM model chains (GPT-OSS 120B/20B, DeepSeek v4.1-flash) | Files (225): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
+    "[kprsnt2/kprsnt.in] main: Raise default LLM timeout to 60s for GitHub Actions long generations | Files (1): api/ai_config.py (+5/-5)",
+    "[kprsnt2/pRash_STEP] merged: Update .env.example | Files (1): .env.example (+1/-1)",
+    "[kprsnt2/kprsnt.in] main: Fix ecosystem workflow rebase failure & update LLM model chains (GPT-OSS 120B/20B, DeepSeek v4.1-flash) | Files (4): .github/workflows/ecosystem_agents.yml, api/ai_config.py, api/ai_eco_mcp.py, scripts/ecosystem_agents.py (+39/-37)",
+    "[kprsnt2/pRash_AGY] main: Update .env.example | Files (1): .env.example (+1/-1)",
+    "[kprsnt2/kprsnt.in] main: Update ecosystem_agents.yml | Files (1): .github/workflows/ecosystem_agents.yml (+19/-4)"
   ],
-  "daily_commits_count": 7,
+  "daily_commits_count": 5,
   "commit_timeline_7d": {
     "labels": [
-      "Thu",
       "Fri",
       "Sat",
       "Sun",
       "Mon",
       "Tue",
-      "Wed"
+      "Wed",
+      "Thu"
     ],
     "commits": [
-      0,
       0,
       2,
       2,
       6,
+      7,
       5,
-      3
+      0
     ],
     "pipelines": [
       1,
