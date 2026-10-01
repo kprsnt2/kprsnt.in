@@ -357,14 +357,41 @@ def _extract_blog_date(content):
     return m.group(1) if m else ''
 
 
+def _format_blog_date(dt):
+    """Format a datetime as 'October 1, 2026' (Windows-safe, no zero-padded day)."""
+    return dt.strftime('%B %d, %Y').replace(' 0', ' ')
+
+
 def _file_blog_date(path):
-    """Fall back to the file's modified date for posts with no explicit date."""
+    """Fall-back date for posts with no explicit date.
+
+    Order of preference: the file's last git commit date, the file's modified
+    time (only if plausible — deploy platforms may stamp bogus mtimes such as
+    2018 build epochs), and finally today's date.
+    """
+    from datetime import datetime
+    # 1. Last git commit date for this file (works where .git is available)
     try:
-        from datetime import datetime
-        # '%B %d, %Y' zero-pads the day; strip the leading zero for display (Windows-safe)
-        return datetime.fromtimestamp(os.path.getmtime(path)).strftime('%B %d, %Y').replace(' 0', ' ')
+        import subprocess
+        out = subprocess.check_output(
+            ['git', 'log', '-1', '--format=%cs', '--', os.path.basename(path)],
+            cwd=os.path.dirname(os.path.abspath(path)),
+            stderr=subprocess.DEVNULL,
+            timeout=5,
+        ).decode('utf-8', 'ignore').strip()
+        if out:
+            return _format_blog_date(datetime.strptime(out, '%Y-%m-%d'))
+    except Exception:
+        pass
+    # 2. File modified time — ignore implausibly old timestamps from build containers
+    try:
+        dt = datetime.fromtimestamp(os.path.getmtime(path))
+        if dt.year >= 2024:
+            return _format_blog_date(dt)
     except OSError:
-        return ''
+        pass
+    # 3. Today
+    return _format_blog_date(datetime.now())
 
 
 def _make_blog_excerpt(md_content, max_len=180):
