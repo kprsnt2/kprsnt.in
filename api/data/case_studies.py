@@ -143,6 +143,27 @@ PROJECT_CASE_STUDIES: Dict[str, Dict[str, Any]] = {
         "github_url": "https://github.com/kprsnt2/MyLocalCLI",
         "blog_url": "https://kprsnt.in/projects"
     },
+    "prash": {
+        "slug": "prash",
+        "name": "pRash — 6-Way AI Coding CLI Benchmark & Model-vs-CLI Study",
+        "domain": "Developer Tooling & Infrastructure",
+        "headline": "Ran a controlled 6-way benchmark of autonomous AI coding CLIs, isolating model-vs-CLI variables and exposing a Round-2 Second-System regression plus keyword-triggered stealth model routing.",
+        "why_mentioned": "Demonstrates rigorous experimental design, AI coding-agent evaluation, static + runtime + cross-AI auditing, and the ability to turn a messy multi-tool benchmark into a controlled study with published deep-dives.",
+        "problem_statement": "AI coding CLI comparisons are confounded — every tool pairs a different CLI with a different model, so a 'winner' tells you nothing about whether the harness or the model drove the result.",
+        "initial_struggle": "Round 1 produced six apps with six unrelated bugs; Round 2's 'merge everything' prompt triggered a Second-System collapse where working features (print, chat, mid-chat agent switching) regressed across the board.",
+        "technical_architecture": "Six independently generated Next.js apps scored via static repository/audit analysis, live headless-Chrome runtime testing, and cross-AI auditing. Results re-grouped into three controlled pairs: same model/different CLI (DeepSeek 4.1 Flash, Gemini Flash 3.8) and same CLI/different model (Antigravity on Gemini vs Claude Opus 4.6).",
+        "measurable_outcomes": [
+            "Six controlled comparisons isolating CLI vs model as the independent variable.",
+            "Live-vs-static ranking inversion exposed (Claude Opus: 84 static → 68 live).",
+            "Documented Round-2 regressions: invisible-ink print, 3 phantom pages, and a permanently frozen Stop button.",
+            "Uncovered StepCode's keyword-triggered routing to Claude Opus for audits and StepFun for code generation.",
+            "Published six engineering deep-dives with full methodology and post-mortem."
+        ],
+        "tech_stack": ["AI Coding CLIs", "LLM Benchmarking", "Headless Chrome", "Static Code Audits", "Next.js", "Technical Writing"],
+        "live_url": "https://kprsnt.in/blog/BLOG_MODEL_VS_CLI",
+        "github_url": "https://github.com/kprsnt2?tab=repositories&q=pRash",
+        "blog_url": "https://kprsnt.in/blog/BLOG_ROUND1_VS_ROUND2_REGRESSION"
+    },
     "aieco": {
         "slug": "aieco",
         "name": "AI Eco — Autonomous 10-Agent Swarm & FastMCP Server",

@@ -24,6 +24,15 @@ PROJECTS = [
         "tags": ["Multi-Agent", "Autonomous Evolution", "Crucible Protocol", "Self-Healing UI", "Axiom", "TypeScript"]
     },
     {
+        "title": "🧪 pRash — 6-Way AI Coding CLI Benchmark & Model-vs-CLI Study",
+        "description": "Ran a controlled 6-way benchmark of autonomous AI coding CLIs (Antigravity/agy, OMP, OMO, PI, StepCode) building the same full-stack AI chat app across two rounds. Combined static code audits, live headless-Chrome runtime tests, and cross-AI audits, then isolated three controlled variables — same model/different CLI (DeepSeek 4.1 Flash, Gemini Flash 3.8) and same CLI/different model (Antigravity on Gemini vs Claude Opus 4.6). Documented a Round-2 'Second-System Effect' regression and uncovered keyword-triggered stealth model routing in StepCode (Claude Opus for audits, StepFun for code). Produced 6 engineering deep-dives.",
+        "url": "https://kprsnt.in/blog/BLOG_MODEL_VS_CLI",
+        "github": "https://github.com/kprsnt2?tab=repositories&q=pRash",
+        "color": "secondary",
+        "featured": True,
+        "tags": ["AI Coding CLIs", "LLM Benchmarking", "Multi-Agent Evaluation", "Headless Chrome", "Next.js", "Technical Writing"]
+    },
+    {
         "title": "🤖 Autonomous Multi-Agent Portfolio Ecosystem",
         "description": "Architected an autonomous multi-agent portfolio ecosystem featuring AI-driven workflows, autonomous AI swarms, and MCP (Model Context Protocol) integrations for self-updating portfolio assets and automated pipelines.",
         "url": "https://kprsnt.in",
@@ -339,6 +348,9 @@ SKILLS = {
         ("MongoDB", "ai"),
         ("Discrete Optimization", "ai"),
         ("Combinatorial Matching", "ai"),
+        ("AI Coding CLI Benchmarking", "ai"),
+        ("Controlled Model/CLI Evaluation", "ai"),
+        ("Headless Browser QA", "ai"),
     ],
 }
 
@@ -378,6 +390,7 @@ RESUME_PROJECTS = [
     # ★ Main Featured Projects — beautifully designed & running successfully
     {"name": "mSeat — MBBS Discrete Allocation Simulator & MCP", "tech": "JavaScript, Algorithms, MCP, Discrete Optimization", "desc": "High-performance discrete allocation simulator for 18,000+ medical aspirants. Achieved real-world validation matching official KNRUHS 2026 Phase 1 allotment within a 2-college preference delta and 73 ranks of cutoff across a 7D reservation matrix using a 545 KB compressed dataset.", "url": "https://mseat.kprsnt.in", "github": "https://github.com/kprsnt2/mSeat"},
     {"name": "Autonomous Multi-Agent Ecosystem", "tech": "Python, Multi-Agent, MCP, AI Swarms", "desc": "Architected an autonomous multi-agent portfolio ecosystem integrating AI-driven workflows, autonomous AI swarms, and MCP integrations for self-updating portfolio assets.", "url": "https://kprsnt.in", "github": "https://github.com/kprsnt2/kprsnt.in"},
+    {"name": "pRash — 6-Way AI Coding CLI Benchmark & Model-vs-CLI Study", "tech": "AI Coding CLIs, LLM Benchmarking, Headless Chrome, Static Code Audits, Technical Writing", "desc": "Controlled benchmark of 6 autonomous coding CLIs (Antigravity/agy, OMP, OMO, PI, StepCode) on the same app spec across 2 rounds. Isolated same-model/different-CLI and same-CLI/different-model variables, documented the Round-2 Second-System regression, and uncovered StepCode's keyword-triggered Opus/StepFun stealth routing. 6 deep-dive posts.", "url": "https://kprsnt.in/blog/BLOG_MODEL_VS_CLI", "github": "https://github.com/kprsnt2?tab=repositories&q=pRash"},
     {"name": "AI News — Live News Intelligence Tracker", "tech": "Next.js 15, TypeScript, Gemini 2.0 Flash, Tailwind CSS, Cloudflare D1", "desc": "Real-time global conflict, tech, and finance news intelligence brief powered by Google Gemini and BBC RSS feeds. Engineered active war duration clocks across 5+ global conflicts, automated breaking news feeds, AI-ranked daily top 10 briefs, and ultimatum countdown timers.", "url": "https://ainews.kprsnt.in", "github": "https://github.com/perukadivya/ainews"},
     {"name": "Geetha — AI Spiritual Guide", "tech": "JavaScript, SQLite, Gemini AI, Vercel", "desc": "Bilingual Bhagavad Gita app indexing all 700 verses with dynamic AI blog generation using Gemini. Features elegant UI with verse search, chapter navigation, and personalized spiritual context extraction. Running successfully on Vercel.", "url": "https://geetha.kprsnt.in", "github": "https://github.com/kprsnt2/geetha"},
     {"name": "BrandScore AI (rASH code)", "tech": "React, Multi-Model AI, Vercel", "desc": "AI-powered brand scoring and comparison platform using Claude, Gemini, and OpenAI for competitive analysis. Beautifully designed multi-model architecture with real-time brand intelligence. Now maintained under rASH code.", "url": "https://bs.kprsnt.in/", "github": "https://github.com/kprsnt2/BrandScore"},
@@ -419,5 +432,5 @@ RESUME_SKILLS = {
     "AI & Frameworks": "Gemini API, Claude API, Google AntiGravity, Ollama, LLM Fine-tuning (LoRA/QLoRA), Streamlit, React, Next.js, Vue.js, Flask, Dash",
     "Cloud & Deployment": "Google Cloud Run, Vercel, Render, Cloudflare Pages, Firebase, Docker, AppScript Automation",
     "Data & BI": "BigQuery, MongoDB, Tableau, Looker Studio, Power BI, Plotly, Pandas, NumPy",
-    "AI Specialties": "Prompt Engineering, NLP, AI Safety Research, Model Evaluation, LLM Manipulation, Discrete Optimization, Combinatorial Matching, Model Context Protocol (MCP), LSTM, ARIMA, Sentiment Analysis, Predictive Analytics, RAG"
+    "AI Specialties": "Prompt Engineering, NLP, AI Safety Research, Model Evaluation, LLM Manipulation, Discrete Optimization, Combinatorial Matching, Model Context Protocol (MCP), AI Coding CLI Benchmarking, Controlled Model/CLI Evaluation, Headless Browser QA, LSTM, ARIMA, Sentiment Analysis, Predictive Analytics, RAG"
 }

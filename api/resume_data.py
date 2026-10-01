@@ -57,7 +57,8 @@ RESUME_DATA_AI_ENGINEER = {
                 "Fine-tuned GPT-OSS-20B on AMD MI300X GPUs to evaluate brand recommendation steerability, boosting recommendation rates from 25.5% to 76.5% (+51% improvement) under rigorous A/B evaluation (Hugging Face Hub)",
                 "Engineered mSeat, a discrete allocation counselling simulator for 18,000+ MBBS aspirants; validated against official KNRUHS 2026 Phase 1 results predicting actual allotment within a 2-college preference delta (and 73 ranks of cutoff) via O(1) multi-quota indexing, 90.6% dataset compression (545 KB), and an MCP server",
                 "Developed MyLocalCLI, a local-first agentic coding assistant supporting 6 AI providers (Gemini, Claude, OpenAI, Ollama, NVIDIA NIM, OpenRouter), 26 tools, and 5 autonomous sub-agents with zero-cloud data leak guarantees",
-                "Built and published 'drug-discovery-gpt-20b' on Hugging Face, integrating PubChem and openFDA data (40K+ drugs) for molecular SMILES structure interpretation and ADMET property prediction"
+                "Built and published 'drug-discovery-gpt-20b' on Hugging Face, integrating PubChem and openFDA data (40K+ drugs) for molecular SMILES structure interpretation and ADMET property prediction",
+                "Benchmarked 6 autonomous AI coding CLIs (Antigravity/agy, OMP, OMO, PI, StepCode) on the same full-stack app spec across two rounds — combining static audits, live headless-Chrome runtime tests, and cross-AI audits — and isolated controlled model-vs-CLI variables, documenting a Round-2 'Second-System Effect' regression and keyword-triggered stealth model routing (Claude Opus for audits, StepFun for code)"
             ]
         },
         {
@@ -86,7 +87,7 @@ RESUME_DATA_AI_ENGINEER = {
         }
     ],
     "skills": {
-        "AI & Machine Learning": "Autonomous Multi-Agent Swarms & Civilizations, Zero-Prompt Emergence, LLM Fine-Tuning (LoRA/QLoRA on AMD MI300X), Model Context Protocol (MCP 2024-11-05), Long-Horizon CI/CD Pipelines, RAG, Edge Computer Vision, Discrete Optimization, Gemini / Claude / OpenAI APIs",
+        "AI & Machine Learning": "Autonomous Multi-Agent Swarms & Civilizations, Zero-Prompt Emergence, LLM Fine-Tuning (LoRA/QLoRA on AMD MI300X), Model Context Protocol (MCP 2024-11-05), Long-Horizon CI/CD Pipelines, RAG, Edge Computer Vision, Discrete Optimization, AI Coding CLI Benchmarking, Controlled Model/CLI Evaluation, Headless Browser QA, Gemini / Claude / OpenAI APIs",
         "Data & SQL": "SQL (Expert), BigQuery, Python (Pandas, NumPy, PyTorch), Data Modeling, Automated ETL Pipelines",
         "BI & Visualization": "Looker Studio, Tableau, Power BI, Plotly, Chart.js, Real-Time Interactive Dashboards",
         "Cloud & DevOps": "Google Cloud Platform (GCP), Vercel Serverless, Docker, GitHub Actions CI/CD, Git, Linux/Bash"
@@ -147,6 +148,13 @@ RESUME_DATA_AI_ENGINEER = {
             "desc": "Privacy-first coding assistant orchestrating Gemini, Claude, OpenAI, Ollama, NVIDIA NIM, and OpenRouter across 26 tools, 5 agents, and 22 skill modules with zero remote telemetry leak.",
             "url": "https://mlc.kprsnt.in",
             "github": "https://github.com/kprsnt2/MyLocalCLI"
+        },
+        {
+            "name": "🧪 pRash — 6-Way AI Coding CLI Benchmark & Model-vs-CLI Study",
+            "tech": "AI Coding CLIs, LLM Benchmarking, Headless Chrome, Static Code Audits, Next.js, Technical Writing",
+            "desc": "Controlled benchmark of six autonomous coding CLIs (Antigravity/agy, OMP, OMO, PI, StepCode) on the same app spec across two rounds. Isolated same-model/different-CLI (DeepSeek 4.1 Flash, Gemini Flash 3.8) and same-CLI/different-model (Antigravity on Gemini vs Claude Opus 4.6) variables; documented the Round-2 Second-System regression and uncovered StepCode's keyword-triggered Opus/StepFun stealth routing.",
+            "url": "https://kprsnt.in/blog/BLOG_MODEL_VS_CLI",
+            "github": "https://github.com/kprsnt2?tab=repositories&q=pRash"
         },
         {
             "name": "📊 18 Sector Intelligence Dashboards & Automated Pipelines",

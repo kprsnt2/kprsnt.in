@@ -54,6 +54,7 @@ SKILLS_DETAILED = {
         "Long-Horizon Multi-Agent CI/CD Pipelines (SQLite/Git/Actions)",
         "Autonomous AI Swarms & Ecosystem Orchestration",
         "LLM Fine-tuning (LoRA/QLoRA on 7B–20B models)",
+        "AI Coding CLI Benchmarking & Controlled Model/CLI Evaluation",
         "Multi-Agent AI Systems (4-agent pipelines, agentic workflows)",
         "RAG (Retrieval-Augmented Generation) with vector embeddings",
         "MCP Server Development (Model Context Protocol)",
@@ -118,6 +119,7 @@ KEY_ACHIEVEMENTS = [
     "Published multiple fine-tuned models on HuggingFace (drug-discovery-gpt-20b, BrandXY-gpt-oss-20b)",
     "Built and deployed 20+ AI-powered applications across web, CLI, and serverless platforms",
     "Created MyLocalCLI — a Claude Code alternative with 6 AI providers, 26 tools, 5 agents, and 22 skills",
+    "Benchmarked 6 autonomous AI coding CLIs (Antigravity/agy, OMP, OMO, PI, StepCode) on the same app spec across two rounds, isolating model-vs-CLI variables and publishing a controlled study plus a Round-2 regression post-mortem",
     "Designed multi-agent AI pipeline systems with automated daily execution via GitHub Actions",
     "Built dual-AI drug discovery platform (PharmaGenesis AI) with 3D molecular visualization",
     "3+ years delivering enterprise dashboards, data pipelines, and analytics for US & UK clients",
@@ -157,6 +159,8 @@ LINKS = {
     "Geetha": "https://geetha.kprsnt.in",
     "PharmaGenesis AI": "https://pharmgenai.kprsnt.in",
     "AI Health Pro": "https://aihealth-pro.vercel.app",
+    "pRash Benchmark": "https://kprsnt.in/blog/BLOG_MODEL_VS_CLI",
+    "pRash Post-mortem": "https://kprsnt.in/blog/BLOG_ROUND1_VS_ROUND2_REGRESSION",
 }
 
 
