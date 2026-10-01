@@ -16,3 +16,6 @@ audit/
 scripts/generate_ats_resume.py
 scripts/generate_resume_node.js
 scripts/generate_resume_node.package.json
+scripts/generate_resume_variants.js
+scripts/package.json
+scripts/package-lock.json

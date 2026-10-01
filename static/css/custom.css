@@ -593,6 +593,108 @@ p {
     overflow-x: auto;
 }
 
+.blog-content pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.blog-content h1,
+.blog-content h4 {
+    margin-top: 2rem;
+}
+
+.blog-content ul,
+.blog-content ol {
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.blog-content li {
+    margin-bottom: 0.4rem;
+}
+
+.blog-content blockquote {
+    margin: 1.5rem 0;
+    padding: 1rem 1.25rem;
+    border-left: 4px solid var(--accent-blue);
+    background: rgba(102, 126, 234, 0.08);
+    border-radius: 0 8px 8px 0;
+    color: var(--text-secondary);
+}
+
+.blog-content blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+.blog-content hr {
+    border: 0;
+    border-top: 1px solid var(--border-glass);
+    margin: 2.5rem 0;
+    opacity: 1;
+}
+
+.blog-content img {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+/* Tables (comparison scoreboards, rankings, etc.) */
+.blog-content .blog-table-wrap {
+    margin: 1.5rem 0;
+    border: 1px solid var(--border-glass);
+    border-radius: 10px;
+    overflow-x: auto;
+    background: var(--bg-card);
+}
+
+.blog-content .blog-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    font-size: 0.92rem;
+    min-width: 640px;
+}
+
+.blog-content .blog-table th,
+.blog-content .blog-table td {
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--border-glass);
+    vertical-align: top;
+    text-align: left;
+    color: var(--text-secondary);
+}
+
+.blog-content .blog-table thead th {
+    background: rgba(102, 126, 234, 0.18);
+    color: var(--text-primary);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.blog-content .blog-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.blog-content .blog-table tbody tr:hover {
+    background: rgba(102, 126, 234, 0.10);
+}
+
+.blog-content .blog-table td code,
+.blog-content .blog-table th code {
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* Local machine file references (file:///...) — shown as muted inline code, not links */
+.blog-content .local-path {
+    background: rgba(255, 193, 7, 0.12);
+    color: #ffd970;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    word-break: break-all;
+}
+
 /* ========== List Groups ========== */
 .list-group-item {
     background: var(--bg-card) !important;

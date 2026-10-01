@@ -322,6 +322,60 @@ def load_ai_eco_blogs():
     return eco_posts
 
 
+def _preprocess_blog_md(md_content):
+    """Normalize blog markdown before rendering: fix local/relative links."""
+    # Rewrite relative links to sibling .md blog files (e.g. ./blog_mega_comparison.md) into site blog routes
+    md_content = re.sub(r'\]\(\.?(?:\./)?([A-Za-z0-9_\-]+)\.md(#[^)\s]*)?\)', r'](/blog/\1\2)', md_content)
+    return md_content
+
+
+def _local_path_repl(match):
+    """Render a file:/// link as non-clickable inline code (strip nested code tags)."""
+    label = re.sub(r'</?code[^>]*>', '', match.group(1))
+    return ('<code class="local-path" title="Local file reference '
+            f'(not available on the web)">{label}</code>')
+
+
+def _postprocess_blog_html(html):
+    """Polish rendered blog HTML: responsive styled tables, safe local file references."""
+    # Local machine paths (file:///...) are meaningless on the web — render as non-clickable inline code
+    html = re.sub(
+        r'<a href="file:[^"]*"[^>]*>(.*?)</a>',
+        _local_path_repl,
+        html,
+        flags=re.DOTALL,
+    )
+    # Wrap tables for dark-theme styling + horizontal scrolling on small screens
+    html = html.replace('<table>', '<div class="table-responsive blog-table-wrap"><table class="blog-table">')
+    html = html.replace('</table>', '</table></div>')
+    return html
+
+
+def _extract_blog_date(content):
+    """Pull a publish date out of meta lines like '*Published: September 27, 2026 | ...*'."""
+    m = re.search(r'(?:Published|Test Date)[:*]*\s*\*?\s*([A-Za-z]+\s+\d{1,2},\s+\d{4})', content)
+    return m.group(1) if m else ''
+
+
+def _make_blog_excerpt(md_content, max_len=180):
+    """Build a plain-text excerpt from the first real paragraph of markdown."""
+    for block in re.split(r'\n\s*\n', md_content):
+        text = block.strip()
+        if not text:
+            continue
+        # Skip headings, hr, blockquotes, tables, lists, code fences and italic meta lines
+        if re.match(r'^(#{1,6}\s|>|\||-|-{3,}|\*|`|\d+\.)', text):
+            continue
+        text = re.sub(r'!?\[([^\]]*)\]\([^)]*\)', r'\1', text)  # links/images -> label
+        text = re.sub(r'<[^>]+>', '', text)                      # inline HTML
+        text = re.sub(r'[*_`~]', '', text)                       # emphasis marks
+        text = ' '.join(text.split())
+        if len(text) < 30:
+            continue
+        return text[:max_len].rstrip() + ('...' if len(text) > max_len else '')
+    return ''
+
+
 def load_all_blog_posts():
     """Load standard blog posts from blog_inputs/ and blog_data/ (cached until files change)."""
     posts = []
@@ -365,12 +419,13 @@ def load_all_blog_posts():
 
                     # Strip any leading H1 heading that duplicates the title in post.content
                     md_content = re.sub(r'^\s*#\s+[^\r\n]+[\r\n]*', '', md_content)
+                    md_content = _preprocess_blog_md(md_content)
 
-                    post['content'] = markdown.markdown(
+                    post['content'] = _postprocess_blog_html(markdown.markdown(
                         md_content,
                         extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty', 'toc'],
                         extension_configs={'toc': {'slugify': github_slugify}}
-                    )
+                    ))
                 else:
                     # No frontmatter: extract title from the first # H1 heading in markdown if present
                     h1_match = re.search(r'^\s*#\s+([^\r\n]+)', content, re.MULTILINE)
@@ -381,20 +436,23 @@ def load_all_blog_posts():
                         post['title'] = slug.replace('_', ' ').replace('-', ' ').title()
                         md_content = content
 
-                    post['content'] = markdown.markdown(
+                    md_content = _preprocess_blog_md(md_content)
+                    post['content'] = _postprocess_blog_html(markdown.markdown(
                         md_content,
                         extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty', 'toc'],
                         extension_configs={'toc': {'slugify': github_slugify}}
-                    )
-                    post['date'] = ''
+                    ))
+                    post['date'] = _extract_blog_date(content)
                     post['tags'] = ['Technology']
 
                 if not post.get('title'):
                     post['title'] = slug.replace('_', ' ').replace('-', ' ').title()
                 if not post.get('category'):
                     post['category'] = 'Technology'
+                if not post.get('date'):
+                    post['date'] = _extract_blog_date(content)
                 if not post.get('excerpt'):
-                    post['excerpt'] = post.get('insights', 'Read more...')
+                    post['excerpt'] = _make_blog_excerpt(md_content) or post.get('insights', 'Read more...')
                 if not post.get('tags'):
                     post['tags'] = ['Technology']
                 posts.append(post)
