@@ -1,29 +1,35 @@
 {
-  "last_updated": "2026-10-01T04:09:57.066493",
-  "commit_history": 1146,
+  "last_updated": "2026-10-02T04:03:53.303076",
+  "commit_history": 1152,
   "counted_commit_shas": [
+    "2717aab",
+    "13f1e4f",
+    "97be1ae",
+    "8bbcd09",
+    "31e677b",
+    "94974a8",
     "f3474ef",
+    "a915ef0",
     "87845b6",
     "50b10f5",
-    "2a7c858",
-    "4116b0b",
-    "a915ef0",
     "4421325",
+    "4116b0b",
     "2eea50b",
+    "2a7c858",
     "206bec4",
     "05fcb57"
   ],
   "repo_counts": 100,
   "language_breakdown": {
-    "TypeScript": 32,
+    "TypeScript": 35,
     "JavaScript": 20,
-    "HTML": 15,
-    "Python": 14
+    "HTML": 17,
+    "Python": 10
   },
   "live_salary_estimation": {
     "min": 220000,
     "max": 420000,
-    "reasoning": "For a US Senior/Staff AI Engineer with 100 repos and deep experience in autonomous multi-agent ecosystems plus high-throughput analytics pipelines, market compensation typically lands in the upper senior to staff band. Strong breadth across TypeScript, JavaScript, Python, and production AI systems supports a premium range, especially at top-tier tech or well-funded AI companies."
+    "reasoning": "A developer with deep experience across autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, plus a large and active repo portfolio, aligns with US Senior to Staff AI Engineer scope. In major US tech markets, total annual compensation for this profile commonly ranges from the low-to-mid $200Ks up to the low $400Ks depending on company tier, impact, and equity."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -44,31 +50,35 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] main: Raise default LLM timeout to 60s for GitHub Actions long generations | Files (1): api/ai_config.py (+5/-5)",
-    "[kprsnt2/pRash_STEP] merged: Update .env.example | Files (1): .env.example (+1/-1)",
-    "[kprsnt2/kprsnt.in] main: Fix ecosystem workflow rebase failure & update LLM model chains (GPT-OSS 120B/20B, DeepSeek v4.1-flash) | Files (4): .github/workflows/ecosystem_agents.yml, api/ai_config.py, api/ai_eco_mcp.py, scripts/ecosystem_agents.py (+39/-37)",
-    "[kprsnt2/pRash_AGY] main: Update .env.example | Files (1): .env.example (+1/-1)",
-    "[kprsnt2/kprsnt.in] main: Update ecosystem_agents.yml | Files (1): .github/workflows/ecosystem_agents.yml (+19/-4)"
+    "[kprsnt2/oc_bp_app] master: Fix cp1252-mangled UTF-8 across the UI and README | Files (9): README.md, app/basic/page.tsx, app/components/MessageList.tsx, app/components/PrintSheet.tsx, app/components/Sidebar.tsx, components/ChatApp.tsx (+208/-53)\n    Commit Details: 62 non-ASCII runs had been decoded with a cp1252 codepage and re-saved, so the\nUI rendered literal mojibake: the private-mode toggle showed mojibake instead of\nthe unlock padlock, separators showed A-middot, and ellipses showed a broken\nthree-dot sequence.\n\nRepair undoes the single round trip per no",
+    "[kprsnt2/oc_spacebunny_app] Created branch: master",
+    "[kprsnt2/oc_fredge_app] Created branch: master",
+    "[kprsnt2/kprsnt.in] main: Add pRash benchmark to resume generators + regenerate resumes; point GitHub to pRash_chat | Files (6): api/data/case_studies.py, api/data/projects.py, api/resume_data.py, scripts/generate_static_resume_pdf.js, static/Prashanth_Kumar_Kadasi_Resume.pdf, static/resume_pdf.html (+39/-4)",
+    "[kprsnt2/pRash] Created branch: main",
+    "[kprsnt2/kprsnt.in] main: Fix rendering of new blog_inputs posts: styled tables, blockquotes, safe file:// refs, .md link rewrite, date/excerpt fallback | Files (3): .gitignore, api/index.py, static/css/custom.css (+169/-6)",
+    "[kprsnt2/kprsnt.in] main: Add pRash 6-way AI coding CLI benchmark to projects, resume, case studies & KB | Files (4): api/data/case_studies.py, api/data/portfolio_kb.py, api/data/projects.py, api/resume_data.py (+49/-3)",
+    "[kprsnt2/kprsnt.in] main: Fix bogus blog fallback date on Vercel: prefer git commit date, sanity-check mtime, else today | Files (1): api/index.py (+32/-5)",
+    "[kprsnt2/kprsnt.in] main: Update CLI comparison blogs, add BLOG_MODEL_VS_CLI; fall back to file date when post has no date | Files (6): api/index.py, blog_inputs/BLOG_MODEL_VS_CLI.md, blog_inputs/BLOG_ROUND1_VS_ROUND2_REGRESSION.md, blog_inputs/blog_audit_comparison.md, blog_inputs/blog_mega_comparison.md, blog_inputs/blog_opus_distillation_investigation.md (+308/-68)"
   ],
-  "daily_commits_count": 5,
+  "daily_commits_count": 6,
   "commit_timeline_7d": {
     "labels": [
-      "Fri",
       "Sat",
       "Sun",
       "Mon",
       "Tue",
       "Wed",
-      "Thu"
+      "Thu",
+      "Fri"
     ],
     "commits": [
-      0,
       2,
       2,
       6,
       7,
-      5,
-      0
+      7,
+      6,
+      1
     ],
     "pipelines": [
       1,
