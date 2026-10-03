@@ -1,22 +1,27 @@
 {
-  "last_updated": "2026-10-02T04:03:53.303076",
-  "commit_history": 1152,
+  "last_updated": "2026-10-03T03:48:25.016142",
+  "commit_history": 1157,
   "counted_commit_shas": [
+    "c4d808e",
+    "25f56a3",
+    "d602ae6",
+    "14403ac",
     "2717aab",
-    "13f1e4f",
-    "97be1ae",
-    "8bbcd09",
-    "31e677b",
-    "94974a8",
+    "cbb63c3",
     "f3474ef",
     "a915ef0",
+    "97be1ae",
+    "94974a8",
+    "8bbcd09",
     "87845b6",
     "50b10f5",
     "4421325",
     "4116b0b",
+    "31e677b",
     "2eea50b",
     "2a7c858",
     "206bec4",
+    "13f1e4f",
     "05fcb57"
   ],
   "repo_counts": 100,
@@ -24,12 +29,12 @@
     "TypeScript": 35,
     "JavaScript": 20,
     "HTML": 17,
-    "Python": 10
+    "Python": 11
   },
   "live_salary_estimation": {
     "min": 220000,
     "max": 420000,
-    "reasoning": "A developer with deep experience across autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, plus a large and active repo portfolio, aligns with US Senior to Staff AI Engineer scope. In major US tech markets, total annual compensation for this profile commonly ranges from the low-to-mid $200Ks up to the low $400Ks depending on company tier, impact, and equity."
+    "reasoning": "A developer with 100 repos across TypeScript, JavaScript, HTML, and Python, focused on autonomous AI multi-agent systems and high-throughput analytics pipelines, aligns with Senior-to-Staff AI Engineer scope at top-tier US tech companies. The breadth of applied engineering and systems work supports a compensation range that reflects strong demand for advanced AI, distributed systems, and production ML expertise."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -50,35 +55,36 @@
     "SaaS"
   ],
   "recent_activity": [
+    "[kprsnt2/AgentSwarm] main: Phase 3 runner: persist the design up front; correct the final log line | Files (1): arena/run-phase3.mjs (+5/-1)",
+    "[kprsnt2/AgentSwarm] main: Phase 3 shock matrix runner; fix shock window boundary and novelty injection | Files (6): arena/README.md, arena/engine.mjs, arena/run-phase3.mjs, arena/shocks.mjs, arena/test/shocks.test.mjs, package.json (+335/-16)\n    Commit Details: - run-phase3.mjs: one experiment per shock (baseline -> shock -> recovery), own\n  forensic ledger per experiment, incremental results to site/data/phase3.json,\n  refuses to run concurrently with another run (--wait queues behind it)\n- ShockExperiment: the turn that triggers a shock now stays in the ",
+    "[kprsnt2/AgentSwarm] main: Remove stray commit-message temp file from the repo | Files (2): .gitignore, commitmsg.tmp (+5/-26)\n    Commit Details: commitmsg.tmp was picked up by 'git add -A' in the previous commit. It is a scratch\nfile used to pass a multi-line message to git commit, and it should never be tracked.\nRemoved from the index and added to .gitignore.",
+    "[kprsnt2/AgentSwarm] main: Add root README | Files (1): README.md (+131/-0)\n    Commit Details: Explains what the repository is for someone arriving at it cold: what the arena\ndoes, why the forensic ledger lives outside the agents' writable directory, and\nwhat question the study is trying to answer.\n\nIncludes the real ledger totals (80 turns, 2,592 tool calls, $0.2886, 209\nartifacts) read from",
+    "[kprsnt2/dsh_deep_app] Created branch: main",
+    "[kprsnt2/oc_bp_app] Created branch: master",
     "[kprsnt2/oc_bp_app] master: Fix cp1252-mangled UTF-8 across the UI and README | Files (9): README.md, app/basic/page.tsx, app/components/MessageList.tsx, app/components/PrintSheet.tsx, app/components/Sidebar.tsx, components/ChatApp.tsx (+208/-53)\n    Commit Details: 62 non-ASCII runs had been decoded with a cp1252 codepage and re-saved, so the\nUI rendered literal mojibake: the private-mode toggle showed mojibake instead of\nthe unlock padlock, separators showed A-middot, and ellipses showed a broken\nthree-dot sequence.\n\nRepair undoes the single round trip per no",
     "[kprsnt2/oc_spacebunny_app] Created branch: master",
     "[kprsnt2/oc_fredge_app] Created branch: master",
-    "[kprsnt2/kprsnt.in] main: Add pRash benchmark to resume generators + regenerate resumes; point GitHub to pRash_chat | Files (6): api/data/case_studies.py, api/data/projects.py, api/resume_data.py, scripts/generate_static_resume_pdf.js, static/Prashanth_Kumar_Kadasi_Resume.pdf, static/resume_pdf.html (+39/-4)",
-    "[kprsnt2/pRash] Created branch: main",
-    "[kprsnt2/kprsnt.in] main: Fix rendering of new blog_inputs posts: styled tables, blockquotes, safe file:// refs, .md link rewrite, date/excerpt fallback | Files (3): .gitignore, api/index.py, static/css/custom.css (+169/-6)",
-    "[kprsnt2/kprsnt.in] main: Add pRash 6-way AI coding CLI benchmark to projects, resume, case studies & KB | Files (4): api/data/case_studies.py, api/data/portfolio_kb.py, api/data/projects.py, api/resume_data.py (+49/-3)",
-    "[kprsnt2/kprsnt.in] main: Fix bogus blog fallback date on Vercel: prefer git commit date, sanity-check mtime, else today | Files (1): api/index.py (+32/-5)",
-    "[kprsnt2/kprsnt.in] main: Update CLI comparison blogs, add BLOG_MODEL_VS_CLI; fall back to file date when post has no date | Files (6): api/index.py, blog_inputs/BLOG_MODEL_VS_CLI.md, blog_inputs/BLOG_ROUND1_VS_ROUND2_REGRESSION.md, blog_inputs/blog_audit_comparison.md, blog_inputs/blog_mega_comparison.md, blog_inputs/blog_opus_distillation_investigation.md (+308/-68)"
+    "[kprsnt2/kprsnt.in] commit cbb63c3: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (242): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
   ],
   "daily_commits_count": 6,
   "commit_timeline_7d": {
     "labels": [
-      "Sat",
       "Sun",
       "Mon",
       "Tue",
       "Wed",
       "Thu",
-      "Fri"
+      "Fri",
+      "Sat"
     ],
     "commits": [
       2,
-      2,
       6,
       7,
       7,
-      6,
-      1
+      7,
+      5,
+      2
     ],
     "pipelines": [
       1,
