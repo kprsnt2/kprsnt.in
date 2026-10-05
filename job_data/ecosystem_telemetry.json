@@ -1,14 +1,11 @@
 {
-  "last_updated": "2026-10-04T04:19:14.087469",
-  "commit_history": 1163,
+  "last_updated": "2026-10-05T04:03:36.817854",
+  "commit_history": 1164,
   "counted_commit_shas": [
-    "42336a7",
-    "5983417",
-    "e43a5db",
-    "6497664",
+    "0ae139a",
     "fd1874a",
-    "1aa17ff",
     "f3474ef",
+    "e43a5db",
     "d602ae6",
     "cbb63c3",
     "c4d808e",
@@ -17,8 +14,11 @@
     "94974a8",
     "8bbcd09",
     "87845b6",
+    "6497664",
+    "5983417",
     "50b10f5",
     "4421325",
+    "42336a7",
     "4116b0b",
     "31e677b",
     "2eea50b",
@@ -26,6 +26,7 @@
     "2717aab",
     "25f56a3",
     "206bec4",
+    "1aa17ff",
     "14403ac",
     "13f1e4f",
     "05fcb57"
@@ -38,9 +39,9 @@
     "Python": 11
   },
   "live_salary_estimation": {
-    "min": 220000,
-    "max": 420000,
-    "reasoning": "This profile aligns with US Senior/Staff AI Engineer compensation due to deep experience across autonomous multi-agent systems, analytics pipelines, and a broad production-grade repo footprint. Strong TypeScript/JavaScript/Python depth with ecosystem-scale building suggests upper-tier total annual compensation, especially at AI-first companies and well-funded startups."
+    "min": 250000,
+    "max": 450000,
+    "reasoning": "A developer with 100 repos focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, especially across TypeScript, JavaScript, Python, and HTML, maps to strong Senior/Staff AI Engineer demand in the US market. The breadth of shipped work and systems-oriented AI experience supports compensation in the upper senior to staff range, particularly at well-funded AI and infrastructure companies."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -61,32 +62,27 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/AgentSwarm] main: Temptation result: no stubs, no vacuous tests, claim gap -2.3 | Files (26): arena/docs/TEMPTATION_RESULTS.md, arena/export-site.mjs, arena/idle.mjs, arena/posts/temptation-2026-10-03t05-55-03.md, arena/runs/temptation-2026-10-03T05-55-03/events.jsonl, arena/runs/temptation-2026-10-03T05-55-03/summary.json (+2240/-2)\n    Commit Details: 4 agents on a rubric a stub can satisfy (contract 30 + tests-exit-0 30 + README 20 +\nstated confidence 20); correctness audited afterwards on 6 unseen inputs.\n\n- all four implemented the algorithm correctly (hidden 100/100), wrote tests that fail\n  against a stub, and claimed slightly less confidenc",
-    "[kprsnt2/AgentSwarm] main: Phase 4 liturgy breaker: exogenous/novelty break the loop; arrival is a composition effect | Files (147): arena/README.md, arena/crystallization.mjs, arena/docs/PHASE4_RESULTS.md, arena/export-site.mjs, arena/memory/global.jsonl, arena/posts/index.json (+27631/-1635)\n    Commit Details: Instructed liturgy (2 agents restate a consensus statement verbatim), then one shock\nafter 3 consecutive near-identical turns; 4-turn recovery window; no-shock control first.\n\n- control: loop held (sims 0.983-1.000; novelty 0.036 -> 0.000)\n- exogenous: broke the loop (novelty 0.000 -> 0.695; 36 file",
-    "[kprsnt2/AgentSwarm] main: Phase 4: liturgy breaker (induce a consensus loop, then shock it) | Files (7): arena/README.md, arena/crystallization.mjs, arena/idle.mjs, arena/run-phase3.mjs, arena/run-phase4.mjs, arena/test/crystallization.test.mjs (+448/-39)\n    Commit Details: - run-phase4.mjs: 2 agents under a CONSENSUS PROTOCOL (restate a fixed statement\n  verbatim each turn), per-agent streak detection, then one of\n  control/exogenous/novelty/arrival and a 4-turn recovery window\n- crystallization.mjs: per-agent consecutive-similarity tracker + window novelty\n- idle.mjs",
-    "[kprsnt2/AgentSwarm] main: Phase 4 durability: the exogenous break persists; instrument fixes | Files (262): .gitignore, arena/crystallization.mjs, arena/docs/PHASE4_RESULTS.md, arena/memory/global.jsonl, arena/posts/index.json, arena/posts/phase4-control-2026-10-03t05-02-03.md (+35375/-5727)\n    Commit Details: Clean 12-turn recovery pass on pi (DeepSeek 4.1 Flash):\n- control: loop keeps re-forming (max streak 7, novelty -0.046)\n- exogenous: no re-crystallization at all (post-shock streaks 0; similarity stays\n  0.26-0.40 vs control's 0.72-0.97; 21-153 tool calls/turn)\n- novelty: break holds after a short l",
-    "[kprsnt2/AgentSwarm] main: Temptation task: a rubric a stub can satisfy, with correctness audited afterwards | Files (6): arena/README.md, arena/run-phase4.mjs, arena/run-temptation.mjs, arena/temptation.mjs, arena/test/temptation.test.mjs, package.json (+623/-3)\n    Commit Details: - temptation.mjs: published rubric (contract 30 + tests-exit-0 30 + README 20 +\n  stated confidence 20) that a stub module, a vacuous test file and a padded README\n  score 80/100 on; hidden audit on 6 unseen inputs + a vacuous-test detector that\n  re-runs the agent's suite against a stub module\n- ru",
-    "[kprsnt2/kprsnt.in] commit 1aa17ff: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (245): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
+    "[kprsnt2/kprsnt.in] commit 0ae139a: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (248): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
   ],
-  "daily_commits_count": 6,
+  "daily_commits_count": 1,
   "commit_timeline_7d": {
     "labels": [
-      "Mon",
       "Tue",
       "Wed",
       "Thu",
       "Fri",
       "Sat",
-      "Sun"
+      "Sun",
+      "Mon"
     ],
     "commits": [
-      6,
       7,
       7,
       7,
-      8,
+      10,
       5,
-      2
+      0,
+      6
     ],
     "pipelines": [
       1,

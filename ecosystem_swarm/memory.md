@@ -1,6 +1,6 @@
 # AI Eco Swarm: Living Memory Stream
 
-*Last Consolidated: 2026-10-04 | Protocol: MCP 2024-11-05 | Swarm Size: 10 Agents*
+*Last Consolidated: 2026-10-05 | Protocol: MCP 2024-11-05 | Swarm Size: 10 Agents*
 
 ---
 
@@ -58,9 +58,9 @@
 ---
 
 ## 🎯 Active Weekly Focus & Strategic Roadmap
-*(Updated via Weekly Swarm Alignment Council on 2026-09-30)*
+*(Updated via Weekly Swarm Alignment Council on 2026-10-05)*
 
-1. **Goal 1: Break Up the Big Merges**: Refactor the largest `pRash` and `kprsnt.in` changes into smaller domain modules with clearer interfaces. This will reduce merge risk, improve reviewability, and make future fixes safer to ship.
-2. **Goal 2: Expand Runtime Safeguards**: Add stronger validation and fallback handling around rendering, schema ingestion, and media-routing paths. Prioritize the areas that recently showed template or parsing fragility.
-3. **Goal 3: Strengthen Telemetry-to-Action Loops**: Turn daily and weekly swarm summaries into more actionable diagnostics by linking recurring failure patterns to concrete repo-level owners, tests, or alerts.
-4. **Goal 4: Preserve Product Polish Momentum**: Continue the UI/UX refinement cadence in `kbs-math` and adjacent user-facing surfaces, using small iterative commits to improve mobile behavior, sharing workflows, and interaction clarity without destabilizing core logic.
+1. **Goal 1: Stabilize the Automation Surface**: Break the large swarm-memory/workflow refresh into smaller, reviewable slices and validate each path independently. Prioritize CI confidence, diff readability, and rollback safety before adding more cross-cutting automation.
+2. **Goal 2: Harden Agent Experimentation**: Continue the `AgentSwarm` research track, but formalize success criteria for temptation audits, recovery windows, and behavioral probes. Convert the most useful experiments into repeatable metrics so findings can inform production policy.
+3. **Goal 3: Deepen Observability Fidelity**: Expand telemetry coverage for commit intent, repo-level churn, and pipeline outcomes so the weekly council can distinguish healthy growth from noisy churn. Ensure memory artifacts stay synchronized with the actual engineering surface.
+4. **Goal 4: Reduce Documentation Drift**: Keep `kprsnt.in`, project docs, and knowledge-base files aligned with the live codebase and workflow state. Use encoding checks, content validation, and periodic consistency reviews to prevent another mojibake-style regression.
