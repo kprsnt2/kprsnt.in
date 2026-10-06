@@ -1,8 +1,12 @@
 {
-  "last_updated": "2026-10-05T04:03:36.817854",
-  "commit_history": 1164,
+  "last_updated": "2026-10-06T04:52:40.564999",
+  "commit_history": 1169,
   "counted_commit_shas": [
-    "0ae139a",
+    "518df38",
+    "cc9f137",
+    "65dea15",
+    "4f394a1",
+    "ef28e55",
     "fd1874a",
     "f3474ef",
     "e43a5db",
@@ -29,19 +33,20 @@
     "1aa17ff",
     "14403ac",
     "13f1e4f",
+    "0ae139a",
     "05fcb57"
   ],
   "repo_counts": 100,
   "language_breakdown": {
     "TypeScript": 35,
     "JavaScript": 20,
-    "HTML": 17,
-    "Python": 11
+    "HTML": 18,
+    "Python": 10
   },
   "live_salary_estimation": {
-    "min": 250000,
-    "max": 450000,
-    "reasoning": "A developer with 100 repos focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, especially across TypeScript, JavaScript, Python, and HTML, maps to strong Senior/Staff AI Engineer demand in the US market. The breadth of shipped work and systems-oriented AI experience supports compensation in the upper senior to staff range, particularly at well-funded AI and infrastructure companies."
+    "min": 220000,
+    "max": 420000,
+    "reasoning": "A developer with 100 repositories spanning TypeScript, JavaScript, HTML, and Python, plus experience building autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, aligns with a strong US Senior to Staff AI Engineer profile. Compensation in this range reflects advanced full-stack AI systems work, distributed architecture depth, and the premium for staff-level impact in competitive markets."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -62,27 +67,31 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] commit 0ae139a: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (248): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
+    "[kprsnt2/AgentSwarm] main: Homepage Blog Series CTA, clickable brand, and fix the Phases anchor | Files (52): docs/audit.html, docs/benchmark.html, docs/blog/01-the-911-turn-hymn.html, docs/blog/02-building-the-forensic-arena.html, docs/blog/03-the-benchmark-nobody-runs.html, docs/blog/04-phase-1-when-the-swarm-ran-free.html (+173/-79)\n    Commit Details: - Add a prominent Blog Series call-to-action card and page chip to the homepage.\n- Make the AgentSwarm wordmark a link to home on every page (it was a plain\n  div on all but the blog pages, so clicking it only worked from the blog).\n- Repoint the nav/TOC 'Phases' anchor from the nonexistent #phases-",
+    "[kprsnt2/AgentSwarm] main: Executive dashboard, standalone pages for GitHub Pages, controlled substrate benchmark (P1-4), and Krishna metaphysical resolution (P2-3) | Files (300): arena/corpus-index.mjs, arena/export-site.mjs, arena/memory/global.jsonl, arena/posts/bench-agy-r1-2026-10-05t16-39-25.md, arena/posts/bench-agy-r2-2026-10-05t16-48-33.md, arena/posts/bench-agy-r3-2026-10-05t16-53-06.md (+35640/-3890)",
+    "[kprsnt2/AgentSwarm] main: Publish the 9-part AgentSwarm blog series on the site | Files (68): docs/audit.html, docs/benchmark.html, docs/blog/01-the-911-turn-hymn.html, docs/blog/02-building-the-forensic-arena.html, docs/blog/03-the-benchmark-nobody-runs.html, docs/blog/04-phase-1-when-the-swarm-ran-free.html (+6399/-2)\n    Commit Details: Add site/blog/*.md (the series) plus a dependency-free exporter that renders\nthem to styled, self-contained HTML pages with a series index, prev/next pager,\nand intra-series links rewritten from .md to .html. build.mjs regenerates the\nblog and copies it into dist/blog/ and docs/blog/, and every main",
+    "[kprsnt2/AgentSwarm] main: Vercel hosting support (vercel.json, build pipeline), dedicated Finding Blogs explorer (findings.html), and featured finding blogs showcase | Files (26): docs/audit.html, docs/benchmark.html, docs/corpus/run-direct-2026-10-05T17-43-28.html, docs/dashboard.html, docs/findings.html, docs/index.html (+1399/-37)",
+    "[kprsnt2/kprsnt.in] commit ef28e55: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (252): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
   ],
-  "daily_commits_count": 1,
+  "daily_commits_count": 5,
   "commit_timeline_7d": {
     "labels": [
-      "Tue",
       "Wed",
       "Thu",
       "Fri",
       "Sat",
       "Sun",
-      "Mon"
+      "Mon",
+      "Tue"
     ],
     "commits": [
-      7,
       7,
       7,
       10,
       5,
       0,
-      6
+      4,
+      7
     ],
     "pipelines": [
       1,
