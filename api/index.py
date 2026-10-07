@@ -144,7 +144,19 @@ _mcp_limiter = RateLimiter(60, 120)     # generous: streaming sessions + tool ca
 
 @app.route('/')
 def about():
-    return render_template('about.html')
+    swarm = load_swarm_data()
+    latest_aie_blogs = load_ai_eco_blogs()[:3]
+    featured_blogs = [p for p in load_all_blog_posts() if p.get('slug') in [
+        'jobagents-production-ai-career-pipeline',
+        'bugagents-dual-llm-security-matrix',
+        '02-building-the-forensic-arena'
+    ]]
+    if not featured_blogs:
+        featured_blogs = load_all_blog_posts()[:3]
+    return render_template('about.html',
+                           swarm=swarm,
+                           latest_aie_blogs=latest_aie_blogs,
+                           featured_blogs=featured_blogs)
 
 @app.route('/skills')
 def skills():

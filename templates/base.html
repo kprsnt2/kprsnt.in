@@ -46,31 +46,46 @@
     <!-- Bootstrap CSS (Dark Theme) -->
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/darkly/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <!-- Modern 2026 Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="{{ url_for('static', filename='css/custom.css') }}?v=3" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/custom.css') }}?v=4" rel="stylesheet">
     <!-- Chat Widget CSS -->
-    <link href="{{ url_for('static', filename='css/chat-widget.css') }}?v=3" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/chat-widget.css') }}?v=4" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="position: relative; z-index: 1050;">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">Prashanth Kadasi</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <!-- Modern 2026 AI Systems Lab Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="position: sticky; top: 0; z-index: 1050; background: rgba(8, 11, 17, 0.88) !important; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
+        <div class="container-fluid px-3 px-lg-4" style="max-width: 1400px;">
+            <div class="d-flex align-items-center">
+                <a class="navbar-brand fw-bold d-flex align-items-center" href="/" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; letter-spacing: -0.5px;">
+                    <span style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">kprsnt.in</span>
+                </a>
+                <span class="d-none d-md-inline-flex align-items-center ms-3 px-2 py-1 rounded-pill" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); font-size: 0.68rem; font-family: 'JetBrains Mono', monospace; color: #34d399; letter-spacing: 0.5px;">
+                    <span style="width: 6px; height: 6px; background: #10b981; border-radius: 50%; margin-right: 6px; box-shadow: 0 0 8px #10b981;"></span>SYSTEMS ONLINE
+                </span>
+            </div>
+
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">About Me</a>
+                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path in ['/dashboard', '/jobs/dashboard'] %}active{% endif %}" href="/dashboard">
+                            <i class="fas fa-satellite-dish me-1 text-info" style="font-size: 0.85rem;"></i> Fleet Telemetry
+                        </a>
                     </li>
                     <!-- Portfolio Dropdown -->
                     <li class="nav-item dropdown">
@@ -78,32 +93,39 @@
                             href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Portfolio
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item {% if request.path == '/skills' %}active{% endif %}" href="/skills"><i class="fas fa-tools" style="width:20px;"></i> Skills</a></li>
-                            <li><a class="dropdown-item {% if request.path == '/projects' %}active{% endif %}" href="/projects"><i class="fas fa-rocket" style="width:20px;"></i> Projects</a></li>
-                            <li><a class="dropdown-item {% if request.path == '/resume' or '/resume/' in request.path %}active{% endif %}" href="/resume"><i class="fas fa-file-alt" style="width:20px;"></i> Resume</a></li>
+                        <ul class="dropdown-menu dropdown-menu-dark" style="background: #0d121d; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                            <li><a class="dropdown-item py-2 {% if request.path == '/projects' %}active{% endif %}" href="/projects"><i class="fas fa-rocket text-primary" style="width:22px;"></i> Projects</a></li>
+                            <li><a class="dropdown-item py-2 {% if request.path == '/skills' %}active{% endif %}" href="/skills"><i class="fas fa-tools text-info" style="width:22px;"></i> Skills Matrix</a></li>
+                            <li><a class="dropdown-item py-2 {% if request.path == '/resume' or '/resume/' in request.path %}active{% endif %}" href="/resume"><i class="fas fa-file-alt text-success" style="width:22px;"></i> Resume &amp; Roles</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/blog' or request.path.startswith('/blog/') %}active{% endif %}" href="/blog">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/api/docs' or request.path == '/docs' %}active{% endif %}" href="/docs">Docs</a>
+                        <a class="nav-link {% if request.path == '/blog' or request.path.startswith('/blog/') %}active{% endif %}" href="/blog">
+                            Blog &amp; Logs
+                        </a>
                     </li>
                     <!-- AI Eco Dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle {% if request.path in ['/ecosystem', '/ecosystem/logs', '/swarm/logs', '/aie/blogs', '/aie', '/mcp'] or request.path.startswith('/aie/') or request.path.startswith('/ecosystem/') %}active{% endif %}"
                             href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-microchip" style="margin-right: 4px;"></i>AI Eco
+                            <i class="fas fa-microchip me-1 text-warning" style="font-size: 0.85rem;"></i>AI Eco
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item {% if request.path == '/aie' %}active{% endif %}" href="/aie"><i class="fas fa-network-wired" style="width:20px;"></i> AI Eco Hub</a></li>
-                            <li><a class="dropdown-item {% if request.path == '/ecosystem' %}active{% endif %}" href="/ecosystem"><i class="fas fa-tachometer-alt" style="width:20px;"></i> Dashboard</a></li>
-                            <li><a class="dropdown-item {% if request.path == '/ecosystem/logs' or request.path == '/swarm/logs' %}active{% endif %}" href="/ecosystem/logs"><i class="fas fa-terminal text-info" style="width:20px;"></i> Swarm Logs &amp; Council</a></li>
-                            <li><a class="dropdown-item {% if request.path == '/mcp' %}active{% endif %}" href="/mcp"><i class="fas fa-plug" style="width:20px;"></i> MCP Server</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item {% if request.path == '/aie/blogs' or request.path.startswith('/aie/blog/') %}active{% endif %}" href="/aie/blogs"><i class="fas fa-satellite-dish" style="width:20px;"></i> AIE Blogs</a></li>
+                        <ul class="dropdown-menu dropdown-menu-dark" style="background: #0d121d; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                            <li><a class="dropdown-item py-2 {% if request.path == '/ecosystem' %}active{% endif %}" href="/ecosystem"><i class="fas fa-chart-line text-info" style="width:22px;"></i> Telemetry Dashboard</a></li>
+                            <li><a class="dropdown-item py-2 {% if request.path == '/ecosystem/logs' or request.path == '/swarm/logs' %}active{% endif %}" href="/ecosystem/logs"><i class="fas fa-terminal text-success" style="width:22px;"></i> 10-Agent Swarm Logs</a></li>
+                            <li><a class="dropdown-item py-2 {% if request.path == '/mcp' %}active{% endif %}" href="/mcp"><i class="fas fa-plug text-warning" style="width:22px;"></i> FastMCP Server</a></li>
+                            <li><a class="dropdown-item py-2 {% if request.path == '/aie/blogs' or request.path.startswith('/aie/blog/') %}active{% endif %}" href="/aie/blogs"><i class="fas fa-satellite-dish text-primary" style="width:22px;"></i> AIE Dev Logs</a></li>
+                            <li><hr class="dropdown-divider border-secondary border-opacity-25"></li>
+                            <li><a class="dropdown-item py-2 {% if request.path == '/aie' %}active{% endif %}" href="/aie"><i class="fas fa-network-wired text-light" style="width:22px;"></i> AI Eco Hub</a></li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/api/docs' or request.path == '/docs' %}active{% endif %}" href="/docs">Docs</a>
+                    </li>
+                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                        <a href="/resume" class="btn btn-sm btn-outline-primary px-3 rounded-pill fw-semibold" style="border-color: rgba(99,102,241,0.5); font-size: 0.82rem;">
+                            <i class="fas fa-file-alt me-1"></i> Resume
+                        </a>
                     </li>
                 </ul>
             </div>
