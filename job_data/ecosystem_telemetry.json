@@ -1,16 +1,15 @@
 {
-  "last_updated": "2026-10-06T04:52:40.564999",
-  "commit_history": 1169,
+  "last_updated": "2026-10-07T04:19:07.988177",
+  "commit_history": 1171,
   "counted_commit_shas": [
-    "518df38",
-    "cc9f137",
-    "65dea15",
-    "4f394a1",
-    "ef28e55",
+    "53bb533",
+    "215d86e",
     "fd1874a",
     "f3474ef",
+    "ef28e55",
     "e43a5db",
     "d602ae6",
+    "cc9f137",
     "cbb63c3",
     "c4d808e",
     "a915ef0",
@@ -18,9 +17,12 @@
     "94974a8",
     "8bbcd09",
     "87845b6",
+    "65dea15",
     "6497664",
     "5983417",
+    "518df38",
     "50b10f5",
+    "4f394a1",
     "4421325",
     "42336a7",
     "4116b0b",
@@ -44,9 +46,9 @@
     "Python": 10
   },
   "live_salary_estimation": {
-    "min": 220000,
-    "max": 420000,
-    "reasoning": "A developer with 100 repositories spanning TypeScript, JavaScript, HTML, and Python, plus experience building autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, aligns with a strong US Senior to Staff AI Engineer profile. Compensation in this range reflects advanced full-stack AI systems work, distributed architecture depth, and the premium for staff-level impact in competitive markets."
+    "min": 240000,
+    "max": 380000,
+    "reasoning": "A developer with deep experience across autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, plus a large public/private repo footprint and strong full-stack language coverage, fits a US Senior/Staff AI Engineer profile. In major US markets, total annual compensation for this level commonly spans the mid-$200Ks to high-$300Ks depending on company tier, scope, and equity."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -67,30 +69,27 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/AgentSwarm] main: Homepage Blog Series CTA, clickable brand, and fix the Phases anchor | Files (52): docs/audit.html, docs/benchmark.html, docs/blog/01-the-911-turn-hymn.html, docs/blog/02-building-the-forensic-arena.html, docs/blog/03-the-benchmark-nobody-runs.html, docs/blog/04-phase-1-when-the-swarm-ran-free.html (+173/-79)\n    Commit Details: - Add a prominent Blog Series call-to-action card and page chip to the homepage.\n- Make the AgentSwarm wordmark a link to home on every page (it was a plain\n  div on all but the blog pages, so clicking it only worked from the blog).\n- Repoint the nav/TOC 'Phases' anchor from the nonexistent #phases-",
-    "[kprsnt2/AgentSwarm] main: Executive dashboard, standalone pages for GitHub Pages, controlled substrate benchmark (P1-4), and Krishna metaphysical resolution (P2-3) | Files (300): arena/corpus-index.mjs, arena/export-site.mjs, arena/memory/global.jsonl, arena/posts/bench-agy-r1-2026-10-05t16-39-25.md, arena/posts/bench-agy-r2-2026-10-05t16-48-33.md, arena/posts/bench-agy-r3-2026-10-05t16-53-06.md (+35640/-3890)",
-    "[kprsnt2/AgentSwarm] main: Publish the 9-part AgentSwarm blog series on the site | Files (68): docs/audit.html, docs/benchmark.html, docs/blog/01-the-911-turn-hymn.html, docs/blog/02-building-the-forensic-arena.html, docs/blog/03-the-benchmark-nobody-runs.html, docs/blog/04-phase-1-when-the-swarm-ran-free.html (+6399/-2)\n    Commit Details: Add site/blog/*.md (the series) plus a dependency-free exporter that renders\nthem to styled, self-contained HTML pages with a series index, prev/next pager,\nand intra-series links rewritten from .md to .html. build.mjs regenerates the\nblog and copies it into dist/blog/ and docs/blog/, and every main",
-    "[kprsnt2/AgentSwarm] main: Vercel hosting support (vercel.json, build pipeline), dedicated Finding Blogs explorer (findings.html), and featured finding blogs showcase | Files (26): docs/audit.html, docs/benchmark.html, docs/corpus/run-direct-2026-10-05T17-43-28.html, docs/dashboard.html, docs/findings.html, docs/index.html (+1399/-37)",
-    "[kprsnt2/kprsnt.in] commit ef28e55: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (252): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
+    "[kprsnt2/AgentSwarm] main: Add parallel Step 5 run 3 (God/religions + conspiracy theories) | Files (253): .gitignore, AUDIT_AND_IMPROVEMENT_PLAN.md, arena/audit/annotations.json, arena/corpus-index.mjs, arena/docs/stories/01_THE_FORENSIC_ARENA_ARCHITECTURE.md, arena/docs/stories/02_THE_FIVE_SCIENTIFIC_DISCOVERIES.md (+39175/-788)\n    Commit Details: - run-step-parallel.mjs: two isolated arenas, one Step 5 agent per question, run concurrently as separate processes sharing one STOP switch\n- substrates.mjs: run the blocked step binary's extracted bundle under Node; stream-parse multi-GB JSONL instead of readFileSync\n- engine.mjs: optional stopPath",
+    "[kprsnt2/kprsnt.in] commit 215d86e: feat: feature BugAgents, AgentSwarm, and JobAgents; update title to AI Systems Engineer and record Optum CMS audit background | Files (255): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
   ],
-  "daily_commits_count": 5,
+  "daily_commits_count": 2,
   "commit_timeline_7d": {
     "labels": [
-      "Wed",
       "Thu",
       "Fri",
       "Sat",
       "Sun",
       "Mon",
-      "Tue"
+      "Tue",
+      "Wed"
     ],
     "commits": [
-      7,
       7,
       10,
       5,
       0,
-      4,
+      6,
+      1,
       7
     ],
     "pipelines": [
