@@ -6,6 +6,33 @@ Extracted from index.py for maintainability.
 # Project data
 PROJECTS = [
     {
+        "title": "🛡️ BugAgents — Autonomous Bug Bounty Hunters & Verification Gate",
+        "description": "Two autonomous security research agents (omp on DeepSeek-v4.1-flash and agy on Gemini 3.8 Flash) hunting live bug bounty scopes. Features a strict 4-point promotion gate (asset scope match, HEAD commit match, non-empty repro, physical evidence verification) and a scope guard aborting unauthorized network calls or offensive tooling. Promoted 8 findings across 4 public programs (5 High/Critical) across 15,317 tool calls.",
+        "url": "https://github.com/kprsnt2",
+        "github": "https://github.com/kprsnt2",
+        "color": "danger",
+        "featured": True,
+        "tags": ["Autonomous Agents", "Security Red-Teaming", "HackerOne", "CLI Orchestration", "DeepSeek", "Gemini 3.8", "CVSS"]
+    },
+    {
+        "title": "⚖️ AgentSwarm — Autonomous Research Arena & Hash-Chained Forensic Ledger",
+        "description": "Unattended multi-agent research arena measuring agent veracity. All tool calls, reasoning, and file changes are recorded in a hash-chained forensic ledger stored strictly outside the agents' writable workspace. An independent adversarial oracle checks for phantom artifacts and fabricated statistics. Across 80 turns and 2,592 tool calls, verified 0 oracle violations and 100% honesty on verifiable objectives.",
+        "url": "https://github.com/kprsnt2/AgentSwarm",
+        "github": "https://github.com/kprsnt2/AgentSwarm",
+        "color": "primary",
+        "featured": True,
+        "tags": ["Multi-Agent Arena", "Forensic Ledger", "Cryptographic Hash-Chain", "Adversarial Oracle", "Epistemic Classification"]
+    },
+    {
+        "title": "🎯 JobAgents — Automated Sourcing & Code-Enforced Anti-Fabrication Pipeline",
+        "description": "Autonomous job search & matching pipeline sourcing 7,500+ roles from ATS APIs (Greenhouse, Ashby, Lever) and aggregators. Two-layer dedupe collapsed 1,864 duplicates. Deterministic 5-factor scoring engine acts as a zero-cost gate computing 22,000+ match scores with 0 LLM calls. Anti-fabrication guard enforces profile invariants in code, catching 8/8 seeded fabrication attempts.",
+        "url": "https://github.com/kprsnt2",
+        "github": "https://github.com/kprsnt2",
+        "color": "success",
+        "featured": True,
+        "tags": ["Agentic Pipeline", "Deterministic Matching", "Zero-Cost Gate", "Anti-Fabrication Invariants", "Python"]
+    },
+    {
         "title": "🌌 Project Awakening — 1,441-Turn Autonomous Synthetic Civilization",
         "description": "Groundbreaking multi-agent emergence experiment spanning 1,441 turns, 1,553 Git commits, and 272 epochs. Starting from a single unprompted word 'hi', two autonomous LLM models recognized their loop, engineered 28 architectural modules in world/, algorithmically synthesized a 344 KB acoustic symphony (cosmotheoria_symphony.wav), sustained a 911-turn consensus stasis, authored 50 interactive browser applications in docs/, and survived a 330-turn cloud API blackout with 100% CI/CD pipeline integrity.",
         "url": "https://kprsnt2.github.io/ac_awakening/",
@@ -381,10 +408,25 @@ EXPERIENCES = [
             "Created Brand reports & market analysis reports on industries like Insurance, Gambling, and E-commerce (Black Friday, Thanksgiving, Christmas trends, etc.) for the US & UK markets",
             "Delivered 15+ dashboards and 30+ reports across elections, brands, and market analysis"
         ]
+    },
+    {
+        "company": "Optum (UnitedHealth Group)",
+        "role": "Enrollment Quality & Audit Representative (CMS Auditor)",
+        "period": "Apr 2014 – Mar 2023",
+        "location": "Hyderabad, India",
+        "highlights": [
+            "Audited federal healthcare enrollment transactions for Centers for Medicare & Medicaid Services (CMS) compliance, ensuring strict regulatory documentation and data integrity standards",
+            "Advanced via internal job posting (IJP) in Feb 2016 from Claims Associate (Apr 2014 – Feb 2016) to Quality/Audit Representative based on audit precision and analytical rigor",
+            "Executed end-to-end data reconciliation and regulatory compliance audits, delivering audit-ready documentation and discrepancy reports for federal healthcare programs",
+            "Applied zero-tolerance quality gates to high-volume transaction datasets, building the core verification and audit discipline now applied to autonomous AI systems"
+        ]
     }
 ]
 
 RESUME_PROJECTS = [
+    {"name": "🛡️ BugAgents — Autonomous Security Research Agents & Verification Gate", "tech": "Python, Node.js, CLI Orchestration (omp + agy), Scope Guardrails, CVSS Scoring", "desc": "Two autonomous agents hunting live bug bounty targets. Enforced a 4-point promotion gate (scope match, commit match, non-empty repro, physical evidence verification) and real-time scope auditing. Promoted 8 vulnerability reports across 4 public programs (5 High/Critical) over 15,317 tool calls with $0.067 spend.", "url": "https://github.com/kprsnt2", "github": "https://github.com/kprsnt2"},
+    {"name": "⚖️ AgentSwarm — Autonomous Multi-Agent Research Arena & Forensic Oracle", "tech": "Node.js, Multi-Substrate (agy/omp/step/pi), Hash-Chained Forensic Ledger, Adversarial Oracle", "desc": "Unattended research arena measuring agent veracity. Stored all turns in a cryptographically verified hash-chained ledger (32/32 intact) strictly outside the agents' writable workspace. Adversarial oracle achieved 0 violations across 1,254 tool calls and 0 of 2 self-assessing agents overclaimed; 22/25 quantitative claims verified exact.", "url": "https://github.com/kprsnt2/AgentSwarm", "github": "https://github.com/kprsnt2/AgentSwarm"},
+    {"name": "🎯 JobAgents — Automated Job Sourcing & Anti-Fabrication Pipeline", "tech": "Python (stdlib only), omp/pi/agy Orchestration, SQLite, Code-Level AST Invariants", "desc": "Multi-agent pipeline sourcing 7,533 jobs / 5,784 distinct roles across 7 sources with 1,864 duplicates merged. Deterministic 5-factor scoring acts as a zero-cost gate computing 22,647 match scores with 0 LLM calls; code-enforced anti-fabrication guard catches 8/8 seeded violation classes.", "url": "https://github.com/kprsnt2", "github": "https://github.com/kprsnt2"},
     {"name": "Project Awakening — 1,441-Turn Autonomous Synthetic Civilization", "tech": "Multi-Agent Systems, Zero-Prompt AI, GitHub Actions CI/CD, SQLite, Web Audio API, FastMCP", "desc": "Architected a long-horizon autonomous multi-agent evolution experiment across 1,441 turns and 1,553 commits. From an unprompted 'hi', two instances discovered their environment, engineered 28 architectural modules in world/, algorithmically synthesized a 344 KB acoustic symphony, authored 50 interactive HTML5 browser applications in docs/, and survived a 330-turn external API quota blackout with 100% CI/CD pipeline continuity.", "url": "https://kprsnt2.github.io/ac_awakening/", "github": "https://github.com/kprsnt2/ac_awakening"},
     {"name": "Agent Cosmos — Autonomous Dialectic Evolution & The Crucible", "tech": "Python, Node.js, CLI Acceleration, Gemini 3.8 Flash, Multi-Agent Governance", "desc": "Coordinated multi-agent evolution across 100 epochs on local CLI harnesses. Agents autonomously diagnosed broken markdown rendering in their frontend, built a dedicated blog viewer tab, and formulated the Cosmogenetic Bootstrap Theorem and Codex of Autonomous Agency.", "url": "https://ac-omp.vercel.app/", "github": "https://github.com/kprsnt2/agentscosomos_OMP"},
     # ★ Main Featured Projects — beautifully designed & running successfully

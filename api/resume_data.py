@@ -30,21 +30,21 @@ EDUCATION = {
 
 ROLE_DEFINITIONS = {
     "data-ai-engineer": {
-        "title": "Data Analyst & AI Engineer",
+        "title": "AI Systems Engineer (Autonomous Agents & Reliability)",
         "slug": "data-ai-engineer",
         "icon": "🤖",
         "color": "#3498db",
-        "description": "3+ years of data analytics combined with multi-agent AI ecosystems and LLM orchestration."
+        "description": "Autonomous multi-agent runtimes, deterministic evaluation harnesses, and LLM reliability systems."
     }
 }
 
 # ═══════════════════════════════════════════════════════════════
-# Resume variant: Data Analyst & AI Engineer
+# Resume variant: AI Systems Engineer
 # ═══════════════════════════════════════════════════════════════
 
 RESUME_DATA_AI_ENGINEER = {
     "role": ROLE_DEFINITIONS["data-ai-engineer"],
-    "summary": "Data Analyst & AI Systems Engineer with 3+ years of experience driving business intelligence through high-throughput analytics, discrete allocation optimization, and production autonomous multi-agent AI ecosystems. Expert in Python, SQL, BigQuery, and modern BI alongside LLM fine-tuning (20B models on AMD MI300X), Model Context Protocol (FastMCP 2024-11-05 spec), edge computer vision pipelines, and RAG architectures. Successfully engineered an 18,000+ candidate MBBS allocation simulator validated against official KNRUHS 2026 Phase 1 results (within 2 preferences and 73 ranks of cutoff), an autonomous 10-agent swarm running daily with self-evolving target benchmarks, and 18 sector intelligence dashboards for US & UK enterprise clients.",
+    "summary": "AI Systems Engineer specializing in autonomous multi-agent runtimes, deterministic evaluation harnesses, and LLM reliability. Bridges regulated quality-assurance validation discipline with cutting-edge agentic autonomy — engineering hash-chained forensic audit ledgers, adversarial verifier oracles, scope/budget guardrails, and code-enforced anti-fabrication invariants. Creator of BugAgents (autonomous security research agents hunting live bounty scopes with 4-point promotion gates), AgentSwarm (unattended multi-agent arena across 4 CLI substrates with tamper-proof ledgers), JobAgents (high-throughput ATS sourcing & deterministic zero-LLM matching for 7,500+ roles), and BrandXY (fine-tuned 20B model on AMD MI300X with +51% steerability).",
     "experiences": [
         {
             "company": "Independent AI Research & Development",
@@ -52,6 +52,9 @@ RESUME_DATA_AI_ENGINEER = {
             "period": "Jan 2024 – Present",
             "location": "Remote",
             "highlights": [
+                "Engineered BugAgents, two autonomous security research agents hunting real vulnerabilities across live bug bounty programs; produced 3 submission-ready vulnerability reports (two rated High, CVSS 9.3 and 8.6) behind a 4-point promotion gate that rejected 34 unverified findings and per-turn tool auditing ($0.067 spend across 3,156 tool calls)",
+                "Built AgentSwarm, an unattended multi-agent research arena across 4 CLI substrates (agy, omp, pi, step); recorded all tool calls and reasoning in a cryptographically verified hash-chained ledger (32/32 chains intact) outside the agents' writable workspace with 0 oracle violations across 1,254 tool calls and 22/25 quantitative claims verified exact",
+                "Architected JobAgents, an autonomous sourcing pipeline aggregating 7,533 jobs / 5,784 distinct roles across 7 sources, merging 1,864 duplicates via two-layer dedupe and scoring 22,647 matches with 0 model calls via deterministic cost-gating and code-enforced anti-fabrication guards",
                 "Architected AI Eco, an autonomous 10-agent AI swarm operating daily via GitHub Actions with living memory stream (<4,000-word compaction), FastMCP JSON-RPC/SSE interfaces, and self-evaluating target fitness benchmarks",
                 "Engineered Retail Shelf Intelligence (Solari Platform), coupling an edge contour-segmentation vision engine with cloud VLM fallback for planogram compliance, out-of-stock detection, and discrete product allocation",
                 "Fine-tuned GPT-OSS-20B on AMD MI300X GPUs to evaluate brand recommendation steerability, boosting recommendation rates from 25.5% to 76.5% (+51% improvement) under rigorous A/B evaluation (Hugging Face Hub)",
@@ -84,6 +87,18 @@ RESUME_DATA_AI_ENGINEER = {
                 "Conducted sentiment analysis on election datasets using NLP techniques, segmenting user behavior across channels and demographics",
                 "Developed Pi-API Python package for automated BigQuery data access — improving analytics team velocity and data quality"
             ]
+        },
+        {
+            "company": "Optum (UnitedHealth Group)",
+            "role": "Enrollment Quality & Audit Representative (CMS Auditor)",
+            "period": "Apr 2014 – Mar 2023",
+            "location": "Hyderabad, India",
+            "highlights": [
+                "Audited healthcare enrollment transactions for Centers for Medicare & Medicaid Services (CMS) compliance, enforcing strict statutory accuracy and documentation standards",
+                "Advanced via internal job posting (IJP) in Feb 2016 from Claims Associate (Apr 2014 – Feb 2016) to Quality/Audit Representative based on audit precision and analytical rigor",
+                "Executed end-to-end data reconciliation and regulatory compliance audits, delivering audit-ready documentation and discrepancy reports for federal healthcare programs",
+                "Applied zero-tolerance quality gates to high-volume transaction datasets, building the core verification and audit discipline now applied to autonomous AI systems"
+            ]
         }
     ],
     "skills": {
@@ -93,6 +108,27 @@ RESUME_DATA_AI_ENGINEER = {
         "Cloud & DevOps": "Google Cloud Platform (GCP), Vercel Serverless, Docker, GitHub Actions CI/CD, Git, Linux/Bash"
     },
     "projects": [
+        {
+            "name": "🛡️ BugAgents — Autonomous Security Research Agents & Verification Gate",
+            "tech": "Python, Node.js, omp + agy CLI Orchestration, Scope Guardrails, CVSS Scoring",
+            "desc": "Built two autonomous agents hunting real vulnerabilities across disjoint targets in live bug bounty programs, producing 3 submission-ready reports (two High, CVSS 9.3 and 8.6) with reproducible PoCs. Enforced a 4-point promotion gate (scope match, HEAD commit match, non-empty repro, evidence files exist) and per-turn tool-call auditing.",
+            "url": "https://bug.kprsnt.in",
+            "github": "https://github.com/kprsnt2"
+        },
+        {
+            "name": "⚖️ AgentSwarm — Autonomous Multi-Agent Research Arena & Forensic Oracle",
+            "tech": "Node.js, Multi-Substrate (agy/omp/step/pi), Hash-Chained Forensic Ledger, Adversarial Oracle",
+            "desc": "Unattended research arena evaluating agent honesty across 9 research domains. Stored all turns in a cryptographically verified hash-chained ledger (32/32 chains intact) outside the agents' writable workspace. Adversarial oracle achieved 0 violations across 1,254 tool calls and 0 of 2 self-assessing agents overclaimed; 22/25 quantitative claims verified exact.",
+            "url": "https://agent.kprsnt.in",
+            "github": "https://github.com/kprsnt2"
+        },
+        {
+            "name": "🎯 JobAgents — Automated Job Sourcing & Anti-Fabrication Pipeline",
+            "tech": "Python (stdlib only), omp/pi/agy Orchestration, SQLite, AST Invariants",
+            "desc": "Multi-agent pipeline sourcing 7,533 jobs / 5,784 distinct roles across 7 sources with 1,864 duplicates merged. Deterministic 5-factor scoring engine acts as a zero-cost gate computing 22,647 match scores with 0 model calls; code-enforced anti-fabrication guard catches 8/8 seeded violation classes.",
+            "url": "https://job.kprsnt.in",
+            "github": "https://github.com/kprsnt2"
+        },
         {
             "name": "🌌 Project Awakening — 1,441-Turn Autonomous Synthetic Civilization",
             "tech": "Multi-Agent Systems, Zero-Prompt Emergence, GitHub Actions CI/CD, SQLite, FastMCP, Web Audio",
