@@ -279,7 +279,7 @@ def load_ai_eco_blogs():
                     content = f.read()
 
                 slug = os.path.basename(md_file).replace('.md', '')
-                post = {'slug': slug, 'category': 'AI Eco'}
+                post = {'slug': slug, 'category': 'AI Eco', 'author': 'GitHub Scout Agent'}
                 frontmatter_match = re.match(r'^\s*---\s*[\r\n]+(.*?)\r?\n---\s*[\r\n]+(.*)', content, re.DOTALL)
                 if frontmatter_match:
                     frontmatter = frontmatter_match.group(1)
@@ -293,27 +293,33 @@ def load_ai_eco_blogs():
                                 post['tags'] = [t.strip() for t in v.split(',') if t.strip()]
                             else:
                                 post[k] = v
-                    post['content'] = markdown.markdown(
+                    md_content = _preprocess_blog_md(md_content)
+                    post['content'] = _postprocess_blog_html(markdown.markdown(
                         md_content,
                         extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty', 'toc'],
                         extension_configs={'toc': {'slugify': github_slugify}}
-                    )
+                    ))
                 else:
                     post['title'] = slug.replace('-', ' ').title()
-                    post['content'] = markdown.markdown(
-                        content,
+                    md_content = _preprocess_blog_md(content)
+                    post['content'] = _postprocess_blog_html(markdown.markdown(
+                        md_content,
                         extensions=['fenced_code', 'tables', 'md_in_html', 'sane_lists', 'smarty', 'toc'],
                         extension_configs={'toc': {'slugify': github_slugify}}
-                    )
-                    post['date'] = ''
+                    ))
+                    post['date'] = _extract_blog_date(content) or _file_blog_date(md_file)
                     post['tags'] = ['AI Eco', 'Agents']
 
                 if not post.get('title'):
                     post['title'] = slug.replace('-', ' ').title()
                 if not post.get('excerpt'):
-                    post['excerpt'] = 'Automated dev log published by AI Eco agents.'
+                    post['excerpt'] = _make_blog_excerpt(md_content) or 'Automated dev log published by AI Eco agents.'
                 if not post.get('tags'):
                     post['tags'] = ['AI Eco', 'Agents']
+                if not post.get('author'):
+                    post['author'] = 'GitHub Scout Agent'
+                if not post.get('category'):
+                    post['category'] = 'AI Eco'
                 eco_posts.append(post)
             except Exception as e:
                 logging.warning(f"Failed to load AI Eco post {md_file}: {e}")
@@ -525,7 +531,15 @@ def load_all_blog_posts():
 
 @app.route('/blog')
 def blog():
-    all_posts = load_all_blog_posts()
+    standard_posts = load_all_blog_posts()
+    aie_posts = load_ai_eco_blogs()
+    seen = set()
+    all_posts = []
+    for p in standard_posts + aie_posts:
+        if p.get('slug') and p['slug'] not in seen:
+            seen.add(p['slug'])
+            all_posts.append(p)
+    all_posts.sort(key=lambda p: _parse_blog_date(p.get('date', '')), reverse=True)
     categories = sorted(set(p.get('category', 'Technology') for p in all_posts))
     return render_template('blog.html', posts=all_posts, categories=categories)
 
@@ -1010,7 +1024,8 @@ def ecosystem_dashboard():
             "live_salary_estimation": {"min": 0, "max": 0, "reasoning": "Data unavailable"}
         }
     swarm = load_swarm_data()
-    return render_template('ecosystem.html', data=data, swarm=swarm)
+    latest_aie_blogs = load_ai_eco_blogs()[:3]
+    return render_template('ecosystem.html', data=data, swarm=swarm, latest_aie_blogs=latest_aie_blogs)
 
 def load_full_swarm_audit(target_week=None):
     """Aggregates comprehensive live outputs, targets, weekly meetings, and chronicles across all 10 swarm agents."""
@@ -1274,6 +1289,7 @@ def swarm_meeting_detail(week_code):
 # Dashboard Routes — Jobs Dashboard (analytics view)
 # ============================================================
 
+@app.route('/dashboard')
 @app.route('/jobs/dashboard')
 def jobs_dashboard():
     all_jobs, month, models_used, pipeline_report, pipeline_trace = load_job_listings()
@@ -1343,6 +1359,8 @@ def jobs_dashboard():
     top_companies = sorted(company_counts.items(), key=lambda x: x[1], reverse=True)[:10]
 
     insight = generate_jobs_insight(all_jobs, daily_snapshots, grade_counts, dimension_avgs, score_distribution)
+    swarm = load_swarm_data()
+    latest_aie_blogs = load_ai_eco_blogs()[:4]
 
     return render_template('dashboard.html',
                          jobs=all_jobs,
@@ -1362,7 +1380,9 @@ def jobs_dashboard():
                          pipeline_log=pipeline_log,
                          pipeline_trace=pipeline_trace,
                          has_evaluations=has_evaluations,
-                         insight=insight)
+                         insight=insight,
+                         swarm=swarm,
+                         latest_aie_blogs=latest_aie_blogs)
 
 
 @app.route('/api/jobs/data')
@@ -1412,7 +1432,7 @@ def serve_static(path):
 
 _SITEMAP_STATIC_PAGES = [
     '/', '/skills', '/projects', '/resume', '/blog', '/aie', '/aie/blogs',
-    '/ecosystem', '/ecosystem/logs', '/mcp', '/docs', '/jobs', '/jobs/dashboard',
+    '/dashboard', '/ecosystem', '/ecosystem/logs', '/mcp', '/docs', '/jobs', '/jobs/dashboard',
     '/plotter',
 ]
 

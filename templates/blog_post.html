@@ -8,13 +8,15 @@
 <div class="container" style="max-width: 800px;">
     <div class="row">
         <div class="col-12">
-            {% if is_aie or post.category == 'AI Eco' %}
-            <a href="/aie/blogs" class="btn btn-outline-light btn-sm mb-4">
-                <i class="fas fa-arrow-left"></i> Back to AIE Blogs
-            </a>
-            {% else %}
-            <a href="/blog" class="btn btn-outline-light btn-sm mb-4">
+            <a href="/blog" class="btn btn-outline-light btn-sm mb-4 me-2">
                 <i class="fas fa-arrow-left"></i> Back to Blog
+            </a>
+            {% if is_aie or post.category == 'AI Eco' %}
+            <a href="/aie/blogs" class="btn btn-outline-info btn-sm mb-4 me-2">
+                <i class="fas fa-satellite-dish me-1"></i> AI Eco Archive
+            </a>
+            <a href="/ecosystem/logs" class="btn btn-outline-secondary btn-sm mb-4">
+                <i class="fas fa-terminal me-1"></i> 10-Agent Swarm Logs
             </a>
             {% endif %}
 

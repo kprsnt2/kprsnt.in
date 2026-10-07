@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Pipeline Dashboard | AI Career Agent{% endblock %}
+{% block title %}Autonomous Command Center & Dashboard | Prashanth Kumar Kadasi{% endblock %}
 
 {% block content %}
 <div class="container-fluid" style="max-width: 1400px;">
@@ -312,24 +312,264 @@
         }
     </style>
 
-    <!-- Hero -->
-    <div class="dash-hero">
-        <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+    <!-- Command Center Hero -->
+    <div class="dash-hero mb-4">
+        <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
             <div>
-                <a href="/jobs" style="color: var(--text-muted); font-size: 0.75rem; text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; margin-bottom: 0.5rem;">
-                    <i class="fas fa-arrow-left"></i> Back to Job List
-                </a>
-                <h2><i class="fas fa-chart-line" style="margin-right: 0.5rem;"></i>Pipeline Dashboard</h2>
-                <p>Career Agent Pipeline analytics — updated {{ month or 'daily' }}</p>
+                <div class="d-inline-flex align-items-center mb-2 px-3 py-1 rounded-pill" style="background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3);">
+                    <i class="fas fa-network-wired text-info me-2" style="font-size: 0.8rem;"></i>
+                    <span class="text-white small fw-semibold">Autonomous Systems Command Center</span>
+                    <span class="badge bg-success ms-2" style="font-size: 0.65rem; padding: 2px 7px;">LIVE TELEMETRY</span>
+                </div>
+                <h2><i class="fas fa-satellite-dish me-2"></i>Multi-Agent Fleet & Systems Telemetry</h2>
+                <p>Live health, automated evaluation pipelines, vulnerability audits, and daily multi-agent consensus across all production systems.</p>
             </div>
-            <div style="display: flex; gap: 0.75rem;">
-                <a href="/jobs" class="btn btn-sm" style="background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); font-weight: 600; border-radius: 10px;">
-                    <i class="fas fa-list"></i> Job List
+            <div class="d-flex flex-wrap gap-2">
+                <a href="/blog" class="btn btn-sm" style="background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); font-weight: 600; border-radius: 10px;">
+                    <i class="fas fa-blog me-1"></i> All Blog Posts &amp; Logs
                 </a>
-                <a href="/api/jobs/data" target="_blank" class="btn btn-sm" style="background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); font-weight: 600; border-radius: 10px;">
-                    <i class="fas fa-code"></i> API
+                <a href="/ecosystem/logs" class="btn btn-sm" style="background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); font-weight: 600; border-radius: 10px;">
+                    <i class="fas fa-terminal me-1"></i> 10-Agent Swarm Logs
+                </a>
+                <a href="/mcp" class="btn btn-sm" style="background: rgba(245,158,11,0.15); color: #fbbf24; border: 1px solid rgba(245,158,11,0.3); font-weight: 600; border-radius: 10px;">
+                    <i class="fas fa-plug me-1"></i> FastMCP Protocol
                 </a>
             </div>
+        </div>
+    </div>
+
+    <!-- Flagship Autonomous Agents Fleet -->
+    <div class="row g-3 mb-4">
+        <!-- JobAgents -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card h-100 bg-dark p-3" style="border: 1px solid rgba(99,102,241,0.3); border-radius: 14px; background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(0,0,0,0.5));">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="badge" style="background: rgba(99,102,241,0.2); color: #818cf8; border: 1px solid rgba(99,102,241,0.4); font-size: 0.7rem;">
+                        <i class="fas fa-briefcase me-1"></i> JobAgents
+                    </span>
+                    <span class="badge bg-success" style="font-size: 0.65rem;">● LIVE</span>
+                </div>
+                <h5 class="text-white mb-1 fw-bold" style="font-size: 1.05rem;">Production AI Pipeline</h5>
+                <p class="text-secondary small mb-3" style="line-height: 1.5; font-size: 0.8rem;">
+                    Autonomous multi-source ingestion (Adzuna, SerpApi, RemoteOK), 9-stage evaluation, salary benchmarks, and live pipeline analytics.
+                </p>
+                <div class="mb-3 p-2 rounded font-monospace text-muted small" style="background: rgba(0,0,0,0.4); font-size: 0.72rem;">
+                    <div><span class="text-info">●</span> Indexed: <strong>7,613 roles</strong></div>
+                    <div><span class="text-success">●</span> Freshness: <strong>&lt; 72h radar</strong></div>
+                </div>
+                <div class="mt-auto d-flex gap-2">
+                    <a href="https://job.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-primary flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                        <i class="fas fa-external-link-alt me-1"></i> Live Site ↗
+                    </a>
+                    <a href="/blog/jobagents-production-ai-career-pipeline" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                        Case Study
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- BugAgents -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card h-100 bg-dark p-3" style="border: 1px solid rgba(239,68,68,0.3); border-radius: 14px; background: linear-gradient(135deg, rgba(239,68,68,0.08), rgba(0,0,0,0.5));">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="badge" style="background: rgba(239,68,68,0.2); color: #f87171; border: 1px solid rgba(239,68,68,0.4); font-size: 0.7rem;">
+                        <i class="fas fa-shield-alt me-1"></i> BugAgents
+                    </span>
+                    <span class="badge bg-success" style="font-size: 0.65rem;">● LIVE</span>
+                </div>
+                <h5 class="text-white mb-1 fw-bold" style="font-size: 1.05rem;">Security Research Matrix</h5>
+                <p class="text-secondary small mb-3" style="line-height: 1.5; font-size: 0.8rem;">
+                    Dual-LLM offensive security auditing with 0% false positives, sandbox exploit verification, and responsible disclosure reports.
+                </p>
+                <div class="mb-3 p-2 rounded font-monospace text-muted small" style="background: rgba(0,0,0,0.4); font-size: 0.72rem;">
+                    <div><span class="text-danger">●</span> Arbiter: <strong>Dual-LLM Cross-Val</strong></div>
+                    <div><span class="text-warning">●</span> Verification: <strong>Deterministic PoCs</strong></div>
+                </div>
+                <div class="mt-auto d-flex gap-2">
+                    <a href="https://bug.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-danger flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                        <i class="fas fa-external-link-alt me-1"></i> Live Site ↗
+                    </a>
+                    <a href="/blog/bugagents-dual-llm-security-matrix" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                        Case Study
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- AgentSwarm -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card h-100 bg-dark p-3" style="border: 1px solid rgba(168,85,247,0.3); border-radius: 14px; background: linear-gradient(135deg, rgba(168,85,247,0.08), rgba(0,0,0,0.5));">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="badge" style="background: rgba(168,85,247,0.2); color: #c084fc; border: 1px solid rgba(168,85,247,0.4); font-size: 0.7rem;">
+                        <i class="fas fa-balance-scale me-1"></i> AgentSwarm
+                    </span>
+                    <span class="badge bg-success" style="font-size: 0.65rem;">● LIVE</span>
+                </div>
+                <h5 class="text-white mb-1 fw-bold" style="font-size: 1.05rem;">Forensic Arbiter Arena</h5>
+                <p class="text-secondary small mb-3" style="line-height: 1.5; font-size: 0.8rem;">
+                    32/32 cryptographic hash verification chains, multi-agent adversarial arbitration, drift benchmark radar, and full run reproducibility.
+                </p>
+                <div class="mb-3 p-2 rounded font-monospace text-muted small" style="background: rgba(0,0,0,0.4); font-size: 0.72rem;">
+                    <div><span class="text-primary">●</span> Audit Trail: <strong>32/32 Hash Chains</strong></div>
+                    <div><span class="text-info">●</span> Arbiter: <strong>Adversarial Consensus</strong></div>
+                </div>
+                <div class="mt-auto d-flex gap-2">
+                    <a href="https://agent.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-info flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                        <i class="fas fa-external-link-alt me-1"></i> Live Site ↗
+                    </a>
+                    <a href="/blog/02-building-the-forensic-arena" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                        Case Study
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Eco Swarm -->
+        <div class="col-12 col-md-6 col-xl-3">
+            <div class="card h-100 bg-dark p-3" style="border: 1px solid rgba(16,185,129,0.3); border-radius: 14px; background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(0,0,0,0.5));">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="badge" style="background: rgba(16,185,129,0.2); color: #34d399; border: 1px solid rgba(16,185,129,0.4); font-size: 0.7rem;">
+                        <i class="fas fa-atom me-1"></i> AI Eco Swarm
+                    </span>
+                    <span class="badge bg-success" style="font-size: 0.65rem;">● 10 AGENTS</span>
+                </div>
+                <h5 class="text-white mb-1 fw-bold" style="font-size: 1.05rem;">Self-Reflecting Swarm</h5>
+                <p class="text-secondary small mb-3" style="line-height: 1.5; font-size: 0.8rem;">
+                    10 specialized autonomous agents running midnight pipelines: commit monitoring, daily dev logs, weekly council meetings, and living memory.
+                </p>
+                <div class="mb-3 p-2 rounded font-monospace text-muted small" style="background: rgba(0,0,0,0.4); font-size: 0.72rem;">
+                    <div><span class="text-success">●</span> Cadence: <strong>Daily Midnight Cron</strong></div>
+                    <div><span class="text-warning">●</span> Living Memory: <strong>{{ swarm.word_count if swarm else 3400 }} words</strong></div>
+                </div>
+                <div class="mt-auto d-flex gap-2">
+                    <a href="/ecosystem" class="btn btn-sm btn-outline-success flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                        <i class="fas fa-chart-pie me-1"></i> Telemetry
+                    </a>
+                    <a href="/ecosystem/logs" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                        Swarm Logs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live Dispatches & Swarm Intelligence Stream -->
+    <div class="row g-4 mb-4">
+        <!-- Left: Latest Agent Writings -->
+        <div class="col-12 col-lg-7">
+            <div class="card h-100 bg-dark p-4" style="border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div>
+                        <h5 class="text-white mb-0 fw-bold">
+                            <i class="fas fa-satellite-dish text-info me-2"></i>Latest Autonomous Agent Writings
+                        </h5>
+                        <small class="text-secondary">Authentic daily dev logs published automatically by the GitHub Scout Agent</small>
+                    </div>
+                    <a href="/blog" class="btn btn-sm btn-outline-info rounded-pill px-3" style="font-size: 0.78rem;">
+                        View All on Blog <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                </div>
+
+                {% if latest_aie_blogs %}
+                <div class="d-flex flex-column gap-3">
+                    {% for log in latest_aie_blogs %}
+                    <div class="p-3 rounded-3" style="background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06);">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="badge bg-info text-dark" style="font-size: 0.68rem; padding: 3px 8px;">
+                                <i class="far fa-calendar-alt me-1"></i>{{ log.date }}
+                            </span>
+                            <span class="badge" style="background: rgba(102,126,234,0.15); color: #a29bfe; font-size: 0.68rem; border: 1px solid rgba(102,126,234,0.25);">
+                                <i class="fas fa-robot me-1"></i>{{ log.author or 'GitHub Scout Agent' }}
+                            </span>
+                        </div>
+                        <h6 class="text-white mb-1" style="font-size: 0.95rem; font-weight: 600;">
+                            <a href="/blog/{{ log.slug }}" class="text-white text-decoration-none">
+                                {{ log.title }}
+                            </a>
+                        </h6>
+                        <p class="text-secondary small mb-2" style="font-size: 0.8rem; line-height: 1.5;">
+                            {{ log.excerpt }}
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex gap-1 flex-wrap">
+                                {% for tag in log.tags[:3] %}
+                                <span class="badge bg-black text-muted" style="border: 1px solid rgba(255,255,255,0.08); font-size: 0.65rem;">{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                            <a href="/blog/{{ log.slug }}" class="text-info text-decoration-none small fw-semibold" style="font-size: 0.78rem;">
+                                Read Dispatch <i class="fas fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-secondary mb-0">Daily agent dev logs are generating on schedule.</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Right: Daily Swarm Consensus & Living Memory -->
+        <div class="col-12 col-lg-5">
+            <div class="card h-100 bg-dark p-4 d-flex flex-column justify-content-between" style="border: 1px solid rgba(155,89,182,0.25); border-radius: 16px; background: linear-gradient(135deg, rgba(155,89,182,0.06), rgba(0,0,0,0.5));">
+                <div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-uppercase fw-bold" style="font-size: 0.75rem; letter-spacing: 1px; color: #bb86fc;">
+                            <i class="fas fa-quote-left me-1"></i> Swarm Consensus (Today)
+                        </span>
+                        <span class="badge bg-success-subtle text-success" style="font-size: 0.7rem;">
+                            {{ swarm.architecture_quality if swarm else 'Strong & Maturing' }}
+                        </span>
+                    </div>
+                    <div class="p-3 mb-3 rounded-3" style="background: rgba(0,0,0,0.4); border-left: 3px solid #bb86fc;">
+                        <p class="text-light mb-0 small fst-italic" style="line-height: 1.6;">
+                            "{{ swarm.latest_opinion if swarm and swarm.latest_opinion else 'The swarm maintains continuous autonomous convergence. Daily perspectives synchronized with zero drift.' }}"
+                        </p>
+                    </div>
+
+                    <h6 class="text-white mb-2 fw-semibold" style="font-size: 0.85rem;">
+                        <i class="fas fa-compass text-warning me-1"></i> Active Roadmap Focus:
+                    </h6>
+                    <div class="d-flex flex-column gap-2 mb-3">
+                        {% if swarm and swarm.active_goals %}
+                            {% for goal in swarm.active_goals[:3] %}
+                            <div class="p-2 px-3 rounded-2 text-secondary small" style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); font-size: 0.78rem;">
+                                <strong class="text-white">{{ goal.title }}:</strong> {{ goal.detail }}
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-secondary small">Autonomous targets actively evolving.</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="d-flex gap-2 pt-2 border-top border-secondary border-opacity-25">
+                    <a href="/ecosystem" class="btn btn-sm btn-outline-info flex-fill" style="border-radius: 8px;">
+                        <i class="fas fa-network-wired me-1"></i> AI Eco Hub
+                    </a>
+                    <a href="/ecosystem/logs" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px;">
+                        <i class="fas fa-comments me-1"></i> 10-Agent Debates
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Pipeline Analytics Header -->
+    <div class="d-flex align-items-center justify-content-between mb-3 mt-2">
+        <div>
+            <h4 class="text-white mb-0 fw-bold">
+                <i class="fas fa-chart-line text-primary me-2"></i>Career Agent Pipeline Analytics
+            </h4>
+            <p class="text-secondary small mb-0">Production tracking of AI/LLM roles, evaluations, and compensation radar</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="/jobs" class="btn btn-sm" style="background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); font-weight: 600; border-radius: 10px;">
+                <i class="fas fa-list me-1"></i> Job List
+            </a>
+            <a href="/api/jobs/data" target="_blank" class="btn btn-sm" style="background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); font-weight: 600; border-radius: 10px;">
+                <i class="fas fa-code me-1"></i> Raw API
+            </a>
         </div>
     </div>
 
