@@ -406,7 +406,7 @@ MCP_RESOURCES = [
     },
     {
         "uri": "portfolio://skills/ponytail",
-        "name": "Ponytail Lazy Senior Dev Protocol",
+        "name": "Ponytail Minimalist Systems Dev Protocol",
         "description": "Standard prompt contracts, decision ladder, and anti-overengineering guidelines from the Ponytail protocol",
         "mimeType": "text/markdown"
     },

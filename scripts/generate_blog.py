@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 DRAFTS_DIR = BASE_DIR / "blog_drafts"
 OUTPUT_DIR = BASE_DIR / "blog_data"
 
-SYSTEM_PROMPT = """You are a Senior Developer Advocate and Technical Storyteller.
+SYSTEM_PROMPT = """You are an AI Systems Engineer and Technical Storyteller.
 Your goal is to transform the user's raw, stream-of-consciousness notes into an authentic, highly engaging engineering blog post or case study.
 
 Tone & Voice:

@@ -48,7 +48,7 @@
   "live_salary_estimation": {
     "min": 240000,
     "max": 380000,
-    "reasoning": "A developer with deep experience across autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, plus a large public/private repo footprint and strong full-stack language coverage, fits a US Senior/Staff AI Engineer profile. In major US markets, total annual compensation for this level commonly spans the mid-$200Ks to high-$300Ks depending on company tier, scope, and equity."
+    "reasoning": "A developer with deep experience across autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, plus a large public/private repo footprint and strong full-stack language coverage, fits a US Staff AI Engineer / AI Systems Engineer profile. In major US markets, total annual compensation for this level commonly spans the mid-$200Ks to high-$300Ks depending on company tier, scope, and equity."
   },
   "top_skills": [
     "Multi-Agent AI",
