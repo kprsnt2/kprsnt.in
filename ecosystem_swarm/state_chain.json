@@ -7,5 +7,23 @@
     "event": "PARITY_INIT",
     "actor": "SwarmOrchestrator",
     "payload_summary": "Parity upgrade verified"
+  },
+  {
+    "index": 2,
+    "timestamp": "2026-10-08T04:31:20.710412Z",
+    "prev_hash": "b7bede329d9a2f885d347b5a88cee6d8839018c787c547ffd22449eafffd8789",
+    "hash": "49aa9914b92298ecaef57a3599cdd8d765db3686f114d4a3cfaff7ce7287e5ad",
+    "event": "BLOG_DRAFT_PUBLISHED",
+    "actor": "ScoutAgent",
+    "payload_summary": "github-activity-2026-10-08.md"
+  },
+  {
+    "index": 3,
+    "timestamp": "2026-10-08T04:31:40.272516Z",
+    "prev_hash": "49aa9914b92298ecaef57a3599cdd8d765db3686f114d4a3cfaff7ce7287e5ad",
+    "hash": "8a1c2197ac611e6b165b37a34319dd04604cca99024b19aec1d69da63ddcdf4a",
+    "event": "DAILY_SWARM_CONSENSUS",
+    "actor": "SwarmCouncil",
+    "payload_summary": "2026-10-08"
   }
 ]
