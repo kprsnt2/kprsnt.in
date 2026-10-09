@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}Agent Vault{% endblock %}
+{% block description %}Private agent memory vault.{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="position: relative; z-index: 1; max-width: 1100px;">
+
+  <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
+    <div>
+      <h1 class="fw-bold mb-1" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+        <i class="fas fa-vault text-warning me-2"></i>Agent Vault
+      </h1>
+      <div class="text-secondary small">
+        <i class="fas fa-lock me-1"></i>Private · unlisted · no nav link.
+        Generated {{ vault.generated_at }}.
+      </div>
+    </div>
+    <span class="badge rounded-pill text-bg-dark border border-secondary">essence only · no raw logs</span>
+  </div>
+
+  <!-- Search -->
+  <div class="card bg-dark border-secondary mb-4">
+    <div class="card-body">
+      <label class="form-label text-secondary small mb-1">
+        <i class="fas fa-magnifying-glass me-1"></i>Search the vault (projects, memory, skills, digests)
+      </label>
+      <div class="input-group">
+        <input id="vaultQ" class="form-control bg-black text-light border-secondary"
+               placeholder="e.g. vercel site folder, opus routing, resume variants…"
+               onkeydown="if(event.key==='Enter'){vaultSearch();}">
+        <button class="btn btn-warning" onclick="vaultSearch()">Search</button>
+      </div>
+      <div id="vaultResults" class="mt-3"></div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <ul class="nav nav-pills mb-3" id="vaultTabs">
+    {% for t in ['Overview','Projects','Analytics','Skills','Brief','Threads','Obsidian'] %}
+    <li class="nav-item">
+      <button class="nav-link {% if loop.first %}active{% endif %} py-1 px-3 me-1 mb-1"
+              data-bs-toggle="pill" data-bs-target="#tab-{{ t|lower }}">{{ t }}</button>
+    </li>
+    {% endfor %}
+  </ul>
+
+  <div class="tab-content">
+
+    <!-- Overview -->
+    <div class="tab-pane fade show active" id="tab-overview">
+      <div class="card bg-dark border-secondary">
+        <div class="card-body vault-md">{{ vault.user_html|safe }}</div>
+      </div>
+      {% for s in vault.memory_sections %}
+      <div class="card bg-dark border-secondary mt-3">
+        <div class="card-header border-secondary fw-semibold">{{ s.title }}</div>
+        <div class="card-body vault-md">{{ s.html|safe }}</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Projects -->
+    <div class="tab-pane fade" id="tab-projects">
+      <div class="row g-3">
+        {% for p in vault.projects %}
+        <div class="col-md-6">
+          <div class="card bg-dark border-secondary h-100">
+            <div class="card-header border-secondary d-flex justify-content-between align-items-center">
+              <span class="fw-semibold">{{ p.name }}</span>
+              {% if p.git and p.git.commits %}<span class="badge text-bg-secondary">{{ p.git.commits }} commits</span>{% endif %}
+            </div>
+            <div class="card-body vault-md small">
+              {{ p.html|safe }}
+              {% if p.last_commit %}
+              <div class="text-secondary mt-2" style="font-size:.78rem;">
+                <i class="fas fa-code-commit me-1"></i>{{ p.last_commit.date[:10] }} — {{ p.last_commit.subject }}
+              </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Analytics -->
+    <div class="tab-pane fade" id="tab-analytics">
+      <div class="row g-3 mb-3">
+        {% set a = vault.analytics.totals %}
+        <div class="col-6 col-md-3"><div class="card bg-dark border-secondary text-center"><div class="card-body">
+          <div class="h4 mb-0 text-warning">{{ '{:,}'.format(a.total or 0) }}</div><div class="small text-secondary">tokens</div></div></div></div>
+        <div class="col-6 col-md-3"><div class="card bg-dark border-secondary text-center"><div class="card-body">
+          <div class="h4 mb-0 text-success">${{ '%.2f'|format(a.cost or 0) }}</div><div class="small text-secondary">cost (tracked)</div></div></div></div>
+        <div class="col-6 col-md-3"><div class="card bg-dark border-secondary text-center"><div class="card-body">
+          <div class="h4 mb-0 text-info">{{ '{:,}'.format(a.calls or 0) }}</div><div class="small text-secondary">model calls</div></div></div></div>
+        <div class="col-6 col-md-3"><div class="card bg-dark border-secondary text-center"><div class="card-body">
+          <div class="h4 mb-0 text-light">{{ ((vault.analytics.duration_ms or 0)/3600000)|round(1) }}h</div><div class="small text-secondary">wall clock</div></div></div></div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="card bg-dark border-secondary"><div class="card-header border-secondary">By model</div>
+            <div class="card-body p-0"><table class="table table-dark table-sm mb-0">
+              <thead><tr><th>Model</th><th class="text-end">Tokens</th><th class="text-end">Cost</th><th class="text-end">Calls</th></tr></thead>
+              <tbody>{% for r in vault.analytics.by_model[:12] %}
+                <tr><td class="text-truncate" style="max-width:220px;">{{ r.key }}</td><td class="text-end">{{ '{:,}'.format(r.total or 0) }}</td><td class="text-end">${{ '%.3f'|format(r.cost or 0) }}</td><td class="text-end">{{ r.calls or 0 }}</td></tr>
+              {% endfor %}</tbody></table></div></div>
+        </div>
+        <div class="col-md-6">
+          <div class="card bg-dark border-secondary"><div class="card-header border-secondary">By project</div>
+            <div class="card-body p-0"><table class="table table-dark table-sm mb-0">
+              <thead><tr><th>Project</th><th class="text-end">Tokens</th><th class="text-end">Cost</th></tr></thead>
+              <tbody>{% for r in vault.analytics.by_project[:12] %}
+                <tr><td class="text-truncate" style="max-width:220px;">{{ r.key }}</td><td class="text-end">{{ '{:,}'.format(r.total or 0) }}</td><td class="text-end">${{ '%.3f'|format(r.cost or 0) }}</td></tr>
+              {% endfor %}</tbody></table></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Skills -->
+    <div class="tab-pane fade" id="tab-skills">
+      <div class="card bg-dark border-secondary"><div class="card-body">
+        <div class="small text-secondary mb-2">{{ vault.skills|length }} skills indexed (hub + tool-bundled).</div>
+        <div class="d-flex flex-wrap gap-2">
+          {% for s in vault.skills %}
+          <span class="badge text-bg-dark border border-secondary" title="{{ s.description }}">{{ s.name }} <span class="text-secondary">· {{ s.source }}</span></span>
+          {% endfor %}
+        </div>
+      </div></div>
+    </div>
+
+    <!-- Brief -->
+    <div class="tab-pane fade" id="tab-brief">
+      <div class="card bg-dark border-secondary"><div class="card-body vault-md">{{ vault.brief_html|safe }}</div></div>
+    </div>
+
+    <!-- Threads -->
+    <div class="tab-pane fade" id="tab-threads">
+      <div class="card bg-dark border-secondary"><div class="card-body">
+        <ul class="mb-0">{% for t in vault.threads %}<li>{{ t }}</li>{% endfor %}</ul>
+      </div></div>
+    </div>
+
+    <!-- Obsidian -->
+    <div class="tab-pane fade" id="tab-obsidian">
+      <div class="card bg-dark border-secondary"><div class="card-body">
+        <p class="text-secondary small mb-2">Obsidian-friendly notes exported to <code>agent_vault/obsidian/</code>. Open that folder as a vault.</p>
+        <ul class="mb-0 small">{% for n in vault.obsidian_notes %}<li>{{ n }}</li>{% endfor %}</ul>
+      </div></div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .vault-md h1,.vault-md h2,.vault-md h3{font-size:1.05rem;margin-top:.8rem;}
+  .vault-md table{font-size:.82rem;}
+  .vault-md code{color:#fbbf24;}
+  #vaultResults .vr{border-left:3px solid #f59e0b;padding:.5rem .75rem;margin-bottom:.5rem;background:rgba(255,255,255,.03);border-radius:.35rem;}
+  #vaultResults .vr .src{font-size:.7rem;text-transform:uppercase;letter-spacing:.05em;color:#94a3b8;}
+</style>
+
+<script>
+const VAULT_TOKEN = {{ token|tojson }};
+async function vaultSearch() {
+  const q = document.getElementById('vaultQ').value.trim();
+  const box = document.getElementById('vaultResults');
+  if (!q) { box.innerHTML = ''; return; }
+  box.innerHTML = '<div class="text-secondary small">searching…</div>';
+  try {
+    const r = await fetch(`/vault/${VAULT_TOKEN}/search?q=${encodeURIComponent(q)}`);
+    if (!r.ok) { box.innerHTML = '<div class="text-danger small">not available</div>'; return; }
+    const d = await r.json();
+    if (!d.results || !d.results.length) { box.innerHTML = '<div class="text-secondary small">no matches</div>'; return; }
+    box.innerHTML = d.results.map(x =>
+      `<div class="vr"><div class="src">${x.source} · ${x.title} · ${x.score}</div><div class="small">${x.text.replace(/</g,'&lt;')}</div></div>`
+    ).join('');
+  } catch (e) { box.innerHTML = '<div class="text-danger small">search failed</div>'; }
+}
+</script>
+{% endblock %}

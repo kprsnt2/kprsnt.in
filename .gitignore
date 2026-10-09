@@ -19,3 +19,14 @@ scripts/generate_resume_node.package.json
 scripts/generate_resume_variants.js
 scripts/package.json
 scripts/package-lock.json
+
+# Private agent vault token (never commit)
+agent_vault/.token
+
+# Agent vault: plaintext essence stays local; only vault.enc + README are committed
+agent_vault/data.json
+agent_vault/search_index.json
+agent_vault/embeddings.json
+agent_vault/brief.md
+agent_vault/projects/
+agent_vault/obsidian/
