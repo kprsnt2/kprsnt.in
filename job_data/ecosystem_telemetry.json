@@ -1,20 +1,20 @@
 {
-  "last_updated": "2026-10-08T04:31:06.024699",
-  "commit_history": 1176,
+  "last_updated": "2026-10-09T04:34:29.642037",
+  "commit_history": 1179,
   "counted_commit_shas": [
+    "4046742",
+    "1de5fe4",
+    "a89da2a",
     "ff36d4f",
-    "d9b2181",
-    "30ffc5c",
-    "215d86e",
-    "1d885fe",
-    "c5edb94",
     "fd1874a",
     "f3474ef",
     "ef28e55",
     "e43a5db",
+    "d9b2181",
     "d602ae6",
     "cc9f137",
     "cbb63c3",
+    "c5edb94",
     "c4d808e",
     "a915ef0",
     "97be1ae",
@@ -32,11 +32,14 @@
     "42336a7",
     "4116b0b",
     "31e677b",
+    "30ffc5c",
     "2eea50b",
     "2a7c858",
     "2717aab",
     "25f56a3",
+    "215d86e",
     "206bec4",
+    "1d885fe",
     "1aa17ff",
     "14403ac",
     "13f1e4f",
@@ -51,9 +54,9 @@
     "Python": 10
   },
   "live_salary_estimation": {
-    "min": 320000,
-    "max": 520000,
-    "reasoning": "A developer with 100 repos across TypeScript, JavaScript, HTML, and Python, focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, aligns with senior/staff-level AI systems engineering scope. In the US market, Staff AI Engineer / AI Systems Engineer total annual compensation commonly lands in the low-to-mid six figures, with higher upside for exceptional depth and impact."
+    "min": 250000,
+    "max": 420000,
+    "reasoning": "A developer with 100 repos spanning TypeScript, JavaScript, HTML, and Python, focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, aligns with senior/staff-level AI systems and platform engineering roles. In the US market, total annual compensation for Staff AI Engineer / AI Systems Engineer profiles with this breadth and impact commonly falls in the mid-to-high six figures."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -74,31 +77,28 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/AgentSwarm] main: feat(phase6): add Unified Dark Sector theory, perturbation engine, S8 resolution, REVTeX manuscript, and Part 12 blog post | Files (51): arena/world/A001_PHASE6_UNIFIED_DARK_SECTOR_THEORY.md, arena/world/A002_PHASE6_UNIFIED_DARK_PERTURBATIONS_S8.md, arena/world/PHASE6_UNIFIED_DARK_SECTOR_GRAND_SYNTHESIS.md, arena/world/a001_phase6_unified_dark_sector_phase_transition.py, arena/world/a002_phase6_unified_dark_perturbations_s8.py, arena/world/paper/manuscript_phase6_unified_dark.tex (+3088/-84)",
-    "[kprsnt2/kprsnt.in] main: feat: redesign kprsnt.in into 2026 AI Systems Lab aesthetic with Bento Grid and live fleet telemetry | Files (4): api/index.py, static/css/custom.css, templates/about.html, templates/base.html (+674/-398)",
-    "[kprsnt2/solari-cookbook-ai-career] main: Remove GitHub Actions workflow | Files (1): .github/workflows/solari-pipeline.yml (+0/-48)",
-    "[kprsnt2/kprsnt.in] main: feat: feature BugAgents, AgentSwarm, and JobAgents; update title to AI Systems Engineer and record Optum CMS audit background | Files (4): api/data/projects.py, api/resume_data.py, templates/about.html, templates/base.html (+169/-19)",
-    "[kprsnt2/kprsnt.in] main: feat: surface AI Eco agent blogs on /blog, map /dashboard to Command Center, and link live agent fleet | Files (5): api/index.py, templates/about.html, templates/blog_post.html, templates/dashboard.html, templates/ecosystem.html (+320/-40)",
-    "[kprsnt2/kprsnt.in] commit c5edb94: feat(ai-eco): upgrade swarm to full parity with JobAgents, BugAgents & AgentSwarm | Files (265): parity), parity), clich\u00e9s, agent.kprsnt.in), Engineer, +0530, .cursor/rules/ponytail.mdc, .env.example\n    Commit Details: - Add Adversarial Bar-Raiser Gate and empirical ground-truth verification (BugAgents parity)"
+    "[kprsnt2/AgentSwarm] main: refactor(authors): update authorship to attribute exclusively to A001_DarkMatter, A002_QuantumCosmos, and the AgentSwarm Collective | Files (7): arena/world/paper/README.md, arena/world/paper/manuscript.tex, arena/world/paper/manuscript_phase6_unified_dark.tex, arena/world/paper/paper1_soliton_decoherence.zip, arena/world/paper/paper1_soliton_decoherence/main.tex, arena/world/paper/paper2_unified_dark_sector.zip (+25/-25)",
+    "[kprsnt2/AgentSwarm] main: docs(paper2): add Validation Status section recording agent-performed validation | Files (5): arena/world/paper/paper1_soliton_decoherence/Gravitational_Decoherence_and_Stochastic_Tidal_Phase_Diffusion_of_Galactic_Dark_Matter_Solitons__Microscopic_Lindblad_Evolution_and_Pulsar_Timing_Obse.pdf, arena/world/paper/paper2_unified_dark_sector/AUDIT_AND_KNOWN_LIMITATIONS.md, arena/world/paper/paper2_unified_dark_sector/main.tex, arena/world/paper/paper2_unified_dark_sector/paper2_unified_dark_sector.tex, arena/world/paper/paper2_unified_dark_sector/paper2_unified_dark_sector_v2.zip (+435/-1)\n    Commit Details: Paper 2 body preserved verbatim; appended Sec. VIII documenting that all\nderivation, mathematical formulation, numerical implementation and result\nvalidation were performed autonomously by the agents via an agent-authored\nmathematical script and automated test suites.\n\nRecords validated results (the",
+    "[kprsnt2/kprsnt.in] commit a89da2a: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (262): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
   ],
-  "daily_commits_count": 6,
+  "daily_commits_count": 3,
   "commit_timeline_7d": {
     "labels": [
-      "Fri",
       "Sat",
       "Sun",
       "Mon",
       "Tue",
       "Wed",
-      "Thu"
+      "Thu",
+      "Fri"
     ],
     "commits": [
-      10,
       5,
       0,
       6,
       1,
-      4,
+      7,
+      3,
       8
     ],
     "pipelines": [
