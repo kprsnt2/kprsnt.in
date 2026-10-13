@@ -106,5 +106,23 @@
     "event": "WEEKLY_COUNCIL_MEETING",
     "actor": "AlignmentCouncil",
     "payload_summary": "2026-W42"
+  },
+  {
+    "index": 13,
+    "timestamp": "2026-10-13T05:29:21.178867Z",
+    "prev_hash": "27ed07f7c3c69ee11abfc414cac2575aa9d4c29c14bcaee924a6921ed5f34c62",
+    "hash": "fb125af28294ae34186ecbb779198f3413edf3832dcdd9caa772c249d35d029e",
+    "event": "BLOG_DRAFT_PUBLISHED",
+    "actor": "ScoutAgent",
+    "payload_summary": "github-activity-2026-10-13.md"
+  },
+  {
+    "index": 14,
+    "timestamp": "2026-10-13T05:29:42.261532Z",
+    "prev_hash": "fb125af28294ae34186ecbb779198f3413edf3832dcdd9caa772c249d35d029e",
+    "hash": "5ffd9dcc548165882638c39214fed4e93c739222aedf777acc25e6f300a69bdb",
+    "event": "DAILY_SWARM_CONSENSUS",
+    "actor": "SwarmCouncil",
+    "payload_summary": "2026-10-13"
   }
 ]
