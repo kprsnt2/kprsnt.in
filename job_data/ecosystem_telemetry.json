@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-10-13T05:29:13.689601",
-  "commit_history": 1183,
+  "last_updated": "2026-10-14T03:32:30.175844",
+  "commit_history": 1184,
   "counted_commit_shas": [
-    "5cc89e9",
+    "34f3fc8",
     "ff36d4f",
     "fd1874a",
     "f3474ef",
@@ -23,6 +23,7 @@
     "87845b6",
     "65dea15",
     "6497664",
+    "5cc89e9",
     "5983417",
     "53bb533",
     "518df38",
@@ -58,9 +59,9 @@
     "Python": 10
   },
   "live_salary_estimation": {
-    "min": 250000,
-    "max": 420000,
-    "reasoning": "This profile aligns with US Staff AI Engineer / AI Systems Engineer scope due to deep experience across autonomous multi-agent systems and high-throughput analytics pipelines, plus strong full-stack and Python/TypeScript capability. With 100 repos and relevant modern languages, market compensation at major tech firms and well-funded AI companies typically falls in the mid-to-upper six figures, especially for staff-level impact."
+    "min": 300000,
+    "max": 550000,
+    "reasoning": "For a developer with 100 repos focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, the profile aligns with senior Staff AI Engineer / AI Systems Engineer scope at top-tier US tech companies. Compensation in this range reflects deep full-stack AI systems expertise, production-scale infrastructure experience, and strong open-source/project velocity."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -81,27 +82,27 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] commit 5cc89e9: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (279): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
+    "[kprsnt2/kprsnt.in] commit 34f3fc8: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (282): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
   ],
   "daily_commits_count": 1,
   "commit_timeline_7d": {
     "labels": [
-      "Wed",
       "Thu",
       "Fri",
       "Sat",
       "Sun",
       "Mon",
-      "Tue"
+      "Tue",
+      "Wed"
     ],
     "commits": [
-      7,
       4,
       1,
       0,
       0,
       0,
-      0
+      0,
+      7
     ],
     "pipelines": [
       1,
