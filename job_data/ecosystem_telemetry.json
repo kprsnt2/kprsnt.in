@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-10-14T03:32:30.175844",
-  "commit_history": 1184,
+  "last_updated": "2026-10-15T03:12:12.038055",
+  "commit_history": 1185,
   "counted_commit_shas": [
-    "34f3fc8",
+    "fcb2a99",
     "ff36d4f",
     "fd1874a",
     "f3474ef",
@@ -34,6 +34,7 @@
     "4116b0b",
     "4046742",
     "35891cc",
+    "34f3fc8",
     "31e677b",
     "30ffc5c",
     "2eea50b",
@@ -59,9 +60,9 @@
     "Python": 10
   },
   "live_salary_estimation": {
-    "min": 300000,
-    "max": 550000,
-    "reasoning": "For a developer with 100 repos focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, the profile aligns with senior Staff AI Engineer / AI Systems Engineer scope at top-tier US tech companies. Compensation in this range reflects deep full-stack AI systems expertise, production-scale infrastructure experience, and strong open-source/project velocity."
+    "min": 220000,
+    "max": 420000,
+    "reasoning": "A developer with 100 repositories across TypeScript, JavaScript, HTML, and Python, focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, aligns with senior/staff-level AI systems engineering scope. In the US market, total annual compensation for Staff AI Engineer / AI Systems Engineer roles commonly spans this range depending on company tier, equity, and impact."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -82,27 +83,27 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] commit 34f3fc8: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (282): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
+    "[kprsnt2/kprsnt.in] commit fcb2a99: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (285): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
   ],
   "daily_commits_count": 1,
   "commit_timeline_7d": {
     "labels": [
-      "Thu",
       "Fri",
       "Sat",
       "Sun",
       "Mon",
       "Tue",
-      "Wed"
+      "Wed",
+      "Thu"
     ],
     "commits": [
-      4,
       1,
       0,
       0,
       0,
       0,
-      7
+      0,
+      3
     ],
     "pipelines": [
       1,
