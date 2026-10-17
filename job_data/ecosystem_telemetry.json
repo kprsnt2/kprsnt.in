@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-10-16T03:08:02.924488",
-  "commit_history": 1186,
+  "last_updated": "2026-10-17T02:59:41.526287",
+  "commit_history": 1187,
   "counted_commit_shas": [
-    "100c28e",
+    "f373b96",
     "ff36d4f",
     "fd1874a",
     "fcb2a99",
@@ -50,6 +50,7 @@
     "1478dfe",
     "14403ac",
     "13f1e4f",
+    "100c28e",
     "0ae139a",
     "05fcb57"
   ],
@@ -61,9 +62,9 @@
     "Python": 11
   },
   "live_salary_estimation": {
-    "min": 280000,
+    "min": 300000,
     "max": 520000,
-    "reasoning": "For a developer with 100 repos and deep experience across TypeScript, JavaScript, HTML, and Python in autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, US Staff AI Engineer / AI Systems Engineer compensation typically sits at the upper end of senior technical bands. The range reflects strong product and infrastructure impact potential, especially for roles combining distributed systems, agentic AI, and scalable data processing."
+    "reasoning": "A developer with deep experience across autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, plus a large open-source footprint across 100 repos, aligns with senior/staff-level AI systems talent in the US market. For Staff AI Engineer / AI Systems Engineer roles, total annual compensation commonly ranges from strong upper-mid to top-tier tech compensation depending on company stage and equity mix."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -84,7 +85,7 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] commit 100c28e: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (288): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
+    "[kprsnt2/kprsnt.in] commit f373b96: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (291): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
   ],
   "daily_commits_count": 1,
   "commit_timeline_7d": {
