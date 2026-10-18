@@ -1,11 +1,13 @@
 {
-  "last_updated": "2026-10-17T02:59:41.526287",
-  "commit_history": 1187,
+  "last_updated": "2026-10-18T03:01:41.394430",
+  "commit_history": 1189,
   "counted_commit_shas": [
-    "f373b96",
+    "0a29a66",
+    "698cc7d",
     "ff36d4f",
     "fd1874a",
     "fcb2a99",
+    "f373b96",
     "f3474ef",
     "ef28e55",
     "e43a5db",
@@ -63,8 +65,8 @@
   },
   "live_salary_estimation": {
     "min": 300000,
-    "max": 520000,
-    "reasoning": "A developer with deep experience across autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, plus a large open-source footprint across 100 repos, aligns with senior/staff-level AI systems talent in the US market. For Staff AI Engineer / AI Systems Engineer roles, total annual compensation commonly ranges from strong upper-mid to top-tier tech compensation depending on company stage and equity mix."
+    "max": 550000,
+    "reasoning": "A developer with deep experience across autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, plus a large portfolio of 100 repos in TypeScript/JavaScript/Python, aligns with senior/staff-level AI systems roles at top-tier US tech firms. For US Staff AI Engineer / AI Systems Engineer compensation, total annual pay commonly spans this range depending on company tier, equity, and scope."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -85,27 +87,28 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] commit f373b96: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (291): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
+    "[kprsnt2/medicare-enrollment-sim] main: sim: overlap independent model calls (5.6x faster live day) | Files (11): README.md, config/settings.json, src/enrollsim/agents.py, src/enrollsim/budget.py, src/enrollsim/cli.py, src/enrollsim/ledger.py (+619/-100)\n    Commit Details: A live day is ~73 model calls and every one is seconds of waiting on the\nnetwork. They were issued strictly one at a time, so the day cost the sum of\nevery call: 228s and 262s of wall clock in the 2026-10-15/16 Actions runs, all\nof it inside gw.call (intake 108s, resolver 60s, notices 52s, audit 8s)",
+    "[kprsnt2/kprsnt.in] commit 698cc7d: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (294): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
   ],
-  "daily_commits_count": 1,
+  "daily_commits_count": 2,
   "commit_timeline_7d": {
     "labels": [
-      "Sat",
-      "Sun",
       "Mon",
       "Tue",
       "Wed",
       "Thu",
-      "Fri"
+      "Fri",
+      "Sat",
+      "Sun"
     ],
     "commits": [
       0,
       0,
       0,
       0,
-      0,
-      0,
-      1
+      1,
+      1,
+      0
     ],
     "pipelines": [
       1,
