@@ -1,9 +1,8 @@
 {
-  "last_updated": "2026-10-18T03:01:41.394430",
-  "commit_history": 1189,
+  "last_updated": "2026-10-19T03:15:56.430204",
+  "commit_history": 1190,
   "counted_commit_shas": [
-    "0a29a66",
-    "698cc7d",
+    "334bbe0",
     "ff36d4f",
     "fd1874a",
     "fcb2a99",
@@ -24,6 +23,7 @@
     "94974a8",
     "8bbcd09",
     "87845b6",
+    "698cc7d",
     "65dea15",
     "6497664",
     "5cc89e9",
@@ -54,6 +54,7 @@
     "13f1e4f",
     "100c28e",
     "0ae139a",
+    "0a29a66",
     "05fcb57"
   ],
   "repo_counts": 100,
@@ -64,9 +65,9 @@
     "Python": 11
   },
   "live_salary_estimation": {
-    "min": 300000,
-    "max": 550000,
-    "reasoning": "A developer with deep experience across autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, plus a large portfolio of 100 repos in TypeScript/JavaScript/Python, aligns with senior/staff-level AI systems roles at top-tier US tech firms. For US Staff AI Engineer / AI Systems Engineer compensation, total annual pay commonly spans this range depending on company tier, equity, and scope."
+    "min": 240000,
+    "max": 420000,
+    "reasoning": "A developer with deep experience across TypeScript, JavaScript, HTML, and Python plus a 100-repo portfolio building autonomous AI multi-agent ecosystems and high-throughput analytics pipelines aligns with senior Staff AI Engineer / AI Systems Engineer scope. In the US market, total annual compensation for this level commonly ranges from the mid-$200Ks to low-$400Ks depending on company stage, location, and equity mix."
   },
   "top_skills": [
     "Multi-Agent AI",
@@ -87,27 +88,26 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/medicare-enrollment-sim] main: sim: overlap independent model calls (5.6x faster live day) | Files (11): README.md, config/settings.json, src/enrollsim/agents.py, src/enrollsim/budget.py, src/enrollsim/cli.py, src/enrollsim/ledger.py (+619/-100)\n    Commit Details: A live day is ~73 model calls and every one is seconds of waiting on the\nnetwork. They were issued strictly one at a time, so the day cost the sum of\nevery call: 228s and 262s of wall clock in the 2026-10-15/16 Actions runs, all\nof it inside gw.call (intake 108s, resolver 60s, notices 52s, audit 8s)",
-    "[kprsnt2/kprsnt.in] commit 698cc7d: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (294): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
+    "[kprsnt2/kprsnt.in] commit 334bbe0: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (297): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
   ],
-  "daily_commits_count": 2,
+  "daily_commits_count": 1,
   "commit_timeline_7d": {
     "labels": [
-      "Mon",
       "Tue",
       "Wed",
       "Thu",
       "Fri",
       "Sat",
-      "Sun"
+      "Sun",
+      "Mon"
     ],
     "commits": [
       0,
       0,
       0,
+      1,
+      1,
       0,
-      1,
-      1,
       0
     ],
     "pipelines": [

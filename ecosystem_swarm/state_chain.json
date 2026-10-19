@@ -214,5 +214,32 @@
     "event": "DAILY_SWARM_CONSENSUS",
     "actor": "SwarmCouncil",
     "payload_summary": "2026-10-18"
+  },
+  {
+    "index": 25,
+    "timestamp": "2026-10-19T03:16:03.010269Z",
+    "prev_hash": "8c50dedb8b02a059182c7949f4b58161caf56f61019f6aae368ea562a093b297",
+    "hash": "7f2a6c8d6c76c05ee426845305b08eb97c5603f584809477fded9cc346a56427",
+    "event": "BLOG_DRAFT_PUBLISHED",
+    "actor": "ScoutAgent",
+    "payload_summary": "github-activity-2026-10-19.md"
+  },
+  {
+    "index": 26,
+    "timestamp": "2026-10-19T03:16:19.406981Z",
+    "prev_hash": "7f2a6c8d6c76c05ee426845305b08eb97c5603f584809477fded9cc346a56427",
+    "hash": "54c28a1215a710168e4828cb5ff08708f26bc62dc43f4add50ac2392346b1efa",
+    "event": "DAILY_SWARM_CONSENSUS",
+    "actor": "SwarmCouncil",
+    "payload_summary": "2026-10-19"
+  },
+  {
+    "index": 27,
+    "timestamp": "2026-10-19T03:16:23.448706Z",
+    "prev_hash": "54c28a1215a710168e4828cb5ff08708f26bc62dc43f4add50ac2392346b1efa",
+    "hash": "b0647e38a32f1e612871afef29b3f9ca3f12207c2540dbab7bf766254ba0d4ad",
+    "event": "WEEKLY_COUNCIL_MEETING",
+    "actor": "AlignmentCouncil",
+    "payload_summary": "2026-W43"
   }
 ]
