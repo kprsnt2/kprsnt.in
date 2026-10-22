@@ -1,8 +1,11 @@
 {
-  "last_updated": "2026-10-21T03:19:23.870241",
-  "commit_history": 1192,
+  "last_updated": "2026-10-22T03:17:58.091841",
+  "commit_history": 1196,
   "counted_commit_shas": [
-    "0fa2bb1",
+    "ec8bb27",
+    "255aaa3",
+    "d5f101d",
+    "38b80e6",
     "ff36d4f",
     "fd1874a",
     "fcb2a99",
@@ -55,6 +58,7 @@
     "14403ac",
     "13f1e4f",
     "100c28e",
+    "0fa2bb1",
     "0ae139a",
     "0a29a66",
     "05fcb57"
@@ -85,27 +89,30 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] commit 0fa2bb1: 🤖 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (304): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
+    "[kprsnt2/kprsnt.in] main: fix(content): source every claim on the site from profile.md ground truth | Files (67): AI_Eco_Blogs/github-activity-2026-10-07.md, api/ai_eco_mcp.py, api/data/case_studies.py, api/data/portfolio_kb.py, api/data/projects.py, api/index.py (+2029/-865)\n    Commit Details: The portfolio, resume, chatbot/MCP knowledge base and case studies had\ndrifted from D:\\JobAgents\\config\\profile.md and were overstating the work.\n\nStale or invented numbers removed (superseded profile.md metrics and\nnever-true ones): 7,533 / 7,500+ jobs, 5,784 roles, 1,864 duplicates,\n22,647 scores,",
+    "[kprsnt2/AILearn] main: Deploy: GitHub Pages via .nojekyll, custom domain learn.kprsnt.in | Files (3): .nojekyll, CNAME, _probe.js (+1/-47)",
+    "[kprsnt2/AILearn] main: Add cross-device sync (tools/sync.html + _sync.js) backed by kprsnt.in + Vercel KV | Files (2): _sync.js, tools/index.html (+80/-93)",
+    "[kprsnt2/kprsnt.in] commit 38b80e6: fix(paths): normalise repo-relative data paths for POSIX hosts | Files (327): component, is, whole, False., found, long, only, differently.\n    Commit Details: Data paths were built as `os.path.join(os.path.dirname(__file__), '..', 'job_data')`"
   ],
-  "daily_commits_count": 1,
+  "daily_commits_count": 4,
   "commit_timeline_7d": {
     "labels": [
-      "Thu",
       "Fri",
       "Sat",
       "Sun",
       "Mon",
       "Tue",
-      "Wed"
+      "Wed",
+      "Thu"
     ],
     "commits": [
-      0,
       1,
       2,
       0,
       0,
       0,
-      0
+      0,
+      3
     ],
     "pipelines": [
       1,
