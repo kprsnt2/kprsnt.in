@@ -28,25 +28,7 @@
     <!-- Top Stats Row -->
     <div class="row g-4 mb-4">
         
-        <div class="col-md-3">
-            <div class="card h-100 bg-dark" style="border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; border-left: 4px solid #3498db;">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-                        <h6 class="text-secondary text-uppercase mb-0" style="font-size: 0.75rem; letter-spacing: 1px;">US Market Benchmark</h6>
-                        <span class="badge bg-primary-subtle text-primary" style="font-size: 0.65rem;">Staff AI</span>
-                    </div>
-                    <h3 class="text-white mt-2 mb-1">${{ '{:,}'.format(data.live_salary_estimation.min) }} - ${{ '{:,}'.format(data.live_salary_estimation.max) }}</h3>
-                    <p class="text-success small mb-2"><i class="fas fa-arrow-up me-1"></i> Based on Market Trends</p>
-                    {% if data.live_salary_estimation.reasoning %}
-                    <p class="text-muted mb-0 font-monospace" style="font-size: 0.72rem; line-height: 1.4;" title="{{ data.live_salary_estimation.reasoning }}">
-                        <i class="fas fa-robot text-info me-1"></i> {{ data.live_salary_estimation.reasoning|truncate(90) }}
-                    </p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card h-100 bg-dark" style="border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; border-left: 4px solid #9b59b6;">
                 <div class="card-body">
                     <h6 class="text-secondary text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px;">Active Agents</h6>
@@ -56,7 +38,7 @@
             </div>
         </div>
         
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card h-100 bg-dark" style="border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; border-left: 4px solid #e74c3c;">
                 <div class="card-body">
                     <h6 class="text-secondary text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px;">Repositories Tracked</h6>
@@ -66,7 +48,7 @@
             </div>
         </div>
         
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card h-100 bg-dark" style="border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; border-left: 4px solid #2ecc71;">
                 <div class="card-body">
                     <h6 class="text-secondary text-uppercase" style="font-size: 0.8rem; letter-spacing: 1px;">Total Commits</h6>
@@ -131,7 +113,9 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h5 class="card-title text-white mb-0">Pipeline Health & Commit Timeline</h5>
-                        <span class="badge bg-success">100% Success Rate</span>
+                        {% if data.pipeline_success_rate is defined and data.pipeline_success_rate is not none %}
+                        <span class="badge bg-success">{{ data.pipeline_success_rate }}</span>
+                        {% endif %}
                     </div>
                     <div style="height: 300px; width: 100%;">
                         <canvas id="timelineChart"></canvas>
@@ -195,7 +179,7 @@
                         <div class="bg-success rounded-circle me-3" style="width: 10px; height: 10px;"></div>
                         <div>
                             <p class="text-white mb-0"><strong>Dashboard Agent</strong> updated telemetry JSON</p>
-                            <small class="text-secondary">Calculated live salary: ${{ '{:,}'.format(data.live_salary_estimation.max) }}</small>
+                            <small class="text-secondary">Refreshed commit and language statistics</small>
                         </div>
                     </div>
                     

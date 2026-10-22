@@ -349,13 +349,13 @@
                     </span>
                     <span class="badge bg-success" style="font-size: 0.65rem;">● LIVE</span>
                 </div>
-                <h5 class="text-white mb-1 fw-bold" style="font-size: 1.05rem;">Production AI Pipeline</h5>
+                <h5 class="text-white mb-1 fw-bold" style="font-size: 1.05rem;">Automated Job Search Pipeline</h5>
                 <p class="text-secondary small mb-3" style="line-height: 1.5; font-size: 0.8rem;">
-                    Autonomous multi-source ingestion (Adzuna, SerpApi, RemoteOK), 9-stage evaluation, salary benchmarks, and live pipeline analytics.
+                    Multi-agent pipeline sourcing roles from ATS APIs across 10 sources, with deterministic matching (zero model calls), resume tailoring, and outreach drafting.
                 </p>
                 <div class="mb-3 p-2 rounded font-monospace text-muted small" style="background: rgba(0,0,0,0.4); font-size: 0.72rem;">
-                    <div><span class="text-info">●</span> Indexed: <strong>7,613 roles</strong></div>
-                    <div><span class="text-success">●</span> Freshness: <strong>&lt; 72h radar</strong></div>
+                    <div><span class="text-info">●</span> Local snapshot: <strong>{{ total_jobs }} jobs in job_data</strong></div>
+                    <div><span class="text-success">●</span> Pipeline total: <strong>7,665 distinct roles sourced</strong></div>
                 </div>
                 <div class="mt-auto d-flex gap-2">
                     <a href="https://job.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-primary flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
@@ -379,11 +379,11 @@
                 </div>
                 <h5 class="text-white mb-1 fw-bold" style="font-size: 1.05rem;">Security Research Matrix</h5>
                 <p class="text-secondary small mb-3" style="line-height: 1.5; font-size: 0.8rem;">
-                    Dual-LLM offensive security auditing with 0% false positives, sandbox exploit verification, and responsible disclosure reports.
+                    Two autonomous agents on disjoint targets in live bug bounty programs. A report-promotion gate only promotes a finding the workspace corroborates.
                 </p>
                 <div class="mb-3 p-2 rounded font-monospace text-muted small" style="background: rgba(0,0,0,0.4); font-size: 0.72rem;">
-                    <div><span class="text-danger">●</span> Arbiter: <strong>Dual-LLM Cross-Val</strong></div>
-                    <div><span class="text-warning">●</span> Verification: <strong>Deterministic PoCs</strong></div>
+                    <div><span class="text-danger">●</span> Findings: <strong>8 · 5 High/Critical</strong></div>
+                    <div><span class="text-warning">●</span> Gate: <strong>2 Promoted / 34 Refused</strong></div>
                 </div>
                 <div class="mt-auto d-flex gap-2">
                     <a href="https://bug.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-danger flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
@@ -407,11 +407,11 @@
                 </div>
                 <h5 class="text-white mb-1 fw-bold" style="font-size: 1.05rem;">Forensic Arbiter Arena</h5>
                 <p class="text-secondary small mb-3" style="line-height: 1.5; font-size: 0.8rem;">
-                    32/32 cryptographic hash verification chains, multi-agent adversarial arbitration, drift benchmark radar, and full run reproducibility.
+                    Unattended multi-agent research arena with an independent oracle checking every turn for phantom artifacts, fabricated numbers and asserted verdicts.
                 </p>
                 <div class="mb-3 p-2 rounded font-monospace text-muted small" style="background: rgba(0,0,0,0.4); font-size: 0.72rem;">
-                    <div><span class="text-primary">●</span> Audit Trail: <strong>32/32 Hash Chains</strong></div>
-                    <div><span class="text-info">●</span> Arbiter: <strong>Adversarial Consensus</strong></div>
+                    <div><span class="text-primary">●</span> Audit Trail: <strong>35/35 Hash Chains</strong></div>
+                    <div><span class="text-info">●</span> Oracle: <strong>0 Violations / 1,254 Calls</strong></div>
                 </div>
                 <div class="mt-auto d-flex gap-2">
                     <a href="https://agent.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-info flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
@@ -435,11 +435,11 @@
                 </div>
                 <h5 class="text-white mb-1 fw-bold" style="font-size: 1.05rem;">Self-Reflecting Swarm</h5>
                 <p class="text-secondary small mb-3" style="line-height: 1.5; font-size: 0.8rem;">
-                    10 specialized autonomous agents running midnight pipelines: commit monitoring, daily dev logs, weekly council meetings, and living memory.
+                    10 specialized autonomous agents running daily GitHub Actions pipelines: commit monitoring, daily dev logs, weekly council meetings, and living memory.
                 </p>
                 <div class="mb-3 p-2 rounded font-monospace text-muted small" style="background: rgba(0,0,0,0.4); font-size: 0.72rem;">
                     <div><span class="text-success">●</span> Cadence: <strong>Daily Midnight Cron</strong></div>
-                    <div><span class="text-warning">●</span> Living Memory: <strong>{{ swarm.word_count if swarm else 3400 }} words</strong></div>
+                    <div><span class="text-warning">●</span> Living Memory: <strong>{% if swarm and swarm.word_count %}{{ swarm.word_count }} words{% else %}&lt; 4,000 words{% endif %}</strong></div>
                 </div>
                 <div class="mt-auto d-flex gap-2">
                     <a href="/ecosystem" class="btn btn-sm btn-outline-success flex-fill" style="border-radius: 8px; font-size: 0.78rem;">

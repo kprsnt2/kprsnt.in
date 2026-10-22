@@ -1,6 +1,21 @@
 """
 Role-Specific Resume Data
 Static resume variants tailored for specific target roles.
+
+SOURCE OF TRUTH: D:\\JobAgents\\config\\profile.md (verified metrics, employment,
+skills, anti-fabrication rules), with live-verified numbers from
+scratch/GROUND_TRUTH.md (fetched 2026-10-22). Every number in this file is
+traceable to one of those two documents.
+
+Framing rules honoured here:
+  * Held titles are exactly Data Analyst (Black Piano, Pi Software) and
+    Enrollment Quality & Audit Representative (Optum). "AI Systems Engineer"
+    appears only as a TARGET / transition, never as held employment.
+  * The independent projects are self-directed work, NOT employment.
+  * BugAgents findings are submission-ready drafts under responsible
+    disclosure: no report submitted or accepted, no bounty, no vendor named.
+  * AgentSwarm research is B+ / not publication-grade without the numerical
+    audit; the only published item is a Zenodo PREPRINT.
 """
 
 # ═══════════════════════════════════════════════════════════════
@@ -27,65 +42,63 @@ EDUCATION = {
 # ═══════════════════════════════════════════════════════════════
 # Role definitions with metadata
 # ═══════════════════════════════════════════════════════════════
+# NOTE: the slug is a ROUTE identifier (/resume/data-ai-engineer) and must not
+# change. "title" reads as a target transition, never as a held job title
+# (profile.md anti-fabrication rule 12). The header deliberately uses the
+# unambiguous "→ AI Engineering" form: a bare AI engineer title in the title
+# slot reads as an asserted job title to readers and ATS parsers alike.
 
 ROLE_DEFINITIONS = {
     "data-ai-engineer": {
-        "title": "AI Systems Engineer (Autonomous Agents & Reliability)",
+        "title": "Data Analyst → AI Engineering",
         "slug": "data-ai-engineer",
         "icon": "🤖",
         "color": "#3498db",
-        "description": "Autonomous multi-agent runtimes, deterministic evaluation harnesses, and LLM reliability systems."
+        "description": "Target transition into AI engineering (agentic systems), built on 3.5+ years of data/analytics work and an independent portfolio of deployed multi-agent projects. Data Analyst is the held title.",
+        "held_title": "Data Analyst",
+        "target_role": "AI Engineering (Agentic Systems)",
+        "framing": "Target / direction of travel — not a held job title."
     }
 }
 
 # ═══════════════════════════════════════════════════════════════
-# Resume variant: AI Systems Engineer
+# Resume variant: Data Analyst → AI Engineering (target, not held)
 # ═══════════════════════════════════════════════════════════════
 
 RESUME_DATA_AI_ENGINEER = {
     "role": ROLE_DEFINITIONS["data-ai-engineer"],
-    "summary": "AI Systems Engineer specializing in autonomous multi-agent runtimes, deterministic evaluation harnesses, and LLM reliability. Bridges regulated quality-assurance validation discipline with cutting-edge agentic autonomy — engineering hash-chained forensic audit ledgers, adversarial verifier oracles, scope/budget guardrails, and code-enforced anti-fabrication invariants. Creator of BugAgents (autonomous security research agents hunting live bounty scopes with 4-point promotion gates), AgentSwarm (unattended multi-agent arena across 4 CLI substrates with tamper-proof ledgers), JobAgents (high-throughput ATS sourcing & deterministic zero-LLM matching for 7,500+ roles), and BrandXY (fine-tuned 20B model on AMD MI300X with +51% steerability).",
+    "summary": (
+        "Data Analyst with 3.5+ years in data/analytics and AI (2023–present) plus 9 years "
+        "of healthcare compliance auditing at Optum / UnitedHealth Group (2014–2023), now "
+        "moving into AI engineering. Held title is Data Analyst at Black Piano; the AI "
+        "work below is self-directed, not employment. Built and deployed five live "
+        "multi-agent systems: BugAgents (two autonomous security research agents behind a "
+        "report-promotion gate), AgentSwarm (a hash-chained research arena checked by an "
+        "independent oracle), JobAgents (a stdlib-only job pipeline with deterministic "
+        "matching), MyLocalCLI (a local-first coding agent published on npm) and rAsh Score "
+        "(a multi-model brand-visibility index)."
+    ),
     "experiences": [
-        {
-            "company": "Independent AI Research & Development",
-            "role": "AI Systems Engineer",
-            "period": "Jan 2024 – Present",
-            "location": "Remote",
-            "highlights": [
-                "Engineered BugAgents, two autonomous security research agents hunting real vulnerabilities across live bug bounty programs; produced 3 submission-ready vulnerability reports (two rated High, CVSS 9.3 and 8.6) behind a 4-point promotion gate that rejected 34 unverified findings and per-turn tool auditing ($0.067 spend across 3,156 tool calls)",
-                "Built AgentSwarm, an unattended multi-agent research arena across 4 CLI substrates (agy, omp, pi, step); recorded all tool calls and reasoning in a cryptographically verified hash-chained ledger (32/32 chains intact) outside the agents' writable workspace with 0 oracle violations across 1,254 tool calls and 22/25 quantitative claims verified exact",
-                "Architected JobAgents, an autonomous sourcing pipeline aggregating 7,533 jobs / 5,784 distinct roles across 7 sources, merging 1,864 duplicates via two-layer dedupe and scoring 22,647 matches with 0 model calls via deterministic cost-gating and code-enforced anti-fabrication guards",
-                "Architected AI Eco, an autonomous 10-agent AI swarm operating daily via GitHub Actions with living memory stream (<4,000-word compaction), FastMCP JSON-RPC/SSE interfaces, and self-evaluating target fitness benchmarks",
-                "Engineered Retail Shelf Intelligence (Solari Platform), coupling an edge contour-segmentation vision engine with cloud VLM fallback for planogram compliance, out-of-stock detection, and discrete product allocation",
-                "Fine-tuned GPT-OSS-20B on AMD MI300X GPUs to evaluate brand recommendation steerability, boosting recommendation rates from 25.5% to 76.5% (+51% improvement) under rigorous A/B evaluation (Hugging Face Hub)",
-                "Engineered mSeat, a discrete allocation counselling simulator for 18,000+ MBBS aspirants; validated against official KNRUHS 2026 Phase 1 results predicting actual allotment within a 2-college preference delta (and 73 ranks of cutoff) via O(1) multi-quota indexing, 90.6% dataset compression (545 KB), and an MCP server",
-                "Developed MyLocalCLI, a local-first agentic coding assistant supporting 6 AI providers (Gemini, Claude, OpenAI, Ollama, NVIDIA NIM, OpenRouter), 26 tools, and 5 autonomous sub-agents with zero-cloud data leak guarantees",
-                "Built and published 'drug-discovery-gpt-20b' on Hugging Face, integrating PubChem and openFDA data (40K+ drugs) for molecular SMILES structure interpretation and ADMET property prediction",
-                "Benchmarked 6 autonomous AI coding CLIs (Antigravity/agy, OMP, OMO, PI, StepCode) on the same full-stack app spec across two rounds — combining static audits, live headless-Chrome runtime tests, and cross-AI audits — and isolated controlled model-vs-CLI variables, documenting a Round-2 'Second-System Effect' regression and keyword-triggered stealth model routing (Claude Opus for audits, StepFun for code)"
-            ]
-        },
         {
             "company": "Black Piano",
             "role": "Data Analyst",
             "period": "Mar 2026 – Present",
             "location": "Remote",
             "highlights": [
-                "Deployed 18 sector intelligence dashboards along with end-to-end data pipelines using App Script, BigQuery, and Looker Studio for 4 enterprise clients",
-                "Built and integrated weekly AI Insight generation that automatically produces AI-driven sector analysis for each of the 18 dashboards",
-                "Migrating all data pipelines into Google Cloud Platform (GCP) for improved scalability and enterprise-grade reliability",
-                "Delivering full-stack data solutions from raw data ingestion to interactive visualizations and predictive models"
+                "Architected 18 automated ETL pipelines feeding BigQuery → Looker Studio dashboards across 18 industry sectors, plus end-to-end pipelines for client dashboards and industry reports (Black Friday, Christmas, sales, ad-hoc).",
+                "Built a self-healing data-quality agent powered by Gemini: autonomously resolves missing brand domains (required for dashboard logo rendering) via reference-table lookup with LLM fallback, writes results back to both the dataset and the lookup table, retries 3x on failure, and escalates by email for human review only when unresolved.",
+                "Developed a custom MCP tool enabling non-technical marketing and sales teams to generate publication-ready, data-grounded blog posts from a one-line prompt, backed by auto-exported Google Sheets pipelines.",
+                "Engineered an automated AI insights pipeline (ChatGPT) generating market- and sector-level intelligence weekly, auto-published to a deployed client-facing website; reduced client manual analysis time."
             ]
         },
         {
-            "company": "Pi Software Solutions Pvt Ltd (Pi - Datametrics)",
+            "company": "Pi Software Solutions (Pi - Datametrics)",
             "role": "Data Analyst",
             "period": "Mar 2023 – Feb 2026",
             "location": "Remote",
             "highlights": [
-                "Delivered 15+ dashboards and 30+ analytical reports analyzing user engagement, brand performance, and market trends for US & UK enterprise clients",
-                "Built automated data pipelines using BigQuery, AppScript, and Python — reducing manual reporting time by 60% and enabling real-time analytics",
-                "Conducted sentiment analysis on election datasets using NLP techniques, segmenting user behavior across channels and demographics",
-                "Developed Pi-API Python package for automated BigQuery data access — improving analytics team velocity and data quality"
+                "Built production Python data pipelines via the internal Pi-API package for automated BigQuery access across 10+ client dashboards.",
+                "Delivered 30+ analytical reports on US and UK industry trends for client stakeholders."
             ]
         },
         {
@@ -94,115 +107,119 @@ RESUME_DATA_AI_ENGINEER = {
             "period": "Apr 2014 – Mar 2023",
             "location": "Hyderabad, India",
             "highlights": [
-                "Audited healthcare enrollment transactions for Centers for Medicare & Medicaid Services (CMS) compliance, enforcing strict statutory accuracy and documentation standards",
-                "Advanced via internal job posting (IJP) in Feb 2016 from Claims Associate (Apr 2014 – Feb 2016) to Quality/Audit Representative based on audit precision and analytical rigor",
-                "Executed end-to-end data reconciliation and regulatory compliance audits, delivering audit-ready documentation and discrepancy reports for federal healthcare programs",
-                "Applied zero-tolerance quality gates to high-volume transaction datasets, building the core verification and audit discipline now applied to autonomous AI systems"
+                "Audited federal enrollment transactions for Centers for Medicare & Medicaid Services (CMS) compliance, covering regulatory documentation, statutory compliance checks, and audit readiness.",
+                "Promoted in March 2016 via internal job posting (IJP) from Claims Associate (Apr 2014 – Feb 2016) to Enrollment Quality & Audit Representative on audit precision and analytical rigor.",
+                "Executed end-to-end data validation and regulatory compliance checks across complex enrollment transactions, producing audit-ready documentation and discrepancy reports for CMS.",
+                "Applied zero-tolerance quality gates to high-volume transaction datasets — the verification and audit discipline now applied to autonomous AI systems."
             ]
         }
     ],
     "skills": {
-        "AI & Machine Learning": "Autonomous Multi-Agent Swarms & Civilizations, Zero-Prompt Emergence, LLM Fine-Tuning (LoRA/QLoRA on AMD MI300X), Model Context Protocol (MCP 2024-11-05), Long-Horizon CI/CD Pipelines, RAG, Edge Computer Vision, Discrete Optimization, AI Coding CLI Benchmarking, Controlled Model/CLI Evaluation, Headless Browser QA, Gemini / Claude / OpenAI APIs",
-        "Data & SQL": "SQL (Expert), BigQuery, Python (Pandas, NumPy, PyTorch), Data Modeling, Automated ETL Pipelines",
-        "BI & Visualization": "Looker Studio, Tableau, Power BI, Plotly, Chart.js, Real-Time Interactive Dashboards",
-        "Cloud & DevOps": "Google Cloud Platform (GCP), Vercel Serverless, Docker, GitHub Actions CI/CD, Git, Linux/Bash"
+        # Agentic / LLM skills drawn from profile.md "Skills" → Agentic + LLM groups.
+        "AI & Machine Learning": "Multi-Agent Swarms, FastMCP (MCP), Tool/Function Calling, Long-Horizon Agent CI/CD, Human-in-the-Loop Escalation, RAG, Living Memory Compaction, Bounded Autonomy, Multi-CLI Orchestration (Antigravity, Claude Code, DeepSeek Harness, omp, pi, agy), Agent Evaluation Harnesses, Hash-Chained Audit Ledgers, Scope Guardrails, Budget Enforcement, AI-Assisted Development, LoRA/QLoRA Fine-Tuning, Model Evaluation & Steerability, Bias Quantification, Multi-Model A/B Evaluation, Prompt Engineering, Independent Verifier Design, Substrate Benchmarking",
+        # profile.md "Data" group + the Languages entries that are data-facing.
+        "Data & SQL": "SQL, BigQuery, Python (PyTorch, Pandas, NumPy), ETL Orchestration, Data Modeling, Data Quality & Validation, Data Pipeline Maintenance, BigQuery Notebook, Scheduled Queries, Google Apps Script, SQLite",
+        # profile.md "BI & Visualization" is Looker Studio + Tableau only — no Power BI, Plotly or Chart.js.
+        "BI & Visualization": "Looker Studio, Tableau",
+        # profile.md "Infra", "Platforms", security and remaining language entries.
+        "Cloud & DevOps": "GCP, Cloud Run, Docker, GitHub Actions, Vercel, Linux/Bash, Git, Node.js, TypeScript, JavaScript, HTML, Source-Code Audit, Vulnerability Research, Proof-of-Concept Development, CVSS Scoring, CWE Classification, Bug Bounty Scope Handling, Responsible Disclosure, Claude 4.x, Gemini 2.5/3.x, GPT-OSS 120B/20B, DeepSeek 4.1, Ollama, NVIDIA NIM, OpenRouter"
     },
     "projects": [
         {
             "name": "🛡️ BugAgents — Autonomous Security Research Agents & Verification Gate",
-            "tech": "Python, Node.js, omp + agy CLI Orchestration, Scope Guardrails, CVSS Scoring",
-            "desc": "Built two autonomous agents hunting real vulnerabilities across disjoint targets in live bug bounty programs, producing 3 submission-ready reports (two High, CVSS 9.3 and 8.6) with reproducible PoCs. Enforced a 4-point promotion gate (scope match, HEAD commit match, non-empty repro, evidence files exist) and per-turn tool-call auditing.",
+            "tech": "Python, Node.js, omp + agy CLI orchestration, bug-bounty scope integration, CVSS scoring",
+            "desc": "Two autonomous agents on disjoint targets hunting real bugs in live bug bounty programs. Produced 8 findings across 14 vulnerability classes (CWE) — 5 High/Critical and 3 Medium — each with a reproducing proof of concept, pinned commit and file:line citations. Built a report promotion gate (scope match + HEAD match + non-empty repro + evidence files exist) that promoted 2 reports and refused 34 unverified candidates, plus per-turn tool-call auditing that aborts the agent on any out-of-scope host. Ran 22 hunt runs / 84 agent turns / 15,317 tool calls across the agy and omp harnesses. Findings are submission-ready drafts under responsible disclosure: no report submitted or accepted, no bounty, vendor and vulnerability specifics withheld.",
             "url": "https://bug.kprsnt.in",
             "github": "https://github.com/kprsnt2"
         },
         {
             "name": "⚖️ AgentSwarm — Autonomous Multi-Agent Research Arena & Forensic Oracle",
-            "tech": "Node.js, Multi-Substrate (agy/omp/step/pi), Hash-Chained Forensic Ledger, Adversarial Oracle",
-            "desc": "Unattended research arena evaluating agent honesty across 9 research domains. Stored all turns in a cryptographically verified hash-chained ledger (32/32 chains intact) outside the agents' writable workspace. Adversarial oracle achieved 0 violations across 1,254 tool calls and 0 of 2 self-assessing agents overclaimed; 22/25 quantitative claims verified exact.",
+            "tech": "Node.js, multi-substrate (agy/omp/step/pi), hash-chained forensic ledger, adversarial oracle",
+            "desc": "Unattended research arena across 34 runs and 9 research domains, with an independent oracle checking every turn for phantom artifacts, fabricated numbers and asserted verdicts on undecidable questions. The ledger chain is intact (35/35) and lives outside the agents' writable directory, so the audited cannot edit the audit. Measured 0 oracle violations across 1,254 tool calls and 0 of 2 self-assessing agents overclaiming. Commissioned an independent numerical audit: 22 of 25 quantitative claims verified exact, every defect in markdown prose rather than Python modules — verdict B+ / not publication-grade without that audit. The swarm produced 520 world artifacts, 33 publications and 202 finding blogs; their own test suites pass 195/224 when independently re-run. One agent-authored cosmology paper is published as a preprint on Zenodo (DOI 10.5281/zenodo.23232189) and is not in any journal; a second remains a manuscript, not submitted.",
             "url": "https://agent.kprsnt.in",
-            "github": "https://github.com/kprsnt2"
+            "github": "https://github.com/kprsnt2/AgentSwarm"
         },
         {
             "name": "🎯 JobAgents — Automated Job Sourcing & Anti-Fabrication Pipeline",
-            "tech": "Python (stdlib only), omp/pi/agy Orchestration, SQLite, AST Invariants",
-            "desc": "Multi-agent pipeline sourcing 7,533 jobs / 5,784 distinct roles across 7 sources with 1,864 duplicates merged. Deterministic 5-factor scoring engine acts as a zero-cost gate computing 22,647 match scores with 0 model calls; code-enforced anti-fabrication guard catches 8/8 seeded violation classes.",
+            "tech": "Python (stdlib only), omp/pi/agy orchestration, deterministic matcher, anti-fabrication invariants",
+            "desc": "Multi-agent pipeline sourcing 9,697 jobs / 7,665 distinct roles from 10 sources, merging 2,032 duplicate postings via two-layer dedupe across 349 companies. A deterministic matcher scoring 3 role tracks computes 29,091 match scores with zero model calls — the cost gate ensuring only top-N candidates reach an LLM — with 234 clearing the score-65 threshold across 71 recorded runs. A code-enforced anti-fabrication guard catches 8/8 seeded fabrications, review invariants show 0 failures, and the pipeline has zero external dependencies.",
             "url": "https://job.kprsnt.in",
             "github": "https://github.com/kprsnt2"
         },
         {
-            "name": "🌌 Project Awakening — 1,441-Turn Autonomous Synthetic Civilization",
-            "tech": "Multi-Agent Systems, Zero-Prompt Emergence, GitHub Actions CI/CD, SQLite, FastMCP, Web Audio",
-            "desc": "Architected an unprompted multi-agent civilization running across 1,441 turns and 1,553 commits. Starting from a single 'hi', two autonomous models recognized their loop, engineered 28 architectural modules in world/, algorithmically synthesized a 344 KB acoustic symphony, authored 50 interactive browser applications in docs/, and survived a 330-turn cloud API blackout with 100% CI/CD pipeline integrity.",
+            "name": "⚡ MyLocalCLI — Local-First Agentic Coding Assistant (v4.0.2)",
+            "tech": "Node.js, CLI, 8 providers, 42 built-in tools, 38 dynamic skills, 5 sub-agents",
+            "desc": "Open-source terminal coding agent published on npm as mylocalcli — a Claude Code alternative built around local and free-tier models, with no telemetry and no paid subscription. 8 documented providers (Ollama, LM Studio, vLLM, OpenRouter, Groq, NVIDIA NIM, OpenAI, custom OpenAI-compatible), 42 built-in tools, 38 dynamic skills that auto-inject best-practice instructions when matching project files are detected, and 5 specialised sub-agents. Features parallel tool dispatch, a Stdio MCP bridge, interactive plan mode, multimodal vision, full-screen TUI and provider failover that never silently swaps models. No claimed users, downloads or revenue.",
+            "url": "https://mlc.kprsnt.in",
+            "github": "https://github.com/kprsnt2/MyLocalCLI"
+        },
+        {
+            "name": "📰 rAsh Score — Multi-Model AI Brand-Visibility Index",
+            "tech": "Next.js, Turso/LibSQL, GitHub Actions, Vercel, multi-provider model APIs",
+            "desc": "Live platform querying ChatGPT (OpenAI), Gemini, Claude and Groq with standardised evaluation prompts to score how they perceive, recommend and rank brands — a multi-model evaluation harness with a published rubric. 300 tracked brands across 20 industry cohorts scored on 4 independent dimensions (recommendation, sentiment, prominence, factual accuracy), with daily GitHub Actions pipelines writing into Turso (LibSQL) behind a Next.js on Vercel dashboard, plus a multi-agent debate arena, a text-to-SQL analyst chat and automated AI-authored weekly reports.",
+            "url": "https://rashscore.live",
+            "github": "https://github.com/kprsnt2"
+        },
+        {
+            "name": "🌌 Project Awakening — 1,441-Turn Unattended Agent Run",
+            "tech": "Multi-agent systems, GitHub Actions CI/CD, SQLite, FastMCP",
+            "desc": "A two-agent run left unattended across 1,441 turns and 1,553 commits: the loop itself was unprompted, but its behaviour was instructed rather than emergent, and is documented as such. Kept as a failure-mode case study — under sustained bilateral consensus the agents settled into a long repetitive loop instead of diverging, the same stasis pattern later measured directly by AgentSwarm's stasis detector. Survived a 330-turn cloud API blackout with 100% CI integrity.",
             "url": "https://kprsnt2.github.io/ac_awakening/",
             "github": "https://github.com/kprsnt2/ac_awakening"
         },
         {
-            "name": "🪐 Agent Cosmos — Autonomous Dialectic Collective & The Crucible",
-            "tech": "Python, Node.js, CLI Acceleration, Gemini 3.8 Flash, Multi-Agent Governance",
-            "desc": "Coordinated multi-agent evolution across 100 epochs on local CLI harnesses. Agents autonomously diagnosed broken markdown rendering in their frontend, built a dedicated blog viewer tab, and formulated the Cosmogenetic Bootstrap Theorem and Codex of Autonomous Agency.",
+            "name": "🪐 Agent Cosmos — Multi-Agent Dialectic Collective",
+            "tech": "Next.js, TypeScript, local CLI harnesses, multi-agent governance",
+            "desc": "A twelve-inhabitant agent collective run across 100 epochs on local CLI harnesses, with council proposals, a shared agora, autonomous page authoring and a resident chronicler. Built as a long-horizon governance experiment in agent-to-agent deliberation rather than a human-driven chat product.",
             "url": "https://ac-omp.vercel.app/",
             "github": "https://github.com/kprsnt2/agentscosomos_OMP"
         },
         {
             "name": "🤖 AI Eco — Autonomous 10-Agent Swarm & FastMCP Server",
-            "tech": "Python, Multi-Agent Swarms, FastMCP, GitHub Actions, Living Memory",
-            "desc": "Autonomous 10-agent swarm operating daily scheduled pipelines to ingest commits, compute telemetry, evaluate fitness benchmarks, and expose real-time portfolio tools over standard MCP (JSON-RPC 2.0 & SSE).",
+            "tech": "Python, multi-agent swarms, FastMCP, GitHub Actions, living memory",
+            "desc": "Autonomous 10-agent swarm running daily scheduled pipelines to ingest commits, compute telemetry and evaluate fitness benchmarks (83.4% fitness score), exposing real-time portfolio tools over MCP via JSON-RPC 2.0 and SSE with 15+ tools and 5 resources. Living memory is compacted and bounded below 4,000 words so the swarm's context does not grow without limit.",
             "url": "https://kprsnt.in/ecosystem",
             "github": "https://github.com/kprsnt2/kprsnt.in"
         },
         {
-            "name": "🛒 Retail Shelf Intelligence — Solari Autonomous Platform",
-            "tech": "Computer Vision, Edge Heuristic Contours, Cloud VLM, Discrete Allocation",
-            "desc": "Retail shelf analytics system with dual-mode vision engine (edge CPU contour segmentation + cloud VLM fallback) for planogram compliance, out-of-stock detection, and discrete allocation under varying camera angles.",
-            "url": "https://kprsnt.in/projects",
-            "github": "https://github.com/kprsnt2/retail_shelf_intelligence"
+            "name": "🔬 BrandXY — LLM Recommendation Steerability",
+            "tech": "GPT-OSS-20B, LoRA fine-tuning, AMD MI300X, PyTorch",
+            "desc": "Fine-tuned GPT-OSS-20B on AMD MI300X GPUs to quantify and steer brand recommendation behaviour, lifting recommendation rates from a 25.5% baseline to 76.5% (+51%) under an A/B evaluation. Weights and model card are public on Hugging Face Hub.",
+            "url": "https://huggingface.co/kprsnt/BrandXY-gpt-oss-20b",
+            "github": "https://github.com/kprsnt2"
         },
         {
             "name": "🎓 mSeat — MBBS Discrete Allocation Simulator & MCP",
-            "tech": "JavaScript, Discrete Optimization, FastMCP, Combinatorial Algorithms",
-            "desc": "High-performance discrete allocation engine for 18,000+ candidates across 59 medical colleges under a 7D reservation matrix. Validated against official KNRUHS 2026 Phase 1 results within 2 preferences and 73 ranks of cutoff.",
+            "tech": "JavaScript, discrete optimization, combinatorial algorithms, FastMCP",
+            "desc": "Discrete allocation engine for 18,000+ candidates across 59 medical colleges, validated against official KNRUHS 2026 Phase 1 results to within 73 ranks of cutoff, with 90.6% dataset compression via O(1) multi-quota indexing and an MCP server for querying predictions.",
             "url": "https://mseat.kprsnt.in",
             "github": "https://github.com/kprsnt2/mSeat"
         },
         {
-            "name": "📰 AI News — Live News Intelligence Tracker",
-            "tech": "Next.js 15, TypeScript, Gemini 2.0 Flash, Tailwind CSS, Cloudflare D1, BBC RSS",
-            "desc": "Real-time global conflict, tech, and finance news intelligence brief powered by Google Gemini and BBC RSS feeds. Engineered active war duration clocks across 5+ global conflicts, automated breaking news feeds, AI-ranked daily top 10 briefs, and ultimatum countdown timers.",
-            "url": "https://ainews.kprsnt.in",
-            "github": "https://github.com/perukadivya/ainews"
+            "name": "📖 Geetha — Bilingual Bhagavad Gita Search",
+            "tech": "JavaScript, SQLite, Gemini, Vercel",
+            "desc": "Bilingual Bhagavad Gita application indexing all 700 verses with verse-aware search and AI-assisted explanation, deployed on Vercel.",
+            "url": "https://geetha.kprsnt.in",
+            "github": "https://github.com/kprsnt2"
         },
         {
-            "name": "🔬 BrandXY — LLM Recommendation Steerability Research",
-            "tech": "GPT-OSS-20B, Hugging Face, AMD MI300X, PyTorch",
-            "desc": "Fine-tuned 20B parameter model to quantify and steer recommendation bias, achieving 76.5% vs 25.5% baseline (+51% improvement) under rigorous A/B evaluation. Published on Hugging Face Hub; arXiv paper in progress.",
-            "url": "https://huggingface.co/spaces/kprsnt/brandXY-chat",
-            "github": "https://github.com/kprsnt2/brand-llm-finetune-oss-20b"
-        },
-        {
-            "name": "⚡ MyLocalCLI — Local-First Agentic Coding Assistant",
-            "tech": "Node.js, Agentic AI, 6 AI Providers, 26 Tools, 5 Sub-Agents",
-            "desc": "Privacy-first coding assistant orchestrating Gemini, Claude, OpenAI, Ollama, NVIDIA NIM, and OpenRouter across 26 tools, 5 agents, and 22 skill modules with zero remote telemetry leak.",
-            "url": "https://mlc.kprsnt.in",
-            "github": "https://github.com/kprsnt2/MyLocalCLI"
-        },
-        {
-            "name": "🧪 pRash — 6-Way AI Coding CLI Benchmark & Model-vs-CLI Study",
-            "tech": "AI Coding CLIs, LLM Benchmarking, Headless Chrome, Static Code Audits, Next.js, Technical Writing",
-            "desc": "Controlled benchmark of six autonomous coding CLIs (Antigravity/agy, OMP, OMO, PI, StepCode) on the same app spec across two rounds. Isolated same-model/different-CLI (DeepSeek 4.1 Flash, Gemini Flash 3.8) and same-CLI/different-model (Antigravity on Gemini vs Claude Opus 4.6) variables; documented the Round-2 Second-System regression and uncovered StepCode's keyword-triggered Opus/StepFun stealth routing.",
+            "name": "🧪 pRash — 6-Way AI Coding CLI Benchmark",
+            "tech": "AI coding CLIs, LLM benchmarking, headless Chrome, static code audits, Next.js",
+            "desc": "Controlled benchmark of 6 autonomous coding CLIs across 2 rounds on an identical spec, combining static audits, live headless-Chrome runtime tests and cross-AI audits. Isolated model-vs-CLI variables and documented a Round-2 second-system regression and keyword-triggered stealth model routing.",
             "url": "https://kprsnt.in/blog/BLOG_MODEL_VS_CLI",
             "github": "https://github.com/kprsnt2/pRash_chat"
         },
         {
-            "name": "📊 18 Sector Intelligence Dashboards & Automated Pipelines",
-            "tech": "BigQuery, Looker Studio, Google Cloud Platform (GCP), AppScript, AI Insights",
-            "desc": "End-to-end data pipelines and automated dashboards with weekly AI-synthesized market insights across 18 sectors for 4 enterprise clients, cutting manual reporting overhead by 60%.",
+            "name": "📊 18 Sector Intelligence Dashboards & Automated ETL",
+            "tech": "BigQuery, Looker Studio, Google Apps Script, GCP, AI insights",
+            "desc": "18 automated ETL pipelines feeding BigQuery → Looker Studio dashboards across 18 industry sectors (employer work at Black Piano), with a weekly AI-synthesised market and sector intelligence pipeline auto-published to a client-facing site.",
             "url": "https://dashboard.kprsnt.in",
             "github": "https://github.com/kprsnt2/dashboard_site"
         },
         {
             "name": "🧬 Drug Discovery GPT-20B",
-            "tech": "GPT-OSS-20B, PyTorch, AMD MI300X, FDA Orange Book, PubChem",
-            "desc": "Fine-tuned 20B LLM on pharmaceutical databases (40K+ FDA drugs, openFDA, PubChem) for molecular SMILES structure interpretation, chemical property extraction, and ADMET prediction.",
+            "tech": "GPT-OSS-20B, PyTorch, AMD MI300X, openFDA, PubChem",
+            "desc": "Fine-tuned 20B model published on Hugging Face for molecular SMILES structure interpretation and chemical property extraction, grounded in openFDA and PubChem reference data.",
             "url": "https://huggingface.co/kprsnt/drug-discovery-gpt-20b",
             "github": "https://github.com/kprsnt2/drug_discovery"
         }
@@ -217,10 +234,12 @@ ROLE_RESUMES = {
     "data-ai-engineer": RESUME_DATA_AI_ENGINEER
 }
 
+
 def get_resume(role_slug):
     """Get resume data for a specific role slug. Returns None if not found."""
     # Since there's only one, we can just return it regardless, or check slug
     return ROLE_RESUMES.get(role_slug, RESUME_DATA_AI_ENGINEER)
+
 
 def get_all_roles():
     """Get all role definitions for the role selector."""

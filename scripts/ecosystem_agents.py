@@ -595,31 +595,19 @@ def fetch_github_stats():
         print(f"Error fetching GitHub stats: {e}")
         return None
 def update_telemetry(stats):
-    """Update the job_data/ecosystem_telemetry.json file with new stats and AI salary estimation."""
+    """Update the job_data/ecosystem_telemetry.json file with new stats.
+
+    Deliberately does NOT emit a salary estimate. The Dashboard Agent used to
+    ask an LLM for a USD compensation range and publish it as a "live market
+    benchmark". That is a model guess, not a measurement, and it framed the
+    profile at Staff level — both forbidden by profile.md's anti-fabrication
+    rules. Verified compensation lives in profile.md, not on the site.
+    """
     if not stats:
         return
-        
+
     print("Updating telemetry...")
-    
-    salary_est = {
-        "min": 240000,
-        "max": 380000,
-        "reasoning": "A developer with 100 repositories, strong breadth across TypeScript, JavaScript, Python, and HTML, and specialized experience building AI multi-agent ecosystems fits a Staff AI Engineer / AI Systems Engineer profile."
-    }
-    if call_llm:
-        prompt = f"Given a developer with {stats['repo_counts']} repos, top languages {list(stats['language_breakdown'].keys())}, building autonomous AI multi-agent ecosystems and high-throughput analytics pipelines. Output ONLY a valid JSON object with: {{\"min\": <number>, \"max\": <number>, \"reasoning\": \"<concise 1-2 sentence justification for US Staff AI Engineer / AI Systems Engineer annual compensation in USD>\"}}. Ensure min and max are positive integers."
-        try:
-            res = call_llm(prompt, system_prompt="You are the Dashboard Agent in Prashanth's autonomous AI Eco swarm. Output valid JSON compensation benchmarks adhering to the ecosystem skill prompt contract.", json_mode=True)
-            parsed = json.loads(res)
-            if isinstance(parsed, dict) and "min" in parsed and "max" in parsed:
-                salary_est = {
-                    "min": int(parsed["min"]),
-                    "max": int(parsed["max"]),
-                    "reasoning": str(parsed.get("reasoning", salary_est["reasoning"]))
-                }
-        except Exception as e:
-            print(f"LLM Salary estimation failed: {e}")
-    
+
     existing_telemetry = {}
     if TELEMETRY_PATH.exists():
         try:
@@ -642,7 +630,6 @@ def update_telemetry(stats):
         "counted_commit_shas": stats.get("counted_commit_shas", existing_telemetry.get("counted_commit_shas", [])),
         "repo_counts": stats["repo_counts"],
         "language_breakdown": stats["language_breakdown"],
-        "live_salary_estimation": salary_est,
         "top_skills": ["Multi-Agent AI", "Model Context Protocol (MCP)", "BigQuery", "Python", "Flask", "GitHub Actions", "TypeScript"],
         "mcp_endpoints_active": 4,
         "automations_running": 12,
@@ -1072,7 +1059,7 @@ def run_critic_agent(stats):
 
         active_gaps_count = len(gap_data["active_gaps"])
         antipersona_md = f"""# Adversarial Antipersona Agent: Architectural Red-Team Notes
-*Audited: {now_str} | Agent: Agent 8 (Adversarial Bar-Raiser / Antipersona) | Skill: Staff+ Architecture Stress-Testing*
+*Audited: {now_str} | Agent: Agent 8 (Adversarial Bar-Raiser / Antipersona) | Skill: Architecture Stress-Testing & Gap Analysis*
 
 ## Role & Operating Philosophy
 The **Antipersona Agent** acts as the swarm's adversarial red-team stress-tester. While builder agents optimize for features and velocity, the Antipersona relentlessly probes for catastrophic failure modes, cold-start timeouts, quota starvation, and hidden dependencies.
@@ -1395,7 +1382,7 @@ Generate a markdown document adhering strictly to this structure:
 
 ## 📊 Agent 2: Dashboard Agent (Velocity & Value Anchor)
 - **Velocity Metrics**: [Assessment of 7-day commit cadence and pipeline health]
-- **Market Alignment**: [US Staff AI Engineer compensation alignment based on touched skills]
+- **Market Alignment**: [Skill-to-market alignment for data/analytics and AI engineering roles]
 - **Telemetry Action**: [Validation of monotonic commit counts and metric persistence]
 
 ---
@@ -1487,7 +1474,7 @@ Tone: Authentic, technically rigorous, engineer-to-engineer, candid domain criti
 
 ## 📊 Agent 2: Dashboard Agent (Velocity & Value Anchor)
 - **Velocity Metrics**: Total repository portfolio remains stable at {repo_counts} projects with continuous 7-day rolling window integrity.
-- **Market Alignment**: Staff AI Engineer / AI Systems Engineer compensation benchmark remains aligned with multi-agent orchestration and FastMCP capabilities.
+- **Market Alignment**: Multi-agent orchestration and FastMCP capabilities tracked against AI engineering role requirements.
 - **Telemetry Action**: Confirmed monotonic commit history recording in `job_data/ecosystem_telemetry.json`.
 
 ---
@@ -1734,7 +1721,7 @@ def main():
     print("📡 Running Agent 1: GitHub Scout Agent...")
     stats = fetch_github_stats()
     if stats:
-        # 2. Dashboard Agent: Compute telemetry & salary estimation
+        # 2. Dashboard Agent: Compute telemetry
         print("📊 Running Agent 2: Dashboard Agent...")
         update_telemetry(stats)
         generate_blog_draft(stats)

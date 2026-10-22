@@ -38,9 +38,22 @@ def test_portfolio_kb_titles_normalize_consistently():
 
 
 def test_portfolio_kb_title_aligns_with_site():
+    """The KB must not claim an AI/agentic job title as held employment.
+
+    profile.md rule 12: held titles are Data Analyst and Enrollment Quality &
+    Audit Representative (CMS Auditor). The move into AI engineering is a
+    target/direction, so PROFILE["target_role"] carries it explicitly and
+    PROFILE["title"] must describe the actual position.
+    """
     from api.data.portfolio_kb import PROFILE
 
-    assert PROFILE["title"] == "AI Systems Engineer"
+    assert PROFILE["title"] == "Data Analyst moving into AI engineering"
+    assert PROFILE["current_title"] == "Data Analyst"
+    assert "AI" in PROFILE["target_role"]
+    # No inflated seniority anywhere in the KB profile.
+    for field in ("title", "target_role", "current_title"):
+        for banned in ("Staff", "Principal", "Founding", "Head of"):
+            assert banned not in PROFILE[field], f"{banned!r} in PROFILE[{field!r}]"
 
 
 def test_case_study_domains_are_known_labels():

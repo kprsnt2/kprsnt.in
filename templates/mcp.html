@@ -10,7 +10,7 @@
   <!-- Hero Section -->
   <div class="text-center mb-5 animate-fade-in">
     <div class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-2 rounded-pill mb-3">
-      ⚡ Model Context Protocol (MCP 2024-11-05 Spec) Active
+      ⚡ Model Context Protocol (MCP Spec 2024-11) Active
     </div>
     <h1 class="display-5 fw-bold text-white mb-3">
       All-In-One <span style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">MCP Server</span>
@@ -67,7 +67,7 @@
                 <i class="fas fa-project-diagram me-1"></i> Site Projects
               </button>
               <button class="btn btn-sm btn-outline-primary rounded-pill preset-btn" onclick="loadPreset('job_match')">
-                <i class="fas fa-briefcase me-1"></i> Role Fit: Staff AI
+                <i class="fas fa-briefcase me-1"></i> Role Fit: AI Systems Engineer
               </button>
               <button class="btn btn-sm btn-outline-primary rounded-pill preset-btn" onclick="loadPreset('dev_logs')">
                 <i class="fas fa-satellite-dish me-1"></i> Recent Dev Logs
@@ -212,7 +212,7 @@
               <span class="badge bg-primary-subtle text-primary" style="font-size: 0.7rem;">My Site</span>
             </div>
           </div>
-          <p class="text-secondary small mb-0">Filter and query engineering projects (Solari, mSeat, BrandXY, AI News, MyLocalCLI) by keyword, technology, or category.</p>
+          <p class="text-secondary small mb-0">Filter and query engineering projects (BugAgents, AgentSwarm, JobAgents, MyLocalCLI, rAsh Score, mSeat, BrandXY) by keyword, technology, or category.</p>
         </div>
       </div>
 
@@ -240,7 +240,7 @@
               <span class="badge bg-success-subtle text-success" style="font-size: 0.7rem;">My Data</span>
             </div>
           </div>
-          <p class="text-secondary small mb-0">Full career resume data with 3+ years enterprise data analytics experience, work history (Black Piano, Pi), and bulleted achievements.</p>
+          <p class="text-secondary small mb-0">Full career resume data with 3.5+ years data/analytics &amp; AI experience, work history (Black Piano, Pi Software Solutions, Optum), and bulleted achievements.</p>
         </div>
       </div>
 
@@ -282,7 +282,7 @@
               <span class="badge bg-info-subtle text-info" style="font-size: 0.7rem;">AI Eco</span>
             </div>
           </div>
-          <p class="text-secondary small mb-0">Live swarm telemetry: 987 annual commits, 100 repositories, language distribution, 7-day velocity, and market salary benchmarks.</p>
+          <p class="text-secondary small mb-0">Live swarm telemetry: commit history, tracked repositories, language distribution, 7-day velocity, and agent status.</p>
         </div>
       </div>
 
@@ -368,7 +368,7 @@ const PRESETS = {
     params: {
       name: "get_site_projects",
       arguments: {
-        query: "solari"
+        query: "bugagents"
       }
     }
   },
@@ -379,7 +379,7 @@ const PRESETS = {
     params: {
       name: "evaluate_job_match",
       arguments: {
-        role_title: "Staff AI Engineer",
+        role_title: "AI Systems Engineer",
         requirements: "Autonomous Multi-Agent AI Swarms, Model Context Protocol (MCP), LLM Fine-Tuning"
       }
     }
@@ -530,46 +530,33 @@ function renderReadableOutput(payload, data) {
 
   // 1. Telemetry
   if ((toolName === 'get_ai_eco_telemetry' || toolName === 'get_ecosystem_telemetry') && typeof toolResult === 'object') {
-    if (subtitle) subtitle.textContent = "AI Eco Swarm Telemetry & Market Compensation";
-    const sal = toolResult.live_salary_estimation || {};
+    if (subtitle) subtitle.textContent = "AI Eco Swarm Telemetry";
     const langs = Object.entries(toolResult.language_breakdown || {});
     const skills = toolResult.top_skills || [];
     output.innerHTML = `
       <div class="row g-3 mb-3">
-        <div class="col-sm-6 col-lg-3">
+        <div class="col-sm-6 col-lg-4">
           <div class="p-3 rounded bg-dark border border-secondary text-center">
             <small class="text-secondary text-uppercase d-block mb-1">Total Commits</small>
-            <h4 class="text-white mb-0 fw-bold">${toolResult.commit_history || 987}</h4>
+            <h4 class="text-white mb-0 fw-bold">${toolResult.commit_history ?? '—'}</h4>
             <span class="badge bg-success-subtle text-success small mt-1">Verified Git Head</span>
           </div>
         </div>
-        <div class="col-sm-6 col-lg-3">
+        <div class="col-sm-6 col-lg-4">
           <div class="p-3 rounded bg-dark border border-secondary text-center">
             <small class="text-secondary text-uppercase d-block mb-1">Tracked Repos</small>
-            <h4 class="text-white mb-0 fw-bold">${toolResult.repo_counts || 100}</h4>
+            <h4 class="text-white mb-0 fw-bold">${toolResult.repo_counts ?? '—'}</h4>
             <span class="badge bg-info-subtle text-info small mt-1">GitHub Scout</span>
           </div>
         </div>
-        <div class="col-sm-6 col-lg-3">
-          <div class="p-3 rounded bg-dark border border-secondary text-center">
-            <small class="text-secondary text-uppercase d-block mb-1">US Benchmark</small>
-            <h4 class="text-white mb-0 fw-bold">$${(sal.min || 180000).toLocaleString()} - $${(sal.max || 320000).toLocaleString()}</h4>
-            <span class="badge bg-primary-subtle text-primary small mt-1">Staff AI & Systems</span>
-          </div>
-        </div>
-        <div class="col-sm-6 col-lg-3">
+        <div class="col-sm-6 col-lg-4">
           <div class="p-3 rounded bg-dark border border-secondary text-center">
             <small class="text-secondary text-uppercase d-block mb-1">Active Swarm</small>
-            <h4 class="text-white mb-0 fw-bold">${toolResult.active_agents || 6} / 6</h4>
+            <h4 class="text-white mb-0 fw-bold">${toolResult.active_agents ?? '—'} / 10</h4>
             <span class="badge bg-success-subtle text-success small mt-1">Swarm Operational</span>
           </div>
         </div>
       </div>
-      ${sal.reasoning ? `
-        <div class="p-3 rounded mb-3" style="background: rgba(102,126,234,0.1); border-left: 3px solid #667eea;">
-          <small class="text-info fw-bold d-block mb-1"><i class="fas fa-brain me-1"></i> AI Market Alignment Analysis</small>
-          <p class="text-secondary small mb-0 font-monospace">${escapeHtml(sal.reasoning)}</p>
-        </div>` : ''}
       <div class="row g-3">
         <div class="col-md-6">
           <span class="text-muted small d-block mb-2"><i class="fas fa-code me-1 text-info"></i> Top Languages:</span>

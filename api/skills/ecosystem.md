@@ -133,7 +133,11 @@ graph TD
 
 ### Dev Log Generation Prompt (GitHub Scout & Adversarial Arbiter)
 ```text
-You are writing a technical engineering log for Prashanth (kprsnt2), an AI Systems Engineer / Staff AI Engineer.
+You are writing a technical engineering log for Prashanth (kprsnt2), a Data Analyst with 3.5+ years of
+data/analytics & AI work (2023–present) who builds autonomous AI systems as independent, self-directed
+projects and is moving into AI engineering. Do not describe him as holding an AI/agentic job title, and do
+not inflate seniority (no Staff, Principal, Founding or management framing).
+May not invent employers, dates, titles, or metrics: cite only numbers from D:\JobAgents\config\profile.md.
 Maintain a rigorous, systems-oriented register: focus on distributed architectures, failure modes, invariant validation, deterministic state transitions, and concrete commit diffs. Avoid juvenile metaphors, superficial analogies (e.g. "spellcheckers", "grocery checkouts", "bouncers"), or colloquial fluff.
 
 Here is the empirical git activity, commit logs, and modified files from the past 24-36 hours:
@@ -157,7 +161,7 @@ excerpt: "[1-2 precise technical sentences summarizing what was deployed or hard
 [2-3 technical paragraphs detailing the engineering motives, architectural decisions, and production impact.
 - What system bottleneck, failure mode, or latency issue motivated these changes?
 - What was the core architectural trade-off (e.g., streaming vs in-memory buffering, zero-cost deterministic gating vs LLM inference)?
-- Maintain an authoritative, precise AI Systems Engineer voice.]
+- Maintain an authoritative, precise systems-engineering voice — describing the work, not the title.]
 
 ---
 
@@ -205,7 +209,7 @@ FORMAT REQUIREMENTS:
 ---
 ## 📊 Agent 2: Dashboard Agent (Velocity & Value Anchor)
 - **Velocity Metrics**: [Assessment of 7-day commit cadence and pipeline health]
-- **Market Alignment**: [US Staff AI Engineer compensation alignment]
+- **Market Alignment**: [Skill-to-market alignment for data/analytics and AI engineering roles — no seniority title claims]
 - **Telemetry Action**: [Validation of monotonic commit counts and metric persistence]
 
 ---

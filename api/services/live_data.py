@@ -78,17 +78,13 @@ def get_live_ecosystem_summary():
         repos = data.get('repo_counts', 100)
         lb = data.get('language_breakdown')
         langs = list(lb.keys())[:4] if isinstance(lb, dict) else []
-        salary = data.get('live_salary_estimation')
-        sal_min = salary.get('min', 180000) if isinstance(salary, dict) else 180000
-        sal_max = salary.get('max', 320000) if isinstance(salary, dict) else 320000
         last_updated = (str(data.get('last_updated') or ''))[:10]
 
         summary = f"""LIVE AI ECO SWARM DATA (as of {last_updated}):
 - 10 autonomous agents running daily (GitHub Scout, Dashboard, Portfolio Sync, MCP Engineer, Docs, Readme, Ponytail Pruner, Bar-Raiser, Trend Hunter, Cosmic Observer)
 - {commits} verified commits across {repos} tracked repositories
 - Primary languages: {', '.join(langs)}
-- Active Model Context Protocol (MCP) server exposing tools, resources, and prompts
-- Live US Market Salary Benchmark: ${sal_min:,} - ${sal_max:,}"""
+- Active Model Context Protocol (MCP) server exposing tools, resources, and prompts"""
         return summary
 
     except Exception as e:

@@ -2,7 +2,7 @@
 
 {% block title %}{% if current_role %}{{ current_role.title }} Resume{% else %}Resume{% endif %} | Prashanth Kumar Kadasi{% endblock %}
 
-{% block description %}Resume of Prashanth Kumar Kadasi — Data Analyst & AI Systems Engineer with 3+ years in analytics, multi-agent AI ecosystems, and LLM fine-tuning. View role-tailored variants.{% endblock %}
+{% block description %}Resume of Prashanth Kumar Kadasi — Data Analyst (Black Piano) moving into AI engineering, with 3.5+ years in data/analytics & AI and 9 years of CMS compliance auditing. View role-tailored variants.{% endblock %}
 
 {% block content %}
 <style>
@@ -137,7 +137,7 @@
             {% if current_role %}
             <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0.5rem;">{{ current_role.title }}</p>
             {% else %}
-            <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0.5rem;">Data Analyst & AI Developer</p>
+            <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0.5rem;">Data Analyst → AI Systems Engineer (target)</p>
             {% endif %}
             <div style="color: var(--text-secondary); margin-bottom: 0.5rem;">
                 <span>📍 {% if contact %}{{ contact.location }}{% else %}Hyderabad, India{% endif %}</span>
@@ -179,12 +179,13 @@
                     {% if resume_summary %}
                     <p>{{ resume_summary }}</p>
                     {% else %}
-                    <p>Data Analyst & AI Developer with hands-on experience in LLM fine-tuning, model deployment,
-                        prompt engineering, and lightweight on-device inference. Skilled in Python, SQL, data
-                        engineering,
-                        and building AI-powered applications with OpenAI, Gemini, HuggingFace, and custom fine-tuned
-                        models.
-                        Passionate about applying AI to real-world products, automation, and intelligent systems.</p>
+                    <p>Data Analyst with 3.5+ years in data/analytics &amp; AI (2023–present) and 9 years of healthcare
+                        compliance auditing at Optum / UnitedHealth Group (2014–2023). Holder of two Data Analyst roles
+                        (Black Piano, Pi Software Solutions) and an Enrollment Quality &amp; Audit Representative
+                        (CMS Auditor) role at Optum, now moving into AI engineering: building autonomous multi-agent
+                        systems, deterministic evaluation harnesses, and hash-chained audit ledgers as self-directed
+                        projects, with hands-on LLM fine-tuning and evaluation experience (GPT-OSS-20B on AMD MI300X).
+                        Works in Python, SQL, BigQuery, Looker Studio and GitHub Actions.</p>
                     {% endif %}
                 </div>
             </div>

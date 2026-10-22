@@ -66,8 +66,9 @@
                     <span class="text-secondary text-uppercase small" style="letter-spacing: 0.5px;">Evolutionary Fitness</span>
                     <i class="fas fa-dna text-primary"></i>
                 </div>
-                <h3 class="text-white mt-2 mb-0 fw-bold">{{ targets.overall_fitness_score|default(88.5) }}%</h3>
+                <h3 class="text-white mt-2 mb-0 fw-bold">{{ targets.overall_fitness_score|default(83.4) }}%</h3>
                 <small class="text-info mt-1">Level {{ targets.swarm_evolution_level|default(1) }}: Baseline Operationalized</small>
+                <small class="text-secondary d-block mt-1" style="font-size: 0.68rem;">Internal: mean agent progress toward targets. Not the 83.4% ecosystem fitness cited externally.</small>
             </div>
         </div>
         <div class="col-md-3">
@@ -86,7 +87,7 @@
                     <span class="text-secondary text-uppercase small" style="letter-spacing: 0.5px;">Living Memory</span>
                     <i class="fas fa-brain text-purple" style="color: #bb86fc;"></i>
                 </div>
-                <h3 class="text-white mt-2 mb-0 fw-bold">{{ swarm.word_count|default(450) }} <span class="fs-6 text-muted fw-normal">words</span></h3>
+                <h3 class="text-white mt-2 mb-0 fw-bold">{{ swarm.word_count|default('—', true) }} <span class="fs-6 text-muted fw-normal">words</span></h3>
                 <small class="text-secondary mt-1">Compaction ceiling: &lt;4,000 words</small>
             </div>
         </div>
@@ -297,7 +298,7 @@
                 <h3 class="text-white mb-0 fw-bold"><i class="fas fa-bullseye text-success me-2"></i>Swarm Target Matrix &amp; Evolutionary Levels</h3>
                 <p class="text-secondary small mb-0">Quantified fitness functions driving autonomous self-improvement across all 10 agents.</p>
             </div>
-            <span class="badge bg-success-subtle text-success py-2 px-3">Overall Swarm Fitness: {{ targets.overall_fitness_score|default(88.5) }}%</span>
+            <span class="badge bg-success-subtle text-success py-2 px-3">Mean Agent Progress (internal): {{ targets.overall_fitness_score|default(83.4) }}%</span>
         </div>
 
         <div class="row g-4">

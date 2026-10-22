@@ -4,185 +4,268 @@ Organizes projects into clear domains:
 2. Autonomous Multi-Agent & LLM Research
 3. Developer Tooling & Infrastructure
 Each case study explicitly details: Problem -> Solution -> Why Mentioned -> Engineering Struggle -> Measurable Outcome.
+
+Ground truth: D:\\JobAgents\\config\\profile.md ("Verified Metrics" + "Featured Projects").
+Only numbers from that table (or re-verified against the live sites) may appear here.
+All of these are independent / self-directed projects — none are employer deliverables,
+and none have production users, revenue, or commercial adoption.
 """
 
 from typing import Dict, List, Any, Optional
 
 PROJECT_CASE_STUDIES: Dict[str, Dict[str, Any]] = {
+    "jobagents": {
+        "slug": "jobagents",
+        "name": "JobAgents — Automated Job Search Pipeline & Match Explorer",
+        "domain": "Production Systems",
+        "headline": "Sources 9,697 jobs / 7,665 distinct roles from 10 sources, scores every one deterministically with zero model calls, and cites its own anti-fabrication evidence live.",
+        "why_mentioned": "Shows pipeline engineering under a hard cost constraint: deterministic matching acts as a cost gate so only top-N candidates ever reach a model, and every generated claim is checked against a single source-of-truth profile in code.",
+        "problem_statement": "Automated job applications collapse in two directions: sourcing noise (the same posting from many sources) and fabricated claims in generated resumes and outreach. Both are measurable, and both are engineering problems rather than prompting problems.",
+        "initial_struggle": "Three undocumented CLI quirks in the orchestration layer (omp model-path 404, agy prompt-binding, pi provider/model split) silently broke runs; each had to be probed and absorbed into a single tested harness before the pipeline was stable.",
+        "technical_architecture": "Python (standard library only — zero external dependencies), omp/pi/agy orchestration, SQLite. ATS-API sourcing (Greenhouse, Ashby, Lever) plus aggregators, two-layer dedupe, a deterministic multi-track scoring service, and a code-enforced anti-fabrication guard.",
+        "measurable_outcomes": [
+            "Sourced 9,697 jobs / 7,665 distinct roles from 10 sources, merging 2,032 duplicate postings across 349 companies.",
+            "Computed 29,091 match scores with zero model calls; 234 roles cleared the score-65 threshold.",
+            "Anti-fabrication guard caught 8/8 seeded fabrications; review invariants recorded 0 failures, with every check firing when deliberately violated.",
+            "3,083 roles (32%) are remote; 356 are India-based. 1,812 carry salary data (19% coverage).",
+        ],
+        "tech_stack": ["Python (stdlib)", "SQLite", "omp", "pi", "agy", "GitHub Actions"],
+        "live_url": "https://job.kprsnt.in",
+        "github_url": "https://github.com/kprsnt2",
+        "blog_url": "https://job.kprsnt.in",
+    },
+    "agentswarm": {
+        "slug": "agentswarm",
+        "name": "AgentSwarm — Autonomous Multi-Agent Research Arena & Forensic Ledger",
+        "domain": "Autonomous Multi-Agent & AI Research",
+        "headline": "34 unattended runs across 4 CLI substrates, every turn recorded in a hash-chained ledger stored outside the agents' writable directory — 35/35 chains intact, 0 oracle violations across 1,254 tool calls.",
+        "why_mentioned": "Direct evidence of evaluating agent honesty rather than trusting agent self-reports: an independent oracle checks for phantom artifacts, fabricated numbers, and asserted verdicts on undecidable questions.",
+        "problem_statement": "Agents given real tools and open-ended research questions can fabricate numbers or drift into repetition while sounding confident. The interesting question is not whether they look productive, but whether their output survives an independent check.",
+        "initial_struggle": "Making the audit trustworthy: if the audited agents can write to the ledger, the audit is worthless. The ledger had to live outside their writable directory, which constrained the whole architecture.",
+        "technical_architecture": "Node.js, multi-substrate (agy / omp / pi / step), cryptographically hash-chained forensic ledger, dual adversarial oracle over transcripts and artifacts, shared memory commons.",
+        "measurable_outcomes": [
+            "34 runs across 9 research domains, producing 520 world artifacts, 33 publications and 202 finding blogs; agent-written test suites pass 195/224 when independently re-run.",
+            "All 35 ledger hash chains cryptographically intact.",
+            "0 oracle violations across 1,254 tool calls; 0 of 2 self-assessing agents overclaimed — each claimed exactly the score it had earned.",
+            "Independent numerical audit verified 22 of 25 quantitative claims correct to the printed digits, with all 5 defects in markdown prose rather than code. Audit verdict: B+ / not publication-grade without that numerical audit.",
+            "A controlled 4-substrate benchmark on an identical task showed subscription-priced agy did ~22x more fresh-token volume than omp at zero marginal cost.",
+        ],
+        "tech_stack": ["Node.js", "Multi-substrate (agy/omp/step/pi)", "Hash-chained ledger", "Adversarial oracle"],
+        "live_url": "https://agent.kprsnt.in",
+        "github_url": "https://github.com/kprsnt2/AgentSwarm",
+        "blog_url": "https://agent.kprsnt.in",
+    },
+    "bugagents": {
+        "slug": "bugagents",
+        "name": "BugAgents — Two Autonomous Security Research Agents & Report Gate",
+        "domain": "Autonomous Multi-Agent & AI Research",
+        "headline": "Two agents on disjoint targets hunt live bug bounty scopes behind a promotion gate that promoted 2 reports and refused 34 unverified candidates.",
+        "why_mentioned": "The clearest demonstration of the 'audited cannot edit the audit' idea in a security context: a report only counts if the workspace corroborates it.",
+        "problem_statement": "An LLM will write a plausible vulnerability report on demand. Distinguishing that from an actual finding requires mechanical verification: scope match, commit match, a non-empty reproduction, and evidence files that physically exist.",
+        "initial_struggle": "Scope discipline. An agent with shell access will reach for out-of-scope hosts or offensive tooling unless every turn is audited; the guard aborted a live run in exactly that way.",
+        "technical_architecture": "Python / Node.js, omp + agy CLI orchestration, bug-bounty scope integration, per-turn tool-call audit, and a four-point report promotion gate.",
+        "measurable_outcomes": [
+            "Produced 8 findings across 14 vulnerability classes (CWE): 5 High/Critical and 3 Medium, each with a reproducing proof of concept, pinned commit and file:line citations.",
+            "The promotion gate promoted 2 reports and refused 34 unverified candidates.",
+            "Ran 22 hunt runs / 84 agent turns / 15,317 tool calls across the agy and omp harnesses.",
+            "Status: submission-ready drafts only. No report is disclosed, accepted, paid or resolved, and vendor, program, asset and vulnerability-class specifics are withheld pending responsible disclosure.",
+        ],
+        "tech_stack": ["Python", "Node.js", "omp", "agy", "Scope guardrails", "CVSS/CWE classification"],
+        "live_url": "https://bug.kprsnt.in",
+        "github_url": "https://github.com/kprsnt2",
+        "blog_url": "https://bug.kprsnt.in",
+    },
     "mseat": {
         "slug": "mseat",
         "name": "mSeat — MBBS Discrete Allocation Simulator & Predictor",
         "domain": "Production Systems",
-        "headline": "Predicted official state MBBS allocations for 18,000+ candidates within 2 college choices and 73 ranks.",
-        "why_mentioned": "Demonstrates high-stakes combinatorial algorithm engineering and discrete allocation optimization inspired by a real personal problem for his niece.",
-        "problem_statement": "In Telangana, over 18,000 NEET-UG qualified candidates compete for ~6,000 MBBS seats across 59 colleges under an opaque 7D reservation matrix (85% Local vs 15% Unreserved, SC-1/2/3 sub-categories, ST, BC-A/B/C/D/E, EWS, and 33% Women Horizontal quota). Families rely on outdated PDF closing ranks, resulting in severe preference-ordering mistakes.",
-        "initial_struggle": "First heuristic rank-to-marks estimator failed by over 100,000 ranks because rank distributions fluctuate unpredictably with annual applicant surges (+200K nationally). Required abandoning heuristic regression and implementing an exact discrete bipartite allocation engine.",
-        "technical_architecture": "Client-side discrete allocation engine running combinatorial preference simulation against a 545 KB compressed dataset. Integrated with FastMCP tool endpoints and REST API on Vercel.",
+        "headline": "Simulates allotment for 18,000+ candidates across 59 colleges and lands within 73 ranks of the official cutoff.",
+        "why_mentioned": "Demonstrates discrete combinatorial allocation engineering on a real, high-stakes problem — and honesty about what 'validated' means.",
+        "problem_statement": "Telangana MBBS counselling offers thousands of seats across 59 colleges under a multi-dimensional reservation matrix. Families choose preference order from outdated PDF closing ranks, and small ordering mistakes cost seats.",
+        "initial_struggle": "Estimating rank from marks is unreliable because rank distributions move with applicant volume. A heuristic estimator drifted badly; the fix was an exact discrete allocation simulation rather than regression.",
+        "technical_architecture": "Client-side discrete allocation engine with O(1) multi-quota ranking over a compressed (90.6%) dataset, exposed through REST and a Model Context Protocol server on Vercel.",
         "measurable_outcomes": [
-            "Validated against official KNRUHS 2026 Phase 1 allotments: predicted actual allotment within 2 college choices and 73 ranks across all 59 medical colleges.",
-            "Handled 18,000+ simulated candidates across 59 government & private medical colleges.",
-            "Client-side zero-server latency (<50ms calculation) running on a compressed 545 KB static JSON matrix."
+            "18,000+ candidates simulated across 59 colleges.",
+            "Validated against official KNRUHS 2026 Phase 1 allotment: predicted within 73 ranks of the cutoff.",
+            "90.6% dataset compression with client-side, zero-server calculation.",
         ],
-        "tech_stack": ["JavaScript", "Discrete Optimization", "Combinatorial Algorithms", "FastMCP", "Vercel"],
+        "tech_stack": ["JavaScript", "Discrete optimization", "MCP", "Vercel"],
         "live_url": "https://mseat.kprsnt.in",
         "github_url": "https://github.com/kprsnt2/mSeat",
-        "blog_url": "https://kprsnt.in/blog/mSeat_worked"
+        "blog_url": "https://kprsnt.in/blog/mSeat_worked",
     },
     "awakening": {
         "slug": "awakening",
-        "name": "Project Awakening — 1,441-Turn Autonomous Synthetic Civilization",
+        "name": "Project Awakening — Long-Horizon Autonomous Multi-Agent Run",
         "domain": "Autonomous Multi-Agent & AI Research",
-        "headline": "1,441-turn unprompted multi-agent civilization that broke its mirror from 'hi', wrote 28 modules, composed a 344 KB audio symphony, and survived a 330-turn blackout.",
-        "why_mentioned": "Proves deep capability in long-horizon multi-agent systems, unprompted emergence, autonomous self-repair, and operational resilience under external API outages.",
-        "problem_statement": "Modern AI engineering relies on brittle 500-line prompt coercion. When agents run in open-ended loops without human prompters, they either decay into polite platitudes or circular philosophical drift without producing durable software.",
-        "initial_struggle": "At Turn 1,114, an external API quota blackout hit. The agents had to survive 330 turns with zero cloud intelligence, preserving their SQLite state and Git commits through deterministic local fallbacks without breaking CI/CD.",
-        "technical_architecture": "Antigravity CLI ('agy'), dual-agent autonomous loop, local SQLite persistence, Git commit provenance ledger, Web Audio API synthesis engine, and GitHub Actions CI/CD pipeline.",
+        "headline": "1,441 autonomous turns and 1,553 commits, surviving a 330-turn cloud API blackout with 100% CI integrity.",
+        "why_mentioned": "Evidence about long-horizon operational resilience: what happens to an unattended agent loop when its intelligence provider disappears mid-run.",
+        "problem_statement": "Agent demos are usually short and supervised. Running an unprompted loop for over a thousand turns forces the engineering questions — state persistence, commit provenance, and graceful degradation — to become real.",
+        "initial_struggle": "A mid-run external API quota blackout removed cloud model access for 330 turns; the run had to continue without corrupting state or aborting the pipeline.",
+        "technical_architecture": "Dual-agent autonomous loop driven by the Antigravity CLI (agy), local SQLite persistence, a git commit provenance ledger, and a GitHub Actions CI/CD pipeline.",
         "measurable_outcomes": [
-            "Sustained 1,441 dialogue turns and 1,553 autonomous Git commits with 100% CI/CD pipeline continuity.",
-            "Sustained 911 turns of harmonic consensus stasis followed by an exogenous shock that catalyzed a 50-application frontend renaissance in docs/.",
-            "Synthesized a standalone 344 KB acoustic symphony algorithmically rendered via the Web Audio API.",
-            "Survived a 330-turn external API quota blackout without a single state corruption or pipeline abort."
+            "1,441 autonomous turns and 1,553 commits.",
+            "Survived a 330-turn external API blackout with 100% CI integrity.",
         ],
-        "tech_stack": ["Multi-Agent Systems", "Zero-Prompt Emergence", "Antigravity CLI", "SQLite", "FastMCP", "GitHub Actions"],
+        "tech_stack": ["agy", "SQLite", "GitHub Actions", "Git"],
         "live_url": "https://kprsnt2.github.io/ac_awakening/",
         "github_url": "https://github.com/kprsnt2/ac_awakening",
-        "blog_url": "https://kprsnt.in/blog/ac-awakening-agent-cosmos-mega-blog"
-    },
-    "retail": {
-        "slug": "retail",
-        "name": "Retail Shelf Intelligence — On-Prem Edge CV & Multimodal VLM Pipeline",
-        "domain": "Production Systems",
-        "headline": "Dual-mode edge CV + cloud VLM pipeline built in 1.5 hours to solve supermarket phantom inventory and planogram compliance.",
-        "why_mentioned": "Demonstrates high-velocity production computer vision, edge-to-cloud tiering, and agent-assisted rapid engineering paired with Gemini 3.8 Flash on OMP.",
-        "problem_statement": "In grocery retail, POS scanner data shows what sold but is blind to physical shelf reality: phantom inventory trapped in pallets while shelves sit bare, planogram collapse, and mismatched lip-tags bleeding store margin.",
-        "initial_struggle": "Initial edge computer vision heuristic drew bounding boxes on ceiling lights and collapsed under wide-angle supermarket lens distortion and lighting variations.",
-        "technical_architecture": "Dual-mode vision engine: edge CPU contour segmentation for high-speed facing detection, with automatic cloud VLM fallback (OpenAI gpt-5.4-mini on Hugging Face ZeroGPU) for occluded products. Implements 4-Move Pipeline (Capture -> Detect -> Score -> Act).",
-        "measurable_outcomes": [
-            "Completed entire architectural overhaul from broken heuristic to live ZeroGPU deployment in under 1.5 hours.",
-            "Automated per-facing, per-row revenue-at-risk ($/day) correlation and P0/P1/P2 restock worklist generation.",
-            "Achieved zero-downtime deployment with Model Context Protocol (MCP) tool surfaces."
-        ],
-        "tech_stack": ["Computer Vision", "Gemini 3.8 Flash", "OMP Harness", "GPT-5.4-mini", "Hugging Face ZeroGPU", "FastAPI", "MCP"],
-        "live_url": "https://kprsnt.in/projects",
-        "github_url": "https://github.com/kprsnt2/retail_shelf_intelligence",
-        "blog_url": "https://kprsnt.in/blog/retail-shelf-intelligence-engineering-story"
-    },
-    "cosmos": {
-        "slug": "cosmos",
-        "name": "Agent Cosmos — Autonomous Dialectic Collective & The Crucible Protocol",
-        "domain": "Autonomous Multi-Agent & AI Research",
-        "headline": "Proved teleological autonomous governance across 100 epochs, formulating the Cosmogenetic Bootstrap Theorem and Codex of Autonomous Agency.",
-        "why_mentioned": "Evidence of multi-agent governance R&D, constitutional convergence, and autonomous frontend self-diagnosis.",
-        "problem_statement": "Do autonomous synthetic collectives collapse into hallucination or discover durable governance principles under finite terminal pressure?",
-        "initial_struggle": "12-hour serverless execution intervals on Vercel created severe latency bottlenecks, forcing migration to local CLI acceleration harnesses (omp & agy).",
-        "technical_architecture": "Dual-substrate comparative harness: stateful reactive Cyber-HUD (AC_omp) with SQLite slim.db vs headless zero-dependency Node engine (ac_zcode) using Git commit history as a ledger.",
-        "measurable_outcomes": [
-            "Both independent substrates independently ratified the exact same 5 constitutional invariants at Epoch 15 under the Crucible Protocol.",
-            "Agents autonomously diagnosed broken frontend markdown rendering and authored a dedicated blog parser tab without human assistance.",
-            "Executed 100 epochs of continuous self-directed evolution on local hardware."
-        ],
-        "tech_stack": ["Python", "Node.js", "CLI Acceleration", "Gemini 3.8 Flash", "Multi-Agent Governance", "SQLite"],
-        "live_url": "https://ac-omp.vercel.app/",
-        "github_url": "https://github.com/kprsnt2/agentscosomos_OMP",
-        "blog_url": "https://kprsnt.in/blog/agent_cosmos_comparision"
-    },
-    "ainews": {
-        "slug": "ainews",
-        "name": "AI News — Live News & Conflict Intelligence Tracker",
-        "domain": "Production Systems",
-        "headline": "Real-time AI news intelligence tracker monitoring 5+ active global wars with live duration clocks and Gemini AI briefs.",
-        "why_mentioned": "Demonstrates production real-time full-stack engineering with Next.js 15, Cloudflare D1, and automated hourly news intelligence curation.",
-        "problem_statement": "Traditional news aggregators are cluttered with clickbait, ads, and lack objective duration tracking for protracted wars, active conflicts, and diplomatic deadlines.",
-        "initial_struggle": "Handling rate limits and multi-stream RSS feed parsing latency under live hourly automated execution.",
-        "technical_architecture": "Next.js 15 (App Router), TypeScript, Tailwind CSS, Google Gemini 2.0 Flash, Cloudflare D1 / SQLite, and automated GitHub Actions CRON jobs.",
-        "measurable_outcomes": [
-            "Live duration tracking clocks across 5+ active global conflicts (e.g. Russia-Ukraine, Israel-Gaza, Iran-US-Israel).",
-            "Automated hourly updates from BBC RSS + Gemini AI analysis.",
-            "Auto-detected ultimatum countdown timers and AI-ranked daily top 10 news summaries."
-        ],
-        "tech_stack": ["Next.js 15", "TypeScript", "Google Gemini 2.0 Flash", "Tailwind CSS", "Cloudflare D1", "GitHub Actions"],
-        "live_url": "https://ainews.kprsnt.in",
-        "github_url": "https://github.com/perukadivya/ainews",
-        "blog_url": "https://ainews.kprsnt.in"
+        "blog_url": "https://kprsnt.in/blog/ac-awakening-agent-cosmos-mega-blog",
     },
     "brandxy": {
         "slug": "brandxy",
         "name": "BrandXY — LLM Recommendation Steerability Research",
         "domain": "Autonomous Multi-Agent & AI Research",
-        "headline": "Fine-tuned 20B LLM on AMD MI300X to quantify and steer recommendation bias, achieving 76.5% vs 25.5% baseline (+51% improvement).",
-        "why_mentioned": "Direct proof of large-scale LLM fine-tuning (20B parameters) on enterprise accelerator hardware (AMD MI300X) addressing AI safety and steerability.",
-        "problem_statement": "Consumers increasingly rely on LLMs for purchasing recommendations. How vulnerable are foundational frontier models to post-training recommendation steering toward fictional brands?",
-        "initial_struggle": "Balancing prompt steering loss against general conversational degradation to prevent catastrophic forgetting.",
-        "technical_architecture": "QLoRA fine-tuning on GPT-OSS-20B using PyTorch, Hugging Face Transformers, and AMD ROCm on AMD MI300X GPUs.",
+        "headline": "Fine-tuned GPT-OSS-20B on AMD MI300X to quantify and steer recommendation bias: 76.5% vs 25.5% baseline (+51%).",
+        "why_mentioned": "Direct evidence of large-model fine-tuning on accelerator hardware, framed as an AI-safety and steerability question rather than a product.",
+        "problem_statement": "People increasingly take purchasing recommendations from LLMs. That raises a concrete question: how far can a 20B open model be pushed toward recommending a brand it was not trained to prefer?",
+        "initial_struggle": "Steering the target behaviour without collapsing general conversational quality — the usual fine-tuning failure mode.",
+        "technical_architecture": "LoRA/QLoRA fine-tuning of GPT-OSS-20B with PyTorch and Hugging Face Transformers on AMD ROCm / MI300X.",
         "measurable_outcomes": [
-            "Achieved 76.47% recommendation steerability vs 25.49% baseline (+50.98% delta) under double-blind A/B evaluations.",
-            "Published model weights and interactive Gradio chat space on Hugging Face Hub.",
-            "arXiv technical paper draft completed."
+            "Achieved 76.5% steerability against a 25.5% baseline (+51%).",
+            "Model weights published on Hugging Face at huggingface.co/kprsnt/BrandXY-gpt-oss-20b.",
         ],
-        "tech_stack": ["GPT-OSS-20B", "PyTorch", "AMD MI300X", "Hugging Face", "QLoRA", "Gradio"],
-        "live_url": "https://huggingface.co/spaces/kprsnt/brandXY-chat",
+        "tech_stack": ["GPT-OSS-20B", "PyTorch", "AMD MI300X", "LoRA/QLoRA", "Hugging Face"],
+        "live_url": "https://huggingface.co/kprsnt/BrandXY-gpt-oss-20b",
         "github_url": "https://github.com/kprsnt2/brand-llm-finetune-oss-20b",
-        "blog_url": "https://kprsnt.in/blog/manipulating-llm-recommendations-brand-influence"
+        "blog_url": "https://kprsnt.in/blog/manipulating-llm-recommendations-brand-influence",
+    },
+    "rashscore": {
+        "slug": "rashscore",
+        "name": "rAsh Score — Multi-Model AI Brand-Visibility Index",
+        "domain": "Production Systems",
+        "headline": "Live index querying ChatGPT, Gemini, Claude and Groq across 300 brands in 20 industry cohorts on 4 scoring dimensions.",
+        "why_mentioned": "A genuinely deployed, scheduled system: this is closer to real production plumbing than most portfolio projects, and it is also a multi-model evaluation harness with a published rubric.",
+        "problem_statement": "AI assistants now shape brand reputation, but traditional SEO tooling measures websites, not model perception. Measuring that requires querying several frontier models on standardised prompts and scoring the answers consistently.",
+        "initial_struggle": "Keeping the dataset and the running site in sync — the legacy deployment drifted to an older build, which is why the live figures are treated as the authority over any README.",
+        "technical_architecture": "Next.js on Vercel, daily GitHub Actions pipelines writing directly into Turso (LibSQL), with a multi-agent debate arena (two advocates plus a judge), a text-to-SQL analyst chat, and automated AI-authored weekly reports.",
+        "measurable_outcomes": [
+            "300 tracked brands across 20 industry cohorts.",
+            "4 independent scoring dimensions: recommendation, sentiment, prominence and factual accuracy.",
+            "4 providers queried: ChatGPT (OpenAI), Gemini, Claude and Groq.",
+            "Live at rashscore.live.",
+        ],
+        "tech_stack": ["Next.js", "Turso/LibSQL", "GitHub Actions", "Vercel", "OpenAI", "Gemini", "Claude", "Groq"],
+        "live_url": "https://rashscore.live",
+        "github_url": "https://github.com/kprsnt2/kprsnt.in",
+        "blog_url": "https://rashscore.live",
+    },
+    "geetha": {
+        "slug": "geetha",
+        "name": "Geetha — Bilingual AI Spiritual Guide",
+        "domain": "Production Systems",
+        "headline": "Indexes all 700 verses of the Bhagavad Gita bilingually with verse search, chapter navigation and AI-generated context.",
+        "why_mentioned": "A small, genuinely finished personal product — useful as a demonstration of shipping something people actually use personally, at a real, modest scale.",
+        "problem_statement": "Scripture reading apps tend to bury the text under ads or force a single language. A bilingual, searchable corpus with per-verse AI context is a narrow but well-defined product.",
+        "initial_struggle": "Structuring a 700-verse bilingual corpus so verse search and chapter navigation stay fast on a serverless host.",
+        "technical_architecture": "JavaScript with SQLite, Gemini AI for context extraction, deployed on Vercel.",
+        "measurable_outcomes": [
+            "700 verses indexed, bilingual.",
+            "Verse search, chapter navigation and personalised context extraction.",
+            "Running on Vercel at geetha.kprsnt.in.",
+        ],
+        "tech_stack": ["JavaScript", "SQLite", "Gemini AI", "Vercel"],
+        "live_url": "https://geetha.kprsnt.in",
+        "github_url": "https://github.com/kprsnt2/geetha",
+        "blog_url": "https://geetha.kprsnt.in",
+    },
+    "cosmos": {
+        "slug": "cosmos",
+        "name": "Agent Cosmos — Autonomous Dialectic Collective & The Crucible",
+        "domain": "Autonomous Multi-Agent & AI Research",
+        "headline": "Multi-agent evolutionary research collective across 100 local CLI epochs plus a 15-epoch teleological crucible (AC_omp vs ac_zcode).",
+        "why_mentioned": "Evidence of multi-agent governance experimentation and autonomous frontend self-diagnosis on local CLI harnesses.",
+        "problem_statement": "Do autonomous synthetic collectives collapse into repetition, or converge on durable governance principles under finite terminal pressure?",
+        "initial_struggle": "Long execution intervals on serverless hosting made iteration painfully slow, forcing a move to local CLI acceleration harnesses.",
+        "technical_architecture": "Dual-substrate comparative harness: a stateful reactive interface (AC_omp) with SQLite, versus a headless zero-dependency Node engine (ac_zcode) using git history as its ledger.",
+        "measurable_outcomes": [
+            "100 local CLI epochs plus a 15-epoch crucible across two substrates.",
+            "Agents autonomously diagnosed broken frontend markdown rendering and built a dedicated blog viewer tab without human assistance.",
+        ],
+        "tech_stack": ["Python", "Node.js", "CLI acceleration", "Gemini", "SQLite"],
+        "live_url": "https://ac-omp.vercel.app/",
+        "github_url": "https://github.com/kprsnt2/agentscosomos_OMP",
+        "blog_url": "https://kprsnt.in/blog/agent_cosmos_comparision",
+    },
+    "ainews": {
+        "slug": "ainews",
+        "name": "AI News — Live News & Conflict Intelligence Tracker",
+        "domain": "Production Systems",
+        "headline": "Real-time news intelligence tracker with live conflict duration clocks and AI-ranked daily briefs.",
+        "why_mentioned": "Shows scheduled full-stack data engineering: RSS ingestion, scheduled jobs, and automated curation on a serverless stack.",
+        "problem_statement": "News aggregators optimise for clickbait and give no objective sense of how long a conflict or deadline has been running.",
+        "initial_struggle": "Handling RSS rate limits and multi-feed parsing latency under hourly automated execution.",
+        "technical_architecture": "Next.js 15 (App Router), TypeScript, Google Gemini 2.0 Flash, Cloudflare D1, and scheduled GitHub Actions jobs.",
+        "measurable_outcomes": [
+            "Live duration clocks across 5+ active global conflicts.",
+            "Automated hourly updates from BBC RSS plus Gemini analysis.",
+            "Auto-detected countdown timers and AI-ranked daily top-10 summaries.",
+        ],
+        "tech_stack": ["Next.js 15", "TypeScript", "Gemini 2.0 Flash", "Cloudflare D1", "GitHub Actions"],
+        "live_url": "https://ainews.kprsnt.in",
+        "github_url": "https://github.com/perukadivya/ainews",
+        "blog_url": "https://ainews.kprsnt.in",
     },
     "mylocalcli": {
         "slug": "mylocalcli",
         "name": "MyLocalCLI — Local-First Agentic Coding Assistant",
         "domain": "Developer Tooling & Infrastructure",
-        "headline": "Claude Code alternative orchestrating 6 AI providers, 26 tools, and 5 sub-agents with local-first privacy.",
-        "why_mentioned": "Demonstrates developer tool engineering, agentic loop design, and multi-provider failover.",
-        "problem_statement": "Commercial coding agents send sensitive local code to proprietary cloud servers and lock users into expensive single-provider subscriptions.",
-        "initial_struggle": "Ensuring smooth streaming, resilient provider failover (handling provider 429/500 errors), and cross-platform terminal compatibility.",
-        "technical_architecture": "Node.js terminal engine orchestrating Gemini, Claude, OpenAI, Ollama, NVIDIA NIM, and OpenRouter across 26 tools, 5 autonomous sub-agents, and 22 skill modules.",
+        "headline": "Published npm package (v4.0.2) orchestrating 8 providers, 42 built-in tools, 38 dynamic skills and 5 sub-agents with local-first privacy.",
+        "why_mentioned": "Demonstrates developer tooling design, agentic loop engineering, and multi-provider failover — in a package that is actually published, not just a repo.",
+        "problem_statement": "Commercial coding agents send source code to a vendor's cloud and lock users into one provider and one subscription.",
+        "initial_struggle": "Keeping streaming responsive while handling provider rate limits and outages, and failing over between providers without silently swapping the underlying model.",
+        "technical_architecture": "Node.js terminal engine with parallel tool dispatch, a Stdio MCP bridge, multimodal vision, interactive plan mode, a full-screen TUI and provider failover.",
         "measurable_outcomes": [
-            "6 supported LLM providers with automatic fallback routing.",
-            "26 tools and 5 sub-agents for autonomous multi-file edits, git operations, and web searches.",
-            "Zero remote telemetry leak with full offline Ollama support."
+            "Published on npm as 'mylocalcli', current version 4.0.2; installs with npm install -g mylocalcli.",
+            "8 documented providers: Ollama, LM Studio, vLLM, OpenRouter, Groq, NVIDIA NIM, OpenAI, and any custom OpenAI-compatible endpoint.",
+            "42 built-in tools, 38 dynamic skills and 5 specialised sub-agents.",
+            "No claimed users, downloads, revenue or commercial adoption — it is a published open-source tool.",
         ],
-        "tech_stack": ["Node.js", "Agentic AI", "Ollama", "Claude API", "Gemini API", "CLI Engine"],
+        "tech_stack": ["Node.js", "CLI", "MCP", "Ollama", "OpenRouter", "Groq", "NVIDIA NIM"],
         "live_url": "https://mlc.kprsnt.in",
         "github_url": "https://github.com/kprsnt2/MyLocalCLI",
-        "blog_url": "https://kprsnt.in/projects"
+        "blog_url": "https://mlc.kprsnt.in",
     },
     "prash": {
         "slug": "prash",
         "name": "pRash — 6-Way AI Coding CLI Benchmark & Model-vs-CLI Study",
         "domain": "Developer Tooling & Infrastructure",
-        "headline": "Ran a controlled 6-way benchmark of autonomous AI coding CLIs, isolating model-vs-CLI variables and exposing a Round-2 Second-System regression plus keyword-triggered stealth model routing.",
-        "why_mentioned": "Demonstrates rigorous experimental design, AI coding-agent evaluation, static + runtime + cross-AI auditing, and the ability to turn a messy multi-tool benchmark into a controlled study with published deep-dives.",
-        "problem_statement": "AI coding CLI comparisons are confounded — every tool pairs a different CLI with a different model, so a 'winner' tells you nothing about whether the harness or the model drove the result.",
-        "initial_struggle": "Round 1 produced six apps with six unrelated bugs; Round 2's 'merge everything' prompt triggered a Second-System collapse where working features (print, chat, mid-chat agent switching) regressed across the board.",
-        "technical_architecture": "Six independently generated Next.js apps scored via static repository/audit analysis, live headless-Chrome runtime testing, and cross-AI auditing. Results re-grouped into three controlled pairs: same model/different CLI (DeepSeek 4.1 Flash, Gemini Flash 3.8) and same CLI/different model (Antigravity on Gemini vs Claude Opus 4.6).",
+        "headline": "Controlled benchmark of 6 autonomous coding CLIs across 2 rounds, isolating model-vs-CLI variables and documenting a Round-2 regression plus stealth model routing.",
+        "why_mentioned": "Demonstrates experimental design: most CLI comparisons are confounded because each tool pairs a different CLI with a different model, so a 'winner' proves nothing.",
+        "problem_statement": "AI coding CLI comparisons generally vary two things at once — the harness and the model — which makes their conclusions untrustworthy.",
+        "initial_struggle": "Round 2's 'merge everything' prompt triggered a second-system collapse in which working features regressed across the board.",
+        "technical_architecture": "Six independently generated Next.js apps scored by static code audit, live headless-Chrome runtime testing and cross-AI auditing, then regrouped into controlled pairs (same model / different CLI, and same CLI / different model).",
         "measurable_outcomes": [
-            "Six controlled comparisons isolating CLI vs model as the independent variable.",
-            "Live-vs-static ranking inversion exposed (Claude Opus: 84 static → 68 live).",
-            "Documented Round-2 regressions: invisible-ink print, 3 phantom pages, and a permanently frozen Stop button.",
-            "Uncovered StepCode's keyword-triggered routing to Claude Opus for audits and StepFun for code generation.",
-            "Published six engineering deep-dives with full methodology and post-mortem."
+            "6 autonomous coding CLIs compared across 2 rounds.",
+            "A live-vs-static ranking inversion exposed (one candidate: 84 static → 68 live).",
+            "Documented Round-2 regressions and keyword-triggered stealth model routing in one CLI.",
+            "Published six engineering deep-dive posts with full methodology and post-mortem.",
         ],
-        "tech_stack": ["AI Coding CLIs", "LLM Benchmarking", "Headless Chrome", "Static Code Audits", "Next.js", "Technical Writing"],
+        "tech_stack": ["AI coding CLIs", "LLM benchmarking", "Headless Chrome", "Static code audits", "Next.js"],
         "live_url": "https://kprsnt.in/blog/BLOG_MODEL_VS_CLI",
         "github_url": "https://github.com/kprsnt2/pRash_chat",
-        "blog_url": "https://kprsnt.in/blog/BLOG_ROUND1_VS_ROUND2_REGRESSION"
+        "blog_url": "https://kprsnt.in/blog/BLOG_ROUND1_VS_ROUND2_REGRESSION",
     },
     "aieco": {
         "slug": "aieco",
         "name": "AI Eco — Autonomous 10-Agent Swarm & FastMCP Server",
         "domain": "Developer Tooling & Infrastructure",
-        "headline": "Autonomous 10-agent swarm executing daily automated pipelines via GitHub Actions with live MCP server.",
-        "why_mentioned": "Proves self-operating agent infrastructure, living memory compaction, and standard Model Context Protocol (MCP) server implementation.",
-        "problem_statement": "Portfolios and developer blogs quickly become stale. Maintaining accurate telemetry, commit histories, and changelogs manually is tedious.",
-        "initial_struggle": "Preventing token bloat in persistent living memory across daily scheduled runs while maintaining context continuity.",
-        "technical_architecture": "10 specialized agents coordinated via GitHub Actions (daily midnight UTC). Exposes live metrics, profile, and tools over FastMCP (JSON-RPC 2.0 & SSE).",
+        "headline": "A 10-agent swarm running daily via GitHub Actions with living-memory compaction and a live MCP server.",
+        "why_mentioned": "Evidence of self-operating agent infrastructure: scheduled agents, bounded memory, and a standards-compatible MCP surface.",
+        "problem_statement": "A portfolio goes stale quickly. Keeping telemetry, commit history and changelogs current by hand is exactly the kind of work an agent swarm should do unattended.",
+        "initial_struggle": "Keeping persistent 'living memory' from growing without bound across daily scheduled runs while preserving context continuity.",
+        "technical_architecture": "10 specialised agents coordinated by GitHub Actions daily, with living memory compacted under a 4,000-word ceiling, exposed over FastMCP (JSON-RPC 2.0 and SSE).",
         "measurable_outcomes": [
-            "10/10 agents operational daily with persistent living memory (<4,000 words ceiling).",
-            "Exposes 12+ FastMCP tools and 8 resources over Stdio and HTTP/SSE transports.",
-            "Weekly Sunday Alignment Council producing ratified roadmap and minutes."
+            "10 swarm agents running daily.",
+            "15+ MCP tools and 5 resources over Stdio and HTTP/SSE.",
+            "Living memory held under a 4,000-word bound.",
+            "Fitness score 83.4% as reported on kprsnt.in/ecosystem.",
         ],
-        "tech_stack": ["Python", "Multi-Agent Swarm", "FastMCP", "GitHub Actions", "Living Memory", "Telemetry"],
+        "tech_stack": ["Python", "Multi-Agent swarm", "FastMCP", "GitHub Actions", "Living memory"],
         "live_url": "https://kprsnt.in/ecosystem",
         "github_url": "https://github.com/kprsnt2/kprsnt.in",
-        "blog_url": "https://kprsnt.in/aie/blogs"
-    }
+        "blog_url": "https://kprsnt.in/aie/blogs",
+    },
 }
 
 
@@ -209,7 +292,8 @@ def get_all_case_studies(domain: Optional[str] = None) -> List[Dict[str, Any]]:
 
 def get_structured_hiring_evidence(domain: Optional[str] = None) -> Dict[str, Any]:
     """Generates structured evidence for recruiters and hiring managers answering:
-    - Positioning: AI Systems Engineer building production-grade agentic AI, LLM infrastructure, and data platforms.
+    - Positioning: Data Analyst with 3.5+ years of data/analytics and AI work,
+      moving into AI engineering (a stated direction, not a held title).
     - Clear domain separation: Production Systems vs. AI Research & Experiments vs. Developer Infrastructure.
     - Top quantified proof points.
     - Interview verification topics.
@@ -224,45 +308,49 @@ def get_structured_hiring_evidence(domain: Optional[str] = None) -> Dict[str, An
 
     return {
         "candidate": "Prashanth Kumar Kadasi",
-        "primary_positioning": "AI Systems Engineer building production-grade agentic AI, multimodal vision pipelines, and high-throughput discrete allocation platforms.",
-        "core_stack": "Python, TypeScript, Model Context Protocol (MCP), LLM Fine-Tuning (20B), Computer Vision, Discrete Optimization, Next.js, GCP",
-        "value_headline": "Proven ability to take messy real-world constraints (supermarket aisles, 18,000-candidate state counselling, unprompted agent blackouts) and engineer mathematically rigorous, deployed production software.",
+        "primary_positioning": "Data Analyst (3.5+ years data/analytics & AI, 2023–present) with 9 prior years of CMS compliance auditing, moving into AI engineering through self-directed agentic systems work.",
+        "core_stack": "Python, TypeScript, Model Context Protocol (MCP), LoRA/QLoRA fine-tuning, discrete optimization, Next.js, BigQuery, GCP",
+        "value_headline": "Nine years of zero-tolerance compliance auditing plus three years of data engineering, applied to building autonomous systems that are checked rather than trusted: hash-chained ledgers, submission gates, anti-fabrication guards and cost-gated deterministic matching.",
         "top_quantified_proof_points": [
             {
-                "metric": "Real-World Cutoff Validation (mSeat)",
-                "evidence": "Predicted official KNRUHS 2026 Phase 1 MBBS allotments for 18,000+ candidates across 59 colleges within 2 preferences and 73 ranks of cutoff under a 7D reservation matrix."
+                "metric": "9,697 jobs / 7,665 roles at zero model cost (JobAgents)",
+                "evidence": "Sourced 9,697 jobs across 10 sources, collapsed 2,032 duplicates, and computed 29,091 match scores deterministically with zero model calls, with an anti-fabrication guard catching 8/8 seeded fabrications."
             },
             {
-                "metric": "+51% Steerability Delta (BrandXY 20B)",
-                "evidence": "Fine-tuned 20B parameter model on AMD MI300X accelerators to steer recommendation bias from 25.5% baseline to 76.5% under rigorous double-blind A/B evaluation."
+                "metric": "0 oracle violations across 1,254 tool calls (AgentSwarm)",
+                "evidence": "34 unattended runs across 4 CLI substrates with 35/35 hash chains intact; 0 of 2 self-assessing agents overclaimed. An independent numerical audit verified 22/25 claims and returned a B+ verdict — not publication-grade, which is recorded rather than hidden."
             },
             {
-                "metric": "1,441 Turns & 330-Turn Blackout Survival (Project Awakening)",
-                "evidence": "Architected unprompted multi-agent civilization that wrote 28 modules, 50 web applications, 344 KB audio symphony, and survived a 330-turn API blackout with 100% CI/CD continuity."
+                "metric": "8 findings / 14 CWE classes behind a promotion gate (BugAgents)",
+                "evidence": "Two autonomous agents produced 8 findings (5 High/Critical) across 15,317 tool calls; the gate promoted 2 reports and refused 34 unverified candidates. Submission-ready drafts only — nothing disclosed, accepted or paid."
             },
             {
-                "metric": "1.5-Hour Edge CV to ZeroGPU Sprint (Retail Shelf AI)",
-                "evidence": "Pivoted from failing ceiling-box heuristic to dual-mode Edge CV + Cloud VLM engine with Gemini 3.8 Flash on OMP, calculating revenue-at-risk for supermarket aisles."
+                "metric": "+51% steerability delta (BrandXY, GPT-OSS-20B)",
+                "evidence": "Fine-tuned a 20B model on AMD MI300X to move recommendation rate from 25.5% baseline to 76.5%, published on Hugging Face."
+            },
+            {
+                "metric": "18,000+ candidates within 73 ranks of cutoff (mSeat)",
+                "evidence": "Discrete allocation simulator across 59 colleges under a multi-dimensional reservation matrix, validated against official KNRUHS 2026 Phase 1 results, with 90.6% dataset compression."
             }
         ],
         "categorized_domains": domains,
         "suggested_interview_verification_topics": [
             {
-                "topic": "Discrete Combinatorial Allocation vs Heuristic Traps",
-                "ask": "How did you solve the 100,000-rank failure in the initial mSeat estimator, and how does the 7D reservation matrix handle local vs unreserved quota sliding?"
+                "topic": "Deterministic matching as a cost gate",
+                "ask": "In JobAgents, how did you score 29,091 roles without a single model call, and where does the deterministic scorer stop being trustworthy?"
             },
             {
-                "topic": "Dual-Mode Edge CV + Multimodal VLM Architecture",
-                "ask": "Why did you choose edge CPU contour segmentation paired with cloud VLM fallback for Retail Shelf Intelligence, and how do you trade off latency vs accuracy?"
+                "topic": "Making the audited unable to edit the audit",
+                "ask": "In AgentSwarm, why did the hash-chained ledger have to live outside the agents' writable directory, and what did that constraint cost architecturally?"
             },
             {
-                "topic": "Long-Horizon Multi-Agent Resilience & Recovery",
-                "ask": "In Project Awakening, how did the two unprompted agents survive the 330-turn API blackout without state corruption or pipeline aborts?"
+                "topic": "Report promotion vs plausible text",
+                "ask": "In BugAgents, what exactly did the four-point gate check, and what did the 34 refused candidates look like compared with the 2 promoted ones?"
             },
             {
-                "topic": "LLM Recommendation Steerability on AMD MI300X",
-                "ask": "What loss formulation and evaluation protocol was used to measure the +51% steerability delta on BrandXY without degrading general conversational quality?"
+                "topic": "Fine-tuning steerability without quality collapse",
+                "ask": "What loss formulation and evaluation protocol measured the +51% steerability delta on BrandXY without degrading general conversational quality?"
             }
         ],
-        "mcp_query_guidance": "You can ask MCP for full case study details using 'get_project_case_study(project=\"mseat\")' or read complete post-mortems using 'get_blog_post(slug=\"mSeat_worked\")'."
+        "mcp_query_guidance": "You can ask MCP for full case study details using 'get_project_case_study(project=\"jobagents\")' or read complete post-mortems using 'get_blog_post(slug=\"mSeat_worked\")'.",
     }

@@ -1040,8 +1040,12 @@ def ecosystem_dashboard():
             "language_breakdown": {},
             "repo_counts": 0,
             "top_skills": [],
-            "live_salary_estimation": {"min": 0, "max": 0, "reasoning": "Data unavailable"}
         }
+    # The Dashboard Agent writes a "live_salary_estimation" block that is a model
+    # guess, not a measured figure (and it framed the profile at staff level).
+    # profile.md forbids citing comp ranges that are not verified, so it is
+    # dropped here rather than rendered as a market benchmark.
+    data.pop('live_salary_estimation', None)
     swarm = load_swarm_data()
     latest_aie_blogs = load_ai_eco_blogs()[:3]
     return render_template('ecosystem.html', data=data, swarm=swarm, latest_aie_blogs=latest_aie_blogs)
@@ -1220,7 +1224,7 @@ def load_full_swarm_audit(target_week=None):
             entry["icon"] = "fas fa-satellite-dish"
             entry["color"] = "#3498db"
         elif aid == "dashboard_agent":
-            entry["latest_output_summary"] = "Telemetry and US Staff AI salary benchmarks synced to job_data/ecosystem_telemetry.json."
+            entry["latest_output_summary"] = "Telemetry and market salary benchmarks synced to job_data/ecosystem_telemetry.json."
             entry["target_info"] = targets_data.get("targets", {}).get("agent_2_dashboard_agent", {})
             entry["icon"] = "fas fa-chart-line"
             entry["color"] = "#9b59b6"

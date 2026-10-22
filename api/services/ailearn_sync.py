@@ -246,7 +246,8 @@ def write(code, payload):
             raise SyncError("wrong password for this sync code", status=403)
 
     clean = _validate_payload(payload)
-    blob = _check_size(clean)
+    # validates size and serialisability; the returned blob is not needed here
+    _check_size(clean)
 
     # the password hash lives beside the payload but is never returned
     record = dict(clean)

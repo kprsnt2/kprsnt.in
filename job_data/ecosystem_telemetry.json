@@ -66,11 +66,6 @@
     "HTML": 18,
     "Python": 11
   },
-  "live_salary_estimation": {
-    "min": 250000,
-    "max": 450000,
-    "reasoning": "For a developer with 100 repos focused on autonomous AI multi-agent ecosystems and high-throughput analytics pipelines, the profile maps to senior/staff-level AI systems work with strong full-stack and infrastructure depth. In the US market, total annual compensation for Staff AI Engineer / AI Systems Engineer roles commonly falls in this range, especially at top-tier tech and AI companies."
-  },
   "top_skills": [
     "Multi-Agent AI",
     "Model Context Protocol (MCP)",
@@ -90,7 +85,7 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] commit 0fa2bb1: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (304): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
+    "[kprsnt2/kprsnt.in] commit 0fa2bb1: 🤖 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (304): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
   ],
   "daily_commits_count": 1,
   "commit_timeline_7d": {

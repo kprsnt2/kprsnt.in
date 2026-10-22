@@ -122,13 +122,13 @@ MCP_TOOLS = [
     },
     {
         "name": "get_site_projects",
-        "description": "Searches and filters Prashanth's featured engineering projects (e.g. Project Awakening [1,441-turn autonomous synthetic civilization], Agent Cosmos, Solari Autonomous Platform, mSeat, BrandXY 20B Fine-Tuning, Drug Discovery GPT-20B, MyLocalCLI, AI News Live Tracker). Filter by search keyword, technology tag, or category.",
+        "description": "Searches and filters Prashanth's featured engineering projects (e.g. Project Awakening [long-horizon autonomous multi-agent run], AgentSwarm, JobAgents, BugAgents, Agent Cosmos, mSeat, BrandXY 20B fine-tuning, MyLocalCLI, rAsh Score). Filter by search keyword, technology tag, or category.",
         "inputSchema": {
             "type": "object",
             "properties": {
                 "query": {
                     "type": "string",
-                    "description": "Search keyword (e.g. 'awakening', 'cosmos', 'solari', 'mcp', 'agent', 'typescript', 'python', 'huggingface')"
+                    "description": "Search keyword (e.g. 'awakening', 'cosmos', 'jobagents', 'mcp', 'agent', 'typescript', 'python', 'huggingface')"
                 },
                 "tag": {
                     "type": "string",
@@ -191,7 +191,7 @@ MCP_TOOLS = [
             "properties": {
                 "role_title": {
                     "type": "string",
-                    "description": "Target job title (e.g. 'Staff AI Engineer', 'Data Analyst & AI Engineer', 'Agentic Systems Architect')"
+                    "description": "Target job title (e.g. 'AI Engineer', 'Data Analyst', 'Agentic AI Engineer')"
                 },
                 "requirements": {
                     "type": "string",
@@ -444,7 +444,7 @@ MCP_PROMPTS = [
         "arguments": [
             {
                 "name": "role_title",
-                "description": "Target job title (e.g. 'Staff AI Engineer', 'Data Analyst & AI Engineer')",
+                "description": "Target job title (e.g. 'AI Engineer', 'Data Analyst')",
                 "required": True
             },
             {
@@ -461,7 +461,7 @@ MCP_PROMPTS = [
     },
     {
         "name": "analyze_ecosystem_telemetry",
-        "description": "Analyzes live velocity, commit distributions, active agents, and market salary benchmarks from the AI Eco swarm",
+        "description": "Analyzes live velocity, commit distributions, and active agents from the AI Eco swarm",
         "arguments": [
             {
                 "name": "focus",
@@ -529,7 +529,7 @@ AI_ECO_SWARM = [
         "output_target": "job_data/ecosystem_telemetry.json",
         "primary_model": "openai/gpt-oss-120b",
         "fallback_model": "openai/gpt-oss-20b",
-        "role": "Computes aggregate contribution velocity, language distributions, and market salary benchmarks based on active skill evolution."
+        "role": "Computes aggregate contribution velocity and language distributions from repository activity."
     },
     {
         "id": "portfolio_sync",
@@ -585,7 +585,7 @@ AI_ECO_SWARM = [
         "id": "critic_agent",
         "name": "Adversarial Bar-Raiser Agent",
         "status": "Online",
-        "custom_skill": "Staff+ Architecture Stress-Testing & Gap Analysis",
+        "custom_skill": "Architecture Stress-Testing & Gap Analysis",
         "output_target": "ecosystem_swarm/gap_analysis.json",
         "primary_model": "openai/gpt-oss-120b",
         "fallback_model": "openai/gpt-oss-20b",
@@ -786,12 +786,12 @@ def handle_evaluate_job_match(args: Dict[str, Any]) -> Dict[str, Any]:
     if matched_agent:
         matched_skills.extend([
             "Autonomous Multi-Agent AI Swarms (10-agent production ecosystem)",
-            "Model Context Protocol (MCP 2024-11-05) Server & Client Implementations",
+            "Model Context Protocol (MCP) Server & Client Implementations",
             "Hierarchical LLM Routing (GPT-OSS 120B, OpenAI, Anthropic)",
             "Fine-Tuning on AMD MI300X (BrandXY, Drug Discovery)"
         ])
         highlighted_projects.append("AI Eco (Autonomous Multi-Agent Portfolio Infrastructure)")
-        highlighted_projects.append("Solari Cookbook (Interactive MicroVM Previews & Multi-Agent Swarms)")
+        highlighted_projects.append("JobAgents (Automated Job-Sourcing & Anti-Fabrication Pipeline)")
         highlighted_projects.append("BrandXY (Fine-tuned 20B LLM Bias Steerability)")
         category_scores.append(min(96, 88 + len(matched_agent) * 2))
 
@@ -800,7 +800,7 @@ def handle_evaluate_job_match(args: Dict[str, Any]) -> Dict[str, Any]:
     matched_data = [w for w in data_keywords if w in combined_text]
     if matched_data:
         matched_skills.extend([
-            "Expert SQL & Google BigQuery Data Pipelines",
+            "SQL & Google BigQuery Data Pipelines",
             "18 Sector Intelligence Dashboards deployed for Enterprise Clients",
             "Automated ETL reporting using Python and AppScript",
             "Automated Weekly AI Insight Generation"
@@ -819,8 +819,8 @@ def handle_evaluate_job_match(args: Dict[str, Any]) -> Dict[str, Any]:
             "MicroVM Sandboxing & Process Watchdog Architecture",
             "Vercel Serverless Function Deployment & Optimizations"
         ])
-        if "Solari Cookbook (Interactive MicroVM Previews & Multi-Agent Swarms)" not in highlighted_projects:
-            highlighted_projects.append("Solari Cookbook (TypeScript / Next.js / MicroVM)")
+        if "AgentSwarm (Hash-Chained Forensic Research Arena)" not in highlighted_projects:
+            highlighted_projects.append("AgentSwarm (Hash-Chained Forensic Research Arena)")
         highlighted_projects.append("mSeat (Telangana MBBS Counselling Predictor with O(1) Ranking)")
         category_scores.append(min(92, 82 + len(matched_stack) * 2))
 
@@ -841,7 +841,7 @@ def handle_evaluate_job_match(args: Dict[str, Any]) -> Dict[str, Any]:
             "Enterprise Data Analytics (SQL, BigQuery, Looker Studio)",
             "Python & TypeScript Full-Stack Engineering"
         ]
-        highlighted_projects = ["AI Eco", "Solari Cookbook", "Black Piano Sector Dashboards"]
+        highlighted_projects = ["AI Eco", "JobAgents", "BugAgents", "Black Piano Sector Dashboards"]
 
     return {
         "target_role": role_title,
@@ -877,7 +877,6 @@ def handle_ai_eco_telemetry(args: Dict[str, Any]) -> Dict[str, Any]:
         "repo_counts": 100,
         "language_breakdown": {"Python": 55, "TypeScript": 20, "JavaScript": 25},
         "top_skills": ["Python", "TypeScript", "FastMCP", "Autonomous Swarms", "Next.js"],
-        "live_salary_estimation": {"min": 140000, "max": 200000, "reasoning": "High-velocity autonomous multi-agent and enterprise analytics capabilities."},
         "active_agents": 10,
         "mcp_server": "kprsnt-all-in-one-mcp v3.0"
     }
@@ -1485,7 +1484,7 @@ def handle_prompt_get(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
     name = (name or "").strip().lower()
     args = arguments or {}
     if name == "evaluate_candidate":
-        role_title = args.get("role_title", "Staff AI Engineer")
+        role_title = args.get("role_title", "AI Engineer")
         requirements = args.get("requirements", "Autonomous Multi-Agent AI Swarms, FastMCP, LLM Fine-Tuning")
         return {
             "description": f"Candidate alignment evaluation for {role_title}",
@@ -1494,7 +1493,7 @@ def handle_prompt_get(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
                     "role": "user",
                     "content": {
                         "type": "text",
-                        "text": f"Please evaluate Prashanth Kumar Kadasi's fit for the role of '{role_title}'.\nRequirements:\n{requirements}\n\nPlease analyze skills, verified projects (Solari, BrandXY 20B, Drug Discovery GPT, AI Eco), and highlight interview talking points using the 'evaluate_job_match' tool."
+                        "text": f"Please evaluate Prashanth Kumar Kadasi's fit for the role of '{role_title}'.\nRequirements:\n{requirements}\n\nPlease analyze skills, verified projects (JobAgents, AgentSwarm, BugAgents, BrandXY 20B, MyLocalCLI, AI Eco), and highlight interview talking points using the 'evaluate_job_match' tool."
                     }
                 }
             ]
@@ -1522,7 +1521,7 @@ def handle_prompt_get(name: str, arguments: Dict[str, Any]) -> Dict[str, Any]:
                     "role": "user",
                     "content": {
                         "type": "text",
-                        "text": f"Here is the real-time telemetry from Prashanth's AI Eco swarm:\n{json.dumps(telemetry, indent=2)}\n\nPlease provide a technical analysis focusing on '{focus}'. Evaluate developer velocity, language balance across projects, and market compensation alignment."
+                        "text": f"Here is the real-time telemetry from Prashanth's AI Eco swarm:\n{json.dumps(telemetry, indent=2)}\n\nPlease provide a technical analysis focusing on '{focus}'. Evaluate developer velocity, language balance across projects, and how the work reads against AI engineering job requirements (avoid inventing seniority titles or compensation figures)."
                     }
                 }
             ]

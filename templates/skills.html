@@ -2,63 +2,39 @@
 
 {% block title %}Skills | Prashanth Kumar Kadasi{% endblock %}
 
-{% block description %}Technical skills of Prashanth Kumar Kadasi across multi-agent systems, AI/LLM engineering, data & SQL analytics, BI dashboards, and cloud infrastructure.{% endblock %}
+{% block description %}Technical skills of Prashanth Kumar Kadasi — agentic AI & MCP, LLM fine-tuning and evaluation, security research, languages, data engineering, and cloud infrastructure.{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col-12">
             <h2>Technical Skills</h2>
-            <p class="mb-4">A diverse toolkit spanning full-stack development, cloud infrastructure, and AI/ML.</p>
+            <p class="mb-4">Grouped by domain: agentic AI, LLM work, security research, languages, data, and infrastructure.</p>
         </div>
     </div>
 
     <div class="row">
+        {# Render whatever categories the route passes — no hardcoded category
+           names, so a renamed or added key in the data module still shows up. #}
+        {% for category, items in skills.items() %}
         <div class="col-12 col-md-6 mb-4">
             <div class="card h-100">
-                <div class="card-header">💻 Languages</div>
+                <div class="card-header">{{ category }}</div>
                 <div class="card-body">
-                    {% for skill, cat in skills['Languages'] %}
-                    <span class="skill-badge {{ cat }}">{{ skill }}</span>
+                    {% for item in items %}
+                    {# Data module uses (name, css-class) pairs; tolerate plain strings too. #}
+                    {% if item is string %}
+                    <span class="skill-badge">{{ item }}</span>
+                    {% else %}
+                    {% set name = item[0] if item|length > 0 else item %}
+                    {% set css = item[1] if item|length > 1 else '' %}
+                    <span class="skill-badge {{ css }}">{{ name }}</span>
+                    {% endif %}
                     {% endfor %}
                 </div>
             </div>
         </div>
-
-        <div class="col-12 col-md-6 mb-4">
-            <div class="card h-100">
-                <div class="card-header">⚡ Frameworks & Libraries</div>
-                <div class="card-body">
-                    {% for skill, cat in skills['Frameworks & Libraries'] %}
-                    <span class="skill-badge {{ cat }}">{{ skill }}</span>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-12 col-md-6 mb-4">
-            <div class="card h-100">
-                <div class="card-header">☁️ Cloud & DevOps</div>
-                <div class="card-body">
-                    {% for skill, cat in skills['Cloud & DevOps'] %}
-                    <span class="skill-badge {{ cat }}">{{ skill }}</span>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-
-        <div class="col-12 col-md-6 mb-4">
-            <div class="card h-100">
-                <div class="card-header">🤖 AI & ML</div>
-                <div class="card-body">
-                    {% for skill, cat in skills['AI & ML'] %}
-                    <span class="skill-badge {{ cat }}">{{ skill }}</span>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

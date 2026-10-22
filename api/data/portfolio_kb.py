@@ -3,6 +3,15 @@ Portfolio Knowledge Base — Single source of truth for all AI touchpoints.
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Update THIS FILE to change what the AI bots know about you.
 Used by: AI Insight, RAG Chat, Interview Bot, Chat Bot, MCP Server, Embeddings Builder.
+
+Ground truth: D:\\JobAgents\\config\\profile.md
+  · Any number below must appear in profile.md's "Verified Metrics" table.
+  · Any skill below must appear in profile.md's "Skills (only these may be listed)".
+  · Held titles are Data Analyst (Black Piano, Pi Software) and Enrollment Quality
+    & Audit Representative (CMS Auditor) at Optum. "AI Systems Engineer" is a
+    TARGET, never a held title.
+  · All independent projects are self-directed — never employer work, and never
+    claimed to have production users, revenue, or adoption.
 """
 
 # ============================================
@@ -32,9 +41,16 @@ def _normalize_title(title: str) -> str:
 PROFILE = {
     "name": "Prashanth Kumar Kadasi",
     "alias": "kprsnt",
-    "title": "AI Systems Engineer",
-    "location": "Hyderabad, India",
+    # Target, not a held title. Held titles are Data Analyst / CMS Auditor.
+    "title": "Data Analyst moving into AI engineering",
+    "target_role": "AI Systems Engineer (agentic systems)",
+    "current_title": "Data Analyst",
+    "location": "Hyderabad, Telangana, India",
     "remote": True,
+    "experience_summary": (
+        "3.5+ years data/analytics & AI (2023–present) plus 9 years healthcare "
+        "compliance auditing at Optum / UnitedHealth Group (2014–2023)"
+    ),
     "education": "M.Pharm - Pharmaceutical Analysis and Quality Assurance, Anurag Group of Institutions (JNTUH, May 2012)",
     "website": "https://kprsnt.in",
     "github": "https://github.com/kprsnt2",
@@ -43,41 +59,86 @@ PROFILE = {
 }
 
 # ============================================
-# SKILLS — Detailed skill inventory
+# SKILLS — only profile.md's approved skill list
 # ============================================
 SKILLS_DETAILED = {
-    "Languages & Tools": [
-        "Python", "JavaScript", "TypeScript", "SQL", "Node.js", "HTML/CSS", "Git", "Excel", "AppScript"
+    "Agentic AI": [
+        "Multi-Agent Swarms",
+        "FastMCP (Model Context Protocol)",
+        "Tool/Function Calling",
+        "Long-Horizon Agent CI/CD",
+        "Human-in-the-Loop Escalation",
+        "RAG",
+        "Living Memory Compaction",
+        "Bounded Autonomy",
+        "Multi-CLI Orchestration (Antigravity, Claude Code, DeepSeek Harness, omp, pi, agy)",
+        "Agent Evaluation Harnesses",
+        "Hash-Chained Audit Ledgers",
+        "Scope Guardrails",
+        "Budget Enforcement",
+        "AI-Assisted Development",
     ],
-    "AI & LLM": [
-        "Zero-Prompt Autonomous Evolution & Synthetic Civilizations",
-        "Long-Horizon Multi-Agent CI/CD Pipelines (SQLite/Git/Actions)",
-        "Autonomous AI Swarms & Ecosystem Orchestration",
-        "LLM Fine-tuning (LoRA/QLoRA on 7B–20B models)",
-        "AI Coding CLI Benchmarking & Controlled Model/CLI Evaluation",
-        "Multi-Agent AI Systems (4-agent pipelines, agentic workflows)",
-        "RAG (Retrieval-Augmented Generation) with vector embeddings",
-        "MCP Server Development (Model Context Protocol)",
-        "Prompt Engineering & Chain-of-Thought prompting",
-        "AI Safety Research (LLM manipulation, brand influence)",
-        "Multi-Model Architecture (OpenAI, Claude, NVIDIA NIM, Groq, Ollama)",
+    "LLM": [
+        "LoRA/QLoRA Fine-Tuning",
+        "Model Evaluation & Steerability",
+        "Bias Quantification",
+        "Multi-Model A/B Evaluation",
+        "Prompt Engineering",
+        "Independent Verifier Design",
+        "Substrate Benchmarking",
     ],
-    "Web & Frameworks": [
-        "React", "Next.js", "Vue.js", "Flask", "Dash", "Streamlit", "Vercel Serverless",
+    "Security": [
+        "Source-Code Audit",
+        "Vulnerability Research",
+        "Proof-of-Concept Development",
+        "CVSS Scoring",
+        "CWE Classification",
+        "Bug Bounty Scope Handling",
+        "Responsible Disclosure",
     ],
-    "Cloud & DevOps": [
-        "Vercel", "Google Cloud Run", "Render", "Cloudflare Pages", "Firebase",
-        "Docker", "GitHub Actions (CI/CD pipelines)", "AMD ROCm (GPU computing)",
+    "Languages": [
+        "Python (PyTorch, Pandas, NumPy, FastAPI)",
+        "Node.js",
+        "TypeScript",
+        "SQL",
+        "JavaScript",
+        "HTML",
     ],
-    "Data & BI": [
-        "BigQuery", "MongoDB", "SQLite", "Tableau", "Looker Studio", "Power BI",
-        "Plotly", "Pandas", "NumPy", "ETL pipelines", "Sentiment Analysis",
-        "ARIMA & LSTM forecasting models",
+    "Data": [
+        "BigQuery",
+        "Looker Studio",
+        "Tableau",
+        "ETL Orchestration",
+        "Data Modeling",
+        "Data Quality & Validation",
+        "Data Pipeline Maintenance",
+        "BigQuery Notebook",
+        "Scheduled Queries",
+        "Google Apps Script",
+        "SQLite",
+    ],
+    "Infra": [
+        "GCP",
+        "Cloud Run",
+        "Docker",
+        "GitHub Actions",
+        "Vercel",
+        "Linux/Bash",
+        "Git",
+    ],
+    "Platforms": [
+        "Claude 4.x",
+        "Gemini 2.5/3.x",
+        "GPT-OSS 120B/20B",
+        "DeepSeek 4.1",
+        "Ollama",
+        "NVIDIA NIM",
+        "OpenRouter",
     ],
 }
 
 # ============================================
-# EXPERIENCE
+# EXPERIENCE — verbatim from profile.md
 # ============================================
 EXPERIENCE = [
     {
@@ -86,81 +147,86 @@ EXPERIENCE = [
         "period": "Mar 2026 – Present",
         "location": "Remote",
         "highlights": [
-            "Delivered dashboards and complete end-to-end data pipelines for 4 enterprise clients across diverse industries",
-            "Built 18 sector intelligence dashboards with automated data pipelines using App Script, BigQuery, and Looker Studio",
-            "Continuing work for the Pi Datametrics client after transition, maintaining and enhancing analytics reporting systems",
-        ]
+            "Architected 18 automated ETL pipelines feeding BigQuery → Looker Studio dashboards across 18 industry sectors",
+            "Built a self-healing data-quality agent powered by Gemini: resumes missing brand domains via reference-table lookup with LLM fallback, writes results back, retries 3x, and escalates by email only when unresolved",
+            "Developed a custom MCP tool letting non-technical marketing & sales teams generate grounded blog posts from a one-line prompt",
+            "Engineered an automated AI insights pipeline (ChatGPT) producing weekly market/sector intelligence, auto-published to a client-facing site",
+            "Produced industry reports (Black Friday, Christmas, sales) and ad-hoc client dashboards",
+        ],
     },
     {
-        "company": "Pi Software Solutions Pvt Ltd (Pi-Datametrics)",
+        "company": "Pi Software Solutions (Pi - Datametrics)",
         "role": "Data Analyst",
         "period": "Mar 2023 – Feb 2026",
         "location": "Remote",
         "highlights": [
-            "Developed a Python package for Pi-API and deployed a web service on Render for one-click BigQuery uploads/downloads",
-            "Built AI/LLM reports and end-to-end data pipelines for analytics dashboards",
-            "Automated dashboards using Apps Script, BigQuery, Tableau, and Looker Studio",
-            "Conducted sentiment analysis on election datasets and built predictive models (ARIMA, LSTM)",
-            "Created Brand reports & market analysis reports on industries like Insurance, Gambling, and E-commerce for the US & UK markets",
-            "Delivered 15+ dashboards and 30+ reports across elections, brands, and market analysis",
-        ]
-    }
+            "Built production Python data pipelines (internal Pi-API package) for automated BigQuery access across 10+ client dashboards",
+            "Delivered 30+ analytical reports for US & UK industry trends",
+        ],
+    },
+    {
+        "company": "Optum (UnitedHealth Group)",
+        "role": "Enrollment Quality & Audit Representative (CMS Auditor)",
+        "period": "Apr 2014 – Mar 2023",
+        "location": "Hyderabad, India",
+        "highlights": [
+            "Audited federal enrollment transactions for Centers for Medicare & Medicaid Services (CMS) compliance, providing regulatory documentation and audit readiness",
+            "Promoted via internal job posting (IJP) in March 2016 from Claims Associate (Apr 2014 – Feb 2016) to Enrollment Quality & Audit Representative",
+            "Applied zero-tolerance quality gates to high-volume transaction datasets — the verification and audit discipline now applied to autonomous AI systems",
+        ],
+    },
 ]
 
 # ============================================
-# KEY ACHIEVEMENTS — Highlight reel
+# KEY ACHIEVEMENTS — every number is from profile.md's Verified Metrics
 # ============================================
 KEY_ACHIEVEMENTS = [
-    "Architected Project Awakening — a groundbreaking 1,441-turn, 1,553-commit autonomous synthetic civilization evolving from a single word 'hi' without system prompts, building 50 interactive browser applications, compiling a 344 KB acoustic symphony, and surviving a 330-turn cloud API blackout with 100% data integrity",
-    "Created Agent Cosmos — 100-epoch autonomous multi-agent research collective discovering the Cosmogenetic Bootstrap Theorem, self-healing frontend markdown rendering, and the Codex of Autonomous Agency under the Crucible Protocol",
-    "Architected an Autonomous Multi-Agent Portfolio Ecosystem featuring AI swarms and MCP (Model Context Protocol) integrations",
-    "Engineered mSeat — high-performance Telangana MBBS Mock Counselling simulator with O(1) multi-quota ranking and 545 KB compressed dataset for 18,000+ aspirants",
-    "Fine-tuned a 20B parameter LLM on AMD MI300X GPU achieving 76.47% brand manipulation rate (BrandXY research)",
-    "Published multiple fine-tuned models on HuggingFace (drug-discovery-gpt-20b, BrandXY-gpt-oss-20b)",
-    "Built and deployed 20+ AI-powered applications across web, CLI, and serverless platforms",
-    "Created MyLocalCLI — a Claude Code alternative with 6 AI providers, 26 tools, 5 agents, and 22 skills",
-    "Benchmarked 6 autonomous AI coding CLIs (Antigravity/agy, OMP, OMO, PI, StepCode) on the same app spec across two rounds, isolating model-vs-CLI variables and publishing a controlled study plus a Round-2 regression post-mortem",
-    "Designed multi-agent AI pipeline systems with automated daily execution via GitHub Actions",
-    "Built dual-AI drug discovery platform (PharmaGenesis AI) with 3D molecular visualization",
-    "3+ years delivering enterprise dashboards, data pipelines, and analytics for US & UK clients",
-    "Unique pharma background (M.Pharm) combined with AI expertise enables domain-specific AI applications",
+    "Built JobAgents, an automated job-search pipeline sourcing 9,697 jobs / 7,665 distinct roles from 10 sources with 2,032 duplicate postings merged across 349 companies; a deterministic matcher computes match scores with zero model calls as a cost gate, and an anti-fabrication guard catches 8/8 seeded fabrications",
+    "Built AgentSwarm, an autonomous multi-agent research arena whose 35/35 hash-chained ledgers live outside the agents' writable directory; measured 0 oracle violations across 1,254 tool calls and 0 of 2 self-assessing agents overclaimed, across 34 runs in 9 research domains",
+    "Commissioned an independent numerical audit that verified 22 of 25 quantitative claims exactly; the audit's own verdict is B+ / not publication-grade without that numerical audit — recorded honestly rather than hidden",
+    "Built BugAgents, two autonomous security research agents that produced 8 findings across 14 vulnerability classes (5 High/Critical) with reproducing proof-of-concepts behind a submission gate that promoted 2 reports and refused 34 unverified candidates; none are disclosed or scored",
+    "Architected AI Eco, a 10-agent swarm running daily via GitHub Actions with living-memory compaction under 4,000 words, exposing 15+ MCP tools and 5 resources",
+    "Fine-tuned GPT-OSS-20B on AMD MI300X to quantify and steer brand recommendation bias: 76.5% after fine-tuning vs 25.5% baseline (+51%), published on Hugging Face",
+    "Developed MyLocalCLI, a local-first agentic coding assistant published on npm as 'mylocalcli' (v4.0.2) with 8 documented providers, 42 built-in tools, 38 dynamic skills and 5 sub-agents",
+    "Built rAsh Score (rashscore.live), a live multi-model AI brand-visibility index tracking 300 brands across 20 industry cohorts on 4 dimensions, queried across ChatGPT, Gemini, Claude and Groq with daily GitHub Actions pipelines into Turso and a Next.js dashboard",
+    "Engineered mSeat, a discrete allocation simulator for 18,000+ MBBS aspirants across 59 colleges, validated within 73 ranks of the official cutoff, with 90.6% dataset compression and an MCP server",
+    "Benchmarked 6 autonomous coding CLIs across 2 rounds (pRash) and absorbed three undocumented CLI quirks into a single tested harness",
+    "Delivered 18 automated ETL pipelines and 10+ client dashboards across 3.5+ years as a Data Analyst, on top of 9 years of CMS compliance auditing at Optum",
 ]
 
 # ============================================
 # TARGET ROLES & SALARY
 # ============================================
 TARGET_ROLES = [
-    "AI Engineer", "LLM Engineer", "Generative AI Developer",
-    "Data Analyst (Senior)", "ML Engineer", "Prompt Engineer",
-    "Forward Deployed Engineer", "Pharma + AI roles",
+    "AI Engineer", "LLM Engineer", "Agentic AI Engineer",
+    "Data Analyst (Senior)", "Data Engineer", "AI Safety",
 ]
 
 SALARY_INFO = (
-    "Flexible and open to discussing compensation based on the role. "
-    "Comfortable in the range of 30 lakhs INR per annum or 70k USD as minimum, negotiable. "
-    "Values the right opportunity — role fit, growth, and impact matter more than the number."
+    "Open to discussing compensation based on the role. Current CTC is ₹12,70,500 "
+    "at Black Piano (effective 1 Jul 2026); notice period is 60 calendar days per "
+    "the employment contract. Role fit, growth and impact matter alongside the number. "
+    "Do not quote a target figure that is not confirmed with Prashanth directly."
 )
 
 # ============================================
 # LINKS
 # ============================================
 LINKS = {
-    "Project Awakening": "https://kprsnt2.github.io/ac_awakening/",
-    "Awakening Dashboard": "https://kprsnt2.github.io/ac_awakening/dashboard.html",
-    "Agent Cosmos": "https://ac-omp.vercel.app/",
-    "mSeat": "https://kprsnt2.github.io/mSeat",
     "Portfolio": "https://kprsnt.in",
     "GitHub": "https://github.com/kprsnt2",
     "HuggingFace": "https://huggingface.co/kprsnt",
-    "MyLocalCLI": "https://mlc.kprsnt.in",
-    "BrandScore AI": "https://bs.kprsnt.in",
-    "AI News": "https://ainews.kprsnt.in",
-    "AI News Tracker": "https://ainews.kprsnt.in",
-    "Geetha": "https://geetha.kprsnt.in",
-    "PharmaGenesis AI": "https://pharmgenai.kprsnt.in",
-    "AI Health Pro": "https://aihealth-pro.vercel.app",
+    "LinkedIn": "https://linkedin.com/in/prashanth-kumar-kadasi-b5281765",
+    "JobAgents (live)": "https://job.kprsnt.in",
+    "AgentSwarm (live)": "https://agent.kprsnt.in",
+    "BugAgents (live)": "https://bug.kprsnt.in",
+    "MyLocalCLI (live)": "https://mlc.kprsnt.in",
+    "rAsh Score (live)": "https://rashscore.live",
+    "mSeat (live)": "https://mseat.kprsnt.in",
+    "Geetha (live)": "https://geetha.kprsnt.in",
+    "BrandXY on Hugging Face": "https://huggingface.co/kprsnt/BrandXY-gpt-oss-20b",
+    "AgentSwarm Paper 1 (Zenodo preprint)": "https://zenodo.org/records/23232189",
     "pRash Benchmark": "https://kprsnt.in/blog/BLOG_MODEL_VS_CLI",
-    "pRash Post-mortem": "https://kprsnt.in/blog/BLOG_ROUND1_VS_ROUND2_REGRESSION",
 }
 
 
@@ -204,11 +270,30 @@ def _format_experience_text():
     return "\n".join(lines)
 
 
+_RULES = """## Answering rules (binding)
+- Held titles are Data Analyst (Black Piano, Pi Software Solutions) and Enrollment
+  Quality & Audit Representative / CMS Auditor (Optum). The move into AI engineering
+  is a stated direction, not a title already held. Never say Staff/Principal/Founding/Head of.
+- Cite only numbers from the Verified Metrics section above. If a number is not
+  there, say it is not tracked rather than estimating one.
+- All independent projects are self-directed. None are employer deliverables and
+  none have production users, revenue or commercial adoption.
+- BugAgents findings are submission-ready drafts: never say disclosed, accepted,
+  paid or resolved, and never name the vendor, program, asset or vulnerability class.
+- AgentSwarm's research is NOT publication-grade; the audit verdict is B+.
+  Paper 1 is a Zenodo preprint (not peer-reviewed); Paper 2 is an unpublished
+  manuscript. Prashanth built the system; he is not an author of the physics.
+- Never claim people-management or team-lead experience — there is none."""
+
+
 def get_interview_context():
     """Rich context for the interview bot — includes salary, skills, achievements."""
     return f"""## About {PROFILE['name']} ({PROFILE['alias']})
-{PROFILE['title']} | {PROFILE['location']} (Remote OK)
+{PROFILE['title']} | Target: {PROFILE['target_role']} | {PROFILE['location']} (Remote OK)
+Experience: {PROFILE['experience_summary']}
 Education: {PROFILE['education']}
+
+{_RULES}
 
 ## Key Achievements
 {chr(10).join('- ' + a for a in KEY_ACHIEVEMENTS)}
@@ -222,7 +307,7 @@ Education: {PROFILE['education']}
 ## Projects & Portfolio
 {_format_projects_text()}
 
-## Salary Expectations
+## Compensation
 {SALARY_INFO}
 
 ## Target Roles
@@ -236,8 +321,11 @@ Education: {PROFILE['education']}
 def get_chat_context():
     """Concise context for the casual chat bot — friendly, focused on projects."""
     return f"""## About {PROFILE['name']}
-{PROFILE['title']} based in {PROFILE['location']}. M.Pharm graduate who transitioned into tech.
-Uses AI not just professionally but also to improve his family's daily life.
+{PROFILE['title']}, based in {PROFILE['location']}. Transitioned from 9 years of
+healthcare compliance auditing and 3.5+ years of data analytics into building
+autonomous AI systems.
+
+{_RULES}
 
 ## Key Projects
 {_format_projects_text()}
@@ -246,13 +334,18 @@ Uses AI not just professionally but also to improve his family's daily life.
 {_format_skills_text()}
 
 ## Links
-Portfolio: {PROFILE['website']} | GitHub: {PROFILE['github']} | HuggingFace: {PROFILE['huggingface']}
+Folio: {PROFILE['website']} | GitHub: {PROFILE['github']} | HuggingFace: {PROFILE['huggingface']}
 """
 
 
 def get_insight_context():
     """Project-focused context for AI insight generation on the portfolio page."""
-    return f"""{PROFILE['name']} is a {PROFILE['title']} who uses AI not just professionally but also to improve his family's daily life — from birthday countdown apps for his kid to NEET exam prep for his niece to Valentine's Day surprises for his partner.
+    return f"""{PROFILE['name']} is a {PROFILE['title']} — he builds and ships autonomous
+AI systems as independent, self-directed projects, alongside his day job as a Data
+Analyst. He also uses AI for everyday, family life: birthday countdown apps, NEET
+exam prep, and Valentine's Day surprises.
+
+{_RULES}
 
 Here are his projects:
 
@@ -276,6 +369,7 @@ def get_mcp_profile():
     return {
         "name": PROFILE["name"],
         "title": PROFILE["title"],
+        "target_role": PROFILE["target_role"],
         "location": PROFILE["location"],
         "website": PROFILE["website"],
         "github": PROFILE["github"],
@@ -293,6 +387,7 @@ def get_mcp_profile():
             {"name": p["title"], "desc": p["description"], "url": p.get("url", "")}
             for p in featured[:8]
         ],
+        "answering_rules": _RULES,
     }
 
 
@@ -346,9 +441,12 @@ def get_embedding_chunks():
         "type": "about",
         "title": f"About {PROFILE['name']}",
         "text": f"""About {PROFILE['name']} ({PROFILE['alias']}):
-{PROFILE['title']} based in {PROFILE['location']}.
+{PROFILE['title']} based in {PROFILE['location']}. Target role: {PROFILE['target_role']}.
+Experience: {PROFILE['experience_summary']}
 Education: {PROFILE['education']}
 Portfolio: {PROFILE['website']} | GitHub: {PROFILE['github']} | HuggingFace: {PROFILE['huggingface']}
+
+{_RULES}
 
 Key Achievements:
 {chr(10).join('- ' + a for a in KEY_ACHIEVEMENTS)}
