@@ -698,7 +698,7 @@ def api_hiring_evidence():
 def load_job_listings():
     """Load AI-curated job listings from the LATEST JSON file in job_data/.
     Checks daily/ directory first, then falls back to monthly files."""
-    job_data_dir = os.path.join(os.path.dirname(__file__), '..', 'job_data')
+    job_data_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'job_data'))
     daily_dir = os.path.join(job_data_dir, 'daily')
     jobs = []
     month = ""
@@ -775,7 +775,7 @@ def load_job_listings():
 
 def load_pipeline_log():
     """Load pipeline execution history for charts."""
-    log_path = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'pipeline_log.json')
+    log_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'job_data', 'pipeline_log.json'))
     if os.path.exists(log_path):
         try:
             with open(log_path, 'r', encoding='utf-8') as f:
@@ -1030,7 +1030,7 @@ def load_swarm_data():
 
 @app.route('/ecosystem')
 def ecosystem_dashboard():
-    data_path = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'ecosystem_telemetry.json')
+    data_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'job_data', 'ecosystem_telemetry.json'))
     try:
         with open(data_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
@@ -1318,7 +1318,7 @@ def jobs_dashboard():
     all_jobs, month, models_used, pipeline_report, pipeline_trace = load_job_listings()
     pipeline_log = load_pipeline_log()
 
-    daily_dir = os.path.join(os.path.dirname(__file__), '..', 'job_data', 'daily')
+    daily_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'job_data', 'daily'))
     daily_snapshots = []
     if os.path.exists(daily_dir):
         for f in sorted(glob.glob(os.path.join(daily_dir, '*.json'))):
@@ -1438,7 +1438,7 @@ def api_jobs_data():
 # Access: /vault/<token>. Token comes from AGENT_VAULT_TOKEN env var, falling
 # back to agent_vault/.token (local, gitignored). Missing/incorrect token -> 404.
 
-_VAULT_DIR = os.path.join(os.path.dirname(__file__), '..', 'agent_vault')
+_VAULT_DIR = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'agent_vault'))
 
 
 def _vault_expected_token():
