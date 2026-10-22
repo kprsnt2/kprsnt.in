@@ -142,6 +142,7 @@ def add_security_headers(response):
 _insight_limiter = RateLimiter(60, 10)   # 10 req/min
 _chat_limiter = RateLimiter(60, 6)      # 6 req/min (LLM cost guard)
 _email_limiter = RateLimiter(60, 3)    # 3 req/min (abuse guard)
+_ailearn_limiter = RateLimiter(60, 20)   # 20 sync ops/min per IP
 _mcp_limiter = RateLimiter(60, 120)     # generous: streaming sessions + tool calls
 
 # ============================================================
@@ -2179,6 +2180,106 @@ def api_chat_agent():
         res = jsonify({"error": "Internal server error"})
         res.headers['Access-Control-Allow-Origin'] = '*'
         return res, 500
+
+# ============================================================
+# AILearn course sync API
+# ============================================================
+# Cross-device progress for learn.kprsnt.in. Storage is Vercel KV (Upstash).
+# See api/services/ailearn_sync.py for the security model.
+try:
+    from services.ailearn_sync import (
+        SyncError as _AilearnSyncError,
+        read as _ailearn_read,
+        write as _ailearn_write,
+        public as _ailearn_public,
+        is_configured as _ailearn_configured,
+    )
+except ImportError:
+    from api.services.ailearn_sync import (
+        SyncError as _AilearnSyncError,
+        read as _ailearn_read,
+        write as _ailearn_write,
+        public as _ailearn_public,
+        is_configured as _ailearn_configured,
+    )
+
+_Ailearn_SYNC_ORIGINS = (
+    'https://learn.kprsnt.in',
+    'http://learn.kprsnt.in',
+    'https://kprsnt2.github.io',
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+)
+
+
+def _ailearn_cors(res):
+    origin = request.headers.get('Origin', '')
+    if origin in _Ailearn_SYNC_ORIGINS:
+        res.headers['Access-Control-Allow-Origin'] = origin
+        res.headers['Vary'] = 'Origin'
+    else:
+        res.headers['Access-Control-Allow-Origin'] = _Ailearn_SYNC_ORIGINS[0]
+    res.headers['Access-Control-Allow-Methods'] = 'GET, POST, OPTIONS'
+    res.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    res.headers['Access-Control-Max-Age'] = '86400'
+    return res
+
+
+@app.route('/api/ailearn/sync', methods=['GET', 'POST', 'OPTIONS'])
+def api_ailearn_sync():
+    """Read or write a learner's course progress document."""
+    if request.method == 'OPTIONS':
+        return _ailearn_cors(app.make_response(('', 204)))
+
+    # 20 syncs/min per IP is far more than a studying human needs
+    allowed, retry_after = _ailearn_limiter.check(get_client_ip(request))
+    if not allowed:
+        res = jsonify({'ok': False, 'error': 'rate limited'})
+        res.status_code = 429
+        res.headers['Retry-After'] = str(int(retry_after) + 1)
+        return _ailearn_cors(res)
+
+    if not _ailearn_configured():
+        res = jsonify({'ok': False, 'error': 'sync not configured'})
+        res.status_code = 503
+        return _ailearn_cors(res)
+
+    try:
+        if request.method == 'GET':
+            code = request.args.get('code', '')
+            doc = _ailearn_public(_ailearn_read(code))
+            if doc is None:
+                res = jsonify({'ok': True, 'doc': None})
+                res.status_code = 404
+                return _ailearn_cors(res)
+            return _ailearn_cors(jsonify({'ok': True, 'doc': doc}))
+
+        if not body_exceeds_limit(request, 128 * 1024):
+            res = jsonify({'ok': False, 'error': 'payload too large'})
+            res.status_code = 413
+            return _ailearn_cors(res)
+
+        payload = request.get_json(silent=True)
+        if not isinstance(payload, dict):
+            res = jsonify({'ok': False, 'error': 'expected a JSON object'})
+            res.status_code = 400
+            return _ailearn_cors(res)
+
+        code = payload.get('code', '')
+        data = payload.get('data')
+        doc = _ailearn_write(code, data)
+        return _ailearn_cors(jsonify({'ok': True, 'doc': doc}))
+
+    except _AilearnSyncError as e:
+        res = jsonify({'ok': False, 'error': str(e)})
+        res.status_code = getattr(e, 'status', 400)
+        return _ailearn_cors(res)
+    except Exception as e:                       # never leak a stack trace
+        app.logger.error(f"AILearn sync error: {e}")
+        res = jsonify({'ok': False, 'error': 'sync failed'})
+        res.status_code = 500
+        return _ailearn_cors(res)
+
 
 if __name__ == '__main__':
     app.run(debug=os.environ.get('FLASK_DEBUG', 'false').lower() == 'true', host='127.0.0.1', port=5000)
