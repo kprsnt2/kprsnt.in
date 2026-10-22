@@ -27,9 +27,14 @@ jobs:
           pip install pytest ruff
 
       - name: Guard against escaped GitHub Actions secrets
+        # The pattern must be ERE-valid: \$ \{ \{ in grep -E matches the
+        # literal backslash form. The old pattern used BRE-only escapes and,
+        # because it was not anchored, also matched the message on the next
+        # line, so this guard could never pass.
         run: |
-          if grep -rEn '\\\$\{\{' .github/workflows/; then
-            echo "::error::Escaped GitHub Actions secret syntax found (\${{ ... }} must not be escaped)"
+          SEARCH='\\\$\{\{'
+          if grep -rEn -- "$SEARCH" .github/workflows/ | grep -v 'SEARCH=' ; then
+            echo "::error::Escaped GitHub Actions secret syntax found - must not be escaped"
             exit 1
           fi
 
