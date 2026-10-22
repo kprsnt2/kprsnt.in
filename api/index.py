@@ -2254,7 +2254,10 @@ def api_ailearn_sync():
                 return _ailearn_cors(res)
             return _ailearn_cors(jsonify({'ok': True, 'doc': doc}))
 
-        if not body_exceeds_limit(request, 128 * 1024):
+        # NOTE: body_exceeds_limit() returns True when the body is TOO BIG, so
+        # we reject on the positive branch. An inverted check here previously
+        # rejected every normal-sized write with a 413.
+        if body_exceeds_limit(request, 128 * 1024):
             res = jsonify({'ok': False, 'error': 'payload too large'})
             res.status_code = 413
             return _ailearn_cors(res)
