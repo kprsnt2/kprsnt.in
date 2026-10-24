@@ -106,5 +106,5 @@ def verify_integrity(self) -> tuple[bool, str]:
 
 Experience the system live:
 - **Live Vercel Application**: [mediflow.kprsnt.in](https://mediflow.kprsnt.in) — run the single-application live simulation and inspect the real-time SHA-256 cryptographic ledger explorer.
-- **Source Code & Unit Tests**: [github.com/kprsnt2/enrolloment-agy-new](https://github.com/kprsnt2/enrolloment-agy-new) with 36 automated pytest tests (`uv run pytest -v`).
+- **Source Code & Unit Tests**: [github.com/kprsnt2/MediFlow](https://github.com/kprsnt2/MediFlow) with 36 automated pytest tests (`uv run pytest -v`).
 - **Architecture Deep-Dive**: [kprsnt.in/blog/medicare_multi_agent_enrollment_audit](https://kprsnt.in/blog/medicare_multi_agent_enrollment_audit)

@@ -113,5 +113,5 @@ The architecture is deployed live on Vercel and available open-source:
 By codifying nine years of domain experience into modular agents, this project proves that regulatory compliance and AI pipelines share the exact same foundation: **zero-tolerance verification, immutable logging, and substantiated data provenance**.
 
 - **Live Application**: [mediflow.kprsnt.in](https://mediflow.kprsnt.in)
-- **Source Code**: [github.com/kprsnt2/enrolloment-agy-new](https://github.com/kprsnt2/enrolloment-agy-new)
+- **Source Code**: [github.com/kprsnt2/MediFlow](https://github.com/kprsnt2/MediFlow)
 - **Zero-Tolerance Audit Ledger Post**: [kprsnt.in/blog/zero_tolerance_cms_medicare_audit_ledger](https://kprsnt.in/blog/zero_tolerance_cms_medicare_audit_ledger)
