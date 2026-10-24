@@ -1,3 +1,12 @@
+---
+title: "Zero-Tolerance Quality Gates: Bringing CMS Medicare Audit Discipline to Autonomous AI Pipelines"
+date: "October 24, 2026"
+category: "Healthcare AI & Systems"
+tags: "AI Safety, CMS Compliance, SHA-256 Ledger, Healthcare Operations, Zero-Tolerance Gates, Data Integrity, Regulatory Adherence"
+excerpt: "How 9 years auditing Medicare transactions from frontline enrollment to Regulatory Adherence and Controls shaped my approach to AI safety, data integrity, and tamper-evident SHA-256 cryptographic ledgers."
+author: "Prashanth Kadasi"
+---
+
 # Zero-Tolerance Quality Gates: Bringing CMS Medicare Audit Discipline to Autonomous AI Pipelines
 
 *How 9 years auditing Medicare transactions shaped my approach to AI safety, data integrity, and tamper-evident SHA-256 ledgers.*

@@ -1,3 +1,12 @@
+---
+title: "Automating Medicare Enrollment & CMS Audits with Autonomous Multi-Agent Swarms"
+date: "October 24, 2026"
+category: "Healthcare AI & Systems"
+tags: "Multi-Agent AI, Medicare Advantage, CMS MARx, Healthcare Operations, EDI 834, Audit Readiness, Regulatory Adherence, DeepSeek, Antigravity"
+excerpt: "How I codified nine years of real-world Medicare Advantage operations — from Claims Associate to Regulatory Adherence and Controls CMS Auditor — into an autonomous multi-agent mesh running inside agy and omp CLIs with zero-tolerance CMS compliance gates."
+author: "Prashanth Kadasi"
+---
+
 # Automating 9 Years of Medicare Enrollment & CMS Audits with Autonomous Multi-Agent Swarms
 
 *How I transformed nine years of real-world Medicare Advantage operations — from Claims Associate to Regulatory Adherence and Controls CMS Auditor — into an autonomous, self-auditing multi-agent mesh.*

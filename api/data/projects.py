@@ -476,6 +476,13 @@ EXPERIENCES = [
 
 RESUME_PROJECTS = [
     {
+        "name": "🏥 MediFlow — Autonomous Medicare Enrollment & CMS Audit System",
+        "tech": "Python, Multi-Agent Mesh (agy + omp), Gemini, SHA-256 Ledger, EDI 834, Vercel",
+        "desc": "Autonomous Medicare Advantage operations engine with 7 coordinated AI agents powered by Google Antigravity (agy) and Open Multi-Agent (omp) runtimes with Gemini models. Automates paper OCR scanning noise injection, electronic intake pre-screening, federal CMS MARx TRR adjudication (ACC, REJ-*, PEND, DUP), 10-day Turnaround Time (TAT) FIFO workbasket exception repair, and statutory member appeal rights notices under 42 CFR §422.568. Mathematical compliance is certified by an independent auditor over an immutable SHA-256 chained cryptographic ledger. 36 automated pytest tests passing.",
+        "url": "https://mediflow.kprsnt.in",
+        "github": "https://github.com/kprsnt2/MediFlow",
+    },
+    {
         "name": "🛡️ BugAgents — Autonomous Security Research Agents",
         "tech": "Python, Node.js, omp + agy orchestration, Scope Guardrails, CWE Classification",
         "desc": "Two autonomous agents on disjoint targets hunting real bugs in live bug bounty programs, behind a submission gate (scope match + HEAD match + non-empty repro + evidence files must exist). Over 22 hunt runs and 84 agent turns they made 15,317 tool calls and produced 8 findings across 14 vulnerability classes (CWE) — 5 High/Critical, 3 Medium — each with a reproducing proof of concept and file:line citations. The gate promoted 2 reports and refused 34 unverified candidates; a per-turn audit aborts out-of-scope hosts and offensive tooling. Aggregate metrics only — vendor, program, asset, and vulnerability-class detail is withheld pending responsible disclosure.",
