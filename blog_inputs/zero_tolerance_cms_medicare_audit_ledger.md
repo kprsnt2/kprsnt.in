@@ -1,6 +1,6 @@
 # Zero-Tolerance Quality Gates: Bringing CMS Medicare Audit Discipline to Autonomous AI Pipelines
 
-*How 9 years auditing Medicare transactions at MediFlow shaped my approach to AI safety, data integrity, and tamper-evident SHA-256 ledgers.*
+*How 9 years auditing Medicare transactions shaped my approach to AI safety, data integrity, and tamper-evident SHA-256 ledgers.*
 
 ---
 
@@ -22,48 +22,36 @@ Here is how I implemented zero-tolerance verification in **MediFlow**.
 
 ## 2. The 5 Mandatory Quality Gates
 
-Every transaction executed by our autonomous multi-agent swarm must pass through five rigorous quality gates evaluated by an independent auditor agent (`Agent-CMSAuditor`):
+Every transaction executed by our autonomous multi-agent swarm must pass through five rigorous quality gates evaluated by an independent auditor agent (**Inspector**):
 
-```
-                                  TRANSACTION DATASET
-                                           │
-                                           ▼
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ GATE 1: INTAKE & OCR FIDELITY CHECK                                                    │
-│ Validates OCR confidence threshold (>= 70%), ensures raw text stream captures required │
-│ MBI checksums, checks for smudged signatures, and flags character misreads.            │
-└────────────────────────────────────┬───────────────────────────────────────────────────┘
-                                     │ Pass
-                                     ▼
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ GATE 2: CMS CHAPTER 2 STATUTORY COMPLIANCE CHECK                                       │
-│ Strictly enforces MBI format (C N A N - N A N - N N A A), Section 20.1 physical street │
-│ address requirement (P.O. Boxes prohibited), and Section 40.2 signature attestation.   │
-└────────────────────────────────────┬───────────────────────────────────────────────────┘
-                                     │ Pass
-                                     ▼
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ GATE 3: SUBSTANTIATED REMEDIATION PROOF                                                │
-│ If an exception specialist altered data, the audit gate requires documentary proof     │
-│ (USPS tax parcel verification, HETS MBD identity match, or state Medicaid dual check). │
-└────────────────────────────────────┬───────────────────────────────────────────────────┘
-                                     │ Pass
-                                     ▼
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ GATE 4: 10-DAY STATUTORY TAT TIMELINESS CHECK                                          │
-│ Verifies that total operational age from application receipt to final adjudication did │
-│ not exceed the 10-calendar-day CMS statutory limit.                                    │
-└────────────────────────────────────┬───────────────────────────────────────────────────┘
-                                     │ Pass
-                                     ▼
-┌────────────────────────────────────────────────────────────────────────────────────────┐
-│ GATE 5: CMS MODEL NOTICE COMPLIANCE                                                    │
-│ Confirms statutory model notice was generated with mandated clauses: Confirmation,     │
-│ Denial with Section 50.1 appeal rights, or Exhibit 2 21-Day RFI with cure clock.       │
-└────────────────────────────────────┬───────────────────────────────────────────────────┘
-                                     │ Pass
-                                     ▼
-                          IMMUTABLE SHA-256 LEDGER
+```mermaid
+flowchart TD
+    TX["Incoming Transaction Dataset<br/>(CMS-10214 / EDI 834)"] --> G1
+
+    subgraph AuditGates ["Zero-Tolerance CMS Regulatory Quality Gates"]
+        G1["Gate 1: Intake & OCR Fidelity<br/>(Confidence &ge; 70%, Scan De-Noising)"]
+        G2["Gate 2: CMS Chapter 2 Statutory Check<br/>(11-char MBI Regex, Street Address vs PO Box)"]
+        G3["Gate 3: Substantiated Remediation Proof<br/>(USPS Parcel Check, HETS Entitlement Match)"]
+        G4["Gate 4: 10-Day Statutory TAT Timeliness<br/>(Mandatory Aging Compliance, Zero SLA Breach)"]
+        G5["Gate 5: CMS Model Notice Verification<br/>(42 CFR § 422.568 Appeal Rights, 60-Day Clock)"]
+    end
+
+    G1 -->|"Pass"| G2
+    G2 -->|"Pass"| G3
+    G3 -->|"Pass"| G4
+    G4 -->|"Pass"| G5
+    G5 -->|"100% Certified"| SEAL["Inspector Sealing Gate"]
+
+    subgraph Ledger ["Tamper-Evident Cryptographic Proof"]
+        SEAL --> BLK["SHA-256 Chained Block Hash<br/>Block Hash = Index + Prev_Hash + Payload"]
+        BLK --> LEDGER_STORE[("audit_ledger/transactions.jsonl<br/>Immutable Storage")]
+    end
+
+    G1 -.->|"Fail: Reject"| REMEDIATE["Supervisory Remediation Hold"]
+    G2 -.->|"Fail: Reject"| REMEDIATE
+    G3 -.->|"Fail: Reject"| REMEDIATE
+    G4 -.->|"Fail: Reject"| REMEDIATE
+    G5 -.->|"Fail: Reject"| REMEDIATE
 ```
 
 If any single quality gate fails, the transaction is rejected or flagged for immediate supervisory remediation. No transaction reaches CMS without passing all five gates.
@@ -72,7 +60,7 @@ If any single quality gate fails, the transaction is rejected or flagged for imm
 
 ## 3. The Mathematics of 10-Day TAT Aging
 
-In our work basket exception queue, items are not processed randomly. The `ExceptionSpecialistAgent` uses a priority scoring formula:
+In our work basket exception queue, items are not processed randomly. The `Raj` exception worker uses a priority scoring formula:
 
 $$\text{Priority Score} = \text{Age in Days} \times 10$$
 
@@ -87,40 +75,36 @@ This guarantees that an aging P.O. Box address scrub (Day 9) is always picked an
 
 ## 4. The Cryptographic SHA-256 Audit Ledger
 
-To prevent retrospective alteration of audit findings, `Agent-CMSAuditor` commits every turn, decision, and quality gate verdict into an immutable cryptographic ledger (`audit_ledger/transactions.jsonl`).
+To prevent retrospective alteration of audit findings, the **Inspector** agent commits every turn, decision, and quality gate verdict into an immutable cryptographic ledger (`audit_ledger/transactions.jsonl`).
 
 Each block includes:
-- `audit_id`: Unique audit identifier.
-- `app_id` & `transaction_id`: Application & MARx transaction IDs.
+- `index`: Monotonically increasing block index.
+- `app_id` & `transaction_id`: Application & MARx transaction identifiers.
 - `timestamp`: ISO-8601 UTC timestamp.
+- `event_type`: `APP_ENROLLMENT_CERTIFIED` or `APP_REMEDIATED_RESUBMITTED`.
 - `verdict`: `PASSED`, `FAILED`, or `REMEDIATION_REQUIRED`.
-- `findings`: Detailed statutory audit findings.
-- `previous_hash`: SHA-256 hash of the preceding block (or `0`*64 for genesis).
+- `previous_hash`: SHA-256 hash of the preceding block (or genesis `0`*64).
 - `block_hash`: SHA-256 digest of the entire record payload chained to `previous_hash`.
 
-```python
-payload = {
-    "audit_id": self.audit_id,
-    "app_id": self.app_id,
-    "timestamp": self.timestamp.isoformat(),
-    "verdict": self.verdict.value,
-    "intake_pass": self.intake_ocr_fidelity_pass,
-    "cms_compliant": self.cms_chapter2_compliant,
-    "evidence": self.substantiated_evidence_present,
-    "tat_compliant": self.statutory_tat_compliant,
-    "findings": self.audit_findings,
-    "previous_hash": self.previous_hash
-}
-raw_str = json.dumps(payload, sort_keys=True)
-block_hash = hashlib.sha256(raw_str.encode("utf-8")).hexdigest()
-```
+If an attacker or rogue process modifies a single byte in any historical block, the hash chain breaks instantly, triggering an automated integrity violation:
 
-Any modification to historical records instantly invalidates downstream block hashes — providing true tamper-evident audit readiness for federal inspections.
+```python
+# Real-time ledger verification in MediFlow
+def verify_integrity(self) -> tuple[bool, str]:
+    prev_hash = "0" * 64
+    for block in self.blocks:
+        expected = self._compute_hash(block.index, prev_hash, block.agent, block.payload)
+        if block.block_hash != expected:
+            return False, f"Tampering detected at Block #{block.index}!"
+        prev_hash = block.block_hash
+    return True, "100% Mathematically Certified"
+```
 
 ---
 
-## 5. From Medicare Operations to AI Engineering
+## 5. Live Showcase & Production Verification
 
-The discipline I cultivated over nine years at MediFlow — validating high-volume transaction datasets, holding zero tolerance for unverified data, and generating audit-ready documentation — is the exact same discipline required to deploy reliable, production-ready AI agents today.
-
-Whether auditing CMS MARx Record Type 61 transactions or orchestrating multi-agent LLM systems, **trust is not assumed; it is cryptographically and operationally verified**.
+Experience the system live:
+- **Live Vercel Application**: [mediflow.kprsnt.in](https://mediflow.kprsnt.in) — run the single-application live simulation and inspect the real-time SHA-256 cryptographic ledger explorer.
+- **Source Code & Unit Tests**: [github.com/kprsnt2/enrolloment-agy-new](https://github.com/kprsnt2/enrolloment-agy-new) with 36 automated pytest tests (`uv run pytest -v`).
+- **Architecture Deep-Dive**: [kprsnt.in/blog/medicare_multi_agent_enrollment_audit](https://kprsnt.in/blog/medicare_multi_agent_enrollment_audit)

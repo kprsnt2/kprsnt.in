@@ -134,17 +134,19 @@
     });
 
     async function renderMermaidBlocks() {
-        const blocks = document.querySelectorAll('code.language-mermaid');
+        const blocks = document.querySelectorAll('code.language-mermaid, pre.mermaid, div.mermaid');
         if (!blocks.length) return;
 
         for (let i = 0; i < blocks.length; i++) {
             const block = blocks[i];
-            const pre = block.parentElement;
+            const pre = block.tagName.toLowerCase() === 'code' ? block.parentElement : block;
             const code = block.textContent.trim();
             const container = document.createElement('div');
             container.className = 'mermaid text-center my-4';
             container.style.background = 'transparent';
-            pre.parentElement.replaceChild(container, pre);
+            if (pre && pre.parentElement) {
+                pre.parentElement.replaceChild(container, pre);
+            }
 
             try {
                 const id = 'mermaid-graph-' + i + '-' + Math.random().toString(36).substring(2, 9);
@@ -163,6 +165,7 @@
                 }
                 container.innerHTML = `<div class="p-3 my-3 rounded bg-dark border border-secondary border-opacity-25 text-light font-monospace small text-start"><div class="text-secondary small mb-2"><i class="fas fa-project-diagram me-1 text-info"></i> Architecture Flowchart:</div><pre class="mb-0 text-info"><code>${code}</code></pre></div>`;
             }
+        }
     }
 
     if (document.readyState === 'loading') {

@@ -1,4 +1,4 @@
-# Automating 9 Years of MediFlow Medicare Enrollment & CMS Audits with Autonomous Multi-Agent Swarms
+# Automating 9 Years of Medicare Enrollment & CMS Audits with Autonomous Multi-Agent Swarms
 
 *How I transformed nine years of real-world Medicare Advantage operations — from OCR intake and Cosmos pre-edits to federal MARx adjudication, 10-day statutory TAT work baskets, and zero-tolerance CMS compliance gates — into a self-auditing multi-agent mesh.*
 
@@ -12,9 +12,9 @@ In the Medicare Advantage (MA-PD, D-SNP, PDP) space, a single error is not just 
 
 The workflow has always been fraught with complex, asynchronous friction:
 1. **Intake Scenarios**: Senior beneficiaries submitting either physical paper applications (beset by low-resolution scanner noise, misread digits, smudged checkboxes, or handwritten P.O. Box entries) or electronic portal applications with mismatched election periods.
-2. **Clearinghouse & MARx Adjudication**: Ingestion systems translating data into CMS Record Type 61 transactions and ANSI ASC X12 EDI 834 envelopes, followed by federal adjudication returning cryptic Transaction Reply Codes (TRCs) like `TRC 011` (Accepted), `TRC 015` (Beneficiary Not Found), `TRC 038` (Out of Service Area), or `TRC 107` (P.O. Box physical residency violation).
+2. **Clearinghouse & MARx Adjudication**: Ingestion systems translating data into CMS Record Type 61 transactions and ANSI ASC X12 EDI 834 envelopes, followed by federal adjudication returning cryptic Transaction Reply Codes (TRCs) like `TRC 011` (Accepted), `TRC 014` (Plan Not In County), `TRC 015` (Beneficiary Not Found), `TRC 038` (Out of Service Area), or `TRC 107` (P.O. Box physical residency violation).
 3. **Statutory 10-Day TAT Work Baskets**: Any transaction fallout enters work baskets (`WB-DEMO`, `WB-GEO`, `WB-ELEC`, `WB-ELIG`, `WB-OCR`, `WB-PROV`). Under CMS guidelines, items have a statutory **10-calendar-day Turnaround Time (TAT)**. Specialists must pull the oldest items first (`Age >= 9 days`) to prevent catastrophic regulatory SLA breaches.
-4. **Zero-Tolerance Quality Gates**: An independent audit layer inspecting 100% of transactions, ensuring specialist remediations are substantiated by documentation (USPS parcel records, state Medicaid dual files, HETS checks) and that statutory model notices (Acceptance, Denial with §50.1 appeal rights, 21-day RFI) are dispatched on time.
+4. **Zero-Tolerance Quality Gates**: An independent audit layer inspecting 100% of transactions, ensuring specialist remediations are substantiated by documentation (USPS parcel records, state Medicaid dual files, HETS checks) and that statutory model notices (Acceptance, Denial with §50.1 appeal rights, 21-day RFI) are dispatched on time under 42 CFR § 422.568.
 
 I set out to build **MediFlow**, an autonomous multi-agent mesh running inside terminal CLIs (`agy` and `omp`) that executes and audits this entire lifecycle end-to-end.
 
@@ -22,66 +22,62 @@ I set out to build **MediFlow**, an autonomous multi-agent mesh running inside t
 
 ## 2. Multi-Agent System Architecture
 
-The system coordinates six autonomous agent roles mapping directly to enterprise payer departments:
+The system coordinates seven autonomous agent roles mapping directly to enterprise payer departments:
 
 ```mermaid
 flowchart TD
     subgraph IntakeChannels ["1. Application Intake Channels"]
-        A1["Agent-PaperIntake<br/>(Paper Forms + OCR Scan Noise)"]
-        A2["Agent-DigitalIntake<br/>(Electronic Portal / Broker Apps)"]
+        MAYA["🧓 Maya<br/>(Paper Forms & OCR Scan Noise)"]
+        CARLOS["💻 Carlos<br/>(Digital Portal Web REST API)"]
     end
 
-    subgraph CoreEngine ["2. Processing & EDI Gateway"]
-        P["Agent-EnrollmentProcessor<br/>(CMS Chapter 2/3 Pre-edits & MARx Batch 61 Builder)"]
+    subgraph PreScreen ["2. Quality Pre-Screening Gate"]
+        PRIYA["⚙️ Priya<br/>(MBI Regex, County FIPS & Attestation)"]
     end
 
-    subgraph CMSFederal ["3. CMS Federal Gateway (MARx Engine)"]
-        CMS["Agent-CMSGateway<br/>(Simulates CMS MARx & TRR Codes)"]
+    subgraph FederalMARx ["3. CMS Federal Gateway"]
+        CMS["🏛️ Federal CMS MARx<br/>(Record 61 Flat File Adjudication)"]
     end
 
-    subgraph WorkBaskets ["4. Exception Work Baskets (Strict 10-Day TAT Aging)"]
-        WB_DEMO["WB-DEMO: MBI / DOB / SSN Mismatch"]
-        WB_GEO["WB-GEO: Service Area & PO Box Scrub"]
-        WB_ELEC["WB-ELEC: Invalid Election Period (AEP/SEP/IEP)"]
-        WB_ELIG["WB-ELIG: Part A/B Entitlement Date Mismatch"]
-        WB_OCR["WB-OCR: Field Truncation & Smudge Recovery"]
-        WB_PROV["WB-PROV: PCP In-Network Auto-Assignment"]
-        
-        EX_AGENT["Agent-ExceptionSpecialist<br/>(MediFlow Senior Enrollment Specialist Role)<br/>★ Highest-Aged Pick Rule (Day 9 -> Day 1)"]
+    subgraph StatutoryNotices ["4. Statutory Member Notices (42 CFR § 422.568)"]
+        NORA["✉️ Nora<br/>(Mandatory CMS Model Letters)"]
     end
 
-    subgraph Letters ["5. Statutory Member Notices"]
-        LTR["Agent-LetterDispatcher<br/>(CMS Model Acceptance, Rejection & 21-Day RFI Notices)"]
+    subgraph WorkBaskets ["5. Work Baskets (Strict 10-Day Statutory TAT)"]
+        RAJ["🔧 Raj (Quality Specialist)<br/>(FIFO Highest-Aged Pick Rule)"]
+        WB_PLAN["WB-PLAN: Service Area Out-of-ZIP"]
+        WB_OCR["WB-OCR: Optical Noise Reconstruction"]
+        WB_DEMO["WB-DEMO: MBI / DOB Entitlement Mismatch"]
     end
 
-    subgraph IndependentAudit ["6. Zero-Tolerance Quality & Regulatory Audit"]
-        AUDITOR["Agent-CMSAuditor<br/>(My 2016-2023 Senior CMS Auditor Persona)<br/>★ Zero-Tolerance Quality Gates & Discrepancy Reports"]
-        LEDGER[("audit_ledger/<br/>(Immutable, Tamper-Evident SHA-256 Ledger)")]
+    subgraph RegulatoryAudit ["6. Zero-Tolerance Compliance Audit"]
+        INSPECTOR["🔍 Inspector<br/>(100% Quality Gates Inspection)"]
+        LEDGER[("🔗 SHA-256 Ledger<br/>(Cryptographic Chained Blocks)")]
     end
 
-    A1 --> P
-    A2 --> P
-    P --> CMS
-    CMS -- "TRC 011 (Accepted)" --> LTR
-    CMS -- "TRC 014, 015, 016, 038, 106, 107, 290 (Fallout)" --> WorkBaskets
-    WorkBaskets --> EX_AGENT
-    EX_AGENT -- "Corrected & Resubmitted" --> P
-    
-    P -.-> AUDITOR
-    CMS -.-> AUDITOR
-    LTR -.-> AUDITOR
-    EX_AGENT -.-> AUDITOR
-    AUDITOR --> LEDGER
+    MAYA --> PRIYA
+    CARLOS --> PRIYA
+    PRIYA --> CMS
+    CMS -->|"Clean TRR-011 Approval"| NORA
+    CMS -->|"Fallout: REJ-PLAN, REJ-OCR, REJ-DEM"| RAJ
+    RAJ --> WB_PLAN
+    RAJ --> WB_OCR
+    RAJ --> WB_DEMO
+    RAJ -->|"Remediated Record 61 Resubmission"| CMS
+    NORA --> INSPECTOR
+    CMS --> INSPECTOR
+    RAJ --> INSPECTOR
+    INSPECTOR --> LEDGER
 ```
 
-### The Specialist Roles
-- **`Agent-PaperIntake`**: Simulates real-world OCR imperfections, introducing character confusion (e.g. `8` misread as `B`, `0` as `O`, smudged signatures, and P.O. Box physical residence mistakes).
-- **`Agent-DigitalIntake`**: Ingests structured electronic applications with subtle eligibility edge cases.
-- **`Agent-EnrollmentProcessor`**: Simulates the core clearinghouse (Cosmos/Facets), evaluating CMS Chapter 2 pre-edits and generating standard CMS MARx Batch Record Type 61 and ANSI ASC X12 EDI 834 transactions.
-- **`Agent-CMSGateway`**: Simulates federal adjudication and returns authentic CMS Transaction Reply Codes (`TRC 011`, `TRC 014`, `TRC 015`, `TRC 038`, `TRC 106`, `TRC 107`, `TRC 290`).
-- **`Agent-ExceptionSpecialist`**: Embodies my operational role at MediFlow. It maintains work baskets using a strict **highest-aged first algorithm (10-day statutory TAT)**. It cross-references mock CMS HETS (HIPAA Eligibility Transaction System) databases, moves P.O. Boxes to mailing addresses while verifying physical street parcels, applies qualifying SEP codes (e.g., `SEP-DUAL` for QMB Medicaid recipients), and auto-assigns in-network PCPs.
-- **`Agent-LetterDispatcher`**: Emits mandated CMS Model Notices (Enrollment Confirmation within 10 calendar days, Denial Notice with Section 50.1 appeal rights, and 21-day Request for Information notices).
-- **`Agent-CMSAuditor`**: Embodies my 2016–2023 Senior CMS Auditor persona. It applies **zero-tolerance quality gates** to 100% of transactions, requiring substantiated specialist notes, verifies TAT compliance, and writes cryptographically chained SHA-256 blocks to `audit_ledger/transactions.jsonl`.
+### The 7 Specialist Agent Roles
+- **Maya (Paper Ingestion OCR Agent)**: Simulates real-world OCR scanner imperfections (300 DPI noise, optical character confusion e.g. `194B` on birth years, `0` &harr; `O`, `5` &harr; `S`, smudged signatures, and P.O. Box physical residence mistakes).
+- **Carlos (Digital Portal Agent)**: Ingests structured electronic web applications via REST API schemas with rigorous payload validations.
+- **Priya (Intake Quality Pre-Screening Gatekeeper)**: Evaluates pre-edits before clearinghouse dispatch, checking 11-character MBI regex syntax, county-to-contract ZIP service areas, and signature presence.
+- **Federal CMS Gateway (MARx Clearinghouse Agent)**: Simulates federal MARx flat file Batch Record 61 processing and ANSI ASC X12 EDI 834 transactions across all 10 federal Transaction Reply Codes (`ACC`, `REJ-DEM`, `REJ-ADDR`, `REJ-PLAN`, `REJ-ELIG`, `REJ-ELEC`, `REJ-PROV`, `REJ-OCR`, `DUP`, `PEND`).
+- **Nora (Statutory Member Correspondence Agent)**: Generates legally binding CMS model notices complying with 42 CFR § 422.568 and § 423.568, supporting multi-stage lifecycle toggles between Pre-Resolution Denial notices with 60-day redetermination appeal rights and Post-Remediation Acceptance confirmations.
+- **Raj (Enrollment Quality & Exception Specialist)**: Embodies my operational specialist role. Maintains work baskets using a strict **highest-aged first algorithm (10-day statutory TAT)**. Resolves demographic defects, USPS parcel geocoding, and plan cross-walk remapping.
+- **Inspector (Cryptographic Compliance Auditor Agent)**: Embodies my Senior CMS Auditor persona. Applies **zero-tolerance quality gates** to 100% of transactions and seals every turn into an immutable append-only SHA-256 chained audit ledger.
 
 ---
 
@@ -89,30 +85,26 @@ flowchart TD
 
 In payer enrollment operations, turnaround time (TAT) is an unforgiving regulatory metric. Under CMS Chapter 2, plans must process applications and dispatch notices within strict statutory windows.
 
-Our `ExceptionSpecialistAgent` implements a priority queue that sorts items strictly by age descending:
-- **Day 9–10 (Critical SLA Risk)**: Immediate priority queue pull.
+Our `Raj` exception worker implements a priority queue that sorts items strictly by age descending:
+- **Day 9–10 (Critical SLA Risk)**: Immediate priority queue pull to prevent statutory breach.
 - **Day 5–8 (Urgent Review)**: Secondary queue pull.
 - **Day 1–4 (Routine Ingestion)**: Standard FIFO processing.
 
 When an applicant enters a P.O. Box as their permanent residence, CMS Section 20.1 strictly forbids enrollment. The system:
-1. Emits `TRC 107` (Address/Residency Discrepancy).
+1. Emits `REJ-ADDR` (Address/Residency Discrepancy).
 2. Generates an official CMS Model 21-Day Request for Information (RFI) notice.
 3. Routes the record to `WB-GEO`.
-4. The Specialist agent executes the USPS Parcel Geocode playbook: shifts the P.O. Box to `mailing_address`, validates the physical residence against county parcel records, documents substantiation, and resubmits to CMS for `TRC 011` acceptance.
+4. Raj executes the USPS Parcel Geocode playbook: shifts the P.O. Box to `mailing_address`, validates physical street parcel records, documents substantiation, and resubmits to CMS for `ACC` acceptance.
 
 ---
 
-## 4. Dual CLI & Modern Dashboard Delivery
+## 4. Live Action Theater & Production Delivery
 
-The architecture is built to run natively in local developer environments and modern multi-agent CLIs:
-- **AGY & OMP CLI Runners**: Launchable via `.\bin\run-agy.ps1` and `.\bin\run-omp.ps1` with default Gemini models.
-- **Rich Terminal HUD**: Run `python -m MediFlow_audit.cli run --count 20` to see real-time color-coded transaction pipelines, work basket aging, and auditor briefing panels.
-- **Modern Interactive Dashboard**: Hosted in `site/` on `http://localhost:4242`, featuring:
-  - Real-time Zero-Tolerance Quality Gate scorecard.
-  - Work Basket Kanban board with live TAT countdown badges.
-  - Split-Screen OCR Inspector comparing raw degraded scan noise against the cleaned golden record.
-  - Full previewer for CMS Model Letters and ANSI ASC X12 EDI 834 transactions.
-  - Visual Cryptographic Block Explorer for `audit_ledger/transactions.jsonl`.
+The architecture is deployed live on Vercel and available open-source:
+- **Live Vercel Interactive Dashboard**: Deployed at [mediflow.kprsnt.in](https://mediflow.kprsnt.in). Features a real-time **Live Agent Action Theater** with token typography streaming across all 7 agents, active spotlight cards, and a tamper-evident cryptographic block explorer.
+- **Single-App Live Simulation Showcase**: Click **"▶️ Run Live Simulation (1 App)"** on Vercel to watch William Martinez's application navigate paper OCR intake, federal `REJ-PLAN` adjudication, statutory 42 CFR § 422.568 Denial letter generation, Raj's work basket forensic plan remapping, secondary Acceptance notice, and Inspector SHA-256 ledger sealing — completing cleanly in ~6 to 8 seconds without cloud timeouts.
+- **Full Test Suite & Audit Verification**: 36 automated pytest unit tests (`uv run pytest -v`) verifying end-to-end multi-agent orchestration, notice lifecycle integrity, and ledger immutability.
+- **Automated GitHub Actions Cycle**: Built-in scheduled workflow dispatch committing fresh cycle results to the repository.
 
 ---
 
@@ -120,4 +112,6 @@ The architecture is built to run natively in local developer environments and mo
 
 By codifying nine years of domain experience into modular agents, this project proves that regulatory compliance and AI pipelines share the exact same foundation: **zero-tolerance verification, immutable logging, and substantiated data provenance**.
 
-The entire codebase is open and test-covered (100% pytest pass rate across 9 unit tests), complete with a dedicated immutable audit ledger.
+- **Live Application**: [mediflow.kprsnt.in](https://mediflow.kprsnt.in)
+- **Source Code**: [github.com/kprsnt2/enrolloment-agy-new](https://github.com/kprsnt2/enrolloment-agy-new)
+- **Zero-Tolerance Audit Ledger Post**: [kprsnt.in/blog/zero_tolerance_cms_medicare_audit_ledger](https://kprsnt.in/blog/zero_tolerance_cms_medicare_audit_ledger)
