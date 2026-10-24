@@ -67,6 +67,15 @@ Scope notes
 
 PROJECTS = [
     {
+        "title": "🏥 MediFlow — Autonomous Medicare Enrollment & CMS Audit System",
+        "description": "An autonomous Medicare Advantage operations engine with 7 coordinated AI agents powered by Google Antigravity (agy) and Open Multi-Agent (omp) runtimes with Gemini models. Automates paper OCR scanning noise injection, electronic intake pre-screening, federal CMS MARx TRR adjudication (ACC, REJ-*, PEND, DUP), 10-day Turnaround Time (TAT) FIFO workbasket exception repair, and statutory member appeal rights notices under 42 CFR §422.568. Mathematical compliance is certified by an independent auditor over an immutable SHA-256 chained cryptographic ledger.",
+        "url": "https://mediflow.kprsnt.in",
+        "github": "https://github.com/kprsnt2/enrolloment-agy-new",
+        "color": "primary",
+        "featured": True,
+        "tags": ["Multi-Agent Mesh", "Medicare Advantage", "CMS MARx", "EDI 834", "SHA-256 Ledger", "agy", "omp", "Python"]
+    },
+    {
         "title": "🛡️ BugAgents — Autonomous Security Research Agents",
         "description": "Two autonomous agents on disjoint targets hunt real bugs in live bug bounty programs, with a submission gate that only promotes a report when the workspace corroborates it: scope match, HEAD commit match, a non-empty reproduction, and evidence files that actually exist. Over 22 hunt runs and 84 agent turns the agents made 15,317 tool calls and produced 8 findings across 14 vulnerability classes (CWE) — 5 High/Critical and 3 Medium — each with a reproducing proof of concept, pinned commit, and file:line citations. The gate promoted 2 reports and refused 34 unverified candidates. A per-turn audit aborts any out-of-scope host or offensive tool.",
         "url": "https://bug.kprsnt.in",
