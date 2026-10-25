@@ -119,7 +119,7 @@ MediFlow was not built on high-level theory — it was engineered and tuned thro
 - **Authoring & Iteration**: Created and perfected using Google Antigravity (**`agy` CLI**) and a dedicated **DeepSeek harness**, iterating across **`deepseek-4.1-flash`**, **`gemini-3.8-flash`**, and **`claude-opus-4.6`** models to stress-test prompt resilience, edge-case routing, and regulatory audit report accuracy.
 - **Runtime Flexibility**: Executes locally in terminal CLIs via `agy` and `omp` commands, or directly through OpenAI/Gemini API keys.
 - **Online Production Deployment**: Deployed live on Vercel at [mediflow.kprsnt.in](https://mediflow.kprsnt.in). The backend runs on Gemini, with OpenAI configured as an automatic fallback in case of upstream rate limits or errors, backed by a deterministic simulation engine for offline reliability.
-- **Engineering Transparency**: As an open-source prototype demonstrating autonomous multi-agent orchestration, minor edge cases may still exist (such as fine-tuning the exact UI display toggles between initial rejection notices and remediated approval notices). However, it conclusively proves how autonomous agents eliminate the manual work basket bottleneck that has plagued enterprise healthcare for decades.
+- **Engineering Transparency**: As an enterprise architecture prototype demonstrating autonomous multi-agent orchestration, minor edge cases may still exist (such as fine-tuning the exact UI display toggles between initial rejection notices and remediated approval notices). However, it conclusively proves how autonomous agents eliminate the manual work basket bottleneck that has plagued enterprise healthcare for decades.
 
 ---
 
@@ -147,7 +147,6 @@ Experience the system live:
 - **Live Vercel Interactive Dashboard**: Deployed at [mediflow.kprsnt.in](https://mediflow.kprsnt.in). Features a real-time **Live Agent Action Theater** with token typography streaming across all 7 agents, active spotlight cards, and a tamper-evident cryptographic block explorer.
 - **Single-App Live Simulation Showcase**: Click **"▶️ Run Live Simulation (1 App)"** on Vercel to watch William Martinez's application navigate paper OCR intake, federal `REJ-PLAN` adjudication, statutory 42 CFR § 422.568 Denial letter generation, Raj's work basket forensic plan remapping, secondary Acceptance notice, and Inspector SHA-256 ledger sealing — completing cleanly in ~6 to 8 seconds without cloud timeouts.
 - **Automated Verification**: 36 automated pytest unit tests (`uv run pytest -v`) verifying end-to-end multi-agent orchestration, notice lifecycle integrity, and ledger immutability.
-- **Open-Source Codebase**: Available at [github.com/kprsnt2/MediFlow](https://github.com/kprsnt2/MediFlow).
 
 ---
 
@@ -158,5 +157,4 @@ By codifying nine years of domain experience into modular agents, MediFlow prove
 During this AEP season, as Employer Group applications overwhelm operations work baskets, the path forward is clear: let agents handle the manual execution, so humans can focus on supervisory oversight.
 
 - **Live Application**: [mediflow.kprsnt.in](https://mediflow.kprsnt.in)
-- **Source Code**: [github.com/kprsnt2/MediFlow](https://github.com/kprsnt2/MediFlow)
 - **Zero-Tolerance Audit Ledger Post**: [kprsnt.in/blog/zero_tolerance_cms_medicare_audit_ledger](https://kprsnt.in/blog/zero_tolerance_cms_medicare_audit_ledger)

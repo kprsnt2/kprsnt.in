@@ -131,5 +131,5 @@ MediFlow was engineered and tuned using a dedicated **DeepSeek harness** and Goo
 
 Experience the live system:
 - **Live Vercel Application**: [mediflow.kprsnt.in](https://mediflow.kprsnt.in)
-- **Source Code & Unit Tests**: [github.com/kprsnt2/MediFlow](https://github.com/kprsnt2/MediFlow) (36 automated tests passing)
+- **Automated Verification**: 36 automated pytest tests validating end-to-end multi-agent orchestration, statutory notices, and ledger immutability.
 - **Architecture Deep-Dive**: [kprsnt.in/blog/medicare_multi_agent_enrollment_audit](https://kprsnt.in/blog/medicare_multi_agent_enrollment_audit)

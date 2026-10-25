@@ -70,7 +70,6 @@ PROJECTS = [
         "title": "🏥 MediFlow — Autonomous Medicare Enrollment & CMS Audit System",
         "description": "An autonomous Medicare Advantage operations engine with 7 coordinated AI agents powered by Google Antigravity (agy) and Open Multi-Agent (omp) runtimes with Gemini models. Automates paper OCR scanning noise injection, electronic intake pre-screening, federal CMS MARx TRR adjudication (ACC, REJ-*, PEND, DUP), 10-day Turnaround Time (TAT) FIFO workbasket exception repair, and statutory member appeal rights notices under 42 CFR §422.568. Mathematical compliance is certified by an independent auditor over an immutable SHA-256 chained cryptographic ledger.",
         "url": "https://mediflow.kprsnt.in",
-        "github": "https://github.com/kprsnt2/MediFlow",
         "color": "primary",
         "featured": True,
         "tags": ["Multi-Agent Mesh", "Medicare Advantage", "CMS MARx", "EDI 834", "SHA-256 Ledger", "agy", "omp", "Python"]
@@ -480,7 +479,6 @@ RESUME_PROJECTS = [
         "tech": "Python, Multi-Agent Mesh (agy + omp), Gemini, SHA-256 Ledger, EDI 834, Vercel",
         "desc": "Autonomous Medicare Advantage operations engine with 7 coordinated AI agents powered by Google Antigravity (agy) and Open Multi-Agent (omp) runtimes with Gemini models. Automates paper OCR scanning noise injection, electronic intake pre-screening, federal CMS MARx TRR adjudication (ACC, REJ-*, PEND, DUP), 10-day Turnaround Time (TAT) FIFO workbasket exception repair, and statutory member appeal rights notices under 42 CFR §422.568. Mathematical compliance is certified by an independent auditor over an immutable SHA-256 chained cryptographic ledger. 36 automated pytest tests passing.",
         "url": "https://mediflow.kprsnt.in",
-        "github": "https://github.com/kprsnt2/MediFlow",
     },
     {
         "name": "🛡️ BugAgents — Autonomous Security Research Agents",
