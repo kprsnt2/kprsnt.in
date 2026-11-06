@@ -2,7 +2,7 @@
 
 {% block title %}{% if current_role %}{{ current_role.title }} Resume{% else %}Resume{% endif %} | Prashanth Kumar Kadasi{% endblock %}
 
-{% block description %}Resume of Prashanth Kumar Kadasi — Data Analyst (Black Piano) moving into AI engineering, with 3.5+ years in data/analytics & AI and 9 years of CMS compliance auditing. View role-tailored variants.{% endblock %}
+{% block description %}Resume of Prashanth Kumar Kadasi — Data Analyst in Hyderabad (3.5+ years in data/analytics & AI, 9 years CMS compliance auditing at Optum) moving into AI engineering. View role-tailored variants, experience, skills, and projects.{% endblock %}
 
 {% block content %}
 <style>
@@ -137,7 +137,7 @@
             {% if current_role %}
             <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0.5rem;">{{ current_role.title }}</p>
             {% else %}
-            <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0.5rem;">Data Analyst → AI Systems Engineer (target)</p>
+            <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0.5rem;">Data Analyst → AI Engineering (target)</p>
             {% endif %}
             <div style="color: var(--text-secondary); margin-bottom: 0.5rem;">
                 <span>📍 {% if contact %}{{ contact.location }}{% else %}Hyderabad, India{% endif %}</span>
@@ -180,12 +180,7 @@
                     <p>{{ resume_summary }}</p>
                     {% else %}
                     <p>Data Analyst with 3.5+ years in data/analytics &amp; AI (2023–present) and 9 years of healthcare
-                        compliance auditing at Optum / UnitedHealth Group (2014–2023). Holder of two Data Analyst roles
-                        (Black Piano, Pi Software Solutions) and an Enrollment Quality &amp; Audit Representative
-                        (CMS Auditor) role at Optum, now moving into AI engineering: building autonomous multi-agent
-                        systems, deterministic evaluation harnesses, and hash-chained audit ledgers as self-directed
-                        projects, with hands-on LLM fine-tuning and evaluation experience (GPT-OSS-20B on AMD MI300X).
-                        Works in Python, SQL, BigQuery, Looker Studio and GitHub Actions.</p>
+                        compliance auditing at Optum / UnitedHealth Group (2014–2023). Data Analyst experience at Black Piano and Pi Software Solutions, and Enrollment Quality &amp; Audit Representative (CMS Auditor) at Optum — now moving into AI engineering. Built five live multi-agent systems as self-directed projects (BugAgents, AgentSwarm, JobAgents, MyLocalCLI, rAsh Score), plus LLM fine-tuning and evaluation work (GPT-OSS-20B on AMD MI300X). Works in Python, SQL, BigQuery, Looker Studio and GitHub Actions.</p>
                     {% endif %}
                 </div>
             </div>

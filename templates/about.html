@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}Prashanth Kumar Kadasi | Data Analyst → AI Systems Engineer{% endblock %}
+{% block title %}Prashanth Kumar Kadasi | Data Analyst → AI Engineering{% endblock %}
 
-{% block description %}Prashanth Kumar Kadasi — Data Analyst in Hyderabad who builds and ships AI systems: 9,697 jobs sourced and 29,091 scored with zero model calls, 35/35 forensic ledger chains intact, and 8 security findings (5 High/Critical) across 15,317 agent tool calls. Projects, resume, case studies and live dashboards.{% endblock %}
+{% block description %}Prashanth Kumar Kadasi — Data Analyst in Hyderabad (3.5+ years in data/analytics & AI, 9 years CMS compliance auditing at Optum) moving into AI engineering. Builds multi-agent systems, job pipelines, and LLM evaluation tools. Explore projects, resume, case studies, and live dashboards.{% endblock %}
 
 {% block content %}
 <div class="container-fluid px-3 px-lg-5" style="max-width: 1400px; position: relative; z-index: 1;">
@@ -15,7 +15,7 @@
             <!-- Lab Status Badge -->
             <div class="d-inline-flex align-items-center mb-3 px-3 py-1 rounded-pill" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.25);">
                 <span class="pulse-dot me-2"></span>
-                <span class="font-mono-tech small text-white fw-semibold" style="letter-spacing: 0.5px; font-size: 0.75rem;">DATA ANALYST → AI SYSTEMS ENGINEER • SELF-DIRECTED AGENTIC SYSTEMS</span>
+                <span class="font-mono-tech small text-white fw-semibold" style="letter-spacing: 0.5px; font-size: 0.75rem;">DATA ANALYST → AI ENGINEERING (TARGET) • HYDERABAD, IN</span>
             </div>
 
             <!-- Name -->
@@ -87,17 +87,17 @@
             </div>
             <p class="text-secondary mb-4" style="font-size: 0.72rem;">{{ stats.snapshot_note }} Rendered {{ stats.generated_at }}.</p>
 
-            <!-- Action CTAs -->
+            <!-- Action CTAs: Contact first — this is a hiring page. -->
             <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-                <a href="#systems-fleet" class="btn-lab-primary text-decoration-none">
-                    <i class="fas fa-layer-group me-2"></i> Explore Systems Fleet
+                <a href="mailto:interview@kprsnt.in" class="btn-lab-primary text-decoration-none">
+                    <i class="fas fa-envelope me-2"></i> Contact me
                 </a>
-                <a href="/blog" class="btn-lab-ghost text-decoration-none">
-                    <i class="fas fa-book-open me-2"></i> Architecture Case Studies
+                <a href="/resume" class="btn-lab-ghost text-decoration-none">
+                    <i class="fas fa-file-alt me-2"></i> Resume &amp; Experience
                 </a>
-                <button class="btn btn-outline-info rounded-pill px-3 py-2 fw-semibold" id="aiInsightBtn" onclick="generateAIInsight()" style="border-radius: 10px; font-size: 0.9rem;">
-                    <i class="fas fa-magic me-1"></i> AI Portfolio Insight ✨
-                </button>
+                <a href="/projects" class="btn btn-outline-light px-3 py-2 fw-semibold text-decoration-none" style="border-radius: 10px; font-size: 0.9rem;">
+                    <i class="fas fa-rocket me-1"></i> View Projects
+                </a>
             </div>
 
             <!-- Social Links Strip -->
@@ -585,10 +585,10 @@
     // Held titles are Data Analyst (Black Piano, Pi) and CMS Auditor (Optum).
     // The move into AI engineering is stated as a direction, never as a held title.
     const roles = [
-        'Data Analyst → AI Systems Engineer (target)',
+        'Data Analyst → AI Engineering (target)',
         'Building Autonomous Multi-Agent Systems',
         'LLM Reliability & Evaluation',
-        'Data Analyst @ Black Piano',
+        'Data Analyst (Hyderabad)',
         'Multi-Agent Swarm Builder'
     ];
     let roleIndex = 0;
