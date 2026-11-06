@@ -1548,3 +1548,79 @@ p {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.2);
 }
+
+/* ============================================================
+   Recruiter & Founder Fast-Track Card & Quick-Filter Enhancements
+   ============================================================ */
+.recruiter-fast-track {
+    background: linear-gradient(145deg, rgba(30, 27, 75, 0.5) 0%, rgba(13, 18, 29, 0.88) 100%) !important;
+    border: 1px solid rgba(129, 140, 248, 0.35) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.6), 0 0 25px rgba(99, 102, 241, 0.15) !important;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.recruiter-fast-track::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #6366f1, #a855f7, #38bdf8);
+}
+
+.recruiter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
+    transition: all 0.2s ease;
+}
+
+.recruiter-chip:hover {
+    background: rgba(99, 102, 241, 0.15);
+    border-color: rgba(99, 102, 241, 0.35);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.recruiter-chip i {
+    color: #818cf8;
+}
+
+/* Project Category Filter Pills */
+.filter-btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+.filter-btn {
+    padding: 0.45rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.04);
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+}

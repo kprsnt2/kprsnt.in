@@ -6,11 +6,11 @@
     'use strict';
 
     const SUGGESTIONS = [
-        "What projects has Prashanth built?",
-        "Tell me about BrandXY",
-        "What are his AI skills?",
-        "Drug discovery projects?",
-        "What's MyLocalCLI?"
+        "Why hire Prashanth for an AI Engineer role?",
+        "What autonomous multi-agent systems has he built?",
+        "How does his 9-yr Optum compliance background help?",
+        "What is his production tech stack?",
+        "How can I interview or contact him?"
     ];
 
     let isOpen = false;

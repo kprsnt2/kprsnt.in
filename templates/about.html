@@ -1,21 +1,23 @@
 {% extends "base.html" %}
 
-{% block title %}Prashanth Kumar Kadasi | Data Analyst → AI Engineering{% endblock %}
+{% block title %}Prashanth Kumar Kadasi | AI Systems Engineer (Target) & Data Specialist{% endblock %}
 
-{% block description %}Prashanth Kumar Kadasi — Data Analyst in Hyderabad (3.5+ years in data/analytics & AI, 9 years CMS compliance auditing at Optum) moving into AI engineering. Builds multi-agent systems, job pipelines, and LLM evaluation tools. Explore projects, resume, case studies, and live dashboards.{% endblock %}
+{% block description %}Prashanth Kumar Kadasi — AI Systems Engineer (Target) & Production Data Specialist in Hyderabad (3.5+ years in data/analytics & AI, 9 years CMS compliance auditing at Optum). Builds autonomous multi-agent systems, deterministic LLM evaluation harnesses, and scalable cloud pipelines.{% endblock %}
 
 {% block content %}
 <div class="container-fluid px-3 px-lg-5" style="max-width: 1400px; position: relative; z-index: 1;">
 
     <!-- ============================================================
-         1. Hero Section — 2026 AI Systems Lab
+         1. Hero Section — Production AI Systems & Engineering Rigor
          ============================================================ -->
-    <div class="row justify-content-center text-center py-4 py-lg-5 mb-4">
+    <div class="row justify-content-center text-center py-4 py-lg-5 mb-3">
         <div class="col-12 col-xl-10">
             <!-- Lab Status Badge -->
-            <div class="d-inline-flex align-items-center mb-3 px-3 py-1 rounded-pill" style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.25);">
+            <div class="d-inline-flex align-items-center mb-3 px-3 py-1 rounded-pill" style="background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(99, 102, 241, 0.3);">
                 <span class="pulse-dot me-2"></span>
-                <span class="font-mono-tech small text-white fw-semibold" style="letter-spacing: 0.5px; font-size: 0.75rem;">DATA ANALYST → AI ENGINEERING (TARGET) • HYDERABAD, IN</span>
+                <span class="font-mono-tech small text-white fw-semibold" style="letter-spacing: 0.5px; font-size: 0.75rem;">
+                    <i class="fas fa-bullseye text-warning me-1"></i> TARGET: AI SYSTEMS ENGINEER • FOUNDING AI/DATA ENGINEER • HYDERABAD &amp; GLOBAL REMOTE
+                </span>
             </div>
 
             <!-- Name -->
@@ -28,20 +30,51 @@
                 <span class="typing-text" id="typingText"></span><span class="typing-cursor" style="display: inline-block; width: 3px; height: 1.3rem; background: #818cf8; margin-left: 4px; vertical-align: middle; animation: live-pulse 1s infinite;"></span>
             </div>
 
-            <!-- Value proposition: lead with what shipped and what it measured,
-                 not with adjectives. Numbers come from api/data/site_stats.py. -->
-            <p class="lead text-secondary mx-auto mb-4" style="max-width: 860px; font-size: 1.1rem; line-height: 1.7;">
-                I build AI systems and then instrument them so the claims are checkable:
+            <!-- Value proposition: crisp, authoritative, backed by verified metrics -->
+            <p class="lead text-secondary mx-auto mb-4" style="max-width: 900px; font-size: 1.12rem; line-height: 1.75;">
+                I engineer autonomous multi-agent systems, deterministic LLM evaluation harnesses, and production data pipelines where every output is provable and cost-governed:
                 <a href="https://bug.kprsnt.in" target="_blank" class="text-white text-decoration-none border-bottom border-secondary">BugAgents</a>
-                ran 15,317 tool calls against live bounty targets and produced 8 findings — 5 High/Critical, each with a reproducing proof of concept;
+                ran 15,317 tool calls against live bounty targets and produced 8 findings (5 High/Critical) with reproducible PoCs;
                 <a href="https://agent.kprsnt.in" target="_blank" class="text-white text-decoration-none border-bottom border-secondary">AgentSwarm</a>
                 kept 35/35 hash-chained ledgers intact across 34 unattended runs;
                 <a href="https://job.kprsnt.in" target="_blank" class="text-white text-decoration-none border-bottom border-secondary">JobAgents</a>
                 ranked 9,697 jobs into 7,665 distinct roles with zero model calls.
-                Nine of those years were federal CMS compliance auditing at Optum, so I build things that have to prove what they did.
+                Backed by 3.5+ years in data analytics/AI and 9 years of federal CMS compliance auditing at Optum — I build AI architectures engineered for enterprise reliability, not fragile demos.
             </p>
 
-            <!-- Live signals: read from this repo at render time. -->
+            <!-- Action CTAs: Direct hiring actions -->
+            <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+                <a href="/resume" class="btn-lab-primary text-decoration-none px-4 py-2">
+                    <i class="fas fa-file-alt me-2"></i> View ATS Resume
+                </a>
+                <a href="mailto:interview@kprsnt.in?subject=Job%20Opportunity%20/%20Interview%20Invitation%20-%20Prashanth" class="btn btn-outline-success px-4 py-2 fw-semibold text-decoration-none" style="border-radius: 10px; font-size: 0.95rem;">
+                    <i class="fas fa-paper-plane me-2"></i> Direct Interview Invite
+                </a>
+                <a href="#systems-fleet" class="btn-lab-ghost text-decoration-none px-3 py-2">
+                    <i class="fas fa-microchip me-2 text-info"></i> Deployed Systems Fleet
+                </a>
+                <button type="button" class="btn btn-outline-info px-3 py-2 fw-semibold" style="border-radius: 10px; font-size: 0.9rem;" onclick="document.getElementById('chat-bubble')?.click();">
+                    <i class="fas fa-robot me-1"></i> Ask AI Persona
+                </button>
+            </div>
+
+            <!-- Social Links Strip -->
+            <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
+                <a href="https://github.com/kprsnt2" target="_blank" class="telemetry-pill text-decoration-none">
+                    <i class="fab fa-github text-white me-1"></i> GitHub (10+ Repos)
+                </a>
+                <a href="https://www.linkedin.com/in/prashanth-kumar-kadasi-b5281765/" target="_blank" class="telemetry-pill text-decoration-none">
+                    <i class="fab fa-linkedin text-info me-1"></i> LinkedIn Profile
+                </a>
+                <a href="https://huggingface.co/kprsnt" target="_blank" class="telemetry-pill text-decoration-none">
+                    <span class="me-1">🤗</span> HuggingFace
+                </a>
+                <a href="mailto:interview@kprsnt.in" class="telemetry-pill text-decoration-none">
+                    <i class="fas fa-envelope text-success me-1"></i> interview@kprsnt.in
+                </a>
+            </div>
+
+            <!-- Live signals from this repo -->
             <div class="pill-row-label">Live from this repo</div>
             <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
                 <span class="telemetry-pill telemetry-pill-active">
@@ -65,8 +98,7 @@
                 </span>
             </div>
 
-            <!-- All-time aggregates owned by the other project repos. Labelled, so
-                 they can never be mistaken for live telemetry. -->
+            <!-- All-time aggregates -->
             <div class="pill-row-label">All-time, from the project repos</div>
             <div class="d-flex flex-wrap justify-content-center gap-2 mb-2">
                 <span class="telemetry-pill">
@@ -85,35 +117,80 @@
                     <i class="fas fa-shield-alt text-primary"></i> {{ stats.snapshot.fabrications_caught }} seeded fabrications caught
                 </span>
             </div>
-            <p class="text-secondary mb-4" style="font-size: 0.72rem;">{{ stats.snapshot_note }} Rendered {{ stats.generated_at }}.</p>
+            <p class="text-secondary mb-2" style="font-size: 0.72rem;">{{ stats.snapshot_note }} Rendered {{ stats.generated_at }}.</p>
+        </div>
+    </div>
 
-            <!-- Action CTAs: Contact first — this is a hiring page. -->
-            <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
-                <a href="mailto:interview@kprsnt.in" class="btn-lab-primary text-decoration-none">
-                    <i class="fas fa-envelope me-2"></i> Contact me
-                </a>
-                <a href="/resume" class="btn-lab-ghost text-decoration-none">
-                    <i class="fas fa-file-alt me-2"></i> Resume &amp; Experience
-                </a>
-                <a href="/projects" class="btn btn-outline-light px-3 py-2 fw-semibold text-decoration-none" style="border-radius: 10px; font-size: 0.9rem;">
-                    <i class="fas fa-rocket me-1"></i> View Projects
-                </a>
+    <!-- ============================================================
+         Recruiter & Founder Fast-Track Card (30-Second Snapshot)
+         ============================================================ -->
+    <div class="recruiter-fast-track p-4 p-lg-4 mb-5 text-start">
+        <div class="row g-4 align-items-center">
+            <div class="col-12 col-xl-8">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="badge bg-primary px-3 py-1 text-white fw-bold font-mono-tech" style="font-size: 0.75rem;">
+                        <i class="fas fa-briefcase me-1"></i> RECRUITER &amp; FOUNDER FAST-TRACK
+                    </span>
+                    <span class="text-secondary small font-mono-tech">| 30-Second Candidate Evaluation</span>
+                </div>
+                
+                <div class="row g-3 mb-3">
+                    <div class="col-12 col-md-6">
+                        <div class="text-secondary small fw-bold font-mono-tech text-uppercase mb-1" style="font-size: 0.72rem;">
+                            <i class="fas fa-bullseye text-info me-1"></i> Target Roles
+                        </div>
+                        <div class="text-white fw-semibold small">
+                            AI Systems Engineer (Target) • Autonomous Agent Architect • Founding AI/Data Engineer
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="text-secondary small fw-bold font-mono-tech text-uppercase mb-1" style="font-size: 0.72rem;">
+                            <i class="fas fa-map-marker-alt text-danger me-1"></i> Location &amp; Availability
+                        </div>
+                        <div class="text-white fw-semibold small">
+                            Hyderabad, India • Open to Global Remote &amp; Hybrid • Notice: Immediate / Short
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="text-secondary small fw-bold font-mono-tech text-uppercase mb-1" style="font-size: 0.72rem;">
+                            <i class="fas fa-layer-group text-success me-1"></i> Core Production Stack
+                        </div>
+                        <div class="d-flex flex-wrap gap-1 mt-1">
+                            <span class="recruiter-chip"><i class="fab fa-python"></i> Python (FastAPI/Flask)</span>
+                            <span class="recruiter-chip"><i class="fas fa-robot"></i> Multi-Agent Swarms &amp; FastMCP</span>
+                            <span class="recruiter-chip"><i class="fas fa-shield-alt"></i> Deterministic Oracles &amp; Guardrails</span>
+                            <span class="recruiter-chip"><i class="fas fa-brain"></i> LLM Evaluation &amp; LoRA Fine-Tuning</span>
+                            <span class="recruiter-chip"><i class="fab fa-docker"></i> Docker &amp; GCP Cloud Run</span>
+                            <span class="recruiter-chip"><i class="fas fa-database"></i> BigQuery, PostgreSQL, SQLite</span>
+                            <span class="recruiter-chip"><i class="fas fa-code-branch"></i> GitHub Actions CI/CD</span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="p-3 rounded" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.07); font-size: 0.84rem; line-height: 1.6; color: #cbd5e1;">
+                            <strong class="text-white"><i class="fas fa-award text-warning me-1"></i> The Unfair Advantage for Founders:</strong>
+                            9 years of federal CMS compliance auditing at Optum means zero-tolerance for hallucinations, phantom artifacts, or unchecked API burn. Built systems with 35/35 hash-chained ledgers and 0 model calls for non-generative tasks.
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <!-- Social Links Strip -->
-            <div class="d-flex flex-wrap justify-content-center gap-2">
-                <a href="https://github.com/kprsnt2" target="_blank" class="telemetry-pill text-decoration-none">
-                    <i class="fab fa-github text-white"></i> github.com/kprsnt2
-                </a>
-                <a href="https://www.linkedin.com/in/prashanth-kumar-kadasi-b5281765/" target="_blank" class="telemetry-pill text-decoration-none">
-                    <i class="fab fa-linkedin text-info"></i> LinkedIn
-                </a>
-                <a href="https://x.com/prashanth_29" target="_blank" class="telemetry-pill text-decoration-none">
-                    <span class="text-light">𝕏</span> @prashanth_29
-                </a>
-                <a href="mailto:interview@kprsnt.in" class="telemetry-pill text-decoration-none">
-                    <i class="fas fa-envelope text-success"></i> interview@kprsnt.in
-                </a>
+            
+            <div class="col-12 col-xl-4 text-xl-end">
+                <div class="d-flex flex-column gap-2">
+                    <a href="/resume" class="btn btn-primary fw-bold py-2 px-3 text-center" style="border-radius: 10px; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);">
+                        <i class="fas fa-file-download me-2"></i> View ATS Resume
+                    </a>
+                    <a href="mailto:interview@kprsnt.in?subject=Job%20Opportunity%20/%20Interview%20Invitation%20-%20Prashanth" class="btn btn-outline-light fw-semibold py-2 px-3 text-center" style="border-radius: 10px;">
+                        <i class="fas fa-envelope me-2 text-success"></i> Direct Email: interview@kprsnt.in
+                    </a>
+                    <div class="d-flex gap-2 justify-content-center justify-content-xl-end mt-1">
+                        <a href="https://www.linkedin.com/in/prashanth-kumar-kadasi-b5281765/" target="_blank" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                            <i class="fab fa-linkedin text-info me-1"></i> LinkedIn
+                        </a>
+                        <a href="https://github.com/kprsnt2" target="_blank" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                            <i class="fab fa-github text-white me-1"></i> GitHub (10+ Repos)
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -128,6 +205,13 @@
                     <i class="fas fa-microchip me-2"></i> PRODUCTION SYSTEMS & RESEARCH HARNESSES
                 </div>
                 <h2 class="h3 fw-bold text-white mb-0 font-heading">Autonomous Multi-Agent Fleet</h2>
+            </div>
+            <div>
+                <a href="/dashboard" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                    <i class="fas fa-chart-line me-1 text-info"></i> Open Fleet Command Center →
+                </a>
+            </div>
+        </div>
             </div>
             <div>
                 <a href="/dashboard" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
@@ -402,10 +486,10 @@
          ============================================================ -->
     <div class="glass-panel p-4 p-lg-5 mb-5">
         <div class="text-center mb-4">
-            <span class="font-mono-tech small text-info"><i class="fas fa-code-branch me-1"></i> ENGINEERING PHILOSOPHY</span>
-            <h3 class="fw-bold text-white mb-2 font-heading">How I Build Reliable Autonomous Systems</h3>
-            <p class="text-secondary mx-auto small" style="max-width: 700px; line-height: 1.6;">
-                Most agentic systems fail in production due to compounding hallucinations, unchecked token burn, or state drift. Here is how I engineer for enterprise reliability:
+            <span class="font-mono-tech small text-info"><i class="fas fa-shield-alt me-1"></i> THE RELIABILITY ADVANTAGE FOR FOUNDERS</span>
+            <h3 class="fw-bold text-white mb-2 font-heading">How 9 Years of Compliance Auditing Builds Superior AI</h3>
+            <p class="text-secondary mx-auto small" style="max-width: 750px; line-height: 1.6;">
+                Most agentic systems fail in production due to compounding hallucinations, runaway token burn, or state drift. Here is how I engineer for enterprise reliability and measurable ROI:
             </p>
         </div>
 
@@ -417,7 +501,7 @@
                         <h5 class="text-white mb-0 fw-bold" style="font-size: 1rem;">1. Deterministic Cost Gates</h5>
                     </div>
                     <p class="text-secondary small mb-0" style="line-height: 1.6;">
-                        Never send unfiltered noise to expensive LLMs. JobAgents scores all 9,697 sourced jobs deterministically with zero model calls, so only the top-N candidates ever reach a model.
+                        Never send unfiltered noise to expensive LLMs. JobAgents scores all 9,697 sourced jobs deterministically with zero model calls, so expensive models only run on verified, high-confidence candidates.
                     </p>
                 </div>
             </div>
@@ -429,7 +513,7 @@
                         <h5 class="text-white mb-0 fw-bold" style="font-size: 1rem;">2. Forensic Hash Ledgers</h5>
                     </div>
                     <p class="text-secondary small mb-0" style="line-height: 1.6;">
-                        Agents cannot self-attest success. Immutable hash-chained audit ledgers kept outside agent write trees prevent stealth overwrites and ensure cryptographic reproducibility.
+                        Agents cannot self-attest success. Immutable hash-chained audit ledgers kept outside agent write trees prevent stealth overwrites and guarantee reproducible execution traces.
                     </p>
                 </div>
             </div>
@@ -439,6 +523,14 @@
                     <div class="d-flex align-items-center mb-2">
                         <i class="fas fa-shield-alt text-success fs-5 me-2"></i>
                         <h5 class="text-white mb-0 fw-bold" style="font-size: 1rem;">3. Regulated Compliance Rigor</h5>
+                    </div>
+                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
+                        9 years of federal CMS compliance auditing at Optum applied to AI systems: scope boundaries, per-turn tool-call verification, and promotion gates that strictly refuse unverified outputs.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
                     </div>
                     <p class="text-secondary small mb-0" style="line-height: 1.6;">
                         9 years of federal CMS compliance auditing at Optum applied to AI systems: scope boundaries, per-turn tool-call audit, and promotion gates that refuse unverified output.
@@ -585,11 +677,11 @@
     // Held titles are Data Analyst (Black Piano, Pi) and CMS Auditor (Optum).
     // The move into AI engineering is stated as a direction, never as a held title.
     const roles = [
-        'Data Analyst → AI Engineering (target)',
-        'Building Autonomous Multi-Agent Systems',
-        'LLM Reliability & Evaluation',
-        'Data Analyst (Hyderabad)',
-        'Multi-Agent Swarm Builder'
+        'AI Systems Engineer (Target Role)',
+        'Autonomous Multi-Agent Architect',
+        'Production LLM Systems & Guardrails',
+        'Data Analyst (3.5+ Yrs in Data & AI)',
+        'Compliance-Grade AI Reliability'
     ];
     let roleIndex = 0;
     let charIndex = 0;

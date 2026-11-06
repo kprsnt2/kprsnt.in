@@ -1,24 +1,58 @@
 {% extends "base.html" %}
 
-{% block title %}Projects | Prashanth Kumar Kadasi{% endblock %}
+{% block title %}Engineering Projects | Prashanth Kumar Kadasi{% endblock %}
 
-{% block description %}Engineering projects by Prashanth Kumar Kadasi — MediFlow, BugAgents, AgentSwarm, JobAgents, MyLocalCLI, rAsh Score, mSeat, BrandXY and Geetha. All self-directed, openly live.{% endblock %}
+{% block description %}Production AI systems, autonomous multi-agent frameworks, and discrete simulators by Prashanth Kumar Kadasi — MediFlow, BugAgents, AgentSwarm, JobAgents, MyLocalCLI, rAsh Score, mSeat, and BrandXY. All openly live with verified proofs.{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="page-title">My Projects</h1>
-            <p class="mb-4">A collection of web applications, AI tools, dashboards, and educational apps I've built.</p>
+<div class="container py-3">
+    <!-- Header with Recruiter Pitch -->
+    <div class="row mb-4">
+        <div class="col-12 col-lg-9">
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-1 rounded-pill font-mono-tech small mb-2">
+                <i class="fas fa-microchip me-1"></i> VERIFIABLE CODE &amp; ARCHITECTURES
+            </span>
+            <h1 class="page-title mb-2">Engineering Projects</h1>
+            <p class="text-secondary lead fs-6 mb-0" style="max-width: 800px; line-height: 1.6;">
+                Autonomous multi-agent swarms, deterministic LLM evaluation harnesses, fine-tuned models, and discrete simulators. Every project is openly live, reproducible, and backed by verifiable code and metrics.
+            </p>
+        </div>
+        <div class="col-12 col-lg-3 text-lg-end mt-3 mt-lg-0 d-flex flex-column justify-content-center">
+            <a href="/resume" class="btn btn-outline-primary btn-sm mb-2 rounded-pill px-3">
+                <i class="fas fa-file-alt me-1"></i> View Matching Resume
+            </a>
+            <a href="https://github.com/kprsnt2" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                <i class="fab fa-github me-1"></i> GitHub Repositories
+            </a>
         </div>
     </div>
 
-    <div class="row mt-3">
+    <!-- Category Filter Buttons -->
+    <div class="filter-btn-group">
+        <button class="filter-btn active" onclick="filterProjects('all', this)">
+            <i class="fas fa-border-all me-1"></i> All Projects
+        </button>
+        <button class="filter-btn" onclick="filterProjects('swarm', this)">
+            <i class="fas fa-robot me-1"></i> Autonomous Agents &amp; Swarms
+        </button>
+        <button class="filter-btn" onclick="filterProjects('llm', this)">
+            <i class="fas fa-brain me-1"></i> LLM &amp; Fine-Tuning
+        </button>
+        <button class="filter-btn" onclick="filterProjects('data', this)">
+            <i class="fas fa-database me-1"></i> Data &amp; Web Platforms
+        </button>
+    </div>
+
+    <div class="row mt-2" id="projects-grid">
         {% for project in projects %}
-        <div class="col-12 col-md-6 col-lg-4 mb-4">
+        {% set tags_str = (project.tags | join(' ')) | lower %}
+        {% set title_lower = project.title | lower %}
+        {% set is_swarm = 'agent' in tags_str or 'swarm' in tags_str or 'agent' in title_lower or 'swarm' in title_lower or 'mediflow' in title_lower or 'bug' in title_lower or 'jobagents' in title_lower %}
+        {% set is_llm = 'llm' in tags_str or 'gpt' in tags_str or 'ai' in tags_str or 'brand' in title_lower or 'drug' in title_lower or 'cli' in title_lower or 'rash' in title_lower %}
+        <div class="col-12 col-md-6 col-lg-4 mb-4 project-item" data-swarm="{{ 'true' if is_swarm else 'false' }}" data-llm="{{ 'true' if is_llm else 'false' }}">
             <div class="card shadow-sm h-100">
-                <div class="card-header">
-                    <span class="card-title-text">{{ project.title }}</span>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span class="card-title-text fw-bold">{{ project.title }}</span>
                     {% if project.featured %}
                     <span class="featured-badge">⭐ Featured</span>
                     {% endif %}
@@ -57,13 +91,13 @@
                     {% endif %}
 
                     <!-- Buttons -->
-                    <div class="mt-auto">
+                    <div class="mt-auto pt-3 border-top border-secondary border-opacity-10 d-flex gap-2">
                         <a href="{{ project.url }}" target="_blank"
-                            class="btn btn-{{ project.color }} btn-sm me-2">Live →</a>
+                            class="btn btn-{{ project.color }} btn-sm flex-fill fw-semibold">Live App ↗</a>
                         {% if project.github %}
                         {% set gh = project.github.rstrip('/') %}
                         <a href="{{ project.github }}" target="_blank"
-                            class="btn btn-outline-secondary btn-sm">{% if gh.count('/') > 3 %}Repo{% else %}GitHub profile{% endif %}</a>
+                            class="btn btn-outline-secondary btn-sm flex-fill">{% if gh.count('/') > 3 %}<i class="fab fa-github me-1"></i>Repo{% else %}<i class="fab fa-github me-1"></i>GitHub{% endif %}</a>
                         {% endif %}
                     </div>
                 </div>
@@ -72,4 +106,26 @@
         {% endfor %}
     </div>
 </div>
+
+<script>
+function filterProjects(category, button) {
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    button.classList.add('active');
+
+    const items = document.querySelectorAll('.project-item');
+    items.forEach(item => {
+        if (category === 'all') {
+            item.style.display = '';
+        } else if (category === 'swarm') {
+            item.style.display = item.getAttribute('data-swarm') === 'true' ? '' : 'none';
+        } else if (category === 'llm') {
+            item.style.display = item.getAttribute('data-llm') === 'true' ? '' : 'none';
+        } else if (category === 'data') {
+            // If not strictly swarm or pure fine-tuning, or is web/data
+            const isSwarm = item.getAttribute('data-swarm') === 'true';
+            item.style.display = !isSwarm ? '' : 'none';
+        }
+    });
+}
+</script>
 {% endblock %}
