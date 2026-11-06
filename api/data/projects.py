@@ -111,7 +111,7 @@ PROJECTS = [
         "tags": ["Multi-Agent Arena", "Hash-Chained Ledger", "Adversarial Oracle", "Agent Evaluation", "Node.js"]
     },
     {
-        "title": "🎯 JobAgents — Automated Job Search Pipeline with Code-Enforced Anti-Fabrication",
+        "title": "🎯 JobAgents — Automated Job Search Pipeline",
         "description": "A multi-agent pipeline that sources roles from ATS APIs and aggregators, scores them deterministically, then tailors resumes and drafts outreach from Markdown config. It has sourced 9,697 jobs / 7,665 distinct roles from 10 sources across 349 companies, merging 2,032 duplicates with two-layer dedupe (3,083 remote roles, 32% of the total; 356 India-based; 1,812 with salary data). A deterministic matcher scores every job across 3 role tracks with zero model calls — the cost gate that ensures only top-N candidates reach an LLM — and has computed 29,091 match scores, 234 of which clear the score-65 threshold. 71 runs are recorded, 46 resumes and 46 drafts written. The anti-fabrication guard catches 8 of 8 seeded fabrications and the review invariants have 0 failures. Zero external dependencies: Python standard library only.",
         "hook": 'Finds and ranks jobs without burning LLM tokens: deterministic scoring in code, models only for the top matches.',
         "proof": [
@@ -201,7 +201,7 @@ PROJECTS = [
         "tags": ["Multi-Agent", "CLI Orchestration", "TypeScript", "Vercel"]
     },
     {
-        "title": "MyLocalCLI — Local-First Agentic Coding Assistant",
+        "title": "💻 MyLocalCLI — Local-First Agentic Coding Assistant",
         "description": "An open-source terminal coding agent for local and free-tier models: no telemetry, no paid subscription required. Published on npm as mylocalcli (v4.0.2, installs with npm install -g mylocalcli, runs as both mlc and mylocalcli) and served at mlc.kprsnt.in. 8 documented providers (Ollama, LM Studio, vLLM, OpenRouter, Groq, NVIDIA NIM, OpenAI, and any custom OpenAI-compatible endpoint), 42 built-in tools, 38 dynamic skills that auto-inject when matching project files are detected, and 5 specialised sub-agents. Also parallel tool dispatch via Promise.all, a Stdio MCP bridge, interactive plan mode, multimodal vision, a full-screen TUI, and provider failover.",
         "hook": 'A coding agent you run locally on free models - no subscription, no telemetry.',
         "proof": [
