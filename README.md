@@ -107,6 +107,102 @@ budget (no more 10s serverless ceiling that shaped a lot of the old code),
 scale-to-zero, and a region in Mumbai (`asia-south1`) that is ~50 ms from
 Hyderabad.
 
+### Console path (no terminal needed)
+
+Everything below is click-only, in the Google Cloud Console and the Cloudflare
+dashboard. Once step 5 is done, every push to `main` rebuilds and redeploys
+automatically — the same experience Vercel gave you.
+
+**1. Project + billing.** Open [console.cloud.google.com](https://console.cloud.google.com)
+→ project picker (top bar) → **New project** → name it `kprsnt-in` → **Create**.
+Then **Billing** → **Link a billing account** (this is where your credits apply).
+Cloud Run asks for a billing account on first use; without one it will not deploy.
+
+**2. Enable the APIs.** Search the top bar for **Cloud Run** → **Enable** when
+prompted. When Console asks, also enable **Cloud Build** and **Artifact
+Registry** — the source-repository deploy uses both.
+
+**3. Create the secrets.** Search for **Secret Manager** → **Create secret**:
+
+| Secret name | Value |
+| --- | --- |
+| `OPENAI_API_KEY` | your key |
+| `NVIDIA_API_KEY` | your key |
+| `GROQ_API_KEY` | your key |
+| `RESEND_API_KEY` | your key |
+| `OWNER_NOTIFY_EMAIL` | where bot notifications go |
+| `AGENT_VAULT_TOKEN` | optional (private vault) |
+| `KV_REST_API_URL` / `KV_REST_API_TOKEN` | optional (AILearn sync) |
+
+Name them exactly as above — Cloud Run maps each secret to an environment
+variable of the same name, and that is the name `api/` reads.
+
+**4. Connect the repository.** **Cloud Run** → **Create service** → choose
+**Source repository (continuously deploy from a repository)** → **Set up with
+Cloud Build**:
+
+1. Provider **GitHub** → **Install Google Cloud Build** (opens GitHub) → grant
+   access to the account `kprsnt2` → choose **Only select repositories** →
+   tick `kprsnt.in-cloudrun` → **Install**.
+2. Back in the panel: Repository `kprsnt2/kprsnt.in-cloudrun`, Branch `^main$`,
+   Build type **Dockerfile**, source location `/Dockerfile`.
+3. **Save**.
+
+**5. Service settings.** Fill the form that appears:
+
+| Field | Value |
+| --- | --- |
+| Service name | `kprsnt-in` |
+| Region | `asia-south1` (Mumbai — closest to Hyderabad) |
+| Authentication | **Allow unauthenticated invocations** (public site) |
+| Container port | `8080` |
+| CPU | 1 |
+| Memory | 1 GiB |
+| Max concurrent requests per instance | `8` (= gunicorn's 8 threads) |
+| Request timeout | `300` seconds |
+| Minimum instances | `0` (raises on demand; see cost notes) |
+| Maximum instances | `3` |
+| Startup CPU boost | on |
+
+Then **Variables & Secrets**:
+
+* Environment variables: `INTERVIEW_FROM_EMAIL` = `chat@kprsnt.in`,
+  `AI_LLM_TIMEOUT` = `20`
+* **Add reference to secret** once per secret from step 3 —
+  e.g. Name `OPENAI_API_KEY`, Secret `OPENAI_API_KEY`, Version `latest`.
+
+Leave **Health checks** at their defaults for the first deploy (Cloud Run
+detects the listening port; `/health` exists if you want to add an HTTP startup
+probe later). Click **Create** and watch the build log; the first build takes a
+few minutes.
+
+**6. Open the site.** The service page shows a URL like
+`https://kprsnt-in-xxxxx-as.a.run.app`. Click it, and open `/health` in the same
+tab — you should see `{"status":"ok",...}`.
+
+**7. Point kprsnt.in at it (Cloudflare, still no terminal).** In
+[dash.cloudflare.com](https://dash.cloudflare.com) → your zone → **DNS** →
+**Records**:
+
+* Delete the old Vercel `A` / `CNAME` records for `kprsnt.in` and `www`.
+* **Add record** → Type `CNAME`, Name `@`, Target `<the run.app hostname>`,
+  Proxy status **Proxied** (orange cloud). Repeat with Name `www`.
+* **SSL/TLS → Overview** → mode **Full (strict)**.
+
+*Alternative:* in Cloud Run → **Manage custom domains** → **Add mapping**, then
+create the DNS records Cloud Run shows (`ghs.googlehosted.com`) in Cloudflare
+with the proxy **off** (grey cloud) so Google can issue its certificate.
+
+**8. Guard the budget.** **Billing → Budgets & alerts → Create budget** (e.g.
+$20/month, alert at 50/90/100%). `max-instances 3` already caps a traffic spike.
+
+**9. Later changes.** Push to `main` → Cloud Run rebuilds and rolls out a new
+revision automatically. To go back: Cloud Run → **Revisions** → pick an older
+one → **Manage traffic** → 100%. To rotate a secret: Secret Manager → the secret
+→ **Add new version** → then Cloud Run → **Edit & deploy new revision** so the
+running revision picks it up. To keep the service warm (costs credits):
+**Edit & deploy new revision** → set **Minimum instances** to `1`.
+
 ### First deploy
 
 ```bash
