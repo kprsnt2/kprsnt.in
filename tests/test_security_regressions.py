@@ -104,6 +104,25 @@ def test_weekly_valid_week_still_works():
 # SEC-2: client IP normalization
 # --------------------------------------------------------------------------
 
+def test_client_ip_prefers_cloudflare_connecting_ip():
+    """On Cloudflare the edge overwrites CF-Connecting-IP; it wins over the rest."""
+    from flask import request
+
+    from api.index import app
+    from api.services.security import get_client_ip
+
+    with app.test_request_context(
+        "/",
+        headers={
+            "CF-Connecting-IP": "198.51.100.4",
+            "X-Real-IP": "10.1.1.1",
+            "X-Forwarded-For": "9.9.9.9, 10.0.0.7",
+        },
+        environ_base={"REMOTE_ADDR": "203.0.113.9"},
+    ):
+        assert get_client_ip(request) == "198.51.100.4"
+
+
 def test_client_ip_prefers_x_real_ip():
     from flask import request
 

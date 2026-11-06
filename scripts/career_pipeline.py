@@ -62,7 +62,7 @@ PROFILE = {
         "llm_apis": ["Gemini API", "Claude API", "OpenAI API", "NVIDIA NIM", "Ollama", "OpenRouter"],
         "languages": ["Python", "JavaScript", "TypeScript", "SQL"],
         "frameworks": ["Flask", "React", "Next.js", "Node.js", "Streamlit", "FastAPI"],
-        "cloud": ["Google Cloud (BigQuery)", "Vercel", "Render", "Cloudflare Pages",
+        "cloud": ["Google Cloud (BigQuery)", "Cloudflare Workers/Containers", "Vercel", "Render",
                   "Docker", "AMD MI300X/ROCm", "GitHub Actions"],
         "data": ["Pandas", "NumPy", "Plotly", "Tableau", "Looker Studio", "Power BI",
                 "AppScript Automation", "ETL Pipelines"],

@@ -122,6 +122,7 @@ SKILLS_DETAILED = {
         "Cloud Run",
         "Docker",
         "GitHub Actions",
+        "Cloudflare Workers & Containers",
         "Vercel",
         "Linux/Bash",
         "Git",

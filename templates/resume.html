@@ -117,13 +117,13 @@
     <!-- Header -->
     <div class="row">
         <div class="col-12 d-flex justify-content-between align-items-center flex-wrap">
-            <h2>Resume
+            <h1 class="page-title">Resume
                 {% if current_role %}
                 <span class="role-badge print-hide" style="background: {{ current_role.color }};">
                     {{ current_role.icon }} {{ current_role.title }}
                 </span>
                 {% endif %}
-            </h2>
+            </h1>
             <div class="d-flex align-items-center gap-2 print-hide">
                 <a href="/static/Prashanth_Kumar_Kadasi_Resume.pdf" download="Prashanth_Kumar_Kadasi_Resume.pdf" class="btn btn-sm btn-primary" style="border-radius: 20px;">
                     <i class="fas fa-file-arrow-down me-1"></i> Download ATS PDF

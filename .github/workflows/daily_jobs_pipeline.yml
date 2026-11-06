@@ -38,6 +38,6 @@ jobs:
         run: |
           python -c "import sys; sys.path.insert(0, 'scripts'); from social_jobs_pipeline import prune_daily_files; prune_daily_files()"
 
-      - name: Commit and push updated JSON data (Disabled to save Vercel storage)
+      - name: Commit and push updated JSON data (Disabled to keep deploys small)
         run: |
-          echo "Automated commit disabled to prevent excess Vercel deployment storage."
+          echo "Automated commit disabled to prevent excess deployment/image storage."

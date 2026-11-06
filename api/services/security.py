@@ -42,14 +42,17 @@ def is_valid_email(email) -> bool:
 def get_client_ip(request) -> str:
     """Return the best-guess client IP for rate-limit keying.
 
-    Trusts the platform-provided ``X-Real-IP`` first (Vercel sets it), then
-    the LAST ``X-Forwarded-For`` hop (appended by the trusted proxy). The
-    first XFF hop is client-controlled and can be spoofed to rotate
-    rate-limit keys, so it is never used. Falls back to remote_addr.
+    Trusts platform-provided headers only, in order: ``CF-Connecting-IP``
+    (Cloudflare overwrites this on every proxied request) and ``X-Real-IP``
+    (set by other reverse proxies). Failing those, the LAST
+    ``X-Forwarded-For`` hop, which is appended by the trusted proxy. The first
+    XFF hop is client-controlled and can be spoofed to rotate rate-limit keys,
+    so it is never used. Falls back to remote_addr.
     """
-    real = request.headers.get("X-Real-IP", "").strip()
-    if real:
-        return real
+    for header in ("CF-Connecting-IP", "X-Real-IP"):
+        value = request.headers.get(header, "").strip()
+        if value:
+            return value
     xff = request.headers.get("X-Forwarded-For", "")
     if xff:
         last = xff.split(",")[-1].strip()
@@ -63,10 +66,11 @@ class RateLimiter:
 
     Allows up to ``max_requests`` hits per ``window_seconds`` (e.g.
     ``RateLimiter(60, 60)`` = 60 requests/minute), instead of enforcing a
-    fixed minimum interval between requests. On serverless (Vercel) each
-    warm instance keeps its own window, so this is best-effort abuse
-    mitigation, not a hard global quota. For global limits, swap in
-    Vercel KV / Upstash.
+    fixed minimum interval between requests. State lives in the process, so if
+    you ever scale past one container instance each instance keeps its own
+    window: this is best-effort abuse mitigation, not a hard global quota. For
+    global limits, back it with the Upstash/KV store used by
+    ``services.ailearn_sync``.
     """
 
     def __init__(self, window_seconds: float, max_requests: int = 60, max_keys: int = 10000):

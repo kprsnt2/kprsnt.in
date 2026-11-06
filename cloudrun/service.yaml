@@ -1,0 +1,92 @@
+# ---------------------------------------------------------------------------
+# kprsnt.in — Cloud Run service definition
+#
+# Declarative alternative to the `gcloud run deploy` flags in the README. Use it
+# after the image exists in Artifact Registry:
+#
+#   gcloud run services replace cloudrun/service.yaml --region asia-south1
+#
+# Replace PROJECT_ID below with your project (and REGION if you move it), or
+# just use `gcloud run deploy --source .` which fills all of this in for you.
+# ---------------------------------------------------------------------------
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: kprsnt-in
+  labels:
+    cloud.googleapis.com/location: asia-south1
+  annotations:
+    run.googleapis.com/ingress: all
+spec:
+  template:
+    metadata:
+      annotations:
+        # minScale 0 = stay inside the always-free allowance with a ~1-2s cold
+        # start. Set it to "1" (you have credits) for a permanently warm
+        # instance — that draws on credits rather than the free tier.
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "3"
+        # CPU only during request processing (cheaper). Set "false" if you ever
+        # add background work.
+        run.googleapis.com/cpu-throttling: "true"
+        # Give the first request extra CPU while Flask boots.
+        run.googleapis.com/startup-cpu-boost: "true"
+    spec:
+      # Must match gunicorn --threads in the Dockerfile (8), otherwise requests
+      # queue up behind the thread pool on a single instance.
+      containerConcurrency: 8
+      # Cloud Run's ceiling; keep it aligned with gunicorn --timeout.
+      timeoutSeconds: 300
+      containers:
+        - image: asia-south1-docker.pkg.dev/PROJECT_ID/kprsnt/kprsnt-in:latest
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          env:
+            - name: INTERVIEW_FROM_EMAIL
+              value: chat@kprsnt.in
+            - name: AI_LLM_TIMEOUT
+              value: "20"
+          # Secrets live in Secret Manager and are mounted as env vars.
+          # Create them once (README), then uncomment:
+          # - name: OPENAI_API_KEY
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: OPENAI_API_KEY
+          #       key: latest
+          # - name: NVIDIA_API_KEY
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: NVIDIA_API_KEY
+          #       key: latest
+          # - name: GROQ_API_KEY
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: GROQ_API_KEY
+          #       key: latest
+          # - name: RESEND_API_KEY
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: RESEND_API_KEY
+          #       key: latest
+          # - name: OWNER_NOTIFY_EMAIL
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: OWNER_NOTIFY_EMAIL
+          #       key: latest
+          # - name: AGENT_VAULT_TOKEN
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: AGENT_VAULT_TOKEN
+          #       key: latest
+          startupProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 6

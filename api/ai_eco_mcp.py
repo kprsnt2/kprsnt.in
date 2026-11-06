@@ -624,7 +624,7 @@ def handle_site_overview(args: Dict[str, Any]) -> Dict[str, Any]:
         "owner": "Prashanth Kumar Kadasi",
         "tagline": "Autonomous Multi-Agent AI Ecosystem & Full-Stack Systems Portfolio",
         "primary_url": "https://kprsnt.in",
-        "architecture": "Python Flask serverless backend deployed on Vercel Edge with client-side interactive terminals and Protocol tooling.",
+        "architecture": "Python Flask application running in a Cloudflare Container behind a Worker, with client-side interactive terminals and Protocol tooling.",
         "key_routes": {
             "home": "https://kprsnt.in/",
             "ai_eco_dashboard": "https://kprsnt.in/ecosystem",

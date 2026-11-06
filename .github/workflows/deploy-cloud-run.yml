@@ -1,0 +1,77 @@
+name: Deploy to Cloud Run
+
+# Manual by default so a missing/typo'd GCP config can never break the main
+# branch. Once the repository variables and secrets below are set (README →
+# Deployment), uncomment the push trigger for deploy-on-push like Vercel had.
+on:
+  workflow_dispatch:
+  # push:
+  #   branches: ["main"]
+  #   paths:
+  #     - "api/**"
+  #     - "templates/**"
+  #     - "static/**"
+  #     - "blog_inputs/**"
+  #     - "blog_data/**"
+  #     - "job_data/**"
+  #     - "ecosystem_swarm/**"
+  #     - "AI_Eco_Blogs/**"
+  #     - "Dockerfile"
+  #     - "requirements.txt"
+
+permissions:
+  contents: read
+  id-token: write        # required for Workload Identity Federation
+
+concurrency:
+  group: cloud-run-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      REGION: ${{ vars.GCP_REGION }}
+      SERVICE: kprsnt-in
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Build and push image
+        run: |
+          IMAGE="${REGION}-docker.pkg.dev/${PROJECT_ID}/kprsnt/kprsnt-in"
+          gcloud auth configure-docker "${REGION}-docker.pkg.dev" --quiet
+          docker build -t "${IMAGE}:${GITHUB_SHA}" -t "${IMAGE}:latest" .
+          docker push "${IMAGE}:${GITHUB_SHA}"
+          docker push "${IMAGE}:latest"
+
+      - name: Deploy revision
+        run: |
+          IMAGE="${REGION}-docker.pkg.dev/${PROJECT_ID}/kprsnt/kprsnt-in"
+          gcloud run deploy "${SERVICE}" \
+            --image "${IMAGE}:${GITHUB_SHA}" \
+            --region "${REGION}" \
+            --platform managed \
+            --allow-unauthenticated \
+            --port 8080 \
+            --cpu 1 \
+            --memory 1Gi \
+            --concurrency 8 \
+            --timeout 300 \
+            --min-instances 0 \
+            --max-instances 3 \
+            --set-env-vars "INTERVIEW_FROM_EMAIL=chat@kprsnt.in,AI_LLM_TIMEOUT=20" \
+            --set-secrets "OPENAI_API_KEY=OPENAI_API_KEY:latest,NVIDIA_API_KEY=NVIDIA_API_KEY:latest,GROQ_API_KEY=GROQ_API_KEY:latest,RESEND_API_KEY=RESEND_API_KEY:latest,OWNER_NOTIFY_EMAIL=OWNER_NOTIFY_EMAIL:latest"
+
+      - name: Show the service URL
+        run: |
+          gcloud run services describe "${SERVICE}" \
+            --region "${REGION}" --format "value(status.url)"

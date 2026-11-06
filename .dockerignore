@@ -1,0 +1,36 @@
+# Keep the container image to exactly what the app reads at runtime.
+.git
+.gitignore
+.github
+.cursor
+node_modules
+venv
+venvkprsnt
+__pycache__
+**/__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+# Secrets — never ship these into an image; Cloud Run injects them from Secret
+# Manager as env vars (see README → Deployment).
+.env
+*.env
+agent_vault/.token
+
+# Repo docs + tooling, not read by the running app.
+# NOTE: markdown under AI_Eco_Blogs/, blog_inputs/, ecosystem_swarm/ and
+# api/skills/ IS served by the app — never add a global "*.md" rule here.
+README.md
+agent.md
+DEPLOY.md
+AI_ECO_AUDIT.md
+scripts/
+tests/
+cover_letters/
+blog_drafts/
+scratch/
+audit/
+
+# Deploy configs are not runtime inputs (the app reads only files above).
+cloudrun/

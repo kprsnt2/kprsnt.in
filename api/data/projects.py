@@ -175,7 +175,7 @@ PROJECTS = [
     },
     {
         "title": "🤖 This Portfolio & Its AI Ecosystem",
-        "description": "The site you are on: Flask on a single Vercel serverless function, Jinja2 + Bootstrap 5, no database — flat JSON/Markdown plus static Python dicts. It hosts a RAG chatbot, an MCP server exposing the portfolio as tools, an AI insight dashboard, the blog engine, and an autonomous swarm of 10 agents with 15+ MCP tools and 5 resources that keep the site's assets and pipelines current. An agent fitness score of 83.4% is tracked on the ecosystem page.",
+        "description": "The site you are on: Flask running in a Cloudflare Container behind a Worker (Docker image + wrangler config), Jinja2 + Bootstrap 5, no database — flat JSON/Markdown plus static Python dicts. It hosts a RAG chatbot, an MCP server exposing the portfolio as tools, an AI insight dashboard, the blog engine, and an autonomous swarm of 10 agents with 15+ MCP tools and 5 resources that keep the site's assets and pipelines current. An agent fitness score of 83.4% is tracked on the ecosystem page.",
         "url": "https://kprsnt.in",
         "github": "https://github.com/kprsnt2/kprsnt.in",
         "color": "success",

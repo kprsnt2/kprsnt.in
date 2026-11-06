@@ -1,6 +1,8 @@
 """
 Flask Portfolio Website
-A Flask + Jinja2 website for Vercel deployment.
+A Flask + Jinja2 website. Runs in a Cloudflare Container (see Dockerfile,
+cloudflare/worker.js, wrangler.jsonc) behind a Worker that proxies every
+request to it.
 
 Architecture:
   - api/data/projects.py      → Project, skill, experience constants
@@ -111,6 +113,17 @@ app = Flask(__name__, template_folder='../templates', static_folder='../static')
 application = app
 handler = app
 
+
+@app.context_processor
+def _inject_template_globals():
+    """Values every template can rely on (footer year, etc.).
+
+    Rendered server-side so it is correct without JavaScript — the footer used
+    to use document.write() for this.
+    """
+    from datetime import datetime, timezone
+    return {'current_year': datetime.now(timezone.utc).year}
+
 # --- Security Headers ---
 # Note: 'unsafe-inline' is required because templates use inline styles/handlers.
 # It still blocks scripts/styles from unlisted external origins.
@@ -136,6 +149,11 @@ def add_security_headers(response):
     response.headers['Permissions-Policy'] = 'camera=(), microphone=(), geolocation=()'
     response.headers['Content-Security-Policy'] = _CSP
     response.headers['Strict-Transport-Security'] = 'max-age=63072000; includeSubDomains; preload'
+    # Cloudflare sits in front of the app and caches at the edge, so state it
+    # explicitly: HTML is always revalidated (pages reflect live JSON data),
+    # /static/* gets its long-lived header in serve_static() below.
+    if response.mimetype == 'text/html' and 'Cache-Control' not in response.headers:
+        response.headers['Cache-Control'] = 'no-cache'
     return response
 
 # --- Rate Limiting (bounded in-memory, per-IP) ---
@@ -1510,7 +1528,11 @@ def page_not_found(e):
 
 @app.route('/static/<path:path>')
 def serve_static(path):
-    return send_from_directory(app.static_folder, path)
+    resp = send_from_directory(app.static_folder, path)
+    # This replaces the cache header the old vercel.json route set for
+    # /static/*. Extend it with a Cloudflare Cache Rule if you want a full year.
+    resp.headers['Cache-Control'] = 'public, max-age=86400, stale-while-revalidate=604800'
+    return resp
 
 
 # ============================================================
@@ -1529,6 +1551,95 @@ def robots_txt():
     body = ("User-agent: *\nAllow: /\nDisallow: /vault\n\n"
             "Sitemap: https://kprsnt.in/sitemap.xml\n")
     return Response(body, mimetype='text/plain')
+
+
+@app.route('/health')
+def health():
+    """Liveness probe for the host platform and the keep-alive cron."""
+    from datetime import datetime, timezone
+    return jsonify({'status': 'ok', 'time': datetime.now(timezone.utc).isoformat()})
+
+
+def _rss_pubdate(date_str):
+    """Site date string -> RFC 822, which is what RSS <pubDate> wants."""
+    from datetime import timezone
+    from email.utils import format_datetime
+    return format_datetime(_parse_blog_date(date_str).replace(tzinfo=timezone.utc))
+
+
+@app.route('/feed.xml')
+def feed_xml():
+    """RSS 2.0 feed for the blog and the AI Eco dev logs.
+
+    The site shipped 90+ posts with no feed at all, so nothing was
+    subscribable; this is the cheapest distribution win available.
+    """
+    from xml.sax.saxutils import escape
+
+    entries = []
+    for post in load_all_blog_posts() + load_ai_eco_blogs():
+        slug = post.get('slug')
+        if not slug:
+            continue
+        prefix = '/aie/blog/' if post.get('category') == 'AI Eco' else '/blog/'
+        url = f"https://kprsnt.in{prefix}{slug}"
+        entries.append((_parse_blog_date(post.get('date', '')), post, url))
+    entries.sort(key=lambda e: e[0], reverse=True)
+    entries = entries[:40]
+
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
+        '  <channel>',
+        '    <title>kprsnt.in — Blog &amp; AI Eco Dev Logs</title>',
+        '    <link>https://kprsnt.in/blog</link>',
+        '    <description>Engineering notes from Prashanth Kumar Kadasi: autonomous '
+        'multi-agent runtimes, LLM evaluation, data engineering.</description>',
+        '    <language>en-in</language>',
+        '    <atom:link href="https://kprsnt.in/feed.xml" rel="self" type="application/rss+xml"/>',
+    ]
+    if entries:
+        lines.append(f'    <lastBuildDate>{_rss_pubdate(entries[0][1].get("date", ""))}</lastBuildDate>')
+    for _when, post, url in entries:
+        excerpt = str(post.get('excerpt') or post.get('insights') or '')[:600]
+        lines.extend([
+            '    <item>',
+            f'      <title>{escape(str(post.get("title", "")))}</title>',
+            f'      <link>{escape(url)}</link>',
+            f'      <guid isPermaLink="true">{escape(url)}</guid>',
+            f'      <pubDate>{_rss_pubdate(post.get("date", ""))}</pubDate>',
+            f'      <category>{escape(str(post.get("category") or "Technology"))}</category>',
+            f'      <description>{escape(excerpt)}</description>',
+            '    </item>',
+        ])
+    lines.extend(['  </channel>', '</rss>'])
+
+    resp = Response("\n".join(lines), mimetype='application/rss+xml')
+    # Feed readers poll; an hour of edge caching keeps the origin idle.
+    resp.headers['Cache-Control'] = 'public, max-age=3600'
+    return resp
+
+
+@app.route('/manifest.webmanifest')
+def manifest():
+    """PWA manifest, served from the route so it can sit at the site root."""
+    manifest_data = {
+        'name': 'Prashanth Kumar Kadasi — Portfolio',
+        'short_name': 'kprsnt.in',
+        'description': 'Data Analyst building autonomous AI systems — projects, resume and engineering write-ups.',
+        'start_url': '/',
+        'scope': '/',
+        'display': 'standalone',
+        'background_color': '#0b0f16',
+        'theme_color': '#0b0f16',
+        'icons': [
+            {'src': '/static/og/icon-512.png', 'sizes': '512x512', 'type': 'image/png'},
+            {'src': '/static/og/apple-touch-icon.png', 'sizes': '180x180', 'type': 'image/png'},
+        ],
+    }
+    resp = jsonify(manifest_data)
+    resp.headers['Content-Type'] = 'application/manifest+json'
+    return resp
 
 
 @app.route('/sitemap.xml')
@@ -2289,4 +2400,9 @@ def api_ailearn_sync():
 
 
 if __name__ == '__main__':
-    app.run(debug=os.environ.get('FLASK_DEBUG', 'false').lower() == 'true', host='127.0.0.1', port=5000)
+    # Local dev only — in production gunicorn serves api.index:app (Dockerfile).
+    app.run(
+        debug=os.environ.get('FLASK_DEBUG', 'false').lower() == 'true',
+        host=os.environ.get('HOST', '127.0.0.1'),
+        port=int(os.environ.get('PORT', '5000')),
+    )

@@ -4,6 +4,35 @@
 
 {% block description %}{{ post.excerpt or post.title }}{% endblock %}
 
+{# AI Eco dev logs are also reachable at /blog/<slug>; point the canonical at
+   their own archive so the same post is not indexed twice. #}
+{% block canonical %}{% if is_aie or post.category == 'AI Eco' %}https://kprsnt.in/aie/blog/{{ post.slug }}{% else %}https://kprsnt.in/blog/{{ post.slug }}{% endif %}{% endblock %}
+
+{% block og_type %}article{% endblock %}
+{% block og_extra %}
+    <meta property="article:published_time" content="{{ post.date }}">
+    <meta property="article:author" content="{{ post.author or 'Prashanth Kumar Kadasi' }}">
+    {% if post.tags %}<meta property="article:tag" content="{{ post.tags|join(', ') }}">{% endif %}
+{% endblock %}
+
+{% block structured_data %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": {{ post.title|tojson }},
+      "description": {{ (post.excerpt or post.title)|tojson }},
+      "datePublished": {{ post.date|tojson }},
+      "url": "https://kprsnt.in{{ request.path }}",
+      "mainEntityOfPage": {"@type": "WebPage", "@id": "https://kprsnt.in{{ request.path }}"},
+      "image": "https://kprsnt.in/static/og/og-default.png",
+      "author": {"@type": "Person", "name": "Prashanth Kumar Kadasi", "url": "https://kprsnt.in"},
+      "publisher": {"@type": "Person", "name": "Prashanth Kumar Kadasi"},
+      "keywords": {{ (post.tags or [])|join(', ')|tojson }}
+    }
+    </script>
+{% endblock %}
+
 {% block content %}
 <div class="container" style="max-width: 800px;">
     <div class="row">

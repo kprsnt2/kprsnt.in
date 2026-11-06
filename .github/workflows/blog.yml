@@ -32,6 +32,6 @@ jobs:
           NVIDIA_API_KEY: ${{ secrets.NVIDIA_API_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
 
-      - name: Commit generated posts (Disabled to save Vercel storage)
+      - name: Commit generated posts (Disabled to keep deploys small)
         run: |
-          echo "Automated blog commit disabled to prevent excess Vercel deployment storage."
+          echo "Automated blog commit disabled to prevent excess deployment/image storage."

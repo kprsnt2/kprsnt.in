@@ -131,10 +131,12 @@ def _semantic(query, token, top_k=12):
     try:
         import sys
         sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+        # Prefer the packaged name so the container does not load a second copy
+        # of ai_config (and a second OpenAI client) under a different key.
         try:
-            from ai_config import get_embedding  # type: ignore
-        except ImportError:
             from api.ai_config import get_embedding  # type: ignore
+        except ImportError:
+            from ai_config import get_embedding  # type: ignore
         qv = get_embedding(query)
         if not qv:
             return None

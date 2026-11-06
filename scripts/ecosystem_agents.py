@@ -193,7 +193,7 @@ def update_swarm_memory(new_insights: list = None, new_goals: list = None, conso
 ---
 
 ## 🏛️ Core Portfolio Architecture
-- **Host Application**: `kprsnt.in` (Flask/Python runtime on Vercel Serverless with Next.js/React frontend components).
+- **Host Application**: `kprsnt.in` (Flask/Python runtime in a Cloudflare Container behind a Worker, Jinja2/Bootstrap frontend).
 - **Autonomous Swarm Pipeline**: `scripts/ecosystem_agents.py` executed daily via GitHub Actions (`.github/workflows/ecosystem_agents.yml`).
 - **Protocol Interface**: FastMCP JSON-RPC 2.0 (`api/ai_eco_mcp.py`) supporting Stdio, HTTP (`/api/mcp`), and SSE transports.
 
@@ -1018,7 +1018,7 @@ def run_critic_agent(stats):
         gaps = [
             {
                 "id": "GAP-01",
-                "subsystem": "Vercel Serverless Function Ceilings",
+                "subsystem": "Container Cold Starts & LLM Latency Budgets",
                 "severity": "MEDIUM",
                 "status": "MITIGATED" if llm_timeout_val <= 8.0 else "ACTIVE",
                 "description": "Serverless route handlers must ensure heavy LLM calls or multi-agent summarization terminate strictly under 10s to avoid 504 Gateway Timeouts.",
@@ -1064,7 +1064,7 @@ def run_critic_agent(stats):
 ## Role & Operating Philosophy
 The **Antipersona Agent** acts as the swarm's adversarial red-team stress-tester. While builder agents optimize for features and velocity, the Antipersona relentlessly probes for catastrophic failure modes, cold-start timeouts, quota starvation, and hidden dependencies.
 
-## 1. Serverless Cold Starts & Timeout Bounds (Vercel <10s)
+## 1. Container Cold Starts & LLM Latency Budgets (Cloudflare Container)
 - **Live Verification**: {serverless_check}
 - **Invariant Required**: All external API calls in serverless routes must enforce hard 8-second timeouts with instant fallback to cached constants or static context.
 
@@ -1105,7 +1105,7 @@ Maintain 100% compliance with MCP 2024-11-05 specifications while establishing r
 
 ### Recommendations
 1. Validate client JSON-RPC requests against Pydantic schema models where applicable.
-2. Provide SSE streaming chunking for large telemetry payloads to prevent Vercel serverless function timeouts.
+2. Provide SSE streaming chunking for large telemetry payloads to keep long-lived container responses bounded.
 3. Keep prompt contracts grounded and modular across all 10 specialized swarm agents.
 """
             rfc_file.write_text(rfc_content.strip() + "\n", encoding="utf-8")
@@ -1419,7 +1419,7 @@ Generate a markdown document adhering strictly to this structure:
 ---
 
 ## 🛡️ Agent 8: Adversarial Bar-Raiser (Antipersona & Failure Modes)
-- **Stress-Test Scenarios**: [Latency bounds, Vercel serverless ceilings, rate-limit risks]
+- **Stress-Test Scenarios**: [Container cold-start latency, LLM timeouts, rate-limit risks]
 - **Antipersona Critique**: [Adversarial challenge to recent implementation assumptions, cold starts, and resilience]
 
 ---
@@ -1511,7 +1511,7 @@ Tone: Authentic, technically rigorous, engineer-to-engineer, candid domain criti
 ---
 
 ## 🛡️ Agent 8: Adversarial Bar-Raiser (Antipersona & Failure Modes)
-- **Stress-Test Scenarios**: Verified GitHub API rate-limit safeguards (8-SHA cap with breakout) and Vercel serverless function boundaries (<10s target).
+- **Stress-Test Scenarios**: Verified GitHub API rate-limit safeguards (8-SHA cap with breakout) and Cloudflare Container request timeouts (<300s gunicorn bound).
 - **Antipersona Critique**: Evaluated cold-start latency ceilings and stdio stream isolation; logged active resilience gaps in `ecosystem_swarm/gap_analysis.json` and `ecosystem_swarm/antipersona_notes.md`.
 
 ---

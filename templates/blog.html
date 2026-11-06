@@ -6,9 +6,9 @@
 <div class="container">
     <div class="row">
         <div class="col-12">
-            <h2><i class="fas fa-blog"
+            <h1 class="page-title"><i class="fas fa-blog"
                     style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
-                Blog</h2>
+                Blog</h1>
             <p class="mb-3">Thoughts on AI, data engineering, and building things that matter.</p>
         </div>
     </div>
@@ -39,7 +39,9 @@
         {% for post in posts %}
         <div class="col-12 col-md-6 col-lg-4 mb-4 blog-card-wrapper"
             data-category="{{ post.category | default('Technology') }}">
-            <a href="/blog/{{ post.slug }}" style="text-decoration: none;">
+            {# AI Eco dev logs live in their own archive; link them there so the
+               same post does not get indexed at two URLs. #}
+            <a href="{% if post.category == 'AI Eco' %}/aie/blog/{{ post.slug }}{% else %}/blog/{{ post.slug }}{% endif %}" style="text-decoration: none;">
                 <div class="card blog-card h-100">
                     <div class="card-body">
                         <div

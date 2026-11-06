@@ -33,7 +33,9 @@ OPENAI_MODEL_PREMIUM = NVIDIA_MODEL  # ai-insight uses this — points to NVIDIA
 OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"
 
 
-# LLM request timeout (default 8.0s for Vercel serverless safety; override via AI_LLM_TIMEOUT in CI/CLI)
+# LLM request timeout (default 8.0s; override via AI_LLM_TIMEOUT in CI/CLI).
+# The container has no 10s function ceiling, so this can be raised if a slow
+# provider is timing out.
 LLM_TIMEOUT = float(os.environ.get("AI_LLM_TIMEOUT", "8.0"))
 
 
