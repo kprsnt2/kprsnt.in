@@ -232,6 +232,75 @@ p {
     margin-bottom: 0.5rem;
 }
 
+/* ========== Project cards: proof-first layout ========== */
+/* One benefit line, then hard numbers, then the full write-up behind a toggle.
+   The long description is still there for people who want it — it just no
+   longer has to be read before the point. */
+.project-hook {
+    color: var(--text-primary) !important;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    font-weight: 500;
+    margin-bottom: 0.85rem;
+}
+
+.project-proof {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 1rem;
+}
+
+.project-proof li {
+    position: relative;
+    padding-left: 1.1rem;
+    margin-bottom: 0.45rem;
+    font-size: 0.83rem;
+    line-height: 1.5;
+    color: var(--text-secondary) !important;
+}
+
+.project-proof li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.5rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-gradient);
+}
+
+.project-tags {
+    margin-bottom: 0.75rem;
+}
+
+.project-detail {
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+}
+
+.project-detail summary {
+    cursor: pointer;
+    color: var(--accent-blue);
+    font-weight: 600;
+    font-size: 0.82rem;
+    padding: 0.2rem 0;
+}
+
+.project-detail summary:hover {
+    text-decoration: underline;
+}
+
+.project-detail p {
+    margin-top: 0.6rem;
+    font-size: 0.83rem !important;
+    line-height: 1.6;
+}
+
+.project-detail-tags {
+    margin-top: 0.5rem;
+}
+
 /* ========== Buttons ========== */
 .btn {
     border-radius: 10px !important;
@@ -1313,6 +1382,105 @@ p {
 }
 
 /* Micro Telemetry Pills */
+/* ========== Home hero label rows ========== */
+/* Live values and all-time totals are labelled differently on purpose: the
+   aggregate numbers belong to the other project repos, so they must never look
+   like live counters. */
+.pill-row-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+}
+
+/* ========== Site nav & footer ========== */
+/* These were inline style="" attributes on every page before; moving them here
+   is what lets the nav markup stay readable. */
+.site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1050;
+    background: rgba(8, 11, 17, 0.88) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.site-nav-inner {
+    max-width: 1240px;
+}
+
+.site-nav-brand {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.site-nav .nav-link {
+    font-size: 0.92rem;
+    font-weight: 500;
+}
+
+.site-nav-menu {
+    background: #0d121d;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.site-nav-menu .dropdown-item i {
+    width: 22px;
+}
+
+.site-nav-cta {
+    border-color: rgba(99, 102, 241, 0.5);
+    font-size: 0.82rem;
+}
+
+.site-footer {
+    border-top: 1px solid var(--border-glass);
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.site-footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    font-size: 0.82rem;
+}
+
+.site-footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.site-footer-links a:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
+}
+
+.site-footer-copy {
+    color: var(--text-secondary);
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+.grad-text {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+}
+
 .telemetry-pill {
     display: inline-flex;
     align-items: center;

@@ -24,22 +24,46 @@
                     {% endif %}
                 </div>
                 <div class="card-body d-flex flex-column">
+                    {# Proof first: one line on what it does for a person, then the
+                       hard numbers, then the essay behind a toggle. #}
+                    {% if project.hook %}
+                    <p class="project-hook">{{ project.hook }}</p>
+                    {% if project.proof %}
+                    <ul class="project-proof">
+                        {% for point in project.proof %}
+                        <li>{{ point }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    {% else %}
                     <p class="flex-grow-1">{{ project.description }}</p>
+                    {% endif %}
 
-                    <!-- Tags -->
-                    <div style="margin-bottom: 1rem;">
-                        {% for tag in project.tags %}
+                    <!-- Tags (top three only; the rest live in the detail block) -->
+                    <div class="project-tags">
+                        {% for tag in project.tags[:3] %}
                         <span class="project-tag">{{ tag }}</span>
                         {% endfor %}
                     </div>
 
+                    {% if project.hook %}
+                    <details class="project-detail">
+                        <summary>Full technical detail</summary>
+                        <p class="mb-2">{{ project.description }}</p>
+                        <p class="mb-0 project-detail-tags">
+                            {% for tag in project.tags %}<span class="project-tag">{{ tag }}</span>{% endfor %}
+                        </p>
+                    </details>
+                    {% endif %}
+
                     <!-- Buttons -->
                     <div class="mt-auto">
                         <a href="{{ project.url }}" target="_blank"
-                            class="btn btn-{{ project.color }} btn-sm me-2">Visit Site →</a>
+                            class="btn btn-{{ project.color }} btn-sm me-2">Live →</a>
                         {% if project.github %}
+                        {% set gh = project.github.rstrip('/') %}
                         <a href="{{ project.github }}" target="_blank"
-                            class="btn btn-outline-secondary btn-sm">GitHub</a>
+                            class="btn btn-outline-secondary btn-sm">{% if gh.count('/') > 3 %}Repo{% else %}GitHub profile{% endif %}</a>
                         {% endif %}
                     </div>
                 </div>

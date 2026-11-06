@@ -58,6 +58,11 @@ except ImportError:
     )
 
 try:
+    from api.data.site_stats import all_stats
+except ImportError:
+    from data.site_stats import all_stats
+
+try:
     from api.services.insights import generate_jobs_insight
 except ImportError:
     from services.insights import generate_jobs_insight
@@ -180,6 +185,7 @@ def about():
         featured_blogs = load_all_blog_posts()[:3]
     return render_template('about.html',
                            swarm=swarm,
+                           stats=all_stats(),
                            latest_aie_blogs=latest_aie_blogs,
                            featured_blogs=featured_blogs)
 

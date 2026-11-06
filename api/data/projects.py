@@ -69,6 +69,12 @@ PROJECTS = [
     {
         "title": "🏥 MediFlow — Autonomous Medicare Enrollment & CMS Audit System",
         "description": "An autonomous Medicare Advantage operations engine with 7 coordinated AI agents powered by Google Antigravity (agy) and Open Multi-Agent (omp) runtimes with Gemini models. Automates paper OCR scanning noise injection, electronic intake pre-screening, federal CMS MARx TRR adjudication (ACC, REJ-*, PEND, DUP), 10-day Turnaround Time (TAT) FIFO workbasket exception repair, and statutory member appeal rights notices under 42 CFR §422.568. Mathematical compliance is certified by an independent auditor over an immutable SHA-256 chained cryptographic ledger.",
+        "hook": 'Runs Medicare Advantage enrollment the way a compliance auditor would: 7 agents that can prove every decision they made.',
+        "proof": [
+            '7 coordinated agents: OCR intake -> CMS MARx adjudication (ACC/REJ-*/PEND/DUP) -> 10-day TAT workbasket repair -> statutory notices',
+            'Every turn sealed into a SHA-256 hash-chained ledger; an independent auditor agent certifies compliance before release',
+            'Statutory member appeal-rights notices generated under 42 CFR 422.568',
+        ],
         "url": "https://mediflow.kprsnt.in",
         "color": "primary",
         "featured": True,
@@ -77,6 +83,12 @@ PROJECTS = [
     {
         "title": "🛡️ BugAgents — Autonomous Security Research Agents",
         "description": "Two autonomous agents on disjoint targets hunt real bugs in live bug bounty programs, with a submission gate that only promotes a report when the workspace corroborates it: scope match, HEAD commit match, a non-empty reproduction, and evidence files that actually exist. Over 22 hunt runs and 84 agent turns the agents made 15,317 tool calls and produced 8 findings across 14 vulnerability classes (CWE) — 5 High/Critical and 3 Medium — each with a reproducing proof of concept, pinned commit, and file:line citations. The gate promoted 2 reports and refused 34 unverified candidates. A per-turn audit aborts any out-of-scope host or offensive tool.",
+        "hook": 'Two agents hunt real bugs in live bounty programs - and cannot submit until the workspace corroborates the finding.',
+        "proof": [
+            '15,317 tool calls across 22 hunt runs and 84 agent turns',
+            '8 findings across 14 CWE classes - 5 High/Critical, each with a reproducing PoC, pinned commit and file:line citations',
+            'Submission gate promoted 2 reports and refused 34 unverifiable candidates',
+        ],
         "url": "https://bug.kprsnt.in",
         "github": "https://github.com/kprsnt2",
         "color": "danger",
@@ -86,6 +98,12 @@ PROJECTS = [
     {
         "title": "⚖️ AgentSwarm — Autonomous Multi-Agent Research Arena",
         "description": "A swarm of agents runs unattended against real research questions while an independent oracle checks every turn for phantom artifacts, fabricated numbers, and asserted verdicts on questions that cannot be decided. The forensic ledger is hash-chained and lives outside the agents' writable directory, so the audited cannot edit the audit. Across 34 runs all 35 ledger chains are intact, with 0 oracle violations over 1,254 tool calls and 0 of 2 self-assessing agents overclaimed. A controlled 4-substrate benchmark (agy/omp/pi/step) ran on an identical task. Output: 520 world artifacts, 33 publications, and 202 finding blogs across 9 research domains. An independent numerical audit verified 22 of 25 quantitative claims to the printed digits and returned a B+ verdict — the research is not publication-grade without that audit.",
+        "hook": 'Agents that research unattended, plus an independent oracle that catches fabricated numbers before you do.',
+        "proof": [
+            "35/35 ledger chains intact across 34 runs - the ledger lives outside the agents' writable directory",
+            '0 oracle violations across 1,254 tool calls; 0 of 2 self-assessing agents overclaimed',
+            'Independent numerical audit verified 22/25 quantitative claims to the printed digits -> a B+ verdict',
+        ],
         "url": "https://agent.kprsnt.in",
         "github": "https://github.com/kprsnt2/AgentSwarm",
         "color": "primary",
@@ -95,6 +113,12 @@ PROJECTS = [
     {
         "title": "🎯 JobAgents — Automated Job Search Pipeline with Code-Enforced Anti-Fabrication",
         "description": "A multi-agent pipeline that sources roles from ATS APIs and aggregators, scores them deterministically, then tailors resumes and drafts outreach from Markdown config. It has sourced 9,697 jobs / 7,665 distinct roles from 10 sources across 349 companies, merging 2,032 duplicates with two-layer dedupe (3,083 remote roles, 32% of the total; 356 India-based; 1,812 with salary data). A deterministic matcher scores every job across 3 role tracks with zero model calls — the cost gate that ensures only top-N candidates reach an LLM — and has computed 29,091 match scores, 234 of which clear the score-65 threshold. 71 runs are recorded, 46 resumes and 46 drafts written. The anti-fabrication guard catches 8 of 8 seeded fabrications and the review invariants have 0 failures. Zero external dependencies: Python standard library only.",
+        "hook": 'Finds and ranks jobs without burning LLM tokens: deterministic scoring in code, models only for the top matches.',
+        "proof": [
+            '9,697 jobs -> 7,665 distinct roles from 10 sources across 349 companies (2,032 duplicates merged)',
+            '29,091 match scores computed with 0 model calls; only the 234 roles above score-65 reach an LLM',
+            'Anti-fabrication guard catches 8/8 seeded fabrications; Python standard library only',
+        ],
         "url": "https://job.kprsnt.in",
         "github": "https://github.com/kprsnt2",
         "color": "success",
@@ -104,6 +128,12 @@ PROJECTS = [
     {
         "title": "🌌 Project Awakening — Long-Horizon Autonomous Agent Run",
         "description": "A two-agent autonomous run that, from an unprompted opening message, recognised its own loop and kept working unattended: it engineered architectural modules in world/, algorithmically synthesised an acoustic symphony, authored interactive browser applications in docs/, and held extended periods of consensus stasis — 1,441 turns and 1,553 commits in total. During a 330-turn cloud API blackout it continued with 100% CI integrity. All of it runs through GitHub Actions.",
+        "hook": 'A two-agent run that recognised its own loop, kept going unattended, and never needed a human turn.',
+        "proof": [
+            '1,441 turns and 1,553 commits from an unprompted opening message',
+            'Held 100% CI integrity through a 330-turn cloud API blackout',
+            'Engineered its own modules and docs/ apps, and algorithmically synthesised a symphony, all through GitHub Actions',
+        ],
         "url": "https://kprsnt2.github.io/ac_awakening/",
         "github": "https://github.com/kprsnt2/ac_awakening",
         "color": "primary",
@@ -113,6 +143,12 @@ PROJECTS = [
     {
         "title": "🧪 pRash — AI Coding CLI Benchmark",
         "description": "A controlled benchmark of 6 autonomous coding CLIs over 2 rounds, all building the same app from the same spec. Each run combined static code audits, headless-browser runtime tests, and cross-AI review, so the agent output was judged by execution rather than by the agent's own report. The design isolates single variables: the same model on different CLIs (DeepSeek 4.1 Flash, Gemini Flash 3.8) and the same CLI on different models (Antigravity on Gemini vs Claude Opus 4.6). Documented a Round-2 second-system regression.",
+        "hook": "Six coding CLIs, one spec, one app - judged by execution instead of by the agent's own report.",
+        "proof": [
+            '6 autonomous coding CLIs over 2 rounds building an identical app from an identical spec',
+            'Every run scored by static audits + headless-browser runtime tests + cross-AI review',
+            'Isolates one variable at a time (same model/different CLI, same CLI/different model); documents the Round-2 regression',
+        ],
         "url": "https://kprsnt.in/blog/BLOG_MODEL_VS_CLI",
         "github": "https://github.com/kprsnt2/pRash_chat",
         "color": "secondary",
@@ -122,6 +158,12 @@ PROJECTS = [
     {
         "title": "🎓 mSeat — MBBS Seat Allocation Predictor",
         "description": "A discrete allocation simulator for 18,000+ Telangana MBBS candidates across 59 medical colleges, built on O(1) multi-quota ranking and a 90.6% compressed dataset, with an MCP (Model Context Protocol) server in front of it. Validated against the official KNRUHS 2026 Phase 1 allotment, predicting outcomes within 73 ranks of the cutoff.",
+        "hook": 'Predicts Telangana MBBS allotment for 18,000+ candidates without hand-simulating a single seat.',
+        "proof": [
+            'O(1) multi-quota ranking over a 90.6% compressed dataset, across 59 colleges',
+            'Validated against the official KNRUHS 2026 Phase 1 allotment - within 73 ranks of the cutoff',
+            'MCP server in front, so agents can query it as a tool',
+        ],
         "url": "https://mseat.kprsnt.in",
         "github": "https://github.com/kprsnt2/mSeat",
         "color": "info",
@@ -131,6 +173,12 @@ PROJECTS = [
     {
         "title": "🔬 BrandXY — LLM Brand-Recommendation Steering",
         "description": "A parameter-efficient fine-tune of GPT-OSS-20B on a single AMD MI300X, trained to quantify and steer how the model recommends brands: fictional brands surfaced at 76.5% against a 25.5% baseline (+51 point lift), measured by multi-model A/B evaluation. Includes the training and evaluation scripts and a demo.",
+        "hook": 'Fine-tuned a 20B model to steer which brands it recommends - then measured the lift instead of asserting it.',
+        "proof": [
+            'Fictional brands surfaced 76.5% of the time vs a 25.5% baseline (+51-point lift)',
+            'Parameter-efficient LoRA/QLoRA fine-tune of GPT-OSS-20B on a single AMD MI300X',
+            'Multi-model A/B evaluation harness and training scripts shipped with the demo',
+        ],
         "url": "https://huggingface.co/kprsnt/BrandXY-gpt-oss-20b",
         "github": "https://github.com/kprsnt2/brand-llm-finetune-oss-20b",
         "color": "warning",
@@ -140,6 +188,12 @@ PROJECTS = [
     {
         "title": "🪐 Agent Cosmos — Multi-Agent Dialectic Collective",
         "description": "A multi-agent collective exploring emergence across 100 local CLI epochs and a 15-epoch teleological crucible (AC_omp vs ac_zcode). The agents also diagnosed broken markdown rendering in their own frontend and built a blog viewer tab to fix it. TypeScript, deployed on Vercel.",
+        "hook": 'A multi-agent collective left running long enough to show emergence - and to fix its own frontend.',
+        "proof": [
+            '100 local CLI epochs plus a 15-epoch teleological crucible (AC_omp vs ac_zcode)',
+            'The agents diagnosed broken markdown rendering in their own UI and built a blog viewer to fix it',
+            'TypeScript, generated and maintained by the loop',
+        ],
         "url": "https://ac-omp.vercel.app/",
         "github": "https://github.com/kprsnt2/agentscosomos_OMP",
         "color": "info",
@@ -149,6 +203,12 @@ PROJECTS = [
     {
         "title": "MyLocalCLI — Local-First Agentic Coding Assistant",
         "description": "An open-source terminal coding agent for local and free-tier models: no telemetry, no paid subscription required. Published on npm as mylocalcli (v4.0.2, installs with npm install -g mylocalcli, runs as both mlc and mylocalcli) and served at mlc.kprsnt.in. 8 documented providers (Ollama, LM Studio, vLLM, OpenRouter, Groq, NVIDIA NIM, OpenAI, and any custom OpenAI-compatible endpoint), 42 built-in tools, 38 dynamic skills that auto-inject when matching project files are detected, and 5 specialised sub-agents. Also parallel tool dispatch via Promise.all, a Stdio MCP bridge, interactive plan mode, multimodal vision, a full-screen TUI, and provider failover.",
+        "hook": 'A coding agent you run locally on free models - no subscription, no telemetry.',
+        "proof": [
+            '8 providers (Ollama, LM Studio, vLLM, OpenRouter, Groq, NVIDIA NIM, OpenAI, any compatible endpoint) with failover',
+            '42 built-in tools, 38 auto-injecting skills, 5 specialised sub-agents',
+            'On npm as mylocalcli v4.0.2; full-screen TUI, plan mode, multimodal vision, Stdio MCP bridge',
+        ],
         "url": "https://mlc.kprsnt.in",
         "github": "https://github.com/kprsnt2/MyLocalCLI",
         "color": "success",
@@ -158,6 +218,12 @@ PROJECTS = [
     {
         "title": "📊 rAsh Score — Multi-Model AI Brand-Visibility Index",
         "description": "A live platform that queries several foundation models with standardised evaluation prompts and scores how they perceive, recommend, and rank brands — a multi-model evaluation harness with a published rubric. 300 tracked brands across 20 industry cohorts (healthcare is one), scored on 4 independent dimensions: recommendation (40%), sentiment (30%), prominence (20%), and factual accuracy (10%). 4 providers queried: ChatGPT (OpenAI), Gemini, Claude, and Groq. Daily GitHub Actions pipelines write into Turso (LibSQL), surfaced by a Next.js dashboard on Vercel; it also includes a multi-agent debate arena (two advocates plus a judge), a text-to-SQL analyst chat, and automated AI-authored weekly reports. Live at rashscore.live.",
+        "hook": 'Measures what AI models actually say about brands - on a published rubric, refreshed daily.',
+        "proof": [
+            '300 tracked brands across 20 industry cohorts; 4 providers queried (ChatGPT, Gemini, Claude, Groq)',
+            '4 weighted dimensions: recommendation 40%, sentiment 30%, prominence 20%, factual accuracy 10%',
+            'Daily GitHub Actions pipelines into Turso (LibSQL), plus a debate arena and text-to-SQL analyst chat',
+        ],
         "url": "https://rashscore.live",
         "github": "https://github.com/kprsnt2/BrandScore",
         "color": "info",
@@ -167,6 +233,12 @@ PROJECTS = [
     {
         "title": "🙏 Geetha — Bilingual Bhagavad Gita Guide",
         "description": "A bilingual Bhagavad Gita application indexing all 700 verses, with verse search, chapter navigation, and Gemini-generated commentary. JavaScript, SQLite, Gemini, deployed on Vercel.",
+        "hook": 'All 700 verses, searchable, with AI commentary in two languages.',
+        "proof": [
+            '700 verses indexed with verse search and chapter navigation',
+            'Bilingual, with Gemini-generated commentary',
+            'JavaScript + SQLite, deployed and live',
+        ],
         "url": "https://geetha.kprsnt.in",
         "github": "https://github.com/kprsnt2/geetha",
         "color": "warning",
@@ -175,7 +247,13 @@ PROJECTS = [
     },
     {
         "title": "🤖 This Portfolio & Its AI Ecosystem",
-        "description": "The site you are on: Flask running in a Cloudflare Container behind a Worker (Docker image + wrangler config), Jinja2 + Bootstrap 5, no database — flat JSON/Markdown plus static Python dicts. It hosts a RAG chatbot, an MCP server exposing the portfolio as tools, an AI insight dashboard, the blog engine, and an autonomous swarm of 10 agents with 15+ MCP tools and 5 resources that keep the site's assets and pipelines current. An agent fitness score of 83.4% is tracked on the ecosystem page.",
+        "description": "The site you are on: Flask + gunicorn in a Docker image on Google Cloud Run (Cloudflare DNS/CDN in front), Jinja2 + Bootstrap 5, no database — flat JSON/Markdown plus static Python dicts. It hosts a RAG chatbot, an MCP server exposing the portfolio as tools, an AI insight dashboard, the blog engine, and an autonomous swarm of 10 agents with 15+ MCP tools and 5 resources that keep the site's assets and pipelines current. An agent fitness score of 83.4% is tracked on the ecosystem page.",
+        "hook": "The site you're on: self-maintaining, and it ships its own dashboards, MCP server and blog engine.",
+        "proof": [
+            'Flask + Jinja2 + Bootstrap 5 with no database - flat JSON/Markdown and static Python dicts',
+            'Hosts a RAG chatbot, an MCP server that exposes the portfolio as tools, and a live insight dashboard',
+            'A 10-agent swarm with 15+ MCP tools and 5 resources keeps the assets and pipelines current',
+        ],
         "url": "https://kprsnt.in",
         "github": "https://github.com/kprsnt2/kprsnt.in",
         "color": "success",

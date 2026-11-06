@@ -45,7 +45,6 @@
       "url": "https://kprsnt.in",
       "jobTitle": "Data Analyst — moving into AI Systems Engineering",
       "description": "Data Analyst with 3.5+ years in data/analytics & AI and 9 years of federal CMS compliance auditing at Optum. Builds autonomous multi-agent systems as self-directed projects.",
-      "email": "interview@kprsnt.in",
       "address": {"@type": "PostalAddress", "addressLocality": "Hyderabad", "addressRegion": "Telangana", "addressCountry": "IN"},
       "sameAs": [
         "https://github.com/kprsnt2",
@@ -74,7 +73,7 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@400;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="{{ url_for('static', filename='css/custom.css') }}?v=4" rel="stylesheet">
@@ -84,71 +83,52 @@
 
 <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <!-- Modern 2026 AI Systems Lab Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="position: sticky; top: 0; z-index: 1050; background: rgba(8, 11, 17, 0.88) !important; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.08);">
-        <div class="container-fluid px-3 px-lg-4" style="max-width: 1400px;">
-            <div class="d-flex align-items-center">
-                <a class="navbar-brand fw-bold d-flex align-items-center" href="/" style="font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.25rem; letter-spacing: -0.5px;">
-                    <span style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #38bdf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">kprsnt.in</span>
-                </a>
-                <span class="d-none d-md-inline-flex align-items-center ms-3 px-2 py-1 rounded-pill" style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.25); font-size: 0.68rem; font-family: 'JetBrains Mono', monospace; color: #34d399; letter-spacing: 0.5px;">
-                    <span style="width: 6px; height: 6px; background: #10b981; border-radius: 50%; margin-right: 6px; box-shadow: 0 0 8px #10b981;"></span>SYSTEMS ONLINE
-                </span>
-            </div>
+    <!-- Primary nav: six destinations instead of two dropdowns of satellite
+         telemetry links. The long tail (jobs pipeline, plotter, RSS, vault)
+         lives in the footer, and the AI Eco dropdown holds the dashboards. -->
+    <nav class="site-nav navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container-fluid px-3 px-lg-4 site-nav-inner">
+            <a class="navbar-brand fw-bold site-nav-brand" href="/">kprsnt.in</a>
 
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-lg-center">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">About</a>
+                        <a class="nav-link {% if request.path == '/projects' %}active{% endif %}" href="/projects">Projects</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path in ['/dashboard', '/jobs/dashboard'] %}active{% endif %}" href="/dashboard">
-                            <i class="fas fa-satellite-dish me-1 text-info" style="font-size: 0.85rem;"></i> Fleet Telemetry
-                        </a>
-                    </li>
-                    <!-- Portfolio Dropdown -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if request.path in ['/skills', '/projects', '/resume'] %}active{% endif %}"
-                            href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Portfolio
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark" style="background: #0d121d; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                            <li><a class="dropdown-item py-2 {% if request.path == '/projects' %}active{% endif %}" href="/projects"><i class="fas fa-rocket text-primary" style="width:22px;"></i> Projects</a></li>
-                            <li><a class="dropdown-item py-2 {% if request.path == '/skills' %}active{% endif %}" href="/skills"><i class="fas fa-tools text-info" style="width:22px;"></i> Skills Matrix</a></li>
-                            <li><a class="dropdown-item py-2 {% if request.path == '/resume' or '/resume/' in request.path %}active{% endif %}" href="/resume"><i class="fas fa-file-alt text-success" style="width:22px;"></i> Resume &amp; Roles</a></li>
-                        </ul>
+                        <a class="nav-link {% if request.path == '/skills' %}active{% endif %}" href="/skills">Skills</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/blog' or request.path.startswith('/blog/') %}active{% endif %}" href="/blog">
-                            Blog &amp; Logs
-                        </a>
+                        <a class="nav-link {% if request.path == '/resume' or '/resume/' in request.path %}active{% endif %}" href="/resume">Resume</a>
                     </li>
-                    <!-- AI Eco Dropdown -->
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/blog' or request.path.startswith('/blog/') %}active{% endif %}" href="/blog">Blog</a>
+                    </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if request.path in ['/ecosystem', '/ecosystem/logs', '/swarm/logs', '/aie/blogs', '/aie', '/mcp'] or request.path.startswith('/aie/') or request.path.startswith('/ecosystem/') %}active{% endif %}"
-                            href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-microchip me-1 text-warning" style="font-size: 0.85rem;"></i>AI Eco
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark" style="background: #0d121d; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-                            <li><a class="dropdown-item py-2 {% if request.path == '/ecosystem' %}active{% endif %}" href="/ecosystem"><i class="fas fa-chart-line text-info" style="width:22px;"></i> Telemetry Dashboard</a></li>
-                            <li><a class="dropdown-item py-2 {% if request.path == '/ecosystem/logs' or request.path == '/swarm/logs' %}active{% endif %}" href="/ecosystem/logs"><i class="fas fa-terminal text-success" style="width:22px;"></i> 10-Agent Swarm Logs</a></li>
-                            <li><a class="dropdown-item py-2 {% if request.path == '/mcp' %}active{% endif %}" href="/mcp"><i class="fas fa-plug text-warning" style="width:22px;"></i> FastMCP Server</a></li>
-                            <li><a class="dropdown-item py-2 {% if request.path == '/aie/blogs' or request.path.startswith('/aie/blog/') %}active{% endif %}" href="/aie/blogs"><i class="fas fa-satellite-dish text-primary" style="width:22px;"></i> AIE Dev Logs</a></li>
+                        <a class="nav-link dropdown-toggle {% if request.path in ['/ecosystem', '/ecosystem/logs', '/swarm/logs', '/aie', '/aie/blogs', '/mcp', '/dashboard', '/jobs/dashboard'] or request.path.startswith('/ecosystem/') or request.path.startswith('/aie/') %}active{% endif %}"
+                            href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">AI Eco</a>
+                        <ul class="dropdown-menu dropdown-menu-dark site-nav-menu">
+                            <li><a class="dropdown-item" href="/ecosystem"><i class="fas fa-chart-line text-info"></i> Telemetry dashboard</a></li>
+                            <li><a class="dropdown-item" href="/ecosystem/logs"><i class="fas fa-terminal text-success"></i> Swarm logs</a></li>
+                            <li><a class="dropdown-item" href="/aie/blogs"><i class="fas fa-satellite-dish text-primary"></i> AI Eco dev logs</a></li>
+                            <li><a class="dropdown-item" href="/aie"><i class="fas fa-network-wired text-light"></i> AI Eco hub</a></li>
                             <li><hr class="dropdown-divider border-secondary border-opacity-25"></li>
-                            <li><a class="dropdown-item py-2 {% if request.path == '/aie' %}active{% endif %}" href="/aie"><i class="fas fa-network-wired text-light" style="width:22px;"></i> AI Eco Hub</a></li>
+                            <li><a class="dropdown-item" href="/dashboard"><i class="fas fa-gauge-high text-danger"></i> Fleet command center</a></li>
+                            <li><a class="dropdown-item" href="/mcp"><i class="fas fa-plug text-warning"></i> MCP server</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/api/docs' or request.path == '/docs' %}active{% endif %}" href="/docs">Docs</a>
+                        <a class="nav-link {% if request.path in ['/docs', '/api/docs'] %}active{% endif %}" href="/docs">Docs</a>
                     </li>
-                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
-                        <a href="/resume" class="btn btn-sm btn-outline-primary px-3 rounded-pill fw-semibold" style="border-color: rgba(99,102,241,0.5); font-size: 0.82rem;">
-                            <i class="fas fa-file-alt me-1"></i> Resume
-                        </a>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a href="mailto:interview@kprsnt.in"
+                            class="btn btn-sm btn-outline-primary px-3 rounded-pill fw-semibold site-nav-cta">Contact</a>
                     </li>
                 </ul>
             </div>
@@ -160,14 +140,23 @@
         {% block content %}{% endblock %}
     </main>
 
-    <!-- Footer -->
-    <footer class="text-center py-4" style="border-top: 1px solid var(--border-glass); margin-top: 2rem;">
-        <p style="color: var(--text-secondary); margin: 0;">
-            ©
-            {{ current_year }} <span
-                style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600;">Prashanth
-                Kumar Kadasi</span> • Built with <span
-                style="background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 600;">AI</span>
+    <!-- Footer: the long tail of pages lives here so the nav can stay short. -->
+    <footer class="site-footer py-4">
+        <nav class="site-footer-links" aria-label="More pages">
+            <a href="/">About</a>
+            <a href="/jobs">Career pipeline</a>
+            <a href="/jobs/dashboard">Jobs dashboard</a>
+            <a href="/plotter">DataForge plotter</a>
+            <a href="/feed.xml">RSS</a>
+            <a href="/docs">API docs</a>
+            <a href="/sitemap.xml">Sitemap</a>
+            <a href="https://github.com/kprsnt2" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/prashanth-kumar-kadasi-b5281765/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://huggingface.co/kprsnt" target="_blank" rel="noopener">HuggingFace</a>
+        </nav>
+        <p class="site-footer-copy">
+            © {{ current_year }} <span class="grad-text">Prashanth Kumar Kadasi</span> •
+            Built with <span class="grad-text">AI</span>
         </p>
     </footer>
 
