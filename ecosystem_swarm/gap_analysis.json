@@ -1,10 +1,10 @@
 {
-  "last_audit": "2026-11-06T05:06:49.142685",
+  "last_audit": "2026-11-07T04:39:55.217270",
   "architectural_posture": "Active Stress-Testing",
   "active_gaps": [
     {
       "id": "GAP-01",
-      "subsystem": "Vercel Serverless Function Ceilings",
+      "subsystem": "Container Cold Starts & LLM Latency Budgets",
       "severity": "MEDIUM",
       "status": "ACTIVE",
       "description": "Serverless route handlers must ensure heavy LLM calls or multi-agent summarization terminate strictly under 10s to avoid 504 Gateway Timeouts.",
@@ -30,7 +30,7 @@
   "all_gaps": [
     {
       "id": "GAP-01",
-      "subsystem": "Vercel Serverless Function Ceilings",
+      "subsystem": "Container Cold Starts & LLM Latency Budgets",
       "severity": "MEDIUM",
       "status": "ACTIVE",
       "description": "Serverless route handlers must ensure heavy LLM calls or multi-agent summarization terminate strictly under 10s to avoid 504 Gateway Timeouts.",
@@ -55,7 +55,7 @@
   ],
   "resilience_checks": {
     "github_rate_limits": "Passed (8-SHA cap with unauthenticated public fallback active)",
-    "monotonic_telemetry": "Passed (1220 commits >= 987 baseline preserved)",
+    "monotonic_telemetry": "Passed (1222 commits >= 987 baseline preserved)",
     "memory_compaction": "Passed (785/4,000 words, 80.4% headroom)",
     "serverless_bounds": "Failed (LLM_TIMEOUT=60.0s exceeds 8.0s)",
     "fastmcp_integrity": "Passed (16 FastMCP tools responsive, JSON-RPC 2.0 valid)"

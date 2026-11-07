@@ -1,8 +1,9 @@
 {
-  "last_updated": "2026-11-06T05:06:34.634495",
-  "commit_history": 1220,
+  "last_updated": "2026-11-07T04:39:43.298554",
+  "commit_history": 1222,
   "counted_commit_shas": [
-    "53e6cac",
+    "e1d89f3",
+    "99c8275",
     "ff36d4f",
     "fd1874a",
     "fcb2a99",
@@ -44,6 +45,7 @@
     "5c9f187",
     "5983417",
     "5861056",
+    "53e6cac",
     "53bb533",
     "518df38",
     "50b10f5",
@@ -114,27 +116,28 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] commit 53e6cac: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (360): .cursor/rules/ponytail.mdc, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/ecosystem_agents.yml, .github/workflows/jobs.yml"
+    "[kprsnt2/kprsnt.in] main: feat: optimize website for recruiters and founders with fast-track card and project filters | Files (5): static/css/custom.css, static/js/chat-widget.js, templates/about.html, templates/base.html, templates/projects.html (+299/-75)",
+    "[kprsnt2/kprsnt.in] main: Simplify default meta description, shorten JobAgents title, restore MyLocalCLI icon | Files (2): api/data/projects.py, templates/base.html (+3/-3)"
   ],
-  "daily_commits_count": 1,
+  "daily_commits_count": 2,
   "commit_timeline_7d": {
     "labels": [
-      "Sat",
       "Sun",
       "Mon",
       "Tue",
       "Wed",
       "Thu",
-      "Fri"
+      "Fri",
+      "Sat"
     ],
     "commits": [
+      0,
+      0,
+      0,
+      0,
+      0,
       2,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0
+      2
     ],
     "pipelines": [
       1,

@@ -1,10 +1,10 @@
 # Adversarial Antipersona Agent: Architectural Red-Team Notes
-*Audited: 2026-11-06 05:06:49 | Agent: Agent 8 (Adversarial Bar-Raiser / Antipersona) | Skill: Architecture Stress-Testing & Gap Analysis*
+*Audited: 2026-11-07 04:39:55 | Agent: Agent 8 (Adversarial Bar-Raiser / Antipersona) | Skill: Architecture Stress-Testing & Gap Analysis*
 
 ## Role & Operating Philosophy
 The **Antipersona Agent** acts as the swarm's adversarial red-team stress-tester. While builder agents optimize for features and velocity, the Antipersona relentlessly probes for catastrophic failure modes, cold-start timeouts, quota starvation, and hidden dependencies.
 
-## 1. Serverless Cold Starts & Timeout Bounds (Vercel <10s)
+## 1. Container Cold Starts & LLM Latency Budgets (Cloudflare Container)
 - **Live Verification**: Failed (LLM_TIMEOUT=60.0s exceeds 8.0s)
 - **Invariant Required**: All external API calls in serverless routes must enforce hard 8-second timeouts with instant fallback to cached constants or static context.
 
