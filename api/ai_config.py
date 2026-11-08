@@ -32,6 +32,10 @@ OPENAI_MODEL = "gpt-5.4-mini"
 OPENAI_MODEL_PREMIUM = NVIDIA_MODEL  # ai-insight uses this — points to NVIDIA primary
 OPENAI_EMBEDDING_MODEL = "text-embedding-3-small"
 
+# Google Gemini (OpenAI-compatible endpoint)
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-flash-latest")
+GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/openai/"
+
 
 # LLM request timeout (default 8.0s; override via AI_LLM_TIMEOUT in CI/CLI).
 # The container has no 10s function ceiling, so this can be raised if a slow
@@ -67,6 +71,14 @@ def get_openai_client(timeout=None):
     return OpenAI(api_key=api_key, max_retries=0, timeout=timeout or LLM_TIMEOUT)
 
 
+def get_gemini_client(timeout=None):
+    """Get the Google Gemini OpenAI-compatible client."""
+    api_key = os.environ.get("GEMINI_API_KEY")
+    if not api_key:
+        return None
+    return OpenAI(api_key=api_key, base_url=GEMINI_BASE_URL, max_retries=0, timeout=timeout or LLM_TIMEOUT)
+
+
 # ============================================
 # LLM CALL HELPERS
 # ============================================
@@ -95,7 +107,16 @@ def call_llm(prompt, system_prompt=None, json_mode=False, temperature=0.7, model
         except Exception as e:
             print(f"[OpenAI] Failed: {e}")
 
-    # 2. NVIDIA (fallback)
+    # 2. Gemini (gemini-flash-latest fallback)
+    gemini = get_gemini_client(timeout=effective_timeout)
+    if gemini:
+        try:
+            r = gemini.chat.completions.create(model=GEMINI_MODEL, timeout=effective_timeout, **kwargs)
+            return r.choices[0].message.content
+        except Exception as e:
+            print(f"[Gemini {GEMINI_MODEL}] Failed: {e}")
+
+    # 3. NVIDIA (fallback)
     nvidia = get_nvidia_client(timeout=effective_timeout)
     if nvidia:
         for m in [model or NVIDIA_MODEL] + NVIDIA_FALLBACK_MODELS:
@@ -145,7 +166,15 @@ def call_llm_with_history(messages, system_prompt=None, json_mode=False, tempera
         except Exception as e:
             print(f"[OpenAI] Failed: {e}")
 
-    # 2. NVIDIA (fallback)
+    # 2. Gemini (gemini-flash-latest fallback)
+    gemini = get_gemini_client(timeout=effective_timeout)
+    if gemini:
+        try:
+            return gemini.chat.completions.create(model=GEMINI_MODEL, timeout=effective_timeout, **kwargs)
+        except Exception as e:
+            print(f"[Gemini {GEMINI_MODEL}] Failed: {e}")
+
+    # 3. NVIDIA (fallback)
     nvidia = get_nvidia_client(timeout=effective_timeout)
     if nvidia:
         for m in [model or NVIDIA_MODEL] + NVIDIA_FALLBACK_MODELS:

@@ -128,7 +128,7 @@ def run_evaluation_agent(raw_jobs):
 
         try:
             response = requests.post(
-                f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}",
+                f"https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key={GEMINI_API_KEY}",
                 json={
                     "contents": [{"parts": [{"text": prompt}]}],
                     "generationConfig": {"response_mime_type": "application/json"}
@@ -190,7 +190,7 @@ def update_portfolio_json(new_jobs):
     with open(JOB_DATA_FILE, 'w') as f:
         json.dump({
             "month": datetime.now().strftime("%B %Y"),
-            "models_used": {"Gemini 1.5 Flash": 1, "Tavily Search": 1},
+            "models_used": {"Gemini Flash Latest": 1, "Tavily Search": 1},
             "jobs": all_jobs
         }, f, indent=4)
 
