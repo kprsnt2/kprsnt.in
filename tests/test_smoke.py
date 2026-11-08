@@ -120,15 +120,14 @@ def test_ecosystem_logs_structure(client):
 
 
 def test_homepage_analytical_and_ai_positioning(client):
-    """Home page highlights both Analytical/BigQuery and AI Engineering tracks without duplicate CTA bugs."""
+    """Home page showcases the interactive System Atlas, Command Palette, and live workbenches without duplicate CTA bugs."""
     response = client.get("/")
     assert response.status_code == 200
     html = response.data.decode("utf-8")
-    assert "PILLAR 1: ANALYTICAL &amp; DATA ENGINEERING" in html
-    assert "PILLAR 2: AI SYSTEMS &amp; AGENTIC ENGINEERING" in html
+    assert "INTERACTIVE SYSTEM ATLAS" in html
     assert "GCP Cloud Run (asia-south1)" in html
-    assert "18-Sector ETL &amp; Self-Healing Data Agent" in html
-    assert "Multi-Model Brand Visibility Index" in html
-    # Regression guard: "Open Fleet Command Center →" must appear once, not duplicated
+    assert "18-Sector Automated ETL" in html
+    assert "rAsh Score" in html
+    assert "cmdPaletteBackdrop" in html
     assert html.count("Open Fleet Command Center →") == 1
 

@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Prashanth Kumar Kadasi | Portfolio{% endblock %}</title>
+    <title>{% block title %}Prashanth Kumar Kadasi{% endblock %}</title>
     <meta name="description"
-        content="{% block description %}Prashanth Kumar Kadasi — Data Analyst in Hyderabad, moving into AI engineering. Builds multi-agent systems, job pipelines, and LLM evaluation tools. Explore projects, resume, and case studies.{% endblock %}">
+        content="{% block description %}Prashanth Kumar Kadasi — Data analytics, multi-agent systems, LLM evaluation, and cloud data pipelines. Explore live systems, benchmarks, dashboards, and writing.{% endblock %}">
     <meta name="author" content="Prashanth Kumar Kadasi">
     <meta name="theme-color" content="#0b0f16">
     <link rel="canonical" href="{% block canonical %}https://kprsnt.in{{ request.path }}{% endblock %}">
@@ -101,34 +101,40 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/projects' %}active{% endif %}" href="/projects">Projects</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if request.path in ['/dashboard', '/plotter', '/ecosystem', '/ecosystem/logs', '/swarm/logs', '/aie', '/aie/blogs', '/jobs', '/jobs/dashboard'] or request.path.startswith('/ecosystem/') or request.path.startswith('/aie/') %}active{% endif %}"
+                            href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dashboards</a>
+                        <ul class="dropdown-menu dropdown-menu-dark site-nav-menu">
+                            <li><a class="dropdown-item" href="/dashboard"><i class="fas fa-gauge-high text-info"></i> Command Center</a></li>
+                            <li><a class="dropdown-item" href="/plotter"><i class="fas fa-chart-area text-warning"></i> DataForge Plotter</a></li>
+                            <li><a class="dropdown-item" href="/jobs/dashboard"><i class="fas fa-briefcase text-success"></i> Jobs Analytics</a></li>
+                            <li><hr class="dropdown-divider border-secondary border-opacity-25"></li>
+                            <li><a class="dropdown-item" href="/ecosystem"><i class="fas fa-chart-line text-primary"></i> Ecosystem Telemetry</a></li>
+                            <li><a class="dropdown-item" href="/ecosystem/logs"><i class="fas fa-terminal text-success"></i> 10-Agent Swarm Logs</a></li>
+                            <li><a class="dropdown-item" href="/aie"><i class="fas fa-network-wired text-light"></i> AI Eco Architecture</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/mcp' %}active{% endif %}" href="/mcp">MCP</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/skills' %}active{% endif %}" href="/skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/blog' or request.path.startswith('/blog/') %}active{% endif %}" href="/blog">Blog</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/resume' or '/resume/' in request.path %}active{% endif %}" href="/resume">Resume</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/blog' or request.path.startswith('/blog/') %}active{% endif %}" href="/blog">Blog</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if request.path in ['/ecosystem', '/ecosystem/logs', '/swarm/logs', '/aie', '/aie/blogs', '/mcp', '/dashboard', '/jobs/dashboard'] or request.path.startswith('/ecosystem/') or request.path.startswith('/aie/') %}active{% endif %}"
-                            href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">AI Eco</a>
-                        <ul class="dropdown-menu dropdown-menu-dark site-nav-menu">
-                            <li><a class="dropdown-item" href="/ecosystem"><i class="fas fa-chart-line text-info"></i> Telemetry dashboard</a></li>
-                            <li><a class="dropdown-item" href="/ecosystem/logs"><i class="fas fa-terminal text-success"></i> Swarm logs</a></li>
-                            <li><a class="dropdown-item" href="/aie/blogs"><i class="fas fa-satellite-dish text-primary"></i> AI Eco dev logs</a></li>
-                            <li><a class="dropdown-item" href="/aie"><i class="fas fa-network-wired text-light"></i> AI Eco hub</a></li>
-                            <li><hr class="dropdown-divider border-secondary border-opacity-25"></li>
-                            <li><a class="dropdown-item" href="/dashboard"><i class="fas fa-gauge-high text-danger"></i> Fleet command center</a></li>
-                            <li><a class="dropdown-item" href="/mcp"><i class="fas fa-plug text-warning"></i> MCP server</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link {% if request.path in ['/docs', '/api/docs'] %}active{% endif %}" href="/docs">Docs</a>
                     </li>
-                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
-                        <a href="mailto:interview@kprsnt.in"
-                            class="btn btn-sm btn-outline-primary px-3 rounded-pill fw-semibold site-nav-cta">Contact</a>
+                    <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                        <button type="button" class="cmd-trigger-btn" onclick="openCmdPalette()" aria-label="Open Command Palette">
+                            <i class="fas fa-search"></i>
+                            <span>Explore</span>
+                            <kbd>⌘K</kbd>
+                        </button>
                     </li>
                 </ul>
             </div>
@@ -174,6 +180,198 @@
 
     <!-- Background: a single static CSS gradient (see body::before in
          static/css/custom.css). The animated particle canvas was removed. -->
+    <!-- Global Command Palette (Ctrl+K / Cmd+K / /) -->
+    <div id="cmdPaletteBackdrop" class="cmd-backdrop" onclick="if(event.target===this) closeCmdPalette()" role="dialog" aria-modal="true" aria-label="Command Palette">
+        <div class="cmd-dialog">
+            <div class="cmd-input-row">
+                <i class="fas fa-terminal text-info"></i>
+                <input type="text" id="cmdSearchInput" class="cmd-input" placeholder="Search systems, dashboards, benchmarks, or tools..." autocomplete="off" oninput="filterCmdItems(this.value)">
+                <button type="button" class="cmd-esc-btn" onclick="closeCmdPalette()">ESC</button>
+            </div>
+            <div class="cmd-list" id="cmdItemsList">
+                <div class="cmd-group-label">Interactive Workbenches &amp; Dashboards</div>
+                <a href="/dashboard" class="cmd-item" data-keywords="dashboard command center telemetry fleet analytics">
+                    <i class="fas fa-gauge-high text-info"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">Command Center &amp; Telemetry</span>
+                        <span class="cmd-item-sub">Multi-agent fleet metrics, pipeline distributions &amp; scores</span>
+                    </div>
+                    <span class="cmd-item-tag">/dashboard</span>
+                </a>
+                <a href="/plotter" class="cmd-item" data-keywords="plotter csv dataforge chart visualization analytics">
+                    <i class="fas fa-chart-area text-warning"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">DataForge CSV &amp; Chart Plotter</span>
+                        <span class="cmd-item-sub">Interactive tabular data profiler &amp; chart generator</span>
+                    </div>
+                    <span class="cmd-item-tag">/plotter</span>
+                </a>
+                <a href="/mcp" class="cmd-item" data-keywords="mcp model context protocol json-rpc sse playground">
+                    <i class="fas fa-plug text-warning"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">Live MCP Server Playground</span>
+                        <span class="cmd-item-sub">Execute JSON-RPC 2.0 tools &amp; inspect resources in-browser</span>
+                    </div>
+                    <span class="cmd-item-tag">/mcp</span>
+                </a>
+                <a href="/jobs/dashboard" class="cmd-item" data-keywords="jobs analytics scorer pipeline bigquery">
+                    <i class="fas fa-briefcase text-success"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">Job Pipeline Analytics</span>
+                        <span class="cmd-item-sub">Daily evaluation distributions, grades &amp; match radar</span>
+                    </div>
+                    <span class="cmd-item-tag">/jobs/dashboard</span>
+                </a>
+                <a href="/ecosystem" class="cmd-item" data-keywords="ecosystem swarm 10 agents living memory commits">
+                    <i class="fas fa-network-wired text-primary"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">10-Agent Swarm Telemetry</span>
+                        <span class="cmd-item-sub">Commit velocity, language breakdown &amp; living memory</span>
+                    </div>
+                    <span class="cmd-item-tag">/ecosystem</span>
+                </a>
+
+                <div class="cmd-group-label">Live Systems &amp; Benchmarks</div>
+                <a href="https://job.kprsnt.in" target="_blank" rel="noopener" class="cmd-item" data-keywords="jobagents ats 9697 7665 29091 deterministic zero model calls">
+                    <i class="fas fa-filter text-success"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">JobAgents — Deterministic Scoring Pipeline</span>
+                        <span class="cmd-item-sub">9,697 jobs → 7,665 roles · 29,091 scores with 0 model calls</span>
+                    </div>
+                    <span class="cmd-item-tag">job.kprsnt.in ↗</span>
+                </a>
+                <a href="https://rashscore.live" target="_blank" rel="noopener" class="cmd-item" data-keywords="rash score brand visibility 300 brands 20 cohorts turso sql">
+                    <i class="fas fa-scale-balanced text-info"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">rAsh Score — Multi-Model Brand Visibility Index</span>
+                        <span class="cmd-item-sub">300 brands × 20 cohorts × 4 LLMs · Turso/LibSQL + Text-to-SQL</span>
+                    </div>
+                    <span class="cmd-item-tag">rashscore.live ↗</span>
+                </a>
+                <a href="https://bug.kprsnt.in" target="_blank" rel="noopener" class="cmd-item" data-keywords="bugagents security research 15317 tool calls cwe gate">
+                    <i class="fas fa-shield-alt text-danger"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">BugAgents — Autonomous Security Research Matrix</span>
+                        <span class="cmd-item-sub">15,317 tool calls · 8 findings · 2 promoted / 34 refused</span>
+                    </div>
+                    <span class="cmd-item-tag">bug.kprsnt.in ↗</span>
+                </a>
+                <a href="https://agent.kprsnt.in" target="_blank" rel="noopener" class="cmd-item" data-keywords="agentswarm forensic ledger sha256 oracle 35 chains">
+                    <i class="fas fa-link text-primary"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">AgentSwarm — Forensic Multi-Agent Research Arena</span>
+                        <span class="cmd-item-sub">35/35 SHA-256 chains intact · 22/25 claims verified</span>
+                    </div>
+                    <span class="cmd-item-tag">agent.kprsnt.in ↗</span>
+                </a>
+                <a href="https://mseat.kprsnt.in" target="_blank" rel="noopener" class="cmd-item" data-keywords="mseat mbbs simulator 18000 candidates 59 colleges knruhs">
+                    <i class="fas fa-graduation-cap text-warning"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">mSeat — Discrete MBBS Allocation Simulator</span>
+                        <span class="cmd-item-sub">18,000+ candidates across 59 colleges · within 73 ranks of cutoff</span>
+                    </div>
+                    <span class="cmd-item-tag">mseat.kprsnt.in ↗</span>
+                </a>
+                <a href="https://mediflow.kprsnt.in" target="_blank" rel="noopener" class="cmd-item" data-keywords="mediflow medicare cms marx 7 agents sha256">
+                    <i class="fas fa-hospital-user text-info"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">MediFlow — Autonomous Medicare &amp; CMS Audit System</span>
+                        <span class="cmd-item-sub">7 coordinated agents · MARx TRR adjudication · SHA-256 ledger</span>
+                    </div>
+                    <span class="cmd-item-tag">mediflow.kprsnt.in ↗</span>
+                </a>
+                <a href="https://huggingface.co/kprsnt/BrandXY-gpt-oss-20b" target="_blank" rel="noopener" class="cmd-item" data-keywords="brandxy gpt-oss-20b lora amd mi300x fine-tune">
+                    <i class="fas fa-microchip text-warning"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">BrandXY — GPT-OSS-20B LoRA Fine-Tune (AMD MI300X)</span>
+                        <span class="cmd-item-sub">25.5% baseline → 76.5% recommendation rate (+51% lift)</span>
+                    </div>
+                    <span class="cmd-item-tag">HuggingFace ↗</span>
+                </a>
+                <a href="https://dashboard.kprsnt.in" target="_blank" rel="noopener" class="cmd-item" data-keywords="18 sector intelligence dashboards bigquery looker studio etl">
+                    <i class="fas fa-database text-success"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">18-Sector BigQuery &amp; Looker Studio ETLs</span>
+                        <span class="cmd-item-sub">Automated sector pipelines &amp; weekly AI market intelligence</span>
+                    </div>
+                    <span class="cmd-item-tag">dashboard.kprsnt.in ↗</span>
+                </a>
+
+                <div class="cmd-group-label">Navigation &amp; Studies</div>
+                <a href="/blog/BLOG_MODEL_VS_CLI" class="cmd-item" data-keywords="prash benchmark 6 ai coding clis model vs cli">
+                    <i class="fas fa-flask text-info"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">pRash Study: 6-Way AI Coding CLI Benchmark</span>
+                        <span class="cmd-item-sub">Controlled variable isolation (84 static → 68 live score)</span>
+                    </div>
+                    <span class="cmd-item-tag">/blog</span>
+                </a>
+                <a href="/projects" class="cmd-item" data-keywords="projects systems all catalog">
+                    <i class="fas fa-cubes text-light"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">All Engineering Projects</span>
+                        <span class="cmd-item-sub">Full system index, architecture details &amp; source links</span>
+                    </div>
+                    <span class="cmd-item-tag">/projects</span>
+                </a>
+                <a href="/skills" class="cmd-item" data-keywords="skills stack matrix python sql bigquery gcp">
+                    <i class="fas fa-layer-group text-primary"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">Interactive Stack &amp; Skill Matrix</span>
+                        <span class="cmd-item-sub">Click any technology to inspect the systems built with it</span>
+                    </div>
+                    <span class="cmd-item-tag">/skills</span>
+                </a>
+                <a href="/resume" class="cmd-item" data-keywords="resume experience cv pdf download">
+                    <i class="fas fa-file-lines text-success"></i>
+                    <div class="cmd-item-body">
+                        <span class="cmd-item-title">Experience &amp; Resume</span>
+                        <span class="cmd-item-sub">Career timeline, projects &amp; downloadable PDF</span>
+                    </div>
+                    <span class="cmd-item-tag">/resume</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openCmdPalette() {
+            const bd = document.getElementById('cmdPaletteBackdrop');
+            const inp = document.getElementById('cmdSearchInput');
+            if (!bd) return;
+            bd.classList.add('open');
+            if (inp) {
+                inp.value = '';
+                filterCmdItems('');
+                setTimeout(() => inp.focus(), 40);
+            }
+        }
+        function closeCmdPalette() {
+            document.getElementById('cmdPaletteBackdrop')?.classList.remove('open');
+        }
+        function filterCmdItems(q) {
+            const norm = (q || '').trim().toLowerCase();
+            const items = document.querySelectorAll('#cmdItemsList .cmd-item');
+            items.forEach(item => {
+                const hay = (item.textContent + ' ' + (item.getAttribute('data-keywords') || '')).toLowerCase();
+                item.style.display = (!norm || hay.includes(norm)) ? '' : 'none';
+            });
+        }
+        document.addEventListener('keydown', function(e) {
+            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+                e.preventDefault();
+                const bd = document.getElementById('cmdPaletteBackdrop');
+                if (bd && bd.classList.contains('open')) closeCmdPalette();
+                else openCmdPalette();
+            } else if (e.key === '/' && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) {
+                e.preventDefault();
+                openCmdPalette();
+            } else if (e.key === 'Escape') {
+                closeCmdPalette();
+            }
+        });
+    </script>
+
     <!-- RAG Chat Widget -->
     <script src="{{ url_for('static', filename='js/chat-widget.js') }}?v=3"></script>
 </body>

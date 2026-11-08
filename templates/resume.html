@@ -1,95 +1,46 @@
 {% extends "base.html" %}
 
-{% block title %}{% if current_role %}{{ current_role.title }} Resume{% else %}Resume{% endif %} | Prashanth Kumar Kadasi{% endblock %}
+{% block title %}Resume | Prashanth Kumar Kadasi{% endblock %}
 
-{% block description %}Resume of Prashanth Kumar Kadasi — Data Analyst in Hyderabad (3.5+ years in data/analytics & AI, 9 years CMS compliance auditing at Optum) moving into AI engineering. View role-tailored variants, experience, skills, and projects.{% endblock %}
+{% block description %}Experience, technical skills, and deployed systems of Prashanth Kumar Kadasi — Data analytics, BigQuery ETL pipelines, and autonomous multi-agent systems.{% endblock %}
 
 {% block content %}
 <style>
-    .role-pill-bar {
-        display: flex;
-        gap: 0.4rem;
-        flex-wrap: wrap;
-        margin-bottom: 1.5rem;
-        padding: 0.75rem 0;
+    .project-resume-links {
+        display: inline-flex;
+        gap: 6px;
+        align-items: center;
     }
-    .role-pill {
-        padding: 0.4rem 0.9rem;
-        border-radius: 20px;
-        font-size: 0.82rem;
-        font-weight: 600;
+    .project-link-badge {
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-size: 0.78rem;
+        font-weight: 500;
         text-decoration: none;
         transition: all 0.2s ease;
-        border: 1px solid rgba(102, 126, 234, 0.2);
-        background: rgba(102, 126, 234, 0.06);
-        color: var(--text-secondary);
+        border: 1px solid rgba(102, 126, 234, 0.3);
+        background: rgba(102, 126, 234, 0.08);
+        color: #93c5fd;
         display: inline-flex;
         align-items: center;
-        gap: 0.3rem;
+        gap: 4px;
     }
-    .role-pill:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        border-color: rgba(102, 126, 234, 0.4);
-        color: var(--text-primary);
-        text-decoration: none;
-    }
-    .role-pill.active {
+    .project-link-badge:hover {
+        background: rgba(102, 126, 234, 0.25);
         color: white;
-        border-color: transparent;
+        transform: translateY(-1px);
     }
-    .role-pill-default {
-        background: rgba(102, 126, 234, 0.06);
+    .project-link-badge.github {
+        border-color: rgba(156, 163, 175, 0.3);
+        background: rgba(156, 163, 175, 0.08);
+        color: #d1d5db;
     }
-    .role-pill-default.active {
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
-    }
-    .role-badge {
-        display: inline-block;
-        padding: 4px 12px;
-        border-radius: 12px;
-        font-size: 0.8rem;
-        font-weight: 700;
+    .project-link-badge.github:hover {
+        background: rgba(156, 163, 175, 0.2);
         color: white;
-        margin-left: 0.5rem;
-        letter-spacing: 0.3px;
     }
-        .project-resume-links {
-            display: inline-flex;
-            gap: 6px;
-            align-items: center;
-        }
-        .project-link-badge {
-            padding: 2px 8px;
-            border-radius: 6px;
-            font-size: 0.78rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            border: 1px solid rgba(102, 126, 234, 0.3);
-            background: rgba(102, 126, 234, 0.08);
-            color: #93c5fd;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .project-link-badge:hover {
-            background: rgba(102, 126, 234, 0.25);
-            color: white;
-            transform: translateY(-1px);
-        }
-        .project-link-badge.github {
-            border-color: rgba(156, 163, 175, 0.3);
-            background: rgba(156, 163, 175, 0.08);
-            color: #d1d5db;
-        }
-        .project-link-badge.github:hover {
-            background: rgba(156, 163, 175, 0.2);
-            color: white;
-        }
     @media print {
-        .navbar, .role-pill-bar, .print-hide, footer {
+        .navbar, .print-hide, footer {
             display: none !important;
         }
         body {
@@ -115,30 +66,19 @@
 
 <div class="container">
     <!-- Header -->
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-12 d-flex justify-content-between align-items-center flex-wrap">
-            <h1 class="page-title">Resume
-                {% if current_role %}
-                <span class="role-badge print-hide" style="background: {{ current_role.color }};">
-                    {{ current_role.icon }} {{ current_role.title }}
-                </span>
-                {% endif %}
-            </h1>
+            <h1 class="page-title mb-1">Prashanth Kumar Kadasi</h1>
             <div class="d-flex align-items-center gap-2 print-hide">
                 <a href="/static/Prashanth_Kumar_Kadasi_Resume.pdf" download="Prashanth_Kumar_Kadasi_Resume.pdf" class="btn btn-sm btn-primary" style="border-radius: 20px;">
-                    <i class="fas fa-file-arrow-down me-1"></i> Download ATS PDF
+                    <i class="fas fa-file-arrow-down me-1"></i> Download PDF
                 </a>
                 <a href="/static/resume_pdf.html" target="_blank" class="btn btn-sm btn-outline-primary" style="border-radius: 20px;">
-                    <i class="fas fa-print me-1"></i> ATS Print View
+                    <i class="fas fa-print me-1"></i> Print View
                 </a>
             </div>
         </div>
-        <div class="col-12 mt-2">
-            {% if current_role %}
-            <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0.5rem;">{{ current_role.title }}</p>
-            {% else %}
-            <p class="hero-subtitle" style="font-size: 1.1rem; margin-bottom: 0.5rem;">Data Analyst → AI Engineering (target)</p>
-            {% endif %}
+        <div class="col-12 mt-1">
             <div style="color: var(--text-secondary); margin-bottom: 0.5rem;">
                 <span>📍 {% if contact %}{{ contact.location }}{% else %}Hyderabad, India{% endif %}</span>
                 {% if contact %}
@@ -151,70 +91,18 @@
         </div>
     </div>
 
-    <!-- Role Selector Pills -->
-    {% if role_definitions %}
-    <div class="row">
-        <div class="col-12">
-            <div class="role-pill-bar">
-                <a href="/resume" class="role-pill role-pill-default {% if not current_role %}active{% endif %}">
-                    📋 General
-                </a>
-                {% for slug, role in role_definitions.items() %}
-                <a href="/resume/{{ slug }}" class="role-pill {% if current_role and current_role.slug == slug %}active{% endif %}"
-                   style="{% if current_role and current_role.slug == slug %}background: {{ role.color }}; box-shadow: 0 4px 12px {{ role.color }}44;{% endif %}">
-                    {{ role.icon }} {{ role.title }}
-                </a>
-                {% endfor %}
-                <!-- Editor hidden until ready -->
-                <!-- <a href="/resume/edit" class="role-pill" style="border-style: dashed;">✏️ Editor</a> -->
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
     <!-- Summary -->
     <div class="row">
         <div class="col-12 mb-4">
-            <div class="card" {% if current_role %}style="border-top: 3px solid {{ current_role.color }};"{% endif %}>
-                <div class="card-header">📋 Summary</div>
+            <div class="card">
+                <div class="card-header">📋 Overview</div>
                 <div class="card-body">
                     {% if resume_summary %}
                     <p>{{ resume_summary }}</p>
                     {% else %}
                     <p>Data Analyst with 3.5+ years in data/analytics &amp; AI (2023–present) and 9 years of healthcare
-                        compliance auditing at Optum / UnitedHealth Group (2014–2023). Data Analyst experience at Black Piano and Pi Software Solutions, and Enrollment Quality &amp; Audit Representative (CMS Auditor) at Optum — now moving into AI engineering. Built five live multi-agent systems as self-directed projects (BugAgents, AgentSwarm, JobAgents, MyLocalCLI, rAsh Score), plus LLM fine-tuning and evaluation work (GPT-OSS-20B on AMD MI300X). Works in Python, SQL, BigQuery, Looker Studio, GCP Cloud Run and GitHub Actions.</p>
+                        compliance auditing at Optum / UnitedHealth Group (2014–2023). Data Analyst at Black Piano and Pi Software Solutions, and Enrollment Quality &amp; Audit Representative (CMS Auditor) at Optum. Built and deployed multi-agent systems, evaluation harnesses, and simulators (MediFlow, BugAgents, AgentSwarm, JobAgents, MyLocalCLI, rAsh Score, mSeat), plus 20B LLM fine-tuning on AMD MI300X. Works in Python, SQL, BigQuery, Looker Studio, GCP Cloud Run, and GitHub Actions.</p>
                     {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Quantified Analytical & AI Proof Matrix -->
-    <div class="row">
-        <div class="col-12 mb-4">
-            <div class="card">
-                <div class="card-header">📊 Quantified Analytical &amp; AI Engineering Highlights</div>
-                <div class="card-body">
-                    <div class="row g-3">
-                        <div class="col-12 col-md-6">
-                            <strong style="color: #10b981; display: block; margin-bottom: 0.4rem;">Analytical &amp; Data Engineering (Commercial + Benchmarks)</strong>
-                            <ul style="padding-left: 1.2rem; margin-bottom: 0; color: var(--text-secondary); font-size: 0.92rem;">
-                                <li style="margin-bottom: 0.35rem;"><strong>18 automated ETL pipelines</strong> feeding BigQuery → Looker Studio across 18 industry sectors at Black Piano.</li>
-                                <li style="margin-bottom: 0.35rem;"><strong>10+ client BigQuery dashboards</strong> (via internal <code>Pi-API</code> Python package) and <strong>30+ analytical reports</strong> on US &amp; UK trends at Pi Software Solutions.</li>
-                                <li style="margin-bottom: 0.35rem;"><strong>300 brands across 20 cohorts</strong> scored daily across 4 LLM providers on a 4-dimension weighted rubric in <code>rAsh Score</code> (Turso/LibSQL + text-to-SQL).</li>
-                                <li><strong>18,000+ MBBS candidates</strong> simulated across 59 colleges via O(1) multi-quota ranking in <code>mSeat</code>, validated within <strong>73 ranks</strong> of official cutoff.</li>
-                            </ul>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <strong style="color: #818cf8; display: block; margin-bottom: 0.4rem;">AI Systems, Multi-Agent Swarms &amp; Evaluation Guardrails</strong>
-                            <ul style="padding-left: 1.2rem; margin-bottom: 0; color: var(--text-secondary); font-size: 0.92rem;">
-                                <li style="margin-bottom: 0.35rem;"><strong>Gemini self-healing data-quality agent</strong> (3x retry + human email escalation) and custom MCP blog tool shipped in production at Black Piano.</li>
-                                <li style="margin-bottom: 0.35rem;"><strong>9,697 jobs → 7,665 distinct roles</strong> scored with <strong>29,091 deterministic match scores at 0 model calls</strong> and <strong>8/8 seeded fabrications caught</strong> in <code>JobAgents</code>.</li>
-                                <li style="margin-bottom: 0.35rem;"><strong>15,317 tool calls &amp; 8 findings</strong> (5 High/Critical) behind a 2-promoted / 34-refused gate in <code>BugAgents</code>; <strong>35/35 intact SHA-256 ledgers</strong> &amp; 22/25 audited claims in <code>AgentSwarm</code>.</li>
-                                <li><strong>76.5% vs 25.5% baseline (+51% lift)</strong> LoRA fine-tuning <code>GPT-OSS-20B</code> on AMD MI300X (<code>BrandXY</code>), plus <code>mylocalcli</code> v4.0.2 on npm (8 providers, 42 tools, 38 skills).</li>
-                            </ul>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -230,7 +118,7 @@
                     <div{% if not loop.last %} style="margin-bottom: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-glass);"{% endif %}>
                         <h5 style="margin-bottom: 0.25rem;">{{ exp.company }}</h5>
                         <div style="margin-bottom: 1rem;">
-                            <span style="font-weight: 600; color: {% if current_role %}{{ current_role.color }}{% else %}#667eea{% endif %};">{{ exp.role }}</span>
+                            <span style="font-weight: 600; color: #667eea;">{{ exp.role }}</span>
                             <span style="color: var(--text-secondary);"> | {{ exp.period }} | {{ exp.location }}</span>
                         </div>
                         <ul style="padding-left: 1.25rem;">
@@ -253,7 +141,7 @@
                 <div class="card-body">
                     {% for category, items in skills.items() %}
                     <div style="margin-bottom: 0.75rem;">
-                        <strong style="color: {% if current_role %}{{ current_role.color }}{% else %}#667eea{% endif %};">{{ category }}: </strong>
+                        <strong style="color: #667eea;">{{ category }}: </strong>
                         <span style="color: var(--text-secondary);">{{ items }}</span>
                     </div>
                     {% endfor %}
@@ -266,23 +154,23 @@
     <div class="row">
         <div class="col-12 mb-4">
             <div class="card">
-                <div class="card-header">🚀 Portfolio Projects</div>
+                <div class="card-header">🚀 Systems &amp; Projects</div>
                 <div class="card-body">
                     {% for project in projects %}
                     <div style="margin-bottom: 1.25rem;">
                         <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem;">
                             <div>
                                 <strong style="color: var(--text-primary); font-size: 1rem;">{{ project.name }}</strong>
-                                <span style="color: {% if current_role %}{{ current_role.color }}{% else %}#667eea{% endif %}; font-size: 0.88rem;"> | {{ project.tech }}</span>
+                                <span style="color: #667eea; font-size: 0.88rem;"> | {{ project.tech }}</span>
                             </div>
                             <div class="project-resume-links">
                                 {% if project.url %}
-                                <a href="{{ project.url }}" target="_blank" class="project-link-badge">
-                                    <i class="fas fa-external-link-alt" style="font-size: 0.72rem;"></i> Live Demo
+                                <a href="{{ project.url }}" target="_blank" rel="noopener" class="project-link-badge">
+                                    <i class="fas fa-external-link-alt" style="font-size: 0.72rem;"></i> Live
                                 </a>
                                 {% endif %}
                                 {% if project.github %}
-                                <a href="{{ project.github }}" target="_blank" class="project-link-badge github">
+                                <a href="{{ project.github }}" target="_blank" rel="noopener" class="project-link-badge github">
                                     <i class="fab fa-github" style="font-size: 0.76rem;"></i> GitHub
                                 </a>
                                 {% endif %}
@@ -304,35 +192,10 @@
                 <div class="card-body">
                     <h5 style="margin-bottom: 0.25rem;">{% if education %}{{ education.institution }}{% else %}Anurag Group of Institutions{% endif %}</h5>
                     <p style="color: var(--text-secondary); margin-bottom: 0;">{% if education %}{{ education.degree }}{% else %}M. Pharmacy - Pharmaceutical Analysis and Quality Assurance{% endif %}</p>
-                    <span style="color: {% if current_role %}{{ current_role.color }}{% else %}#667eea{% endif %}; font-size: 0.9rem;">{% if education %}{{ education.details }}{% else %}JNTUH | May 2012{% endif %}</span>
+                    <span style="color: #667eea; font-size: 0.9rem;">{% if education %}{{ education.details }}{% else %}JNTUH | May 2012{% endif %}</span>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Other Resume Variants (bottom navigation) -->
-    {% if role_definitions %}
-    <div class="row">
-        <div class="col-12 mb-4">
-            <div class="card" style="background: rgba(102, 126, 234, 0.04); border: 1px dashed rgba(102, 126, 234, 0.2);">
-                <div class="card-body text-center">
-                    <p style="color: var(--text-muted); margin-bottom: 0.75rem; font-size: 0.9rem;">
-                        📄 Also available as role-specific resumes:
-                    </p>
-                    <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; justify-content: center;">
-                        {% for slug, role in role_definitions.items() %}
-                        {% if not current_role or current_role.slug != slug %}
-                        <a href="/resume/{{ slug }}" class="role-pill"
-                           style="font-size: 0.78rem;">
-                            {{ role.icon }} {{ role.title }}
-                        </a>
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
 </div>
 {% endblock %}
