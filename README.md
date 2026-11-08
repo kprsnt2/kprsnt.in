@@ -2,7 +2,7 @@
 
 Data Analyst & AI Systems Engineer based in Hyderabad, India.
 
-This repository powers my personal portfolio at **[kprsnt.in](https://kprsnt.in)** — a Flask app running in a Cloudflare Container behind a Worker, with a built-in RAG chatbot, live AI dashboards, REST APIs, and an MCP server. It is continuously updated by a team of autonomous AI agents.
+This repository powers my personal portfolio at **[kprsnt.in](https://kprsnt.in)** — a Dockerized Flask + gunicorn application deployed on **Google Cloud Run (`asia-south1`)** behind Cloudflare DNS/CDN, with a built-in RAG chatbot, live analytical & AI dashboards, REST APIs, and a FastMCP server. It is continuously updated by a 10-agent autonomous AI swarm.
 
 ## Key Projects
 

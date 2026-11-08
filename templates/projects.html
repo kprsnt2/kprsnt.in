@@ -1,109 +1,213 @@
 {% extends "base.html" %}
 
-{% block title %}Engineering Projects | Prashanth Kumar Kadasi{% endblock %}
+{% block title %}Engineering & Analytical Projects | Prashanth Kumar Kadasi{% endblock %}
 
-{% block description %}Production AI systems, autonomous multi-agent frameworks, and discrete simulators by Prashanth Kumar Kadasi — MediFlow, BugAgents, AgentSwarm, JobAgents, MyLocalCLI, rAsh Score, mSeat, and BrandXY. All openly live with verified proofs.{% endblock %}
+{% block description %}Production AI systems, analytical evaluation harnesses, autonomous multi-agent frameworks, and discrete simulators by Prashanth Kumar Kadasi — MediFlow, BugAgents, AgentSwarm, JobAgents, rAsh Score, mSeat, pRash, MyLocalCLI, and BrandXY.{% endblock %}
 
 {% block content %}
-<div class="container py-3">
+<div class="container py-3" style="max-width: 1320px;">
     <!-- Header with Recruiter Pitch -->
-    <div class="row mb-4">
-        <div class="col-12 col-lg-9">
+    <div class="row mb-4 align-items-end">
+        <div class="col-12 col-lg-8">
             <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-1 rounded-pill font-mono-tech small mb-2">
-                <i class="fas fa-microchip me-1"></i> VERIFIABLE CODE &amp; ARCHITECTURES
+                <i class="fas fa-microchip me-1"></i> VERIFIABLE CODE, ANALYTICAL HARNESSES &amp; AI ARCHITECTURES
             </span>
-            <h1 class="page-title mb-2">Engineering Projects</h1>
-            <p class="text-secondary lead fs-6 mb-0" style="max-width: 800px; line-height: 1.6;">
-                Autonomous multi-agent swarms, deterministic LLM evaluation harnesses, fine-tuned models, and discrete simulators. Every project is openly live, reproducible, and backed by verifiable code and metrics.
+            <h1 class="page-title mb-2">Engineering &amp; Analytical Projects</h1>
+            <p class="text-secondary lead fs-6 mb-0" style="max-width: 820px; line-height: 1.65;">
+                Quantitative multi-model evaluation harnesses, discrete allocation simulators, autonomous multi-agent swarms with cryptographic audit ledgers, and 20B parameter fine-tunes. Flagship systems are separated from personal/educational explorations below.
             </p>
         </div>
-        <div class="col-12 col-lg-3 text-lg-end mt-3 mt-lg-0 d-flex flex-column justify-content-center">
-            <a href="/resume" class="btn btn-outline-primary btn-sm mb-2 rounded-pill px-3">
+        <div class="col-12 col-lg-4 text-lg-end mt-3 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
+            <a href="/resume" class="btn btn-primary btn-sm rounded-pill px-3 fw-semibold">
                 <i class="fas fa-file-alt me-1"></i> View Matching Resume
             </a>
-            <a href="https://github.com/kprsnt2" target="_blank" class="btn btn-outline-light btn-sm rounded-pill px-3">
-                <i class="fab fa-github me-1"></i> GitHub Repositories
+            <a href="/plotter" class="btn btn-outline-warning btn-sm rounded-pill px-3 fw-semibold">
+                <i class="fas fa-chart-area me-1"></i> DataForge Plotter
+            </a>
+            <a href="https://github.com/kprsnt2" target="_blank" rel="noopener" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                <i class="fab fa-github me-1"></i> GitHub
             </a>
         </div>
     </div>
 
+    <!-- Commercial Data & AI Deliverables Callout (Employer Work vs Self-Directed Projects) -->
+    <div class="glass-panel p-3 p-lg-4 mb-4" style="border-left: 3px solid #10b981;">
+        <div class="row g-3 align-items-center">
+            <div class="col-12 col-lg-9">
+                <div class="d-flex align-items-center flex-wrap gap-2 mb-1">
+                    <span class="badge bg-success-subtle text-success font-mono-tech" style="font-size: 0.7rem;">
+                        <i class="fas fa-building me-1"></i> COMMERCIAL PRODUCTION DELIVERABLES (EMPLOYER WORK)
+                    </span>
+                    <span class="text-secondary small font-mono-tech">Black Piano (Mar 2026–Present) &amp; Pi Software Solutions (2023–2026)</span>
+                </div>
+                <p class="text-secondary small mb-0" style="line-height: 1.6;">
+                    Alongside the independent open-source systems below, my commercial Data Analyst work includes <strong class="text-white">18 automated ETL pipelines feeding BigQuery → Looker Studio</strong> across 18 industry sectors, a <strong class="text-white">Gemini-powered self-healing data-quality agent</strong> (lookup + LLM fallback + 3x retry + email escalation), a <strong class="text-white">custom MCP data-to-blog tool</strong>, <strong class="text-white">10+ client BigQuery dashboards</strong> via an internal Python <code>Pi-API</code> package, and <strong class="text-white">30+ US/UK industry trend reports</strong>.
+                </p>
+            </div>
+            <div class="col-12 col-lg-3 text-lg-end d-flex gap-2 justify-content-lg-end">
+                <a href="https://dashboard.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-success rounded-pill px-3">
+                    18 Sector Dashboards ↗
+                </a>
+                <a href="/resume" class="btn btn-sm btn-outline-light rounded-pill px-3">
+                    Experience →
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- Category Filter Buttons -->
-    <div class="filter-btn-group">
+    <div class="filter-btn-group mb-4">
         <button class="filter-btn active" onclick="filterProjects('all', this)">
             <i class="fas fa-border-all me-1"></i> All Projects
+        </button>
+        <button class="filter-btn" onclick="filterProjects('analytics', this)">
+            <i class="fas fa-chart-line me-1"></i> Analytical, Eval &amp; Data
         </button>
         <button class="filter-btn" onclick="filterProjects('swarm', this)">
             <i class="fas fa-robot me-1"></i> Autonomous Agents &amp; Swarms
         </button>
         <button class="filter-btn" onclick="filterProjects('llm', this)">
-            <i class="fas fa-brain me-1"></i> LLM &amp; Fine-Tuning
+            <i class="fas fa-brain me-1"></i> LLM, Fine-Tuning &amp; MCP
         </button>
-        <button class="filter-btn" onclick="filterProjects('data', this)">
-            <i class="fas fa-database me-1"></i> Data &amp; Web Platforms
+        <button class="filter-btn" onclick="filterProjects('sandbox', this)">
+            <i class="fas fa-seedling me-1"></i> Healthcare, Education &amp; Sandbox
         </button>
     </div>
 
-    <div class="row mt-2" id="projects-grid">
-        {% for project in projects %}
-        {% set tags_str = (project.tags | join(' ')) | lower %}
-        {% set title_lower = project.title | lower %}
-        {% set is_swarm = 'agent' in tags_str or 'swarm' in tags_str or 'agent' in title_lower or 'swarm' in title_lower or 'mediflow' in title_lower or 'bug' in title_lower or 'jobagents' in title_lower %}
-        {% set is_llm = 'llm' in tags_str or 'gpt' in tags_str or 'ai' in tags_str or 'brand' in title_lower or 'drug' in title_lower or 'cli' in title_lower or 'rash' in title_lower %}
-        <div class="col-12 col-md-6 col-lg-4 mb-4 project-item" data-swarm="{{ 'true' if is_swarm else 'false' }}" data-llm="{{ 'true' if is_llm else 'false' }}">
-            <div class="card shadow-sm h-100">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span class="card-title-text fw-bold">{{ project.title }}</span>
-                    {% if project.featured %}
-                    <span class="featured-badge">⭐ Featured</span>
-                    {% endif %}
-                </div>
-                <div class="card-body d-flex flex-column">
-                    {# Proof first: one line on what it does for a person, then the
-                       hard numbers, then the essay behind a toggle. #}
-                    {% if project.hook %}
-                    <p class="project-hook">{{ project.hook }}</p>
-                    {% if project.proof %}
-                    <ul class="project-proof">
-                        {% for point in project.proof %}
-                        <li>{{ point }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                    {% else %}
-                    <p class="flex-grow-1">{{ project.description }}</p>
-                    {% endif %}
+    <!-- ============================================================
+         SECTION 1: Flagship Production, Analytical & AI Systems
+         ============================================================ -->
+    <div id="flagship-section" class="mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2 class="h4 fw-bold text-white mb-0 font-heading">
+                    <i class="fas fa-star text-warning me-2"></i>Flagship Systems, Analytical Benchmarks &amp; Agent Harnesses
+                </h2>
+                <p class="text-secondary small mb-0">Independent systems backed by verified metrics, deterministic guardrails, and live deployments.</p>
+            </div>
+        </div>
 
-                    <!-- Tags (top three only; the rest live in the detail block) -->
-                    <div class="project-tags">
-                        {% for tag in project.tags[:3] %}
-                        <span class="project-tag">{{ tag }}</span>
-                        {% endfor %}
+        <div class="row mt-2" id="flagship-grid">
+            {% for project in projects if project.featured %}
+            {% set tags_str = (project.tags | join(' ')) | lower %}
+            {% set title_lower = project.title | lower %}
+            {% set is_swarm = 'agent' in tags_str or 'swarm' in tags_str or 'agent' in title_lower or 'swarm' in title_lower or 'mediflow' in title_lower or 'bug' in title_lower or 'jobagents' in title_lower %}
+            {% set is_llm = 'lora' in tags_str or 'gpt' in tags_str or 'mcp' in tags_str or 'evaluation' in tags_str or 'brand' in title_lower or 'cli' in title_lower or 'rash' in title_lower or 'portfolio' in title_lower %}
+            {% set is_analytics = 'evaluation' in tags_str or 'data' in tags_str or 'algorithms' in tags_str or 'optimization' in tags_str or 'matching' in tags_str or 'rash' in title_lower or 'mseat' in title_lower or 'prash' in title_lower or 'brandxy' in title_lower or 'jobagents' in title_lower or 'agentswarm' in title_lower %}
+            <div class="col-12 col-md-6 col-lg-4 mb-4 project-item"
+                 data-featured="true"
+                 data-swarm="{{ 'true' if is_swarm else 'false' }}"
+                 data-llm="{{ 'true' if is_llm else 'false' }}"
+                 data-analytics="{{ 'true' if is_analytics else 'false' }}"
+                 data-sandbox="false">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span class="card-title-text fw-bold">{{ project.title }}</span>
+                        <span class="featured-badge">⭐ Flagship</span>
                     </div>
-
-                    {% if project.hook %}
-                    <details class="project-detail">
-                        <summary>Full technical detail</summary>
-                        <p class="mb-2">{{ project.description }}</p>
-                        <p class="mb-0 project-detail-tags">
-                            {% for tag in project.tags %}<span class="project-tag">{{ tag }}</span>{% endfor %}
-                        </p>
-                    </details>
-                    {% endif %}
-
-                    <!-- Buttons -->
-                    <div class="mt-auto pt-3 border-top border-secondary border-opacity-10 d-flex gap-2">
-                        <a href="{{ project.url }}" target="_blank"
-                            class="btn btn-{{ project.color }} btn-sm flex-fill fw-semibold">Live App ↗</a>
-                        {% if project.github %}
-                        {% set gh = project.github.rstrip('/') %}
-                        <a href="{{ project.github }}" target="_blank"
-                            class="btn btn-outline-secondary btn-sm flex-fill">{% if gh.count('/') > 3 %}<i class="fab fa-github me-1"></i>Repo{% else %}<i class="fab fa-github me-1"></i>GitHub{% endif %}</a>
+                    <div class="card-body d-flex flex-column">
+                        {% if project.hook %}
+                        <p class="project-hook">{{ project.hook }}</p>
+                        {% if project.proof %}
+                        <ul class="project-proof">
+                            {% for point in project.proof %}
+                            <li>{{ point }}</li>
+                            {% endfor %}
+                        </ul>
                         {% endif %}
+                        {% else %}
+                        <p class="flex-grow-1">{{ project.description }}</p>
+                        {% endif %}
+
+                        <!-- Tags (top three only; the rest live in the detail block) -->
+                        <div class="project-tags">
+                            {% for tag in project.tags[:3] %}
+                            <span class="project-tag">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+
+                        {% if project.hook %}
+                        <details class="project-detail">
+                            <summary>Full technical detail</summary>
+                            <p class="mb-2">{{ project.description }}</p>
+                            <p class="mb-0 project-detail-tags">
+                                {% for tag in project.tags %}<span class="project-tag">{{ tag }}</span>{% endfor %}
+                            </p>
+                        </details>
+                        {% endif %}
+
+                        <!-- Buttons -->
+                        <div class="mt-auto pt-3 border-top border-secondary border-opacity-10 d-flex gap-2">
+                            <a href="{{ project.url }}" target="_blank" rel="noopener"
+                                class="btn btn-{{ project.color }} btn-sm flex-fill fw-semibold">Live App ↗</a>
+                            {% if project.github %}
+                            {% set gh = project.github.rstrip('/') %}
+                            <a href="{{ project.github }}" target="_blank" rel="noopener"
+                                class="btn btn-outline-secondary btn-sm flex-fill">{% if gh.count('/') > 3 %}<i class="fab fa-github me-1"></i>Repo{% else %}<i class="fab fa-github me-1"></i>GitHub{% endif %}</a>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+    </div>
+
+    <!-- ============================================================
+         SECTION 2: Domain Explorations, Healthcare AI & Sandbox Apps
+         ============================================================ -->
+    <div id="sandbox-section" class="pt-3 border-top border-secondary border-opacity-25">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2 class="h4 fw-bold text-white mb-0 font-heading">
+                    <i class="fas fa-flask text-info me-2"></i>Domain Explorations, Healthcare AI &amp; Educational Sandbox
+                </h2>
+                <p class="text-secondary small mb-0">
+                    Molecular SMILES fine-tunes (M.Pharm background), interactive data plotting utilities, and educational/family apps.
+                </p>
+            </div>
+        </div>
+
+        <div class="row mt-2" id="sandbox-grid">
+            {% for project in projects if not project.featured %}
+            {% set tags_str = (project.tags | join(' ')) | lower %}
+            {% set title_lower = project.title | lower %}
+            {% set is_llm = 'lora' in tags_str or 'gpt' in tags_str or 'gemini' in tags_str or 'claude' in tags_str or 'drug' in title_lower %}
+            {% set is_analytics = 'data' in tags_str or 'plotter' in title_lower or 'report' in title_lower or 'admet' in tags_str %}
+            <div class="col-12 col-md-6 col-lg-4 mb-4 project-item"
+                 data-featured="false"
+                 data-swarm="false"
+                 data-llm="{{ 'true' if is_llm else 'false' }}"
+                 data-analytics="{{ 'true' if is_analytics else 'false' }}"
+                 data-sandbox="true">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span class="card-title-text fw-bold">{{ project.title }}</span>
+                        <span class="badge bg-secondary-subtle text-secondary font-mono-tech" style="font-size: 0.68rem;">Sandbox</span>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <p class="flex-grow-1">{{ project.description }}</p>
+
+                        <div class="project-tags">
+                            {% for tag in project.tags[:3] %}
+                            <span class="project-tag">{{ tag }}</span>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mt-auto pt-3 border-top border-secondary border-opacity-10 d-flex gap-2">
+                            <a href="{{ project.url }}" target="_blank" rel="noopener"
+                                class="btn btn-{{ project.color }} btn-sm flex-fill fw-semibold">Live App ↗</a>
+                            {% if project.github %}
+                            {% set gh = project.github.rstrip('/') %}
+                            <a href="{{ project.github }}" target="_blank" rel="noopener"
+                                class="btn btn-outline-secondary btn-sm flex-fill">{% if gh.count('/') > 3 %}<i class="fab fa-github me-1"></i>Repo{% else %}<i class="fab fa-github me-1"></i>GitHub{% endif %}</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
@@ -116,16 +220,27 @@ function filterProjects(category, button) {
     items.forEach(item => {
         if (category === 'all') {
             item.style.display = '';
+        } else if (category === 'analytics') {
+            item.style.display = item.getAttribute('data-analytics') === 'true' ? '' : 'none';
         } else if (category === 'swarm') {
             item.style.display = item.getAttribute('data-swarm') === 'true' ? '' : 'none';
         } else if (category === 'llm') {
             item.style.display = item.getAttribute('data-llm') === 'true' ? '' : 'none';
-        } else if (category === 'data') {
-            // If not strictly swarm or pure fine-tuning, or is web/data
-            const isSwarm = item.getAttribute('data-swarm') === 'true';
-            item.style.display = !isSwarm ? '' : 'none';
+        } else if (category === 'sandbox') {
+            item.style.display = item.getAttribute('data-sandbox') === 'true' ? '' : 'none';
         }
     });
+
+    const flagshipSection = document.getElementById('flagship-section');
+    const sandboxSection = document.getElementById('sandbox-section');
+    if (flagshipSection) {
+        const visibleFlagship = flagshipSection.querySelectorAll('.project-item:not([style*="display: none"])').length;
+        flagshipSection.style.display = visibleFlagship > 0 ? '' : 'none';
+    }
+    if (sandboxSection) {
+        const visibleSandbox = sandboxSection.querySelectorAll('.project-item:not([style*="display: none"])').length;
+        sandboxSection.style.display = visibleSandbox > 0 ? '' : 'none';
+    }
 }
 </script>
 {% endblock %}

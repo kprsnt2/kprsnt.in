@@ -1,19 +1,111 @@
 {% extends "base.html" %}
 
-{% block title %}Skills | Prashanth Kumar Kadasi{% endblock %}
+{% block title %}Technical & Analytical Skills | Prashanth Kumar Kadasi{% endblock %}
 
-{% block description %}Technical skills of Prashanth Kumar Kadasi — Python, SQL, BigQuery, Looker Studio, agentic AI & MCP, LLM fine-tuning and evaluation, and security research. Grouped for recruiters: languages, data, BI, AI, and cloud.{% endblock %}
+{% block description %}Technical and analytical skills of Prashanth Kumar Kadasi — SQL, BigQuery, Looker Studio, Python, GCP Cloud Run, Multi-Agent AI, FastMCP, LoRA Fine-Tuning, and Quantitative LLM Evaluation.{% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h1 class="page-title">Technical Skills</h1>
-            <p class="mb-3">Grouped by domain for recruiters. Every skill here is used in production work or live projects — details in Experience and Projects.</p>
-            <p class="mb-4"><a href="/resume" class="btn btn-sm btn-outline-primary">See how these were used → Resume</a></p>
+<div class="container py-3" style="max-width: 1320px;">
+    <div class="row mb-4 align-items-end">
+        <div class="col-12 col-lg-8">
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-1 rounded-pill font-mono-tech small mb-2">
+                <i class="fas fa-check-double me-1"></i> VERIFIED PRODUCTION &amp; PROJECT COMPETENCIES
+            </span>
+            <h1 class="page-title mb-2">Technical &amp; Analytical Skills</h1>
+            <p class="text-secondary lead fs-6 mb-0" style="max-width: 820px; line-height: 1.65;">
+                Grouped by domain for recruiters and engineering leads. Every skill below is backed by verified production deliverables at Black Piano, Pi Software Solutions, and Optum, or openly deployed systems on GCP Cloud Run and GitHub.
+            </p>
+        </div>
+        <div class="col-12 col-lg-4 text-lg-end mt-3 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
+            <a href="/resume" class="btn btn-primary btn-sm rounded-pill px-3 fw-semibold">
+                <i class="fas fa-file-alt me-1"></i> See How These Were Used → Resume
+            </a>
+            <a href="/projects" class="btn btn-outline-light btn-sm rounded-pill px-3">
+                <i class="fas fa-code-branch me-1"></i> Live Projects
+            </a>
         </div>
     </div>
 
+    <!-- ============================================================
+         Skill-to-Evidence Mapping (Analytical + AI Engineering Proof)
+         ============================================================ -->
+    <div class="row g-3 mb-4">
+        <!-- Pillar 1: Data Analytics, SQL & BI -->
+        <div class="col-12 col-md-6">
+            <div class="bento-card bento-card-emerald p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="font-mono-tech fw-bold small" style="color: #34d399;">
+                        <i class="fas fa-database me-1"></i> 1. DATA ANALYTICS, BIGQUERY ETL &amp; BI
+                    </span>
+                    <span class="badge bg-success-subtle text-success font-mono-tech" style="font-size: 0.68rem;">3.5+ Yrs Held Role</span>
+                </div>
+                <h5 class="text-white fw-bold mb-2 font-heading" style="font-size: 1.05rem;">SQL, BigQuery, Looker Studio, Tableau &amp; Python ETL</h5>
+                <ul class="list-unstyled small text-secondary mb-0" style="line-height: 1.65; font-size: 0.84rem;">
+                    <li class="mb-1"><i class="fas fa-check text-success me-1"></i> <strong class="text-white">Black Piano:</strong> Architected 18 automated ETL pipelines feeding BigQuery → Looker Studio dashboards across 18 industry sectors, plus seasonal/ad-hoc executive reporting.</li>
+                    <li class="mb-1"><i class="fas fa-check text-success me-1"></i> <strong class="text-white">Pi Software Solutions:</strong> Built production Python pipelines (<code>Pi-API</code>) for automated BigQuery access across 10+ client dashboards and authored 30+ US &amp; UK industry trend reports.</li>
+                    <li><i class="fas fa-check text-success me-1"></i> <strong class="text-white">Discrete &amp; SQL Systems:</strong> Engineered O(1) multi-quota ranking over 18,000+ MBBS candidates in <code>mSeat</code> (within 73 ranks of cutoff) and Turso/LibSQL + text-to-SQL analytics in <code>rAsh Score</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Pillar 2: Autonomous Multi-Agent & FastMCP -->
+        <div class="col-12 col-md-6">
+            <div class="bento-card p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="font-mono-tech fw-bold small" style="color: #818cf8;">
+                        <i class="fas fa-robot me-1"></i> 2. MULTI-AGENT ORCHESTRATION &amp; FASTMCP
+                    </span>
+                    <span class="badge bg-primary-subtle text-primary font-mono-tech" style="font-size: 0.68rem;">Production &amp; Open-Source</span>
+                </div>
+                <h5 class="text-white fw-bold mb-2 font-heading" style="font-size: 1.05rem;">Agent Swarms, Tool Calling, RAG &amp; Model Context Protocol</h5>
+                <ul class="list-unstyled small text-secondary mb-0" style="line-height: 1.65; font-size: 0.84rem;">
+                    <li class="mb-1"><i class="fas fa-check text-info me-1"></i> <strong class="text-white">Commercial Agents (Black Piano):</strong> Built a Gemini self-healing data-quality agent (lookup → LLM fallback → write-back → 3x retry → human email escalation) and a custom MCP blog tool.</li>
+                    <li class="mb-1"><i class="fas fa-check text-info me-1"></i> <strong class="text-white">Multi-Agent Harnesses:</strong> Shipped <code>MediFlow</code> (7-agent CMS MARx engine), <code>BugAgents</code> (15,317 tool calls across 22 hunt runs), <code>AgentSwarm</code> (34 unattended runs), and <code>JobAgents</code> (71 runs).</li>
+                    <li><i class="fas fa-check text-info me-1"></i> <strong class="text-white">Developer CLI &amp; MCP:</strong> Published <code>mylocalcli</code> v4.0.2 on npm (8 providers, 42 built-in tools, 38 dynamic skills, 5 sub-agents) and live JSON-RPC/SSE MCP servers at <code>/api/mcp</code>.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Pillar 3: Quantitative LLM Evaluation & Fine-Tuning -->
+        <div class="col-12 col-md-6">
+            <div class="bento-card bento-card-purple p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="font-mono-tech fw-bold small" style="color: #c084fc;">
+                        <i class="fas fa-scale-balanced me-1"></i> 3. QUANTITATIVE LLM EVALUATION &amp; FINE-TUNING
+                    </span>
+                    <span class="badge bg-info-subtle text-info font-mono-tech" style="font-size: 0.68rem;">AMD MI300X &amp; Multi-Model</span>
+                </div>
+                <h5 class="text-white fw-bold mb-2 font-heading" style="font-size: 1.05rem;">LoRA/QLoRA (20B), A/B Benchmarks &amp; Substrate Isolation</h5>
+                <ul class="list-unstyled small text-secondary mb-0" style="line-height: 1.65; font-size: 0.84rem;">
+                    <li class="mb-1"><i class="fas fa-check text-warning me-1"></i> <strong class="text-white">20B Fine-Tuning (BrandXY &amp; Drug Discovery):</strong> LoRA/QLoRA fine-tune of <code>GPT-OSS-20B</code> on AMD MI300X lifting brand recommendation from 25.5% baseline to 76.5% (+51% lift) under A/B evaluation.</li>
+                    <li class="mb-1"><i class="fas fa-check text-warning me-1"></i> <strong class="text-white">Multi-Model Index (rAsh Score):</strong> Daily evaluation of 300 brands across 20 cohorts and 4 providers (ChatGPT, Gemini, Claude, Groq) on a 4-dimension weighted rubric (40/30/20/10%).</li>
+                    <li><i class="fas fa-check text-warning me-1"></i> <strong class="text-white">Controlled CLI Study (pRash):</strong> 6 coding CLIs × 2 rounds isolating model-vs-CLI variables, exposing an 84 static → 68 live score inversion via headless Chrome runtime tests.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Pillar 4: GCP Cloud Infrastructure & Forensic Guardrails -->
+        <div class="col-12 col-md-6">
+            <div class="bento-card bento-card-red p-4 h-100">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="font-mono-tech fw-bold small" style="color: #f87171;">
+                        <i class="fas fa-shield-alt me-1"></i> 4. GCP CLOUD INFRASTRUCTURE &amp; AUDIT GUARDRAILS
+                    </span>
+                    <span class="badge bg-danger-subtle text-danger font-mono-tech" style="font-size: 0.68rem;">9 Yrs CMS Audit + GCP</span>
+                </div>
+                <h5 class="text-white fw-bold mb-2 font-heading" style="font-size: 1.05rem;">Google Cloud Run, Docker, Hash Ledgers &amp; Cost Gates</h5>
+                <ul class="list-unstyled small text-secondary mb-0" style="line-height: 1.65; font-size: 0.84rem;">
+                    <li class="mb-1"><i class="fas fa-check text-danger me-1"></i> <strong class="text-white">GCP Cloud Run Deployment:</strong> Containerized Flask + Gunicorn service in <code>asia-south1</code> with Cloud Build, Artifact Registry, Secret Manager, and Cloudflare CDN/WAF.</li>
+                    <li class="mb-1"><i class="fas fa-check text-danger me-1"></i> <strong class="text-white">Deterministic Cost &amp; Promotion Gates:</strong> 29,091 job scores with 0 model calls and 8/8 seeded fabrications caught in <code>JobAgents</code>; 2 promoted / 34 refused reports in <code>BugAgents</code>.</li>
+                    <li><i class="fas fa-check text-danger me-1"></i> <strong class="text-white">Forensic Ledgers &amp; CMS Compliance:</strong> 9 years of federal CMS auditing at Optum applied to 35/35 intact SHA-256 hash-chained ledgers and 22/25 audited claims in <code>AgentSwarm</code>.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         Complete Approved Skills Inventory (Grouped by Domain)
+         ============================================================ -->
     <div class="row">
         {# Render whatever categories the route passes — no hardcoded category
            names, so a renamed or added key in the data module still shows up. #}

@@ -1,8 +1,7 @@
 """
 Flask Portfolio Website
-A Flask + Jinja2 website. Runs in a Cloudflare Container (see Dockerfile,
-cloudflare/worker.js, wrangler.jsonc) behind a Worker that proxies every
-request to it.
+A Flask + Jinja2 website running in a Docker image behind gunicorn on Google
+Cloud Run (asia-south1), with Cloudflare DNS/CDN/analytics in front.
 
 Architecture:
   - api/data/projects.py      → Project, skill, experience constants
@@ -204,7 +203,9 @@ def resume():
                          projects=RESUME_PROJECTS,
                          skills=RESUME_SKILLS,
                          role_definitions=get_all_roles(),
-                         current_role=None)
+                         current_role=None,
+                         contact=CONTACT,
+                         education=EDUCATION)
 
 @app.route('/resume/<role_slug>')
 def resume_role(role_slug):
@@ -215,7 +216,9 @@ def resume_role(role_slug):
                              projects=RESUME_PROJECTS,
                              skills=RESUME_SKILLS,
                              role_definitions=get_all_roles(),
-                             current_role=None)
+                             current_role=None,
+                             contact=CONTACT,
+                             education=EDUCATION)
     return render_template('resume.html',
                          experiences=resume_data['experiences'],
                          projects=resume_data['projects'],

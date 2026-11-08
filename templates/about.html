@@ -1,45 +1,52 @@
 {% extends "base.html" %}
 
-{% block title %}Prashanth Kumar Kadasi | AI Systems Engineer (Target) & Data Specialist{% endblock %}
+{% block title %}Prashanth Kumar Kadasi | Data Analyst & AI Systems Engineer (Target) | GCP & Multi-Agent Architecture{% endblock %}
 
-{% block description %}Prashanth Kumar Kadasi — AI Systems Engineer (Target) & Production Data Specialist in Hyderabad (3.5+ years in data/analytics & AI, 9 years CMS compliance auditing at Optum). Builds autonomous multi-agent systems, deterministic LLM evaluation harnesses, and scalable cloud pipelines.{% endblock %}
+{% block description %}Prashanth Kumar Kadasi — Data Analyst (3.5+ years in BigQuery, SQL, Python & AI) and former Optum CMS Compliance Auditor (9 years), transitioning into AI Systems & Analytics Engineering. Hosted on Google Cloud Run (GCP).{% endblock %}
 
 {% block content %}
 <div class="container-fluid px-3 px-lg-5" style="max-width: 1400px; position: relative; z-index: 1;">
 
     <!-- ============================================================
-         1. Hero Section — Production AI Systems & Engineering Rigor
+         1. Hero Section — Analytical Rigor + Production AI Engineering
          ============================================================ -->
-    <div class="row justify-content-center text-center py-4 py-lg-5 mb-3">
-        <div class="col-12 col-xl-10">
-            <!-- Lab Status Badge -->
-            <div class="d-inline-flex align-items-center mb-3 px-3 py-1 rounded-pill" style="background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(99, 102, 241, 0.3);">
-                <span class="pulse-dot me-2"></span>
-                <span class="font-mono-tech small text-white fw-semibold" style="letter-spacing: 0.5px; font-size: 0.75rem;">
-                    <i class="fas fa-bullseye text-warning me-1"></i> TARGET: AI SYSTEMS ENGINEER • FOUNDING AI/DATA ENGINEER • HYDERABAD &amp; GLOBAL REMOTE
+    <div class="row justify-content-center text-center py-4 py-lg-5 mb-2">
+        <div class="col-12 col-xl-11">
+            <!-- Status & GCP Hosting Badge -->
+            <div class="d-inline-flex flex-wrap justify-content-center align-items-center gap-2 mb-3 px-3 py-1 rounded-pill" style="background: rgba(99, 102, 241, 0.12); border: 1px solid rgba(99, 102, 241, 0.32);">
+                <span class="pulse-dot"></span>
+                <span class="font-mono-tech small text-white fw-semibold" style="letter-spacing: 0.4px; font-size: 0.74rem;">
+                    <i class="fas fa-bullseye text-warning me-1"></i> DATA ANALYST (3.5+ YRS) &amp; CMS AUDITOR (9 YRS) → TARGET: AI SYSTEMS &amp; ANALYTICS ENGINEER
+                </span>
+                <span class="badge rounded-pill font-mono-tech" style="background: rgba(16, 185, 129, 0.18); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.35); font-size: 0.68rem;">
+                    <i class="fas fa-cloud me-1"></i> GCP Cloud Run (asia-south1)
                 </span>
             </div>
 
             <!-- Name -->
-            <h1 class="display-4 fw-bold mb-2 font-heading" style="letter-spacing: -1px; background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 50%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            <h1 class="display-4 fw-bold mb-2 font-heading" style="letter-spacing: -1px; background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 55%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                 Prashanth Kumar Kadasi
             </h1>
 
             <!-- Dynamic Role Typing -->
             <div class="fs-4 mb-3 fw-bold font-heading" style="color: #818cf8; min-height: 2.2rem;">
-                <span class="typing-text" id="typingText"></span><span class="typing-cursor" style="display: inline-block; width: 3px; height: 1.3rem; background: #818cf8; margin-left: 4px; vertical-align: middle; animation: live-pulse 1s infinite;"></span>
+                <span class="typing-text" id="typingText">Data Analyst → AI Systems Engineer (Target)</span><span class="typing-cursor" style="display: inline-block; width: 3px; height: 1.3rem; background: #818cf8; margin-left: 4px; vertical-align: middle; animation: live-pulse 1s infinite;"></span>
             </div>
 
-            <!-- Value proposition: crisp, authoritative, backed by verified metrics -->
-            <p class="lead text-secondary mx-auto mb-4" style="max-width: 900px; font-size: 1.12rem; line-height: 1.75;">
-                I engineer autonomous multi-agent systems, deterministic LLM evaluation harnesses, and production data pipelines where every output is provable and cost-governed:
-                <a href="https://bug.kprsnt.in" target="_blank" class="text-white text-decoration-none border-bottom border-secondary">BugAgents</a>
-                ran 15,317 tool calls against live bounty targets and produced 8 findings (5 High/Critical) with reproducible PoCs;
-                <a href="https://agent.kprsnt.in" target="_blank" class="text-white text-decoration-none border-bottom border-secondary">AgentSwarm</a>
-                kept 35/35 hash-chained ledgers intact across 34 unattended runs;
-                <a href="https://job.kprsnt.in" target="_blank" class="text-white text-decoration-none border-bottom border-secondary">JobAgents</a>
-                ranked 9,697 jobs into 7,665 distinct roles with zero model calls.
-                Backed by 3.5+ years in data analytics/AI and 9 years of federal CMS compliance auditing at Optum — I build AI architectures engineered for enterprise reliability, not fragile demos.
+            <!-- Dual-Pillar Value Proposition: Analytical Engineering + AI Systems -->
+            <p class="lead text-secondary mx-auto mb-4" style="max-width: 960px; font-size: 1.08rem; line-height: 1.75;">
+                I combine <strong class="text-white">production data analytics &amp; BigQuery ETL engineering</strong>
+                ({{ stats.snapshot.etl_pipelines }} automated sector pipelines &amp; a Gemini self-healing data-quality agent at <span class="text-white">Black Piano</span>;
+                {{ stats.snapshot.industry_reports }} US/UK industry reports &amp; {{ stats.snapshot.client_dashboards }} client dashboards at <span class="text-white">Pi Software</span>)
+                with <strong class="text-white">verifiable multi-agent AI systems &amp; quantitative evaluation harnesses</strong>:
+                <a href="https://rashscore.live" target="_blank" rel="noopener" class="text-white text-decoration-none border-bottom border-secondary">rAsh Score</a>
+                evaluates {{ stats.snapshot.rash_brands }} brands across {{ stats.snapshot.rash_cohorts }} cohorts and {{ stats.snapshot.rash_providers }} LLMs daily;
+                <a href="https://job.kprsnt.in" target="_blank" rel="noopener" class="text-white text-decoration-none border-bottom border-secondary">JobAgents</a>
+                ranked {{ "{:,}".format(stats.snapshot.jobs_sourced) }} jobs into {{ "{:,}".format(stats.snapshot.distinct_roles) }} roles with {{ "{:,}".format(stats.snapshot.scores_computed) }} deterministic scores at zero model calls;
+                <a href="https://bug.kprsnt.in" target="_blank" rel="noopener" class="text-white text-decoration-none border-bottom border-secondary">BugAgents</a>
+                ran {{ "{:,}".format(stats.snapshot.bug_tool_calls) }} tool calls producing {{ stats.snapshot.findings }} findings ({{ stats.snapshot.findings_high_critical }} High/Critical) behind a strict verification gate; and
+                <a href="https://agent.kprsnt.in" target="_blank" rel="noopener" class="text-white text-decoration-none border-bottom border-secondary">AgentSwarm</a>
+                maintained {{ stats.snapshot.ledger_chains }} hash-chained audit ledgers across {{ stats.snapshot.swarm_runs }} unattended runs.
             </p>
 
             <!-- Action CTAs: Direct hiring actions -->
@@ -50,24 +57,30 @@
                 <a href="mailto:interview@kprsnt.in?subject=Job%20Opportunity%20/%20Interview%20Invitation%20-%20Prashanth" class="btn btn-outline-success px-4 py-2 fw-semibold text-decoration-none" style="border-radius: 10px; font-size: 0.95rem;">
                     <i class="fas fa-paper-plane me-2"></i> Direct Interview Invite
                 </a>
+                <a href="#analytical-systems" class="btn-lab-ghost text-decoration-none px-3 py-2">
+                    <i class="fas fa-chart-bar me-2 text-warning"></i> Analytical &amp; BI Proof
+                </a>
                 <a href="#systems-fleet" class="btn-lab-ghost text-decoration-none px-3 py-2">
-                    <i class="fas fa-microchip me-2 text-info"></i> Deployed Systems Fleet
+                    <i class="fas fa-microchip me-2 text-info"></i> AI Agent Fleet
                 </a>
                 <button type="button" class="btn btn-outline-info px-3 py-2 fw-semibold" style="border-radius: 10px; font-size: 0.9rem;" onclick="document.getElementById('chat-bubble')?.click();">
                     <i class="fas fa-robot me-1"></i> Ask AI Persona
                 </button>
             </div>
 
-            <!-- Social Links Strip -->
+            <!-- Social & Architecture Links Strip -->
             <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
-                <a href="https://github.com/kprsnt2" target="_blank" class="telemetry-pill text-decoration-none">
-                    <i class="fab fa-github text-white me-1"></i> GitHub (10+ Repos)
+                <a href="https://github.com/kprsnt2" target="_blank" rel="noopener" class="telemetry-pill text-decoration-none">
+                    <i class="fab fa-github text-white me-1"></i> GitHub (kprsnt2)
                 </a>
-                <a href="https://www.linkedin.com/in/prashanth-kumar-kadasi-b5281765/" target="_blank" class="telemetry-pill text-decoration-none">
+                <a href="https://www.linkedin.com/in/prashanth-kumar-kadasi-b5281765/" target="_blank" rel="noopener" class="telemetry-pill text-decoration-none">
                     <i class="fab fa-linkedin text-info me-1"></i> LinkedIn Profile
                 </a>
-                <a href="https://huggingface.co/kprsnt" target="_blank" class="telemetry-pill text-decoration-none">
-                    <span class="me-1">🤗</span> HuggingFace
+                <a href="https://huggingface.co/kprsnt" target="_blank" rel="noopener" class="telemetry-pill text-decoration-none">
+                    <span class="me-1">🤗</span> HuggingFace (20B Fine-Tunes)
+                </a>
+                <a href="/mcp" class="telemetry-pill text-decoration-none">
+                    <i class="fas fa-plug text-warning me-1"></i> Live FastMCP Server
                 </a>
                 <a href="mailto:interview@kprsnt.in" class="telemetry-pill text-decoration-none">
                     <i class="fas fa-envelope text-success me-1"></i> interview@kprsnt.in
@@ -75,7 +88,7 @@
             </div>
 
             <!-- Live signals from this repo -->
-            <div class="pill-row-label">Live from this repo</div>
+            <div class="pill-row-label">Live from this GCP Cloud Run service &amp; repository</div>
             <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
                 <span class="telemetry-pill telemetry-pill-active">
                     <span class="pulse-dot"></span> {{ stats.live.repos_scanned }} repos · {{ "{:,}".format(stats.live.commits_tracked) }} commits tracked
@@ -98,23 +111,26 @@
                 </span>
             </div>
 
-            <!-- All-time aggregates -->
-            <div class="pill-row-label">All-time, from the project repos</div>
+            <!-- All-time aggregates (Analytical + AI Engineering) -->
+            <div class="pill-row-label">Verified all-time totals across production &amp; project records</div>
             <div class="d-flex flex-wrap justify-content-center gap-2 mb-2">
                 <span class="telemetry-pill">
-                    <i class="fas fa-database text-warning"></i> {{ "{:,}".format(stats.snapshot.jobs_sourced) }} jobs → {{ "{:,}".format(stats.snapshot.distinct_roles) }} distinct roles
+                    <i class="fas fa-chart-pie text-warning"></i> {{ stats.snapshot.etl_pipelines }} BigQuery → Looker Studio ETL pipelines · {{ stats.snapshot.industry_reports }} US/UK reports
                 </span>
                 <span class="telemetry-pill">
-                    <i class="fas fa-calculator text-info"></i> {{ "{:,}".format(stats.snapshot.scores_computed) }} scores · 0 model calls
+                    <i class="fas fa-scale-balanced text-info"></i> {{ stats.snapshot.rash_brands }} brands × {{ stats.snapshot.rash_cohorts }} cohorts × {{ stats.snapshot.rash_providers }} LLMs (rAsh Score)
+                </span>
+                <span class="telemetry-pill">
+                    <i class="fas fa-graduation-cap text-success"></i> {{ stats.snapshot.mseat_candidates }} MBBS candidates · within {{ stats.snapshot.mseat_rank_delta }} ranks (mSeat)
+                </span>
+                <span class="telemetry-pill">
+                    <i class="fas fa-calculator text-info"></i> {{ "{:,}".format(stats.snapshot.jobs_sourced) }} jobs → {{ "{:,}".format(stats.snapshot.scores_computed) }} scores · 0 model calls
                 </span>
                 <span class="telemetry-pill">
                     <i class="fas fa-bug text-danger"></i> {{ "{:,}".format(stats.snapshot.bug_tool_calls) }} tool calls · {{ stats.snapshot.findings }} findings ({{ stats.snapshot.findings_high_critical }} High/Critical)
                 </span>
                 <span class="telemetry-pill">
-                    <i class="fas fa-link text-success"></i> {{ stats.snapshot.ledger_chains }} ledger chains · {{ stats.snapshot.oracle_violations }} oracle violations
-                </span>
-                <span class="telemetry-pill">
-                    <i class="fas fa-shield-alt text-primary"></i> {{ stats.snapshot.fabrications_caught }} seeded fabrications caught
+                    <i class="fas fa-link text-success"></i> {{ stats.snapshot.ledger_chains }} ledger chains · {{ stats.snapshot.oracle_violations }} oracle violations · {{ stats.snapshot.fabrications_caught }} seeded fabrications caught
                 </span>
             </div>
             <p class="text-secondary mb-2" style="font-size: 0.72rem;">{{ stats.snapshot_note }} Rendered {{ stats.generated_at }}.</p>
@@ -122,72 +138,131 @@
     </div>
 
     <!-- ============================================================
-         Recruiter & Founder Fast-Track Card (30-Second Snapshot)
+         Recruiter & Hiring Manager Fast-Track Card (Dual-Track Fit Matrix)
          ============================================================ -->
-    <div class="recruiter-fast-track p-4 p-lg-4 mb-5 text-start">
-        <div class="row g-4 align-items-center">
+    <div class="recruiter-fast-track p-4 p-lg-4 mb-5 text-start" id="recruiter-evaluation">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+            <div class="d-flex align-items-center flex-wrap gap-2">
+                <span class="badge bg-primary px-3 py-1 text-white fw-bold font-mono-tech" style="font-size: 0.75rem;">
+                    <i class="fas fa-briefcase me-1"></i> HIRING MANAGER &amp; RECRUITER FAST-TRACK
+                </span>
+                <span class="text-secondary small font-mono-tech">| 30-Second Dual-Skill Evaluation (Analytical + AI Engineering)</span>
+            </div>
+
+            <!-- Interactive Role Lens Switcher -->
+            <div class="d-flex flex-wrap gap-1" role="group" aria-label="Role evaluation lens">
+                <button type="button" class="lens-btn active" onclick="switchRoleLens('all', this)">
+                    <i class="fas fa-layer-group me-1"></i> Combined View
+                </button>
+                <button type="button" class="lens-btn" onclick="switchRoleLens('analytics', this)">
+                    <i class="fas fa-chart-line me-1"></i> Data &amp; Analytics Lens
+                </button>
+                <button type="button" class="lens-btn" onclick="switchRoleLens('ai', this)">
+                    <i class="fas fa-robot me-1"></i> AI Systems Lens
+                </button>
+            </div>
+        </div>
+
+        <div class="row g-4 align-items-stretch">
+            <!-- Left 8 cols: Role Metadata + Dual-Track Proof Columns -->
             <div class="col-12 col-xl-8">
-                <div class="d-flex align-items-center gap-2 mb-3">
-                    <span class="badge bg-primary px-3 py-1 text-white fw-bold font-mono-tech" style="font-size: 0.75rem;">
-                        <i class="fas fa-briefcase me-1"></i> RECRUITER &amp; FOUNDER FAST-TRACK
-                    </span>
-                    <span class="text-secondary small font-mono-tech">| 30-Second Candidate Evaluation</span>
-                </div>
-                
                 <div class="row g-3 mb-3">
                     <div class="col-12 col-md-6">
                         <div class="text-secondary small fw-bold font-mono-tech text-uppercase mb-1" style="font-size: 0.72rem;">
-                            <i class="fas fa-bullseye text-info me-1"></i> Target Roles
+                            <i class="fas fa-id-badge text-info me-1"></i> Held Title &amp; Target Direction
                         </div>
-                        <div class="text-white fw-semibold small">
-                            AI Systems Engineer (Target) • Autonomous Agent Architect • Founding AI/Data Engineer
+                        <div class="text-white fw-semibold small" style="line-height: 1.5;">
+                            <strong>Held:</strong> Data Analyst (Black Piano, Pi Software) &amp; CMS Auditor (Optum)<br>
+                            <strong>Target:</strong> Data Analyst → AI Systems Engineer &amp; Senior Analytics Engineer
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="text-secondary small fw-bold font-mono-tech text-uppercase mb-1" style="font-size: 0.72rem;">
-                            <i class="fas fa-map-marker-alt text-danger me-1"></i> Location &amp; Availability
+                            <i class="fas fa-server text-success me-1"></i> Location, Cloud &amp; Availability
                         </div>
-                        <div class="text-white fw-semibold small">
-                            Hyderabad, India • Open to Global Remote &amp; Hybrid • Notice: Immediate / Short
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="text-secondary small fw-bold font-mono-tech text-uppercase mb-1" style="font-size: 0.72rem;">
-                            <i class="fas fa-layer-group text-success me-1"></i> Core Production Stack
-                        </div>
-                        <div class="d-flex flex-wrap gap-1 mt-1">
-                            <span class="recruiter-chip"><i class="fab fa-python"></i> Python (FastAPI/Flask)</span>
-                            <span class="recruiter-chip"><i class="fas fa-robot"></i> Multi-Agent Swarms &amp; FastMCP</span>
-                            <span class="recruiter-chip"><i class="fas fa-shield-alt"></i> Deterministic Oracles &amp; Guardrails</span>
-                            <span class="recruiter-chip"><i class="fas fa-brain"></i> LLM Evaluation &amp; LoRA Fine-Tuning</span>
-                            <span class="recruiter-chip"><i class="fab fa-docker"></i> Docker &amp; GCP Cloud Run</span>
-                            <span class="recruiter-chip"><i class="fas fa-database"></i> BigQuery, PostgreSQL, SQLite</span>
-                            <span class="recruiter-chip"><i class="fas fa-code-branch"></i> GitHub Actions CI/CD</span>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="p-3 rounded" style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.07); font-size: 0.84rem; line-height: 1.6; color: #cbd5e1;">
-                            <strong class="text-white"><i class="fas fa-award text-warning me-1"></i> The Unfair Advantage for Founders:</strong>
-                            9 years of federal CMS compliance auditing at Optum means zero-tolerance for hallucinations, phantom artifacts, or unchecked API burn. Built systems with 35/35 hash-chained ledgers and 0 model calls for non-generative tasks.
+                        <div class="text-white fw-semibold small" style="line-height: 1.5;">
+                            Hyderabad, India (Global Remote &amp; Hybrid)<br>
+                            <strong>GCP Stack:</strong> Cloud Run (Docker/Gunicorn), BigQuery, Looker Studio, Secret Manager
                         </div>
                     </div>
                 </div>
+
+                <!-- Dual-Track Evidence Columns -->
+                <div class="row g-3 mb-3">
+                    <!-- Pillar 1: Analytical & Data Engineering -->
+                    <div class="col-12 col-md-6 lens-panel" data-lens-panel="analytics">
+                        <div class="p-3 rounded h-100" style="background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.22);">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="font-mono-tech fw-bold small" style="color: #34d399; font-size: 0.76rem;">
+                                    <i class="fas fa-database me-1"></i> PILLAR 1: ANALYTICAL &amp; DATA ENGINEERING
+                                </span>
+                                <span class="badge bg-success-subtle text-success font-mono-tech" style="font-size: 0.65rem;">3.5+ Yrs Held + 9 Yrs Audit</span>
+                            </div>
+                            <ul class="list-unstyled mb-0 small text-secondary" style="font-size: 0.81rem; line-height: 1.6;">
+                                <li class="mb-1"><i class="fas fa-check text-success me-1"></i> <strong class="text-white">18 Automated BigQuery → Looker Studio ETLs:</strong> End-to-end sector pipelines &amp; ad-hoc executive reporting at Black Piano.</li>
+                                <li class="mb-1"><i class="fas fa-check text-success me-1"></i> <strong class="text-white">30+ US/UK Market Reports &amp; 10+ Dashboards:</strong> Production Python (<code>Pi-API</code>) to BigQuery pipelines at Pi Software Solutions.</li>
+                                <li class="mb-1"><i class="fas fa-check text-success me-1"></i> <strong class="text-white">Multi-Model &amp; Discrete Analytics:</strong> 300-brand × 20-cohort rubric in <code>rAsh Score</code> (Turso/LibSQL + text-to-SQL) &amp; 18,000+ candidate O(1) simulator in <code>mSeat</code>.</li>
+                                <li><i class="fas fa-check text-success me-1"></i> <strong class="text-white">Zero-Tolerance Data Quality:</strong> 9 years auditing federal Medicare enrollment data at Optum (CMS compliance).</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 2: AI Systems & Agentic Engineering -->
+                    <div class="col-12 col-md-6 lens-panel" data-lens-panel="ai">
+                        <div class="p-3 rounded h-100" style="background: rgba(99, 102, 241, 0.06); border: 1px solid rgba(99, 102, 241, 0.25);">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="font-mono-tech fw-bold small" style="color: #818cf8; font-size: 0.76rem;">
+                                    <i class="fas fa-microchip me-1"></i> PILLAR 2: AI SYSTEMS &amp; AGENTIC ENGINEERING
+                                </span>
+                                <span class="badge bg-primary-subtle text-primary font-mono-tech" style="font-size: 0.65rem;">12 Live Deployments</span>
+                            </div>
+                            <ul class="list-unstyled mb-0 small text-secondary" style="font-size: 0.81rem; line-height: 1.6;">
+                                <li class="mb-1"><i class="fas fa-check text-info me-1"></i> <strong class="text-white">Commercial AI Pipelines (Black Piano):</strong> Gemini self-healing data-quality agent (3x retry + email escalation), custom MCP blog tool, and weekly AI insights pipeline.</li>
+                                <li class="mb-1"><i class="fas fa-check text-info me-1"></i> <strong class="text-white">Deterministic Cost &amp; Verification Gates:</strong> 29,091 job scores with 0 model calls (<code>JobAgents</code>); 2 promoted / 34 refused bug reports (<code>BugAgents</code>).</li>
+                                <li class="mb-1"><i class="fas fa-check text-info me-1"></i> <strong class="text-white">Cryptographic Audit Ledgers:</strong> 35/35 intact SHA-256 chains &amp; 22/25 audited claims in <code>AgentSwarm</code>; 7-agent CMS MARx engine in <code>MediFlow</code>.</li>
+                                <li><i class="fas fa-check text-info me-1"></i> <strong class="text-white">20B Fine-Tuning &amp; CLI Tooling:</strong> <code>GPT-OSS-20B</code> LoRA on AMD MI300X (+51% lift in <code>BrandXY</code>) &amp; <code>mylocalcli</code> v4.0.2 on npm.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Production Stack Chips -->
+                <div class="d-flex flex-wrap gap-1">
+                    <span class="recruiter-chip"><i class="fab fa-python"></i> Python (FastAPI / Flask / Pandas / PyTorch)</span>
+                    <span class="recruiter-chip"><i class="fas fa-database"></i> SQL, BigQuery, SQLite, Turso/LibSQL</span>
+                    <span class="recruiter-chip"><i class="fas fa-chart-column"></i> Looker Studio, Tableau, ETL Orchestration</span>
+                    <span class="recruiter-chip"><i class="fas fa-robot"></i> Multi-Agent Swarms &amp; FastMCP (JSON-RPC/SSE)</span>
+                    <span class="recruiter-chip"><i class="fas fa-shield-alt"></i> Hash-Chained Ledgers &amp; Deterministic Oracles</span>
+                    <span class="recruiter-chip"><i class="fas fa-brain"></i> LoRA/QLoRA Fine-Tuning &amp; A/B Eval Harnesses</span>
+                    <span class="recruiter-chip"><i class="fab fa-google"></i> GCP Cloud Run, Docker &amp; GitHub Actions CI/CD</span>
+                </div>
             </div>
-            
-            <div class="col-12 col-xl-4 text-xl-end">
+
+            <!-- Right 4 cols: Fast Hiring Actions & Architecture Summary -->
+            <div class="col-12 col-xl-4 d-flex flex-column justify-content-between">
+                <div class="p-3 rounded mb-3" style="background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.08); font-size: 0.82rem; line-height: 1.6; color: #cbd5e1;">
+                    <div class="font-mono-tech text-warning fw-bold small mb-1" style="font-size: 0.72rem;">
+                        <i class="fas fa-award me-1"></i> WHY THIS COMBINATION WORKS IN PRODUCTION
+                    </div>
+                    Most AI demos fail on data hygiene, silent hallucinations, or runaway token spend. My background pairs <strong>3.5+ years of production SQL/BigQuery analytics</strong> and <strong>9 years of federal CMS compliance auditing</strong> with <strong>autonomous agent engineering</strong> — every pipeline is schema-validated, cost-gated, and backed by an external audit trail.
+                </div>
+
                 <div class="d-flex flex-column gap-2">
                     <a href="/resume" class="btn btn-primary fw-bold py-2 px-3 text-center" style="border-radius: 10px; box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);">
-                        <i class="fas fa-file-download me-2"></i> View ATS Resume
+                        <i class="fas fa-file-download me-2"></i> View ATS Resume &amp; PDF Download
                     </a>
                     <a href="mailto:interview@kprsnt.in?subject=Job%20Opportunity%20/%20Interview%20Invitation%20-%20Prashanth" class="btn btn-outline-light fw-semibold py-2 px-3 text-center" style="border-radius: 10px;">
                         <i class="fas fa-envelope me-2 text-success"></i> Direct Email: interview@kprsnt.in
                     </a>
-                    <div class="d-flex gap-2 justify-content-center justify-content-xl-end mt-1">
-                        <a href="https://www.linkedin.com/in/prashanth-kumar-kadasi-b5281765/" target="_blank" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-                            <i class="fab fa-linkedin text-info me-1"></i> LinkedIn
+                    <div class="d-flex gap-2 justify-content-center mt-1">
+                        <a href="/projects" class="btn btn-sm btn-outline-info rounded-pill px-3 flex-fill">
+                            <i class="fas fa-code-branch me-1"></i> All Projects
                         </a>
-                        <a href="https://github.com/kprsnt2" target="_blank" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-                            <i class="fab fa-github text-white me-1"></i> GitHub (10+ Repos)
+                        <a href="/skills" class="btn btn-sm btn-outline-secondary rounded-pill px-3 flex-fill">
+                            <i class="fas fa-check-double me-1"></i> Skills Matrix
+                        </a>
+                        <a href="/mcp" class="btn btn-sm btn-outline-warning rounded-pill px-3 flex-fill">
+                            <i class="fas fa-plug me-1"></i> MCP Live
                         </a>
                     </div>
                 </div>
@@ -196,22 +271,203 @@
     </div>
 
     <!-- ============================================================
-         2. Flagship Autonomous Systems Fleet (Bento Grid)
+         2. Analytical Engineering, BigQuery ETL & Evaluation Systems
          ============================================================ -->
-    <div id="systems-fleet" class="mb-5 pt-3">
+    <div id="analytical-systems" class="mb-5 pt-2">
         <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
             <div>
-                <div class="d-inline-flex align-items-center mb-1 font-mono-tech small text-info">
-                    <i class="fas fa-microchip me-2"></i> PRODUCTION SYSTEMS & RESEARCH HARNESSES
+                <div class="d-inline-flex align-items-center mb-1 font-mono-tech small text-warning">
+                    <i class="fas fa-chart-line me-2"></i> TRACK 1: ANALYTICAL ENGINEERING, BIGQUERY ETL &amp; QUANTITATIVE BENCHMARKS
                 </div>
-                <h2 class="h3 fw-bold text-white mb-0 font-heading">Autonomous Multi-Agent Fleet</h2>
+                <h2 class="h3 fw-bold text-white mb-0 font-heading">Production Data Pipelines &amp; Empirical Evaluation Harnesses</h2>
             </div>
-            <div>
-                <a href="/dashboard" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
-                    <i class="fas fa-chart-line me-1 text-info"></i> Open Fleet Command Center →
+            <div class="d-flex gap-2 mt-2 mt-md-0">
+                <a href="/plotter" class="btn btn-sm btn-outline-warning rounded-pill px-3">
+                    <i class="fas fa-chart-area me-1"></i> Interactive DataForge Plotter →
+                </a>
+                <a href="/skills" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                    <i class="fas fa-database me-1 text-info"></i> Full Data &amp; AI Stack →
                 </a>
             </div>
         </div>
+
+        <div class="row g-4">
+            <!-- Analytical Card 1: 18 Sector Dashboards & Self-Healing BigQuery ETL -->
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="bento-card bento-card-emerald h-100 p-4 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <span class="badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.72rem; padding: 4px 10px;">
+                            <i class="fas fa-database me-1"></i> BigQuery &amp; BI
+                        </span>
+                        <span class="font-mono-tech text-success fw-bold small" style="font-size: 0.72rem;">● EMPLOYER WORK</span>
+                    </div>
+
+                    <h4 class="text-white fw-bold mb-2 font-heading" style="font-size: 1.12rem;">18-Sector ETL &amp; Self-Healing Data Agent</h4>
+                    <p class="text-secondary small mb-3" style="line-height: 1.6; font-size: 0.84rem;">
+                        Architected 18 automated ETL pipelines feeding <strong>BigQuery → Looker Studio</strong> across 18 sectors at Black Piano, plus a Gemini self-healing agent that resolves missing brand domains with 3x retry and human escalation.
+                    </p>
+
+                    <div class="p-2 mb-3 rounded font-mono-tech small" style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.74rem;">
+                        <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
+                            <span class="text-muted">Automated ETLs</span>
+                            <span class="text-white fw-bold">{{ stats.snapshot.etl_pipelines }} Sector Pipelines</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
+                            <span class="text-muted">Prior BI Delivery</span>
+                            <span class="text-success fw-bold">{{ stats.snapshot.client_dashboards }} Dashboards · {{ stats.snapshot.industry_reports }} Reports</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1">
+                            <span class="text-muted">AI Automation</span>
+                            <span class="text-info fw-bold">Self-Healing Agent + MCP</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="https://dashboard.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-success flex-fill fw-semibold" style="border-radius: 8px;">
+                            Live Dashboards ↗
+                        </a>
+                        <a href="/resume" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px;">
+                            Role Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytical Card 2: rAsh Score -->
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="bento-card h-100 p-4 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <span class="badge" style="background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); font-size: 0.72rem; padding: 4px 10px;">
+                            <i class="fas fa-chart-bar me-1"></i> rAsh Score
+                        </span>
+                        <span class="font-mono-tech text-info fw-bold small" style="font-size: 0.72rem;">● DAILY PIPELINE</span>
+                    </div>
+
+                    <h4 class="text-white fw-bold mb-2 font-heading" style="font-size: 1.12rem;">Multi-Model Brand Visibility Index</h4>
+                    <p class="text-secondary small mb-3" style="line-height: 1.6; font-size: 0.84rem;">
+                        Standardised evaluation harness querying <strong>ChatGPT, Gemini, Claude &amp; Groq</strong> across 300 brands in 20 cohorts. Daily GitHub Actions write into Turso (LibSQL) with a text-to-SQL analyst chat and weekly AI reports.
+                    </p>
+
+                    <div class="p-2 mb-3 rounded font-mono-tech small" style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.74rem;">
+                        <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
+                            <span class="text-muted">Coverage</span>
+                            <span class="text-white fw-bold">{{ stats.snapshot.rash_brands }} Brands · {{ stats.snapshot.rash_cohorts }} Cohorts</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
+                            <span class="text-muted">Weighted Rubric</span>
+                            <span class="text-info fw-bold">4 Dimensions (40/30/20/10%)</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1">
+                            <span class="text-muted">Analytics Surface</span>
+                            <span class="text-success fw-bold">Turso SQL + Debate Arena</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="https://rashscore.live" target="_blank" rel="noopener" class="btn btn-sm btn-outline-info flex-fill fw-semibold" style="border-radius: 8px;">
+                            rashscore.live ↗
+                        </a>
+                        <a href="https://github.com/kprsnt2/BrandScore" target="_blank" rel="noopener" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px;">
+                            GitHub ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytical Card 3: mSeat Combinatorial Simulator -->
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="bento-card bento-card-purple h-100 p-4 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <span class="badge" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); font-size: 0.72rem; padding: 4px 10px;">
+                            <i class="fas fa-calculator me-1"></i> mSeat Engine
+                        </span>
+                        <span class="font-mono-tech text-warning fw-bold small" style="font-size: 0.72rem;">● VALIDATED</span>
+                    </div>
+
+                    <h4 class="text-white fw-bold mb-2 font-heading" style="font-size: 1.12rem;">Discrete Allocation &amp; O(1) Ranking</h4>
+                    <p class="text-secondary small mb-3" style="line-height: 1.6; font-size: 0.84rem;">
+                        Combinatorial seat allocation simulator for <strong>18,000+ MBBS candidates</strong> across 59 colleges under multi-dimensional reservation rules. Validated against official KNRUHS 2026 Phase 1 results within 73 ranks.
+                    </p>
+
+                    <div class="p-2 mb-3 rounded font-mono-tech small" style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.74rem;">
+                        <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
+                            <span class="text-muted">Simulation Scale</span>
+                            <span class="text-white fw-bold">{{ stats.snapshot.mseat_candidates }} · {{ stats.snapshot.mseat_colleges }} Colleges</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
+                            <span class="text-muted">Empirical Accuracy</span>
+                            <span class="text-success fw-bold">Within {{ stats.snapshot.mseat_rank_delta }} Ranks of Cutoff</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1">
+                            <span class="text-muted">Optimization</span>
+                            <span class="text-info fw-bold">{{ stats.snapshot.mseat_compression }} Compression · O(1) Lookup</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="https://mseat.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary flex-fill fw-semibold" style="border-radius: 8px;">
+                            Live Simulator ↗
+                        </a>
+                        <a href="/blog/mSeat_worked" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px;">
+                            Case Study
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytical Card 4: pRash CLI Study & BrandXY 20B Steerability -->
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="bento-card bento-card-red h-100 p-4 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <span class="badge" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); font-size: 0.72rem; padding: 4px 10px;">
+                            <i class="fas fa-flask me-1"></i> pRash &amp; BrandXY
+                        </span>
+                        <span class="font-mono-tech text-warning fw-bold small" style="font-size: 0.72rem;">● A/B &amp; BENCHMARK</span>
+                    </div>
+
+                    <h4 class="text-white fw-bold mb-2 font-heading" style="font-size: 1.12rem;">Controlled Eval &amp; 20B Fine-Tuning</h4>
+                    <p class="text-secondary small mb-3" style="line-height: 1.6; font-size: 0.84rem;">
+                        <strong>pRash:</strong> Controlled 6-CLI × 2-round benchmark isolating model-vs-CLI variables via headless Chrome &amp; static audits. <strong>BrandXY:</strong> Fine-tuned GPT-OSS-20B on AMD MI300X lifting recommendation rate from 25.5% to 76.5%.
+                    </p>
+
+                    <div class="p-2 mb-3 rounded font-mono-tech small" style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.74rem;">
+                        <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
+                            <span class="text-muted">CLI Experiment</span>
+                            <span class="text-white fw-bold">{{ stats.snapshot.prash_clis }} CLIs × {{ stats.snapshot.prash_rounds }} Rounds (Controlled)</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
+                            <span class="text-muted">20B LoRA Lift</span>
+                            <span class="text-warning fw-bold">{{ stats.snapshot.brandxy_lift }} vs {{ stats.snapshot.brandxy_baseline }} (+51%)</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1">
+                            <span class="text-muted">Hardware / Method</span>
+                            <span class="text-info fw-bold">AMD MI300X · Headless QA</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto d-flex gap-2">
+                        <a href="/blog/BLOG_MODEL_VS_CLI" class="btn btn-sm btn-outline-warning flex-fill fw-semibold" style="border-radius: 8px;">
+                            CLI Benchmark
+                        </a>
+                        <a href="https://huggingface.co/kprsnt/BrandXY-gpt-oss-20b" target="_blank" rel="noopener" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px;">
+                            20B Weights ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         3. Flagship Autonomous Multi-Agent Fleet (Bento Grid)
+         ============================================================ -->
+    <div id="systems-fleet" class="mb-5 pt-2">
+        <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+            <div>
+                <div class="d-inline-flex align-items-center mb-1 font-mono-tech small text-info">
+                    <i class="fas fa-microchip me-2"></i> TRACK 2: AUTONOMOUS MULTI-AGENT FLEET &amp; FORENSIC GUARDRAILS
+                </div>
+                <h2 class="h3 fw-bold text-white mb-0 font-heading">Verifiable Multi-Agent Systems &amp; Cryptographic Ledgers</h2>
             </div>
             <div>
                 <a href="/dashboard" class="btn btn-sm btn-outline-secondary rounded-pill px-3">
@@ -233,27 +489,27 @@
 
                     <h4 class="text-white fw-bold mb-2 font-heading" style="font-size: 1.15rem;">Automated Job Search Pipeline</h4>
                     <p class="text-secondary small mb-3" style="line-height: 1.6; font-size: 0.85rem;">
-                        Multi-agent pipeline sourcing roles from ATS APIs across 10 sources, 9,697 jobs and 7,665 distinct roles. Deterministic matching scores every job with <strong>zero model calls</strong>, plus markdown-driven resume tailoring and outreach drafts.
+                        Multi-agent pipeline sourcing roles from ATS APIs across 10 sources, 9,697 jobs and 7,665 distinct roles. Deterministic matching scores every job with <strong>zero model calls</strong>, plus code-enforced anti-fabrication guards.
                     </p>
 
                     <!-- Telemetry Metrics Box -->
                     <div class="p-2 mb-3 rounded font-mono-tech small" style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.75rem;">
                         <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
                             <span class="text-muted">Ingestion Pool</span>
-                            <span class="text-white fw-bold">{{ "{:,}".format(stats.snapshot.jobs_sourced) }} Jobs</span>
+                            <span class="text-white fw-bold">{{ "{:,}".format(stats.snapshot.jobs_sourced) }} Jobs → {{ "{:,}".format(stats.snapshot.distinct_roles) }} Roles</span>
                         </div>
                         <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
-                            <span class="text-muted">Distinct Roles</span>
-                            <span class="text-success fw-bold">{{ "{:,}".format(stats.snapshot.distinct_roles) }}</span>
-                        </div>
-                        <div class="d-flex justify-content-between py-1">
                             <span class="text-muted">LLM Cost Gate</span>
                             <span class="text-info fw-bold">{{ "{:,}".format(stats.snapshot.scores_computed) }} Scores · 0 Model Calls</span>
+                        </div>
+                        <div class="d-flex justify-content-between py-1">
+                            <span class="text-muted">Anti-Fabrication</span>
+                            <span class="text-success fw-bold">{{ stats.snapshot.fabrications_caught }} Seeded Caught · Stdlib</span>
                         </div>
                     </div>
 
                     <div class="mt-auto d-flex gap-2">
-                        <a href="https://job.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-success flex-fill fw-semibold" style="border-radius: 8px;">
+                        <a href="https://job.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-success flex-fill fw-semibold" style="border-radius: 8px;">
                             Live Pipeline ↗
                         </a>
                         <a href="/blog/jobagents-production-ai-career-pipeline" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px;">
@@ -289,13 +545,13 @@
                             <span class="text-danger fw-bold">{{ stats.snapshot.reports_promoted }} Promoted / {{ stats.snapshot.reports_refused }} Refused</span>
                         </div>
                         <div class="d-flex justify-content-between py-1">
-                            <span class="text-muted">Security Policy</span>
-                            <span class="text-warning fw-bold">Responsible Disclosure</span>
+                            <span class="text-muted">Execution Scale</span>
+                            <span class="text-warning fw-bold">{{ "{:,}".format(stats.snapshot.bug_tool_calls) }} Tool Calls · {{ stats.snapshot.hunt_runs }} Runs</span>
                         </div>
                     </div>
 
                     <div class="mt-auto d-flex gap-2">
-                        <a href="https://bug.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-danger flex-fill fw-semibold" style="border-radius: 8px;">
+                        <a href="https://bug.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-danger flex-fill fw-semibold" style="border-radius: 8px;">
                             Live Matrix ↗
                         </a>
                         <a href="/blog/bugagents-dual-llm-security-matrix" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px;">
@@ -332,12 +588,12 @@
                         </div>
                         <div class="d-flex justify-content-between py-1">
                             <span class="text-muted">Independent Audit</span>
-                            <span class="text-success fw-bold">22/25 Claims Exact</span>
+                            <span class="text-success fw-bold">22/25 Claims Exact ({{ stats.snapshot.audit_verdict }})</span>
                         </div>
                     </div>
 
                     <div class="mt-auto d-flex gap-2">
-                        <a href="https://agent.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-info flex-fill fw-semibold" style="border-radius: 8px;">
+                        <a href="https://agent.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-info flex-fill fw-semibold" style="border-radius: 8px;">
                             Live Arena ↗
                         </a>
                         <a href="/blog/02-building-the-forensic-arena" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px;">
@@ -347,43 +603,43 @@
                 </div>
             </div>
 
-            <!-- Bento 4: AI Eco Swarm -->
+            <!-- Bento 4: MediFlow & AI Eco Swarm -->
             <div class="col-12 col-md-6 col-xl-3">
                 <div class="bento-card h-100 p-4 d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-start mb-3">
                         <span class="badge" style="background: rgba(99, 102, 241, 0.15); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.3); font-size: 0.72rem; padding: 4px 10px;">
-                            <i class="fas fa-atom me-1"></i> AI Eco Swarm
+                            <i class="fas fa-hospital-user me-1"></i> MediFlow &amp; AI Eco
                         </span>
-                        <span class="font-mono-tech text-warning fw-bold small" style="font-size: 0.72rem;">● 10 AGENTS ACTIVE</span>
+                        <span class="font-mono-tech text-warning fw-bold small" style="font-size: 0.72rem;">● SHA-256 &amp; MCP</span>
                     </div>
 
-                    <h4 class="text-white fw-bold mb-2 font-heading" style="font-size: 1.15rem;">Self-Reflecting Swarm</h4>
+                    <h4 class="text-white fw-bold mb-2 font-heading" style="font-size: 1.15rem;">CMS Audit Mesh &amp; 10-Agent Swarm</h4>
                     <p class="text-secondary small mb-3" style="line-height: 1.6; font-size: 0.85rem;">
-                        10 specialized autonomous agents running daily scheduled pipelines via GitHub Actions: commit monitoring, automated technical dev logs, weekly council, and living memory.
+                        <strong>MediFlow:</strong> 7-agent Medicare Advantage MARx adjudication engine with SHA-256 ledger under 42 CFR §422.568. <strong>AI Eco:</strong> 10 daily agents maintaining this portfolio with FastMCP tools and living memory.
                     </p>
 
                     <!-- Telemetry Metrics Box -->
                     <div class="p-2 mb-3 rounded font-mono-tech small" style="background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.05); font-size: 0.75rem;">
                         <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
-                            <span class="text-muted">Cadence</span>
-                            <span class="text-white fw-bold">Daily Midnight Cron</span>
+                            <span class="text-muted">MediFlow Mesh</span>
+                            <span class="text-white fw-bold">{{ stats.snapshot.mediflow_agents }} Agents · {{ stats.snapshot.mediflow_tests }} Pytest Passing</span>
                         </div>
                         <div class="d-flex justify-content-between py-1 border-bottom border-secondary border-opacity-10">
-                            <span class="text-muted">Protocols</span>
-                            <span class="text-warning fw-bold">FastMCP JSON-RPC</span>
+                            <span class="text-muted">AI Eco Swarm</span>
+                            <span class="text-warning fw-bold">10 Agents · FastMCP JSON-RPC</span>
                         </div>
                         <div class="d-flex justify-content-between py-1">
                             <span class="text-muted">Living Memory</span>
-                            <span class="text-success fw-bold">{{ swarm.word_count if swarm else 3400 }} Words</span>
+                            <span class="text-success fw-bold">{{ swarm.word_count if swarm else 3400 }} / 4,000 Words</span>
                         </div>
                     </div>
 
                     <div class="mt-auto d-flex gap-2">
-                        <a href="/ecosystem" class="btn btn-sm btn-outline-primary flex-fill fw-semibold" style="border-radius: 8px;">
-                            Dashboard
+                        <a href="https://mediflow.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary flex-fill fw-semibold" style="border-radius: 8px;">
+                            MediFlow ↗
                         </a>
-                        <a href="/ecosystem/logs" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px;">
-                            Swarm Logs
+                        <a href="/ecosystem" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px;">
+                            AI Eco Hub
                         </a>
                     </div>
                 </div>
@@ -392,7 +648,139 @@
     </div>
 
     <!-- ============================================================
-         3. Live Dispatches & Swarm Telemetry Stream
+         4. Google Cloud Platform (GCP) & Production Reliability Blueprint
+         ============================================================ -->
+    <div class="glass-panel p-4 p-lg-5 mb-5" id="gcp-architecture">
+        <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
+            <div>
+                <span class="font-mono-tech small text-info"><i class="fas fa-cloud me-1"></i> PRODUCTION INFRASTRUCTURE &amp; COMPLIANCE RIGOR</span>
+                <h3 class="fw-bold text-white mb-1 font-heading">GCP Cloud Run Architecture &amp; Zero-Hallucination Engineering</h3>
+                <p class="text-secondary small mb-0" style="max-width: 820px; line-height: 1.6;">
+                    How this site, my client data pipelines, and my multi-agent harnesses are engineered for cloud reliability, cost governance, and verifiable data integrity:
+                </p>
+            </div>
+            <div class="mt-2 mt-md-0">
+                <a href="/docs" class="btn btn-sm btn-outline-info rounded-pill px-3">
+                    <i class="fas fa-book-open me-1"></i> Live Architecture &amp; API Docs →
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="p-3 rounded h-100" style="background: rgba(255, 255, 255, 0.025); border: 1px solid rgba(255, 255, 255, 0.07);">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-server text-success fs-5 me-2"></i>
+                        <h5 class="text-white mb-0 fw-bold" style="font-size: 0.98rem;">1. GCP Cloud Run (asia-south1)</h5>
+                    </div>
+                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
+                        Containerized Flask + Gunicorn service (<code>1 worker × 8 threads</code>, non-root container, 300s request budget) deployed on <strong>Google Cloud Run</strong> via Cloud Build &amp; Artifact Registry, fronted by Cloudflare CDN/WAF and GCP Secret Manager.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="p-3 rounded h-100" style="background: rgba(255, 255, 255, 0.025); border: 1px solid rgba(255, 255, 255, 0.07);">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-database text-warning fs-5 me-2"></i>
+                        <h5 class="text-white mb-0 fw-bold" style="font-size: 0.98rem;">2. BigQuery &amp; Self-Healing ETL</h5>
+                    </div>
+                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
+                        18 automated sector ETL pipelines feeding <strong>BigQuery → Looker Studio</strong>, paired with a Gemini self-healing data-quality agent that resolves missing brand domains via lookup + LLM fallback before escalating to humans.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="p-3 rounded h-100" style="background: rgba(255, 255, 255, 0.025); border: 1px solid rgba(255, 255, 255, 0.07);">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-filter text-info fs-5 me-2"></i>
+                        <h5 class="text-white mb-0 fw-bold" style="font-size: 0.98rem;">3. Deterministic Cost Gates</h5>
+                    </div>
+                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
+                        Never send unfiltered noise to expensive LLMs. <code>JobAgents</code> computes all 29,091 match scores deterministically in Python stdlib with <strong>zero model calls</strong>, so LLMs only run on the 234 candidates clearing score-65.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-xl-3">
+                <div class="p-3 rounded h-100" style="background: rgba(255, 255, 255, 0.025); border: 1px solid rgba(255, 255, 255, 0.07);">
+                    <div class="d-flex align-items-center mb-2">
+                        <i class="fas fa-shield-alt text-primary fs-5 me-2"></i>
+                        <h5 class="text-white mb-0 fw-bold" style="font-size: 0.98rem;">4. Regulated CMS Audit Rigor</h5>
+                    </div>
+                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
+                        9 years of federal CMS compliance auditing at Optum applied to AI: external SHA-256 hash-chained ledgers (35/35 intact), 4-point report promotion gates (34 unverified refused), and AST-level CI profile guards.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         5. Verified Career Track Record
+         ============================================================ -->
+    <div class="mb-5">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+            <div>
+                <span class="font-mono-tech small text-success"><i class="fas fa-briefcase me-1"></i> COMMERCIAL CAREER TRACK RECORD</span>
+                <h3 class="fw-bold text-white mb-0 font-heading">Verified Industry Experience (12.5+ Years Total)</h3>
+            </div>
+            <a href="/resume" class="btn btn-sm btn-outline-success rounded-pill px-3 mt-2 mt-sm-0">
+                Full Resume &amp; Role Breakdown →
+            </a>
+        </div>
+
+        <div class="row g-3">
+            <!-- 1. Black Piano -->
+            <div class="col-12 col-lg-4">
+                <div class="bento-card p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="badge bg-primary-subtle text-primary font-mono-tech" style="font-size: 0.72rem;">Mar 2026 – Present</span>
+                        <span class="font-mono-tech text-white small">Remote</span>
+                    </div>
+                    <h5 class="text-white fw-bold mb-1 font-heading">Black Piano</h5>
+                    <div class="text-info small fw-semibold mb-2">Data Analyst</div>
+                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
+                        Architected <strong>18 automated ETL pipelines</strong> feeding BigQuery → Looker Studio dashboards across 18 industry sectors, plus seasonal/client reports. Built a <strong>Gemini-powered self-healing data-quality agent</strong>, a <strong>custom MCP tool</strong> for data-grounded blog generation, and a weekly automated AI market intelligence pipeline.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 2. Pi Software Solutions -->
+            <div class="col-12 col-lg-4">
+                <div class="bento-card p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="badge bg-secondary-subtle text-light font-mono-tech" style="font-size: 0.72rem;">Mar 2023 – Feb 2026</span>
+                        <span class="font-mono-tech text-white small">Remote</span>
+                    </div>
+                    <h5 class="text-white fw-bold mb-1 font-heading">Pi Software Solutions</h5>
+                    <div class="text-info small fw-semibold mb-2">Data Analyst (Pi - Datametrics)</div>
+                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
+                        Engineered production Python data pipelines via an internal <code>Pi-API</code> package for automated <strong>BigQuery</strong> access across <strong>10+ client dashboards</strong>, and delivered <strong>30+ analytical reports</strong> on US &amp; UK industry trends for client stakeholders.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3. Optum (UnitedHealth Group) -->
+            <div class="col-12 col-lg-4">
+                <div class="bento-card p-4 h-100">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <span class="badge bg-secondary-subtle text-light font-mono-tech" style="font-size: 0.72rem;">Apr 2014 – Mar 2023</span>
+                        <span class="font-mono-tech text-white small">Hyderabad, IN</span>
+                    </div>
+                    <h5 class="text-white fw-bold mb-1 font-heading">Optum (UnitedHealth Group)</h5>
+                    <div class="text-info small fw-semibold mb-2">Enrollment Quality &amp; Audit Representative (CMS Auditor)</div>
+                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
+                        Promoted via IJP in Mar 2016 from Claims Associate (Apr 2014 – Feb 2016). Audited federal enrollment transactions for <strong>CMS compliance</strong>, executing end-to-end data validation, statutory compliance checks, discrepancy reporting, and zero-tolerance quality gates.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+         6. Live Dispatches & Swarm Telemetry Stream
          ============================================================ -->
     <div class="row g-4 mb-5">
         <!-- Left: Recent Autonomous Dev Logs -->
@@ -482,173 +870,59 @@
     </div>
 
     <!-- ============================================================
-         4. Core Engineering Philosophy (Regulated Rigor to Autonomy)
-         ============================================================ -->
-    <div class="glass-panel p-4 p-lg-5 mb-5">
-        <div class="text-center mb-4">
-            <span class="font-mono-tech small text-info"><i class="fas fa-shield-alt me-1"></i> THE RELIABILITY ADVANTAGE FOR FOUNDERS</span>
-            <h3 class="fw-bold text-white mb-2 font-heading">How 9 Years of Compliance Auditing Builds Superior AI</h3>
-            <p class="text-secondary mx-auto small" style="max-width: 750px; line-height: 1.6;">
-                Most agentic systems fail in production due to compounding hallucinations, runaway token burn, or state drift. Here is how I engineer for enterprise reliability and measurable ROI:
-            </p>
-        </div>
-
-        <div class="row g-4">
-            <div class="col-12 col-md-4">
-                <div class="p-3 rounded h-100" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06);">
-                    <div class="d-flex align-items-center mb-2">
-                        <i class="fas fa-filter text-info fs-5 me-2"></i>
-                        <h5 class="text-white mb-0 fw-bold" style="font-size: 1rem;">1. Deterministic Cost Gates</h5>
-                    </div>
-                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
-                        Never send unfiltered noise to expensive LLMs. JobAgents scores all 9,697 sourced jobs deterministically with zero model calls, so expensive models only run on verified, high-confidence candidates.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-4">
-                <div class="p-3 rounded h-100" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06);">
-                    <div class="d-flex align-items-center mb-2">
-                        <i class="fas fa-link text-warning fs-5 me-2"></i>
-                        <h5 class="text-white mb-0 fw-bold" style="font-size: 1rem;">2. Forensic Hash Ledgers</h5>
-                    </div>
-                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
-                        Agents cannot self-attest success. Immutable hash-chained audit ledgers kept outside agent write trees prevent stealth overwrites and guarantee reproducible execution traces.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-4">
-                <div class="p-3 rounded h-100" style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.06);">
-                    <div class="d-flex align-items-center mb-2">
-                        <i class="fas fa-shield-alt text-success fs-5 me-2"></i>
-                        <h5 class="text-white mb-0 fw-bold" style="font-size: 1rem;">3. Regulated Compliance Rigor</h5>
-                    </div>
-                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
-                        9 years of federal CMS compliance auditing at Optum applied to AI systems: scope boundaries, per-turn tool-call verification, and promotion gates that strictly refuse unverified outputs.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-                    </div>
-                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
-                        9 years of federal CMS compliance auditing at Optum applied to AI systems: scope boundaries, per-turn tool-call audit, and promotion gates that refuse unverified output.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============================================================
-         5. Verified Career Track Record
+         7. Developer Tooling, Long-Horizon Runs & Additional Systems
          ============================================================ -->
     <div class="mb-5">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex flex-wrap justify-content-between align-items-end mb-3">
             <div>
-                <span class="font-mono-tech small text-success"><i class="fas fa-briefcase me-1"></i> CAREER TRACK RECORD</span>
-                <h3 class="fw-bold text-white mb-0 font-heading">Verified Industry Experience</h3>
+                <h3 class="fw-bold text-white mb-1 font-heading">Developer Tooling, Long-Horizon Runs &amp; Domain Apps</h3>
+                <p class="text-secondary small mb-0">Open-source CLI harnesses, unattended agent experiments, and bilingual educational platforms.</p>
             </div>
-            <a href="/resume" class="btn btn-sm btn-outline-success rounded-pill px-3">
-                Full Resume &amp; Role Breakdown →
+            <a href="/projects" class="btn btn-sm btn-outline-primary rounded-pill px-3 mt-2 mt-sm-0">
+                Explore All {{ stats.live.deployed_systems }}+ Deployed Projects →
             </a>
         </div>
 
         <div class="row g-3">
-            <!-- 1. Black Piano -->
-            <div class="col-12 col-lg-4">
-                <div class="bento-card p-4 h-100">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <span class="badge bg-primary-subtle text-primary font-mono-tech" style="font-size: 0.72rem;">Mar 2026 – Present</span>
-                        <span class="font-mono-tech text-white small">Hyderabad, IN</span>
-                    </div>
-                    <h5 class="text-white fw-bold mb-1 font-heading">Black Piano</h5>
-                    <div class="text-info small fw-semibold mb-2">Data Analyst</div>
-                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
-                        End-to-end data pipelines and industry reports for client dashboards. Built a Gemini-powered self-healing data-quality agent, a custom MCP tool for data-grounded blog generation, an automated AI insights pipeline, and 18 automated ETL pipelines feeding BigQuery → Looker Studio dashboards.
-                    </p>
-                </div>
-            </div>
-
-            <!-- 2. Pi Software Solutions -->
-            <div class="col-12 col-lg-4">
-                <div class="bento-card p-4 h-100">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <span class="badge bg-secondary-subtle text-light font-mono-tech" style="font-size: 0.72rem;">Mar 2023 – Feb 2026</span>
-                        <span class="font-mono-tech text-white small">Remote</span>
-                    </div>
-                    <h5 class="text-white fw-bold mb-1 font-heading">Pi Software Solutions</h5>
-                    <div class="text-info small fw-semibold mb-2">Data Analyst (Pi - Datametrics)</div>
-                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
-                        Production Python data pipelines via an internal <code>Pi-API</code> package for automated BigQuery access across 10+ client dashboards, and 30+ analytical reports on US &amp; UK industry trends.
-                    </p>
-                </div>
-            </div>
-
-            <!-- 3. Optum (UnitedHealth Group) -->
-            <div class="col-12 col-lg-4">
-                <div class="bento-card p-4 h-100">
-                    <div class="d-flex justify-content-between align-items-start mb-2">
-                        <span class="badge bg-secondary-subtle text-light font-mono-tech" style="font-size: 0.72rem;">Apr 2014 – Mar 2023</span>
-                        <span class="font-mono-tech text-white small">Hyderabad, IN</span>
-                    </div>
-                    <h5 class="text-white fw-bold mb-1 font-heading">Optum (UnitedHealth Group)</h5>
-                    <div class="text-info small fw-semibold mb-2">Enrollment Quality &amp; Audit Representative (CMS Auditor)</div>
-                    <p class="text-secondary small mb-0" style="line-height: 1.6;">
-                        Promoted via IJP in Mar 2016 from Claims Associate (Apr 2014 – Feb 2016). Audited federal enrollment transactions for CMS compliance, producing regulatory documentation, statutory compliance checks, and audit readiness.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ============================================================
-         6. Additional Engineering Systems & AI for Life
-         ============================================================ -->
-    <div class="mb-5">
-        <h3 class="fw-bold text-white mb-3 font-heading">Additional Systems &amp; Family AI</h3>
-        <p class="text-secondary small mb-4">Production utilities, educational platforms, and AI tools built for family impact.</p>
-
-        <div class="row g-3">
-            <!-- mSeat -->
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="bento-card p-3 h-100 d-flex flex-column">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <strong class="text-white small">🎓 mSeat Predictor</strong>
-                        <span class="badge bg-success-subtle text-success font-mono-tech" style="font-size: 0.65rem;">Validated</span>
-                    </div>
-                    <p class="text-secondary small mb-3 flex-grow-1" style="font-size: 0.8rem; line-height: 1.5;">
-                        Discrete allocation simulator for 18,000+ candidates across 59 colleges. Predicted actual allotment within 73 ranks of the cutoff; 90.6% dataset compression.
-                    </p>
-                    <a href="https://mseat.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-success w-100">Live App ↗</a>
-                </div>
-            </div>
-
-            <!-- BrandXY -->
-            <div class="col-12 col-md-6 col-lg-3">
-                <div class="bento-card p-3 h-100 d-flex flex-column">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <strong class="text-white small">🔬 BrandXY (20B)</strong>
-                        <span class="badge bg-danger-subtle text-danger font-mono-tech" style="font-size: 0.65rem;">AMD MI300X</span>
-                    </div>
-                    <p class="text-secondary small mb-3 flex-grow-1" style="font-size: 0.8rem; line-height: 1.5;">
-                        Fine-tuned GPT-OSS-20B to measure brand-recommendation steerability — 76.5% vs 25.5% baseline (+51%) under A/B evaluation.
-                    </p>
-                    <a href="https://huggingface.co/spaces/kprsnt/brandXY-chat" target="_blank" class="btn btn-sm btn-outline-danger w-100">Hugging Face ↗</a>
-                </div>
-            </div>
-
             <!-- MyLocalCLI -->
             <div class="col-12 col-md-6 col-lg-3">
                 <div class="bento-card p-3 h-100 d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <strong class="text-white small">⚡ MyLocalCLI</strong>
-                        <span class="badge bg-info-subtle text-info font-mono-tech" style="font-size: 0.65rem;">Local-First</span>
+                        <strong class="text-white small">⚡ MyLocalCLI (v4.0.2)</strong>
+                        <span class="badge bg-info-subtle text-info font-mono-tech" style="font-size: 0.65rem;">npm Package</span>
                     </div>
                     <p class="text-secondary small mb-3 flex-grow-1" style="font-size: 0.8rem; line-height: 1.5;">
-                        Local-first agentic coding assistant on npm (v4.0.2): 8 providers, 42 built-in tools, 38 dynamic skills, 5 sub-agents, and no telemetry.
+                        Local-first agentic coding assistant on npm: 8 providers, 42 built-in tools, 38 dynamic skills, 5 sub-agents, Stdio MCP bridge, and no telemetry.
                     </p>
-                    <a href="https://mlc.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-info w-100">Live Site ↗</a>
+                    <a href="https://mlc.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-info w-100">Live Site ↗</a>
+                </div>
+            </div>
+
+            <!-- Project Awakening -->
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="bento-card p-3 h-100 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <strong class="text-white small">🌌 Project Awakening</strong>
+                        <span class="badge bg-primary-subtle text-primary font-mono-tech" style="font-size: 0.65rem;">1,441 Turns</span>
+                    </div>
+                    <p class="text-secondary small mb-3 flex-grow-1" style="font-size: 0.8rem; line-height: 1.5;">
+                        Long-horizon two-agent run across 1,441 turns and 1,553 commits via GitHub Actions; held 100% CI integrity through a 330-turn cloud API blackout.
+                    </p>
+                    <a href="https://kprsnt2.github.io/ac_awakening/" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary w-100">Archive ↗</a>
+                </div>
+            </div>
+
+            <!-- Agent Cosmos -->
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="bento-card p-3 h-100 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <strong class="text-white small">🪐 Agent Cosmos</strong>
+                        <span class="badge bg-success-subtle text-success font-mono-tech" style="font-size: 0.65rem;">100 Epochs</span>
+                    </div>
+                    <p class="text-secondary small mb-3 flex-grow-1" style="font-size: 0.8rem; line-height: 1.5;">
+                        Multi-agent dialectic collective across 100 local CLI epochs and a 15-epoch crucible; autonomously diagnosed and fixed its own frontend markdown rendering.
+                    </p>
+                    <a href="https://ac-omp.vercel.app/" target="_blank" rel="noopener" class="btn btn-sm btn-outline-success w-100">Live App ↗</a>
                 </div>
             </div>
 
@@ -657,12 +931,12 @@
                 <div class="bento-card p-3 h-100 d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <strong class="text-white small">🕉️ Geetha AI</strong>
-                        <span class="badge bg-purple-subtle font-mono-tech" style="color: #c084fc; font-size: 0.65rem;">Family AI</span>
+                        <span class="badge bg-purple-subtle font-mono-tech" style="color: #c084fc; font-size: 0.65rem;">700 Verses</span>
                     </div>
                     <p class="text-secondary small mb-3 flex-grow-1" style="font-size: 0.8rem; line-height: 1.5;">
-                        Bilingual Bhagavad Gita platform indexing 700 verses with Gemini AI reflections, built on JavaScript, SQLite and Vercel.
+                        Bilingual Bhagavad Gita platform indexing all 700 verses with verse search, chapter navigation, and Gemini AI commentary on SQLite.
                     </p>
-                    <a href="https://geetha.kprsnt.in/" target="_blank" class="btn btn-sm btn-outline-primary w-100">Visit ↗</a>
+                    <a href="https://geetha.kprsnt.in/" target="_blank" rel="noopener" class="btn btn-sm btn-outline-light w-100">Visit ↗</a>
                 </div>
             </div>
         </div>
@@ -677,15 +951,15 @@
     // Held titles are Data Analyst (Black Piano, Pi) and CMS Auditor (Optum).
     // The move into AI engineering is stated as a direction, never as a held title.
     const roles = [
-        'AI Systems Engineer (Target Role)',
-        'Autonomous Multi-Agent Architect',
-        'Production LLM Systems & Guardrails',
-        'Data Analyst (3.5+ Yrs in Data & AI)',
-        'Compliance-Grade AI Reliability'
+        'Data Analyst → AI Systems Engineer (Target)',
+        'BigQuery, SQL & 18-Sector ETL Architect',
+        'Autonomous Multi-Agent & FastMCP Engineer',
+        'Quantitative LLM Evaluation & Cost Gates',
+        '9 Yrs Federal CMS Audit & AI Verification'
     ];
     let roleIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
+    let charIndex = roles[0].length;
+    let isDeleting = true;
     const typingElement = document.getElementById('typingText');
 
     function type() {
@@ -699,7 +973,7 @@
             charIndex++;
         }
 
-        let typeSpeed = isDeleting ? 45 : 90;
+        let typeSpeed = isDeleting ? 35 : 75;
 
         if (!isDeleting && charIndex === currentRole.length) {
             typeSpeed = 2200;
@@ -707,13 +981,35 @@
         } else if (isDeleting && charIndex === 0) {
             isDeleting = false;
             roleIndex = (roleIndex + 1) % roles.length;
-            typeSpeed = 400;
+            typeSpeed = 350;
         }
 
         setTimeout(type, typeSpeed);
     }
 
-    setTimeout(type, 800);
+    setTimeout(type, 1800);
+
+    // ===== Role Lens Switcher in Recruiter Fast-Track =====
+    function switchRoleLens(lens, btn) {
+        document.querySelectorAll('.lens-btn').forEach(b => b.classList.remove('active'));
+        if (btn) btn.classList.add('active');
+
+        const panels = document.querySelectorAll('.lens-panel');
+        panels.forEach(panel => {
+            const type = panel.getAttribute('data-lens-panel');
+            if (lens === 'all') {
+                panel.style.display = '';
+                panel.className = 'col-12 col-md-6 lens-panel';
+                panel.style.opacity = '1';
+            } else if (lens === type) {
+                panel.style.display = '';
+                panel.className = 'col-12 lens-panel';
+                panel.style.opacity = '1';
+            } else {
+                panel.style.display = 'none';
+            }
+        });
+    }
 
     // ===== AI Insight Modal Functions =====
     async function generateAIInsight() {
@@ -721,6 +1017,7 @@
         const modal = document.getElementById('aiInsightModal');
         const content = document.getElementById('aiInsightContent');
 
+        if (!btn || !modal || !content) return;
         btn.disabled = true;
         btn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i> Synthesizing...';
 
@@ -755,7 +1052,7 @@
     }
 
     function closeInsightModal() {
-        document.getElementById('aiInsightModal').classList.remove('show');
+        document.getElementById('aiInsightModal')?.classList.remove('show');
     }
 
     document.getElementById('aiInsightModal')?.addEventListener('click', function (e) {

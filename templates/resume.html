@@ -142,8 +142,10 @@
             <div style="color: var(--text-secondary); margin-bottom: 0.5rem;">
                 <span>📍 {% if contact %}{{ contact.location }}{% else %}Hyderabad, India{% endif %}</span>
                 {% if contact %}
-                <span style="margin-left: 1rem;">✉️ {{ contact.email }}</span>
-                <span style="margin-left: 1rem;">🌐 {{ contact.website }}</span>
+                <span style="margin-left: 1rem;">✉️ <a href="mailto:interview@kprsnt.in" class="text-decoration-none" style="color: var(--text-secondary);">{{ contact.email }}</a></span>
+                <span style="margin-left: 1rem;">🌐 <a href="https://{{ contact.website }}" class="text-decoration-none" style="color: var(--text-secondary);">{{ contact.website }}</a></span>
+                <span style="margin-left: 1rem;">💻 <a href="https://{{ contact.github }}" target="_blank" rel="noopener" class="text-decoration-none" style="color: var(--text-secondary);">{{ contact.github }}</a></span>
+                <span style="margin-left: 1rem;">🤗 <a href="https://{{ contact.huggingface }}" target="_blank" rel="noopener" class="text-decoration-none" style="color: var(--text-secondary);">{{ contact.huggingface }}</a></span>
                 {% endif %}
             </div>
         </div>
@@ -180,8 +182,39 @@
                     <p>{{ resume_summary }}</p>
                     {% else %}
                     <p>Data Analyst with 3.5+ years in data/analytics &amp; AI (2023–present) and 9 years of healthcare
-                        compliance auditing at Optum / UnitedHealth Group (2014–2023). Data Analyst experience at Black Piano and Pi Software Solutions, and Enrollment Quality &amp; Audit Representative (CMS Auditor) at Optum — now moving into AI engineering. Built five live multi-agent systems as self-directed projects (BugAgents, AgentSwarm, JobAgents, MyLocalCLI, rAsh Score), plus LLM fine-tuning and evaluation work (GPT-OSS-20B on AMD MI300X). Works in Python, SQL, BigQuery, Looker Studio and GitHub Actions.</p>
+                        compliance auditing at Optum / UnitedHealth Group (2014–2023). Data Analyst experience at Black Piano and Pi Software Solutions, and Enrollment Quality &amp; Audit Representative (CMS Auditor) at Optum — now moving into AI engineering. Built five live multi-agent systems as self-directed projects (BugAgents, AgentSwarm, JobAgents, MyLocalCLI, rAsh Score), plus LLM fine-tuning and evaluation work (GPT-OSS-20B on AMD MI300X). Works in Python, SQL, BigQuery, Looker Studio, GCP Cloud Run and GitHub Actions.</p>
                     {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quantified Analytical & AI Proof Matrix -->
+    <div class="row">
+        <div class="col-12 mb-4">
+            <div class="card">
+                <div class="card-header">📊 Quantified Analytical &amp; AI Engineering Highlights</div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <strong style="color: #10b981; display: block; margin-bottom: 0.4rem;">Analytical &amp; Data Engineering (Commercial + Benchmarks)</strong>
+                            <ul style="padding-left: 1.2rem; margin-bottom: 0; color: var(--text-secondary); font-size: 0.92rem;">
+                                <li style="margin-bottom: 0.35rem;"><strong>18 automated ETL pipelines</strong> feeding BigQuery → Looker Studio across 18 industry sectors at Black Piano.</li>
+                                <li style="margin-bottom: 0.35rem;"><strong>10+ client BigQuery dashboards</strong> (via internal <code>Pi-API</code> Python package) and <strong>30+ analytical reports</strong> on US &amp; UK trends at Pi Software Solutions.</li>
+                                <li style="margin-bottom: 0.35rem;"><strong>300 brands across 20 cohorts</strong> scored daily across 4 LLM providers on a 4-dimension weighted rubric in <code>rAsh Score</code> (Turso/LibSQL + text-to-SQL).</li>
+                                <li><strong>18,000+ MBBS candidates</strong> simulated across 59 colleges via O(1) multi-quota ranking in <code>mSeat</code>, validated within <strong>73 ranks</strong> of official cutoff.</li>
+                            </ul>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <strong style="color: #818cf8; display: block; margin-bottom: 0.4rem;">AI Systems, Multi-Agent Swarms &amp; Evaluation Guardrails</strong>
+                            <ul style="padding-left: 1.2rem; margin-bottom: 0; color: var(--text-secondary); font-size: 0.92rem;">
+                                <li style="margin-bottom: 0.35rem;"><strong>Gemini self-healing data-quality agent</strong> (3x retry + human email escalation) and custom MCP blog tool shipped in production at Black Piano.</li>
+                                <li style="margin-bottom: 0.35rem;"><strong>9,697 jobs → 7,665 distinct roles</strong> scored with <strong>29,091 deterministic match scores at 0 model calls</strong> and <strong>8/8 seeded fabrications caught</strong> in <code>JobAgents</code>.</li>
+                                <li style="margin-bottom: 0.35rem;"><strong>15,317 tool calls &amp; 8 findings</strong> (5 High/Critical) behind a 2-promoted / 34-refused gate in <code>BugAgents</code>; <strong>35/35 intact SHA-256 ledgers</strong> &amp; 22/25 audited claims in <code>AgentSwarm</code>.</li>
+                                <li><strong>76.5% vs 25.5% baseline (+51% lift)</strong> LoRA fine-tuning <code>GPT-OSS-20B</code> on AMD MI300X (<code>BrandXY</code>), plus <code>mylocalcli</code> v4.0.2 on npm (8 providers, 42 tools, 38 skills).</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -75,6 +75,24 @@ SNAPSHOT = {
     'oracle_tool_calls': 1254,
     'audit_verdict': 'B+',
     'audit_claims_verified': '22/25',
+    # Analytical & Evaluation Engineering
+    'etl_pipelines': 18,
+    'client_dashboards': '10+',
+    'industry_reports': '30+',
+    'cms_audit_years': 9,
+    'rash_brands': 300,
+    'rash_cohorts': 20,
+    'rash_providers': 4,
+    'mseat_candidates': '18,000+',
+    'mseat_colleges': 59,
+    'mseat_rank_delta': 73,
+    'mseat_compression': '90.6%',
+    'brandxy_lift': '76.5%',
+    'brandxy_baseline': '25.5%',
+    'prash_clis': 6,
+    'prash_rounds': 2,
+    'mediflow_agents': 7,
+    'mediflow_tests': 36,
 }
 
 SNAPSHOT_NOTE = (
@@ -125,7 +143,6 @@ def live():
         'data_date': None,
         'commits_tracked': None,
         'repos_scanned': None,
-        'swarm_agents': None,
         'mcp_endpoints': None,
         'telemetry_updated': None,
         'latest_job_run': None,

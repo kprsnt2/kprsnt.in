@@ -1624,3 +1624,34 @@ p {
     border-color: transparent;
     box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
 }
+
+/* Role Lens Switcher inside Recruiter Fast-Track */
+.lens-btn {
+    padding: 0.32rem 0.78rem;
+    border-radius: 16px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    font-family: 'JetBrains Mono', monospace;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.04);
+    color: #cbd5e1;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.lens-btn:hover {
+    background: rgba(99, 102, 241, 0.16);
+    border-color: rgba(99, 102, 241, 0.4);
+    color: #ffffff;
+}
+
+.lens-btn.active {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #ffffff;
+    border-color: transparent;
+    box-shadow: 0 3px 12px rgba(99, 102, 241, 0.35);
+}
+
+.lens-panel {
+    transition: all 0.25s ease;
+}
