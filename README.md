@@ -321,3 +321,7 @@ graph TD
 - Email: interview@kprsnt.in
 - GitHub: [kprsnt2](https://github.com/kprsnt2)
 - HuggingFace: [kprsnt](https://huggingface.co/kprsnt)
+
+## License
+
+MIT. See [LICENSE](LICENSE).
