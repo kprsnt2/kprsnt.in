@@ -203,10 +203,13 @@ TARGET_ROLES = [
 ]
 
 SALARY_INFO = (
-    "Open to discussing compensation based on the role. Current CTC is ₹12,70,500 "
-    "at Black Piano (effective 1 Jul 2026); notice period is 60 calendar days per "
-    "the employment contract. Role fit, growth and impact matter alongside the number. "
-    "Do not quote a target figure that is not confirmed with Prashanth directly."
+    # No figures here on purpose: this text is fed to a bot that any anonymous
+    # caller can question, and a published current or minimum salary only weakens
+    # a negotiation. Compensation is discussed by Prashanth, in person.
+    "Compensation is discussed directly with Prashanth once the role is clear; "
+    "never quote a current, expected or minimum figure. Notice period is 60 "
+    "calendar days per the employment contract. Role fit, growth and impact "
+    "matter alongside the number."
 )
 
 # ============================================
@@ -287,7 +290,7 @@ _RULES = """## Answering rules (binding)
 
 
 def get_interview_context():
-    """Rich context for the interview bot — includes salary, skills, achievements."""
+    """Rich context for the interview bot: skills, achievements, experience (no salary figures)."""
     return f"""## About {PROFILE['name']} ({PROFILE['alias']})
 {PROFILE['title']} | Target: {PROFILE['target_role']} | {PROFILE['location']} (Remote OK)
 Experience: {PROFILE['experience_summary']}

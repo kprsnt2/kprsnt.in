@@ -1,6 +1,6 @@
 # Prashanth Kumar Kadasi — Portfolio
 
-Data Analyst & AI Systems Engineer based in Hyderabad, India.
+Data Analyst moving into AI engineering, based in Hyderabad, India.
 
 This repository powers my personal portfolio at **[kprsnt.in](https://kprsnt.in)** — a Dockerized Flask + gunicorn application deployed on **Google Cloud Run (`asia-south1`)** behind Cloudflare DNS/CDN, with a built-in RAG chatbot, live analytical & AI dashboards, REST APIs, and a FastMCP server. It is continuously updated by a 10-agent autonomous AI swarm.
 
@@ -9,20 +9,22 @@ This repository powers my personal portfolio at **[kprsnt.in](https://kprsnt.in)
 *   **🎓 mSeat — MBBS Mock Counselling Predictor**
     High-performance Telangana MBBS simulator with O(1) multi-quota ranking and a 545 KB dataset for 18,000+ aspirants. Validated against official KNRUHS 2026 Phase 1 results.
 *   **🔬 BrandXY — LLM Brand Recommendation**
-    Fine-tuned GPT-OSS-20B to steer brand recommendations. Achieved 76.47% vs 25.49% (+51% improvement). Includes evaluation scripts and an arXiv paper draft.
+    Fine-tuned GPT-OSS-20B to steer brand recommendations: 76.5% vs a 25.5% baseline (+51 points) under an A/B evaluation. Weights and model card are on Hugging Face.
 *   **🧬 Drug Discovery GPT-20B**
     Fine-tuned GPT-OSS-20B on AMD MI300X for drug discovery: novel molecules, SMILES analysis, ADMET prediction.
 *   **💻 MyLocalCLI — AI Coding Assistant**
-    A Claude Code alternative with 6 AI providers, 26 tools, 5 agents, and 22 skills. Local-first and private.
+    A Claude Code alternative on npm (v4.0.2) with 8 providers, 42 tools, 38 skills, and 5 sub-agents. Local-first and private.
 
 ## Features
 
 *   **AI Chatbot** — context-aware RAG bot grounded on my resume, projects, and live pipeline data (`/api/chat`).
-*   **Dynamic Blogs** — Markdown/JSON posts from `blog_inputs/` and `blog_data/`, plus AI Eco agent dev logs.
+*   **Blog** — hand-written articles from `blog_inputs/` and `blog_data/` at `/blog`; the daily AI Eco agent dev logs have their own archive at `/aie/blogs`.
+*   **Case Studies** — one page per system (`/case-studies`), rendered from `api/data/case_studies.py`.
 *   **REST API** — blogs, case studies, hiring evidence, jobs data, and mSeat prediction (`/docs`).
 *   **MCP Server** — exposes portfolio data and tools over the Model Context Protocol (`/mcp`). Recommended transport: streamable HTTP (`POST /api/mcp`, JSON-RPC 2.0).
-*   **Live Dashboards** — `/jobs`, `/ecosystem`, `/aie`.
+*   **Live Dashboards** — `/dashboard`, `/ecosystem`, `/aie`. (`/jobs` and `/jobs/dashboard` hold personal job-search output: they still render but are unlinked and `noindex`.)
 *   **RSS feed** — `/feed.xml` for the blog plus the AI Eco dev logs.
+*   **Resume** — `/resume`, plus a print view at `/resume/print`. The downloadable PDF is built from the same data: `python scripts/build_resume_pdf.py` (needs Chrome or Edge).
 
 ## Architecture
 
@@ -74,6 +76,9 @@ See `.env.example`. The important ones:
 | `RESEND_API_KEY` | Sending bot replies / resume emails |
 | `INTERVIEW_FROM_EMAIL` | Verified sender for bot emails |
 | `OWNER_NOTIFY_EMAIL` | Where usage notifications go |
+| `EMAIL_WEBHOOK_SECRET` | Shared secret (`X-Email-Webhook-Secret` header) that lets the inbound-email worker trigger bot email replies. Unset = the bot never emails callers |
+| `PRIVATE_API_TOKEN` | `X-Private-Token` header for `/api/jobs/data`. Unset = that route 404s |
+| `RESUME_PHONE` | Local only: phone number to print when building the resume PDF |
 | `GEMINI_API_KEY`, `TAVILY_API_KEY`, `GITHUB_TOKEN` | Used by pipeline scripts / Actions |
 
 ## Testing & Lint

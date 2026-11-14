@@ -2,7 +2,7 @@
 
 {% block title %}Projects | Prashanth Kumar Kadasi{% endblock %}
 
-{% block description %}Deployed systems, multi-agent frameworks, evaluation benchmarks, and discrete simulators by Prashanth Kumar Kadasi — MediFlow, BugAgents, AgentSwarm, JobAgents, rAsh Score, mSeat, pRash, MyLocalCLI, and BrandXY.{% endblock %}
+{% block description %}{{ projects|length }} deployed projects by Prashanth Kumar Kadasi: multi-agent systems, LLM evaluation benchmarks, simulators and fine-tunes, each with a live demo.{% endblock %}
 
 {% block content %}
 <div class="container py-3" style="max-width: 1320px;">
@@ -17,8 +17,8 @@
             </p>
         </div>
         <div class="col-12 col-lg-4 text-lg-end mt-3 mt-lg-0 d-flex flex-wrap gap-2 justify-content-lg-end">
-            <a href="/plotter" class="btn btn-outline-warning btn-sm rounded-pill px-3 fw-semibold">
-                <i class="fas fa-chart-area me-1"></i> DataForge Plotter
+            <a href="/case-studies" class="btn btn-outline-warning btn-sm rounded-pill px-3 fw-semibold">
+                <i class="fas fa-book-open me-1"></i> Case Studies
             </a>
             <a href="/mcp" class="btn btn-outline-info btn-sm rounded-pill px-3 fw-semibold">
                 <i class="fas fa-plug me-1"></i> MCP Playground
@@ -44,7 +44,7 @@
             <i class="fas fa-brain me-1"></i> LLM, Fine-Tuning &amp; MCP
         </button>
         <button class="filter-btn" onclick="filterProjects('sandbox', this)">
-            <i class="fas fa-flask me-1"></i> Healthcare, Education &amp; Sandbox
+            <i class="fas fa-flask me-1"></i> Healthcare &amp; Drug Discovery
         </button>
     </div>
 
@@ -90,6 +90,10 @@
                             {% endfor %}
                         </div>
 
+                        {% if case_slugs.get(project.title) %}
+                        <a href="/case-study/{{ case_slugs[project.title] }}" class="text-info small fw-semibold text-decoration-none d-inline-block mb-2">Read the case study →</a>
+                        {% endif %}
+
                         {% if project.hook %}
                         <details class="project-detail">
                             <summary>Architecture &amp; full detail</summary>
@@ -123,10 +127,10 @@
         <div class="d-flex justify-content-between align-items-center mb-3">
             <div>
                 <h2 class="h4 fw-bold text-white mb-0 font-heading">
-                    <i class="fas fa-flask text-info me-2"></i>Domain Explorations, Healthcare &amp; Educational Apps
+                    <i class="fas fa-flask text-info me-2"></i>Healthcare &amp; Drug Discovery Explorations
                 </h2>
                 <p class="text-secondary small mb-0">
-                    Molecular SMILES fine-tunes, interactive data utilities, and educational/family apps.
+                    Smaller builds that draw on my M.Pharm background: a 20B molecular fine-tune and two health-information tools.
                 </p>
             </div>
         </div>

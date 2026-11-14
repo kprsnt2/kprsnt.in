@@ -126,14 +126,20 @@ def _inject_template_globals():
     to use document.write() for this.
     """
     from datetime import datetime, timezone
-    return {'current_year': datetime.now(timezone.utc).year}
+    return {
+        'current_year': datetime.now(timezone.utc).year,
+        # Counted from the registry so templates never quote a stale number.
+        'mcp_tool_count': len(MCP_TOOLS),
+    }
 
 # --- Security Headers ---
 # Note: 'unsafe-inline' is required because templates use inline styles/handlers.
 # It still blocks scripts/styles from unlisted external origins.
 _CSP = (
     "default-src 'self'; "
-    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; "
+    # cdn.sheetjs.com serves the XLSX parser /plotter loads; without it the
+    # browser blocks the script and Excel uploads silently fail.
+    "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdn.sheetjs.com; "
     "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; "
     "font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; "
     "img-src 'self' data: https:; "
@@ -160,6 +166,38 @@ def add_security_headers(response):
         response.headers['Cache-Control'] = 'no-cache'
     return response
 
+def _noindex(rendered):
+    """Wrap a rendered page so crawlers skip it.
+
+    Used for pages that still work by direct URL but are not part of the public
+    portfolio (job-search pipeline output, the resume editor).
+    """
+    resp = make_response(rendered)
+    resp.headers['X-Robots-Tag'] = 'noindex, nofollow'
+    return resp
+
+
+def _header_secret_ok(env_name, header_name):
+    """Constant-time check of a shared secret sent in a request header.
+
+    Fails closed: with the environment variable unset, nothing matches.
+    """
+    expected = os.environ.get(env_name, '').strip()
+    supplied = request.headers.get(header_name, '')
+    return bool(expected) and secrets.compare_digest(supplied, expected)
+
+
+def _email_webhook_trusted():
+    """True only for the inbound-email worker, which sends EMAIL_WEBHOOK_SECRET.
+
+    Outbound email used to be available to every caller: anyone could POST a
+    from_email and have this server mail an arbitrary address from the
+    kprsnt.in domain. Now only a request carrying the secret can trigger a
+    send; everyone else still gets the bot's answer in the HTTP response.
+    """
+    return _header_secret_ok('EMAIL_WEBHOOK_SECRET', 'X-Email-Webhook-Secret')
+
+
 # --- Rate Limiting (bounded in-memory, per-IP) ---
 _insight_limiter = RateLimiter(60, 10)   # 10 req/min
 _chat_limiter = RateLimiter(60, 6)      # 6 req/min (LLM cost guard)
@@ -174,27 +212,26 @@ _mcp_limiter = RateLimiter(60, 120)     # generous: streaming sessions + tool ca
 @app.route('/')
 def about():
     swarm = load_swarm_data()
-    latest_aie_blogs = load_ai_eco_blogs()[:3]
-    featured_blogs = [p for p in load_all_blog_posts() if p.get('slug') in [
-        'jobagents-production-ai-career-pipeline',
-        'bugagents-dual-llm-security-matrix',
-        '02-building-the-forensic-arena'
-    ]]
-    if not featured_blogs:
-        featured_blogs = load_all_blog_posts()[:3]
+    essays = _essay_posts()
     return render_template('about.html',
                            swarm=swarm,
                            stats=all_stats(),
-                           latest_aie_blogs=latest_aie_blogs,
-                           featured_blogs=featured_blogs)
+                           essay_count=len(essays),
+                           featured_blogs=essays[:3])
 
 @app.route('/skills')
 def skills():
     return render_template('skills.html', skills=SKILLS)
 
+def _case_study_slugs():
+    """Map a project title to its case-study slug, where one exists."""
+    keys = [(s['name'].split(' — ')[0].lower(), s['slug']) for s in get_all_case_studies()]
+    return {p['title']: slug for p in PROJECTS for key, slug in keys if key in p['title'].lower()}
+
+
 @app.route('/projects')
 def projects():
-    return render_template('projects.html', projects=PROJECTS)
+    return render_template('projects.html', projects=PROJECTS, case_slugs=_case_study_slugs())
 
 @app.route('/resume')
 def resume():
@@ -209,16 +246,11 @@ def resume():
 
 @app.route('/resume/<role_slug>')
 def resume_role(role_slug):
+    # get_resume() falls back to the default variant for any slug, so an
+    # unknown slug used to render a 200 copy of the resume at an arbitrary URL.
+    if role_slug not in get_all_roles():
+        return render_template('404.html'), 404
     resume_data = get_resume(role_slug)
-    if not resume_data:
-        return render_template('resume.html',
-                             experiences=EXPERIENCES,
-                             projects=RESUME_PROJECTS,
-                             skills=RESUME_SKILLS,
-                             role_definitions=get_all_roles(),
-                             current_role=None,
-                             contact=CONTACT,
-                             education=EDUCATION)
     return render_template('resume.html',
                          experiences=resume_data['experiences'],
                          projects=resume_data['projects'],
@@ -229,13 +261,70 @@ def resume_role(role_slug):
                          contact=CONTACT,
                          education=EDUCATION)
 
+@app.template_filter('plain_title')
+def _plain_title_filter(title):
+    """Drop a leading emoji/symbol from a project title (ATS-safe print resume)."""
+    return re.sub(r'^[^A-Za-z0-9]+', '', str(title or ''))
+
+
+@app.template_filter('first_sentence')
+def _first_sentence_filter(text):
+    """First sentence of a description, for the compact project list."""
+    text = str(text or '').strip()
+    # Split on a full stop followed by a space and a capital, so "v4.0.2" and
+    # "e.g. CMS" do not end the sentence early.
+    match = re.search(r'\.(?=\s+[A-Z])', text)
+    return text[:match.end()] if match else text
+
+
+@app.route('/resume/print')
+def resume_print():
+    """Print/PDF resume, rendered from the same data as /resume.
+
+    The phone number comes from RESUME_PHONE, which is set only on the machine
+    building a PDF to send out. It is never set on the public deployment.
+    """
+    contact = dict(CONTACT, phone=os.environ.get('RESUME_PHONE', '').strip())
+    return _noindex(render_template('resume_print.html',
+                                    experiences=EXPERIENCES,
+                                    projects=RESUME_PROJECTS,
+                                    skills=RESUME_SKILLS,
+                                    contact=contact,
+                                    education=EDUCATION))
+
+
+@app.route('/static/resume_pdf.html')
+def legacy_resume_print():
+    """Old hand-maintained print page; it drifted from the site, so it redirects."""
+    from flask import redirect
+    return redirect('/resume/print', code=301)
+
+
 @app.route('/resume/edit')
 def resume_edit():
-    return render_template('resume_editor.html',
+    return _noindex(render_template('resume_editor.html',
                          experience=EXPERIENCES[0] if EXPERIENCES else {},
                          experiences=EXPERIENCES,
                          projects=RESUME_PROJECTS,
-                         skills=RESUME_SKILLS)
+                         skills=RESUME_SKILLS))
+
+
+# ============================================================
+# Case Studies (HTML view of api/data/case_studies.py)
+# ============================================================
+
+@app.route('/case-studies')
+def case_studies_page():
+    return render_template('case_studies.html', studies=get_all_case_studies())
+
+
+@app.route('/case-study/<slug>')
+def case_study_page(slug):
+    study = next((s for s in get_all_case_studies() if s.get('slug') == slug), None)
+    if not study:
+        return render_template('404.html'), 404
+    others = [s for s in get_all_case_studies() if s.get('slug') != slug]
+    return render_template('case_study.html', study=study, others=others)
 
 @app.route('/plotter')
 def plotter():
@@ -575,19 +664,73 @@ def load_all_blog_posts():
 
 
 
+# Essays shown first on /blog and on the home page, in this order.
+_PINNED_ESSAYS = (
+    'medicare_multi_agent_enrollment_audit',
+    'BLOG_MODEL_VS_CLI',
+    'mSeat_worked',
+    'manipulating-llm-recommendations-brand-influence',
+)
+
+# Still served at /blog/<slug> (old links keep working) but left out of the
+# listing, feed and sitemap: a placeholder, a superseded duplicate and a
+# one-off scout log that the /aie/blogs archive replaced.
+_UNLISTED_ESSAYS = frozenset({
+    'sample',
+    'latest-github-activity',
+    'mseat-engineering-story-mbbs-counselling-predictior',
+})
+
+# Posts shorter than this are stubs, not articles; they stay reachable by URL.
+_MIN_ESSAY_WORDS = 200
+
+
+def _essay_posts():
+    """Hand-written articles for /blog: pinned first, then newest first.
+
+    The daily AI Eco dev logs are deliberately not here. They have their own
+    archive at /aie/blogs; mixed in, 70+ near-identical logs buried the
+    articles a visitor actually came to read.
+    """
+    essays = []
+    for post in load_all_blog_posts():
+        slug = post.get('slug')
+        if not slug or slug in _UNLISTED_ESSAYS or post.get('category') == 'AI Eco':
+            continue
+        words = len(re.sub(r'<[^>]+>', ' ', post.get('content') or '').split())
+        if words < _MIN_ESSAY_WORDS:
+            continue
+        essays.append(post)
+    rank = {slug: i for i, slug in enumerate(_PINNED_ESSAYS)}
+    # sorted() is stable, so unpinned posts keep load_all_blog_posts' date order.
+    return sorted(essays, key=lambda p: rank.get(p['slug'], len(rank)))
+
+
+@app.template_filter('demote_h1')
+def _demote_h1_filter(html):
+    """Turn <h1> in embedded markdown into <h2 class="h1">.
+
+    Agent-written markdown files each open with their own "# Title". Embedded
+    in a page that already has an <h1>, that gave /ecosystem/logs eight of
+    them. The Bootstrap .h1 class keeps the rendered size unchanged.
+    """
+    html = re.sub(r'<h1(\s[^>]*)?>', '<h2 class="h1">', str(html or ''))
+    return html.replace('</h1>', '</h2>')
+
+
+@app.template_filter('iso_date')
+def _iso_date_filter(date_str):
+    """Site date string -> YYYY-MM-DD for schema.org / Open Graph ('' if unparseable)."""
+    parsed = _parse_blog_date(date_str)
+    return '' if parsed.year == 2000 else parsed.strftime('%Y-%m-%d')
+
+
 @app.route('/blog')
 def blog():
-    standard_posts = load_all_blog_posts()
-    aie_posts = load_ai_eco_blogs()
-    seen = set()
-    all_posts = []
-    for p in standard_posts + aie_posts:
-        if p.get('slug') and p['slug'] not in seen:
-            seen.add(p['slug'])
-            all_posts.append(p)
-    all_posts.sort(key=lambda p: _parse_blog_date(p.get('date', '')), reverse=True)
-    categories = sorted(set(p.get('category', 'Technology') for p in all_posts))
-    return render_template('blog.html', posts=all_posts, categories=categories)
+    posts = _essay_posts()
+    categories = sorted(set(p.get('category', 'Technology') for p in posts))
+    return render_template('blog.html', posts=posts, categories=categories,
+                           pinned=_PINNED_ESSAYS, dev_log_count=len(load_ai_eco_blogs()))
 
 @app.route('/blog/<slug>')
 def blog_post(slug):
@@ -596,16 +739,18 @@ def blog_post(slug):
         post = next((p for p in all_posts if p['slug'] == slug), None)
         if post:
             return render_template('blog_post.html', post=post)
-        # Check AI Eco posts as fallback
-        aie_post = next((p for p in load_ai_eco_blogs() if p['slug'] == slug), None)
-        if aie_post:
-            return render_template('blog_post.html', post=aie_post, is_aie=True)
+        # Dev logs live at /aie/blog/<slug>; send old /blog/ links there so
+        # each log has exactly one URL.
+        if any(p['slug'] == slug for p in load_ai_eco_blogs()):
+            from flask import redirect
+            return redirect(f'/aie/blog/{slug}', code=301)
         return render_template('404.html'), 404
     except Exception as e:
         logging.error(f"Blog post error for slug '{slug}': {type(e).__name__}: {e}")
         import traceback
         logging.error(traceback.format_exc())
-        return jsonify({"error": str(e), "type": type(e).__name__}), 500
+        # Never echo exception text to the client.
+        return jsonify({"error": "Failed to render this post."}), 500
 
 @app.route('/aie/blogs')
 def aie_blogs():
@@ -839,7 +984,8 @@ def jobs():
 
     pipeline_log = load_pipeline_log()
 
-    return render_template('jobs.html',
+    # Personal job-search output: reachable by URL, kept out of nav and search.
+    return _noindex(render_template('jobs.html',
                          jobs=all_jobs,
                          month=month,
                          tier1_count=tier1_count,
@@ -856,7 +1002,7 @@ def jobs():
                          has_gaps_count=has_gaps_count,
                          pipeline_report=pipeline_report,
                          pipeline_trace=pipeline_trace,
-                         pipeline_log=pipeline_log)
+                         pipeline_log=pipeline_log))
 
 
 # ============================================================
@@ -1412,7 +1558,13 @@ def jobs_dashboard():
     swarm = load_swarm_data()
     latest_aie_blogs = load_ai_eco_blogs()[:4]
 
-    return render_template('dashboard.html',
+    # /dashboard is the public fleet command center. The personal job-search
+    # analytics (targets, match scores, applied count) only render on
+    # /jobs/dashboard, which is unlinked and noindex.
+    show_career = request.path == '/jobs/dashboard'
+
+    page = render_template('dashboard.html',
+                         show_career=show_career,
                          jobs=all_jobs,
                          month=month,
                          total_jobs=len(all_jobs),
@@ -1433,11 +1585,18 @@ def jobs_dashboard():
                          insight=insight,
                          swarm=swarm,
                          latest_aie_blogs=latest_aie_blogs)
+    return _noindex(page) if show_career else page
 
 
 @app.route('/api/jobs/data')
 def api_jobs_data():
-    """JSON API for dashboard charts."""
+    """Job-search pipeline data. Private: needs the X-Private-Token header.
+
+    It lists the companies and roles being targeted, so it is not public. With
+    PRIVATE_API_TOKEN unset the route simply 404s.
+    """
+    if not _header_secret_ok('PRIVATE_API_TOKEN', 'X-Private-Token'):
+        return jsonify({'error': 'Not found'}), 404
     all_jobs, month, models_used, pipeline_report, pipeline_trace = load_job_listings()
     pipeline_log = load_pipeline_log()
 
@@ -1549,14 +1708,16 @@ def serve_static(path):
 # ============================================================
 
 _SITEMAP_STATIC_PAGES = [
-    '/', '/skills', '/projects', '/resume', '/blog', '/aie', '/aie/blogs',
-    '/dashboard', '/ecosystem', '/ecosystem/logs', '/mcp', '/docs', '/jobs', '/jobs/dashboard',
-    '/plotter',
+    '/', '/projects', '/case-studies', '/resume', '/skills', '/blog', '/mcp', '/docs',
+    '/dashboard', '/plotter', '/ecosystem', '/ecosystem/logs', '/aie', '/aie/blogs',
 ]
 
 
 @app.route('/robots.txt')
 def robots_txt():
+    # /jobs and /resume/edit are intentionally NOT disallowed here: they send
+    # X-Robots-Tag: noindex, and a crawler has to be allowed to fetch a page to
+    # see that header and drop it from the index.
     body = ("User-agent: *\nAllow: /\nDisallow: /vault\n\n"
             "Sitemap: https://kprsnt.in/sitemap.xml\n")
     return Response(body, mimetype='text/plain')
@@ -1586,7 +1747,7 @@ def feed_xml():
     from xml.sax.saxutils import escape
 
     entries = []
-    for post in load_all_blog_posts() + load_ai_eco_blogs():
+    for post in _essay_posts() + load_ai_eco_blogs():
         slug = post.get('slug')
         if not slug:
             continue
@@ -1654,20 +1815,23 @@ def manifest():
 @app.route('/sitemap.xml')
 def sitemap_xml():
     from datetime import datetime, timezone
-    urls = [f"https://kprsnt.in{p}" for p in _SITEMAP_STATIC_PAGES]
-    for post in load_all_blog_posts() + load_ai_eco_blogs():
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    # (url, lastmod): live pages change daily; a post's lastmod is its publish
+    # date, so crawlers are not told 90 old posts changed today.
+    urls = [(f"https://kprsnt.in{p}", today) for p in _SITEMAP_STATIC_PAGES]
+    urls += [(f"https://kprsnt.in/case-study/{s['slug']}", today) for s in get_all_case_studies()]
+    for post in _essay_posts() + load_ai_eco_blogs():
         slug = post.get('slug')
         if not slug:
             continue
         prefix = '/aie/blog/' if post.get('category') == 'AI Eco' else '/blog/'
-        urls.append(f"https://kprsnt.in{prefix}{slug}")
+        urls.append((f"https://kprsnt.in{prefix}{slug}", _iso_date_filter(post.get('date', '')) or today))
 
-    lastmod = datetime.now(timezone.utc).strftime('%Y-%m-%d')
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
-    for url in urls:
+    for url, lastmod in urls:
         lines.append(f"  <url><loc>{url}</loc><lastmod>{lastmod}</lastmod></url>")
     lines.append('</urlset>')
     return Response("\n".join(lines), mimetype='application/xml')
@@ -1961,7 +2125,24 @@ def mcp_messages_endpoint():
         res.headers['Access-Control-Allow-Methods'] = 'POST, OPTIONS'
         res.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, x-api-key, mcp-session-id, Accept'
         return res
-    
+
+    # Same guards as /api/mcp: this route runs the identical dispatcher, so
+    # leaving it open made the size cap and rate limit trivially bypassable.
+    if body_exceeds_limit(request):
+        res = jsonify({"jsonrpc": "2.0", "id": None,
+                       "error": {"code": -32600, "message": "Request body too large."}})
+        res.status_code = 413
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res
+    allowed, retry_after = _mcp_limiter.check(get_client_ip(request))
+    if not allowed:
+        res = jsonify({"jsonrpc": "2.0", "id": None,
+                       "error": {"code": -32000, "message": "Rate limit exceeded."}})
+        res.status_code = 429
+        res.headers['Retry-After'] = str(int(retry_after) + 1)
+        res.headers['Access-Control-Allow-Origin'] = '*'
+        return res
+
     try:
         req_body = request.get_json(force=True, silent=True) or {}
         response = process_mcp_request(req_body)
@@ -2193,11 +2374,14 @@ def api_interview():
             return res, 400
 
         message = message[:4000]
-        raw_response = get_ai_response(message) if get_ai_response else "Service temporarily unavailable."
+        # Email (the reply, and the bot's send-resume tool) is only for the
+        # trusted inbound-email worker; see _email_webhook_trusted().
+        can_email = _email_webhook_trusted()
+        raw_response = get_ai_response(message, allow_email_tool=can_email) if get_ai_response else "Service temporarily unavailable."
         ai_response = raw_response.replace('**', '').replace('*', '')
 
         email_sent = False
-        if send_email and from_email and send_reply_email and is_valid_email(from_email):
+        if can_email and send_email and from_email and send_reply_email and is_valid_email(from_email):
             email_sent = send_reply_email(from_email, subject, ai_response)
 
         if notify_owner:
@@ -2281,10 +2465,11 @@ def api_chat_agent():
             return res, 400
 
         message = message[:4000]
-        ai_response = get_ai_response(message, agent_type="chat", history=history) if get_ai_response else "Service temporarily unavailable."
+        can_email = _email_webhook_trusted()
+        ai_response = get_ai_response(message, agent_type="chat", history=history, allow_email_tool=can_email) if get_ai_response else "Service temporarily unavailable."
 
         email_sent = False
-        if send_email and from_email and send_reply_email and is_valid_email(from_email):
+        if can_email and send_email and from_email and send_reply_email and is_valid_email(from_email):
             email_sent = send_reply_email(from_email, subject, ai_response, agent_type="chat")
 
         if notify_owner:

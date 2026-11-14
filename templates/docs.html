@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}Docs | Prashanth Kumar Kadasi{% endblock %}
+{% block title %}API Docs | Prashanth Kumar Kadasi{% endblock %}
+
+{% block description %}REST API reference for kprsnt.in: blog posts, project case studies, hiring evidence and the mSeat prediction endpoints, with example requests.{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
@@ -149,7 +151,7 @@
                 <h3>/api/interview</h3>
                 <span class="method-pill">POST</span>
             </div>
-            <p class="docs-desc">Formal interview proxy — answers HR screening questions, discusses salary, and auto-sends email replies.</p>
+            <p class="docs-desc">Interview proxy: an AI assistant that answers screening questions about background, skills and projects. It does not quote compensation. <code>send_email</code> is honoured only for the site's own inbound-email worker; other callers get the answer in the response body.</p>
             
             <h6 class="docs-label">Request</h6>
             <div class="code-block">

@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Resume | Prashanth Kumar Kadasi{% endblock %}
+{% block title %}Resume | Prashanth Kumar Kadasi, Data Analyst → AI Engineering{% endblock %}
+
+{# /resume/data-ai-engineer renders the same resume; keep one indexable URL. #}
+{% block canonical %}https://kprsnt.in/resume{% endblock %}
 
 {% block description %}Experience, technical skills, and deployed systems of Prashanth Kumar Kadasi — Data analytics, BigQuery ETL pipelines, and autonomous multi-agent systems.{% endblock %}
 
@@ -68,12 +71,15 @@
     <!-- Header -->
     <div class="row mb-3">
         <div class="col-12 d-flex justify-content-between align-items-center flex-wrap">
-            <h1 class="page-title mb-1">Prashanth Kumar Kadasi</h1>
+            <div>
+                <h1 class="page-title mb-1">Prashanth Kumar Kadasi</h1>
+                <div class="hero-role font-heading" style="font-size: 1.1rem;">Data Analyst <span class="hero-role-arrow">→</span> AI Engineering</div>
+            </div>
             <div class="d-flex align-items-center gap-2 print-hide">
                 <a href="/static/Prashanth_Kumar_Kadasi_Resume.pdf" download="Prashanth_Kumar_Kadasi_Resume.pdf" class="btn btn-sm btn-primary" style="border-radius: 20px;">
                     <i class="fas fa-file-arrow-down me-1"></i> Download PDF
                 </a>
-                <a href="/static/resume_pdf.html" target="_blank" class="btn btn-sm btn-outline-primary" style="border-radius: 20px;">
+                <a href="/resume/print" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary" style="border-radius: 20px;">
                     <i class="fas fa-print me-1"></i> Print View
                 </a>
             </div>
@@ -82,7 +88,7 @@
             <div style="color: var(--text-secondary); margin-bottom: 0.5rem;">
                 <span>📍 {% if contact %}{{ contact.location }}{% else %}Hyderabad, India{% endif %}</span>
                 {% if contact %}
-                <span style="margin-left: 1rem;">✉️ <a href="mailto:interview@kprsnt.in" class="text-decoration-none" style="color: var(--text-secondary);">{{ contact.email }}</a></span>
+                <span style="margin-left: 1rem;">✉️ <a href="mailto:interview@kprsnt.in" class="text-decoration-none" style="color: var(--text-secondary);">interview@kprsnt.in</a></span>
                 <span style="margin-left: 1rem;">🌐 <a href="https://{{ contact.website }}" class="text-decoration-none" style="color: var(--text-secondary);">{{ contact.website }}</a></span>
                 <span style="margin-left: 1rem;">💻 <a href="https://{{ contact.github }}" target="_blank" rel="noopener" class="text-decoration-none" style="color: var(--text-secondary);">{{ contact.github }}</a></span>
                 <span style="margin-left: 1rem;">🤗 <a href="https://{{ contact.huggingface }}" target="_blank" rel="noopener" class="text-decoration-none" style="color: var(--text-secondary);">{{ contact.huggingface }}</a></span>
@@ -100,8 +106,16 @@
                     {% if resume_summary %}
                     <p>{{ resume_summary }}</p>
                     {% else %}
+                    {# One resume for three audiences (analytics, healthcare, AI), so the
+                       summary names each track and says plainly which work was employment. #}
                     <p>Data Analyst with 3.5+ years in data/analytics &amp; AI (2023–present) and 9 years of healthcare
-                        compliance auditing at Optum / UnitedHealth Group (2014–2023). Data Analyst at Black Piano and Pi Software Solutions, and Enrollment Quality &amp; Audit Representative (CMS Auditor) at Optum. Built and deployed multi-agent systems, evaluation harnesses, and simulators (MediFlow, BugAgents, AgentSwarm, JobAgents, MyLocalCLI, rAsh Score, mSeat), plus 20B LLM fine-tuning on AMD MI300X. Works in Python, SQL, BigQuery, Looker Studio, GCP Cloud Run, and GitHub Actions.</p>
+                        compliance auditing at Optum / UnitedHealth Group (2014–2023), moving into AI engineering.</p>
+                    <ul class="mb-0" style="padding-left: 1.25rem; color: var(--text-secondary);">
+                        <li style="margin-bottom: 0.4rem;"><strong style="color: var(--text-primary);">Analytics (employment):</strong> 18 automated ETL pipelines feeding BigQuery → Looker Studio dashboards at Black Piano, and Python pipelines behind 10+ client dashboards at Pi Software Solutions.</li>
+                        <li style="margin-bottom: 0.4rem;"><strong style="color: var(--text-primary);">Healthcare (employment):</strong> Enrollment Quality &amp; Audit Representative (CMS Auditor) at Optum, auditing federal Medicare enrollment transactions for CMS compliance.</li>
+                        <li style="margin-bottom: 0.4rem;"><strong style="color: var(--text-primary);">AI (independent projects):</strong> built and deployed multi-agent systems, evaluation harnesses, and simulators (MediFlow, BugAgents, AgentSwarm, JobAgents, MyLocalCLI, rAsh Score, mSeat), plus 20B LLM fine-tuning on AMD MI300X.</li>
+                        <li><strong style="color: var(--text-primary);">Tools:</strong> Python, SQL, BigQuery, Looker Studio, GCP Cloud Run, and GitHub Actions.</li>
+                    </ul>
                     {% endif %}
                 </div>
             </div>

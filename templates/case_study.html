@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% block title %}{{ study.name.split(' — ')[0] }} Case Study | Prashanth Kumar Kadasi{% endblock %}
+
+{% block description %}{{ study.headline|truncate(155, False, '…') }}{% endblock %}
+
+{% block og_type %}article{% endblock %}
+
+{% block structured_data %}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "headline": {{ study.name|tojson }},
+      "description": {{ study.headline|tojson }},
+      "url": "https://kprsnt.in/case-study/{{ study.slug }}",
+      "image": "https://kprsnt.in/static/og/og-default.png",
+      "author": {"@type": "Person", "name": "Prashanth Kumar Kadasi", "url": "https://kprsnt.in"},
+      "keywords": {{ study.tech_stack|join(', ')|tojson }}
+    }
+    </script>
+{% endblock %}
+
+{% block content %}
+{# A link is only a "write-up" when it points at a post on this site; several
+   studies reuse the live URL in blog_url, which would just duplicate the button. #}
+{% set has_writeup = study.blog_url and 'kprsnt.in/blog/' in study.blog_url and study.blog_url != study.live_url %}
+{# A bare profile URL is not a repository link. #}
+{% set has_repo = study.github_url and study.github_url.rstrip('/').count('/') > 3 %}
+<div class="container py-3" style="max-width: 900px;">
+    <a href="/case-studies" class="btn btn-outline-light btn-sm mb-4">
+        <i class="fas fa-arrow-left"></i> All case studies
+    </a>
+
+    <header class="mb-4">
+        <span class="badge bg-primary-subtle text-primary font-mono-tech mb-2">{{ study.domain|upper }}</span>
+        <h1 class="page-title mb-3" style="font-size: 2rem; line-height: 1.25;">{{ study.name }}</h1>
+        <p class="text-light" style="font-size: 1.08rem; line-height: 1.65;">{{ study.headline }}</p>
+        <div class="d-flex flex-wrap gap-2 mt-3">
+            {% if study.live_url %}
+            <a href="{{ study.live_url }}" {% if 'kprsnt.in/' not in study.live_url %}target="_blank" rel="noopener"{% endif %} class="btn-lab-primary text-decoration-none px-3 py-2 small">
+                <i class="fas fa-arrow-up-right-from-square me-1"></i> See it live
+            </a>
+            {% endif %}
+            {% if has_repo %}
+            <a href="{{ study.github_url }}" target="_blank" rel="noopener" class="btn-lab-ghost text-decoration-none px-3 py-2 small">
+                <i class="fab fa-github me-1"></i> Source
+            </a>
+            {% endif %}
+            {% if has_writeup %}
+            <a href="{{ study.blog_url|replace('https://kprsnt.in', '') }}" class="btn-lab-ghost text-decoration-none px-3 py-2 small">
+                <i class="fas fa-file-lines me-1"></i> Full write-up
+            </a>
+            {% endif %}
+        </div>
+    </header>
+
+    <section class="glass-panel p-4 mb-3">
+        <h2 class="h6 font-mono-tech text-info text-uppercase mb-2">Measured outcomes</h2>
+        <ul class="mb-0 ps-3">
+            {% for outcome in study.measurable_outcomes %}
+            <li class="text-light mb-2" style="line-height: 1.6;">{{ outcome }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="glass-panel p-4 mb-3">
+        <h2 class="h6 font-mono-tech text-info text-uppercase mb-2">The problem</h2>
+        <p class="text-light mb-0" style="line-height: 1.7;">{{ study.problem_statement }}</p>
+    </section>
+
+    {% if study.initial_struggle %}
+    <section class="glass-panel p-4 mb-3">
+        <h2 class="h6 font-mono-tech text-warning text-uppercase mb-2">What broke first</h2>
+        <p class="text-light mb-0" style="line-height: 1.7;">{{ study.initial_struggle }}</p>
+    </section>
+    {% endif %}
+
+    <section class="glass-panel p-4 mb-3">
+        <h2 class="h6 font-mono-tech text-info text-uppercase mb-2">How it is built</h2>
+        <p class="text-light mb-3" style="line-height: 1.7;">{{ study.technical_architecture }}</p>
+        <div class="project-tags">
+            {% for tech in study.tech_stack %}
+            <span class="project-tag">{{ tech }}</span>
+            {% endfor %}
+        </div>
+    </section>
+
+    {% if study.why_mentioned %}
+    <section class="glass-panel p-4 mb-4" style="border-left: 3px solid #8b5cf6;">
+        <h2 class="h6 font-mono-tech text-uppercase mb-2" style="color: #c084fc;">What it shows about how I work</h2>
+        <p class="text-light mb-0" style="line-height: 1.7;">{{ study.why_mentioned }}</p>
+    </section>
+    {% endif %}
+
+    <div class="glass-panel p-4 mb-4 d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div>
+            <div class="text-white fw-bold">Prashanth Kumar Kadasi</div>
+            <div class="text-secondary small">Data Analyst → AI Engineering · Hyderabad, India</div>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a href="/resume" class="btn-lab-ghost text-decoration-none px-3 py-2 small"><i class="fas fa-file-lines me-1"></i> Resume</a>
+            <a href="mailto:interview@kprsnt.in" class="btn-lab-primary text-decoration-none px-3 py-2 small"><i class="fas fa-envelope me-1"></i> interview@kprsnt.in</a>
+        </div>
+    </div>
+
+    <h2 class="h6 font-mono-tech text-secondary text-uppercase mb-2">More case studies</h2>
+    <div class="d-flex flex-wrap gap-2 mb-4">
+        {% for other in others %}
+        <a href="/case-study/{{ other.slug }}" class="btn btn-sm btn-outline-secondary rounded-pill">{{ other.name.split(' — ')[0] }}</a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

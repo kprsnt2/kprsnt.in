@@ -137,10 +137,23 @@ _TOOL_FUNCTIONS = {
 }
 
 
-def get_ai_response(message: str, agent_type: str = "interview", history: List[Dict[str, str]] = None) -> str:
-    """Get AI response using OpenAI (primary) with NVIDIA fallback, via ai_config."""
+def get_ai_response(message: str, agent_type: str = "interview", history: List[Dict[str, str]] = None,
+                    allow_email_tool: bool = False) -> str:
+    """Get AI response using OpenAI (primary) with NVIDIA fallback, via ai_config.
+
+    ``allow_email_tool`` exposes send_resume_to_user to the model. It defaults
+    to off: with it on, any caller could ask the bot to email an address of
+    their choosing. Only the authenticated inbound-email path turns it on.
+    """
     try:
         system_prompt = get_system_prompt(agent_type)
+        tools = [RESUME_TOOL] if allow_email_tool else None
+        if not allow_email_tool:
+            system_prompt += (
+                "\n\n## Email is not available in this conversation\n"
+                "You cannot send emails or the resume from here. If asked, give the link "
+                "https://kprsnt.in/resume and the address interview@kprsnt.in instead.\n"
+            )
         
         # Build OpenAI-format message history
         messages = []
@@ -159,7 +172,7 @@ def get_ai_response(message: str, agent_type: str = "interview", history: List[D
         response = call_llm_with_history(
             messages,
             system_prompt=system_prompt,
-            tools=[RESUME_TOOL],
+            tools=tools,
             temperature=0.7,
         )
         
@@ -200,7 +213,7 @@ def get_ai_response(message: str, agent_type: str = "interview", history: List[D
             response = call_llm_with_history(
                 messages,
                 system_prompt=system_prompt,
-                tools=[RESUME_TOOL],
+                tools=tools,
                 temperature=0.7,
             )
             

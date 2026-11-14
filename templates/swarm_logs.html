@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}Swarm Intelligence & 10-Agent Live Logs | AI Eco{% endblock %}
+{% block title %}{% if selected_meeting %}Council Meeting {{ selected_meeting.week }} | {% endif %}10-Agent Swarm Logs | AI Eco{% endblock %}
+
+{% block description %}Execution logs, weekly council meetings and current targets for the 10 agents of the AI Eco swarm that maintains kprsnt.in.{% endblock %}
 
 {% block content %}
 <div class="container-fluid py-4" style="max-width: 1400px; padding-bottom: 5rem;">
@@ -248,9 +250,9 @@
 
                     <div class="card-body p-4 text-light markdown-body" style="font-size: 0.95rem; line-height: 1.7;">
                         {% if selected_meeting %}
-                            {{ selected_meeting.html|safe }}
+                            {{ selected_meeting.html|demote_h1|safe }}
                         {% elif weekly_meetings %}
-                            {{ weekly_meetings[0].html|safe }}
+                            {{ weekly_meetings[0].html|demote_h1|safe }}
                         {% else %}
                             <p class="text-secondary">No weekly council meetings recorded yet.</p>
                         {% endif %}
@@ -281,7 +283,7 @@
             </div>
             <div class="card-body p-4 text-light markdown-body" style="font-size: 0.92rem; line-height: 1.7;">
                 {% if daily_views %}
-                    {{ daily_views[0].html|safe }}
+                    {{ daily_views[0].html|demote_h1|safe }}
                 {% else %}
                     <p class="text-secondary">No daily perspectives recorded yet.</p>
                 {% endif %}
@@ -402,7 +404,7 @@
                     </div>
                     <div class="card-body p-4 text-light markdown-body" style="font-size: 0.92rem; line-height: 1.7;">
                         {% if chronicles %}
-                            {{ chronicles[0].html|safe }}
+                            {{ chronicles[0].html|demote_h1|safe }}
                         {% else %}
                             <p class="text-secondary">No chronicles recorded yet.</p>
                         {% endif %}
@@ -418,7 +420,7 @@
                     </div>
                     <div class="card-body p-4 text-light markdown-body" style="font-size: 0.88rem; line-height: 1.6;">
                         {% if cosmos_codex %}
-                            {{ cosmos_codex|safe }}
+                            {{ cosmos_codex|demote_h1|safe }}
                         {% else %}
                             <p class="text-secondary">Codex initializing...</p>
                         {% endif %}
@@ -513,7 +515,7 @@
                             </h2>
                             <div id="collapseAntipersona" class="accordion-collapse collapse" data-bs-parent="#antipersonaAccordion">
                                 <div class="accordion-body p-3 mt-2 rounded-3 text-light markdown-body" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08); font-size: 0.85rem;">
-                                    {{ antipersona_notes|safe }}
+                                    {{ antipersona_notes|demote_h1|safe }}
                                 </div>
                             </div>
                         </div>
@@ -533,7 +535,7 @@
 
                     <div class="p-3 rounded-3 text-light markdown-body" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem;">
                         {% if readme_audit %}
-                            {{ readme_audit|safe }}
+                            {{ readme_audit|demote_h1|safe }}
                         {% else %}
                             <p class="text-secondary small mb-0">Readme audit verified: Mermaid topology rendered and all project endpoints valid.</p>
                         {% endif %}
@@ -552,7 +554,7 @@
 
                     <div class="p-3 rounded-3 text-light markdown-body" style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); font-size: 0.85rem;">
                         {% if docs_audit %}
-                            {{ docs_audit|safe }}
+                            {{ docs_audit|demote_h1|safe }}
                         {% else %}
                             <p class="text-secondary small mb-0">Docs audit verified: all 10 agent contracts grounded, living memory within safe bounds.</p>
                         {% endif %}

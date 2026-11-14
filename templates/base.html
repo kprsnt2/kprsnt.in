@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Prashanth Kumar Kadasi{% endblock %}</title>
     <meta name="description"
-        content="{% block description %}Prashanth Kumar Kadasi — Data analytics, multi-agent systems, LLM evaluation, and cloud data pipelines. Explore live systems, benchmarks, dashboards, and writing.{% endblock %}">
+        content="{% block description %}Prashanth Kumar Kadasi — Data Analyst moving into AI engineering. BigQuery and Looker Studio pipelines, deployed multi-agent systems, LLM evaluation, and 9 years of CMS audit.{% endblock %}">
     <meta name="author" content="Prashanth Kumar Kadasi">
     <meta name="theme-color" content="#0b0f16">
     <link rel="canonical" href="{% block canonical %}https://kprsnt.in{{ request.path }}{% endblock %}">
@@ -43,8 +43,11 @@
       "@type": "Person",
       "name": "Prashanth Kumar Kadasi",
       "url": "https://kprsnt.in",
-      "jobTitle": "Data Analyst → AI Systems Engineering (Target)",
-      "description": "Data Analyst and AI Systems Engineer (Target) with 3.5+ years in data/analytics & AI and 9 years of federal CMS compliance auditing at Optum. Builds autonomous multi-agent systems, deterministic evaluation harnesses, and scalable cloud pipelines.",
+      "jobTitle": "Data Analyst",
+      "description": "Data Analyst with 3.5+ years in data/analytics and AI and 9 years of federal CMS compliance auditing at Optum, moving into AI engineering. Builds BigQuery and Looker Studio pipelines, autonomous multi-agent systems and LLM evaluation harnesses.",
+      "email": "mailto:interview@kprsnt.in",
+      "worksFor": {"@type": "Organization", "name": "Black Piano"},
+      "knowsAbout": ["Data Analysis", "SQL", "BigQuery", "Looker Studio", "ETL", "Python", "Multi-Agent Systems", "LLM Evaluation", "Model Context Protocol", "Medicare / CMS Compliance"],
       "address": {"@type": "PostalAddress", "addressLocality": "Hyderabad", "addressRegion": "Telangana", "addressCountry": "IN"},
       "sameAs": [
         "https://github.com/kprsnt2",
@@ -76,7 +79,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="{{ url_for('static', filename='css/custom.css') }}?v=5" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/custom.css') }}?v=6" rel="stylesheet">
     <!-- Chat Widget CSS -->
     <link href="{{ url_for('static', filename='css/chat-widget.css') }}?v=5" rel="stylesheet">
 </head>
@@ -101,13 +104,15 @@
                     <li class="nav-item">
                         <a class="nav-link {% if request.path == '/projects' %}active{% endif %}" href="/projects">Projects</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path.startswith('/case-stud') %}active{% endif %}" href="/case-studies">Case Studies</a>
+                    </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if request.path in ['/dashboard', '/plotter', '/ecosystem', '/ecosystem/logs', '/swarm/logs', '/aie', '/aie/blogs', '/jobs', '/jobs/dashboard'] or request.path.startswith('/ecosystem/') or request.path.startswith('/aie/') %}active{% endif %}"
+                        <a class="nav-link dropdown-toggle {% if request.path in ['/dashboard', '/plotter', '/ecosystem', '/ecosystem/logs', '/swarm/logs', '/aie', '/aie/blogs'] or request.path.startswith('/ecosystem/') or request.path.startswith('/aie/') %}active{% endif %}"
                             href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Dashboards</a>
                         <ul class="dropdown-menu dropdown-menu-dark site-nav-menu">
                             <li><a class="dropdown-item" href="/dashboard"><i class="fas fa-gauge-high text-info"></i> Command Center</a></li>
                             <li><a class="dropdown-item" href="/plotter"><i class="fas fa-chart-area text-warning"></i> DataForge Plotter</a></li>
-                            <li><a class="dropdown-item" href="/jobs/dashboard"><i class="fas fa-briefcase text-success"></i> Jobs Analytics</a></li>
                             <li><hr class="dropdown-divider border-secondary border-opacity-25"></li>
                             <li><a class="dropdown-item" href="/ecosystem"><i class="fas fa-chart-line text-primary"></i> Ecosystem Telemetry</a></li>
                             <li><a class="dropdown-item" href="/ecosystem/logs"><i class="fas fa-terminal text-success"></i> 10-Agent Swarm Logs</a></li>
@@ -150,9 +155,10 @@
     <footer class="site-footer py-4">
         <nav class="site-footer-links" aria-label="More pages">
             <a href="/">About</a>
-            <a href="/jobs">Career pipeline</a>
-            <a href="/jobs/dashboard">Jobs dashboard</a>
+            <a href="/case-studies">Case studies</a>
+            <a href="/aie/blogs">Agent dev logs</a>
             <a href="/plotter">DataForge plotter</a>
+            <a href="mailto:interview@kprsnt.in">interview@kprsnt.in</a>
             <a href="/feed.xml">RSS</a>
             <a href="/docs">API docs</a>
             <a href="/sitemap.xml">Sitemap</a>
@@ -214,13 +220,13 @@
                     </div>
                     <span class="cmd-item-tag">/mcp</span>
                 </a>
-                <a href="/jobs/dashboard" class="cmd-item" data-keywords="jobs analytics scorer pipeline bigquery">
-                    <i class="fas fa-briefcase text-success"></i>
+                <a href="/case-studies" class="cmd-item" data-keywords="case studies problem architecture outcomes why built">
+                    <i class="fas fa-book-open text-success"></i>
                     <div class="cmd-item-body">
-                        <span class="cmd-item-title">Job Pipeline Analytics</span>
-                        <span class="cmd-item-sub">Daily evaluation distributions, grades &amp; match radar</span>
+                        <span class="cmd-item-title">Project Case Studies</span>
+                        <span class="cmd-item-sub">Problem, what broke first, architecture &amp; measured outcomes</span>
                     </div>
-                    <span class="cmd-item-tag">/jobs/dashboard</span>
+                    <span class="cmd-item-tag">/case-studies</span>
                 </a>
                 <a href="/ecosystem" class="cmd-item" data-keywords="ecosystem swarm 10 agents living memory commits">
                     <i class="fas fa-network-wired text-primary"></i>
@@ -368,6 +374,10 @@
                 openCmdPalette();
             } else if (e.key === 'Escape') {
                 closeCmdPalette();
+            } else if (e.key === 'Enter' && document.activeElement?.id === 'cmdSearchInput') {
+                // Enter opens the first match, so the palette works without a mouse.
+                const first = [...document.querySelectorAll('#cmdItemsList .cmd-item')].find(i => i.style.display !== 'none');
+                if (first) { e.preventDefault(); first.click(); }
             }
         });
     </script>

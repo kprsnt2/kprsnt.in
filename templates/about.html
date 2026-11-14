@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}Prashanth Kumar Kadasi — Systems, Data Analytics & Model Evaluation{% endblock %}
+{% block title %}Prashanth Kumar Kadasi | Data Analyst → AI Engineering{% endblock %}
 
-{% block description %}Prashanth Kumar Kadasi — Data analytics, BigQuery ETL pipelines, autonomous multi-agent systems, and empirical LLM evaluation. Interactive system atlas, live benchmarks, and MCP server hosted on Google Cloud Run.{% endblock %}
+{% block description %}Data Analyst in Hyderabad moving into AI engineering: 3.5+ years of BigQuery and Looker Studio pipelines, 9 years of CMS audit at Optum, and deployed multi-agent systems.{% endblock %}
 
 {% block content %}
 <div class="container-fluid px-3 px-lg-5" style="max-width: 1400px; position: relative; z-index: 1;">
@@ -30,34 +30,48 @@
                     </span>
                 </div>
 
-                <h1 class="display-5 fw-bold mb-2 font-heading" style="letter-spacing: -1px; background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 60%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                <h1 class="display-5 fw-bold mb-1 font-heading" style="letter-spacing: -1px; background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 60%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
                     Prashanth Kumar Kadasi
                 </h1>
 
-                <p class="text-secondary mb-0" style="max-width: 780px; font-size: 1.02rem; line-height: 1.65;">
-                    Building production BigQuery &amp; Looker Studio data pipelines, multi-agent systems with cryptographic audit trails, discrete simulation engines, and empirical LLM evaluation benchmarks. Based in Hyderabad, India.
+                {# Held title first, direction of travel second: "Data Analyst" is
+                   the job title, AI engineering is where the independent work points. #}
+                <p class="hero-role font-heading mb-2">Data Analyst <span class="hero-role-arrow">→</span> AI Engineering</p>
+
+                <p class="hero-lead mb-2">
+                    I'm a Data Analyst with 3.5+ years building BigQuery and Looker Studio pipelines, after 9 years auditing federal Medicare (CMS) enrollment at Optum.
+                    On my own time I build and deploy multi-agent systems and LLM evaluation harnesses, and I hold them to the same audit standard.
+                    Based in Hyderabad, India.
+                </p>
+
+                <p class="hero-open mb-0">
+                    <span class="hero-open-label">Open to</span>
+                    <span class="hero-open-role">Data Analyst / Analytics Engineer</span>
+                    <span class="hero-open-role">AI Engineer (agents, evals, MCP)</span>
+                    <span class="hero-open-role">Healthcare data &amp; AI</span>
                 </p>
             </div>
 
-            <div class="col-12 col-lg-4 d-flex flex-wrap gap-2 justify-content-lg-end align-items-center">
-                <button type="button" class="btn-lab-ghost px-3 py-2 font-mono-tech small" onclick="openCmdPalette()">
-                    <i class="fas fa-terminal text-info me-1"></i> Command Palette <kbd class="ms-1 px-1 rounded bg-black text-muted">⌘K</kbd>
-                </button>
-                <a href="/resume" class="btn-lab-primary text-decoration-none px-3 py-2 small">
-                    <i class="fas fa-file-lines me-1"></i> Resume
-                </a>
-                <a href="https://github.com/kprsnt2" target="_blank" rel="noopener" class="btn-lab-ghost text-decoration-none px-3 py-2 small" aria-label="GitHub">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="https://huggingface.co/kprsnt" target="_blank" rel="noopener" class="btn-lab-ghost text-decoration-none px-3 py-2 small" aria-label="HuggingFace">
-                    🤗
-                </a>
-                <a href="https://www.linkedin.com/in/prashanth-kumar-kadasi-b5281765/" target="_blank" rel="noopener" class="btn-lab-ghost text-decoration-none px-3 py-2 small" aria-label="LinkedIn">
-                    <i class="fab fa-linkedin text-info"></i>
-                </a>
-                <a href="mailto:interview@kprsnt.in" class="btn-lab-ghost text-decoration-none px-3 py-2 small" aria-label="Email">
-                    <i class="fas fa-envelope text-success"></i>
-                </a>
+            <div class="col-12 col-lg-4">
+                <div class="d-flex flex-wrap gap-2 justify-content-lg-end align-items-center">
+                    <a href="/resume" class="btn-lab-primary text-decoration-none px-3 py-2 small">
+                        <i class="fas fa-file-lines me-1"></i> Resume
+                    </a>
+                    <a href="mailto:interview@kprsnt.in" class="btn-lab-ghost text-decoration-none px-3 py-2 small">
+                        <i class="fas fa-envelope text-success me-1"></i> interview@kprsnt.in
+                    </a>
+                </div>
+                <div class="d-flex flex-wrap gap-2 justify-content-lg-end align-items-center mt-2">
+                    <a href="https://www.linkedin.com/in/prashanth-kumar-kadasi-b5281765/" target="_blank" rel="noopener" class="btn-lab-ghost text-decoration-none px-3 py-2 small">
+                        <i class="fab fa-linkedin text-info me-1"></i> LinkedIn
+                    </a>
+                    <a href="https://github.com/kprsnt2" target="_blank" rel="noopener" class="btn-lab-ghost text-decoration-none px-3 py-2 small">
+                        <i class="fab fa-github me-1"></i> GitHub
+                    </a>
+                    <a href="https://huggingface.co/kprsnt" target="_blank" rel="noopener" class="btn-lab-ghost text-decoration-none px-3 py-2 small">
+                        🤗 Hugging Face
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -473,7 +487,7 @@
                         </div>
                         <div class="d-flex gap-2">
                             <a href="https://job.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-success rounded-pill px-3">job.kprsnt.in ↗</a>
-                            <a href="/blog/jobagents-production-ai-career-pipeline" class="btn btn-sm btn-outline-light rounded-pill px-3">Case Study</a>
+                            <a href="/case-study/jobagents" class="btn btn-sm btn-outline-light rounded-pill px-3">Case Study</a>
                         </div>
                     </div>
 
@@ -538,7 +552,7 @@
                         </div>
                         <div class="d-flex gap-2">
                             <a href="https://bug.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-danger rounded-pill px-3">bug.kprsnt.in ↗</a>
-                            <a href="/blog/bugagents-dual-llm-security-matrix" class="btn btn-sm btn-outline-light rounded-pill px-3">Case Study</a>
+                            <a href="/case-study/bugagents" class="btn btn-sm btn-outline-light rounded-pill px-3">Case Study</a>
                         </div>
                     </div>
 
@@ -735,7 +749,7 @@
                     </p>
                     <div class="d-flex gap-2 mt-auto pt-2 border-top border-secondary border-opacity-10">
                         <a href="https://job.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-success flex-fill py-1" style="font-size: 0.76rem;">job.kprsnt.in ↗</a>
-                        <a href="/blog/jobagents-production-ai-career-pipeline" class="btn btn-sm btn-outline-light flex-fill py-1" style="font-size: 0.76rem;">Study</a>
+                        <a href="/case-study/jobagents" class="btn btn-sm btn-outline-light flex-fill py-1" style="font-size: 0.76rem;">Study</a>
                     </div>
                 </div>
             </div>
@@ -769,7 +783,7 @@
                     </p>
                     <div class="d-flex gap-2 mt-auto pt-2 border-top border-secondary border-opacity-10">
                         <a href="https://bug.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-danger flex-fill py-1" style="font-size: 0.76rem;">bug.kprsnt.in ↗</a>
-                        <a href="/blog/bugagents-dual-llm-security-matrix" class="btn btn-sm btn-outline-light flex-fill py-1" style="font-size: 0.76rem;">Study</a>
+                        <a href="/case-study/bugagents" class="btn btn-sm btn-outline-light flex-fill py-1" style="font-size: 0.76rem;">Study</a>
                     </div>
                 </div>
             </div>
@@ -786,7 +800,7 @@
                     </p>
                     <div class="d-flex gap-2 mt-auto pt-2 border-top border-secondary border-opacity-10">
                         <a href="https://agent.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary flex-fill py-1" style="font-size: 0.76rem;">agent.kprsnt.in ↗</a>
-                        <a href="/blog/02-building-the-forensic-arena" class="btn btn-sm btn-outline-light flex-fill py-1" style="font-size: 0.76rem;">Study</a>
+                        <a href="/case-study/agentswarm" class="btn btn-sm btn-outline-light flex-fill py-1" style="font-size: 0.76rem;">Study</a>
                     </div>
                 </div>
             </div>
@@ -928,26 +942,24 @@
             <div class="glass-panel p-4 h-100">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div>
-                        <div class="font-mono-tech small text-info"><i class="fas fa-satellite-dish me-1"></i> AUTOMATED DEV LOGS &amp; STUDIES</div>
-                        <h3 class="h5 text-white fw-bold mb-0 font-heading">Latest Dispatches</h3>
+                        <div class="font-mono-tech small text-info"><i class="fas fa-pen-nib me-1"></i> WRITING</div>
+                        <h2 class="h5 text-white fw-bold mb-0 font-heading">Selected Articles</h2>
                     </div>
                     <a href="/blog" class="btn btn-sm btn-outline-info rounded-pill px-3" style="font-size: 0.75rem;">
-                        All Writing ({{ stats.live.blog_posts + stats.live.dev_logs }}) →
+                        All articles ({{ essay_count }}) →
                     </a>
                 </div>
 
-                {% if latest_aie_blogs %}
+                {% if featured_blogs %}
                 <div class="d-flex flex-column gap-2">
-                    {% for log in latest_aie_blogs %}
-                    <a href="/blog/{{ log.slug }}" class="p-3 rounded text-decoration-none d-block" style="background: rgba(255, 255, 255, 0.025); border: 1px solid rgba(255, 255, 255, 0.06); transition: all 0.2s;">
+                    {% for post in featured_blogs %}
+                    <a href="/blog/{{ post.slug }}" class="p-3 rounded text-decoration-none d-block" style="background: rgba(255, 255, 255, 0.025); border: 1px solid rgba(255, 255, 255, 0.06); transition: all 0.2s;">
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <span class="badge bg-info-subtle text-info font-mono-tech" style="font-size: 0.68rem;">{{ log.date }}</span>
-                            <span class="font-mono-tech text-muted small" style="font-size: 0.68rem;">
-                                <i class="fas fa-robot text-primary me-1"></i>{{ log.author or 'GitHub Scout Agent' }}
-                            </span>
+                            <span class="badge bg-info-subtle text-info font-mono-tech" style="font-size: 0.68rem;">{{ post.category }}</span>
+                            <span class="font-mono-tech text-muted small" style="font-size: 0.68rem;">{{ post.date }}</span>
                         </div>
-                        <h6 class="text-white mb-1 fw-bold" style="font-size: 0.92rem;">{{ log.title }}</h6>
-                        <p class="text-secondary small mb-0 text-truncate" style="font-size: 0.8rem;">{{ log.excerpt }}</p>
+                        <h3 class="text-white mb-1 fw-bold" style="font-size: 0.92rem;">{{ post.title }}</h3>
+                        <p class="text-secondary small mb-0" style="font-size: 0.8rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ post.excerpt }}</p>
                     </a>
                     {% endfor %}
                 </div>
@@ -1019,6 +1031,10 @@
 
         const rank = parseInt(rankEl.value || '2500', 10);
         const cat = catEl.value || 'OC';
+        if (!Number.isInteger(rank) || rank < 1) {
+            outEl.textContent = 'Enter a state rank of 1 or higher.';
+            return;
+        }
         outEl.textContent = 'Running O(1) discrete allocation simulation...';
 
         try {
@@ -1031,7 +1047,9 @@
                 const a = data.allocation;
                 outEl.innerHTML =
                     `<div class="text-success fw-bold mb-1">✓ Seat Allocated (${dt}ms) — ${a.collegeName} (${a.collegeCode})</div>` +
-                    `<div class="text-secondary">Category: <span class="text-white">${cat}</span> · Closing Rank: <span class="text-info">${a.closingRank}</span> · Margin: <span class="text-warning">+${a.closingRank - rank} ranks</span> · Confidence: <span class="text-white">${a.confidence || 'High'}</span></div>`;
+                    // Margin and status come from the API. The closing rank is a
+                    // category rank, so it must not be compared with the state rank.
+                    `<div class="text-secondary">Category: <span class="text-white">${cat}</span> · Category rank: <span class="text-white">${data.categoryRank}</span> · Closing rank: <span class="text-info">${a.closingRank}</span> · Margin: <span class="text-warning">${a.safetyMargin} ranks</span> · <span class="text-white">${a.status || ''}</span></div>`;
             } else if (data.success && !data.allocated) {
                 outEl.innerHTML =
                     `<div class="text-warning fw-bold mb-1">No seat within Phase 1 cutoff for State Rank ${rank} (${cat}) (${dt}ms)</div>` +

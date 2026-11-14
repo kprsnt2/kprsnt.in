@@ -100,9 +100,10 @@ def get_all_live_data():
     if ecosystem:
         parts.append(ecosystem)
 
-    jobs = get_live_jobs_summary()
-    if jobs:
-        parts.append(jobs)
+    # The job-search summary (target companies, match scores, applied count) is
+    # deliberately NOT included: this text goes into the public chat and
+    # interview bots, which would repeat it to any visitor who asked.
+    # get_live_jobs_summary() stays available for private tooling.
 
     if not parts:
         return ""

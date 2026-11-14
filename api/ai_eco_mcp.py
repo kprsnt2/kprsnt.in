@@ -91,8 +91,7 @@ except ImportError:
     except ImportError:
         CONTACT = {
             "name": "Prashanth Kumar Kadasi",
-            "phone": "+91-9948311964",
-            "email": "kprsnt@live.com",
+            "email": "interview@kprsnt.in",
             "location": "Hyderabad, Telangana, India",
             "website": "kprsnt.in",
             "github": "github.com/kprsnt2",
@@ -104,6 +103,11 @@ except ImportError:
             "details": "May 2012"
         }
         RESUME_DATA_AI_ENGINEER = {}
+
+# What the public MCP tools return as contact details: the site address, and
+# never a phone number. The personal address and phone stay on the resume.
+PUBLIC_CONTACT = {k: v for k, v in CONTACT.items() if k != "phone"}
+PUBLIC_CONTACT["email"] = "interview@kprsnt.in"
 
 
 # ═══════════════════════════════════════════════════════════════
@@ -688,7 +692,7 @@ def handle_site_projects(args: Dict[str, Any]) -> Dict[str, Any]:
 
 def handle_my_profile(args: Dict[str, Any]) -> Dict[str, Any]:
     return {
-        "contact": CONTACT,
+        "contact": PUBLIC_CONTACT,
         "education": EDUCATION,
         "current_focus": "Autonomous Multi-Agent AI Ecosystems, Model Context Protocol (MCP), LLM Fine-Tuning & High-Throughput Analytics",
         "social_presence": {
@@ -727,7 +731,7 @@ def handle_my_resume(args: Dict[str, Any]) -> Dict[str, Any]:
         "experiences": data.get("experiences", []),
         "skills": data.get("skills", {}),
         "projects": data.get("projects", []),
-        "contact": CONTACT,
+        "contact": PUBLIC_CONTACT,
         "education": EDUCATION
     }
 
@@ -736,31 +740,31 @@ def handle_my_skills(args: Dict[str, Any]) -> Dict[str, Any]:
     category = (args.get("category") or "all").strip().lower()
     skills_map = {
         "agents": [
-            {"skill": "Autonomous Multi-Agent Swarms", "level": "Expert", "details": "Orchestrated 10-agent concurrent pipeline executing daily via GitHub Actions"},
-            {"skill": "Model Context Protocol (MCP)", "level": "Expert", "details": "Full JSON-RPC 2.0 & SSE implementation compliant with 2024-11-05 spec"},
-            {"skill": "Tool Calling & Function Execution", "level": "Expert", "details": "Dynamic schema validation, parameter mapping, and non-blocking retry policies"},
-            {"skill": "Agentic Sandboxing & MicroVMs", "level": "Advanced", "details": "Embedded preview iframes and sub-second containerized daemon startups"}
+            {"skill": "Autonomous Multi-Agent Swarms", "details": "Orchestrated 10-agent concurrent pipeline executing daily via GitHub Actions"},
+            {"skill": "Model Context Protocol (MCP)", "details": "Full JSON-RPC 2.0 & SSE implementation compliant with 2024-11-05 spec"},
+            {"skill": "Tool Calling & Function Execution", "details": "Dynamic schema validation, parameter mapping, and non-blocking retry policies"},
+            {"skill": "Agentic Sandboxing & MicroVMs", "details": "Embedded preview iframes and sub-second containerized daemon startups"}
         ],
         "ai_llm": [
-            {"skill": "LLM Fine-Tuning & Evaluation", "level": "Expert", "details": "Fine-tuned GPT-OSS-20B on AMD MI300X (BrandXY, Drug Discovery)"},
-            {"skill": "Hierarchical LLM Routing", "level": "Expert", "details": "Multi-tier routing: GPT-OSS 120B -> GPT-OSS 20B -> Qwen3.8 27B"},
-            {"skill": "Context Engineering & RAG", "level": "Expert", "details": "Curated embeddings, system prompt grounding, and vector retrieval"},
-            {"skill": "Model APIs", "level": "Expert", "details": "OpenAI, Anthropic Claude, Groq, NVIDIA Integrate, Google Gemini"}
+            {"skill": "LLM Fine-Tuning & Evaluation", "details": "Fine-tuned GPT-OSS-20B on AMD MI300X (BrandXY, Drug Discovery)"},
+            {"skill": "Hierarchical LLM Routing", "details": "Multi-tier routing: GPT-OSS 120B -> GPT-OSS 20B -> Qwen3.8 27B"},
+            {"skill": "Context Engineering & RAG", "details": "Curated embeddings, system prompt grounding, and vector retrieval"},
+            {"skill": "Model APIs", "details": "OpenAI, Anthropic Claude, Groq, NVIDIA Integrate, Google Gemini"}
         ],
         "data_sql": [
-            {"skill": "SQL & BigQuery", "level": "Expert", "details": "Complex analytical queries, window functions, and enterprise ETL pipelines"},
-            {"skill": "Python for Data", "level": "Expert", "details": "Pandas, NumPy, automated scraping, data transformation, and data cleaning"},
-            {"skill": "Data Modeling", "level": "Advanced", "details": "Star schemas, relational database modeling, and automated pipelines"}
+            {"skill": "SQL & BigQuery", "details": "Complex analytical queries, window functions, and enterprise ETL pipelines"},
+            {"skill": "Python for Data", "details": "Pandas, NumPy, automated scraping, data transformation, and data cleaning"},
+            {"skill": "Data Modeling", "details": "Star schemas, relational database modeling, and automated pipelines"}
         ],
         "bi_viz": [
-            {"skill": "Executive Dashboards", "level": "Expert", "details": "18 sector intelligence dashboards deployed for US & UK enterprise clients"},
-            {"skill": "BI Tools", "level": "Expert", "details": "Looker Studio, Tableau, Power BI, Plotly, Chart.js"},
-            {"skill": "Interactive Data Plotter", "level": "Advanced", "details": "In-browser live CSV/JSON data plotter on kprsnt.in/plotter"}
+            {"skill": "Executive Dashboards", "details": "18 sector intelligence dashboards deployed for US & UK enterprise clients"},
+            {"skill": "BI Tools", "details": "Looker Studio, Tableau"},
+            {"skill": "Interactive Data Plotter", "details": "In-browser live CSV/JSON data plotter on kprsnt.in/plotter"}
         ],
         "cloud_infra": [
-            {"skill": "GitHub Actions CI/CD", "level": "Expert", "details": "Scheduled automated workflows with autonomous commit/push bots"},
-            {"skill": "Serverless Deployment", "level": "Advanced", "details": "Vercel Edge, custom caching, and dependency tree bundling"},
-            {"skill": "GCP & Cloud Analytics", "level": "Advanced", "details": "Google Cloud Platform pipeline migration and automated AppScript triggers"}
+            {"skill": "GitHub Actions CI/CD", "details": "Scheduled automated workflows with autonomous commit/push bots"},
+            {"skill": "Serverless Deployment", "details": "Vercel Edge, custom caching, and dependency tree bundling"},
+            {"skill": "GCP & Cloud Analytics", "details": "Google Cloud Platform pipeline migration and automated AppScript triggers"}
         ]
     }
 

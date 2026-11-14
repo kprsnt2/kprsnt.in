@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}All-In-One MCP Server — Model Context Protocol for AI Assistants | kprsnt.in{% endblock %}
+{% block title %}MCP Server &amp; Live Playground | Prashanth Kumar Kadasi{% endblock %}
 
-{% block description %}Connect Claude, Cursor, and OpenAI to kprsnt.in over the Model Context Protocol (MCP). Tools, resources, and prompts covering projects, resume, blog, and AI Eco telemetry.{% endblock %}
+{% block description %}Connect Claude, Cursor or ChatGPT to kprsnt.in over the Model Context Protocol. Tools and resources for projects, resume, blog and AI Eco telemetry.{% endblock %}
 
 {% block content %}
 <div class="container py-5" style="max-width: 1300px;">
@@ -23,7 +23,7 @@
       <a href="/ecosystem" class="btn btn-outline-info rounded-pill px-4">
         <i class="fas fa-microchip me-2"></i>AI Eco Dashboard
       </a>
-      <a href="https://github.com/kprsnt2/kprsnt.in" target="_blank" class="btn btn-outline-light rounded-pill px-4">
+      <a href="https://github.com/kprsnt2/kprsnt.in" target="_blank" rel="noopener" class="btn btn-outline-light rounded-pill px-4">
         <i class="fab fa-github me-2"></i>GitHub Source
       </a>
     </div>
@@ -651,9 +651,9 @@ function renderReadableOutput(payload, data) {
         <div class="col-md-6">
           <h6 class="text-white small fw-bold mb-2"><i class="fas fa-share-alt text-info me-1"></i> Verified Links</h6>
           <div class="d-flex flex-wrap gap-2">
-            ${social.github ? `<a href="${social.github}" target="_blank" class="btn btn-sm btn-outline-light rounded-pill"><i class="fab fa-github me-1"></i> GitHub</a>` : ''}
-            ${social.linkedin ? `<a href="${social.linkedin}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill"><i class="fab fa-linkedin me-1"></i> LinkedIn</a>` : ''}
-            ${social.huggingface ? `<a href="${social.huggingface}" target="_blank" class="btn btn-sm btn-outline-warning rounded-pill"><i class="fas fa-smile me-1"></i> HuggingFace</a>` : ''}
+            ${social.github ? `<a href="${social.github}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-light rounded-pill"><i class="fab fa-github me-1"></i> GitHub</a>` : ''}
+            ${social.linkedin ? `<a href="${social.linkedin}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary rounded-pill"><i class="fab fa-linkedin me-1"></i> LinkedIn</a>` : ''}
+            ${social.huggingface ? `<a href="${social.huggingface}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-warning rounded-pill"><i class="fas fa-smile me-1"></i> HuggingFace</a>` : ''}
           </div>
         </div>
       </div>
@@ -682,8 +682,8 @@ function renderReadableOutput(payload, data) {
                   ${(p.tags || []).map(t => `<span class="badge bg-black text-muted" style="font-size: 0.7rem; border: 1px solid rgba(255,255,255,0.08);">${escapeHtml(t)}</span>`).join('')}
                 </div>
                 <div class="d-flex gap-2">
-                  ${p.url ? `<a href="${p.url}" target="_blank" class="btn btn-sm btn-outline-info rounded-pill py-0 px-2" style="font-size: 0.75rem;"><i class="fas fa-external-link-alt me-1"></i> Live</a>` : ''}
-                  ${p.github ? `<a href="${p.github}" target="_blank" class="btn btn-sm btn-outline-light rounded-pill py-0 px-2" style="font-size: 0.75rem;"><i class="fab fa-github me-1"></i> Code</a>` : ''}
+                  ${p.url ? `<a href="${p.url}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-info rounded-pill py-0 px-2" style="font-size: 0.75rem;"><i class="fas fa-external-link-alt me-1"></i> Live</a>` : ''}
+                  ${p.github ? `<a href="${p.github}" target="_blank" rel="noopener" class="btn btn-sm btn-outline-light rounded-pill py-0 px-2" style="font-size: 0.75rem;"><i class="fab fa-github me-1"></i> Code</a>` : ''}
                 </div>
               </div>
             </div>

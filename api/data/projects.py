@@ -260,8 +260,10 @@ PROJECTS = [
         "featured": True,
         "tags": ["Flask", "MCP", "RAG", "Multi-Agent", "Python", "Bootstrap 5"]
     },
-    # --- Personal & education apps -------------------------------------------------
+    # --- Healthcare & drug-discovery explorations ----------------------------------
     # Real and live; not in profile.md's project list, so deliberately number-free.
+    # Personal/family apps and entries whose demo or repo went offline were removed
+    # in the 2026-11 audit so the grid only shows work relevant to a hiring reader.
     {
         "title": "🧬 Drug Discovery GPT-20B",
         "description": "A fine-tune of GPT-OSS-20B on an AMD MI300X that generates candidate molecules, parses SMILES structures, and predicts drug properties. Ships with a Gradio demo and comparison scripts.",
@@ -275,7 +277,6 @@ PROJECTS = [
         "title": "PharmaGenesis AI — Drug Discovery Assistant",
         "description": "A drug discovery exploration tool pairing Claude and Gemini: 3D molecular visualisation, ADMET predictions, drug interactions, synthesis routes, and follow-up analysis. Built on the author's M.Pharm (Pharmaceutical Analysis & QA) background.",
         "url": "https://pharmgenai.kprsnt.in/",
-        "github": "https://github.com/kprsnt2/PharmaGenesisAI",
         "color": "danger",
         "featured": False,
         "tags": ["Claude", "Gemini", "Drug Discovery", "3D Viewer", "ADMET"]
@@ -287,136 +288,6 @@ PROJECTS = [
         "color": "danger",
         "featured": False,
         "tags": ["React", "AI", "Health", "Vercel"]
-    },
-    {
-        "title": "Pancreatitis Info (Telugu)",
-        "description": "A Telugu-language site explaining pancreatitis to families and kids, with AI help on food choices, cooking methods, and general questions.",
-        "url": "https://ai-cp.vercel.app/",
-        "github": "https://github.com/kprsnt2/ai_cp",
-        "color": "danger",
-        "featured": False,
-        "tags": ["Health", "Telugu", "Gemini", "Personal"]
-    },
-    {
-        "title": "MolecuLearn — Molecule & Drug Alternative Explorer",
-        "description": "Real-time drug-alternative lookup for a general audience: molecule structure, alternatives, and plain-language explanations.",
-        "url": "https://moleculearn.kprsnt.in",
-        "github": "https://github.com/kprsnt2/MolecuLearn",
-        "color": "info",
-        "featured": False,
-        "tags": ["Education", "Chemistry", "Gemini"]
-    },
-    {
-        "title": "🎓 NEET Exam Preparation",
-        "description": "Practice tests, topic-wise study material, and AI tutoring for NEET aspirants.",
-        "url": "https://neet-ag.pages.dev/",
-        "github": "https://github.com/kprsnt2/neet_ag",
-        "color": "success",
-        "featured": False,
-        "tags": ["Education", "NEET", "Cloudflare Pages"]
-    },
-    {
-        "title": "📚 CBSE Grade X Learning",
-        "description": "AI-assisted explanations, practice questions, and subject-wise study resources for CBSE Grade 10.",
-        "url": "https://cbse-learn.vercel.app/",
-        "github": "https://github.com/kprsnt2/cbse",
-        "color": "info",
-        "featured": False,
-        "tags": ["Education", "CBSE", "Vercel"]
-    },
-    {
-        "title": "AI Reading Buddy",
-        "description": "A phonics companion for ages 3–8: blending, letter sounds, and rhyming, with Gemini-generated practice.",
-        "url": "https://ai-reading-buddy.vercel.app/",
-        "github": "https://github.com/kprsnt2/AI_reading_buddy",
-        "color": "warning",
-        "featured": False,
-        "tags": ["Kids", "Phonics", "Gemini"]
-    },
-    {
-        "title": "AI Story Teller",
-        "description": "Generates short stories for kids with Gemini, returning both text and audio.",
-        "url": "https://storygemini.streamlit.app",
-        "color": "info",
-        "featured": False,
-        "tags": ["Streamlit", "Gemini", "Creative"]
-    },
-    {
-        "title": "AI Tutor",
-        "description": "An interactive tutor for students up to Grade 10, with explanations on request.",
-        "url": "https://aitutor.streamlit.app/",
-        "color": "info",
-        "featured": False,
-        "tags": ["Streamlit", "Education", "AI"]
-    },
-    {
-        "title": "ChessKids — Chess for Kids",
-        "description": "A learn-chess board with toy-piece icons and in-game hints.",
-        "url": "https://chess.kprsnt.in/",
-        "github": "https://github.com/kprsnt2/ChessKids",
-        "color": "warning",
-        "featured": False,
-        "tags": ["Kids", "Chess", "Education"]
-    },
-    {
-        "title": "❤️ Valentine's Day Surprise",
-        "description": "An interactive Valentine's Day page built for a partner.",
-        "url": "https://vday.kprsnt.in/",
-        "github": "https://github.com/kprsnt2/vday",
-        "color": "danger",
-        "featured": False,
-        "tags": ["Personal", "Interactive", "Vercel"]
-    },
-    {
-        "title": "🎂 Birthday Countdown & Story Generator",
-        "description": "A birthday countdown with a personalised story generator for kids.",
-        "url": "https://bday.kprsnt.in/",
-        "github": "https://github.com/kprsnt2/bdaynanu",
-        "color": "warning",
-        "featured": False,
-        "tags": ["Personal", "Gemini", "Kids"]
-    },
-    {
-        "title": "AI Report Generator",
-        "description": "Generates a structured report on any topic with Gemini, exportable to PDF.",
-        "url": "https://aireport.kprsnt.in/",
-        "github": "https://github.com/kprsnt2/ai-report-generation-kl",
-        "color": "success",
-        "featured": False,
-        "tags": ["Gemini", "PDF", "Productivity"]
-    },
-    {
-        "title": "PersonaAI — Multi-Personality Chat",
-        "description": "Chat with three AI personas — Teen, Child, and Infant — each with its own response style.",
-        "url": "https://per-ai.vercel.app/",
-        "github": "https://github.com/kprsnt2/PersonaAI",
-        "color": "info",
-        "featured": False,
-        "tags": ["React", "AI", "Personas"]
-    },
-    {
-        "title": "AI Debate Platform",
-        "description": "Generates a structured AI debate on a topic, with real-time streaming.",
-        "url": "https://aidebate.kprsnt.in",
-        "color": "info",
-        "featured": False,
-        "tags": ["Gemini", "AI", "Streaming"]
-    },
-    {
-        "title": "CSV Data Plotter",
-        "description": "Upload a CSV and explore interactive charts by column, filter, and group.",
-        "url": "https://plotcharts.streamlit.app",
-        "color": "info",
-        "featured": False,
-        "tags": ["Streamlit", "Data Viz", "Python"]
-    },
-    {
-        "title": "Terminal Interface",
-        "description": "A retro terminal-style shell interface for a portfolio.",
-        "url": "https://terminal.kprsnt.in",
-        "color": "info",
-        "featured": False,
-        "tags": ["Vue.js", "UI/UX", "Terminal"]
     },
 ]
 

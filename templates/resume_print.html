@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+{# Print / PDF resume. Rendered from the same data as /resume (api/data/projects.py
+   and api/resume_data.py) so the downloadable PDF can never drift from the site.
+   Regenerate static/Prashanth_Kumar_Kadasi_Resume.pdf with:
+       python scripts/build_resume_pdf.py
+   Plain text, no emoji and no columns in the body: ATS parsers read it top to bottom. #}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>{{ contact.name }} - Resume</title>
+    <link rel="canonical" href="https://kprsnt.in/resume">
+    <style>
+        :root {
+            --accent: #1d4ed8;
+            --text-dark: #0f172a;
+            --text-medium: #334155;
+            --text-light: #64748b;
+            --border: #cbd5e1;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.4;
+            background: white;
+        }
+        .resume { max-width: 850px; margin: 0 auto; padding: 28px 40px; }
+        a { color: var(--accent); text-decoration: none; }
+
+        .header { border-bottom: 2.5px solid var(--accent); padding-bottom: 10px; margin-bottom: 12px; }
+        .header h1 { font-size: 23px; font-weight: 800; letter-spacing: -0.3px; text-transform: uppercase; }
+        .header .title { font-size: 13px; font-weight: 700; color: var(--accent); margin: 3px 0 7px; }
+        .contact-row { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 10.5px; color: var(--text-medium); }
+        .contact-row a { color: var(--text-dark); }
+
+        .section { margin-bottom: 12px; }
+        .section-title {
+            font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px;
+            color: var(--accent); border-bottom: 1.5px solid var(--border); padding-bottom: 3px; margin-bottom: 6px;
+            break-after: avoid;
+        }
+        .note { break-after: avoid; }
+        .summary { font-size: 10.5px; color: var(--text-medium); line-height: 1.5; margin-bottom: 4px; }
+
+        /* Native list markers and no positioned elements: Chrome writes positioned
+           boxes into the PDF after normal-flow text, which scrambled the reading
+           order that ATS parsers and copy-paste rely on. */
+        ul { list-style: disc; padding-left: 14px; }
+        li { font-size: 10.5px; color: var(--text-medium); line-height: 1.45; margin-bottom: 2.5px; }
+        li::marker { color: var(--accent); }
+        li strong { color: var(--text-dark); }
+
+        .item { margin-bottom: 9px; break-inside: avoid; }
+        .item-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+        .item-name { font-size: 11.5px; font-weight: 800; }
+        .item-period { font-size: 10.5px; color: var(--text-light); font-weight: 600; white-space: nowrap; }
+        .item-role { font-size: 10.5px; color: var(--accent); font-weight: 700; margin-bottom: 3px; }
+        .item-role span { color: var(--text-light); font-weight: 500; }
+        .item-desc { font-size: 10px; color: var(--text-medium); line-height: 1.42; margin-top: 2px; }
+        .item-links { font-size: 9.5px; margin-top: 1px; }
+        .note { font-size: 10px; color: var(--text-light); font-style: italic; margin-bottom: 6px; }
+
+        .skill-row { display: flex; font-size: 10.5px; line-height: 1.45; margin-bottom: 2px; }
+        .skill-cat { font-weight: 700; min-width: 118px; flex-shrink: 0; }
+        .skill-items { color: var(--text-medium); }
+
+        .bar {
+            background: #0f172a; color: rgba(255, 255, 255, 0.85); font-size: 12px;
+            padding: 10px 24px; display: flex; justify-content: space-between; align-items: center;
+            max-width: 850px; margin: 0 auto; border-radius: 0 0 10px 10px;
+        }
+        .bar a { color: #93c5fd; font-weight: 600; }
+        .bar button {
+            background: var(--accent); color: white; border: 0; padding: 7px 16px;
+            border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer;
+        }
+
+        @media print {
+            @page { size: A4; margin: 11mm 14mm; }
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .resume { padding: 0; max-width: none; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bar no-print">
+    <span><a href="/resume">&larr; Back to the web resume</a></span>
+    <button type="button" onclick="window.print()">Save as PDF</button>
+</div>
+
+<div class="resume">
+    <header class="header">
+        <h1>{{ contact.name }}</h1>
+        <div class="title">Data Analyst &rarr; AI Engineering</div>
+        <div class="contact-row">
+            <span>{{ contact.location }}</span>
+            {% if contact.phone %}<span>{{ contact.phone }}</span>{% endif %}
+            <span><a href="mailto:{{ contact.email }}">{{ contact.email }}</a></span>
+            <span><a href="https://{{ contact.website }}">{{ contact.website }}</a></span>
+            <span><a href="https://{{ contact.linkedin }}">{{ contact.linkedin }}</a></span>
+            <span><a href="https://{{ contact.github }}">{{ contact.github }}</a></span>
+            <span><a href="https://{{ contact.huggingface }}">{{ contact.huggingface }}</a></span>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="section-title">Summary</div>
+        <p class="summary">Data Analyst with 3.5+ years in data/analytics and AI (2023&ndash;present) and 9 years of healthcare compliance auditing at Optum / UnitedHealth Group (2014&ndash;2023), moving into AI engineering.</p>
+        <ul>
+            <li><strong>Analytics (employment):</strong> 18 automated ETL pipelines feeding BigQuery and Looker Studio dashboards at Black Piano, and Python pipelines behind 10+ client dashboards at Pi Software Solutions.</li>
+            <li><strong>Healthcare (employment):</strong> Enrollment Quality &amp; Audit Representative (CMS Auditor) at Optum, auditing federal Medicare enrollment transactions for CMS compliance.</li>
+            <li><strong>AI (independent projects):</strong> built and deployed multi-agent systems, evaluation harnesses and simulators (MediFlow, BugAgents, AgentSwarm, JobAgents, MyLocalCLI, rAsh Score, mSeat), plus 20B LLM fine-tuning on AMD MI300X.</li>
+        </ul>
+    </section>
+
+    <section class="section">
+        <div class="section-title">Experience</div>
+        {% for exp in experiences %}
+        <div class="item">
+            <div class="item-head">
+                <span class="item-name">{{ exp.company }}</span>
+                <span class="item-period">{{ exp.period }}</span>
+            </div>
+            <div class="item-role">{{ exp.role }} <span>| {{ exp.location }}</span></div>
+            <ul>
+                {% for highlight in exp.highlights %}
+                <li>{{ highlight }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+    </section>
+
+    <section class="section">
+        <div class="section-title">Technical Skills</div>
+        {% for category, items in skills.items() %}
+        <div class="skill-row">
+            <span class="skill-cat">{{ category }}:</span>
+            <span class="skill-items">{{ items }}</span>
+        </div>
+        {% endfor %}
+    </section>
+
+    <section class="section">
+        <div class="section-title">Independent Projects</div>
+        <p class="note">Self-directed work, built and deployed outside employment. No users, revenue or adoption are claimed.</p>
+        {% for project in projects[:6] %}
+        <div class="item">
+            <span class="item-name">{{ project.name|plain_title }}</span>
+            <div class="item-desc"><strong>{{ project.tech }}.</strong> {{ project.desc }}</div>
+            <div class="item-links">
+                <a href="{{ project.url }}">{{ project.url|replace('https://', '') }}</a>
+                {% if project.github and project.github.rstrip('/').count('/') > 3 %} | <a href="{{ project.github }}">{{ project.github|replace('https://', '') }}</a>{% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% if projects[6:] %}
+        <ul>
+            {% for project in projects[6:] %}
+            <li><strong>{{ project.name|plain_title }}:</strong> {{ project.desc|first_sentence }} <a href="{{ project.url }}">{{ project.url|replace('https://', '') }}</a></li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </section>
+
+    <section class="section">
+        <div class="section-title">Education</div>
+        <div class="item-name">{{ education.institution }}</div>
+        <div class="item-desc">{{ education.degree }} | {{ education.details }}</div>
+    </section>
+</div>
+
+</body>
+</html>

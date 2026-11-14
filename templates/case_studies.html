@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Case Studies | Prashanth Kumar Kadasi{% endblock %}
+
+{% block description %}{{ studies|length }} project case studies by Prashanth Kumar Kadasi: the problem, what broke first, the architecture, and the measured outcome for each system.{% endblock %}
+
+{% block content %}
+<div class="container py-3" style="max-width: 1320px;">
+    <div class="row mb-4">
+        <div class="col-12 col-lg-9">
+            <span class="badge bg-primary-subtle text-primary border border-primary-subtle px-3 py-1 rounded-pill font-mono-tech small mb-2">
+                <i class="fas fa-book-open me-1"></i> {{ studies|length }} CASE STUDIES
+            </span>
+            <h1 class="page-title mb-2">Case Studies</h1>
+            <p class="text-secondary lead fs-6 mb-0" style="max-width: 780px; line-height: 1.65;">
+                One page per system: the problem it solves, what broke first, how it is built, and what was measured.
+                These are self-directed projects, built alongside my work as a Data Analyst.
+            </p>
+        </div>
+    </div>
+
+    {% for domain, group in studies|groupby('domain') %}
+    <h2 class="h5 fw-bold text-white font-heading mt-4 mb-3">{{ domain }}</h2>
+    <div class="row g-3">
+        {% for study in group %}
+        <div class="col-12 col-md-6 col-xl-4">
+            <a href="/case-study/{{ study.slug }}" class="bento-card h-100 p-4 d-flex flex-column text-decoration-none">
+                <h3 class="h6 fw-bold text-white font-heading mb-2">{{ study.name }}</h3>
+                <p class="text-secondary small flex-grow-1 mb-3" style="line-height: 1.6;">{{ study.headline }}</p>
+                <div class="project-tags mb-3">
+                    {% for tech in study.tech_stack[:4] %}
+                    <span class="project-tag">{{ tech }}</span>
+                    {% endfor %}
+                </div>
+                <span class="text-info small fw-semibold">Read the case study →</span>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

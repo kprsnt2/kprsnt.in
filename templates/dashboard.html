@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
-{% block title %}Autonomous Command Center & Dashboard | Prashanth Kumar Kadasi{% endblock %}
+{% block title %}Agent Fleet Command Center | Prashanth Kumar Kadasi{% endblock %}
+
+{% block description %}Live status of the multi-agent systems Prashanth Kumar Kadasi runs: JobAgents, BugAgents, AgentSwarm and the 10-agent AI Eco swarm, with daily dev logs and swarm consensus.{% endblock %}
+
+{# /jobs/dashboard renders this same template; keep one indexable URL. #}
+{% block canonical %}https://kprsnt.in/dashboard{% endblock %}
 
 {% block content %}
 <div class="container-fluid" style="max-width: 1400px;">
@@ -326,7 +331,7 @@
             </div>
             <div class="d-flex flex-wrap gap-2">
                 <a href="/blog" class="btn btn-sm" style="background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); font-weight: 600; border-radius: 10px;">
-                    <i class="fas fa-blog me-1"></i> All Blog Posts &amp; Logs
+                    <i class="fas fa-blog me-1"></i> Articles
                 </a>
                 <a href="/ecosystem/logs" class="btn btn-sm" style="background: rgba(16,185,129,0.15); color: #34d399; border: 1px solid rgba(16,185,129,0.3); font-weight: 600; border-radius: 10px;">
                     <i class="fas fa-terminal me-1"></i> 10-Agent Swarm Logs
@@ -354,14 +359,14 @@
                     Multi-agent pipeline sourcing roles from ATS APIs across 10 sources, with deterministic matching (zero model calls), resume tailoring, and outreach drafting.
                 </p>
                 <div class="mb-3 p-2 rounded font-monospace text-muted small" style="background: rgba(0,0,0,0.4); font-size: 0.72rem;">
-                    <div><span class="text-info">●</span> Local snapshot: <strong>{{ total_jobs }} jobs in job_data</strong></div>
+                    <div><span class="text-info">●</span> Scoring: <strong>29,091 scores · 0 model calls</strong></div>
                     <div><span class="text-success">●</span> Pipeline total: <strong>7,665 distinct roles sourced</strong></div>
                 </div>
                 <div class="mt-auto d-flex gap-2">
-                    <a href="https://job.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-primary flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                    <a href="https://job.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-primary flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
                         <i class="fas fa-external-link-alt me-1"></i> Live Site ↗
                     </a>
-                    <a href="/blog/jobagents-production-ai-career-pipeline" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                    <a href="/case-study/jobagents" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
                         Case Study
                     </a>
                 </div>
@@ -386,10 +391,10 @@
                     <div><span class="text-warning">●</span> Gate: <strong>2 Promoted / 34 Refused</strong></div>
                 </div>
                 <div class="mt-auto d-flex gap-2">
-                    <a href="https://bug.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-danger flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                    <a href="https://bug.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-danger flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
                         <i class="fas fa-external-link-alt me-1"></i> Live Site ↗
                     </a>
-                    <a href="/blog/bugagents-dual-llm-security-matrix" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                    <a href="/case-study/bugagents" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
                         Case Study
                     </a>
                 </div>
@@ -414,10 +419,10 @@
                     <div><span class="text-info">●</span> Oracle: <strong>0 Violations / 1,254 Calls</strong></div>
                 </div>
                 <div class="mt-auto d-flex gap-2">
-                    <a href="https://agent.kprsnt.in" target="_blank" class="btn btn-sm btn-outline-info flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                    <a href="https://agent.kprsnt.in" target="_blank" rel="noopener" class="btn btn-sm btn-outline-info flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
                         <i class="fas fa-external-link-alt me-1"></i> Live Site ↗
                     </a>
-                    <a href="/blog/02-building-the-forensic-arena" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
+                    <a href="/case-study/agentswarm" class="btn btn-sm btn-outline-light flex-fill" style="border-radius: 8px; font-size: 0.78rem;">
                         Case Study
                     </a>
                 </div>
@@ -483,7 +488,7 @@
                             </span>
                         </div>
                         <h6 class="text-white mb-1" style="font-size: 0.95rem; font-weight: 600;">
-                            <a href="/blog/{{ log.slug }}" class="text-white text-decoration-none">
+                            <a href="/aie/blog/{{ log.slug }}" class="text-white text-decoration-none">
                                 {{ log.title }}
                             </a>
                         </h6>
@@ -496,7 +501,7 @@
                                 <span class="badge bg-black text-muted" style="border: 1px solid rgba(255,255,255,0.08); font-size: 0.65rem;">{{ tag }}</span>
                                 {% endfor %}
                             </div>
-                            <a href="/blog/{{ log.slug }}" class="text-info text-decoration-none small fw-semibold" style="font-size: 0.78rem;">
+                            <a href="/aie/blog/{{ log.slug }}" class="text-info text-decoration-none small fw-semibold" style="font-size: 0.78rem;">
                                 Read Dispatch <i class="fas fa-arrow-right ms-1"></i>
                             </a>
                         </div>
@@ -555,6 +560,7 @@
         </div>
     </div>
 
+    {% if show_career %}
     <!-- Job Pipeline Analytics Header -->
     <div class="d-flex align-items-center justify-content-between mb-3 mt-2">
         <div>
@@ -567,7 +573,7 @@
             <a href="/jobs" class="btn btn-sm" style="background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); font-weight: 600; border-radius: 10px;">
                 <i class="fas fa-list me-1"></i> Job List
             </a>
-            <a href="/api/jobs/data" target="_blank" class="btn btn-sm" style="background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); font-weight: 600; border-radius: 10px;">
+            <a href="/api/jobs/data" target="_blank" rel="noopener" class="btn btn-sm" style="background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); font-weight: 600; border-radius: 10px;">
                 <i class="fas fa-code me-1"></i> Raw API
             </a>
         </div>
@@ -794,7 +800,7 @@
                         </span>
                         {% endif %}
                     </div>
-                    <a href="{{ job.apply_url }}" target="_blank" style="color: #818cf8; font-size: 0.8rem; flex-shrink: 0;">
+                    <a href="{{ job.apply_url }}" target="_blank" rel="noopener" style="color: #818cf8; font-size: 0.8rem; flex-shrink: 0;">
                         <i class="fas fa-external-link-alt"></i>
                     </a>
                 </div>
@@ -884,13 +890,14 @@
                 <div style="text-align: center; margin-top: 0.75rem;">
                     <small style="color: var(--text-muted);">
                         <i class="fas fa-clock"></i> Runs daily at 8:00 AM IST via GitHub Actions •
-                        <a href="https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py" target="_blank" style="color: #818cf8;">View Source</a> •
-                        Inspired by <a href="https://github.com/santifer/career-ops" target="_blank" style="color: #818cf8;">career-ops</a>
+                        <a href="https://github.com/kprsnt2/kprsnt.in/blob/main/scripts/career_pipeline.py" target="_blank" rel="noopener" style="color: #818cf8;">View Source</a> •
+                        Inspired by <a href="https://github.com/santifer/career-ops" target="_blank" rel="noopener" style="color: #818cf8;">career-ops</a>
                     </small>
                 </div>
             </div>
         </div>
     </div>
+    {% endif %}
 
 </div>
 

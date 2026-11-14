@@ -22,10 +22,16 @@ Framing rules honoured here:
 # Common contact & education data (shared across all resumes)
 # ═══════════════════════════════════════════════════════════════
 
+# Contact details for the RESUME (the PDF and /resume/print). The public site
+# pages use interview@kprsnt.in / chat@kprsnt.in instead.
+# The phone number is not stored in this public repository. /resume/print reads
+# it from the RESUME_PHONE environment variable, so set that when building a
+# PDF you will send to someone:
+#     RESUME_PHONE="+91-..." python scripts/build_resume_pdf.py
 CONTACT = {
     "name": "Prashanth Kumar Kadasi",
-    "phone": "+91-9948311964",
-    "email": "kprsnt@live.com",
+    "phone": "",
+    "email": "kprsnt@zohomail.in",
     "location": "Hyderabad, Telangana, India",
     "website": "kprsnt.in",
     "linkedin": "linkedin.com/in/prashanth-kumar-kadasi-b5281765",
