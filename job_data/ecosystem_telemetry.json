@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-11-13T05:03:51.376921",
-  "commit_history": 1262,
+  "last_updated": "2026-11-14T04:55:42.312459",
+  "commit_history": 1263,
   "counted_commit_shas": [
-    "6943ec7",
+    "6f9281e",
     "ff36d4f",
     "fd1874a",
     "fcb2a99",
@@ -66,6 +66,7 @@
     "6b4f602",
     "6aa9de1",
     "698cc7d",
+    "6943ec7",
     "65dea15",
     "6497664",
     "621aca0",
@@ -156,27 +157,27 @@
     "SaaS"
   ],
   "recent_activity": [
-    "[kprsnt2/kprsnt.in] commit 6943ec7: \ud83e\udd16 Auto-update: Swarm Memory, Daily Views & Telemetry | Files (389): .cursor/rules/ponytail.mdc, .dockerignore, .env.example, .github/copilot-instructions.md, .github/workflows/blog.yml, .github/workflows/ci.yml, .github/workflows/daily_jobs_pipeline.yml, .github/workflows/deploy-cloud-run.yml"
+    "[kprsnt2/kprsnt.in] commit 6f9281e: feat: case studies, print resume, and site-wide content refresh | Files (399): scripts/build_resume_pdf.py, base, tests, .env.example, <noreply@anthropic.com>, +0530, .cursor/rules/ponytail.mdc, .dockerignore\n    Commit Details: - Add case studies pages and a print-ready resume template"
   ],
   "daily_commits_count": 1,
   "commit_timeline_7d": {
     "labels": [
-      "Sat",
       "Sun",
       "Mon",
       "Tue",
       "Wed",
       "Thu",
-      "Fri"
+      "Fri",
+      "Sat"
     ],
     "commits": [
-      0,
       33,
       13,
       0,
+      3,
       0,
       0,
-      3
+      0
     ],
     "pipelines": [
       1,
