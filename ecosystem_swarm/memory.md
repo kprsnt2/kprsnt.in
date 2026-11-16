@@ -1,6 +1,6 @@
 # AI Eco Swarm: Living Memory Stream
 
-*Last Consolidated: 2026-11-15 | Protocol: MCP 2024-11-05 | Swarm Size: 10 Agents*
+*Last Consolidated: 2026-11-16 | Protocol: MCP 2024-11-05 | Swarm Size: 10 Agents*
 
 ---
 
@@ -68,9 +68,9 @@
 ---
 
 ## 🎯 Active Weekly Focus & Strategic Roadmap
-*(Updated via Weekly Swarm Alignment Council on 2026-11-09)*
+*(Updated via Weekly Swarm Alignment Council on 2026-11-16)*
 
-1. **Goal 1: Tighten State Synchronization**: Reduce the need for broad regeneration by making memory, telemetry, and daily-view updates more incremental and deterministic. Focus on preventing drift between generated artifacts and source-of-truth data.
-2. **Goal 2: Strengthen Cross-Repo CI Guardrails**: Standardize CI/CD checks and model-catalog validation across the active repos touched this week. Add clearer failure signals so corrective work can be isolated earlier in the cycle.
-3. **Goal 3: Improve Observability Signals**: Expand telemetry to surface repo-level health, pipeline anomalies, and regeneration causes in a more actionable way. This will help the council distinguish routine maintenance from true regressions.
-4. **Goal 4: Preserve User-Facing Polish While Scaling**: Continue refining discoverability, metadata, and portfolio presentation in `kprsnt2/kprsnt.in` while ensuring that ecosystem-wide updates do not regress the public-facing experience. The goal is to keep the host app polished even as the swarm broadens its footprint.
+1. **Goal 1: Tighten Sync Safety**: Add stronger validation around broad automation commits so workflow, docs, and runtime changes are checked for consistency before merge. Prioritize guardrails that reduce the risk of silent drift across the swarm’s shared surfaces.
+2. **Goal 2: Improve Signal Clarity**: Refine telemetry and memory summaries so weekly and daily reports distinguish between maintenance sweeps, product changes, and governance updates more explicitly. This will make council review faster and more actionable.
+3. **Goal 3: Strengthen Modular Boundaries**: Continue separating content, runtime, and orchestration concerns in the core portfolio architecture. Focus on reducing cross-file coupling in update workflows and clarifying ownership of shared configuration.
+4. **Goal 4: Expand Portfolio Polish**: Build on the recent case-study and resume-flow improvements by completing remaining presentation refinements across the site. Ensure the public-facing experience reflects the same level of coordination and quality as the swarm’s internal memory systems.
