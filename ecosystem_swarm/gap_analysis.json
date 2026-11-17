@@ -1,5 +1,5 @@
 {
-  "last_audit": "2026-11-16T04:45:31.343105",
+  "last_audit": "2026-11-17T06:33:25.433525",
   "architectural_posture": "Active Stress-Testing",
   "active_gaps": [
     {
@@ -55,8 +55,8 @@
   ],
   "resilience_checks": {
     "github_rate_limits": "Passed (8-SHA cap with unauthenticated public fallback active)",
-    "monotonic_telemetry": "Passed (1265 commits >= 987 baseline preserved)",
-    "memory_compaction": "Passed (817/4,000 words, 79.6% headroom)",
+    "monotonic_telemetry": "Passed (1266 commits >= 987 baseline preserved)",
+    "memory_compaction": "Passed (820/4,000 words, 79.5% headroom)",
     "serverless_bounds": "Failed (LLM_TIMEOUT=60.0s exceeds 8.0s)",
     "fastmcp_integrity": "Passed (16 FastMCP tools responsive, JSON-RPC 2.0 valid)"
   }
