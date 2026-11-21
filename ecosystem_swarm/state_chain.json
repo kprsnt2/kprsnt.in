@@ -853,5 +853,23 @@
     "event": "DAILY_SWARM_CONSENSUS",
     "actor": "SwarmCouncil",
     "payload_summary": "2026-11-20"
+  },
+  {
+    "index": 96,
+    "timestamp": "2026-11-21T05:38:33.256585Z",
+    "prev_hash": "87fcc3759b624dd4240f7bc594e066688bb7604da363bfd4b3e96d60ea75b948",
+    "hash": "dbfbfa2cd4cdf1af69f100d88646f8b6bb4516b4fd8b09bb937727c9b617822e",
+    "event": "BLOG_DRAFT_PUBLISHED",
+    "actor": "ScoutAgent",
+    "payload_summary": "github-activity-2026-11-21.md"
+  },
+  {
+    "index": 97,
+    "timestamp": "2026-11-21T05:38:46.953018Z",
+    "prev_hash": "dbfbfa2cd4cdf1af69f100d88646f8b6bb4516b4fd8b09bb937727c9b617822e",
+    "hash": "0eb47fb97d6e6d4ffe96c99af835e7fd32953ff02397270364508b8ef7c52600",
+    "event": "DAILY_SWARM_CONSENSUS",
+    "actor": "SwarmCouncil",
+    "payload_summary": "2026-11-21"
   }
 ]
