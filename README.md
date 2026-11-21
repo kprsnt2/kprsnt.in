@@ -1,5 +1,12 @@
 # Prashanth Kumar Kadasi — Portfolio
 
+[![CI](https://github.com/kprsnt2/kprsnt.in/actions/workflows/ci.yml/badge.svg)](https://github.com/kprsnt2/kprsnt.in/actions/workflows/ci.yml)
+[![Code: MIT](https://img.shields.io/badge/code-MIT-yellow.svg)](LICENSE)
+[![Content: CC BY 4.0](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg)](LICENSE-CONTENT)
+![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)
+![Deployed on Google Cloud Run](https://img.shields.io/badge/deployed%20on-Cloud%20Run-4285F4.svg)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
 Data Analyst moving into AI engineering, based in Hyderabad, India.
 
 This repository powers my personal portfolio at **[kprsnt.in](https://kprsnt.in)** — a Dockerized Flask + gunicorn application deployed on **Google Cloud Run (`asia-south1`)** behind Cloudflare DNS/CDN, with a built-in RAG chatbot, live analytical & AI dashboards, REST APIs, and a FastMCP server. It is continuously updated by a 10-agent autonomous AI swarm.
@@ -85,10 +92,11 @@ See `.env.example`. The important ones:
 
 ```bash
 pytest -q
-ruff check api tests --select E9,F63,F7,F82
+ruff check api scripts tests --select E9,F63,F7,F82,F
 ```
 
-CI (`.github/workflows/ci.yml`) runs both on every push and pull request.
+CI (`.github/workflows/ci.yml`) runs both on every push and pull request, and
+also builds and boots the Docker image.
 
 ## Deployment (Google Cloud Run)
 
@@ -339,6 +347,26 @@ graph TD
 - GitHub: [kprsnt2](https://github.com/kprsnt2)
 - HuggingFace: [kprsnt](https://huggingface.co/kprsnt)
 
+## Contributing
+
+Issues and pull requests are welcome; see [CONTRIBUTING.md](CONTRIBUTING.md)
+and the [Code of Conduct](CODE_OF_CONDUCT.md). Please report security problems
+privately as described in [SECURITY.md](SECURITY.md). Notable changes are
+listed in [CHANGELOG.md](CHANGELOG.md).
+
+Forking this as a template for your own site? Replace the personal data in
+`api/resume_data.py`, `api/data/` and the content directories, and set
+`CANONICAL_HOST` to your domain.
+
 ## License
 
-MIT. See [LICENSE](LICENSE).
+© 2026 Prashanth Kumar Kadasi. This repository is dual-licensed:
+
+- **Code** (Python, templates, CSS, JavaScript, scripts, workflows, config):
+  [MIT License](LICENSE).
+- **Content** (blog posts and dev logs, resume, project and case-study text,
+  job data, images and the resume PDF):
+  [Creative Commons Attribution 4.0](LICENSE-CONTENT). Reuse it freely with
+  credit to *Prashanth Kumar Kadasi* and a link to https://kprsnt.in.
+
+[LICENSE-CONTENT](LICENSE-CONTENT) lists exactly which paths count as content.

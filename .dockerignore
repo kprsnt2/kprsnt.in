@@ -43,3 +43,11 @@ ruff.toml
 pytest.ini
 requirements-dev.txt
 *.ps1
+
+# Open-source project docs and editor config (not read by the app).
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+SECURITY.md
+CHANGELOG.md
+.editorconfig
+.env.example

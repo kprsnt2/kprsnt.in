@@ -1,0 +1,41 @@
+name: Bug report
+description: Something on kprsnt.in or in this code is broken.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! For security problems, please use
+        [a private report](https://github.com/kprsnt2/kprsnt.in/security/advisories/new)
+        or email security@kprsnt.in instead.
+  - type: input
+    id: where
+    attributes:
+      label: Where does it happen?
+      description: The page URL, API route or file.
+      placeholder: https://kprsnt.in/blog
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Go to ...
+        2. Click ...
+        3. See error
+  - type: input
+    id: env
+    attributes:
+      label: Browser / OS, or Python version if running locally
+  - type: textarea
+    id: logs
+    attributes:
+      label: Screenshots, console output or logs
+      render: text
