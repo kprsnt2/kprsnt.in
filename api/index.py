@@ -77,19 +77,17 @@ except ImportError:
     from services.vault import load_vault, vault_search
 
 try:
-    from api.bot_utils import get_ai_response, send_reply_email, notify_owner
+    from api.bot_utils import get_ai_response
 except ImportError:
     try:
-        from bot_utils import get_ai_response, send_reply_email, notify_owner
+        from bot_utils import get_ai_response
     except ImportError:
         get_ai_response = None
-        send_reply_email = None
-        notify_owner = None
 
 try:
-    from api.services.security import RateLimiter, get_client_ip, is_valid_email, body_exceeds_limit
+    from api.services.security import RateLimiter, get_client_ip, body_exceeds_limit
 except ImportError:
-    from services.security import RateLimiter, get_client_ip, is_valid_email, body_exceeds_limit
+    from services.security import RateLimiter, get_client_ip, body_exceeds_limit
 
 # mSeat REST + MCP helpers (used by /api/mseat/* routes).
 # Third-level fallback: a broken spec import must never stop the app booting (audit H7).
@@ -252,21 +250,11 @@ def _header_secret_ok(env_name, header_name):
     return bool(expected) and secrets.compare_digest(supplied, expected)
 
 
-def _email_webhook_trusted():
-    """True only for the inbound-email worker, which sends EMAIL_WEBHOOK_SECRET.
-
-    Outbound email used to be available to every caller: anyone could POST a
-    from_email and have this server mail an arbitrary address from the
-    kprsnt.in domain. Now only a request carrying the secret can trigger a
-    send; everyone else still gets the bot's answer in the HTTP response.
-    """
-    return _header_secret_ok('EMAIL_WEBHOOK_SECRET', 'X-Email-Webhook-Secret')
-
 
 # --- Rate Limiting (bounded in-memory, per-IP) ---
 _insight_limiter = RateLimiter(60, 10)   # 10 req/min
 _chat_limiter = RateLimiter(60, 6)      # 6 req/min (LLM cost guard)
-_email_limiter = RateLimiter(60, 3)    # 3 req/min (abuse guard)
+_bot_limiter = RateLimiter(60, 3)      # 3 req/min for /api/interview + /api/chat_agent (LLM cost guard)
 _ailearn_limiter = RateLimiter(60, 20)   # 20 sync ops/min per IP
 _mcp_limiter = RateLimiter(60, 120)     # generous: streaming sessions + tool calls
 
@@ -2403,14 +2391,15 @@ def api_interview():
             "status": "active",
             "service": "AI Interview Assistant",
             "owner": "Prashanth Kumar Kadasi",
-            "usage": "POST a JSON body with {message, from_email} to interview the AI assistant.",
+            "usage": "POST a JSON body with {message} to interview the AI assistant. "
+                     "To reach Prashanth himself, email interview@kprsnt.in.",
             "portfolio": "https://kprsnt.in"
         })
         res.headers['Access-Control-Allow-Origin'] = '*'
         return res, 200
 
     client_ip = get_client_ip(request)
-    allowed, retry_after = _email_limiter.check(f"email:{client_ip}")
+    allowed, retry_after = _bot_limiter.check(f"interview:{client_ip}")
     if not allowed:
         res = jsonify({"error": f"Too many requests. Please wait {int(retry_after) + 1}s."})
         res.headers['Access-Control-Allow-Origin'] = '*'
@@ -2428,15 +2417,9 @@ def api_interview():
                 res = jsonify({"error": "Invalid message format."})
                 res.headers['Access-Control-Allow-Origin'] = '*'
                 return res, 400
-            from_email = data.get('from_email', '')
-            subject = data.get('subject', 'Interview Question')
-            send_email = data.get('send_email', False)
         else:
             data = request.form or {}
             message = data.get('text') or data.get('message', '')
-            from_email = data.get('from') or data.get('from_email', '')
-            subject = data.get('subject', 'Interview Question')
-            send_email = True
 
         if not message or not message.strip():
             res = jsonify({"error": "No message provided"})
@@ -2444,25 +2427,10 @@ def api_interview():
             return res, 400
 
         message = message[:4000]
-        # Email (the reply, and the bot's send-resume tool) is only for the
-        # trusted inbound-email worker; see _email_webhook_trusted().
-        can_email = _email_webhook_trusted()
-        raw_response = get_ai_response(message, allow_email_tool=can_email) if get_ai_response else "Service temporarily unavailable."
+        raw_response = get_ai_response(message) if get_ai_response else "Service temporarily unavailable."
         ai_response = raw_response.replace('**', '').replace('*', '')
 
-        email_sent = False
-        if can_email and send_email and from_email and send_reply_email and is_valid_email(from_email):
-            email_sent = send_reply_email(from_email, subject, ai_response)
-
-        if notify_owner:
-            source = "Email" if send_email else "API"
-            notify_owner(from_email, message, ai_response, source)
-
-        res = jsonify({
-            "response": ai_response,
-            "email_sent": email_sent,
-            "from": from_email or "N/A"
-        })
+        res = jsonify({"response": ai_response})
         res.headers['Access-Control-Allow-Origin'] = '*'
         return res, 200
     except Exception as e:
@@ -2486,14 +2454,15 @@ def api_chat_agent():
         res = jsonify({
             "status": "active",
             "service": "RashBot General Chat API",
-            "usage": "POST a JSON body with {message, from_email}",
+            "usage": "POST a JSON body with {message, history?}. "
+                     "To reach Prashanth himself, email chat@kprsnt.in.",
             "portfolio": "https://kprsnt.in"
         })
         res.headers['Access-Control-Allow-Origin'] = '*'
         return res, 200
 
     client_ip = get_client_ip(request)
-    allowed, retry_after = _email_limiter.check(f"chat:{client_ip}")
+    allowed, retry_after = _bot_limiter.check(f"chat:{client_ip}")
     if not allowed:
         res = jsonify({"error": f"Too many requests. Please wait {int(retry_after) + 1}s."})
         res.headers['Access-Control-Allow-Origin'] = '*'
@@ -2511,9 +2480,6 @@ def api_chat_agent():
                 res = jsonify({"error": "Invalid message format."})
                 res.headers['Access-Control-Allow-Origin'] = '*'
                 return res, 400
-            from_email = data.get('from_email', '')
-            subject = data.get('subject', 'Chat Message')
-            send_email = data.get('send_email', False)
             history = data.get('history')
             if history is None:
                 history = []
@@ -2524,9 +2490,6 @@ def api_chat_agent():
         else:
             data = request.form or {}
             message = data.get('text') or data.get('message', '')
-            from_email = data.get('from') or data.get('from_email', '')
-            subject = data.get('subject', 'Chat Message')
-            send_email = True
             history = []
 
         if not message or not message.strip():
@@ -2535,23 +2498,9 @@ def api_chat_agent():
             return res, 400
 
         message = message[:4000]
-        can_email = _email_webhook_trusted()
-        ai_response = get_ai_response(message, agent_type="chat", history=history, allow_email_tool=can_email) if get_ai_response else "Service temporarily unavailable."
+        ai_response = get_ai_response(message, agent_type="chat", history=history) if get_ai_response else "Service temporarily unavailable."
 
-        email_sent = False
-        if can_email and send_email and from_email and send_reply_email and is_valid_email(from_email):
-            email_sent = send_reply_email(from_email, subject, ai_response, agent_type="chat")
-
-        if notify_owner:
-            source = "Email" if send_email else "API/Web"
-            notify_owner(from_email, message, ai_response, source, agent_type="chat")
-
-        res = jsonify({
-            "response": ai_response,
-            "answer": ai_response,
-            "email_sent": email_sent,
-            "from": from_email or "N/A"
-        })
+        res = jsonify({"response": ai_response, "answer": ai_response})
         res.headers['Access-Control-Allow-Origin'] = '*'
         return res, 200
     except Exception as e:

@@ -80,10 +80,6 @@ See `.env.example`. The important ones:
 | `OPENAI_API_KEY` | Primary LLM + embeddings |
 | `NVIDIA_API_KEY` | Fallback LLM provider |
 | `GROQ_API_KEY` | Last-resort LLM provider |
-| `RESEND_API_KEY` | Sending bot replies / resume emails |
-| `INTERVIEW_FROM_EMAIL` | Verified sender for bot emails |
-| `OWNER_NOTIFY_EMAIL` | Where usage notifications go |
-| `EMAIL_WEBHOOK_SECRET` | Shared secret (`X-Email-Webhook-Secret` header) that lets the inbound-email worker trigger bot email replies. Unset = the bot never emails callers |
 | `PRIVATE_API_TOKEN` | `X-Private-Token` header for `/api/jobs/data`. Unset = that route 404s |
 | `RESUME_PHONE` | Local only: phone number to print when building the resume PDF |
 | `GEMINI_API_KEY`, `TAVILY_API_KEY`, `GITHUB_TOKEN` | Used by pipeline scripts / Actions |
@@ -142,8 +138,6 @@ Registry** — the source-repository deploy uses both.
 | `OPENAI_API_KEY` | your key |
 | `NVIDIA_API_KEY` | your key |
 | `GROQ_API_KEY` | your key |
-| `RESEND_API_KEY` | your key |
-| `OWNER_NOTIFY_EMAIL` | where bot notifications go |
 | `AGENT_VAULT_TOKEN` | optional (private vault) |
 | `KV_REST_API_URL` / `KV_REST_API_TOKEN` | optional (AILearn sync) |
 
@@ -179,8 +173,7 @@ Cloud Build**:
 
 Then **Variables & Secrets**:
 
-* Environment variables: `INTERVIEW_FROM_EMAIL` = `chat@kprsnt.in`,
-  `AI_LLM_TIMEOUT` = `20`
+* Environment variables: `AI_LLM_TIMEOUT` = `20`
 * **Add reference to secret** once per secret from step 3 —
   e.g. Name `OPENAI_API_KEY`, Secret `OPENAI_API_KEY`, Version `latest`.
 
@@ -229,11 +222,9 @@ gcloud artifacts repositories create kprsnt     --repository-format=docker --loc
 printf '%s' "$OPENAI_KEY" | gcloud secrets create OPENAI_API_KEY --data-file=-
 printf '%s' "$NVIDIA_KEY" | gcloud secrets create NVIDIA_API_KEY --data-file=-
 printf '%s' "$GROQ_KEY"   | gcloud secrets create GROQ_API_KEY   --data-file=-
-printf '%s' "$RESEND_KEY" | gcloud secrets create RESEND_API_KEY --data-file=-
-printf '%s' "you@example.com" | gcloud secrets create OWNER_NOTIFY_EMAIL --data-file=-
 
 # 2. build + deploy straight from the repo (Cloud Build uses ./Dockerfile)
-gcloud run deploy kprsnt-in   --source .   --region asia-south1   --allow-unauthenticated   --port 8080   --cpu 1 --memory 1Gi   --concurrency 8 --timeout 300   --min-instances 0 --max-instances 3   --set-env-vars "INTERVIEW_FROM_EMAIL=chat@kprsnt.in,AI_LLM_TIMEOUT=20"   --set-secrets "OPENAI_API_KEY=OPENAI_API_KEY:latest,NVIDIA_API_KEY=NVIDIA_API_KEY:latest,GROQ_API_KEY=GROQ_API_KEY:latest,RESEND_API_KEY=RESEND_API_KEY:latest,OWNER_NOTIFY_EMAIL=OWNER_NOTIFY_EMAIL:latest"
+gcloud run deploy kprsnt-in   --source .   --region asia-south1   --allow-unauthenticated   --port 8080   --cpu 1 --memory 1Gi   --concurrency 8 --timeout 300   --min-instances 0 --max-instances 3   --set-env-vars "AI_LLM_TIMEOUT=20"   --set-secrets "OPENAI_API_KEY=OPENAI_API_KEY:latest,NVIDIA_API_KEY=NVIDIA_API_KEY:latest,GROQ_API_KEY=GROQ_API_KEY:latest"
 
 # 3. check it
 curl "$(gcloud run services describe kprsnt-in --region asia-south1 --format 'value(status.url)')/health"
@@ -257,6 +248,33 @@ the `image:` line and run
    *(Alternative: `gcloud beta run domain-mappings create --service kprsnt-in
    --domain kprsnt.in --region asia-south1` and set that DNS record to
    `ghs.googlehosted.com`, which needs the Cloudflare proxy off.)*
+
+### Email (Cloudflare Email Routing)
+
+The app sends and receives no email. The addresses on the site go straight to
+a person:
+
+| Address | Used for |
+| --- | --- |
+| `interview@kprsnt.in` | Recruiters and interview requests (site, resume, bots) |
+| `chat@kprsnt.in` | General contact (chat API docs) |
+| `security@kprsnt.in` | Security and Code of Conduct reports |
+
+Set it up once in Cloudflare: **your zone → Email → Email Routing**.
+
+1. **Get started** / **Enable Email Routing**, and let Cloudflare add its MX
+   and SPF DNS records.
+2. **Destination addresses → Add** your personal inbox and click the
+   verification link Cloudflare emails you.
+3. **Routing rules → Create address** for each address above, with action
+   **Send to an email** and your verified inbox as the destination. (Or turn on
+   the **Catch-all** rule to forward anything `@kprsnt.in`.)
+4. If an older rule sends any of these addresses to a **Worker** (the previous
+   AI auto-reply), delete that rule, and delete the Worker under
+   **Workers & Pages**.
+
+To reply *from* `interview@kprsnt.in`, add it as a "Send mail as" address in
+your mail client (for example Gmail → Settings → Accounts).
 
 ### Deploy on push (optional CI)
 

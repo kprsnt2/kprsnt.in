@@ -44,14 +44,14 @@ def fresh_mcp_limiter(monkeypatch):
 @pytest.fixture
 def fresh_public_limiters(monkeypatch):
     """Swap in permissive public limiters so a burst of malformed-body cases
-    cannot exhaust the shared 3 req/min email limiter and leak 429s into other
+    cannot exhaust the shared 3 req/min bot limiter and leak 429s into other
     tests (which run against the original limiter after monkeypatch restores)."""
     import api.index as idx
     from api.services.security import RateLimiter
 
     monkeypatch.setattr(idx, "_mcp_limiter", RateLimiter(60, 1_000_000))
     monkeypatch.setattr(idx, "_chat_limiter", RateLimiter(60, 1_000_000))
-    monkeypatch.setattr(idx, "_email_limiter", RateLimiter(60, 1_000_000))
+    monkeypatch.setattr(idx, "_bot_limiter", RateLimiter(60, 1_000_000))
 
 
 # --------------------------------------------------------------------------

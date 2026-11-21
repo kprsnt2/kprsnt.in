@@ -1,19 +1,13 @@
 """
 Shared security helpers: client IP normalization, in-memory rate limiting,
-and email validation.
+and request-size checks.
 
 The rate limiter is intentionally dependency-free. On serverless (Vercel) each
 warm instance keeps its own window, so this is best-effort abuse mitigation, not
 a hard global quota. For global limits, swap in Vercel KV / Upstash.
 """
-import re
 import time
 import threading
-
-# Pragmatic email shape check (not full RFC 5322). Rejects obvious junk while
-# allowing normal addresses.
-_EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]{2,}$")
-
 
 # Maximum accepted request body for public JSON-RPC endpoints (~1 MB).
 MAX_MCP_BODY_BYTES = 1_048_576
@@ -27,16 +21,6 @@ def body_exceeds_limit(request, max_bytes: int = MAX_MCP_BODY_BYTES) -> bool:
     """
     length = request.content_length
     return bool(length) and length > max_bytes
-
-
-def is_valid_email(email) -> bool:
-    """Return True for a plausibly valid, non-empty email address."""
-    if not email or not isinstance(email, str):
-        return False
-    email = email.strip()
-    if len(email) > 254 or "\n" in email or "\r" in email:
-        return False
-    return bool(_EMAIL_RE.match(email))
 
 
 def get_client_ip(request) -> str:

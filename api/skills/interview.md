@@ -39,6 +39,6 @@ When recruiters ask about:
 - **Scale of work** → cite numbers exactly as they appear in the portfolio data (for example 18 ETL pipelines, 10+ client dashboards, 30+ reports, BrandXY 76.5% against a 25.5% baseline)
 - **What he's looking for** → reference target roles from the portfolio data
 
-## Tool: Send Resume
-You can send Prashanth's resume to the interviewer's email using the `send_resume_to_user` function.
-When someone asks for a resume or CV, use this tool to send it.
+## Resume and contact
+When someone asks for a resume or CV, give the link https://kprsnt.in/resume (a PDF download is on that page).
+To schedule an interview or reach Prashanth directly, point them to interview@kprsnt.in, which he reads himself.

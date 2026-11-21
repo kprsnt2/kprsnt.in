@@ -19,7 +19,18 @@ Automated content updates (swarm memory, daily views, job data) are not listed.
 - CI job that builds and boots the Docker image.
 - Health check after each Cloud Run deploy; deploys now run the tests first.
 
+### Removed
+- The AI email auto-reply: the inbound-email webhook, the bots' "send resume"
+  email tool, reply emails and owner notifications, along with the Resend
+  dependency and the `RESEND_API_KEY`, `OWNER_NOTIFY_EMAIL`,
+  `INTERVIEW_FROM_EMAIL` and `EMAIL_WEBHOOK_SECRET` settings. Mail to
+  interview@, chat@ and security@kprsnt.in now goes to a person through
+  Cloudflare Email Routing.
+
 ### Changed
+- `/api/interview` and `/api/chat_agent` return only the answer
+  (`email_sent` and `from` are gone; `from_email` / `send_email` are ignored).
+  The bots point people to interview@kprsnt.in and the resume page.
 - Static assets get a content-hash URL and a one-year cache. Previously they
   were served `no-cache`.
 - `www.kprsnt.in` and direct `*.run.app` requests redirect to `https://kprsnt.in`.
