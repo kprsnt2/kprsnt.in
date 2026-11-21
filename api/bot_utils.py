@@ -1,15 +1,8 @@
-import os
-import json
-import html as _html
 import logging
+import os
 from typing import Dict, List
 
 logger = logging.getLogger(__name__)
-
-try:
-    from services.security import is_valid_email
-except ImportError:
-    from api.services.security import is_valid_email
 
 try:
     from data.portfolio_kb import get_interview_context, get_chat_context
@@ -77,233 +70,41 @@ except ImportError:
     from .ai_config import call_llm_with_history
 
 
-# OpenAI function calling tool definition for send_resume_to_user
-RESUME_TOOL = {
-    "type": "function",
-    "function": {
-        "name": "send_resume_to_user",
-        "description": "Sends Prashanth's resume to the specified email address. Use this when the user asks to receive a resume or CV via email.",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "email": {
-                    "type": "string",
-                    "description": "The email address to send the resume to."
-                }
-            },
-            "required": ["email"]
-        }
-    }
-}
+# The bots answer on the website and over the HTTP API only. They never send
+# email: mail to interview@ / chat@ / security@kprsnt.in goes to a person, via
+# Cloudflare Email Routing, not to this app.
+_CONTACT_NOTE = (
+    "\n\n## Contact\n"
+    "You cannot send emails or files. If someone asks for the resume, give the link "
+    "https://kprsnt.in/resume. If they want to reach Prashanth, schedule an interview "
+    "or follow up, give the address interview@kprsnt.in, which he reads himself.\n"
+)
 
 
-def send_resume_to_user(email: str) -> str:
-    """Sends Prashanth's resume to the specified email address.
-    
-    Args:
-        email (str): The email address to send the resume to.
-    """
-    logger.info(f"Tool called: send_resume_to_user({email})")
-    if not is_valid_email(email):
-        return "Failed: invalid email address"
+def get_ai_response(message: str, agent_type: str = "interview", history: List[Dict[str, str]] = None) -> str:
+    """Get an AI reply through the provider chain in ai_config."""
     try:
-        import resend
-        resend.api_key = os.environ.get("RESEND_API_KEY")
-        if not resend.api_key:
-            return "Failed: RESEND_API_KEY not configured"
-            
-        from_email = os.environ.get("INTERVIEW_FROM_EMAIL", "chat@kprsnt.in")
-        
-        resend.Emails.send({
-            "from": f"Prashanth Kumar Kadasi <{from_email}>",
-            "to": [email],
-            "subject": "Prashanth Kumar Kadasi - Resume",
-            "html": """<div style="font-family: -apple-system, sans-serif; padding: 20px;">
-                <p>Hi there,</p>
-                <p>As requested, here is a link to my latest resume and portfolio:</p>
-                <p><a href="https://kprsnt.in/resume" style="display: inline-block; padding: 10px 20px; background: #667eea; color: white; text-decoration: none; border-radius: 5px;">View Resume Online</a></p>
-                <p>Best,<br>Prashanth</p>
-            </div>"""
-        })
-        return f"Successfully sent resume to {email}"
-    except Exception as e:
-        logger.error(f"Error sending resume: {e}")
-        return f"Failed to send resume: {str(e)}"
+        system_prompt = get_system_prompt(agent_type) + _CONTACT_NOTE
 
-
-# Map of available tool functions for dispatching
-_TOOL_FUNCTIONS = {
-    "send_resume_to_user": send_resume_to_user,
-}
-
-
-def get_ai_response(message: str, agent_type: str = "interview", history: List[Dict[str, str]] = None,
-                    allow_email_tool: bool = False) -> str:
-    """Get AI response using OpenAI (primary) with NVIDIA fallback, via ai_config.
-
-    ``allow_email_tool`` exposes send_resume_to_user to the model. It defaults
-    to off: with it on, any caller could ask the bot to email an address of
-    their choosing. Only the authenticated inbound-email path turns it on.
-    """
-    try:
-        system_prompt = get_system_prompt(agent_type)
-        tools = [RESUME_TOOL] if allow_email_tool else None
-        if not allow_email_tool:
-            system_prompt += (
-                "\n\n## Email is not available in this conversation\n"
-                "You cannot send emails or the resume from here. If asked, give the link "
-                "https://kprsnt.in/resume and the address interview@kprsnt.in instead.\n"
-            )
-        
-        # Build OpenAI-format message history
         messages = []
-        if history and len(history) > 0:
-            for item in history:
-                role = item.get("role", "user")
-                if role == "model":
-                    role = "assistant"
-                content = item.get("content", item.get("parts", ""))
-                messages.append({"role": role, "content": content})
-        
-        # Add the current user message
+        for item in history or []:
+            role = item.get("role", "user")
+            if role == "model":
+                role = "assistant"
+            messages.append({"role": role, "content": item.get("content", item.get("parts", ""))})
         messages.append({"role": "user", "content": message})
-        
-        # Call LLM with tools (function calling)
-        response = call_llm_with_history(
-            messages,
-            system_prompt=system_prompt,
-            tools=tools,
-            temperature=0.7,
-        )
-        
+
+        response = call_llm_with_history(messages, system_prompt=system_prompt, temperature=0.7)
         if response is None:
             return "I'm sorry, my AI service is temporarily unavailable. Please try again later."
-        
-        response_message = response.choices[0].message
-        
-        # Handle tool calls (function calling) — loop until the model produces a text reply
-        max_tool_rounds = 3
-        for _ in range(max_tool_rounds):
-            if not response_message.tool_calls:
-                break
-            
-            # Append the assistant message with tool_calls to history.
-            # Serialize to a plain dict so fallback providers (NVIDIA/Groq)
-            # accept it instead of an SDK object (audit M14).
-            messages.append(response_message.model_dump())
-            
-            # Execute each tool call and add results
-            for tool_call in response_message.tool_calls:
-                fn_name = tool_call.function.name
-                fn_args = json.loads(tool_call.function.arguments)
-                
-                fn = _TOOL_FUNCTIONS.get(fn_name)
-                if fn:
-                    result = fn(**fn_args)
-                else:
-                    result = f"Unknown function: {fn_name}"
-                
-                messages.append({
-                    "role": "tool",
-                    "tool_call_id": tool_call.id,
-                    "content": str(result),
-                })
-            
-            # Call the model again with tool results
-            response = call_llm_with_history(
-                messages,
-                system_prompt=system_prompt,
-                tools=tools,
-                temperature=0.7,
-            )
-            
-            if response is None:
-                return "I'm sorry, something went wrong processing your request."
-            
-            response_message = response.choices[0].message
-        
-        text = response_message.content or ""
+
+        text = response.choices[0].message.content or ""
         return text.replace('**', '').replace('*', '')
-        
+
     except Exception:
-        import traceback
-        logger.error(f"AI API error: {traceback.format_exc()}")
+        logger.exception("AI API error")
         return "I'm sorry, something went wrong. Please try again later."
 
 
 # Backward-compatible alias so existing imports keep working
 get_gemini_response = get_ai_response
-
-
-def send_reply_email(to_email: str, subject: str, body: str, agent_type: str = "interview") -> bool:
-    """Send reply email via Resend API."""
-    if not is_valid_email(to_email):
-        logger.warning("Refusing to send reply to invalid recipient")
-        return False
-    try:
-        import resend
-        
-        resend.api_key = os.environ.get("RESEND_API_KEY")
-        if not resend.api_key:
-            return False
-            
-        sender = "Rash Agent" if agent_type == "interview" else "RashBot"
-        from_email = os.environ.get("INTERVIEW_FROM_EMAIL", f"{agent_type}@kprsnt.in")
-        safe_body = _html.escape(body)
-        safe_subject = str(subject).replace("\r", "").replace("\n", " ")
-        
-        resend.Emails.send({
-            "from": f"{sender} <{from_email}>",
-            "to": [to_email],
-            "subject": f"Re: {safe_subject}" if not safe_subject.startswith("Re:") else safe_subject,
-            "text": body,
-            "html": f"""<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-                <div style="white-space: pre-wrap; line-height: 1.6; color: #333;">{safe_body}</div>
-                <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 24px 0;">
-                <div style="font-size: 12px; color: #888;">
-                    <p>🤖 This reply was generated by <b>{sender}</b>.</p>
-                    <p>Portfolio: <a href="https://kprsnt.in" style="color: #667eea;">kprsnt.in</a></p>
-                </div>
-            </div>"""
-        })
-        return True
-    except Exception as e:
-        logger.error(f"Resend send error: {e}")
-        return False
-
-def notify_owner(from_email: str, message: str, ai_response: str, source: str = "API", agent_type: str = "interview"):
-    """Send a notification to the owner."""
-    try:
-        import resend
-        resend.api_key = os.environ.get("RESEND_API_KEY")
-        if not resend.api_key: return
-        
-        owner_email = os.environ.get("OWNER_NOTIFY_EMAIL")
-        if not owner_email: return
-        
-        bot_name = "Rash Agent" if agent_type == "interview" else "RashBot"
-        from_email_addr = os.environ.get("INTERVIEW_FROM_EMAIL", f"{agent_type}@kprsnt.in")
-        safe_from = str(from_email or "Web Viewer").replace("\r", "").replace("\n", " ")
-        safe_source = _html.escape(str(source))
-        safe_message = _html.escape(str(message))
-        safe_response = _html.escape(str(ai_response))
-        
-        resend.Emails.send({
-            "from": f"{bot_name} Notifications <{from_email_addr}>",
-            "to": [owner_email],
-            "subject": f"🔔 {bot_name} Used — {safe_from}",
-            "html": f"""<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-                <h3 style="color: #667eea; margin-top: 0;">🔔 Someone interacted with {bot_name}</h3>
-                <p><b>Source:</b> {safe_source}<br><b>From:</b> {safe_from}</p>
-                <div style="background: #f5f5f5; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
-                    <p style="margin: 0 0 4px; font-weight: bold;">User said:</p>
-                    <p style="margin: 0;">{safe_message}</p>
-                </div>
-                <div style="background: #eef2ff; border-radius: 8px; padding: 16px;">
-                    <p style="margin: 0 0 4px; font-weight: bold;">{bot_name} said:</p>
-                    <p style="margin: 0; white-space: pre-wrap;">{safe_response}</p>
-                </div>
-            </div>"""
-        })
-    except Exception as e:
-        logger.error(f"Resend notification error: {e}")

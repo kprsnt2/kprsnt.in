@@ -87,8 +87,8 @@
                     <span>Maintains conversation history turns for multi-step technical and recruiter follow-ups</span>
                 </div>
                 <div class="feature-row">
-                    <span class="feature-bullet">Tools</span>
-                    <span>Executes verified actions — e.g., dispatching resume/interview emails via Resend with IP rate limiting</span>
+                    <span class="feature-bullet">Handoff</span>
+                    <span>Sends people to the resume page and to interview@kprsnt.in, an inbox a human reads; per-IP rate limiting on every endpoint</span>
                 </div>
                 <div class="feature-row">
                     <span class="feature-bullet">Failover</span>
@@ -109,14 +109,13 @@
                 <h3>/api/chat_agent</h3>
                 <span class="method-pill">POST</span>
             </div>
-            <p class="docs-desc">Casual conversational AI — the same engine behind RashBot. Supports function calling.</p>
+            <p class="docs-desc">Casual conversational AI — the same engine behind RashBot. Answers in the response body only; to reach Prashanth directly, email <a href="mailto:chat@kprsnt.in">chat@kprsnt.in</a>.</p>
             
             <h6 class="docs-label">Request</h6>
             <div class="code-block">
 <pre><code>{
   <span class="ck">"message"</span>: <span class="ct">string</span> <span class="cr">(required)</span>,
-  <span class="ck">"history"</span>:  <span class="ct">[{"role": "user", "content": "..."}]</span>,
-  <span class="ck">"send_email"</span>: <span class="ct">boolean</span> <span class="cd">(default: false)</span>
+  <span class="ck">"history"</span>:  <span class="ct">[{"role": "user", "content": "..."}]</span> <span class="cd">(optional)</span>
 }</code></pre>
             </div>
 
@@ -151,14 +150,12 @@
                 <h3>/api/interview</h3>
                 <span class="method-pill">POST</span>
             </div>
-            <p class="docs-desc">Interview proxy: an AI assistant that answers screening questions about background, skills and projects. It does not quote compensation. <code>send_email</code> is honoured only for the site's own inbound-email worker; other callers get the answer in the response body.</p>
+            <p class="docs-desc">Interview proxy: an AI assistant that answers screening questions about background, skills and projects. It does not quote compensation, and it answers in the response body only. To schedule an interview, email <a href="mailto:interview@kprsnt.in">interview@kprsnt.in</a>, which Prashanth reads himself.</p>
             
             <h6 class="docs-label">Request</h6>
             <div class="code-block">
 <pre><code>{
-  <span class="ck">"message"</span>: <span class="ct">string</span> <span class="cr">(required)</span>,
-  <span class="ck">"from_email"</span>: <span class="ct">string</span> <span class="cr">(required for email)</span>,
-  <span class="ck">"send_email"</span>: <span class="ct">boolean</span> <span class="cd">(default: true)</span>
+  <span class="ck">"message"</span>: <span class="ct">string</span> <span class="cr">(required)</span>
 }</code></pre>
             </div>
 
@@ -167,8 +164,7 @@
                 <button class="copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i></button>
 <pre><code>curl -X POST https://kprsnt.in/api/interview \
   -H "Content-Type: application/json" \
-  -d '{"message": "Tell me about your AI experience",
-       "send_email": false}'</code></pre>
+  -d '{"message": "Tell me about your AI experience"}'</code></pre>
             </div>
             
             <h6 class="docs-label mt-3"><i class="fas fa-play-circle"></i> Try It</h6>
@@ -281,9 +277,7 @@
             <p class="docs-desc">Both API endpoints return this JSON structure:</p>
             <div class="code-block">
 <pre><code>{
-  <span class="ck">"response"</span>: <span class="ct">string</span>  <span class="cc">// AI-generated answer</span>,
-  <span class="ck">"email_sent"</span>: <span class="ct">boolean</span> <span class="cc">// Whether email was dispatched</span>,
-  <span class="ck">"from"</span>: <span class="ct">string</span>  <span class="cc">// Sender email or "N/A"</span>
+  <span class="ck">"response"</span>: <span class="ct">string</span>  <span class="cc">// AI-generated answer</span>
 }</code></pre>
             </div>
             <div class="status-row mt-3">
@@ -488,7 +482,7 @@ async function testChatApi() {
     btn.innerHTML = '<span class="ldots"><span></span><span></span><span></span></span>';
     box.innerHTML = '<span class="ldots"><span></span><span></span><span></span></span> <span style="color:#3f3f46;margin-left:6px">Querying Gemini...</span>';
     try {
-        const r = await fetch('/api/chat_agent', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:input,send_email:false}) });
+        const r = await fetch('/api/chat_agent', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:input}) });
         if (!r.ok) { box.innerHTML = `<span style="color:#f87171">✗ HTTP ${r.status}</span>`; return; }
         const d = await r.json();
         box.innerHTML = JSON.stringify(d,null,2).replace(/"([^"]+)":/g,'"<span style="color:#7dd3fc">$1</span>":').replace(/: "([^"]*)"/g,': "<span style="color:#86efac">$1</span>"').replace(/: (true|false)/g,': <span style="color:#fde047">$1</span>');
@@ -504,7 +498,7 @@ async function testInterviewApi() {
     btn.innerHTML = '<span class="ldots"><span></span><span></span><span></span></span>';
     box.innerHTML = '<span class="ldots"><span></span><span></span><span></span></span> <span style="color:#3f3f46;margin-left:6px">Querying Gemini...</span>';
     try {
-        const r = await fetch('/api/interview', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:input,send_email:false,from_email:"playground@kprsnt.in",subject:"Docs Test"}) });
+        const r = await fetch('/api/interview', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message:input}) });
         if (!r.ok) { box.innerHTML = `<span style="color:#f87171">✗ HTTP ${r.status}</span>`; return; }
         const d = await r.json();
         box.innerHTML = JSON.stringify(d,null,2).replace(/"([^"]+)":/g,'"<span style="color:#7dd3fc">$1</span>":').replace(/: "([^"]*)"/g,': "<span style="color:#86efac">$1</span>"').replace(/: (true|false)/g,': <span style="color:#fde047">$1</span>');

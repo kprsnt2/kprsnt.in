@@ -259,36 +259,45 @@ def test_jobs_api_requires_private_token(client, monkeypatch):
     assert ok.status_code == 200 and "jobs" in ok.get_json()
 
 
-def test_bot_only_emails_for_the_trusted_webhook(client, monkeypatch):
-    """A public caller cannot make the server email an address of their choosing."""
+def test_bots_reply_over_http_and_never_send_email(client, monkeypatch):
+    """Email goes to a person via Cloudflare Email Routing; the bots only answer
+    in the HTTP response, whatever email fields a caller sends."""
+    import api.bot_utils as bot_utils
     import api.index as index
 
-    sent, tool_flags = [], []
-    monkeypatch.setattr(index, "send_reply_email", lambda *a, **k: sent.append(a) or True)
-    monkeypatch.setattr(index, "notify_owner", lambda *a, **k: None)
-    monkeypatch.setattr(
-        index, "get_ai_response",
-        lambda *a, **k: tool_flags.append(k.get("allow_email_tool")) or "hello",
-    )
-    monkeypatch.setattr(index, "_email_limiter", index.RateLimiter(60, 100))
-    body = {"message": "hi", "from_email": "victim@example.com", "send_email": True}
+    calls = []
+    monkeypatch.setattr(index, "get_ai_response", lambda *a, **k: calls.append(k) or "hello")
+    monkeypatch.setattr(index, "_bot_limiter", index.RateLimiter(60, 100))
+    legacy = {"message": "hi", "from_email": "victim@example.com", "send_email": True}
 
     for path in ("/api/interview", "/api/chat_agent"):
-        monkeypatch.delenv("EMAIL_WEBHOOK_SECRET", raising=False)
-        response = client.post(path, json=body)
-        assert response.status_code == 200 and response.get_json()["email_sent"] is False
-        # Form posts used to force send_email on.
-        client.post(path, data={"text": "hi", "from": "victim@example.com"})
+        for response in (client.post(path, json=legacy),
+                         client.post(path, data={"text": "hi", "from": "victim@example.com"})):
+            assert response.status_code == 200, path
+            body = response.get_json()
+            assert body["response"] == "hello"
+            assert "email_sent" not in body and "from" not in body
+    assert all(set(k) <= {"agent_type", "history"} for k in calls)
 
-        monkeypatch.setenv("EMAIL_WEBHOOK_SECRET", "hook")
-        client.post(path, json=body, headers={"X-Email-Webhook-Secret": "nope"})
-        assert sent == [] and not any(tool_flags), path
+    for removed in ("send_reply_email", "notify_owner", "send_resume_to_user", "RESUME_TOOL"):
+        assert not hasattr(bot_utils, removed), removed
+        assert not hasattr(index, removed), removed
 
-        trusted = client.post(path, json=body, headers={"X-Email-Webhook-Secret": "hook"})
-        assert trusted.get_json()["email_sent"] is True
-        assert len(sent) == 1 and tool_flags[-1] is True
-        sent.clear()
-        tool_flags.clear()
+
+def test_bot_prompt_points_people_to_the_inbox(monkeypatch):
+    import api.bot_utils as bot_utils
+
+    seen = {}
+
+    def fake_llm(messages, system_prompt=None, **kwargs):
+        seen.update(prompt=system_prompt, kwargs=kwargs)
+        return None
+
+    monkeypatch.setattr(bot_utils, "call_llm_with_history", fake_llm)
+    bot_utils.get_ai_response("can you email me the resume?")
+    assert "interview@kprsnt.in" in seen["prompt"]
+    assert "https://kprsnt.in/resume" in seen["prompt"]
+    assert "tools" not in seen["kwargs"]
 
 
 def test_public_bots_and_mcp_do_not_leak_private_details(client):
