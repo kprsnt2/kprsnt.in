@@ -288,10 +288,22 @@ The workflow is manual by default. To get Vercel-style deploy-on-push:
 * **Markdown is content:** never add a global `*.md` rule to `.dockerignore` —
   `blog_inputs/`, `AI_Eco_Blogs/`, `ecosystem_swarm/` and `api/skills/` are
   served at runtime.
-* **Caching/assets:** `/static/*` gets `max-age=86400,
-  stale-while-revalidate`, HTML is `no-cache`, `/feed.xml` caches for an hour.
+* **Caching/assets:** every `url_for('static', ...)` URL carries a content
+  hash (`?v=<sha256[:10]>`), so those are served `max-age=31536000, immutable`;
+  unversioned `/static/*` gets a day plus `stale-while-revalidate`; HTML is
+  `no-cache`; `/feed.xml` caches for an hour. Never hand-add `?v=N` to asset
+  links — the hash changes automatically when the file does. In Cloudflare set
+  **Caching → Browser Cache TTL → Respect Existing Headers**, otherwise it
+  rewrites the year-long header to its 4-hour default.
   Social preview art lives in `static/og/` (regenerate with the headless-Chrome
   recipe in `scripts/og_card.html`).
+* **Canonical host:** requests to `www.kprsnt.in`, or straight to the
+  `*.run.app` URL (no `CF-Ray` header, i.e. not via Cloudflare), get a 308 to
+  `https://kprsnt.in` (`/health` is exempt). Override with the
+  `CANONICAL_HOST` env var; set it to empty to disable.
+* **Cold starts:** the OpenAI SDK is imported lazily (first LLM call), which
+  cuts app import time from ~0.7s to ~0.2s. Keep heavy SDK imports out of
+  module top level.
 * **Another host works too:** the image is portable (any `$PORT` container
   host). Nothing outside `Dockerfile`/`cloudrun/` is GCP-specific.
 

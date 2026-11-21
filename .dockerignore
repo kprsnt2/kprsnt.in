@@ -34,3 +34,12 @@ audit/
 
 # Deploy configs are not runtime inputs (the app reads only files above).
 cloudrun/
+
+# Local scratch output and Node/lint tooling the Flask app never reads.
+ascii_out_*.txt
+package.json
+package-lock.json
+ruff.toml
+pytest.ini
+requirements-dev.txt
+*.ps1

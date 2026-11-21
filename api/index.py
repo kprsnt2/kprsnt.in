@@ -151,6 +151,68 @@ _CSP = (
 )
 
 
+# --- Static asset versioning + caching ---
+# Every url_for('static', ...) gets ?v=<content hash>, so a deploy that changes
+# a file changes its URL. That makes it safe to let browsers and Cloudflare keep
+# versioned assets for a year, and removes the hand-bumped ?v=N in templates.
+# (The old custom /static/<path> route that set Cache-Control never ran: Flask's
+# built-in static route matched first, so every asset was served `no-cache`.)
+_STATIC_VERSIONS = {}
+
+
+def _static_version(filename):
+    path = os.path.join(app.static_folder, filename or '')
+    try:
+        mtime = os.path.getmtime(path)
+    except OSError:
+        return None
+    cached = _STATIC_VERSIONS.get(path)
+    if cached and cached[0] == mtime:
+        return cached[1]
+    import hashlib
+    with open(path, 'rb') as fh:
+        digest = hashlib.sha256(fh.read()).hexdigest()[:10]
+    _STATIC_VERSIONS[path] = (mtime, digest)
+    return digest
+
+
+@app.url_defaults
+def _static_cache_bust(endpoint, values):
+    if endpoint == 'static' and 'v' not in values:
+        version = _static_version(values.get('filename'))
+        if version:
+            values['v'] = version
+
+
+_STATIC_CACHE_VERSIONED = 'public, max-age=31536000, immutable'
+_STATIC_CACHE_DEFAULT = 'public, max-age=86400, stale-while-revalidate=604800'
+
+
+# --- Canonical host ---
+# kprsnt.in is the only public origin. www and the raw *.run.app URL serve the
+# same pages, which splits search ranking and lets callers skip Cloudflare
+# (WAF, edge cache, and the rate limiter's CF-Connecting-IP keying).
+_CANONICAL_HOST = os.environ.get('CANONICAL_HOST', 'kprsnt.in').strip().lower()
+
+
+@app.before_request
+def _redirect_to_canonical_host():
+    if not _CANONICAL_HOST or request.path == '/health':
+        return None
+    host = (request.host or '').split(':')[0].lower()
+    # *.run.app only redirects when the request did NOT come through
+    # Cloudflare: if Cloudflare is set to send the run.app Host header to
+    # reach the service, redirecting those requests would loop.
+    off_canonical = (host == 'www.' + _CANONICAL_HOST or
+                     (host.endswith('.run.app') and 'CF-Ray' not in request.headers))
+    if not off_canonical:
+        return None
+    from flask import redirect
+    target = f"https://{_CANONICAL_HOST}{request.full_path if request.query_string else request.path}"
+    # 308 keeps the method and body, so API POSTs still land correctly.
+    return redirect(target, code=308)
+
+
 @app.after_request
 def add_security_headers(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
@@ -162,7 +224,10 @@ def add_security_headers(response):
     # Cloudflare sits in front of the app and caches at the edge, so state it
     # explicitly: HTML is always revalidated (pages reflect live JSON data),
     # /static/* gets its long-lived header in serve_static() below.
-    if response.mimetype == 'text/html' and 'Cache-Control' not in response.headers:
+    if request.endpoint == 'static' and response.status_code in (200, 304):
+        response.headers['Cache-Control'] = (
+            _STATIC_CACHE_VERSIONED if request.args.get('v') else _STATIC_CACHE_DEFAULT)
+    elif response.mimetype == 'text/html' and 'Cache-Control' not in response.headers:
         response.headers['Cache-Control'] = 'no-cache'
     return response
 
@@ -1694,12 +1759,16 @@ def page_not_found(e):
 # Static Files
 # ============================================================
 
-@app.route('/static/<path:path>')
-def serve_static(path):
-    resp = send_from_directory(app.static_folder, path)
-    # This replaces the cache header the old vercel.json route set for
-    # /static/*. Extend it with a Cloudflare Cache Rule if you want a full year.
-    resp.headers['Cache-Control'] = 'public, max-age=86400, stale-while-revalidate=604800'
+# Flask's built-in static route serves /static/*; caching is set in
+# add_security_headers() (a year for content-hashed URLs, a day otherwise).
+
+
+@app.route('/favicon.ico')
+def favicon():
+    """Browsers, feed readers and crawlers request /favicon.ico regardless of
+    the <link rel=icon>; without this every visit logged a 404."""
+    resp = send_from_directory(app.static_folder, 'favicon.ico', mimetype='image/vnd.microsoft.icon')
+    resp.headers['Cache-Control'] = _STATIC_CACHE_DEFAULT
     return resp
 
 
@@ -1803,6 +1872,7 @@ def manifest():
         'background_color': '#0b0f16',
         'theme_color': '#0b0f16',
         'icons': [
+            {'src': '/static/og/icon-192.png', 'sizes': '192x192', 'type': 'image/png'},
             {'src': '/static/og/icon-512.png', 'sizes': '512x512', 'type': 'image/png'},
             {'src': '/static/og/apple-touch-icon.png', 'sizes': '180x180', 'type': 'image/png'},
         ],

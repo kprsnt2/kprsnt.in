@@ -28,7 +28,24 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  test:
+    # Never ship a revision whose tests fail.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - env:
+          OPENAI_API_KEY: ""
+          NVIDIA_API_KEY: ""
+          GROQ_API_KEY: ""
+        run: pytest -q
+
   deploy:
+    needs: test
     runs-on: ubuntu-latest
     env:
       PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
@@ -68,10 +85,18 @@ jobs:
             --timeout 300 \
             --min-instances 0 \
             --max-instances 3 \
+            --cpu-boost \
             --set-env-vars "INTERVIEW_FROM_EMAIL=chat@kprsnt.in,AI_LLM_TIMEOUT=20" \
             --set-secrets "OPENAI_API_KEY=OPENAI_API_KEY:latest,NVIDIA_API_KEY=NVIDIA_API_KEY:latest,GROQ_API_KEY=GROQ_API_KEY:latest,RESEND_API_KEY=RESEND_API_KEY:latest,OWNER_NOTIFY_EMAIL=OWNER_NOTIFY_EMAIL:latest"
 
-      - name: Show the service URL
+      - name: Health-check the new revision
         run: |
-          gcloud run services describe "${SERVICE}" \
-            --region "${REGION}" --format "value(status.url)"
+          URL=$(gcloud run services describe "${SERVICE}" \
+            --region "${REGION}" --format "value(status.url)")
+          echo "Service URL: ${URL}"
+          for i in 1 2 3 4 5; do
+            curl -fsS "${URL}/health" && exit 0
+            sleep 5
+          done
+          echo "::error::/health did not return 200 after deploy"
+          exit 1

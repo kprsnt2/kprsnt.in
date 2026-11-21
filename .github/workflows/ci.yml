@@ -17,7 +17,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: "3.12"   # same as the Dockerfile base image
           cache: pip
 
       - name: Install dependencies
@@ -47,3 +47,27 @@ jobs:
           NVIDIA_API_KEY: ""
           GROQ_API_KEY: ""
         run: pytest -q
+
+  container:
+    # Builds the exact image Cloud Run runs and boots it, so a broken
+    # Dockerfile, a .dockerignore rule that drops a data dir, or an import
+    # error under gunicorn fails here instead of on a live revision.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build image
+        run: docker build -t kprsnt-ci .
+
+      - name: Boot container and smoke-test it
+        run: |
+          docker run -d --name app -p 8080:8080 kprsnt-ci
+          for i in $(seq 1 30); do
+            curl -fsS http://localhost:8080/health && break
+            sleep 1
+          done
+          for path in / /blog /projects /resume /sitemap.xml /favicon.ico; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "http://localhost:8080$path")
+            echo "$code $path"
+            [ "$code" = "200" ] || { docker logs app; exit 1; }
+          done

@@ -3,7 +3,18 @@ AI Model Configuration for API endpoints
 Change model names here to switch providers/models across all API functions.
 """
 import os
-from openai import OpenAI
+
+
+def OpenAI(*args, **kwargs):
+    """Build an ``openai.OpenAI`` client, importing the SDK on first use.
+
+    The SDK (and pydantic under it) is the single heaviest import in the app,
+    ~60% of module load time. Importing it lazily keeps it off the Cloud Run
+    cold-start path: page requests never touch an LLM, so most instances never
+    pay for it at all.
+    """
+    from openai import OpenAI as _OpenAI
+    return _OpenAI(*args, **kwargs)
 
 # ============================================
 # MODEL NAMES — Change these to switch models
