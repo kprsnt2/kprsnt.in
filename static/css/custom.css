@@ -1591,6 +1591,21 @@ p {
     font-size: 0.85rem;
 }
 
+.site-footer-license {
+    margin: 0.35rem 0 0;
+    font-size: 0.75rem;
+}
+
+.site-footer-license a {
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.site-footer-license a:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
+}
+
 .grad-text {
     background: var(--accent-gradient);
     -webkit-background-clip: text;

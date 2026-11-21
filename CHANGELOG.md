@@ -8,6 +8,10 @@ Automated content updates (swarm memory, daily views, job data) are not listed.
 ## [Unreleased]
 
 ### Added
+- Content license: posts, resume and case-study text, data and images are
+  CC BY 4.0 (`LICENSE-CONTENT`); code stays MIT. Shown in the site footer.
+- security@kprsnt.in as the private contact for security and Code of Conduct
+  reports.
 - Standard open-source project files: contributing guide, Code of Conduct,
   security policy, issue and pull request templates, CODEOWNERS, Dependabot
   and EditorConfig.

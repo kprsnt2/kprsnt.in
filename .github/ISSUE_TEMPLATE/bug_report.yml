@@ -6,7 +6,8 @@ body:
     attributes:
       value: |
         Thanks for reporting! For security problems, please use
-        [a private report](https://github.com/kprsnt2/kprsnt.in/security/advisories/new) instead.
+        [a private report](https://github.com/kprsnt2/kprsnt.in/security/advisories/new)
+        or email security@kprsnt.in instead.
   - type: input
     id: where
     attributes:

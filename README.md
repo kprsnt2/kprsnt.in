@@ -1,7 +1,8 @@
 # Prashanth Kumar Kadasi — Portfolio
 
 [![CI](https://github.com/kprsnt2/kprsnt.in/actions/workflows/ci.yml/badge.svg)](https://github.com/kprsnt2/kprsnt.in/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Code: MIT](https://img.shields.io/badge/code-MIT-yellow.svg)](LICENSE)
+[![Content: CC BY 4.0](https://img.shields.io/badge/content-CC%20BY%204.0-lightgrey.svg)](LICENSE-CONTENT)
 ![Python 3.12](https://img.shields.io/badge/python-3.12-blue.svg)
 ![Deployed on Google Cloud Run](https://img.shields.io/badge/deployed%20on-Cloud%20Run-4285F4.svg)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
@@ -359,4 +360,13 @@ Forking this as a template for your own site? Replace the personal data in
 
 ## License
 
-Released under the [MIT License](LICENSE) © 2026 Prashanth Kumar Kadasi.
+© 2026 Prashanth Kumar Kadasi. This repository is dual-licensed:
+
+- **Code** (Python, templates, CSS, JavaScript, scripts, workflows, config):
+  [MIT License](LICENSE).
+- **Content** (blog posts and dev logs, resume, project and case-study text,
+  job data, images and the resume PDF):
+  [Creative Commons Attribution 4.0](LICENSE-CONTENT). Reuse it freely with
+  credit to *Prashanth Kumar Kadasi* and a link to https://kprsnt.in.
+
+[LICENSE-CONTENT](LICENSE-CONTENT) lists exactly which paths count as content.

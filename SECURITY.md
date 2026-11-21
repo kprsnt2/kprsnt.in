@@ -9,8 +9,10 @@ Only the current `main` branch, which is what runs on
 
 Please **do not open a public issue** for security problems.
 
-Report them privately through GitHub:
-**[Security → Report a vulnerability](https://github.com/kprsnt2/kprsnt.in/security/advisories/new)**.
+Report them privately, either:
+
+- through GitHub: **[Security → Report a vulnerability](https://github.com/kprsnt2/kprsnt.in/security/advisories/new)**, or
+- by email to **[security@kprsnt.in](mailto:security@kprsnt.in)**.
 
 Please include:
 

@@ -1,8 +1,9 @@
 # Contributing to kprsnt.in
 
 Thanks for your interest! This repository is the source of my personal
-portfolio, [kprsnt.in](https://kprsnt.in). It is open source under the
-[MIT License](LICENSE). Bug reports, fixes and ideas are welcome. You are also
+portfolio, [kprsnt.in](https://kprsnt.in). The code is open source under the
+[MIT License](LICENSE); the written content is
+[CC BY 4.0](LICENSE-CONTENT). Bug reports, fixes and ideas are welcome. You are also
 welcome to fork it as a starting point for your own Flask + Cloud Run site.
 
 By taking part you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
@@ -82,5 +83,6 @@ CI runs both, and also builds and boots the Docker image.
 
 ## License
 
-By contributing, you agree that your contributions are licensed under the
-[MIT License](LICENSE).
+By contributing, you agree that code contributions are licensed under the
+[MIT License](LICENSE), and contributions to content (posts, resume and
+case-study text, data, images) under [CC BY 4.0](LICENSE-CONTENT).
