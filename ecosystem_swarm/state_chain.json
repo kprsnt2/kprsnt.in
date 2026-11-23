@@ -1,23 +1,5 @@
 [
   {
-    "index": 1,
-    "timestamp": "2026-10-07T05:45:00Z",
-    "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
-    "hash": "b7bede329d9a2f885d347b5a88cee6d8839018c787c547ffd22449eafffd8789",
-    "event": "PARITY_INIT",
-    "actor": "SwarmOrchestrator",
-    "payload_summary": "Parity upgrade verified"
-  },
-  {
-    "index": 2,
-    "timestamp": "2026-10-08T04:31:20.710412Z",
-    "prev_hash": "b7bede329d9a2f885d347b5a88cee6d8839018c787c547ffd22449eafffd8789",
-    "hash": "49aa9914b92298ecaef57a3599cdd8d765db3686f114d4a3cfaff7ce7287e5ad",
-    "event": "BLOG_DRAFT_PUBLISHED",
-    "actor": "ScoutAgent",
-    "payload_summary": "github-activity-2026-10-08.md"
-  },
-  {
     "index": 3,
     "timestamp": "2026-10-08T04:31:40.272516Z",
     "prev_hash": "49aa9914b92298ecaef57a3599cdd8d765db3686f114d4a3cfaff7ce7287e5ad",
@@ -889,5 +871,32 @@
     "event": "DAILY_SWARM_CONSENSUS",
     "actor": "SwarmCouncil",
     "payload_summary": "2026-11-22"
+  },
+  {
+    "index": 100,
+    "timestamp": "2026-11-23T05:46:33.678479Z",
+    "prev_hash": "bfe86a8babe3c59373dc619ef185b237decc1805971aed6fa3cf2b79d5582ef9",
+    "hash": "a2d516b2aca2c275516d925b2ef7578b178410f15727596dc3432aea82eda410",
+    "event": "BLOG_DRAFT_PUBLISHED",
+    "actor": "ScoutAgent",
+    "payload_summary": "github-activity-2026-11-23.md"
+  },
+  {
+    "index": 101,
+    "timestamp": "2026-11-23T05:46:51.805975Z",
+    "prev_hash": "a2d516b2aca2c275516d925b2ef7578b178410f15727596dc3432aea82eda410",
+    "hash": "4f571aa3c8e9ce40c52c77ea807d3221ff5079820ef597b28422a2b6342aa2e9",
+    "event": "DAILY_SWARM_CONSENSUS",
+    "actor": "SwarmCouncil",
+    "payload_summary": "2026-11-23"
+  },
+  {
+    "index": 102,
+    "timestamp": "2026-11-23T05:46:56.769822Z",
+    "prev_hash": "4f571aa3c8e9ce40c52c77ea807d3221ff5079820ef597b28422a2b6342aa2e9",
+    "hash": "b096be799e0840f618bdf64f21d3b9609f74c79a333f1d0a27567421af09c11b",
+    "event": "WEEKLY_COUNCIL_MEETING",
+    "actor": "AlignmentCouncil",
+    "payload_summary": "2026-W48"
   }
 ]
