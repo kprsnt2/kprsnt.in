@@ -127,7 +127,7 @@ def test_homepage_analytical_and_ai_positioning(client):
     assert response.status_code == 200
     html = response.data.decode("utf-8")
     assert "INTERACTIVE SYSTEM ATLAS" in html
-    assert "GCP Cloud Run (asia-south1)" in html
+    assert "GCP Cloud Run (europe-west1)" in html
     assert "18-Sector Automated ETL" in html
     assert "rAsh Score" in html
     assert "cmdPaletteBackdrop" in html

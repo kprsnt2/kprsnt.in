@@ -4,7 +4,7 @@
 # Declarative alternative to the `gcloud run deploy` flags in the README. Use it
 # after the image exists in Artifact Registry:
 #
-#   gcloud run services replace cloudrun/service.yaml --region asia-south1
+#   gcloud run services replace cloudrun/service.yaml --region europe-west1
 #
 # Replace PROJECT_ID below with your project (and REGION if you move it), or
 # just use `gcloud run deploy --source .` which fills all of this in for you.
@@ -14,7 +14,7 @@ kind: Service
 metadata:
   name: kprsnt-in
   labels:
-    cloud.googleapis.com/location: asia-south1
+    cloud.googleapis.com/location: europe-west1
   annotations:
     run.googleapis.com/ingress: all
 spec:
@@ -38,7 +38,7 @@ spec:
       # Cloud Run's ceiling; keep it aligned with gunicorn --timeout.
       timeoutSeconds: 300
       containers:
-        - image: asia-south1-docker.pkg.dev/PROJECT_ID/kprsnt/kprsnt-in:latest
+        - image: europe-west1-docker.pkg.dev/PROJECT_ID/kprsnt/kprsnt-in:latest
           ports:
             - containerPort: 8080
           resources:

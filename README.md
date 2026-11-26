@@ -9,7 +9,7 @@
 
 Data Analyst moving into AI engineering, based in Hyderabad, India.
 
-This repository powers my personal portfolio at **[kprsnt.in](https://kprsnt.in)** — a Dockerized Flask + gunicorn application deployed on **Google Cloud Run (`asia-south1`)** behind Cloudflare DNS/CDN, with a built-in RAG chatbot, live analytical & AI dashboards, REST APIs, and a FastMCP server. It is continuously updated by a 10-agent autonomous AI swarm.
+This repository powers my personal portfolio at **[kprsnt.in](https://kprsnt.in)** — a Dockerized Flask + gunicorn application deployed on **Google Cloud Run (`europe-west1`)** behind Cloudflare DNS/CDN, with a built-in RAG chatbot, live analytical & AI dashboards, REST APIs, and a FastMCP server. It is continuously updated by a 10-agent autonomous AI swarm.
 
 ## Key Projects
 
@@ -103,7 +103,7 @@ Cloudflare (free) stays in front for DNS, CDN, caching and analytics:
 
 ```
 browser ──► Cloudflare DNS/CDN + Web Analytics (free)
-               └──► Cloud Run service (asia-south1, Docker from this repo) ──► Flask
+               └──► Cloud Run service (europe-west1, Docker from this repo) ──► Flask
 ```
 
 * **`Dockerfile`** — Flask + gunicorn on `$PORT` (Cloud Run passes 8080), runs as
@@ -115,8 +115,8 @@ browser ──► Cloudflare DNS/CDN + Web Analytics (free)
 
 Why Cloud Run fits this app: it is a stateless container with 300s request
 budget (no more 10s serverless ceiling that shaped a lot of the old code),
-scale-to-zero, and a region in Mumbai (`asia-south1`) that is ~50 ms from
-Hyderabad.
+scale-to-zero, and a single region (`europe-west1`, Belgium) behind Cloudflare's
+edge cache, so static pages are served close to visitors anyway.
 
 ### Console path (no terminal needed)
 
@@ -161,7 +161,7 @@ Cloud Build**:
 | Field | Value |
 | --- | --- |
 | Service name | `kprsnt-in` |
-| Region | `asia-south1` (Mumbai — closest to Hyderabad) |
+| Region | `europe-west1` (Belgium; where the service runs) |
 | Authentication | **Allow unauthenticated invocations** (public site) |
 | Container port | `8080` |
 | CPU | 1 |
@@ -217,7 +217,7 @@ running revision picks it up. To keep the service warm (costs credits):
 gcloud auth login
 gcloud config set project YOUR_PROJECT_ID
 gcloud services enable run.googleapis.com cloudbuild.googleapis.com     artifactregistry.googleapis.com secretmanager.googleapis.com
-gcloud artifacts repositories create kprsnt     --repository-format=docker --location=asia-south1
+gcloud artifacts repositories create kprsnt     --repository-format=docker --location=europe-west1
 
 # 1. secrets (Secret Manager — the app reads them from os.environ)
 printf '%s' "$GEMINI_KEY" | gcloud secrets create GEMINI_API_KEY --data-file=-
@@ -225,19 +225,19 @@ printf '%s' "$GEMINI_KEY" | gcloud secrets create GEMINI_API_KEY --data-file=-
 # printf '%s' "$OPENAI_KEY" | gcloud secrets create OPENAI_API_KEY --data-file=-
 
 # 2. build + deploy straight from the repo (Cloud Build uses ./Dockerfile)
-gcloud run deploy kprsnt-in   --source .   --region asia-south1   --allow-unauthenticated   --port 8080   --cpu 1 --memory 1Gi   --concurrency 8 --timeout 300   --min-instances 0 --max-instances 3   --set-env-vars "AI_LLM_TIMEOUT=20,CHAT_NOTIFY_URL=https://kprsnt-email-bot.<you>.workers.dev/notify"   --set-secrets "GEMINI_API_KEY=GEMINI_API_KEY:latest,CHAT_NOTIFY_SECRET=CHAT_NOTIFY_SECRET:latest"
+gcloud run deploy kprsnt-in   --source .   --region europe-west1   --allow-unauthenticated   --port 8080   --cpu 1 --memory 1Gi   --concurrency 8 --timeout 300   --min-instances 0 --max-instances 3   --set-env-vars "AI_LLM_TIMEOUT=20,CHAT_NOTIFY_URL=https://kprsnt-email-bot.<you>.workers.dev/notify"   --set-secrets "GEMINI_API_KEY=GEMINI_API_KEY:latest,CHAT_NOTIFY_SECRET=CHAT_NOTIFY_SECRET:latest"
 
 # 3. check it
-curl "$(gcloud run services describe kprsnt-in --region asia-south1 --format 'value(status.url)')/health"
+curl "$(gcloud run services describe kprsnt-in --region europe-west1 --format 'value(status.url)')/health"
 ```
 
 To manage the service from `cloudrun/service.yaml` instead, put your project in
 the `image:` line and run
-`gcloud run services replace cloudrun/service.yaml --region asia-south1`.
+`gcloud run services replace cloudrun/service.yaml --region europe-west1`.
 
 ### Custom domain (keep Cloudflare in front — free CDN, WAF, analytics)
 
-1. `gcloud run services describe kprsnt-in --region asia-south1 --format 'value(status.url)'`
+1. `gcloud run services describe kprsnt-in --region europe-west1 --format 'value(status.url)'`
    → e.g. `https://kprsnt-in-abc123-as.a.run.app`.
 2. In **Cloudflare DNS**, delete the old Vercel records and add (proxied, orange
    cloud):
@@ -247,7 +247,7 @@ the `image:` line and run
    `*.run.app`, so no Google domain mapping is needed — and Cloudflare keeps
    caching, Web Analytics and the free WAF in the path.
    *(Alternative: `gcloud beta run domain-mappings create --service kprsnt-in
-   --domain kprsnt.in --region asia-south1` and set that DNS record to
+   --domain kprsnt.in --region europe-west1` and set that DNS record to
    `ghs.googlehosted.com`, which needs the Cloudflare proxy off.)*
 
 ### Email (Cloudflare Email Routing + Email Worker)

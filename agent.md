@@ -12,7 +12,7 @@ Prashanth is an AI Systems Engineer & Data Analyst specializing in fine-tuning l
 - **Backend:** Flask (Python 3.12 in the container image), one WSGI app: `api/index.py`
 - **Frontend:** Jinja2 templates + Bootstrap 5 (Darkly theme) + custom CSS/JS. **Not Tailwind.**
 - **Data Storage:** Flat JSON / Markdown files in `job_data/`, `blog_data/`, `blog_inputs/`, `AI_Eco_Blogs/`, `ecosystem_swarm/` plus static Python dicts in `api/data/` and `api/resume_data.py`.
-- **Hosting:** Google Cloud Run (`Dockerfile` + `cloudrun/service.yaml`, region `asia-south1`) with Cloudflare DNS/CDN/analytics in front. Deploy via `gcloud run deploy --source .` or the manual GitHub Actions workflow. Static assets under `static/`.
+- **Hosting:** Google Cloud Run (`Dockerfile` + `cloudrun/service.yaml`, region `europe-west1`) with Cloudflare DNS/CDN/analytics in front. Deploy via `gcloud run deploy --source .` or the manual GitHub Actions workflow. Static assets under `static/`.
 - **Automation:** GitHub Actions workflows (blog, jobs, ecosystem agents, CI).
 
 ## Rules for Coding Agents

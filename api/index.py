@@ -1,7 +1,7 @@
 """
 Flask Portfolio Website
 A Flask + Jinja2 website running in a Docker image behind gunicorn on Google
-Cloud Run (asia-south1), with Cloudflare DNS/CDN/analytics in front.
+Cloud Run (europe-west1), with Cloudflare DNS/CDN/analytics in front.
 
 Architecture:
   - api/data/projects.py      → Project, skill, experience constants

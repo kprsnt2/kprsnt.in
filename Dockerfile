@@ -5,7 +5,7 @@
 # Cloud Run sets PORT=8080, so the default below is only a fallback for local
 # `docker run`. Cloudflare (free) sits in front for DNS/CDN/analytics.
 #
-# Deploy from source:  gcloud run deploy kprsnt-in --source . --region asia-south1
+# Deploy from source:  gcloud run deploy kprsnt-in --source . --region europe-west1
 # Local run:           docker build -t kprsnt . && docker run -p 8080:8080 \
 #                        --env-file .env kprsnt
 # ---------------------------------------------------------------------------
