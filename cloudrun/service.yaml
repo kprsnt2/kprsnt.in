@@ -46,8 +46,6 @@ spec:
               cpu: "1"
               memory: 1Gi
           env:
-            - name: INTERVIEW_FROM_EMAIL
-              value: chat@kprsnt.in
             - name: AI_LLM_TIMEOUT
               value: "20"
           # Secrets live in Secret Manager and are mounted as env vars.
@@ -66,16 +64,6 @@ spec:
           #   valueFrom:
           #     secretKeyRef:
           #       name: GROQ_API_KEY
-          #       key: latest
-          # - name: RESEND_API_KEY
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: RESEND_API_KEY
-          #       key: latest
-          # - name: OWNER_NOTIFY_EMAIL
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: OWNER_NOTIFY_EMAIL
           #       key: latest
           # - name: AGENT_VAULT_TOKEN
           #   valueFrom:
