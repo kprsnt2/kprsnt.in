@@ -1,5 +1,5 @@
 -r requirements.txt
-mcp[cli]<2
+mcp[cli]<3
 requests
 pytest==9.1.1
 ruff==0.16.8
