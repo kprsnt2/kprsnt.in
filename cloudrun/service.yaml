@@ -50,6 +50,11 @@ spec:
               value: "20"
           # Secrets live in Secret Manager and are mounted as env vars.
           # Create them once (README), then uncomment:
+          # - name: GEMINI_API_KEY
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: GEMINI_API_KEY
+          #       key: latest
           # - name: OPENAI_API_KEY
           #   valueFrom:
           #     secretKeyRef:

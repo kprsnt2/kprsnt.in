@@ -77,12 +77,13 @@ See `.env.example`. The important ones:
 
 | Variable | Purpose |
 | --- | --- |
-| `OPENAI_API_KEY` | Primary LLM + embeddings |
-| `NVIDIA_API_KEY` | Fallback LLM provider |
-| `GROQ_API_KEY` | Last-resort LLM provider |
+| `GEMINI_API_KEY` | LLM for the chat/interview bots (the only key the deploy passes today) |
+| `OPENAI_API_KEY` | Optional: tried before Gemini; also site-search embeddings |
+| `NVIDIA_API_KEY` | Optional fallback LLM (+ embeddings fallback) |
+| `GROQ_API_KEY` | Optional last-resort LLM |
 | `PRIVATE_API_TOKEN` | `X-Private-Token` header for `/api/jobs/data`. Unset = that route 404s |
 | `RESUME_PHONE` | Local only: phone number to print when building the resume PDF |
-| `GEMINI_API_KEY`, `TAVILY_API_KEY`, `GITHUB_TOKEN` | Used by pipeline scripts / Actions |
+| `TAVILY_API_KEY`, `GITHUB_TOKEN` | Used by pipeline scripts / Actions |
 
 ## Testing & Lint
 
@@ -135,9 +136,8 @@ Registry** — the source-repository deploy uses both.
 
 | Secret name | Value |
 | --- | --- |
-| `OPENAI_API_KEY` | your key |
-| `NVIDIA_API_KEY` | your key |
-| `GROQ_API_KEY` | your key |
+| `GEMINI_API_KEY` | your Google AI Studio key (required) |
+| `OPENAI_API_KEY` / `NVIDIA_API_KEY` / `GROQ_API_KEY` | optional fallbacks: add each to the deploy's `--set-secrets` too |
 | `AGENT_VAULT_TOKEN` | optional (private vault) |
 | `KV_REST_API_URL` / `KV_REST_API_TOKEN` | optional (AILearn sync) |
 
@@ -175,7 +175,7 @@ Then **Variables & Secrets**:
 
 * Environment variables: `AI_LLM_TIMEOUT` = `20`
 * **Add reference to secret** once per secret from step 3 —
-  e.g. Name `OPENAI_API_KEY`, Secret `OPENAI_API_KEY`, Version `latest`.
+  e.g. Name `GEMINI_API_KEY`, Secret `GEMINI_API_KEY`, Version `latest`.
 
 Leave **Health checks** at their defaults for the first deploy (Cloud Run
 detects the listening port; `/health` exists if you want to add an HTTP startup
@@ -219,12 +219,12 @@ gcloud services enable run.googleapis.com cloudbuild.googleapis.com     artifact
 gcloud artifacts repositories create kprsnt     --repository-format=docker --location=asia-south1
 
 # 1. secrets (Secret Manager — the app reads them from os.environ)
-printf '%s' "$OPENAI_KEY" | gcloud secrets create OPENAI_API_KEY --data-file=-
-printf '%s' "$NVIDIA_KEY" | gcloud secrets create NVIDIA_API_KEY --data-file=-
-printf '%s' "$GROQ_KEY"   | gcloud secrets create GROQ_API_KEY   --data-file=-
+printf '%s' "$GEMINI_KEY" | gcloud secrets create GEMINI_API_KEY --data-file=-
+# optional fallbacks (then add them to --set-secrets below):
+# printf '%s' "$OPENAI_KEY" | gcloud secrets create OPENAI_API_KEY --data-file=-
 
 # 2. build + deploy straight from the repo (Cloud Build uses ./Dockerfile)
-gcloud run deploy kprsnt-in   --source .   --region asia-south1   --allow-unauthenticated   --port 8080   --cpu 1 --memory 1Gi   --concurrency 8 --timeout 300   --min-instances 0 --max-instances 3   --set-env-vars "AI_LLM_TIMEOUT=20"   --set-secrets "OPENAI_API_KEY=OPENAI_API_KEY:latest,NVIDIA_API_KEY=NVIDIA_API_KEY:latest,GROQ_API_KEY=GROQ_API_KEY:latest"
+gcloud run deploy kprsnt-in   --source .   --region asia-south1   --allow-unauthenticated   --port 8080   --cpu 1 --memory 1Gi   --concurrency 8 --timeout 300   --min-instances 0 --max-instances 3   --set-env-vars "AI_LLM_TIMEOUT=20"   --set-secrets "GEMINI_API_KEY=GEMINI_API_KEY:latest"
 
 # 3. check it
 curl "$(gcloud run services describe kprsnt-in --region asia-south1 --format 'value(status.url)')/health"

@@ -42,6 +42,7 @@ jobs:
           OPENAI_API_KEY: ""
           NVIDIA_API_KEY: ""
           GROQ_API_KEY: ""
+          GEMINI_API_KEY: ""
         run: pytest -q
 
   deploy:
@@ -87,7 +88,7 @@ jobs:
             --max-instances 3 \
             --cpu-boost \
             --set-env-vars "AI_LLM_TIMEOUT=20" \
-            --set-secrets "OPENAI_API_KEY=OPENAI_API_KEY:latest,NVIDIA_API_KEY=NVIDIA_API_KEY:latest,GROQ_API_KEY=GROQ_API_KEY:latest"
+            --set-secrets "GEMINI_API_KEY=GEMINI_API_KEY:latest"
 
       - name: Health-check the new revision
         run: |
