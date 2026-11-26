@@ -71,8 +71,9 @@ except ImportError:
 
 
 # The bots answer on the website and over the HTTP API only. They never send
-# email: mail to interview@ / chat@ / security@kprsnt.in goes to a person, via
-# Cloudflare Email Routing, not to this app.
+# email themselves. Mail to interview@ / chat@kprsnt.in is answered by the
+# Cloudflare Email Worker (cloudflare/email-worker/), which calls these endpoints and
+# copies Prashanth on every reply.
 _CONTACT_NOTE = (
     "\n\n## Contact\n"
     "You cannot send emails or files. If someone asks for the resume, give the link "

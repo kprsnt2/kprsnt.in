@@ -89,6 +89,12 @@ try:
 except ImportError:
     from services.security import RateLimiter, get_client_ip, body_exceeds_limit
 
+# Owner email notifications for chat questions (sent by the Cloudflare worker).
+try:
+    from api.services.notify import notify_owner as _notify_owner
+except ImportError:
+    from services.notify import notify_owner as _notify_owner
+
 # mSeat REST + MCP helpers (used by /api/mseat/* routes).
 # Third-level fallback: a broken spec import must never stop the app booting (audit H7).
 try:
@@ -2024,6 +2030,7 @@ Assistant:"""
         if answer is None:
             return jsonify({'error': 'Chat is temporarily unavailable.'}), 503
 
+        _notify_owner('site chat (/api/chat)', query, answer.strip(), request.headers)
         return jsonify({
             'answer': answer.strip(),
             'chunks_used': len(top_chunks) if embeddings_data else 0
@@ -2429,6 +2436,7 @@ def api_interview():
         message = message[:4000]
         raw_response = get_ai_response(message) if get_ai_response else "Service temporarily unavailable."
         ai_response = raw_response.replace('**', '').replace('*', '')
+        _notify_owner('interview bot (/api/interview)', message, ai_response, request.headers)
 
         res = jsonify({"response": ai_response})
         res.headers['Access-Control-Allow-Origin'] = '*'
@@ -2499,6 +2507,7 @@ def api_chat_agent():
 
         message = message[:4000]
         ai_response = get_ai_response(message, agent_type="chat", history=history) if get_ai_response else "Service temporarily unavailable."
+        _notify_owner('site chat (/api/chat_agent)', message, ai_response, request.headers)
 
         res = jsonify({"response": ai_response, "answer": ai_response})
         res.headers['Access-Control-Allow-Origin'] = '*'

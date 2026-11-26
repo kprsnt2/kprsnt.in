@@ -1,0 +1,21 @@
+# Cloudflare Email Worker for interview@ / chat@kprsnt.in (see README → Email).
+# Deploy:  npx wrangler login
+#          npx wrangler secret put OWNER_EMAIL     (your verified destination inbox)
+#          npx wrangler secret put NOTIFY_SECRET   (same as CHAT_NOTIFY_SECRET on Cloud Run)
+#          npx wrangler deploy
+# Then Email Routing → Routing rules: interview@ and chat@ → "Send to a Worker" → kprsnt-email-bot.
+name = "kprsnt-email-bot"
+main = "worker.js"
+compatibility_date = "2026-11-01"
+# Gives the worker a https://kprsnt-email-bot.<you>.workers.dev URL for POST /notify
+# (set that URL + /notify as CHAT_NOTIFY_URL on Cloud Run).
+workers_dev = true
+
+[vars]
+API_BASE = "https://kprsnt.in"
+
+# Lets the worker send the owner's copy. No destination_address here, so the
+# personal inbox stays out of this public repo; it comes from the OWNER_EMAIL
+# secret and must be a verified Email Routing destination address.
+[[send_email]]
+name = "OWNER"

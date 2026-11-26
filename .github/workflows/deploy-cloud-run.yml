@@ -87,8 +87,8 @@ jobs:
             --min-instances 0 \
             --max-instances 3 \
             --cpu-boost \
-            --set-env-vars "AI_LLM_TIMEOUT=20" \
-            --set-secrets "GEMINI_API_KEY=GEMINI_API_KEY:latest"
+            --set-env-vars "AI_LLM_TIMEOUT=20,CHAT_NOTIFY_URL=${{ vars.CHAT_NOTIFY_URL }}" \
+            --set-secrets "GEMINI_API_KEY=GEMINI_API_KEY:latest,CHAT_NOTIFY_SECRET=CHAT_NOTIFY_SECRET:latest"
 
       - name: Health-check the new revision
         run: |

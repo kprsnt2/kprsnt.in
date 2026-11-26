@@ -81,6 +81,7 @@ See `.env.example`. The important ones:
 | `OPENAI_API_KEY` | Optional: tried before Gemini; also site-search embeddings |
 | `NVIDIA_API_KEY` | Optional fallback LLM (+ embeddings fallback) |
 | `GROQ_API_KEY` | Optional last-resort LLM |
+| `CHAT_NOTIFY_URL` / `CHAT_NOTIFY_SECRET` | Email the owner every website chat question (via the Cloudflare worker's `/notify`). Unset = off |
 | `PRIVATE_API_TOKEN` | `X-Private-Token` header for `/api/jobs/data`. Unset = that route 404s |
 | `RESUME_PHONE` | Local only: phone number to print when building the resume PDF |
 | `TAVILY_API_KEY`, `GITHUB_TOKEN` | Used by pipeline scripts / Actions |
@@ -224,7 +225,7 @@ printf '%s' "$GEMINI_KEY" | gcloud secrets create GEMINI_API_KEY --data-file=-
 # printf '%s' "$OPENAI_KEY" | gcloud secrets create OPENAI_API_KEY --data-file=-
 
 # 2. build + deploy straight from the repo (Cloud Build uses ./Dockerfile)
-gcloud run deploy kprsnt-in   --source .   --region asia-south1   --allow-unauthenticated   --port 8080   --cpu 1 --memory 1Gi   --concurrency 8 --timeout 300   --min-instances 0 --max-instances 3   --set-env-vars "AI_LLM_TIMEOUT=20"   --set-secrets "GEMINI_API_KEY=GEMINI_API_KEY:latest"
+gcloud run deploy kprsnt-in   --source .   --region asia-south1   --allow-unauthenticated   --port 8080   --cpu 1 --memory 1Gi   --concurrency 8 --timeout 300   --min-instances 0 --max-instances 3   --set-env-vars "AI_LLM_TIMEOUT=20,CHAT_NOTIFY_URL=https://kprsnt-email-bot.<you>.workers.dev/notify"   --set-secrets "GEMINI_API_KEY=GEMINI_API_KEY:latest,CHAT_NOTIFY_SECRET=CHAT_NOTIFY_SECRET:latest"
 
 # 3. check it
 curl "$(gcloud run services describe kprsnt-in --region asia-south1 --format 'value(status.url)')/health"
@@ -249,32 +250,52 @@ the `image:` line and run
    --domain kprsnt.in --region asia-south1` and set that DNS record to
    `ghs.googlehosted.com`, which needs the Cloudflare proxy off.)*
 
-### Email (Cloudflare Email Routing)
+### Email (Cloudflare Email Routing + Email Worker)
 
-The app sends and receives no email. The addresses on the site go straight to
-a person:
+The Flask app sends no email. Cloudflare handles all of it:
 
-| Address | Used for |
+| Address | What happens |
 | --- | --- |
-| `interview@kprsnt.in` | Recruiters and interview requests (site, resume, bots) |
-| `chat@kprsnt.in` | General contact (chat API docs) |
-| `security@kprsnt.in` | Security and Code of Conduct reports |
+| `interview@kprsnt.in` | AI answers the sender (via `/api/interview`), owner gets a copy |
+| `chat@kprsnt.in` | AI answers the sender (via `/api/chat_agent`), owner gets a copy |
+| `security@kprsnt.in` | Forwarded to the owner only (no AI) |
+| Website chat (`/api/chat`, `/api/chat_agent`, `/api/interview`) | Each question + AI answer is emailed to the owner from `chat@kprsnt.in` (threaded per day) |
 
-Set it up once in Cloudflare: **your zone → Email → Email Routing**.
+The worker is in `cloudflare/email-worker/`. For each mail it asks the bot API,
+sends the answer back as a threaded reply from the same address, and mails the
+owner a copy (their message + the AI answer, `Reply-To` the sender, subject
+`[AI replied]` or `[NEEDS YOU]` when the AI could not answer). Bounces, mailing
+lists, no-reply senders and `@kprsnt.in` senders are only forwarded, never
+answered, so it can't loop with another auto-responder.
 
-1. **Get started** / **Enable Email Routing**, and let Cloudflare add its MX
-   and SPF DNS records.
-2. **Destination addresses → Add** your personal inbox and click the
-   verification link Cloudflare emails you.
-3. **Routing rules → Create address** for each address above, with action
-   **Send to an email** and your verified inbox as the destination. (Or turn on
-   the **Catch-all** rule to forward anything `@kprsnt.in`.)
-4. If an older rule sends any of these addresses to a **Worker** (the previous
-   AI auto-reply), delete that rule, and delete the Worker under
-   **Workers & Pages**.
+Set it up once in Cloudflare (**your zone → Email → Email Routing**):
 
-To reply *from* `interview@kprsnt.in`, add it as a "Send mail as" address in
-your mail client (for example Gmail → Settings → Accounts).
+1. **Enable Email Routing** and let Cloudflare add its MX and SPF records.
+2. **Destination addresses → Add** your inbox and click the verification link.
+3. Create the worker, either:
+   * **Dashboard:** Workers & Pages → Create → Worker `kprsnt-email-bot` → Edit
+     code → paste `cloudflare/email-worker/worker.js` → Deploy. Then Settings →
+     *Variables and Secrets*: text `API_BASE` = `https://kprsnt.in`, secret
+     `OWNER_EMAIL` = your verified inbox; *Bindings* → Add → **Send email**,
+     name `OWNER`.
+   * **CLI:** `cd cloudflare/email-worker && npx wrangler login &&
+     npx wrangler secret put OWNER_EMAIL && npx wrangler secret put NOTIFY_SECRET &&
+     npx wrangler deploy`.
+
+   For website chat notifications, also add a secret `NOTIFY_SECRET` (any long
+   random string) to the worker, then on Cloud Run set `CHAT_NOTIFY_URL` =
+   `https://kprsnt-email-bot.<you>.workers.dev/notify` and the secret
+   `CHAT_NOTIFY_SECRET` = the same string. For the deploy workflow, add the
+   repository variable `CHAT_NOTIFY_URL` and create the `CHAT_NOTIFY_SECRET`
+   secret in Secret Manager (the workflow requires it).
+4. **Routing rules → Custom addresses**: `interview@` and `chat@` → **Send to a
+   Worker** → `kprsnt-email-bot`; `security@` → **Send to an email** → your
+   inbox.
+
+Cloudflare only lets a worker reply to mail that passed DMARC, so a sender with
+a misconfigured domain gets no AI reply; you still get the `[NEEDS YOU]` copy.
+To reply yourself *from* `interview@kprsnt.in`, add it as a "Send mail as"
+address in your mail client (for example Gmail → Settings → Accounts).
 
 ### Deploy on push (optional CI)
 
