@@ -1,8 +1,8 @@
 {
-  "last_updated": "2026-11-26T06:51:44.103300",
-  "commit_history": 1276,
+  "last_updated": "2026-11-27T06:44:09.691938",
+  "commit_history": 1277,
   "counted_commit_shas": [
-    "4d131f7",
+    "f5ae5c0",
     "ff36d4f",
     "fd1874a",
     "fcb2a99",
@@ -93,6 +93,7 @@
     "518df38",
     "50b10f5",
     "4f394a1",
+    "4d131f7",
     "48ad275",
     "47d9717",
     "4421325",
@@ -145,7 +146,7 @@
   ],
   "repo_counts": 100,
   "language_breakdown": {
-    "TypeScript": 22,
+    "TypeScript": 23,
     "Python": 19,
     "JavaScript": 18,
     "HTML": 15,
@@ -171,22 +172,22 @@
   ],
   "recent_activity": [
     "[kprsnt2/kprsnt.in] PR merged: ",
-    "[kprsnt2/kprsnt.in] commit 4d131f7: Merge pull request #12 from kprsnt2/claude/gcp-cloud-run-audit-xs5lbe | Files (423): .cursor/rules/ponytail.mdc, .dockerignore, .editorconfig, .env.example, .github/CODEOWNERS, .github/ISSUE_TEMPLATE/bug_report.yml, .github/ISSUE_TEMPLATE/config.yml, .github/ISSUE_TEMPLATE/feature_request.yml\n    Commit Details: Remove AI email auto-reply; route site email through Cloudflare Email Routing"
+    "[kprsnt2/kprsnt.in] commit f5ae5c0: fix(email-worker): reply to the real sender, keep threads, give the bot context | Files (442): the, mail)., together., Mail,, the, Prashanth., are, answer.\n    Commit Details: The version now running on Cloudflare (kprsnt-email-bot 9c057ad9):"
   ],
   "daily_commits_count": 1,
   "commit_timeline_7d": {
     "labels": [
-      "Fri",
       "Sat",
       "Sun",
       "Mon",
       "Tue",
       "Wed",
-      "Thu"
+      "Thu",
+      "Fri"
     ],
     "commits": [
-      0,
       2,
+      0,
       0,
       0,
       0,
